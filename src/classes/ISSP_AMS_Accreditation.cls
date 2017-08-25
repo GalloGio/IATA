@@ -5812,11 +5812,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
                     
-                    if (newForm.ISSP_AMS_Pax_Office_Open_Date__c == null) {
-                        newForm.ISSP_AMS_Pax_Office_Open_Date__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    
                     if (newForm.ISSP_AMS_VAT_Number_Input__c == null && isocountry.Hide_Tax_Number_VAT__c == false) {
                         newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
@@ -5901,6 +5896,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
 
             if (amsOfficeType == 'Branch') {
+                if (newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+                    newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs);
+                    errorFound = true;
+                }
+
                 if (newForm.Wholly_owned_by_this_Head_Office__c == null && newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
                     newForm.Wholly_owned_by_this_Head_Office__c.addError(Label.ISSP_YouMustEnter);
                     errorFound = true;
@@ -5953,6 +5953,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             //Validation for both HO & Branch office
 
+            if (newForm.ISSP_AMS_Pax_Office_Open_Date__c == null) {
+                newForm.ISSP_AMS_Pax_Office_Open_Date__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+
             if (CountryCheckList.Registration_required__c && newForm.ISSP_AMS_Trade_Reg_No__c == null) {
                 newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
@@ -5989,12 +5994,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
-            if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null && newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) {
                 newForm.ISSP_AMS_Gross_Amnt_First_year__c.addError(Label.ISSP_AMS_Gross_Amnt_First_year);
                 errorFound = true;
             }
             
-            if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null && newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) {
                 newForm.ISSP_AMS_Gross_Amnt_Second_year__c.addError(Label.ISSP_AMS_Gross_Amnt_Second_year);
                 errorFound = true;
             }

@@ -1069,14 +1069,15 @@
                           </apex:pageBlockSection>
 
                           <apex:pageBlockSection columns="2">
-                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
                             </apex:outputtext>
-                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" />
-                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" />
-                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" />
+                            <apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"></apex:outputPanel>
+                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
                           </apex:pageBlockSection>
                         </apex:pageBlock>
                       </div>
@@ -1090,23 +1091,26 @@
                          tradeRegNo = $j('[for$=trade-reg-no]')[0],
                          dateLicenseGranted = $j('[for$=date-license-granted]')[0],
                          dateRegGranted = $j('[for$=date-reg-granted]')[0],
-                         //vatNumber = $j('[id$=vat-number]')[0],
                          officePhoneLabel = $j('[id$=office-phone-label]')[0],
                          labelBillStreet = $j('.address-label')[0].childNodes[0],
                          labelBillCity = $j('.address-label')[1].childNodes[0],
                          legalStatusLabel = $j('[for$=LegalStatus]')[0];
-                        
-                        dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
-                        licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
-                        tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
-                        dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
-                        dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
-                        officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
-                        //vatNumber.textContent = vatNumber.textContent + ' *';
-                        labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
-                        labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
-                        
-
+                        if(dateOpenedAsTravelAgency)
+                          dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
+                        if (licenseNo)
+                          licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
+                        if (tradeRegNo)
+                          tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
+                        if (dateLicenseGranted)
+                          dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
+                        if (dateRegGranted)
+                          dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
+                        if (officePhoneLabel)
+                          officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
+                        if (labelBillStreet)
+                          labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
+                        if (labelBillCity)
+                          labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
                       });
                   </script>
 
@@ -1327,8 +1331,10 @@
                    $j( document ).ready(function() {
                       var prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
                          prevDef = $j('[id$=previous-default-label]')[0];
-                      prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
-                      prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+                      if (prevDef) 
+                        prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+                      if (prevDefDetLabel) 
+                        prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
                     });
                   </script>
                   <!-- ****************************************************************************** -->
@@ -1351,7 +1357,7 @@
                   
                   <apex:pageBlockSection >
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="{!$Label.ISSP_Credit_Card_Form}" />
+                      <apex:outputlabel value="* {!$Label.ISSP_Credit_Card_Form}" />
                       <apex:selectradio style="width:100px" value="{!newForm.Enable_Credit_Card_FOP__c}" styleclass="{!IF(AND(isValError, newForm.Enable_Credit_Card_FOP__c==null), 'requiredIndicator', '')}" id="creditCardForm">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                         <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
@@ -1478,11 +1484,16 @@
                        iatanCode = $j('[id$=iatan-code-label]')[0],
                        isCargo = $j('[id$=is-cargo-label]')[0],
                        cargoCode = $j('[id$=cargo-code-label]')[0];
-                    dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
-                    isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
-                    iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *';
-                    isCargo.textContent = isCargo.textContent.replace('* ', '') + ' *';
-                    cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
+                    if (dgsLabel)
+                      dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
+                    if (isAgencyIatan)
+                      isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
+                    if (iatanCode)
+                      iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *';
+                    if (isCargo)
+                      isCargo.textContent = isCargo.textContent.replace('* ', '') + ' *';
+                    if (cargoCode)
+                      cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
                   });
               </script>
             </apex:form>
