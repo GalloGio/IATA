@@ -154,7 +154,7 @@ public class ANG_AccountTriggerHandler {
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 		for(Account acc : accounts){
 			objects.put(acc.Id, new OscarObjects());
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', ANG_Type_of_change__c = AMS_Utils.VFMR);
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open');
 			oscars.add(oscar);
 
 			objects.get(acc.Id).oscar = oscar;
@@ -178,7 +178,6 @@ public class ANG_AccountTriggerHandler {
 			c.BSPCountry__c = acc.BillingCountry;
 			c.Region__c = acc.Region_formula__c;
 			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
-			c.Reason1__c = 'Change of '+AMS_Utils.VFMR;
 			c.ContactId = contacts.get(acc.Id);
 			c.OwnerId = objects.get(acc.Id).oscar.OwnerId;
 
@@ -246,6 +245,7 @@ public class ANG_AccountTriggerHandler {
 	    	oscar.Oscar_Communication_Case_Id__c = objects.get(oscar.Account__c).commCase.Id;
 	    	oscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), objects.get(oscar.Account__c).commCase.Id);
 	    	oscar.AMS_Online_Accreditation__c = objects.get(oscar.Account__c).stagingArea.Id;
+	    	oscar.ANG_Type_of_change__c = AMS_Utils.VFMR;
 
 	    	AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
 	    }
