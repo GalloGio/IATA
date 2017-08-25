@@ -153,7 +153,7 @@ public class ANG_AccountTriggerHandler {
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 		for(Account acc : accounts){
 			objects.put(acc.Id, new OscarObjects());
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', ANG_Type_of_change__c = AMS_Utils.VFMR);
 			oscars.add(oscar);
 
 			objects.get(acc.Id).oscar = oscar;
