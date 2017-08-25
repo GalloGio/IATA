@@ -52,8 +52,6 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	};
 	
 	global ANG_OscarConversionBatch(String countryToSearch, String oscarName) {
-		
-		ANG_AgencyChangesHelper.isMigrationRunning = true;
 
 		this.oscarName = oscarName;
 		this.countryToSearch = countryToSearch;
@@ -75,6 +73,8 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		AMS_OSCAR__c oscarToProcess = null;
 
 		try{
+
+			ANG_AgencyChangesHelper.isMigrationRunning = true;
 
 	   		oscarToProcess = (AMS_OSCAR__c)scope.get(0);
 
@@ -206,7 +206,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 				toReturn.Subject = 'New HE standard' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New HE standard';
 			}
-			else if(!(oscarToProcess.Process__c == AMS_Utils.NGCHANGES)){
+			else if(oscarToProcess.Process__c == AMS_Utils.NEWAE){
 				toReturn.Subject = 'New AE' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New AE';
 			}
