@@ -18911,6 +18911,78 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Quantity</value>
     </labels>
     <labels>
+        <fullName>ISSP_RHC_HUB</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP</shortDescription>
+        <value>Available Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Cash</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
+        <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Credit Card</shortDescription>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Curr_Financial_Security</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Curr Financial Security</shortDescription>
+        <value>Current Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Current_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Current Usage</shortDescription>
+        <value>Current usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Last_Updated</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Last Updated</shortDescription>
+        <value>Last Updated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Percentage_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Percentage Usage</shortDescription>
+        <value>Percentage usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_RP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB RP</shortDescription>
+        <value>Risk Profile</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
         <categories>ISSP, ChangeUserPortalStatus, s8</categories>
         <language>en_US</language>
