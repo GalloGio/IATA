@@ -69,7 +69,7 @@ public class ANG_AccountTriggerHandler {
 		involvedAccounts.addAll(new Map<Id, Account>(downGradeAtoB).keySet());
 		involvedAccounts.addAll(new Map<Id, Account>(downGradeBtoC).keySet());
 
-		for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :involvedAccounts)]){
+		for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :involvedAccounts OR AccountId IN :involvedAccounts)]){
 
 			//select a portal admin from the HE, if possible, or from the hierarchy if not
 			if(involvedAccounts.contains(c.AccountId)) portalAdmins.put(c.AccountId, c.Id);
