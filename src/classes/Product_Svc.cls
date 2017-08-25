@@ -809,6 +809,21 @@ public class Product_Svc
         }
     } //*** end of "setDefaultValue"
     
+
+    /****************************************************************************************************
+        Created by BI - AngeLazaro 2017-08-25
+            Set default values for accepted payment methods
+    ****************************************************************************************************/
+    public static void setAcceptedPaymentMehodsDefaultValue(List<Product2> newList) {
+        
+        for (Product2 product : newList) {
+            if (String.isBlank(product.Accepted_Payment_Methods__c)){
+                product.Accepted_Payment_Methods__c = 'Bank Transfer;Credit Card;IATA Clearing House';
+            }
+        }
+    } //*** end of "setAcceptedPaymentMehodsDefaultValue"
+    
+
     /****************************************************************************************************
         Created by CGI - Samy Saied 2015-12-23
             Checks whether product and country are compliant for the current user
