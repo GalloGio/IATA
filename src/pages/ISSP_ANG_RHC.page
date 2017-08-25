@@ -2,9 +2,11 @@
   <html>
 
   <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <c:iss_ap_css />
     <c:ISSP_Header></c:ISSP_Header>
+    <c:iss_ap_css />
   </head>
 
   <body>
@@ -50,6 +52,14 @@
         margin-left: 15px;
       }
 
+      .last-updated {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: rgb(121, 118, 111);
+        font-size: 12px;
+      }
+
       @media (max-width: 992px) {
         .fa-money {
           font-size: 200px;
@@ -62,6 +72,10 @@
         }
         #gaugeSection > strong {
           margin-left: 25px;
+          font-size: 20px;
+        }
+        .last-updated {
+          font-size: 13px;
         }
       }
     </style>
@@ -72,45 +86,61 @@
           <section name="remittance-holding" class="row">
             <header class="col-xs-12">
               <div class="section-header">
-                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Remittance Holding Capacity</strong>
+                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB}</strong>
               </div>
             </header>
             <section id="remittance-holding-table" class="col-md-8 col-sm-12">
               <table class="table">
                 <tr>
                   <td>
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> RHC amount
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_RHC_Amount__c}</td>
-                  <td></td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode} 
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_RHC_Amount__c}"/>
+                    </apex:outputText>
+                  </td>
                 </tr>
                 <tr>
                   <td>
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current usage
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_Current_Usage}
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_ConsumedRHC__c}</td>
-                  <td></td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode}
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC__c}"/>
+                    </apex:outputText>
+                  </td>
                 </tr>
                 <tr>
                   <td>
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Percentage usage
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_Percentage_Usage}
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}%</td>
-                  <td></td>
-                </tr>
-                <tr>
                   <td>
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Financial Security
+                    <apex:outputText value="{0, number, 0}%">
+                      <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
+                    </apex:outputText>
                   </td>
-                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_Financial_Security__c}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
+                  </td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode}
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_Financial_Security__c}"/>
+                    </apex:outputText>
+                  </td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Remittance frequency
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {!$ObjectType.Account.fields.Remittance_frequency__c.label}
                   </td>
                   <td>{!contact.Account.Remittance_frequency__c}</td>
                   <td></td>
@@ -119,7 +149,17 @@
             </section>
             <section id="gaugeSection" class="col-md-4 col-sm-12">
               <canvas id="percentageUsageGauge"></canvas>
-              <strong>{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}%</strong>
+              <strong>
+                <apex:outputText value="{0, number, 0}%">
+                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
+                </apex:outputText>
+              </strong>
+              <span class="last-updated">
+                <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
+                <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Last_Update__c}" />
+                </apex:outputText>
+              </span>
             </section>
           </section>
           <div class="row">
@@ -131,21 +171,21 @@
           <section name="payment-forms" class="row">
             <header class="col-xs-12">
               <div class="section-header">
-                <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>Available Forms of Payment</strong>
+                <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
               </div>
             </header>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>Cash</strong>
+              <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
               <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
               <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">IATA EasyPay</strong>
+              <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
               <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
               <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">Credit Card</strong>
+              <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
               <i class="fa fa-check fa-2x show check" aria-hidden="true"></i>
               <a href="#">Example</a>
             </div>
@@ -155,7 +195,7 @@
           <table class="table">
             <tr>
               <th class="section-header" colspan="2">
-                <i class="fa fa-user-md" aria-hidden="true"></i> Risk Profile
+                <i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}
               </th>
             </tr>
             <tr>

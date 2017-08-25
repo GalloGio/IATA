@@ -23,7 +23,7 @@ public with sharing class ISSP_ANG_RHC {
 				SELECT Id 
 				  FROM Portal_Application_Right__c
 			     WHERE Contact__c = :this.contact.Id
-				   AND Right__c = 'Access Granted'
+				   AND Right__c = :AMS_Utils.PORTAL_APP_ACCESS_GRANTED
 				   AND Portal_Application__c = :service
 			];
 			return !appRightList.isEmpty();
@@ -40,7 +40,12 @@ public with sharing class ISSP_ANG_RHC {
 
 	private void initializeRemittanceFrequency() {
 		List<ANG_RHC_Information__c> remittanceFrequencyList = [
-			SELECT Id, ANG_RHC_Amount__c, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_Financial_Security__c
+			SELECT Id, 
+				   ANG_RHC_Amount__c, 
+				   ANG_ConsumedRHC__c, 
+				   ANG_ConsumedRHC_Percent__c, 
+				   ANG_ConsumedRHC_Last_Update__c, 
+				   ANG_Financial_Security__c
 			  FROM ANG_RHC_Information__c
 			 WHERE ANG_AccountId__c = :this.contact.Account.Id
 		];
