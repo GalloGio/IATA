@@ -1308,7 +1308,7 @@ public without sharing class ISSP_AMS_Accreditation {
             //system.debug('isDupeSAAMCase: ' + isDupeSAAMCase);
             try {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
-                if ((draftHQCaseExists && !isHOAccredited) || isDupeSAAMCase) {
+                if ((draftHQCaseExists) || isDupeSAAMCase) {
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
                     newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();                    
                     newCase.Case_Language__c = applyLanguage;
