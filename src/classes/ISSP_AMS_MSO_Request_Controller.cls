@@ -258,11 +258,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         delete msoAccount;
 
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
-        if (retURL == null) {
+        //if (retURL == null) {
             return new Pagereference('/ISSP_Homepage');
-        } else {
+        /*} else {
             return new Pagereference(retURL);
-        }
+        }*/
     }
 
     public void generateMsoIataCode (Id accountId, Id accreditationId, Id oscarId) {
