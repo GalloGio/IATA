@@ -76,21 +76,21 @@ private class ANG_RiskEventMigrationHelperTest {
 		Agency_Applied_Change_code__c cc1 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RCR,
-												PreviousReason__c = ''
+												PreviousReason__c = '50'
 												);
 		insert cc1;
 
 		Agency_Applied_Change_code__c cc2 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RCR,
-												PreviousReason__c = '54'
+												PreviousReason__c = '53'
 												);
 		insert cc2;
 
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
 
-		system.assertEquals(listRisks.size() , 3);
+		system.assertEquals(listRisks.size() , 1);
 
 	}
 
@@ -151,7 +151,9 @@ private class ANG_RiskEventMigrationHelperTest {
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
-		system.assertEquals(listRisks.size() , 1);
+
+		//creates 2 major changes because of major 1 rule
+		system.assertEquals(listRisks.size() , 2);
 
 	}
 
@@ -196,7 +198,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	}
 
-//--------maybe bullettin test needs to cantain black. check if fails
 	@isTest
 	public static void failFinancialSecurity2Test() {
 		Set<Account> setAccs = new set<Account>();
@@ -218,7 +219,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	}
 
-//------check previous code if fails
 	@isTest
 	public static void commonOwnershipDefaultTest() {
 		Set<Account> setAccs = new set<Account>();
@@ -227,13 +227,15 @@ private class ANG_RiskEventMigrationHelperTest {
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RCR
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RCR,
+												PreviousReason__c = '54'
 												);
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
 
-		system.assertEquals(listRisks.size() , 1);
+		//creates 2: common ownership and payment default
+		system.assertEquals(listRisks.size() , 2);
 
 	}
 
@@ -247,8 +249,7 @@ private class ANG_RiskEventMigrationHelperTest {
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
 												Reason_Code__c = '63',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION,
-												PreviousReason__c = '54'
+												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION
 												);
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
@@ -270,7 +271,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 		Case c = createCase();
 		insert c;
-
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
@@ -286,10 +286,9 @@ private class ANG_RiskEventMigrationHelperTest {
 												SIDRA_Case__c = c.id 
 												);
 		insert cc1;
-
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
-
+		
 		system.assertEquals(0, listRisks.size());
 	}
 
