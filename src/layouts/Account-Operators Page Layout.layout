@@ -168,6 +168,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EF_SIS_Code_Verified__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SIS_Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -399,6 +403,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IFG_Member__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

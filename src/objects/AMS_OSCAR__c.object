@@ -5524,10 +5524,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed (Closed)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </picklistValues>
@@ -11117,10 +11113,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
@@ -12992,10 +12984,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Closed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20260,6 +20248,30 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>Financial_Review_Result__c</errorDisplayField>
         <errorMessage>To change the Financial Review Result you need to provide a reason for the change in &quot;Reason for change of Financial result&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_validation_or_approval</fullName>
+        <active>true</active>
+        <description>If any new multi picklist values are added to the &quot;Type of change&quot; field from the OSCAR. This validation rule should be updated.</description>
+        <errorConditionFormula>AND(
+    AND(
+        NOT(ISNULL(Type_of_change__c)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Legal status&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Location&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;VMFR&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Name&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;))
+    ),
+    OR(
+        ISPICKVAL(Status__c, &quot;Pending Approval&quot;),
+        ISPICKVAL(Status__c, &quot;Pending Validation&quot;)
+    )
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>This type of change doesn&apos;t require validation or approval</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RPM_Approval_only_after_Validation</fullName>

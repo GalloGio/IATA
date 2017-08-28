@@ -15,6 +15,7 @@ private class Test_ISSP_PortalUserCreation {
         ctrl.LastName = 'Test';
         ctrl.accountId = acc.id;
         ctrl.emailAddress = 'iss.portal.test.class@Test.com';
+        con.FirstName = 'Name';
         con.Phone = '1234';
         ctrl.saveActiveContact();
         con = ctrl.con;

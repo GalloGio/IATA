@@ -1572,8 +1572,10 @@ public without sharing class ISSP_AMS_Accreditation {
             return 'Sole Proprietorship';
         } else if (companyType == 'T') {
             return 'Trust Company';
-        } else {
+        } else if (companyType == 'V') {
             return 'Co-operative';   
+        } else {
+            return '';
         }
     }
 
@@ -1904,7 +1906,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     contactSaved = false;
                 }
 
-                if (contactType == 'Current Owner' && (newContact.Agency_owner__c == true || newContact.Agency_role__c == true)  && (newContact.Time_devoted_to_Agency_business__c <= 0 || newContact.Time_devoted_to_Agency_business__c == null))  {
+                if (contactType == 'Current Owner' && (newContact.Agency_owner__c == true || newContact.Agency_role__c == true)  && (newContact.Time_devoted_to_Agency_business__c < 0 || newContact.Time_devoted_to_Agency_business__c == null))  {
                     myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted);
                     ApexPages.addMessage(myMsg);
                     contactSaved = false;
@@ -2187,6 +2189,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
                 accountUpdated = false;
             }
+            if (hqAccount.Email__c == null) {
+                hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }
+
             if (!accountUpdated)
                 return;
             if (!validateCharactersInAgencyWindow()) {
@@ -5253,6 +5260,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
+                    
+                    if (hqAccount.Email__c == null) {
+                        hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
                     if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null) {
                         newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
@@ -5452,6 +5465,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 ApexPages.Message myMsg;
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please add at least one facility (SECTION 5)');
                 ApexPages.addMessage(myMsg);
+                errorFound = true;
+            }
+
+            if (hqAccount.Email__c == null) {
+                hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
             
@@ -5846,7 +5864,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
 
         } else if (sector.StartsWith('Cargo Agent') && !isNoticeOfChange &&  (newForm.Agent_Type__c != 'IATA Cargo Agent' && newForm.Agent_Type__c != 'EACP Intermediary') && amsOfficeType == 'HO') {
+
             errorFound = validateCGOCASSAssociate(cntIFAPContacts, cntAuthorisedSig, cntCASSContact);
+            
+            if (hqAccount.Email__c == null) {
+                hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+            
         }
 
         //Finally need to check that Local Address fields are completed for China, for all forms (HO & BR)

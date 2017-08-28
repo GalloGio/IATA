@@ -227,7 +227,7 @@ private class ISSP_HomepageTest {
      
      public static testMethod void test_addNumberOfViews() {
      
-        Contact contact = new Contact(LastName='test');
+        Contact contact = new Contact(FirstName='Name', LastName='test');
         insert contact;
         Notification__c notification = new Notification__c(Contact__c=contact.Id);
         insert notification;
