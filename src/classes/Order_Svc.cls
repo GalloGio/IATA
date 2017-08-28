@@ -146,8 +146,10 @@ public without sharing class Order_Svc
                 //shipTo.Company              = Utility.truncate(ord.ShipToAccount_Name__c,35);
                 shipTo.Name                 = Utility.truncate(shipToLocation.Account_Name__c,35);
                 //shipTo.Name                 = Utility.truncate(ord.ShipToContact_Name__c,35);
-                shipTo.AddressLine1         = Utility.truncate(shipToLocation.Street__c,35);
-                shipTo.AddressLine2         = Utility.truncate(shipToLocation.Street__c,35,35);
+                //TC: Enhancement
+                List<String> addressLines 	= Utility.splitAddress(shipToLocation.Street__c, 35);
+                shipTo.AddressLine1         = addressLines[0];
+                shipTo.AddressLine2         = addressLines[1];
                 shipTo.City                 = Utility.truncate(shipToLocation.City__c,35);
                 shipTo.PostalCode           = Utility.truncate(shipToLocation.ZipCode__c,9);
                 //shipTo.Province             = Utility.truncate(shipToLocation.ISO_State_Code_SAP__c,3);
@@ -946,7 +948,7 @@ public without sharing class Order_Svc
 
         set<Id> orderIds = new set<Id>();
         set<String> paymentMethod = new set<String>();
-        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');
+        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');paymentMethod.add('Credit Card');
 
         //map of Order sold Id
         map<Id,Boolean> orderId_Sold = new map<Id,Boolean>();
