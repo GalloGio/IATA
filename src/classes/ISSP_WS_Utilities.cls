@@ -24,13 +24,17 @@ public without sharing class ISSP_WS_Utilities {
 		return con;
     }
 
-    public static User createUser(String firstName, String lastName, String email, String accountType, String contactId){
+    public static User createUser(String firstName, String lastName, String email, String accountType, String contactId, Boolean isCNS){
     	User u = new User();
         u.Username = ISSP_Utilities.buildPortalUserName(email);
         u.Email = email;
         u.FirstName = firstName;
         u.LastName = lastName;
+        if(isCNS){
+		u.Community__c = 'CNS';
+        }else{
         u.Community__c = 'ISSP';
+        }
         if (lastName.length() > 3)
             u.CommunityNickname = lastName.substring(0,3)+Datetime.now().formatLong();
         else
@@ -50,8 +54,6 @@ public without sharing class ISSP_WS_Utilities {
         u.contactId = contactId;
         u.timezonesidkey = 'Asia/Dubai';
         u.UID__c = Comm_User_Helper.NewGuid();
-		u.Community__c = 'ISSP';
-
         return u;
     }
 

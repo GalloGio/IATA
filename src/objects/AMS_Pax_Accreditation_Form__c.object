@@ -1154,7 +1154,7 @@
     <fields>
         <fullName>Branch_Office_Email__c</fullName>
         <externalId>false</externalId>
-        <label>Office Email</label>
+        <label>* Office Email</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -3438,7 +3438,8 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
 &apos;R&apos;, $Label.ISSP_AMS_LS_Limited_Partnership,
 &apos;T&apos;, $Label.ISSP_AMS_LS_Trust_Company,
 &apos;V&apos;, $Label.ISSP_AMS_LS_Co_operative,
-$Label.ISSP_AMS_LS_Sole_Owner)</formula>
+&apos;S&apos;, $Label.ISSP_AMS_LS_Sole_Owner,
+&apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Map Company Type of HO to Legal Status</inlineHelpText>
         <label>Current Legal Status</label>

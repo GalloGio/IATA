@@ -10,7 +10,7 @@
         </recipients>
         <senderAddress>ecommerce.notification@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Quote_PDF_notification_for_the_client</template>
+        <template>ECOM_Notification_Templates/Quote_PDF_notification_for_the_client</template>
     </alerts>
     <rules>
         <fullName>Notify the client when a new quote is created</fullName>

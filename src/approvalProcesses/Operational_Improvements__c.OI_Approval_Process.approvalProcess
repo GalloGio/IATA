@@ -11,12 +11,6 @@
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
-        <approvalActions>
-            <action>
-                <name>OI_Approved_by_RPM</name>
-                <type>Alert</type>
-            </action>
-        </approvalActions>
         <assignedApprover>
             <approver>
                 <type>adhoc</type>
@@ -29,13 +23,14 @@
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
-            <field>Operational_Improvements__c.Open_Date__c</field>
-            <operation>notEqual</operation>
+            <field>Operational_Improvements__c.Approval_process_selector__c</field>
+            <operation>equals</operation>
+            <value>OI Approval Process</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>OI_Approval_notification</name>
+            <name>OI_Approved_by_RPM</name>
             <type>Alert</type>
         </action>
         <action>
@@ -44,6 +39,16 @@
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>OI_Rejected_by_RPM</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Terminate_OI</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>

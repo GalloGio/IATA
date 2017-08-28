@@ -13,7 +13,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Airline__c</field>
             </layoutItems>
             <layoutItems>
@@ -27,6 +27,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSPLink_or_CASSLink_activation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AMS_GDP_Sort_By__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Previous_status_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Valid_Code_For_GDP_Replication__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
