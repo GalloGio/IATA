@@ -479,11 +479,12 @@ private class vfIECUserRegistrationTest {
             IECUtil.DomainValidation validation1 = IECUtil.validateContactEmailDomain(con.Email, account1.Id);
             system.assert(validation1 == IECUtil.DomainValidation.NOREGISTEREDDOMAIN, 'Email validation NOREGISTEREDDOMAIN');
 
-
+			Test.startTest();
             //Validate Email not matching a registered Email domain under the account
             IECUtil.DomainValidation validation2 = IECUtil.validateContactEmailDomain(con.Email, account2.Id);
             system.assert(validation2 == IECUtil.DomainValidation.NOTMATCHINGDOMAINS,  'Email validation NOTMATCHINGDOMAINS');
-
+			
+			Test.stopTest();
 
             //Validate Email not matching a registered Email domain under the account
             //IECUtil.DomainValidation validation3 = IECUtil.validateContactEmailDomain(con.Email, account3.Id);
