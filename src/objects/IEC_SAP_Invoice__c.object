@@ -1072,6 +1072,11 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <columns>Ready_for_SAP__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Sent to SAP</value>
+        </filters>
         <label>TD</label>
         <language>en_US</language>
     </listViews>
