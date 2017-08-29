@@ -51,6 +51,7 @@ public class SurveyBatchTest {
         insert a;
 
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -778,12 +779,12 @@ public class SurveyBatchTest {
             //List Contact
             List<Contact> cont = new List<Contact>();
 
-            Contact con =new contact(lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et1', HasOptedOutOfEmail = false);
-            Contact con2 =new contact(lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et2', HasOptedOutOfEmail = false);
-            Contact con3 =new contact(lastname = 'pluto', phone = '123', accountid = a3.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et3', HasOptedOutOfEmail = false);
-            Contact con4 =new contact(lastname = 'pluto',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et4',HasOptedOutOfEmail = false);
-            Contact con5 =new contact(lastname = 'pluto', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et5', HasOptedOutOfEmail = false);
-            Contact con6 =new contact(lastname = 'pluto', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
+            Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et1', HasOptedOutOfEmail = false);
+            Contact con2 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et2', HasOptedOutOfEmail = false);
+            Contact con3 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a3.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et3', HasOptedOutOfEmail = false);
+            Contact con4 =new contact(firstname = 'Name', lastname = 'pluto',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et4',HasOptedOutOfEmail = false);
+            Contact con5 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et5', HasOptedOutOfEmail = false);
+            Contact con6 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
 
             cont.add(con);
             cont.add(con2);
@@ -1023,7 +1024,7 @@ public class SurveyBatchTest {
         i=0;
         for(Account a : listAccount) {
            Contact con =new contact(
-                lastname = 'pluto' ,phone = '123',accountid = a.id,
+                firstname = 'Name', lastname = 'pluto' ,phone = '123',accountid = a.id,
                 Financial_Assessment_Contact__c = true,
                 email = 'asd.arg@wewt.et'+i,HasOptedOutOfEmail = false);
            contactList.add(con);

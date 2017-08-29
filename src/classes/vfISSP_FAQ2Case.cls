@@ -283,7 +283,7 @@ public without sharing class vfISSP_FAQ2Case
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
              
              String areaOfConcernStr='';
-             if (areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
+             if (isIFG && areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
                 areaOfConcernStr='\n'+Label.ISSP_Area_of_Concern+' - '+areaOfConcern+'\n';
              }
             
@@ -565,6 +565,7 @@ public without sharing class vfISSP_FAQ2Case
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
         }
+        newCase.Case_Language__c = null;
 
         system.debug('wwe newCase: ' + newCase );
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
@@ -652,6 +653,7 @@ public without sharing class vfISSP_FAQ2Case
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
         }
+        newCase.Case_Language__c = null;
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
             errorMessage = new list<string>();

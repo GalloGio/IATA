@@ -63,12 +63,14 @@
         <apex:inputField value="{!dummyCase.Open_TKT_System__c}" rendered="{!selectedType=='DEF Withdrawal'}"/>
         <apex:inputField value="{!dummyCase.Inform_Airlines_REI_DEFWD__c}" rendered="{!selectedType=='DEFWD'}"/>
         <apex:inputField value="{!dummyCase.Ticketing_Authority_Re_assigned__c}" rendered="{!selectedType=='DEFWD'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_REI_DEFWITH__c}" rendered="{!selectedType=='DEFWD'}"/>
 
         <apex:inputField value="{!dummyCase.Confirm_Reinstatement_to_AG__c}" rendered="{!selectedType=='REI'}"/>
         <apex:inputField value="{!dummyCase.Activate_Agent_in_Systems__c}" rendered="{!selectedType=='REI'}"/>
         <apex:inputField value="{!dummyCase.Open_TKT_System__c}" rendered="{!selectedType=='REI'}"/>
         <apex:inputField value="{!dummyCase.Inform_Airlines_REI_DEFWD__c}" rendered="{!selectedType=='REI'}"/>
         <apex:inputField value="{!dummyCase.Ticketing_Authority_Re_assigned__c}" rendered="{!selectedType=='REI'}"/>
+        <apex:inputField value="{!dummyCase.Update_AIMS_REI_DEFWITH__c}" rendered="{!selectedType=='REI'}"/>
 
         <apex:inputField value="{!dummyCase.NOT_Sent__c}" rendered="{!selectedType=='NOT'}"/>
 

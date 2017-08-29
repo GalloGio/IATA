@@ -168,7 +168,8 @@
     <apex:form >
     
     <apex:outputPanel id="warningInspPanelContainer" >
-        <apex:outputPanel id="warningInspPanel" rendered="{!OR (IF( ExistOscarInspections ,false, true),displayErrorMsg)}">
+        <!--<apex:outputPanel id="warningInspPanel" rendered="{!OR (IF( ExistOscarInspections ,false, true),displayErrorMsg)}">-->
+        <apex:outputPanel id="warningInspPanel">
             <apex:pageMessages ></apex:pageMessages>
        </apex:outputPanel>
     </apex:outputPanel>

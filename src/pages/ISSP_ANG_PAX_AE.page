@@ -690,7 +690,10 @@
           $j(".PostalArea").val($j(".PhysicalArea").val());
         }
       }
+      
     </script>
+    <c:MutationObserverPolyfill></c:MutationObserverPolyfill>
+
     <div class="container">
       <div id="contentWrapper">
         <c:ISSP_CustomNavigation />
@@ -878,7 +881,46 @@
                                 </div>
                               </apex:outputPanel>
                             </apex:pageBlockSectionItem>
-                            
+                            <!-- NEWGEN-1513 -->
+                            <apex:pageBlockSectionItem rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
+                              <apex:outputPanel >
+                                <div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:19px;">
+                                  <apex:outputText value="{!$ObjectType.Account.fields.Legal_name__c.Label}" />
+                                </div>
+                                <apex:outputPanel layout="none">
+                                  <div style="width:174.4px; float:left;">
+                                    <apex:outputField value="{!newForm.Account_Name__c}" style="width:174.4px" />
+                                  </div>
+                                </apex:outputPanel>
+                              </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem  rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
+                              <apex:outputPanel>
+                                <div class="label labelCol" style="margin-left: 118px; width: 173px;text-align: left;float: left;padding-left:9px;">
+                                  <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
+                                </div>
+                                <apex:outputPanel layout="none">
+                                  <div style="width:174.4px; float:left;">
+                                    <apex:outputField value="{!newForm.Trade_Name__c}" style="width:174.4px" />
+                                  </div>
+                                </apex:outputPanel>
+                              </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
+                              <apex:outputPanel >
+                                <div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:19px;">
+                                  <apex:outputText value="{!SUBSTITUTE($Label.ISSP_AMS_CGO_ReadOnly_LBL1, '* ', '')}" />
+                                </div>
+                                <apex:outputPanel layout="none">
+                                  <div style="width:174.4px; float:left;">
+                                    <apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px" />
+                                  </div>
+                                </apex:outputPanel>
+                              </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <!-- END NEWGEN-1513 -->
                             <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
 
                             <apex:pageBlockSectionItem rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">
@@ -1027,14 +1069,15 @@
                           </apex:pageBlockSection>
 
                           <apex:pageBlockSection columns="2">
-                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
                             </apex:outputtext>
-                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" />
-                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" />
-                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" />
+                            <apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"></apex:outputPanel>
+                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
                           </apex:pageBlockSection>
                         </apex:pageBlock>
                       </div>
@@ -1042,29 +1085,32 @@
                   </apex:pageblock>
                   <script>
                     $j( document ).ready(function() {
-                      const legalStatus = $j('[id$=LegalStatusLabel]')[0],
+                      var legalStatus = $j('[id$=LegalStatusLabel]')[0],
                          dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
                          licenseNo = $j('[for$=license-no]')[0],
                          tradeRegNo = $j('[for$=trade-reg-no]')[0],
                          dateLicenseGranted = $j('[for$=date-license-granted]')[0],
                          dateRegGranted = $j('[for$=date-reg-granted]')[0],
-                         //vatNumber = $j('[id$=vat-number]')[0],
                          officePhoneLabel = $j('[id$=office-phone-label]')[0],
                          labelBillStreet = $j('.address-label')[0].childNodes[0],
                          labelBillCity = $j('.address-label')[1].childNodes[0],
                          legalStatusLabel = $j('[for$=LegalStatus]')[0];
-                        
-                        dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
-                        licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
-                        tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
-                        dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
-                        dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
-                        officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
-                        //vatNumber.textContent = vatNumber.textContent + ' *';
-                        labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
-                        labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
-                        
-
+                        if(dateOpenedAsTravelAgency)
+                          dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
+                        if (licenseNo)
+                          licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
+                        if (tradeRegNo)
+                          tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
+                        if (dateLicenseGranted)
+                          dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
+                        if (dateRegGranted)
+                          dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
+                        if (officePhoneLabel)
+                          officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
+                        if (labelBillStreet)
+                          labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
+                        if (labelBillCity)
+                          labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
                       });
                   </script>
 
@@ -1283,17 +1329,18 @@
                   </div>
                   <script>
                    $j( document ).ready(function() {
-                      const prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
+                      var prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
                          prevDef = $j('[id$=previous-default-label]')[0];
-                      prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
-                      prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+                      if (prevDef) 
+                        prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+                      if (prevDefDetLabel) 
+                        prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
                     });
                   </script>
                   <!-- ****************************************************************************** -->
                   <!-- ************ SECTION 4 – Security of Electronic Tickets ********************** -->
                   <!-- ****************************************************************************** -->
 
-                  <span id="nav_five"></span>
                   <span id="nav_five"></span>
                   <apex:pageBlockSection id="sectionfive" collapsible="false" columns="1">
                     <apex:facet name="header">
@@ -1309,7 +1356,7 @@
                   
                   <apex:pageBlockSection >
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="{!$Label.ISSP_Credit_Card_Form}" />
+                      <apex:outputlabel value="* {!$Label.ISSP_Credit_Card_Form}" />
                       <apex:selectradio style="width:100px" value="{!newForm.Enable_Credit_Card_FOP__c}" styleclass="{!IF(AND(isValError, newForm.Enable_Credit_Card_FOP__c==null), 'requiredIndicator', '')}" id="creditCardForm">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                         <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
@@ -1334,28 +1381,30 @@
                   <span id="nav_six"></span>
                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                     <apex:facet name="header">
-                      <apex:outputpanel >
+                      <apex:outputpanel>
                         {!$Label.ISSP_AMS_Step3_5_Other_Info}
                       </apex:outputpanel>
                     </apex:facet>
 
-                    <apex:outputText rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
+                    <apex:outputText rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
                       <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
-                      <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
-                    </apex:outputText>         
-                    <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
-                      <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
-                      <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
-                    </apex:pageBlockSection> 
-
-                    <apex:pageblocksectionitem >
+                      <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    </apex:outputText>
+                  </apex:pageBlockSection>
+                  <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+                    <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                    <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                  </apex:pageBlockSection>
+                  <apex:pageBlockSection>
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
-                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
+                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
                       </apex:selectradio>
                     </apex:pageblocksectionitem>
                   </apex:pageBlockSection>
+
 
 
                   <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
@@ -1364,29 +1413,29 @@
                         <apex:outputLabel id="cargo-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
                         <apex:inputField id="iataCodeCargoInput" value="{!newForm.IATA_Cargo_Code__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="cargoagentdetails">
-                          <apex:actionStatus id="actCargoAgent" startStyleClass="bg-info">
-                            <apex:facet name="start">
-                              {!$Label.ISSP_Loading_Cargo_Agency_Details}
-                            </apex:facet>
-                          </apex:actionStatus>
-                            <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(cargoAgentAccount.Name=='', iatacode!='')}" />
-                            <apex:outputText escape="false" value="
-                                <strong>{!cargoAgentAccount.Name}</strong><br>
-                                {!cargoAgentAccount.BillingStreet}<br/>
-                                {!cargoAgentAccount.BillingCity} {!cargoAgentAccount.BillingPostalCode}<br/>
-                                {!cargoAgentAccount.BillingState}, {!cargoAgentAccount.BillingCountry}
-                            " />
-                        </apex:outputPanel>
+                      <apex:outputPanel id="cargoagentdetails">
+                        <apex:actionStatus id="actCargoAgent" startStyleClass="bg-info">
+                          <apex:facet name="start">
+                            {!$Label.ISSP_Loading_Cargo_Agency_Details}
+                          </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(cargoAgentAccount.Name=='', iatacode!='')}" />
+                        <apex:outputText escape="false" value="
+                                                <strong>{!cargoAgentAccount.Name}</strong><br>
+                                                {!cargoAgentAccount.BillingStreet}<br/>
+                                                {!cargoAgentAccount.BillingCity} {!cargoAgentAccount.BillingPostalCode}<br/>
+                                                {!cargoAgentAccount.BillingState}, {!cargoAgentAccount.BillingCountry}
+                                            " />
+                      </apex:outputPanel>
                     </apex:pageBlockSection>
                   </div>
-                  
-                  <apex:pageBlockSection >
-                    <apex:pageblocksectionitem >
+
+                  <apex:pageBlockSection>
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="is-agency-iatan-label" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
-                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
+                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
                       </apex:selectradio>
                     </apex:pageblocksectionitem>
                   </apex:pageBlockSection>
@@ -1396,25 +1445,25 @@
                         <apex:outputLabel id="iatan-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
                         <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchIATANAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="iatantravelagen">
-                          <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
-                            <apex:facet name="start">
-                              {!$Label.ISSP_Loading_IATAN_Agency_Details}
-                            </apex:facet>
-                          </apex:actionStatus>
-                          <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATAN_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(IATANAgentAccount.Name=='', iatacode!='')}" />
-                          <apex:outputText escape="false" value="
-                              <strong>{!IATANAgentAccount.Name}</strong><br>
-                              {!IATANAgentAccount.BillingStreet}<br/>
-                              {!IATANAgentAccount.BillingCity} {!IATANAgentAccount.BillingPostalCode}<br/>
-                              {!IATANAgentAccount.BillingState}, {!IATANAgentAccount.BillingCountry}" />
-                        </apex:outputPanel>
+                      <apex:outputPanel id="iatantravelagen">
+                        <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
+                          <apex:facet name="start">
+                            {!$Label.ISSP_Loading_IATAN_Agency_Details}
+                          </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATAN_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(IATANAgentAccount.Name=='', iatacode!='')}" />
+                        <apex:outputText escape="false" value="
+                                              <strong>{!IATANAgentAccount.Name}</strong><br>
+                                              {!IATANAgentAccount.BillingStreet}<br/>
+                                              {!IATANAgentAccount.BillingCity} {!IATANAgentAccount.BillingPostalCode}<br/>
+                                              {!IATANAgentAccount.BillingState}, {!IATANAgentAccount.BillingCountry}" />
+                      </apex:outputPanel>
                     </apex:pageBlockSection>
 
                   </div>
-                  
+
                   <apex:pageblocksection columns="1">
-                    <apex:pageblocksectionitem >
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
                       <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
@@ -1431,16 +1480,21 @@
               <script>
                 setPortalAdmin('{!$Component.PortalAdminId}');
                  $j( document ).ready(function() {
-                    const dgsLabel = $j('[id$=dgs-label]')[0],
+                    var dgsLabel = $j('[id$=dgs-label]')[0],
                        isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
                        iatanCode = $j('[id$=iatan-code-label]')[0],
                        isCargo = $j('[id$=is-cargo-label]')[0],
                        cargoCode = $j('[id$=cargo-code-label]')[0];
-                    dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
-                    isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
-                    iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *';
-                    isCargo.textContent = isCargo.textContent.replace('* ', '') + ' *';
-                    cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
+                    if (dgsLabel)
+                      dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
+                    if (isAgencyIatan)
+                      isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
+                    if (iatanCode)
+                      iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *';
+                    if (isCargo)
+                      isCargo.textContent = isCargo.textContent.replace('* ', '') + ' *';
+                    if (cargoCode)
+                      cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
                   });
               </script>
             </apex:form>
@@ -1952,7 +2006,7 @@
               <!--<script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>-->
               <script>
 
-                const target = $j('.statusBox #recordstatuscontainer')[0],
+                var target = $j('.statusBox #recordstatuscontainer')[0],
                   observer = new MutationObserver(function(mutations) {
                     $j('#div-verify-office-phone').html($j('.statusBox input')[0]);  
                   }),

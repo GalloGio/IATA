@@ -217,9 +217,9 @@ private class clsMassCaseCreationControllerTest {
         
         
             
-        Contact c1 = new Contact(LastName='Contact 1 OK', Email='cont1@test.com',  Financial_Assessment_Contact__c = true, AccountId=a1.id);
-        Contact c2 = new Contact(LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
-        Contact c3 = new Contact(LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
+        Contact c1 = new Contact(FirstName='Name', LastName='Contact 1 OK', Email='cont1@test.com',  Financial_Assessment_Contact__c = true, AccountId=a1.id);
+        Contact c2 = new Contact(FirstName='Name', LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
+        Contact c3 = new Contact(FirstName='Name', LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
         insert new List<Contact>{c1,c2,c3};
 
      

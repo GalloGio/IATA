@@ -11,15 +11,17 @@ public class ANG_RHCInformationTriggerHandler{
 	// ************************************************************
 	
 	public void onBeforeInsert(){
+		convertAndSumFS();
 	}
 	public void onAfterInsert(){
-		recalculateConvertedAmount();
+
 	}
 
 	public void onBeforeUpdate(){
+		 convertAndSumFS();
 	}
 	public void onAfterUpdate(){
-		recalculateConvertedAmount();
+		
 	}
 
 	public void onBeforeDelete(){}
@@ -29,20 +31,29 @@ public class ANG_RHCInformationTriggerHandler{
 	// ********************* action methods ***********************
 	// ************************************************************
 
-	private void recalculateConvertedAmount(){
-		set<id> accIdSet = new set<id>();
-		
+
+	private void convertAndSumFS(){
+		set<id> accIdSet = new set<id>();		
+		map<id,ANG_RHC_Information__c> accRhcMap = new map<id,ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhc:triggerNew){
-			if(Trigger.isInsert || (Trigger.isUpdate &&(rhc.currencyIsoCode != oldMap.get(rhc.id).CurrencyIsoCode)))	accIdSet.add(rhc.ANG_AccountId__c);
+			accIdSet.add(rhc.ANG_AccountId__c);
+			accRhcMap.put(rhc.ANG_AccountId__c,rhc);
 		}
+
 		if(!accIdSet.isEmpty()){
-			list<Financial_Security__c> fsList= Database.query('select account__C,amount__c,CurrencyIsoCode,ANG_ConvertedAmount__c from Financial_Security__c where account__C in:accIdSet');
-			
+			Map<id,list<Financial_Security__c>> accFSmap =new map<id,list<Financial_Security__c>>();
+			for(account acc:[SELECT Id, (SELECT Id, amount__c,CurrencyIsoCode,Security_Status__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accIdSet]){
+				accFSmap.put(acc.id,acc.Financial_Securities__r);
+			}
+			list<Financial_Security__c> fsList= new list<Financial_Security__c>();
+			for(id accid :accFSmap.KeySet()){
+				ANG_Risk_Helper.convertFSAmountToTargetCur(accFSmap.get(accid),accRhcMap.get(accid).CurrencyIsoCode);
+				accRhcMap.get(accid).ANG_Financial_Security__c =ANG_Risk_Helper.sumFSConvertedAmounts(accFSmap.get(accid));
+				fsList.addAll(accFSmap.get(accid));
+			}
 			if(!fsList.isEmpty()){
-				ANG_Risk_Helper.convertFSAmount(fsList,accIdSet);
 				update fsList;
 			}
 		}
-	}
-
+	}	
 }
