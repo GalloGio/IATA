@@ -144,9 +144,8 @@ public with sharing class AMS_XML_Generator {
 
         //Agency Section
         
-        //Changed on AMSU-97
-        //Date dToday = Date.today();
-        //Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
+        Date dToday = Date.today();
+        Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
 
         //Get 1st and last day of month - AMSU-97
         Date dFirstDayOfMonth = Date.today().toStartOfMonth();
