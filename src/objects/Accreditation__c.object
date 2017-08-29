@@ -73,7 +73,7 @@
         <label>AMS_GDP_Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -163,7 +163,7 @@
         <externalId>false</externalId>
         <label>Last re-inspection date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -185,7 +185,7 @@
         <relationshipLabel>Accreditation</relationshipLabel>
         <relationshipName>Accreditation</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
