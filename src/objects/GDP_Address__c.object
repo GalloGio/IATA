@@ -73,7 +73,7 @@
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -283,7 +283,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <label>Address Type Uniqueness Validation</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -336,7 +336,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -360,7 +360,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <precision>2</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -399,7 +399,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -487,7 +487,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <nameField>
         <displayFormat>A-{00000}</displayFormat>
         <label>GDP Address Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP Addresses</pluralLabel>
