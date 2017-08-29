@@ -178,7 +178,9 @@ public class ANG_AccountTriggerHandler {
 			c.Region__c = acc.Region_formula__c;
 			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
 			c.ContactId = contacts.get(acc.Id);
-			c.OwnerId = objects.get(acc.Id).oscar.OwnerId;
+
+			String oscarOwner = objects.get(acc.Id).oscar.OwnerId;
+			if(!String.isEmpty(oscarOwner)) c.OwnerId = oscarOwner;
 
 			cases.add(c);
 			objects.get(acc.Id).commCase = c;
