@@ -1,8 +1,10 @@
-global class clsMassEmailReminderBatch implements Database.Batchable<sObject>{
+global class clsMassEmailReminderBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts{
 	global List<Case> caseList = new List<Case>();
 	global String emailTemplate;
 	global String type;
-
+	global Boolean trackedEmail;
+	global List<Tracked_Email__c> trackedEmails = new List<Tracked_Email__c>();
+    
 	global List<Case> start(Database.BatchableContext BC){
 		return caseList;
 	}
@@ -13,15 +15,26 @@ global class clsMassEmailReminderBatch implements Database.Batchable<sObject>{
 		try{
 			for(Case c : scope){
 				System.debug('*** type '+ type);
-				//c.EmailTemplate__c = emailTemplate;
+                
 				if (type == 'FA - Financial Assessment'){
 					System.debug('*** FA');
 
 					c.Reminder_EmailTemplate__c = emailTemplate;
-					c.Mass_Email_Send__c = true;
-
+					if(!trackedEmail){
+						c.Mass_Email_Send__c = true;
+					}
 					System.debug('** reminder temp' + c.Reminder_EmailTemplate__c);
-				}else if(type == 'SCF - Sanity Check Failure'){
+				}
+				else if(type == 'FS - Financial Security'){
+					System.debug('*** FS');
+
+					c.FS_Reminder_EmailTemplate__c = emailTemplate;
+					if(!trackedEmail){
+						c.FS_Mass_Email_Send__c = true;
+					}
+					System.debug('** reminder temp' + c.FS_Reminder_EmailTemplate__c);
+				}
+				else if(type == 'SCF - Sanity Check Failure'){
 					c.SCF_Reminder_Template__c = emailTemplate;
 					c.SCF_Letter_Sent__c = true;
 				}
@@ -31,9 +44,22 @@ global class clsMassEmailReminderBatch implements Database.Batchable<sObject>{
 
 			if(!casesToUpdate.isEmpty())
 				Update casesToUpdate;
-		}
-		catch(Exception e){}
-	}
+                
+            if(trackedEmail){
+				String templateDeveloperName = type == 'FA - Financial Assessment' ? 'IFAP_FA_Reminder' : 'IFAP_FS_Reminder';
+				
+				trackedEmails.addAll(SignaturitUtils.createTrackedEmails(scope, templateDeveloperName, 'IATA Financial Review', 'noreply.ifap@iata.org', null));
+            }
+        }
+        catch(Exception ex){
+        	System.debug('error'+ ex.getMessage());
+        }
+    }
+    
 
-	global void finish(Database.BatchableContext BC){}
+    global void finish(Database.BatchableContext BC){
+    	if(!trackedEmails.isEmpty()){
+			SignaturitUtils.sendTrackedEmails(trackedEmails);
+		}
+    }
 }

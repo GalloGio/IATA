@@ -1,0 +1,29 @@
+<messaging:emailTemplate subject="{!relatedTo.EmailTemplate__r.Subject__c} Case Number: {!relatedTo.CaseNumber} {!relatedTo.Case_Thread_ID__c}" recipientType="Contact" relatedToType="Case" >
+
+<messaging:htmlEmailBody >
+<html>
+<body>
+<font face="Times New Roman">
+<table>
+<tr align ="center"><td align="center"><apex:image url="https://iata.my.salesforce.com/servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+<tr><td><c:VFEmailTemplate caseId="{!relatedTo.Id}" templateName="IFAP"/></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+<tr><td><apex:outputText escape="false" value="{!relatedTo.Case_Thread_ID__c}" ></apex:outputText></td></tr>
+</table>
+</font>
+</body>
+</html>
+</messaging:htmlEmailBody>
+
+</messaging:emailTemplate>
