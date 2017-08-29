@@ -68,7 +68,7 @@
         <label>AIMS ID</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -79,7 +79,7 @@
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -751,7 +751,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
