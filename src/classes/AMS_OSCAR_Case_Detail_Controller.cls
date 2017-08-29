@@ -220,7 +220,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 // for New AE, remittance frequency is populated from the Parent Account and picklist values are restricted to the value of the parent
                 }else if(oscarObj.Process__c == AMS_Utils.NEWAE) {
 
-                    rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c));                 
+                    if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
+                        rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c));                 
                   
                 // only populate with BSP attributes of operation codes related with the current account
                 }else if(oscarObj.Process__c == AMS_Utils.NGCHANGES && tocList.contains(AMS_Utils.ANG_VMFR)) {
