@@ -470,8 +470,12 @@ global class AMS_OSCAR_Webservice {
 
         try{
 
-            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId from AMS_OSCAR__c where Id =: oscarId];
+
             if(oscar!=null && oscar.size()>0){
+
+                if((oscar[0].Process__c == AMS_Utils.NEWHESTANDARD || oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES) && oscar[0].RPM_Approval__c != 'Authorize Approval')
+                    return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
                 oscar[0].Risk_event_creation_date__c = System.today();
                 oscar[0].STEP36__c = 'Passed';

@@ -22,6 +22,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
 
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -82,7 +83,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
                 //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
+            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE)){
                 if(!createHierarchy(realAccountId, typeOfProcess)){
                     Database.rollback(sp);
                     throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
@@ -127,7 +128,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
 
-        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV)))
+        if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
             return accountId;
 
         List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
@@ -214,7 +215,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id);
+        Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE);
+
+        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
 
         insert relationship;
 
@@ -479,16 +482,16 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(account == null)
             throw new CalloutException('Account could not be found.');
 
-		List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
+        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
 
         if(containsTradeName(accountChanges)){
                   
             changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
-			if(accountActiveChangeCode.size() > 0){
-					changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-					changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
-			}
+            if(accountActiveChangeCode.size() > 0){
+                    changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+            }
 
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCodeTN);
@@ -501,10 +504,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             changeCode = generateChangeCode(accountChanges);
             
-			if(accountActiveChangeCode.size() > 0){
-					changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-					changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
-			}
+            if(accountActiveChangeCode.size() > 0){
+                    changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+            }
             
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCode);

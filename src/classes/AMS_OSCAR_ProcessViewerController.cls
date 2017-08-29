@@ -35,7 +35,7 @@ public class AMS_OSCAR_ProcessViewerController {
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
-
+                && (!(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES))
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -95,12 +95,6 @@ public class AMS_OSCAR_ProcessViewerController {
                 && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED
                 ||oscar.STEP25__c == AMS_Utils.PASSED || oscar.STEP25__c == AMS_Utils.FAILED)
             );
-        }
-    }
-
-    public boolean isNewgenRT{
-        get{
-            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
         }
     }
 
