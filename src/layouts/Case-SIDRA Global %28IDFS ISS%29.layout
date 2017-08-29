@@ -611,7 +611,7 @@
                 <field>Issue_Declaration_of_Default_to_Agent__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>GDS_Confirm_TKT_System_Shut_Down__c</field>
             </layoutItems>
             <layoutItems>
