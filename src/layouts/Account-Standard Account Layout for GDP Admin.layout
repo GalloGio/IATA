@@ -600,6 +600,7 @@
         <fields>SALES.ACCOUNT.NAME</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <fields>ORDERS.CREATED_DATE</fields>
         <relatedList>Order.BillToAccount__c</relatedList>
     </relatedLists>
     <relatedLists>

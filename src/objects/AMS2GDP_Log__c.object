@@ -101,7 +101,8 @@
         <columns>NAME</columns>
         <columns>Job_Name__c</columns>
         <columns>Message__c</columns>
-        <columns>CREATED_DATE</columns>
+        <columns>AMS_Record_Id__c</columns>
+        <columns>GDP_Record_Id__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All Logs with Details</label>
