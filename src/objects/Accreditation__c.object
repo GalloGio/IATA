@@ -235,7 +235,21 @@
         <columns>Date__c</columns>
         <columns>Status__c</columns>
         <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>AMS_GDP_Key__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Accreditation__c.Live</value>
+        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
