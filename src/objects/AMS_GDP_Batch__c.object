@@ -120,9 +120,11 @@
         <columns>Batch_Name__c</columns>
         <columns>Total_Records_Processed__c</columns>
         <columns>Total_Failed_Records__c</columns>
+        <columns>Failed_Records__c</columns>
         <columns>Last_Sync_Start_Date__c</columns>
         <columns>Last_Sync_End_Date__c</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <label>All Batches with Details</label>
         <language>en_US</language>

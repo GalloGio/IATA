@@ -20,6 +20,8 @@ public without sharing class ISSP_WS_Utilities {
         if(isCNS) {
             con.CNS_Contact__c = true;
             con.Community__c = 'CNS Customer Portal';
+        }else{
+        	con.Community__c = 'ISS Customer Portal';
         }
 		return con;
     }
