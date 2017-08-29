@@ -60,7 +60,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ANG_Consumed_RHC_Date__c</field>
+                <field>ANG_ConsumedRHC_Last_Update__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

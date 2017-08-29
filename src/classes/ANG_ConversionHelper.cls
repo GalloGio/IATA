@@ -451,8 +451,8 @@ global with sharing class ANG_ConversionHelper {
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		ANG_RiskEventMigrationHelper reHelper = new ANG_RiskEventMigrationHelper(accountsToUpdate);
-		reHelper.convertChangeCodesToRiskEvents();
 		update new List<Account>(accountsToUpdate);
+		insert reHelper.convertChangeCodesToRiskEvents();
 
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
