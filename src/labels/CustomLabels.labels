@@ -8933,6 +8933,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Country concerned: You must enter a value</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Legal_Status</shortDescription>
+        <value>Legal Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
         <language>en_US</language>
         <protected>false</protected>
