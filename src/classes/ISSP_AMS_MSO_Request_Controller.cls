@@ -189,7 +189,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
                 oscarCase.Subject = 'New MSO - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
-                oscarCase.Reason1__c = 'New MSO';
+                oscarCase.Reason1__c = 'GSA / MSO / Handling Agent';
                 oscarCase.Origin = 'Portal';
                 oscarCase.Type_of_customer__c = 'IATA Travel Agent';
                 oscarCase.OSCAR__c = oscar.Id;
