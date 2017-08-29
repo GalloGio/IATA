@@ -7,7 +7,7 @@ global class AMS_2_MDM_Webservice {
         List<String> result = new List<String>();
 
         //List<AMS_Agency_Updates__c> agencyUpdates = [select Agency__c from AMS_Agency_Updates__c where Update_Type__c = 'Update' AND Agency__c != null]; - #AMSFTS
-        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null];
+        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null AND Integration_System__c = 'SAP PI'];
         
         for(AMS_Agency_Updates__c au :agencyUpdates){
             result.add(au.Account__c);

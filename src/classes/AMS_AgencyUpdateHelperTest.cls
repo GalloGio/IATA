@@ -221,7 +221,7 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(a4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             //System.assertEquals('Update', au.Update_Type__c);
@@ -483,7 +483,7 @@ public class AMS_AgencyUpdateHelperTest {
         a1.Name='Update Agency 1';
         update a1;
         
-        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
 
         Test.startTest();
         agencyUpdate.Update_Type__c = 'Update_Sent';

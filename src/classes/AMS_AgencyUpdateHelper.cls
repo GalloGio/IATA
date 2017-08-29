@@ -75,7 +75,7 @@ public without sharing class AMS_AgencyUpdateHelper {
 
         List<Account> aulist = [select id,  Name, IATACode__c,BillingStreet,IATA_ISO_Country__c,BillingCity,BillingPostalCode,
                                             Top_Parent__c,Location_Type__c,Status__c,CASS_Number__c,Check_Digit__c,Location_Class__c,
-                (select id,Update_Type__c,Change_Code__c,Account__c from AMS_Agency_Updates__r), 
+                (select id,Update_Type__c,Change_Code__c,Account__c from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' ), 
                 (SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c,For_Integration__c from Agencies_Applied_Change_codes__r WHERE Change_Code__c != null AND For_Integration__c = true)
                 from Account where id in :agencyIds];
 
@@ -355,7 +355,7 @@ System.debug('au3: ' + au3);
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(toCreate);
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
             
-            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreate, Update_Type__c = 'Update', Change_Code__c = sChangeCode);
+            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreate, Update_Type__c = 'Update', Change_Code__c = sChangeCode,Integration_System__c='SAP PI');
             agencyUpdateToInsert.add(aux);
         }
 
@@ -366,7 +366,7 @@ System.debug('au3: ' + au3);
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(toCreateInvalid);
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
             
-            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreateInvalid, Update_Type__c = 'Invalid', Change_Code__c = sChangeCode);
+            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreateInvalid, Update_Type__c = 'Invalid', Change_Code__c = sChangeCode,Integration_System__c='SAP PI');
             invalidAgencyUpdateToInsert.add(aux);
         }
  
