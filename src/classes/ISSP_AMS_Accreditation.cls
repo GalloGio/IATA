@@ -5820,7 +5820,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
-                    if (CountryCheckList.Statement_of_International_Sales__c && newForm.International_Sales_in_last_Year__c == null) {
+                    if (CountryCheckList.Statement_of_International_Sales__c && newForm.International_Sales_in_last_Year__c == null && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
                         newForm.International_Sales_in_last_Year__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
