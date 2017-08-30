@@ -23886,7 +23886,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Endpoint</shortDescription>
-        <value>https://api.signaturit.com/v2/</value>
+        <value>https://api.signaturit.com/v3/</value>
     </labels>
     <labels>
         <fullName>SiteTitle</fullName>
