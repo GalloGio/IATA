@@ -4773,7 +4773,7 @@
         <fullName>DPC_Update_case_area</fullName>
         <description>Update the case area for global data update case origin (DPC Process)</description>
         <field>CaseArea__c</field>
-        <literalValue>DPCM â€“ Global data Update Request</literalValue>
+        <literalValue>DPCM – Global data Update Request</literalValue>
         <name>DPC - Update case area</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -4949,7 +4949,7 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Escalate_to_DPC</fullName>
-        <description>Update â€˜Escalate to DPCâ€™ is â€œcheckedâ€, when ACCA Customer Service Request (External) or  ACCA Customer Service Request (Internal) is created.</description>
+        <description>Update ‘Escalate to DPC’ is “checked”, when ACCA Customer Service Request (External) or  ACCA Customer Service Request (Internal) is created.</description>
         <field>Escalate_to_ACCA__c</field>
         <literalValue>1</literalValue>
         <name>Escalate to DPC_Checked</name>
@@ -5426,8 +5426,8 @@ IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c 
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IFAP_FA_Letter_Sent_Status_change</fullName>
-        <description>if  â€œ FA Letter Sentâ€ is checked
-Change the case status to â€œAgent Notified (mail)â€ if case status was â€œAgent to be Notifiedâ€.</description>
+        <description>if  “ FA Letter Sent” is checked
+Change the case status to “Agent Notified (mail)” if case status was “Agent to be Notified”.</description>
         <field>Status</field>
         <literalValue>Agent Notified (Mail)</literalValue>
         <name>IFAP FA Letter Sent Status change</name>
@@ -5437,7 +5437,7 @@ Change the case status to â€œAgent Notified (mail)â€ if case status was
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IFAP_FS_Validation_Case_change1</fullName>
-        <description>If all checkbox are selected and FS Submitted Date is entered, change the status to â€œFinancial Security Providedâ€ on save</description>
+        <description>If all checkbox are selected and FS Submitted Date is entered, change the status to “Financial Security Provided” on save</description>
         <field>Status</field>
         <literalValue>Financial Security Provided</literalValue>
         <name>IFAP FS Validation Case change1</name>
@@ -5447,7 +5447,7 @@ Change the case status to â€œAgent Notified (mail)â€ if case status was
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IFAP_FS_Validation_Case_change2</fullName>
-        <description>If checkbox were selected and are unselected change the status back to â€œFinancial Security requestedâ€.</description>
+        <description>If checkbox were selected and are unselected change the status back to “Financial Security requested”.</description>
         <field>Status</field>
         <literalValue>Financial Security Requested</literalValue>
         <name>IFAP FS Validation Case change2</name>
@@ -8254,17 +8254,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Description</field>
             <operation>contains</operation>
-            <value>&quot;CÃ³digo IATA (nÃºmeros solamente; sin espacios, comas, guiones ni caracteres especiales)&quot;</value>
+            <value>&quot;Código IATA (números solamente; sin espacios, comas, guiones ni caracteres especiales)&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Description</field>
             <operation>contains</operation>
-            <value>&quot;CÃ³digo IATA (somente nÃºmeros; sem espaÃ§os, vÃ­rgulas, barras, ou caracteres especiais)&quot;</value>
+            <value>&quot;Código IATA (somente números; sem espaços, vírgulas, barras, ou caracteres especiais)&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Description</field>
             <operation>contains</operation>
-            <value>&quot;code IATA (chiffres uniquement; sans espace, virgule, tiret ou caractÃ¨res spÃ©ciaux)&quot;</value>
+            <value>&quot;code IATA (chiffres uniquement; sans espace, virgule, tiret ou caractères spéciaux)&quot;</value>
         </criteriaItems>
         <description>Change Case Origin from email2case to WEB</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8331,7 +8331,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8360,7 +8360,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8419,7 +8419,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8468,7 +8468,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>notEqual</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),CÃ´te d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
+            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),Côte d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -8493,7 +8493,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8542,7 +8542,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8571,7 +8571,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8605,7 +8605,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),CÃ´te d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
+            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contact.Email</field>
@@ -8620,7 +8620,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8649,7 +8649,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8698,7 +8698,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8727,7 +8727,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8776,7 +8776,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8805,7 +8805,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8854,7 +8854,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8883,7 +8883,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -8932,7 +8932,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -8961,7 +8961,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9010,7 +9010,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9039,7 +9039,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9088,7 +9088,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9117,7 +9117,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9166,7 +9166,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9195,7 +9195,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9244,7 +9244,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9273,7 +9273,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9322,7 +9322,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9351,7 +9351,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9400,7 +9400,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9429,7 +9429,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9478,7 +9478,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9507,7 +9507,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9556,7 +9556,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV â€“ New Code</value>
+            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -9585,7 +9585,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9650,7 +9650,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
-            <value>Ãngel PeÃ±a,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Airline participation processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -9779,7 +9779,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
             <operation>notEqual</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,CÃ´te d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
+            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -9915,7 +9915,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
             <operation>equals</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,CÃ´te d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
+            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10687,7 +10687,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <rules>
         <fullName>Clicktools Workflow_ENGLISH_2</fullName>
         <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),  Case_Group__c = &quot;Query&quot;,  ISPICKVAL(BSPCountry__c,&quot;Mongolia&quot;), ISPICKVAL(BSPCountry__c,&quot;Chinese Taipei&quot;), ISPICKVAL(BSPCountry__c,&quot;Hong Kong (SAR), China&quot;) ),  AND(  OR(  CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;),  CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;)  ),  ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;),  Case_Group__c = &quot;Query&quot;,  AND(  NOT(ISPICKVAL(BSPCountry__c,&quot;Benin&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;CÃ´te d&apos;Ivoire&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mali&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Niger&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Togo&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;))  )  )  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  )  )</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),  Case_Group__c = &quot;Query&quot;,  ISPICKVAL(BSPCountry__c,&quot;Mongolia&quot;), ISPICKVAL(BSPCountry__c,&quot;Chinese Taipei&quot;), ISPICKVAL(BSPCountry__c,&quot;Hong Kong (SAR), China&quot;) ),  AND(  OR(  CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;),  CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;)  ),  ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;),  Case_Group__c = &quot;Query&quot;,  AND(  NOT(ISPICKVAL(BSPCountry__c,&quot;Benin&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mali&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Niger&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Togo&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;))  )  )  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  )  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -10746,7 +10746,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <rules>
         <fullName>Clicktools Workflow_FRENCH</fullName>
         <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), OR(  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;France&quot;)  ), AND( OR( CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;), CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;) ), ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;), Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Benin&quot;), ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;), ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;), ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;), ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;), ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;), ISPICKVAL(BSPCountry__c,&quot;CÃ´te d&apos;Ivoire&quot;), ISPICKVAL(BSPCountry__c,&quot;Mali&quot;), ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;), ISPICKVAL(BSPCountry__c,&quot;Niger&quot;), ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;), ISPICKVAL(BSPCountry__c,&quot;Togo&quot;), ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;), ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;), ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;)) ) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), OR(  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;France&quot;)  ), AND( OR( CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;), CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;) ), ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;), Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Benin&quot;), ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;), ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;), ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;), ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;), ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;), ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;), ISPICKVAL(BSPCountry__c,&quot;Mali&quot;), ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;), ISPICKVAL(BSPCountry__c,&quot;Niger&quot;), ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;), ISPICKVAL(BSPCountry__c,&quot;Togo&quot;), ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;), ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;), ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;)) ) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11841,7 +11841,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Create Bank Account</value>
+            <value>ICCS – Create Bank Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Do_Not_Send_Notification__c</field>
@@ -11863,7 +11863,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Creation Cases when the required form has been received / validated, and the Bank Account code populated.</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS â€“ Create Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
+        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS – Create Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11886,7 +11886,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Delete Bank Account</value>
+            <value>ICCS – Delete Bank Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Do_Not_Send_Notification__c</field>
@@ -11908,7 +11908,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Delete Cases when the required form has been received / validated, and the Bank Account code populated.</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;, ISPICKVAL(CaseArea__c, &apos;ICCS â€“ Delete Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
+        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;, ISPICKVAL(CaseArea__c, &apos;ICCS – Delete Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11931,7 +11931,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Update Bank Account</value>
+            <value>ICCS – Update Bank Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Do_Not_Send_Notification__c</field>
@@ -11953,7 +11953,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Update Cases when the required form has been received / validated, and the Bank Account code populated.</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS â€“ Update Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
+        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS – Update Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11971,7 +11971,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Delete Bank Account,ICCS â€“ Update Bank Account,ICCS â€“ Assign Product,ICCS â€“ Remove Product,ICCS â€“ Update Payment Instructions</value>
+            <value>ICCS – Delete Bank Account,ICCS – Update Bank Account,ICCS – Assign Product,ICCS – Remove Product,ICCS – Update Payment Instructions</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Do_Not_Send_Notification__c</field>
@@ -14273,8 +14273,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>Agent to be Notified</value>
         </criteriaItems>
-        <description>If â€œFA Letter Sentâ€ is checked 
-Change the case status to â€œAgent Notified (mail)â€ if case status was â€œAgent to be Notifiedâ€.</description>
+        <description>If “FA Letter Sent” is checked 
+Change the case status to “Agent Notified (mail)” if case status was “Agent to be Notified”.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14382,7 +14382,7 @@ Change the case status to â€œAgent Notified (mail)â€ if case status was
             <operation>equals</operation>
             <value>Financial Security Rejected</value>
         </criteriaItems>
-        <description>If all checkbox are selected and FS Submitted Date is entered, change the status to â€œFinancial Security Providedâ€ on save</description>
+        <description>If all checkbox are selected and FS Submitted Date is entered, change the status to “Financial Security Provided” on save</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14770,12 +14770,12 @@ Change the case status to â€œAgent Notified (mail)â€ if case status was
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>,CHC â€“ Change of Shareholding,CHG â€“ Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
+            <value>,CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV â€“ New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite,New SA</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite,New SA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -14856,12 +14856,12 @@ Change the case status to â€œAgent Notified (mail)â€ if case status was
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>CHC â€“ Change of Shareholding,CHG â€“ Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS â€“ Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV â€“ New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -15389,7 +15389,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>,E-mail to Case - China,E-mail to Case - TaÃ¯wan,E-mail to Case - C&amp;NA Agency Mgmt,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia,E-mail to Case - C&amp;NA Customer Service,E-mail to Case - C&amp;NA Dev. &amp; Perf.,E-mail to Case - C&amp;NA Operational Mgmt</value>
+            <value>,E-mail to Case - China,E-mail to Case - Taïwan,E-mail to Case - C&amp;NA Agency Mgmt,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia,E-mail to Case - C&amp;NA Customer Service,E-mail to Case - C&amp;NA Dev. &amp; Perf.,E-mail to Case - C&amp;NA Operational Mgmt</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15414,7 +15414,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Email to Case â€“ ASD Support</value>
+            <value>Email to Case – ASD Support</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15479,7 +15479,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Create Bank Account</value>
+            <value>ICCS – Create Bank Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Documentation_Complete__c</field>
@@ -15561,7 +15561,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
-            <value>ICCS â€“ Create Bank Account</value>
+            <value>ICCS – Create Bank Account</value>
         </criteriaItems>
         <description>Send a notification to the Contact when an FDS ICCS Bank Account Management Case with a &quot;Create&quot; case area has been opened</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16975,7 +16975,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,RÃ©union,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,CÃ´te d&apos;Ivoire,Zimbabwe</value>
+            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,Réunion,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,Côte d&apos;Ivoire,Zimbabwe</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -17005,7 +17005,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Panama,Montserrat,Paraguay,Ecuador,Guatemala,Suriname,Nicaragua,Jamaica,CuraÃ§ao,Guyana,Haiti,Saint Lucia,Grenada,Mexico,El Salvador,Honduras,Peru,St. Kitts and Nevis,St. Vincent and the Grenadines</value>
+            <value>Panama,Montserrat,Paraguay,Ecuador,Guatemala,Suriname,Nicaragua,Jamaica,Curaçao,Guyana,Haiti,Saint Lucia,Grenada,Mexico,El Salvador,Honduras,Peru,St. Kitts and Nevis,St. Vincent and the Grenadines</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18036,7 +18036,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Afghanistan,Algeria,Angola,Bahrain,Benin,Botswana,Burkina Faso,Burundi,Cameroon,Cape Verde,Central African Republic,Comoros,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),CÃ´te d&apos;Ivoire,Djibouti,Egypt,Equatorial Guinea</value>
+            <value>Afghanistan,Algeria,Angola,Bahrain,Benin,Botswana,Burkina Faso,Burundi,Cameroon,Cape Verde,Central African Republic,Comoros,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),Côte d&apos;Ivoire,Djibouti,Egypt,Equatorial Guinea</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18091,7 +18091,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>E-mail to Case - C&amp;NA Agency Mgmt,E-mail to Case - C&amp;NA Customer Service,E-mail to Case - C&amp;NA Operational Mgmt,E-mail to Case - China,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia,E-mail to Case - TaÃ¯wan</value>
+            <value>E-mail to Case - C&amp;NA Agency Mgmt,E-mail to Case - C&amp;NA Customer Service,E-mail to Case - C&amp;NA Operational Mgmt,E-mail to Case - China,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia,E-mail to Case - Taïwan</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -18136,7 +18136,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,RÃ©union,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,CÃ´te d&apos;Ivoire,Zimbabwe</value>
+            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,Réunion,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,Côte d&apos;Ivoire,Zimbabwe</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18171,7 +18171,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Panama,Paraguay,Montserrat,Ecuador,Curacao,Guatemala,Nicaragua,Jamaica,CuraÃ§ao,Guyana,Haiti,Mexico,Honduras,El Salvador,Dominican Republic,Peru,Dominica</value>
+            <value>Panama,Paraguay,Montserrat,Ecuador,Curacao,Guatemala,Nicaragua,Jamaica,Curaçao,Guyana,Haiti,Mexico,Honduras,El Salvador,Dominican Republic,Peru,Dominica</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18252,7 +18252,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>&quot;Hong Kong (SAR), China&quot;,&quot;Korea, Democratic Peopleâ€™s Republic of&quot;,&quot;Macau SAR, China&quot;,Mongolia,People&apos;s Republic of China</value>
+            <value>&quot;Hong Kong (SAR), China&quot;,&quot;Korea, Democratic People’s Republic of&quot;,&quot;Macau SAR, China&quot;,Mongolia,People&apos;s Republic of China</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18262,7 +18262,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>E-mail to Case - China,E-mail to Case - TaÃ¯wan,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia</value>
+            <value>E-mail to Case - China,E-mail to Case - Taïwan,E-mail to Case - Hong-Kong,E-mail to Case - Mongolia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
