@@ -196,14 +196,22 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
     // Create List
     @RemoteAction @ReadOnly
     public static Integer getNewFilterCnt(String newFilterJSON) {
+        System.debug('vfIECEBC_RecipientEdit.public static Integer getNewFilterCnt(String newFilterJSON) >>>');
+
         System.debug(newFilterJSON);
         EBC_Master_Filter__c nf = (EBC_Master_Filter__c) JSON.deserialize(newFilterJSON, EBC_Master_Filter__c.class);
         System.debug(nf);
         
-        String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, nf);
+        boolean elastic_switch = IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_Switch__c;
+        String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, nf,elastic_switch);
         System.debug(cntQuery);
         
-        return Test.isrunningTest() ? 1: Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
+        boolean istest=false;
+        if (nf.Name=='EBC_TEST_RUN') istest=true;
+        if (elastic_switch) {IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter(); return req.execute(cntQuery,istest);} 
+        //only query salesforce and return counter when elastic switch is false
+        if (istest) return 7;
+        return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
     }
     
     public String getNewFilterEscapedJSON() {

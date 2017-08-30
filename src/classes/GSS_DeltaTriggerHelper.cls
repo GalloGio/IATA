@@ -287,9 +287,8 @@ public class GSS_DeltaTriggerHelper {
         // update in related objects of GDP_Products_Account_View will only be recorded in delta if they are still active
         // therefore, we need to have some info on GDP_Products_Account_View 
         Map<Id, GDP_Products_Account_View__c> pvaIdToObjectMap = null; //new Map<Id, GDP_Products_Account_View__c> ();
-        if (!OBJECT_ACCOUNTVIEW) { 
-            pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);
-        }
+        if (!OBJECT_ACCOUNTVIEW) { pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);}
+        if (OBJECT_ACCOUNTVIEW) { for ( SObject obj : newRecords ) { pvaIdToObjectMap = new Map<Id, GDP_Products_Account_View__c> (); GDP_Products_Account_View__c objb = (GDP_Products_Account_View__c) obj; pvaIdToObjectMap.put(objb.id, objb);} }
         //Generic treatment for aby type of objects.
         //Iterate on records, fields, and File specification to detect change and add change code as needed
         //Iterate the list of new records to find if there are modifications
@@ -373,7 +372,7 @@ public class GSS_DeltaTriggerHelper {
                         if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;
                     if (ISINSERT || ISDELETE) LogDelta=true;
                     
-                    
+                    System.debug('field : '+ds.FieldName+' Delta: '+LogDelta);
                     if (LogDelta)
                         for(String SpecificationId : ds.SpecficationFile)
                         {
@@ -388,11 +387,11 @@ public class GSS_DeltaTriggerHelper {
                             Delta.GDP_File_Description__c = SpecificationId;
                             Delta.DeltaLastModifiedDate__c = System.Today();
                             Delta.Change_Code__c = 'C';
-                            
+                            boolean IsDeltaList = false;
                             //This is the parent object
                             if(OBJECT_ACCOUNTVIEW) {
                                 Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
-                                if (ISINSERT) Delta.Change_Code__c = 'A';
+                                if (ISINSERT) {IsDeltaList = true; Delta.Change_Code__c = 'A';}
                                 if (ISDELETE) Delta.Change_Code__c = 'D';                                 
                             }
                             else{ //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
@@ -403,17 +402,20 @@ public class GSS_DeltaTriggerHelper {
                             }
                             // change other than Accreditation__c.Status will be only recorded in delta
                             // if the GDP_Products_Account_View is not inactive
+                            
                             if((Delta.Related_GDP_Product_Account_View__c != null)
                                 && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c) != null)
-                                && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0))
-                            {
-                                DeltaList.add(Delta);
-                            }
+                               && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0)) {isDeltaList=true;}
+                            
+                            If (IsDeltaList)  DeltaList.add(Delta);
+                            
                         }
                     if (LogDelta) break;
                     
                 }
-                catch(Exception e) {}
+                catch(Exception e) {
+                System.debug('field : '+ds.FieldName+' Error: '+e.getMessage());
+                }
             }   
             
            // position++;
