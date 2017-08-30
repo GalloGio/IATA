@@ -1,5 +1,6 @@
 <apex:component controller="VFEmailTemplateController" access="global"  allowDML="true" rendered="true">
 <apex:attribute name="caseId" type="String"  description="The controller for the page." assignTo="{!caseId}" />
+<apex:attribute name="templateName" type="String"  description="The developer name of the related Visualforce Email Template." assignTo="{!templateName}" />
 <apex:componentBody >
 
 <tr></tr><tr></tr><tr></tr><tr></tr>
