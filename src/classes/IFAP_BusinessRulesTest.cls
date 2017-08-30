@@ -183,30 +183,17 @@ public class IFAP_BusinessRulesTest {
             contactIds.add(c.Id);
         }
 
+		EmailTemplate__c template = new EmailTemplate__c(name='test');
+		insert template;
+
         // insert inexisting contact id
         //contactIds.add('321asdf5sdf25');
 
-
-
-        IFAP_BusinessRules.massCreateCase(contactIds, batch.Id, status, subject, description, reviewType, deadline, 'E-0001', finYear, finMonth, 'E-0001', '', false);
-
-
-        //test batch
-        System.debug('***** STARTING BATCH ' ) ;
         Test.startTest();
-        clsMassCaseCreationBatch cBatch = new clsMassCaseCreationBatch();
-        cBatch.caseList = cList;
-        cBatch.caseContact = contactIds;
-        cBatch.nCases = cList.size();
-        cBatch.batchName = batch.Name;
-        cBatch.status = status;
-        cBatch.subject = subject;
-        cBatch.description = description;
-        cBatch.reviewType = '';
-        cBatch.deadlineDate = deadline;
-        ID batchprocessid = Database.executeBatch(cBatch, 5);
-        Test.stopTest();
 
+        IFAP_BusinessRules.massCreateCase(contactIds, batch.Id, status, subject, description, reviewType, deadline, template.Id, finYear, finMonth, 'E-0001', '', false);
+
+        Test.stopTest();
 
     }
 
@@ -417,6 +404,7 @@ public class IFAP_BusinessRulesTest {
         vtc2.isEnglish = true;
 
         vtc2.VFEmailTemplateController();
+		vtc2.fakemethod();
 
     }
 
