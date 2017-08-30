@@ -243,6 +243,7 @@
     </fields>
     <fields>
         <fullName>ANG_Remarks__c</fullName>
+        <description>Holds extra information provided by Supervisors and Admins</description>
         <externalId>false</externalId>
         <label>Remarks</label>
         <required>false</required>
@@ -253,6 +254,7 @@
     <fields>
         <fullName>ANG_Risk_Configuration__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Technical Use: indicates the Id of the Risk Event Configuration that triggered the creation of the Risk Event.</description>
         <externalId>false</externalId>
         <label>Configuration</label>
         <referenceTo>ANG_Risk_Event_Configuration__c</referenceTo>
@@ -321,6 +323,7 @@ Id
     </fields>
     <fields>
         <fullName>ANG_TargetAgency__c</fullName>
+        <description>Technical field: reflects the Target Agency of the Configuration. Used to avoid a query on triggers</description>
         <externalId>false</externalId>
         <formula>TEXT(ANG_Risk_Configuration__r.ANG_TargetAgency__c)</formula>
         <label>Target Agency</label>
