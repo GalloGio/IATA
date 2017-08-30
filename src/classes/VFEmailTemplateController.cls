@@ -363,11 +363,11 @@ public class VFEmailTemplateController{
                 deadline = this.formatThisDate(e.Template_Language__c,tmp); 
                 tmp = null;
                 signature = e.signature_details__c;
+                greeting = e.greeting_line__c;
                 emailBody1 = e.Body_Section_1__c;
             }
         }
         catch(Exception ex){
-            greeting = 'exception l. ' + ex.getLineNumber() + ' : ' + ex;
             emailBody2 = 'Exception!!!!' + ex;
         }
     }
