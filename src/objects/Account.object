@@ -2850,7 +2850,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>        
+        <description>Triggers Cash Condition throught risk Status assessment</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
