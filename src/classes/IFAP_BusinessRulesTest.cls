@@ -417,6 +417,7 @@ public class IFAP_BusinessRulesTest {
         vtc2.isEnglish = true;
 
         vtc2.VFEmailTemplateController();
+		vtc2.fakemethod();
 
     }
 
