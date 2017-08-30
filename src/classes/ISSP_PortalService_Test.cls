@@ -17,6 +17,7 @@ public class ISSP_PortalService_Test {
 		insert acc2;
 
 		Contact contact = ISSP_ObjectFactory.createNewContact();
+		Contact.LastName = 'test123';
 		contact.AccountId = acc2.Id;	
 		insert contact;
 
@@ -67,9 +68,11 @@ public class ISSP_PortalService_Test {
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
 		
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId = acc.Id;
-		insert con;
+		Contact con = [Select id from Contact where LastName = 'test123'];		
+
+		//Contact con = ISSP_ObjectFactory.createNewContact();
+		//con.AccountId = acc.Id;
+		//insert con;
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
