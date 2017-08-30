@@ -15,6 +15,33 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 
+                // validate that owners are present
+                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.BANKACCCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES};
+                if (lstProcessesToValidateOwnership.contains(oscar.Process__c)) { 
+                    
+                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner')];
+                    
+                    if (cntOwners == 0) oscar.addError('No owners found on the OSCAR');
+
+                    return false;
+                }
+
+                // validate that certified trained staff is present
+                set<String> lstProcessesToValidateDGR = new set<String>{AMS_Utils.BANKACCCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES};
+                if (lstProcessesToValidateDGR.contains(oscar.Process__c)) { 
+                    AMS_Pax_Accreditation_Form__c form = [SELECT Id, Agent_Type__c, Location_Type__c, Is_your_firm_handling_Dangerous_Goods__c, Branch_Office_Country__c, Branch_Office_Country__r.EACP_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
+
+                    if ((form.Agent_Type__c == 'IATA Cargo Agent' || form.Agent_Type__c == 'EACP Intermediary') && !(form.Branch_Office_Country__r.EACP_Country__c && form.Is_your_firm_handling_Dangerous_Goods__c == 'No')) {
+                        
+                        Integer cntCrtDanGoodsContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName = 'Trained Staff' AND Training_dangerous_goods_completed__c = 'Yes'];
+                        Integer limitNum = form.Location_Type__c == 'HO' ? 2 : 1;
+
+                        if (cntCrtDanGoodsContacts < limitNum) oscar.addError('Must have ' + limitNum + ' or more staff members with dangerous goods handling certificate. Only ' + cntCrtDanGoodsContacts + ' found');
+
+                        return false;
+                    }
+                }
+                
                 oscar.Sanity_check_received__c = Date.today();
                 
                 if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
