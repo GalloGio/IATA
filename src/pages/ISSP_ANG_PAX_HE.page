@@ -197,6 +197,7 @@
         $j(".country__c").attr('readonly', true);
         $j(".country__c").attr('disabled','disabled');
         $j(".labelText").hide();
+        $j(".email-label label").text("{!$Label.OneId_Profile_OfficeEmail} *");
         $j("#phone").hide();
         $j("#branch_office_phone__c").hide();
     });
@@ -647,7 +648,7 @@
     }
     
     </script>
-     <c:MutationObserverPolyfill></c:MutationObserverPolyfill>       
+     <c:MutationObserverPolyfill ></c:MutationObserverPolyfill>       
      <div class="container">
        <div id="contentWrapper">
            <c:ISSP_CustomNavigation />
@@ -794,7 +795,7 @@
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
                                 
-                                <apex:pageBlockSectionItem>    
+                                <apex:pageBlockSectionItem >    
                                 <DSE:DS_DataQuality id="HOEmail" 
                                         RecordRef="{!hqAccount}"
                                         FieldGroupName="Email"
@@ -1531,8 +1532,8 @@
 
                     <!-- NG-593 START -->
                         <apex:pageBlockSection >
-                            <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
-                               <apex:outputlabel value="{!$Label.ISSP_Credit_Card_Form}"/>
+                            <apex:pageblocksectionitem >
+                               <apex:outputlabel value="{!$Label.ISSP_Credit_Card_Form} *"/>
                                <apex:selectradio style="width:100px" value="{!newForm.Enable_Credit_Card_FOP__c}" styleclass="{!IF(AND(isValError, newForm.Enable_Credit_Card_FOP__c==null), 'requiredIndicator', '')}" id="creditCardForm">
                                    <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                                    <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
@@ -1573,7 +1574,7 @@
                             <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
                         </apex:pageBlockSection>                    
 
-                       <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
+                       <apex:pageblocksectionitem >
                            <apex:outputlabel id="section5-cargo-code-radio" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
                            <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
                                <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
@@ -1608,7 +1609,7 @@
 
             <!--NG-663 START -->
                 <apex:pageBlockSection >
-                    <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
+                    <apex:pageblocksectionitem >
                        <apex:outputlabel id="section5-iatan-code-radio" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                        <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
                            <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />

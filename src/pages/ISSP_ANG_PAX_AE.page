@@ -692,7 +692,7 @@
       }
       
     </script>
-    <c:MutationObserverPolyfill></c:MutationObserverPolyfill>
+    <c:MutationObserverPolyfill ></c:MutationObserverPolyfill>
 
     <div class="container">
       <div id="contentWrapper">
@@ -895,8 +895,8 @@
                               </apex:outputPanel>
                             </apex:pageBlockSectionItem>
 
-                            <apex:pageBlockSectionItem  rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
-                              <apex:outputPanel>
+                            <apex:pageBlockSectionItem rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
+                              <apex:outputPanel >
                                 <div class="label labelCol" style="margin-left: 118px; width: 173px;text-align: left;float: left;padding-left:9px;">
                                   <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
                                 </div>
@@ -952,7 +952,7 @@
                             </apex:actionfunction>
                             <apex:outputPanel id="VatNumberInput">
                               <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)}" />
+                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)} *" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
                                   <div style="display:inline-block; width: 213px;">
@@ -1356,7 +1356,7 @@
                   
                   <apex:pageBlockSection >
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="* {!$Label.ISSP_Credit_Card_Form}" />
+                      <apex:outputlabel value="{!$Label.ISSP_Credit_Card_Form} *" />
                       <apex:selectradio style="width:100px" value="{!newForm.Enable_Credit_Card_FOP__c}" styleclass="{!IF(AND(isValError, newForm.Enable_Credit_Card_FOP__c==null), 'requiredIndicator', '')}" id="creditCardForm">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                         <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
@@ -1381,7 +1381,7 @@
                   <span id="nav_six"></span>
                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                     <apex:facet name="header">
-                      <apex:outputpanel>
+                      <apex:outputpanel >
                         {!$Label.ISSP_AMS_Step3_5_Other_Info}
                       </apex:outputpanel>
                     </apex:facet>
@@ -1395,8 +1395,8 @@
                     <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
                     <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
                   </apex:pageBlockSection>
-                  <apex:pageBlockSection>
-                    <apex:pageblocksectionitem>
+                  <apex:pageBlockSection >
+                    <apex:pageblocksectionitem >
                       <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
@@ -1430,8 +1430,8 @@
                     </apex:pageBlockSection>
                   </div>
 
-                  <apex:pageBlockSection>
-                    <apex:pageblocksectionitem>
+                  <apex:pageBlockSection >
+                    <apex:pageblocksectionitem >
                       <apex:outputlabel id="is-agency-iatan-label" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
@@ -1463,7 +1463,7 @@
                   </div>
 
                   <apex:pageblocksection columns="1">
-                    <apex:pageblocksectionitem>
+                    <apex:pageblocksectionitem >
                       <apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
                       <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
