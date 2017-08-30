@@ -1,117 +1,94 @@
 <apex:page standardController="Case">
+    <apex:includeScript value="/soap/ajax/13.0/connection.js"/>
 
+    <script>
+        function InitialEmail(type){
+            var remTemplate = "{!Case.EmailTemplate__c}";
+        
+            if(remTemplate != ""){
+                if(type == "tracked"){
+                    parent.location.href = "/apex/sendsingletrackedemail?case={!Case.Id}&sender=noreply.ifap@iata.org&template=IFAP&caseUpdateType=FA";
+                }
+                else{
+                    parent.location.href = "/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001Rxu0&reminder=famanual&retURL=/{!Case.Id}&new_template=1";
+                }
+                //change case status.
+                var caseObj;
+                caseObj = new sforce.SObject("Case");
+                caseObj.Id = '{!Case.Id}';
+                //caseObj.Status = 'Agent Notified (Email)'; //IFAP Status change: 15Jan2013
+                //var result = sforce.connection.update([caseObj]); //IFAP Status change: 15Jan2013
+            }else{
+                alert('Error: Initial Request Email Template has not been selected. Please select the Initial Request Email Template first using Initial Request Email Template lookup and Save the case. Then, use "Request an agent to upload Financial Documents" link to send an email.');
+                parent.location.href = "{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}";
+            }
+        }
+        
+        function FAReminder(type){
+            var s = '{!Case.Status}';
+            if ( s != 'Agent Notified (Mail)' && s != 'Agent Notified (Email)' ){
+                alert('Case status have to be either Agent Notified(Mail) or Agent Notified(Email)');
+            }
+            else if (!{!Case.FA_Letter_Sent__c}){
+                alert('Error: Please tick the "FA Letter Sent" check box before sending this reminder email.');
+            }
+            else{
+                var remTemplate = "{!Case.Reminder_EmailTemplate__c}";
+                if(remTemplate != ""){
+                    if(type == "tracked"){
+                        parent.location.href = "/apex/sendsingletrackedemail?case={!Case.Id}&sender=noreply.ifap@iata.org&template=IFAP_FA_Reminder";
+                    }
+                    else{
+                        parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWW&reminder=true&retURL=/{!Case.Id}&new_template=1";
+                    }
+                }
+                else{
+                    alert('Error: A Reminder Template has not been selected. Please select a reminder template.');
+                    parent.location.href ="{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}";
+                }
+            }
+        }
+    </script>
 
-<apex:includeScript value="/soap/ajax/13.0/connection.js"/>
-
-<script>
-
-function InitialEmail(){
-
-
-
-var remTemplate = "{!Case.EmailTemplate__c}"; 
-
-if(remTemplate != ""){ 
-
-parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001Rxu0&reminder=famanual&retURL=/{!Case.Id}&new_template=1"; 
-
-//change case status. 
-var caseObj; 
-caseObj = new sforce.SObject("Case"); 
-caseObj.Id = '{!Case.Id}'; 
-//caseObj.Status = 'Agent Notified (Email)'; //IFAP Status change: 15Jan2013
-//var result = sforce.connection.update([caseObj]); //IFAP Status change: 15Jan2013
-
-}else{ 
-alert('Error: Initial Request Email Template has not been selected. Please select the Initial Request Email Template first using Initial Request Email Template lookup and Save the case. Then, use "Request an agent to upload Financial Documents" link to send an email.'); 
-
-parent.location.href = "{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}"; 
-
-
-}
-
-
-}
-
-
-function FAReminder(){
-
-
-var s = '{!Case.Status}'; 
-if ( s != 'Agent Notified (Mail)' && s != 'Agent Notified (Email)' ){ 
-alert('Case status have to be either Agent Notified(Mail) or Agent Notified(Email)'); 
-} 
-else if (!{!Case.FA_Letter_Sent__c}) 
-{ 
-alert('Error: Please tick the "FA Letter Sent" check box before sending this reminder email.'); 
-} 
-
-else 
-{ 
-var remTemplate = "{!Case.Reminder_EmailTemplate__c}"; 
-
-if(remTemplate != "") 
-{ 
-parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWW&reminder=true&retURL=/{!Case.Id}&new_template=1"; 
-
-} 
-
-else 
-{ 
-alert('Error: A Reminder Template has not been selected. Please select a reminder template.'); 
-parent.location.href ="{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}"; 
-} 
-
-}
-
-
-
-}
-
-
-
-
-</script>
-
-
-<style type="text/css">
-A:link {text-decoration: underline; color: #015ba7;}
-A:visited {text-decoration:  underline}
-A:active {text-decoration:  underline}
-A:hover {text-decoration:  underline; color: #015ba7;}
-</style>
-
-
-
-
-
-<table class="detailList"  border="0"  cellpadding="0" cellspacing="0"> 
-
-<tr>
-<td width = "20%"></td>
-
-<td class="data2Col last" colspan="3">
-<table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
-<tr class="first">
-<td>
-<a href="" onClick="InitialEmail()" style="text-decoration: underline; cursor:pointer">Request an agent to upload Financial Documents</a>
-</td>
-</tr>
-
-<tr class="second">
-<td>
-<a href="" onClick="FAReminder()" style="text-decoration: underline; cursor:pointer;">Send FA Email Reminder to the Agent</a>
-</td>
-</tr>
-
-</table>
-</td>
-
-</tr>
-
-</table>
-
-
-
-
+    <style type="text/css">
+        A:link {text-decoration: underline; color: #015ba7;}
+        A:visited {text-decoration:  underline}
+        A:active {text-decoration:  underline}
+        A:hover {text-decoration:  underline; color: #015ba7;}
+    </style>
+    
+    <table class="detailList"  border="0"  cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td width = "10%"></td>
+            <td class="data2Col last" colspan="3" width="40%">
+                <table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
+                    <tr class="first">
+                        <td>
+                            <a href="" onClick="InitialEmail('standard')" style="text-decoration: underline; cursor:pointer">Request an agent to upload Financial Documents</a>
+                        </td>
+                    </tr>
+                    <tr class="second">
+                        <td>
+                            <a href="" onClick="FAReminder('standard')" style="text-decoration: underline; cursor:pointer;">Send FA Email Reminder to the Agent</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width = "10%"></td>
+            <td class="data2Col last" colspan="3" width="40%">
+                <table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
+                    <tr class="first">
+                        <td>
+                            <a href="" onClick="InitialEmail('tracked')" style="display: {!IF($Permission.Can_send_a_tracked_email,'','none')};text-decoration: underline; cursor:pointer">Request an agent to upload Financial Documents [Tracked]</a>
+                        </td>
+                    </tr>
+                    <tr class="second">
+                        <td>
+                            <a href="" onClick="FAReminder('tracked')" style="display: {!IF($Permission.Can_send_a_tracked_email,'','none')};text-decoration: underline; cursor:pointer;">Send FA Email Reminder to the Agent [Tracked]</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </apex:page>
