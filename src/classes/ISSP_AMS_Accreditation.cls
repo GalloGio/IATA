@@ -5459,7 +5459,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             //checking if the Phone number is fill
             if(hqAccount.Phone == null && hqAccount.Status__c != 'Terminated'){
-                hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
+                hqAccount.PhoneNational__c.addError(Label.ISSP_YouMustEnter);
                 ngErrorFound = true;
             }
 
@@ -5514,6 +5514,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         //checking if IATAN question is answered
         if(newForm.IATA_Registered_IATAN_Agent__c == null){
             newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
+            ngErrorFoundBR = true;
+        }
+        
+        if(newForm.Branch_Office_Email__c == null){
+            newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
             ngErrorFoundBR = true;
         }
             
