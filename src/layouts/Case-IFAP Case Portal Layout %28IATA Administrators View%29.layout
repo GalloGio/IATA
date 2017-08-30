@@ -293,7 +293,7 @@
         <label>Financial Review Links</label>
         <layoutColumns>
             <layoutItems>
-                <height>50</height>
+                <height>80</height>
                 <page>initialEmail_FAReminder</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -403,7 +403,7 @@
         <label>Financial Security Links</label>
         <layoutColumns>
             <layoutItems>
-                <height>50</height>
+                <height>80</height>
                 <page>FSRequest_FSReminder</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
