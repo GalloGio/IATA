@@ -376,7 +376,7 @@
                                         <input type="hidden" id="total_items" value="{!vfOrder.orderItems.size}" />
                                     </apex:outputPanel>
 
-                                    <!-- <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" oncomplete="sendShipToCustomerToSAP();" reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" /> -->
+                                    <!-- <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}"  reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" /> -->
                                     <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" reRender="shipToLocation,shippingInstructionSection,errorBloc,shippingFormValidationError" status="runningShipToStatus" />
                                     <!-- <apex:actionFunction name="sendShipToCustomerToSAP" action="{!sendShipToCustomerToSAP}" oncomplete="calculateTax();" status="runningShipToStatus" /> -->
                                     <apex:actionFunction name="calculateTax" action="{!calculateFreightTaxDTO}" status="runningShipToStatus" reRender="orderTotalTaxes,orderTotalFreight,orderTotalHandling,orderTotalAmount" />
@@ -630,7 +630,7 @@
                                                             <div class="action text-right">
                                                                 <ul class="list actions">
                                                                     <li><apex:commandLink styleClass="text-link" value="Cancel" onclick="javascript:hideNewAddressForm();" /></li>
-                                                                    <!-- <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); sendShipToCustomerToSAP();" /></li> -->
+                                                                    <!-- <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); " /></li> -->
                                                                     <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); calculateTax();" /></li>
                                                                 </ul>
                                                                 <apex:actionStatus id="saveAdrStatus">

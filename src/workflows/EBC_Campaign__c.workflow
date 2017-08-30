@@ -15,14 +15,14 @@
     </alerts>
     <alerts>
         <fullName>EBC_Email_Confirmation_Status_Sent</fullName>
-        <ccEmails>globaldata@iata.org</ccEmails>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>EBC Email Confirmation Status Sent</description>
         <protected>false</protected>
         <recipients>
             <field>Notification_Email__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>globaldata@iata.org</senderAddress>
+        <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Sent</template>
     </alerts>
