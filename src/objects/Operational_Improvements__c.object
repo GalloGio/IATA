@@ -3804,7 +3804,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <fullName>OI_Overall_effectiveness_of_improvement</fullName>
         <active>true</active>
         <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</description>
-        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
+        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;), Datevalue(Date_Time_Closed__c)&gt;DATE(2017,08,21))</errorConditionFormula>
         <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
         <errorMessage>OI  can not be closed. Please fill &quot;Overall effectiveness of improvement&quot;.</errorMessage>
     </validationRules>
