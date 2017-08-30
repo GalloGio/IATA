@@ -71,6 +71,7 @@ private class SignaturitRestEventsTest {
 
         Contact contact = new Contact();
         contact.email = 'recipient@test.com';
+        contact.FirstName = 'Name';
         contact.LastName = 'toto';
         insert contact;
 

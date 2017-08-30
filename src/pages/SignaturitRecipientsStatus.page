@@ -81,7 +81,7 @@
         </apex:pageblockTable>
         
         <apex:outputPanel rendered="{!rowsDisplayed < eventsSize}">
-            <a target="_blank" href="/apex/SignaturitRecipientsStatus?id={!trackedEmail.Id}&rows=all">Go to List ({!eventsSize})</a>
+            <a target="_parent" href="/apex/SignaturitRecipientsStatus?id={!trackedEmail.Id}&rows=all">Go to List ({!eventsSize})</a>
         </apex:outputPanel>
     </apex:pageBlock>
 

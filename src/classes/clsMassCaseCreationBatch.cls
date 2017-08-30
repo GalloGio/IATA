@@ -40,7 +40,7 @@ global class clsMassCaseCreationBatch implements Database.Batchable<sObject>, Da
 			// this part is dedicated to the mass sending of tracked email (Visualforce email template = IFAP)
 			if(status == 'Agent Notified (Tracked Email)'){
 				trackedEmails.addAll(SignaturitUtils.createTrackedEmails(scope, 'IFAP', 'IATA Financial Review', 'noreply.ifap@iata.org', 'FA'));
-				status == 'Agent Notified (Email)';
+				status = 'Agent Notified (Email)';
 			}
 		}
 		catch (Exception ex) {
