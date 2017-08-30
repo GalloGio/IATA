@@ -118,7 +118,7 @@ public with sharing class ANG_Risk_Helper{
 			if(convertionsRateMap ==null){
 				convertionsRateMap= new map<string,CurrencyType>();
 				for (CurrencyType cur : [select Id,IsoCode, ConversionRate, DecimalPlaces from CurrencyType where IsActive=true]) {
-					convertionsRateMap.put(cur.IsoCode, cur);
+					convertionsRateMap.put(cur.IsoCode.toUpperCase(), cur);
 				}
 			}
 
@@ -276,14 +276,14 @@ public with sharing class ANG_Risk_Helper{
 
     public static Decimal currencyConverter(string currentCurIso,Decimal ammount,string targetCurIso){
 
-		if(!convertionsRateMap.containsKey(currentCurIso)) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
-		if(!convertionsRateMap.containsKey(targetCurIso))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
+		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
+		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
 
 		Decimal fromRate = convertionsRateMap.get(currentCurIso.toUpperCase()).ConversionRate;
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
-		Decimal toRate = targetCur.ConversionRate;
+		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount * toRate/fromRate;
+		Decimal result = ammount==null?0:ammount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 }
