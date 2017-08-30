@@ -4439,7 +4439,6 @@
                   "Off_site_storage__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -4505,7 +4504,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
                   "STEP18__c"
@@ -4985,7 +4983,6 @@
                   "Off_site_storage__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -5051,7 +5048,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
                   "STEP18__c"
@@ -5372,7 +5368,6 @@
                   "Welcome_pack__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -5435,7 +5430,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "STEP18__c"
                 ],
                 "IsDependent": false
