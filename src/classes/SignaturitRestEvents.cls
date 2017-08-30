@@ -22,6 +22,11 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
     @HttpPost
     global static void receiveEvent() {
         Map<String,String> params = RestContext.request.params;
+		
+		System.debug('Params : ' + params);
+		for(String key : params.keySet()){
+			System.debug(key + ' : ' + params.get(key));
+		}
 
         try{
             Tracked_Email_Certificate__c trackedEmailCertificate = [Select Tracked_Email__r.Id
