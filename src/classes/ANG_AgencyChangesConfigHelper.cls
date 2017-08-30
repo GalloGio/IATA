@@ -183,5 +183,16 @@ public class ANG_AgencyChangesConfigHelper{
 		return changeCode;
 	}
 
+	public static Boolean getManagerApprovalRequired(Map<String, String> config){
+		Boolean isApprovalRequired = false;
+
+		if (config.get('Requires Manager Approval') != null)
+			isApprovalRequired = config.get('Requires Manager Approval') == 'true' ? true : false;
+
+		system.debug('Requires Manager Approval: ' + isApprovalRequired);
+
+		return isApprovalRequired;
+	}
+
 
 }
