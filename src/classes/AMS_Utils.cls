@@ -247,6 +247,9 @@ public without sharing class AMS_Utils {
     //Account - Location_Class__c
     public static final String LC_PASSENGER = 'P';
 
+    public static final String OPEN = 'Open';
+    public static final String NO_IEP_ACCOUNT = 'No IEP Account';
+
 
     static {
         refreshCache();

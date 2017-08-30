@@ -28,10 +28,18 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				}
 			}
 		}
-		if(contact.Account.ANG_IEP_Status_FF__c == 'Open') {
+		if(contact.Account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
+			for(Portal_Application_Right__c par: services) {
+				if(par.Application_Name__c.startsWith('IATA EasyPay') && par.Right__c == 'Access Granted') {
+					this.iepLinkLabel = 'IATA EasyPay';
+					this.iepLink = par.Application_Start_URL__c;
+					break;
+				}
+			}
+		} else if(contact.Account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
+			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
+			this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
 		}
-
-
 	}
 }
