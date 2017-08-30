@@ -127,7 +127,9 @@ public class ISSP_ANG_ProductComparisonTest {
 
 		ISSP_ANG_ProductComparison ctrl = new ISSP_ANG_ProductComparison();
 
-		System.assertEquals(ctrl.headers.size(), 3);
+		//System.debug(LoggingLevel.ERROR, '---->' + ctrl);
+
+		System.assertEquals(ctrl.headers.size(), 4);
 		System.assertEquals(ctrl.lines.size(), 6);
 	}
 }
