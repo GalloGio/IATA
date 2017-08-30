@@ -577,7 +577,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             
             PageReference pageLoadPR = campaignExtCon.pageLoad();
             //System.assertEquals(pageRef.getUrl().toLowerCase(), pageLoadPR.getUrl().toLowerCase());
@@ -906,7 +906,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -1010,7 +1010,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -1104,7 +1104,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
