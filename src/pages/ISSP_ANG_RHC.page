@@ -168,28 +168,9 @@
               <apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">IATA Customer e-Statment</apex:outputLink>
             </div>
           </div>
-          <section name="payment-forms" class="row">
-            <header class="col-xs-12">
-              <div class="section-header">
-                <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
-              </div>
-            </header>
-            <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
-              <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
-              <a href="#">Example</a>
-            </div>
-            <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
-              <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
-              <a href="#">Example</a>
-            </div>
-            <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
-              <i class="fa fa-check fa-2x show check" aria-hidden="true"></i>
-              <a href="#">Example</a>
-            </div>
-          </section>
+
+          <c:AFP_Component wrapperClass='{!afpWrapper}'/>
+          
         </section>
         <section name="right-side" class="col-md-6 col-sm-12">
           <table class="table">
