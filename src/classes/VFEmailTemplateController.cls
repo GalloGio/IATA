@@ -373,7 +373,7 @@ public class VFEmailTemplateController{
     }
 	
 	
-	public static void fakemethod() {
+	public void fakemethod() {
 	Integer i=1;
 	i=1;
 	i=1;
