@@ -35,6 +35,7 @@ public class AMS_OSCARTriggerHandler {
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		//create agency regulation objects for Cargo agencies
 		handleCargoAgencyRegulations();
+		handleSanityCheckValidations(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		handleChangesProcess(oscars);
 		ANG_AgencyChangesHelper.handleNewGenChangesProcess(oscars);
         copyDataFromTargetAgency();
@@ -2043,6 +2044,42 @@ public class AMS_OSCARTriggerHandler {
 
 		return (!isNewGenProcess && percentages.get(oscar.Account__c) == 100) || (isNewGenProcess && percentages.get(oscar.Account__c) < 99.99);
 
+	}
+
+	public static void handleSanityCheckValidations(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+
+		//Validation: should not be possible to pass sanity checks without attachments - NEWGEN-1401
+		for(AMS_Oscar__c oscar: oscars){
+
+			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+
+				if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
+					
+					boolean isToValidate = true;
+					
+					if(oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR)){
+							isToValidate = false; // we can skipp this validation
+					}
+
+					if(isToValidate){
+
+						List<Case> cList = [SELECT Id from CASE WHERE Oscar__c != null AND CaseNumber = :oscar.Name AND RecordType.Name = 'OSCAR Communication' AND Oscar__c = :oscar.Id AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))];
+
+						if(cList != null && cList.size() == 1){
+
+							Case c = cList.get(0);
+
+							list<WrapperAttach> attchs = WrapperAttach.getListAttachments(c.Id);
+
+							List<AmazonFile__c> amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];
+
+							if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty())
+								oscar.addError('Error - There are no attachments associated with this case/oscar.');
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	public static void increasecoverage () {
