@@ -1,122 +1,103 @@
 <apex:page standardController="Case">
+    <apex:includeScript value="/soap/ajax/13.0/connection.js"/>
 
+    <script>
+        function FSRequest(type){
+            var s = '{!Case.Status}';
+            var t = '{!Case.Financial_Review_Result__c}';
+            
+            if ( s != 'Assessment Performed' ){
+                alert('Case status have to be Assessment Performed');
+            }
+            else if ( t != 'Satisfactory - New Financial Security' && t != 'Satisfactory - Update Financial Security' && t != 'Unsatisfactory - New Financial Security' && t != 'Unsatisfactory - Update Financial Security'){
+                alert('Financial Review Result must be one of the following:\nSatisfactory - New Financial Security\nSatisfactory - Update Financial Security\nUnsatisfactory - New Financial Security\nUnsatisfactory - Update Financial Security');
+            }
+            else{
+                var remTemplate = '{!Case.FS_EmailTemplate__c}';
 
-<apex:includeScript value="/soap/ajax/13.0/connection.js"/>
+                if(remTemplate != ""){
+                    if(type == "tracked"){
+                        parent.location.href = "/apex/sendsingletrackedemail?case={!Case.Id}&sender=noreply.ifap@iata.org&template=IFAP_FS_Request&caseUpdateType=FS";
+                    }
+                    else{
+                        parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWY&reminder=fsmanual&retURL=/{!Case.Id}&new_template=1";
+                    }
+                }
+                else{
+                    alert('Error: Financial Security Email Template has not been selected. Please select the Email Template first using Financial Security Email Template lookup and Save the case. Then, use Send a Financial Security Request Email link to send an email.');
+                    parent.location.href = "{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}";
+                }
+            }
+        }
 
-<script>
+        function FSReminder(type){
+            var s = '{!Case.Status}';
+            if ( s != 'Financial Security Requested' ){
+                alert('Case status have to be Financial Security Requested');
+            }
+            else if (!{!Case.FS_Letter_Sent__c})
+            {
+                alert('Error: Please tick the "FS Letter Sent" check box before sending this reminder email.');
+            }
+            else{
+                var remTemplate = "{!Case.FS_Reminder_EmailTemplate__c}";
 
-function FSRequest(){
+                if(remTemplate != ""){
 
-var s = '{!Case.Status}'; 
-var t = '{!Case.Financial_Review_Result__c}'; 
+                    if(type == "tracked"){
+                        parent.location.href = "/apex/sendsingletrackedemail?case={!Case.Id}&sender=noreply.ifap@iata.org&template=IFAP_FS_Reminder";
+                    }
+                    else{
+                        parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWX&reminder=fsreminder&retURL=/{!Case.Id}&new_template=1";
+                    }
+                }
+                else{
+                    alert('Error: A FS Reminder Template has not been selected. Please select a FS reminder template..');
+                    parent.location.href ="{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}";
+                }
+            }
+        }
+    </script>
 
-if ( s != 'Assessment Performed' ){ 
-alert('Case status have to be Assessment Performed'); 
-} 
-else if ( t != 'Satisfactory - New Financial Security' && t != 'Satisfactory - Update Financial Security' && t != 'Unsatisfactory - New Financial Security' && t != 'Unsatisfactory - Update Financial Security') 
-{ 
-alert('Financial Review Result must be one of the following:\nSatisfactory - New Financial Security\nSatisfactory - Update Financial Security\nUnsatisfactory - New Financial Security\nUnsatisfactory - Update Financial Security'); 
-} 
-
-else 
-{ 
-var remTemplate = '{!Case.FS_EmailTemplate__c}'; 
-
-
-if(remTemplate != "") 
-{ 
-parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWY&reminder=fsmanual&retURL=/{!Case.Id}&new_template=1"; 
-
-} 
-
-else 
-{ 
-alert('Error: Financial Security Email Template has not been selected. Please select the Email Template first using Financial Security Email Template lookup and Save the case. Then, use Send a Financial Security Request Email link to send an email.'); 
-parent.location.href = "{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}"; 
-} 
-
-}
-
-
-}
-
-
-function FSReminder(){
-
-var s = '{!Case.Status}'; 
-if ( s != 'Financial Security Requested' ){ 
-alert('Case status have to be Financial Security Requested'); 
-} 
-else if (!{!Case.FS_Letter_Sent__c}) 
-{ 
-alert('Error: Please tick the "FS Letter Sent" check box before sending this reminder email.'); 
-} 
-
-else 
-{ 
-var remTemplate = "{!Case.FS_Reminder_EmailTemplate__c}"; 
-
-if(remTemplate != "") 
-{ 
-parent.location.href ="/_ui/core/email/author/EmailAuthor?retURL=%2F{!Case.Id}&p3_lkid={!Case.Id}&rtype=003&p2_lkid={!Case.ContactId}&p26=noreply.ifap@iata.org&p4=noreply.ifap@iata.org&template_id=00X20000001SfWX&reminder=fsreminder&retURL=/{!Case.Id}&new_template=1"; 
-
-} 
-
-else 
-{ 
-alert('Error: A FS Reminder Template has not been selected. Please select a FS reminder template..'); 
-parent.location.href ="{!$Label.SF_Base_URL}/{!Case.Id}/e?retURL={!Case.Id}"; 
-} 
-
-}
-
-
-}
-
-
-
-
-</script>
-
-
-<style type="text/css">
-A:link {text-decoration: underline; color: #015ba7;}
-A:visited {text-decoration:  underline}
-A:active {text-decoration:  underline}
-A:hover {text-decoration:  underline; color: #015ba7;}
-</style>
-
-
-
-
-
-<table class="detailList"  border="0"  cellpadding="0" cellspacing="0"> 
-
-<tr>
-<td width = "20%"></td>
-
-<td class="data2Col last" colspan="3">
-<table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
-<tr class="first">
-<td>
-<a href="" onClick="FSRequest()" style="text-decoration: underline; cursor:pointer">Send a Financial Security Request Email</a>
-</td>
-</tr>
-
-<tr class="second">
-<td>
-<a href="" onClick="FSReminder()" style="text-decoration: underline; cursor:pointer;">Send FS Email Reminder to the Agent</a>
-</td>
-</tr>
-
-</table>
-</td>
-
-</tr>
-
-</table>
-
-
-
-
+    <style type="text/css">
+        A:link {text-decoration: underline; color: #015ba7;}
+        A:visited {text-decoration:  underline}
+        A:active {text-decoration:  underline}
+        A:hover {text-decoration:  underline; color: #015ba7;}
+    </style>
+    
+    <table class="detailList"  border="0"  cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td width = "10%"></td>
+            <td class="data2Col last" colspan="3" width="40%">
+                <table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
+                    <tr class="first">
+                        <td>
+                            <a href="" onClick="FSRequest('standard')" style="text-decoration: underline; cursor:pointer">Send a Financial Security Request Email</a>
+                        </td>
+                    </tr>
+                    <tr class="second">
+                        <td>
+                            <a href="" onClick="FSReminder('standard')" style="text-decoration: underline; cursor:pointer;">Send FS Email Reminder to the Agent</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width = "10%"></td>
+            <td class="data2Col last" colspan="3" width="40%">
+                <table  class="customLinks" border="0" cellpadding="0" cellspacing="0">
+                    <tr class="first">
+                        <td>
+                            <a href="" onClick="FSRequest('tracked')" style="display: {!IF($Permission.Can_send_a_tracked_email,'','none')};text-decoration: underline; cursor:pointer">Send a Financial Security Request Email [Tracked]</a>
+                        </td>
+                    </tr>
+                    <tr class="second">
+                        <td>
+                            <a href="" onClick="FSReminder('tracked')" style="display: {!IF($Permission.Can_send_a_tracked_email,'','none')};text-decoration: underline; cursor:pointer;">Send FS Email Reminder to the Agent [Tracked]</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </apex:page>
