@@ -1028,11 +1028,12 @@
                                             
                                             <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">
                                                 <ul class="list actions">
-                                                    <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}">
+                                                    <!--INC331542
+                                                     <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}"> -->
                                                     <li>
                                                         <a href="javascript:;" onclick="openModal('#quote-modal')" class="button secondary">{!$Label.Generate_Quote}</a>
                                                     </li>
-                                                    </apex:variable>
+                                                    <!-- </apex:variable> -->
         
                                                     <li>
                                                         <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
