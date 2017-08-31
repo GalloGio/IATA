@@ -100,7 +100,7 @@
                 <field>IEC_Page_Content_Types__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Accepted_Payment_Methods__c</field>
             </layoutItems>
         </layoutColumns>

@@ -137,7 +137,7 @@ public class AMS_OscarCaseTriggerHelper {
                 
                 oscar.Name = c.CaseNumber;
 
-                if(oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
+                if(c.QuantityProduct__c != null && oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
                     oscar.Certificate_Quantity__c = Integer.valueOf(c.QuantityProduct__c);
                 }
 
