@@ -1,0 +1,141 @@
+<apex:component controller="SelectTrackedEmailRecipientsController" >
+    <apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
+
+	<script>
+        function startRecipientSpinner(){
+            var lock = document.getElementById('recipientSpinner'); 
+            if (lock){
+                lock.className = 'LockOn';
+            }
+        }
+
+        function stopRecipientSpinner(){
+            var lock = document.getElementById('recipientSpinner');
+            if (lock){
+                lock.className = 'LockOff'; 
+            }
+        }
+
+	    function showRecipientsPanel(show) {
+	        var value = show?"block":"none";
+	        document.getElementById('recipientPanel').style.display=value;
+	        document.getElementById('recipientBackground').style.display=value;
+	    }
+	</script>
+	
+	<style>
+	    .white_content {
+	        left: 20%;
+	        width: 60%;
+	    }
+	</style>
+
+    <div id="recipientPanel" class="white_content">
+		<div id="recipientSpinner" class="LockOff"/>
+        <apex:actionStatus id="recipientActStatusId" onstart="startRecipientSpinner();" onstop="stopRecipientSpinner();" />
+    
+        <apex:form id="selector">
+
+            <apex:pageBlock title="Recipient Lists">
+    
+                <apex:pageBlockSection >
+                    <apex:selectList title="test" value="{!selectedList}" size="1">
+                        <apex:selectOptions value="{!recipientLists}"/>
+                        <apex:actionSupport event="onchange" action="{!updateRecipientList}" reRender="recipientLimitMessage,recipientList,recipientFilter" status="recipientActStatusId"/>
+                    </apex:selectList><p/>
+                </apex:pageBlockSection>
+    
+            </apex:pageBlock>
+    
+            <apex:pageBlock title="Select Recipients">
+    
+				<apex:outputPanel style="color:#FF0000;" id="recipientLimitMessage" >
+					<apex:outputtext rendered="{!nbOfRecipients > 1000}">The number of users in the selected folder ({!nbOfRecipients}) exceeds the limit (1000). Please filter on the user or contact name.</apex:outputtext>
+					<apex:outputtext rendered="{!nbOfRecipients == 0}">Your search criteria didn't match any user or contact.</apex:outputtext>
+				</apex:outputPanel>
+
+                <apex:pageBlockSection columns="2">
+                        
+					<apex:outputpanel>
+						<apex:inputText id="recipientFilter" label="File Name" value="{!recipientFilter}" style="width:100px;"/>
+						<apex:commandButton value="Filter" action="{!applyFilter}" rerender="recipientLimitMessage,recipientList" status="recipientActStatusId"/>
+					</apex:outputpanel>
+
+					<apex:outputPanel ></apex:outputPanel>
+    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel >
+                            <apex:outputLabel style="font-weight: bold">Contacts:</apex:outputLabel>
+                            <br/>
+                            <apex:selectList id="recipientList" label="Contacts" value="{!availableRecipientsSelected}" size="20" multiselect="true" style="min-width:250px;max-height:270px;">
+                                <apex:selectOptions value="{!availableRecipients}"/>
+                            </apex:selectList>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:pageBlockSection >
+                            
+                            <!-- TO -->
+                            <apex:pageBlockSectionItem dataStyle="vertical-align : middle;" labelStyle="vertical-align : middle;">
+                                <apex:commandButton value="<<" action="{!removeToRecipients}" rerender="toRecipients" status="recipientActStatusId"/>
+                                <apex:commandButton value=">>" action="{!addToRecipients}" rerender="toRecipients" status="recipientActStatusId"/>
+                            </apex:pageBlockSectionItem>
+        
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+                                    <apex:outputLabel style="font-weight: bold">Additional To Recipients:</apex:outputLabel>
+                                    <br/>
+                                    <apex:selectList id="toRecipients" label="Additional To" value="{!selectedToRecipients}" size="5" multiselect="true"  style="min-width:250px;">
+                                        <apex:selectOptions value="{!additionalToRecipients}"/>
+                                    </apex:selectList>
+                                </apex:outputPanel>    
+                            </apex:pageBlockSectionItem>
+                            
+                            <!-- CC -->
+                            <apex:pageBlockSectionItem dataStyle="vertical-align : middle;" labelStyle="vertical-align : middle;">
+                                <apex:commandButton value="<<" action="{!removeCcRecipients}" rerender="ccRecipients" status="recipientActStatusId"/>
+                                <apex:commandButton value=">>" action="{!addCcRecipients}" rerender="ccRecipients" status="recipientActStatusId"/>
+                            </apex:pageBlockSectionItem>
+        
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+                                    <apex:outputLabel style="font-weight: bold">CC Recipients:</apex:outputLabel>
+                                    <br/>
+                                    <apex:selectList id="ccRecipients" label="Cc" value="{!selectedCcRecipients}" size="5" multiselect="true"  style="min-width:250px;">
+                                        <apex:selectOptions value="{!ccRecipients}"/>
+                                    </apex:selectList>
+                                </apex:outputPanel>    
+                            </apex:pageBlockSectionItem>
+                                                 
+                            <!-- BCC -->
+                            <apex:pageBlockSectionItem dataStyle="vertical-align : middle;" labelStyle="vertical-align : middle;">
+                                <apex:commandButton value="<<" action="{!removebccRecipients}" rerender="bccRecipients" status="recipientActStatusId"/>
+                                <apex:commandButton value=">>" action="{!addBccRecipients}" rerender="bccRecipients" status="recipientActStatusId"/>
+                            </apex:pageBlockSectionItem>
+        
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+                                    <apex:outputLabel style="font-weight: bold">BCC Recipients:</apex:outputLabel>
+                                    <br/>
+                                    <apex:selectList id="bccRecipients" label="Bcc" value="{!selectedBccRecipients}" size="5" multiselect="true"  style="min-width:250px;">
+                                        <apex:selectOptions value="{!bccRecipients}"/>
+                                    </apex:selectList>
+                                </apex:outputPanel>    
+                            </apex:pageBlockSectionItem>
+                           
+                        </apex:pageBlockSection>
+                    </apex:pageBlockSectionItem>                    
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockButtons location="bottom" >
+                    <apex:commandButton value="Save" action="{!save}"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}"/>
+                </apex:pageBlockButtons>
+
+            </apex:pageBlock>
+        </apex:form>
+    </div>
+    <div id="recipientBackground" class="black_overlay"></div>
+
+</apex:component>
