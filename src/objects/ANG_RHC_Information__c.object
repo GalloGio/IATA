@@ -72,10 +72,9 @@
     </fields>
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
-        <description>Reports the cash condition of the account. Used to determine the actual and forecasted RHC Amounts</description>
+        <defaultValue>false</defaultValue>
+        <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>
         <externalId>false</externalId>
-        <formula>ANG_AccountId__r.ANG_CashCondition__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Cash Conditions Equal to FS</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -167,16 +166,6 @@
         <fullName>ANG_RHC_Amount_Forecasted__c</fullName>
         <description>Holds the information regarding what is the expected RHC Amount if the user clicks on the button &quot;Confirm Forecasted RHC&quot;</description>
         <externalId>false</externalId>
-        <formula>IF(
-    ANG_AccountId__r.ANG_CashCondition__c &amp;&amp; ANG_Financial_Security__c &gt; 0,
-    ANG_Financial_Security__c,
-    IF(
-        ANG_Financial_Security__c  &gt; (ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c) ,
-        ANG_Financial_Security__c , 
-        ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Forecasted RHC Amount</label>
         <precision>18</precision>
         <required>false</required>
@@ -199,18 +188,8 @@
     </fields>
     <fields>
         <fullName>ANG_RHC_Amount__c</fullName>
-        <description>The current RHC Amount for the agent.</description>
+        <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>
-        <formula>IF(
-    ANG_AccountId__r.ANG_CashCondition__c &amp;&amp; ANG_Financial_Security__c &gt; 0,
-    ANG_Financial_Security__c,
-    IF(
-        ANG_Financial_Security__c  &gt; (ANG_RME_Amount__c + ANG_Exceeding_Financial_Security__c) ,
-        ANG_Financial_Security__c , 
-        ANG_RME_Amount__c + ANG_Exceeding_Financial_Security__c
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>RHC Amount</label>
         <precision>18</precision>
         <required>false</required>
