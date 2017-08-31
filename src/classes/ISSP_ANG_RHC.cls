@@ -35,10 +35,13 @@ public with sharing class ISSP_ANG_RHC {
 		List<User> userList = [SELECT Id, ContactId FROM User WHERE Id = :Userinfo.getUserId()];
 		Id contactId = userList.isEmpty() ? null : userList[0].ContactId;
 		List<Contact> contactList = [SELECT Id,
+											Authorized_Signatory__c,
 											Account.Id,
 											Account.Remittance_frequency__c,
 											Account.ANG_IEP_Status_FF__c,
-											Account.ANG_Accreditation_Model__c
+											Account.ANG_Accreditation_Model__c,
+											Account.Location_Type__c,
+											Account.Top_Parent__r.Location_Type__c
 									   FROM Contact
 									  WHERE Id = :contactId];
 		this.contact = contactList.isEmpty() ? null : contactList[0];

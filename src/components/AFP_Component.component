@@ -1,4 +1,28 @@
 <apex:component controller="ANG_AfpController">
+
+  <script type="text/javascript">
+    //$('#iepLink').click(function(){ errorMessageModal(); return false; });
+
+    function errorMessageModal(flag) {
+      if(flag == '-') {
+        showModal('#ModalErrorMessage');
+      }
+    }
+
+    function showModal(modalName) {
+      if (! $(modalName).is(":visible")) {
+        $(modalName).modal('show');  
+      }
+    }
+
+    function hideModal(modalName) {
+      if ($(modalName).is(":visible")) {
+        $(modalName).modal('hide');  
+      }
+    }  
+  </script>
+--{! wrapper.modalErrorMessage}--
+
   <apex:attribute name="wrapperClass" type="ANG_ISSP_AfpWrapper" description="Wrapper" assignTo="{! wrapper}" />
   <section name="payment-forms" class="row">
     <header class="col-xs-12">
@@ -8,24 +32,54 @@
     </header>
     <div class="col-md-4 col-sm-12 text-center">
       <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
-      <apex:outputPanel rendered="{! NOT wrapper.isCashless}">
-	    <i class="{! wrapper.isCash}" aria-hidden="true"></i>
-	    <a href="#">Example</a>
-      </apex:outputPanel>
+      <i class="{! wrapper.isCash}" aria-hidden="true"></i>
       <apex:outputPanel rendered="{! wrapper.isCashless}">
-      	<br/>
       	<apex:outputText escape="false" value="{! $Label.ANG_ISSP_AFP_CashlessMessage}"/>
       </apex:outputPanel>      
     </div>
     <div class="col-md-4 col-sm-12 text-center">
       <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
       <i class="{! wrapper.isIEP}" aria-hidden="true"></i>
-      <a href="{! wrapper.iepLink}">{! wrapper.iepLinkLabel}</a>
+      <a id="iepLink" href="{! wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
     </div>
     <div class="col-md-4 col-sm-12 text-center">
       <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
       <i class="{! wrapper.isCreditCard}" aria-hidden="true"></i>
-      <a href="#">Example</a>
+      <apex:outputPanel rendered="{! NOT wrapper.isCreditCardFlag}">
+        <apex:outputText escape="false" value="{! $Label.ANG_ISSP_AFP_NoCreditCardMessage}"/>
+      </apex:outputPanel>      
     </div>
   </section>
+
+  <div class="modal" id="ModalErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
+      <div class="modal-content"> 
+        <div class="modal-header"> 
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">{!$Label.ANG_ISSP_Open_IATA_EasyPay_Account}</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p>              
+                <apex:outputLabel escape = "false" id="errorMessage" value="{! wrapper.modalErrorMessage}"/>
+              </p>
+            </div>
+          </div>            
+        </div>  
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-12">
+              <a onclick="hideModal('#ModalErrorMessage')" class="btn_iata_cancel btn-block btn">
+                {!$label.ISSP_Cancel}
+              </a>
+            </div>
+          </div>            
+        </div>          
+      </div>
+    </apex:outputPanel>
+  </div>
+
+
 </apex:component>

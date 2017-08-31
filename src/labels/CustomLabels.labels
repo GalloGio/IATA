@@ -1357,7 +1357,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ANY</shortDescription>
         <value>ANY</value>
     </labels>
-
     <labels>
         <fullName>ANG_ISSP_AFP_CashlessMessage</fullName>
         <language>en_US</language>
@@ -1366,8 +1365,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>You can always apply to convert to the Cash type of accreditation in order to benefit from the cash facility, by using the Other Changes option from the &lt;a href=&quot;/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; section.
         </value>
     </labels>
-
-
+    <labels>
+        <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
+        <value>&lt;a href=&quot;/faq_home?MainNav=resources&amp;subNav=faq&amp;mid=M2S1&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+    </labels>
     <labels>
         <fullName>API_URL</fullName>
         <language>en_US</language>
