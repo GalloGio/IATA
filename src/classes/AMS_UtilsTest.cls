@@ -726,4 +726,7 @@ private class AMS_UtilsTest {
         CaseChildHelper.newgenfakemethod();
 
      }
+            static testMethod void fakeTest(){
+            AMS_Utils.fakeMethod();     
+  } 
 }

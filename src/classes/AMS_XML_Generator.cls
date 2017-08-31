@@ -456,8 +456,6 @@ public with sharing class AMS_XML_Generator {
                     FROM Account WHERE Id in :setOwnershipKeys];
 
         for (Account o : lOwner) {
-            //20-06-2017 - Change AMSU-93 - special chars replacement
-            o.Name = AMS_Utils.cleanSpecialChars(o.Name);
             setAccountKeys.add(o.Id); 
         }
         
@@ -641,11 +639,6 @@ public with sharing class AMS_XML_Generator {
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c FROM Account WHERE Id in :setAccountKeys]; 
-
-        for (Account o : lAccount) {
-            //20-06-2017 - Change AMSU-93 - special chars replacement
-            o.Name = AMS_Utils.cleanSpecialChars(o.Name);
-        }
 
         //REFERENCE        
         lPerson = [SELECT Email__c,First_Name__c,Id,
@@ -1002,18 +995,13 @@ public with sharing class AMS_XML_Generator {
 
                     String[] billingStreet;
 
-                    
-                    //2017-03-23 - AMSU-93
-                    //billingStreet = AMS_Utils.splitAccName(ag.BillingStreet == null?'':ag.BillingStreet);
-                    billingStreet = AMS_Utils.splitAccName(ag.BillingStreet == null?'':AMS_Utils.cleanSpecialChars(ag.BillingStreet));
+                    billingStreet = AMS_Utils.splitAccName(ag.BillingStreet == null?'':ag.BillingStreet);
                     
                     billingAdd.Address_1__c = billingStreet[0];
                     billingAdd.Address_2__c = billingStreet[1];
                     billingAdd.Address_3__c = billingStreet[2];
 
-                    //2017-03-23 - AMSU-93
-                    //billingAdd.City__c = ag.BillingCity;
-                    billingAdd.City__c = AMS_Utils.cleanSpecialChars(ag.BillingCity);
+                    billingAdd.City__c = ag.BillingCity;
                     billingAdd.State__c = ag.Iso_State__c;
                     billingAdd.Country__c = ag.IATA_ISO_Country__c;
                     billingAdd.AMS_ZipCode__c = ag.BillingPostalCode;
@@ -1041,9 +1029,7 @@ public with sharing class AMS_XML_Generator {
                         abbreviatedAdd = billingAdd.clone(false, true);
 
                         String[] abbreviatedStreet;
-                        //2017-03-23 - AMSU-93
-                        //abbreviatedStreet = AMS_Utils.splitAccName(ag.Abbreviated_address__c == null ? '' : ag.Abbreviated_address__c);
-                        abbreviatedStreet = AMS_Utils.splitAccName(ag.Abbreviated_address__c == null ? '' : AMS_Utils.cleanSpecialChars(ag.Abbreviated_address__c));
+                        abbreviatedStreet = AMS_Utils.splitAccName(ag.Abbreviated_address__c == null ? '' : ag.Abbreviated_address__c);
 
                         abbreviatedAdd.Address_Type__c = 'Abbreviated';
 
@@ -1059,17 +1045,12 @@ public with sharing class AMS_XML_Generator {
                         shippingAdd.Account__c = ag.Id;
                         shippingAdd.Address_Type__c = 'Shipping';
 
-                        //2017-03-23 - AMSU-93
-                        //String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet == null ? '' : ag.ShippingStreet);
-                        String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet == null ? '' : AMS_Utils.cleanSpecialChars(ag.ShippingStreet));
-                        
+                        String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet == null ? '' : ag.ShippingStreet);
                         shippingAdd.Address_1__c = shippingStreet[0];
                         shippingAdd.Address_2__c = shippingStreet[1];
                         shippingAdd.Address_3__c = shippingStreet[2];
 
-                        //2017-03-23 - AMSU-93
-                        //shippingAdd.City__c = ag.ShippingCity;
-                        shippingAdd.City__c = ag.ShippingCity == null ? '' : AMS_Utils.cleanSpecialChars(ag.ShippingCity);
+                        shippingAdd.City__c = ag.ShippingCity;
                         
                         if(ag.ShippingState != null ){
                             if(AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()) != null){
@@ -1104,12 +1085,6 @@ public with sharing class AMS_XML_Generator {
                                         add.Address_Type__c = add.Address_Type__c.replace(';'+addressType, '');
                                     }
                                 }
-
-                                //2017-03-23 - AMSU-93
-                                add.Address_1__c = AMS_Utils.cleanSpecialChars(add.Address_1__c);
-                                add.Address_2__c = AMS_Utils.cleanSpecialChars(add.Address_2__c);
-                                add.Address_3__c = AMS_Utils.cleanSpecialChars(add.Address_3__c);
-                                add.City__c = AMS_Utils.cleanSpecialChars(add.City__c);
                                 //if address is a valid addres, add new node.
                                 if(String.isNotEmpty(add.Address_Type__c)) getObjectData(addressNode, 'AMS_Address__c', add );
                             }
@@ -1583,9 +1558,7 @@ public with sharing class AMS_XML_Generator {
 
             getElementNode(agencyNode, 'air_code', agency.Airline_Code__c);
             
-            //20-06-2017 - Change AMSU-93 - special chars replacement
-            //List<String> lsLegalName = AMS_Utils.splitAccName(agency.Name);
-            List<String> lsLegalName = AMS_Utils.splitAccName(AMS_Utils.cleanSpecialChars(agency.Name));
+            List<String> lsLegalName = AMS_Utils.splitAccName(agency.Name);
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.name', 'legal_1', lsLegalName[0] == ''?null:lsLegalName[0]);
 
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_2__c', 'legal_2', lsLegalName[1] == ''?null:lsLegalName[1]);
@@ -1593,15 +1566,11 @@ public with sharing class AMS_XML_Generator {
 
             //short_name
             //DECISION R3.1 - Always send "Abbreviated_name__c"
-            //20-06-2017 - Change AMSU-93 - special chars replacement
-            //getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c); 
-            getElementNode(agencyNode, 'short_name', AMS_Utils.cleanSpecialChars(agency.Abbreviated_name__c)); 
+            getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c); 
             
             List<String> lsTradeName = Null;
             if(agency.TradeName__c != Null){
-                //20-06-2017 - Change AMSU-93 - special chars replacement
-                //lsTradeName = AMS_Utils.splitAccTradeName(agency.TradeName__c);
-                lsTradeName = AMS_Utils.splitAccTradeName(AMS_Utils.cleanSpecialChars(agency.TradeName__c));
+                lsTradeName = AMS_Utils.splitAccTradeName(agency.TradeName__c);
             }else{
                 lsTradeName = new List<String>();
                 lsTradeName.add(''); //1
