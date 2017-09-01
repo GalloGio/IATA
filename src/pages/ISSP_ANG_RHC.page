@@ -164,9 +164,12 @@
           </section>
           <div class="row">
             <div class="col-xs-12 text-center">
-              <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">IATA Customer e-Statment</apex:outputLink>
-              <apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">IATA Customer e-Statment</apex:outputLink>
-            </div>
+              <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
+              <apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink>              
+            </div>            
+          </div>
+          <div class="row">
+            <br/>
           </div>
 
           <c:AFP_Component wrapperClass='{!afpWrapper}'/>
@@ -184,7 +187,7 @@
                 <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Accreditation type
                 <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
               </td>
-              <td>Standard Accreditatio with Cash</td>
+              <td>Standard Accreditation with Cash</td>
             </tr>
             <tr>
               <td>

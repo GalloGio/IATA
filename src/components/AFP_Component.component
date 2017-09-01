@@ -21,8 +21,6 @@
       }
     }  
   </script>
---{! wrapper.modalErrorMessage}--
-
   <apex:attribute name="wrapperClass" type="ANG_ISSP_AfpWrapper" description="Wrapper" assignTo="{! wrapper}" />
   <section name="payment-forms" class="row">
     <header class="col-xs-12">
