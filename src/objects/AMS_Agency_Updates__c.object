@@ -93,6 +93,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ConfigurationID__c</fullName>
+        <externalId>false</externalId>
+        <label>Configuration ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Account__r.IATA_ISO_Country__r.ISO_Code__c</formula>
