@@ -1216,32 +1216,11 @@
                         <apex:inputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;"/>   
                     </apex:pageBlockSection>
                 </apex:outputPanel>
-                
-                <apex:outputPanel rendered="{!OR(amsOfficeType!='HO',newCase.Reason1__c=='New BR Abroad')}">
-                    <apex:pageBlockSection columns="1">
-                        <apex:pageblocksectionitem >
-                            <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
-                            <apex:outputfield value="{!hqAccount.Name}" />
-                        </apex:pageblocksectionitem>
-                        <apex:outputField value="{!hqAccount.TradeName__c}"/>
-                        <apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AMS_Step3_HO_Full_Address}">
-                            <apex:param value="{!hqAccount.BillingStreet}" />
-                            <apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
-                            <apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
-                        </apex:outputText>                       
-                        <apex:outputField value="{!hqAccount.Website}"/>
-                        <apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Registration_BusinessPhone}"/>
-                        <apex:outputField value="{!hqAccount.Email__c}" label="{!$Label.ISSP_Office_Email}"/>
-                        <apex:outputField value="{!hqAccount.Mobile__c}"/>
-                        <apex:outputField value="{!hqAccount.Fax}"/>
-                        <apex:outputField value="{!hqAccount.IATACode__c}"/>
-                        <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
-                    </apex:pageBlockSection>
-                 </apex:outputPanel>
-                             
+                  
                 <apex:pageBlockSection columns="2">                    
                     <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
                     <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                    <apex:outputtext rendered="{!AND(countryCheckList.License_required__c!=true,countryCheckList.Registration_required__c!=true)}"><!--empty: move following field to next row --></apex:outputtext>
                     <apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}" />
                     <apex:inputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}" />
                     <apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}" />                
