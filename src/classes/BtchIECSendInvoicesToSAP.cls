@@ -40,12 +40,22 @@ global class BtchIECSendInvoicesToSAP implements Database.Batchable<sObject>, Da
 		{
 			strStatus = mapZInvNum_Status.get(ZInvNum);
 			SAPInv = mapZInvNum_SAPInv.get(ZInvNum);
-			if (getNextStatus(SAPInv, strStatus))
-			{
+			if (getNextStatus(SAPInv, strStatus)){
 				SAPInv.Error_Message__c = strStatus;
 				SAPInv.Status_Date__c = system.now();
+
+				if(!strStatus.contains('Error')){
+					string subject = strStatus;
+					Pattern p = Pattern.compile('\\(([^}]*)\\)');
+					Matcher m = p.matcher(subject);
+					if (m.find()){
+					   SAPInv.Order__c = m.group(1);			   
+					}	
+				}
+
 				lstSAPInv.add(SAPInv);
 			}
+
 		}
 		if (lstSAPInv.size() > 0)
 			update lstSAPInv;

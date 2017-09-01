@@ -5,7 +5,39 @@
   * History: 
   */
 public with sharing class trgHndlrIECSAPInvoice {
+
+	public static void OnBeforeInsert (List<IEC_SAP_Invoice__c> newRecords){ // tiago
+		Set<String> invoiceNumber = new Set<String>();		
+		Map<String,Id> invoiceIdMap = new Map<String,Id>();
+		List<IEC_SAP_Invoice__c> toUpdate = new List<IEC_SAP_Invoice__c>();
+
+		for(IEC_SAP_Invoice__c zInvoice : newRecords ){
+			if(zInvoice.Name != null){
+			 invoiceNumber.add(zInvoice.Name);
+			}
+		    system.debug(LoggingLevel.ERROR, 'invoiceNumber ' + invoiceNumber);
+		}
+
+		if(invoiceNumber.isEmpty() == false){
+			for(Zuora__Payment__c zp : [SELECT Id, Zuora__InvoiceNumber__c, Order__c, Zuora__PaymentMethod__c, Order__r.Payment_Type__c from Zuora__Payment__c where Zuora__InvoiceNumber__c IN :invoiceNumber]){
+				invoiceIdMap.put(zp.Zuora__InvoiceNumber__c,zp.Order__c);
+			}
+		}
+
+		system.debug(LoggingLevel.ERROR, 'invoiceIdMap' + invoiceIdMap);
+
+			for(IEC_SAP_Invoice__c iecsap : newRecords){				
+				String sapInvoiceNumber = iecsap.Name;
+				Id orderId = invoiceIdMap.get(sapInvoiceNumber);
+
+				if(orderId != null)
+					iecsap.Order__c = orderId;
+			}	
+	}
+
 	public static void OnAfterUpdate(List<IEC_SAP_Invoice__c> newRecords, Map<Id, IEC_SAP_Invoice__c> newRecordsMap, List<IEC_SAP_Invoice__c> oldRecords, Map<Id, IEC_SAP_Invoice__c> oldRecordsMap) {
+		
+
 		/* 
 		 * NOTE: Commented on 2014/07/14 following feedback from David. Will be used in the future when we create inexisting users in SAP, but it's not the case now.
 		 * 
