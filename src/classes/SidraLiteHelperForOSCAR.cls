@@ -7,6 +7,16 @@ public with sharing class SidraLiteHelperForOSCAR {
     public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change'};
     public static final set<String> VALID_REASONS2 = new set<String>{'Certificate DGR'};
 
+    public static final map<String,String> MAP_STEP_REASON = new map<String,String>{
+        '6' => 'Non submission of supporting documents',
+        '9' => 'Non payment of change fees',
+        '11' => 'Financial Review Non-compliance (OSCAR Change)',
+        '12' => 'Financial Security Non-compliance (OSCAR Change)',
+        '14' => 'Non submission of PSAA',
+        '26' => 'Late/Absence of Notification of Change',
+        'RPM' => 'Change Deficiency'
+    };
+
     public static void checkBussinessRules(Case cse) {
         try {
             if (cse.OSCAR__r==null) {
@@ -106,43 +116,43 @@ public with sharing class SidraLiteHelperForOSCAR {
         AMS_OSCAR__c oscar = cse.OSCAR__r;
 
         if (oscar.Step6__c == 'Failed') {
-            String reason = 'Non submission of supporting documents';
+            String reason = MAP_STEP_REASON.get('6');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step9__c == 'Failed') {
-            String reason = 'Non payment of change fees';
+            String reason = MAP_STEP_REASON.get('9');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step11__c == 'Failed') {
-            String reason = 'Financial Review Non-compliance (OSCAR Change)';
+            String reason = MAP_STEP_REASON.get('11');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step12__c == 'Failed') {
-            String reason = 'Financial Security Non-compliance (OSCAR Change)';
+            String reason = MAP_STEP_REASON.get('12');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step14__c == 'Failed') {
-            String reason = 'Non submission of PSAA';
+            String reason = MAP_STEP_REASON.get('14');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.Step26__c == 'Failed') {
-            String reason = 'Late/Absence of Notification of Change';
+            String reason = MAP_STEP_REASON.get('26');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
         }
         if (oscar.RPM_Approval__c == 'Authorize Disapproval') {
-            String reason = 'Change Deficiency';
+            String reason = MAP_STEP_REASON.get('RPM');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }

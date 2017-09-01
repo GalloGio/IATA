@@ -255,7 +255,8 @@ global class AMS_OSCAR_Webservice {
     **/
     private static Case findOscarParentCase(Id oscarId) {
         List<Case> cases = [
-            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c
+            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.RPM_Approval__c
             FROM Case
             WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
             LIMIT 1];
@@ -264,10 +265,46 @@ global class AMS_OSCAR_Webservice {
         }
         return cases[0];
     }
+    
+    private static void checkOscarStep(AMS_OSCAR__c oscar, String step) {
+        String reason = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+        String message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Failed" in this step.';
+        if (step=='6') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='9') {
+            if (oscar.Step9__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='11') {
+            if (oscar.Step11__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='12') {
+            if (oscar.Step12__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='14') {
+            if (oscar.Step14__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='26') {
+            if (oscar.Step26__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='RPM') {
+            if (oscar.RPM_Approval__c == 'Authorize Disapproval') return;
+            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Authorize Disapproval" in this step.';
+            throw new OSCARException(message);
+        }
+        throw new OSCARException('Step ' + step + ' is invalid');
+    }
 
-    WebService static String createSIDRALite(String oscarId, Boolean createCase) {
+    WebService static String createSIDRALite(String oscarId, String step, Boolean createCase) {
         try {
             Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
             Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
             
             if (createCase) {
@@ -285,9 +322,10 @@ global class AMS_OSCAR_Webservice {
         }
     }
     
-    WebService static String updateSIDRALite(String oscarId) {
+    WebService static String updateSIDRALite(String oscarId, String step) {
         try {
             Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
             WSSidraLite.updateSecondAndThirdDeadline(oscarCase.Id);
             return '';
 

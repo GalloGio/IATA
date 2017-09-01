@@ -466,7 +466,6 @@ function buildFunctionCall(func, argList){
             <div id="inline{!step.name}" style="display:none;">
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
                 <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
-                    
                 <apex:repeat value="{!step.actions}" var="action">
                     <br/>
                     <apex:commandButton onclick="buildFunctionCall('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>

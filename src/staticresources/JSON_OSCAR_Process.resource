@@ -294,7 +294,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -756,7 +764,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -1055,7 +1071,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "6"
                     ]
                   }
                 ],
@@ -1121,7 +1137,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "26"
                     ]
                   },
                   {
@@ -1221,7 +1237,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "9"
                     ]
                   }
                 ],
@@ -1264,7 +1280,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "11"
                     ]
                   }
                 ],
@@ -1290,7 +1306,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "12"
                     ]
                   }
                 ],
@@ -1356,7 +1372,7 @@
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "14"
                     ]
                   }
                 ],
@@ -1413,7 +1429,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -1903,7 +1927,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -3615,7 +3647,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4416,7 +4456,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4938,7 +4986,15 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
+                  }
+                ],
                 "Automations": [
                   {
                     "Status": "Passed",

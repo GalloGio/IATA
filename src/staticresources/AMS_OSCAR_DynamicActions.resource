@@ -326,8 +326,11 @@ var dyn_functions = {
            
            },
            SIDRALiteAction:function (arg) {
+                listArgs = arg.split(",");
+                var oscarId = listArgs[0].trim();
+                var stepNumber = listArgs[1].trim();
                 try {
-                  var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg, createCase: false});
+                  var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: oscarId, step: stepNumber, createCase: false});
                   // if string is an error
                   if (result[0] != null && result[0].substring(0, 6) == 'ERROR:') {
                       alert(result);
@@ -336,7 +339,7 @@ var dyn_functions = {
                   // if case was not found (with no Id) then ask the user to continue
                   if (result[0] == null) {
                       if(confirm('Do you want to proceed creating a SIDRA Lite case?')) {
-                          result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg, createCase: true});
+                          result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: oscarId, step: stepNumber, createCase: true});
                       } else {
                           return;
                       }
@@ -361,7 +364,7 @@ var dyn_functions = {
                   if (exception.startsWith("WSSidraLite.ShowConfirmationException") ) {
                     var message = exception.replace("WSSidraLite.ShowConfirmationException: ","");
                     if (confirm(message)) {
-                        var updateResult = sforce.apex.execute("AMS_OSCAR_Webservice","updateSIDRALite",{oscarId:arg});
+                        var updateResult = sforce.apex.execute("AMS_OSCAR_Webservice","updateSIDRALite",{oscarId:oscarId, step: stepNumber});
                         if (updateResult[0] != null && updateResult[0].substring(0, 6) == 'ERROR:') {
                           alert(updateResult);
                           return;
