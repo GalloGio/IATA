@@ -73,7 +73,11 @@ private void onBeforeInsert() {
     Product_Svc.setIsNewVersion(newList);
 
     /** Ecommerce Enhancements R2 **/
-    Product_Svc.checkProductAcceptedPaymentMethods(newList, null);
+    /* Begin INC335264
+    *Product_Svc.checkProductAcceptedPaymentMethods(newList, null);
+    */
+    Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);    
+    /** End INC335264**/
 }
 private void onBeforeUpdate() {
     getData(true, true);
@@ -83,7 +87,11 @@ private void onBeforeUpdate() {
     Product_Svc.setProductManager(oldList, newList, false);
 
     /** Ecommerce Enhancements R2 **/
-    Product_Svc.checkProductAcceptedPaymentMethods(newList, oldMap);
+    /* INC335264
+    /Product_Svc.checkProductAcceptedPaymentMethods(newList, oldMap);
+    */
+    Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
+    /** End INC335264**/
 }
 //private void onBeforeDelete() {
     //getData(false, true);

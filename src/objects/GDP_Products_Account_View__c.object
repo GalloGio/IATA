@@ -291,7 +291,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_ISO_Country_Code__c</formula>
+        <formula>Related_GDP_Address__r.Address_IATA_Custom_ISO_Country_Code__c</formula>
         <label>Country ISO Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -302,7 +302,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
+        <formula>Related_GDP_Address__r.Address_Country_Name_Uppercase__c</formula>
         <label>Country Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

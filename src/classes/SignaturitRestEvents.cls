@@ -27,6 +27,7 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 		for(String key : params.keySet()){
 			System.debug(key + ' : ' + params.get(key));
 		}
+		System.debug('' + RestContext.request);
 
         try{
             Tracked_Email_Certificate__c trackedEmailCertificate = [Select Tracked_Email__r.Id
