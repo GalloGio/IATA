@@ -874,8 +874,9 @@
                           <apex:pageBlockSection columns="2" id="section2" >
                             <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">
                               <apex:outputPanel >
-                                <apex:outputlabel value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
-
+                              <div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:19px;">
+                                <apex:outputText value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
+                              </div>
                                 <div style="width: 174.4px; float: left; margin-left: 10px;">
                                   <apex:inputField value="{!newForm.Account_Name__c}" />
                                 </div>
@@ -924,7 +925,7 @@
                             <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
 
                             <apex:pageBlockSectionItem rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">
-                              <apex:outputLabel id="LegalStatusLabel" style="padding-left: 6px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" />
+                              <apex:outputLabel id="LegalStatusLabel" styleClass="LegalStatusLabel" style="padding-left: 6px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" />
                               <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');" />
                             </apex:pageBlockSectionItem>
                              </apex:pageBlockSection>
@@ -952,7 +953,7 @@
                             </apex:actionfunction>
                             <apex:outputPanel id="VatNumberInput">
                               <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)} *" />
+                                <apex:outputText id="vat-number" styleClass="label labelCol" style="width: 163px;text-align: left;float: left;padding-left:19px;" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)} *" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
                                   <div style="display:inline-block; width: 213px;">
@@ -1027,7 +1028,7 @@
                               <DSE:DS_DataQuality id="BranchEmail" RecordRef="{!newForm}" 
                                                   FieldGroupName="Branch Email" Edit="true" 
                                                   FormGroupStyle="form-group" RowStyle="row" 
-                                                  LabelStyle="label labelCol test-label text-label-no-margin" 
+                                                  LabelStyle="label labelCol test-label text-label-no-margin office-email" 
                                                   InputStyle="test-input" 
                                                   StatusStyle="test-status" 
                                                   FormControlStyle="apcontainer">
@@ -1092,9 +1093,11 @@
                          dateLicenseGranted = $j('[for$=date-license-granted]')[0],
                          dateRegGranted = $j('[for$=date-reg-granted]')[0],
                          officePhoneLabel = $j('[id$=office-phone-label]')[0],
+                         officeEmail = $j('.office-email')[0].childNodes[0],
                          labelBillStreet = $j('.address-label')[0].childNodes[0],
                          labelBillCity = $j('.address-label')[1].childNodes[0],
-                         legalStatusLabel = $j('[for$=LegalStatus]')[0];
+                         legalStatusLabel = $j('.LegalStatusLabel')[0].childNodes[0];
+                         
                         if(dateOpenedAsTravelAgency)
                           dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
                         if (licenseNo)
@@ -1107,10 +1110,14 @@
                           dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
                         if (officePhoneLabel)
                           officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
+                        if (officeEmail)
+                          officeEmail.textContent = officeEmail.textContent.replace('* ', '') + ' *';
                         if (labelBillStreet)
-                          labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
+                            labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
                         if (labelBillCity)
                           labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
+                        if (legalStatusLabel)
+                         	legalStatusLabel.textContent = legalStatusLabel.textContent.replace('* ', '') + ' *' ;
                       });
                   </script>
 

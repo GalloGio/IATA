@@ -5501,6 +5501,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
             ngErrorFoundBR = true;
         }
+        
+        if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.AE_separate_Legal_Entity__c == 'Yes' && newForm.ISSP_AMS_when_incorporated__c == null) {
+   			newForm.ISSP_AMS_when_incorporated__c.addError(Label.ISSP_YouMustEnter);
+        	ngErrorFoundBR = true;
+        }
+        
+       	if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.AE_separate_Legal_Entity__c == 'Yes' && newForm.ISSP_AMS_where_incorporated__c == null) {
+   			newForm.ISSP_AMS_where_incorporated__c.addError(Label.ISSP_YouMustEnter);
+          	ngErrorFoundBR = true;
+        }
 
         if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
             newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_YouMustEnter);

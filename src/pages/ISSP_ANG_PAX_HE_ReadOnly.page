@@ -129,12 +129,12 @@
             	<apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
             </apex:outputText>
         	<apex:outputtext ></apex:outputtext>
-			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}" value="{!newForm.ISSP_AMS_License_No__c}" />
-			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}" value="{0,date, MMMM d,  yyyy}">
+			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
+			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}" />
+			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}" value="{0,date, MMMM d,  yyyy}" rendered="{!countryCheckList.License_required__c==true}">
             	<apex:param value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
             </apex:outputText>
-			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}" value="{0,date, MMMM d,  yyyy}">
+			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}" value="{0,date, MMMM d,  yyyy}" rendered="{!countryCheckList.Registration_required__c==true}" >
             	<apex:param value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
             </apex:outputText>
 
