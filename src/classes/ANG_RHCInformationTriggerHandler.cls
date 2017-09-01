@@ -14,14 +14,13 @@ public class ANG_RHCInformationTriggerHandler{
 		convertAndSumFS();
 	}
 	public void onAfterInsert(){
-
+		 new ANG_AgencyEventsGenerator('Create',triggerNew,oldMap,triggerNew.getSObjectType(),'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
 	}
-
 	public void onBeforeUpdate(){
 		 convertAndSumFS();
 	}
 	public void onAfterUpdate(){
-		
+		new ANG_AgencyEventsGenerator('Update',triggerNew,oldMap,triggerNew.getSObjectType(),'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
 	}
 
 	public void onBeforeDelete(){}
