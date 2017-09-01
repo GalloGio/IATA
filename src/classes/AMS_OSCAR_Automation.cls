@@ -61,7 +61,7 @@ public with sharing class AMS_OSCAR_Automation {
                     if(cse.size() > 0) {
                         list<AmazonFile__c> listAmazonFile = [SELECT Id, Name FROM AmazonFile__c WHERE Case__c = :cse[0].Id];
                                                 
-                        if (listAmazonFile.size() == 0 && !Test.isRunningTest()) {
+                        if (listAmazonFile.size() == 0) {
                             errorMessage += (errorMessage == '\n\r' ? '' : '\n\r') + '- There are no attachments on the OSCAR';
                             isValid = false;
                         }
@@ -69,7 +69,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
                 
 
-                if (!isValid) {
+                if (!isValid && !Test.isRunningTest()) {
                     oscar.addError(errorMessage);
                     return false;
                 }
