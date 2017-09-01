@@ -17669,6 +17669,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>E&amp;F Clients</label>
         <language>en_US</language>
         <sharedTo>
+            <group>EFServices</group>
             <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>

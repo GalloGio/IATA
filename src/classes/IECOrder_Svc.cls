@@ -925,5 +925,18 @@ public with sharing class IECOrder_Svc {
         
     }
 
+/****************************************************************************************************
+    Created by blue-infinity, Susana 2017-08-18
+        Delete an order
+****************************************************************************************************/
+public static void deleteOrder(Order order) {
+    Savepoint sp = Database.setSavepoint();
+    try {
+        delete [select Id from Order where Id = :order.id];
+    } catch (Exception e) {
+        ApexPages.addMessages(e);
+        Database.rollback(sp);
+    }
+} //*** end of "deleteOrderById"
 
 }

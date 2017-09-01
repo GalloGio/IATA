@@ -103,7 +103,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -112,7 +112,7 @@
         <externalId>false</externalId>
         <label>Calendar New Submission Effective Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -174,7 +174,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -231,7 +231,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -263,7 +263,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -286,7 +286,7 @@
         <externalId>false</externalId>
         <label>File Recipient Email</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -297,7 +297,7 @@
         <label>File Recipient First Name</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -308,7 +308,7 @@
         <label>File Recipient Job Title</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -330,7 +330,7 @@
         <label>File Recipient Phone</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -351,7 +351,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -371,7 +371,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -381,7 +381,7 @@
         <label>File Name Custom Prefix</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -392,7 +392,7 @@
         <label>File Name Custom Suffix</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -413,7 +413,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -433,7 +433,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -445,7 +445,7 @@
         <referenceTo>GDP_File_Description__c</referenceTo>
         <relationshipName>GSS_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -456,7 +456,7 @@
         <inlineHelpText>Master File Delivery Date each time the Master File needs to be sent</inlineHelpText>
         <label>Master File Delivery</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -467,7 +467,7 @@
         <inlineHelpText>Calculated at the Delivery Time Plus 12 Months after each Delivery of the Master File</inlineHelpText>
         <label>Next Master File Delivery</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -477,7 +477,7 @@
         <label>Trigger File Name</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -490,7 +490,7 @@
         <referenceTo>Zuora__Subscription__c</referenceTo>
         <relationshipName>GSS_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -534,7 +534,7 @@
     </listViews>
     <nameField>
         <label>Subscription Number</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>File Subscription Details</pluralLabel>

@@ -1,0 +1,30 @@
+<apex:component controller="TrackedEmailPreviewController">
+    <apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
+
+	<script>
+	    function showPreviewPanel(show) {
+	        var value = show?"block":"none";
+	        document.getElementById('previewPanel').style.display=value;
+	        document.getElementById('previewBackground').style.display=value;
+	    }
+	</script>
+
+    <div id="previewPanel" class="white_content">
+        <apex:form >
+        
+        <apex:pageBlock >
+
+            <apex:outputPanel >
+                <apex:outputtext value="{!htmlBody}" escape="false"/> 
+            </apex:outputPanel>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Close Preview" action="{!closePreview}"/>
+            </apex:pageBlockButtons>
+
+        </apex:pageBlock>
+        </apex:form>
+    </div>
+    <div id="previewBackground" class="black_overlay"></div>
+
+</apex:component>

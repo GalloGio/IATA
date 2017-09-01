@@ -23968,7 +23968,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Allowed Users</shortDescription>
-        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB;00520000001WToeAAG;005w0000003VyOAAA0;00520000002rzLU;00520000001Wfth;00520000002Q38Y;005w0000004gSUJ;005w0000003X6vd;005w0000004BVdv</value>
+        <value>NA</value>
     </labels>
     <labels>
         <fullName>Signaturit_Endpoint</fullName>
@@ -23976,7 +23976,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Endpoint</shortDescription>
-        <value>https://api.signaturit.com/v2/</value>
+        <value>https://api.signaturit.com/v3/</value>
     </labels>
     <labels>
         <fullName>SiteTitle</fullName>
