@@ -100,7 +100,7 @@
         <defaultValue>false</defaultValue>
         <description>Field will not be tracked to trigger Delta update records</description>
         <externalId>false</externalId>
-        <inlineHelpText>Field will not be tracked to trigger Delta update records</inlineHelpText>
+        <inlineHelpText>DRIVES GDP_DELTA CREATION. If Checked, the field will not be tracked by the GDP_Delta trigger.</inlineHelpText>
         <label>Do Not Track</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -215,7 +215,7 @@
         <defaultValue>false</defaultValue>
         <description>Remove the field from the Txt file type generation</description>
         <externalId>false</externalId>
-        <inlineHelpText>Remove the field from the Txt file type generation</inlineHelpText>
+        <inlineHelpText>Remove the field from the Txt file. THIS ALTERS THE LAYOUT and will shift the information fields backward.</inlineHelpText>
         <label>TXT Hidden Column</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -294,7 +294,7 @@
         <defaultValue>true</defaultValue>
         <description>Value Field Visible or not visible in the output</description>
         <externalId>false</externalId>
-        <inlineHelpText>Value Field Visible or not visible in the output</inlineHelpText>
+        <inlineHelpText>Makes the information visible or not in the field WITHOUT ALTERING THE LAYOUT (spacing maintained with blank information)</inlineHelpText>
         <label>Visible</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -305,7 +305,7 @@
         <defaultValue>false</defaultValue>
         <description>Remove the field from the XML file type generation</description>
         <externalId>false</externalId>
-        <inlineHelpText>Remove the field from the XML file type generation</inlineHelpText>
+        <inlineHelpText>Remove the field from the XML file. THIS ALTERS THE LAYOUT (XML block will no be present in files).</inlineHelpText>
         <label>XML Hidden Column</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -341,9 +341,10 @@
     <listViews>
         <fullName>Field_Details_GSS_Member_TXT</fullName>
         <columns>NAME</columns>
-        <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
         <columns>Size__c</columns>
         <columns>Position__c</columns>
         <columns>Visible__c</columns>
@@ -354,15 +355,21 @@
             <operation>equals</operation>
             <value>Reference - GSS Member</value>
         </filters>
+        <filters>
+            <field>Filter_Field_API_Name__c</field>
+            <operation>contains</operation>
+            <value>Index</value>
+        </filters>
         <label>Field Details - GSS Member - TXT</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Field_Details_GSS_Non_Member_TXT</fullName>
         <columns>NAME</columns>
-        <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
         <columns>Size__c</columns>
         <columns>Position__c</columns>
         <columns>Visible__c</columns>
@@ -374,6 +381,27 @@
             <value>Reference - GSS Non Member</value>
         </filters>
         <label>Field Details - GSS Non Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Details_MDP_NO_Address</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - MDP NO Address</value>
+        </filters>
+        <label>Field Details - MDP NO Address</label>
         <language>en_US</language>
     </listViews>
     <listViews>

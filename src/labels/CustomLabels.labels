@@ -15920,6 +15920,13 @@ Please add below all your company valid email domains, including different ones 
         <value>The below contact has been registered as BSP/CASS Payment contact for your account:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_BSP_CASS_Payment_contact1_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_BSP/CASS Payment contact1 CNS</shortDescription>
+        <value>The below contact has been registered as Payment contact for your account:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_BSP_CASS_Payment_contact2</fullName>
         <categories>S12.1, Portal</categories>
         <language>en_US</language>
@@ -15933,7 +15940,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_BSP_CASS_Payment_contact2_CNS</shortDescription>
-        <value>This person will be used by CNS as point of contact for notifications about short/non payment for BSP/CASS operations and eventually receive electronic copies of Irregularity and Default notices for your Account.</value>
+        <value>This person will be used by CNS as point of contact for notifications about short/non payment for CASS operations.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_BSP_CASS_Payment_contact3</fullName>
