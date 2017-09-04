@@ -163,11 +163,12 @@
 		                <h3 class="panel-title">{!$Label.ISSP_AMS_New_MSO_Application}</h3>
 		            </div>
                     
-                    <apex:form>                   
+                    <apex:form>            
                     <apex:outputPanel id="msoForm">
 					<apex:pageBlock id="newMSOform" rendered="{! step == 'form' }">	
+
+                        <apex:pageMessages />       
                         
-                        <apex:pageMessages />
 
 						<apex:pageBlockButtons location="bottom" >
 							<!--
@@ -176,12 +177,12 @@
 							-->
 	                        <apex:actionStatus id="buttonLoadingStep1">
 			                    <apex:facet name="stop"><apex:outputPanel >
-			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="msoForm"/>
-			                        <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1"  />
+			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="newMSOform"/>
+			                        <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" />
 			                    </apex:outputPanel></apex:facet>
 			                    <apex:facet name="start"><apex:outputPanel >
-			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="msoForm"/>
-			                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true"  />
+			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="newMSOform"/>
+			                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true"  reRender="newMSOform"/>
 			                    </apex:outputPanel></apex:facet>
 			                </apex:actionStatus>
 						</apex:pageBlockButtons>              
@@ -271,11 +272,11 @@
                             <apex:actionStatus id="buttonLoadingStep1">
                                 <apex:facet name="stop"><apex:outputPanel >
                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancelRequest}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="overview"/>
-                                    <apex:commandButton styleclass="btn btn-default" action="{!submitAndApproveCase}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep1" />
+                                    <apex:commandButton styleclass="btn btn-default" action="{!submitAndApproveCase}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep1" reRender="overview" />
                                 </apex:outputPanel></apex:facet>
                                 <apex:facet name="start"><apex:outputPanel >
                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="overview"/>
-                                    <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="msooverviewForm"/>
+                                    <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="overview"/>
                                 </apex:outputPanel></apex:facet>
                             </apex:actionStatus>
                         </apex:pageBlockButtons>
@@ -288,6 +289,7 @@
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     {!$Label.ISSP_AMS_STEP_3_1_HO_Title}
+                                    <apex:commandButton styleclass="btn btn-default" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
                                 </apex:outputpanel>
                             </apex:facet>
                             
@@ -298,6 +300,7 @@
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     {!$Label.ISSP_AMS_MSO_Application_Section_2}
+                                    <apex:commandButton styleclass="btn btn-default" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
                                 </apex:outputpanel>
                             </apex:facet>
                             

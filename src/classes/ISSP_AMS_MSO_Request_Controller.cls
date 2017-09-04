@@ -19,6 +19,19 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
+    private map<String, String> mapCompanyTypePerCode = new map<String, String>{
+        'A' => 'Association',
+        'C' => 'Corporation',
+        'E' => 'State Owned Enterprise',
+        'L' => 'Limited Company',
+        'O' => 'Other',
+        'P' => 'Partnership',
+        'R' => 'Limited Partnership',
+        'S' => 'Sole Proprietorship',
+        'T' => 'Trust Company',
+        'V' => 'Co-operative'
+    };
 	
     public ISSP_AMS_MSO_Request_Controller() {
         step = ApexPages.currentPage().getParameters().get('step');
@@ -29,7 +42,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         billingStatesList = new list<SelectOption>();
 
         currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-        currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name FROM Contact WHERE Id = :currentUser.ContactId];
+        currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name, Account.Company_Type__c, Account.ParentId, Account.Parent.Company_Type__c FROM Contact WHERE Id = :currentUser.ContactId];
 
         applyLanguage = UserInfo.getLanguage();
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
@@ -49,9 +62,13 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         if (accreditationForm == null) {
             if (oscarCase.Id == null)
-                accreditationForm = new AMS_Pax_Accreditation_Form__c();
-            else
-                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__r.Name, Branch_Office_Country__r.Name, ISSP_AMS_Legal_Status__c, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                accreditationForm = new AMS_Pax_Accreditation_Form__c(ISSP_AMS_Legal_Status__c = mapCompanyTypePerCode.get(currentUserContact.Account.ParentId == null ? currentUserContact.Account.Company_Type__c : currentUserContact.Account.Parent.Company_Type__c));
+            else {
+                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, ISSP_AMS_Legal_Status__c, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                countrySelected = accreditationForm.Branch_Office_Country__c;
+                refreshStates();
+                billingState = accreditationForm.IATA_ISO_State__c;
+            }
         }
     }
 
@@ -130,7 +147,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public void refreshStates(){
         billingStatesList.clear();
 
-        if (countrySelected == null || mapBillingStatesPerCountry.get(countrySelected) == null) return;
+        if (countryISOCodeList.size() == 0 || countrySelected == null || mapBillingStatesPerCountry.get(countrySelected) == null) return;
 
         for (IATA_ISO_State__c s : mapBillingStatesPerCountry.get(countrySelected)) {
             billingStatesList.add(new SelectOption(s.Id, s.Name));
@@ -268,6 +285,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }*/
     }
 
+    public PageReference goBackToForm() {
+        return new PageReference('/ISSP_AMS_MSO_Request?step=form&caseId=' + oscarCase.Id);
+    }
+
     // return false for failure, true for success
     public Boolean generateMsoIataCode (Id accountId, Id accreditationId, Id oscarId, Id caseId) {
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
@@ -318,7 +339,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }
     }
 
-    @future
+    /*@future
     public static void updateCaseContact(Id caseId, Id contactId) {
         try {
             Case c = new Case(Id = caseId, ContactId = contactId);
@@ -326,7 +347,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }  catch (DmlException ex) {
             system.debug('Error updating the OSCAR Communication case contact: ' + ex.getMessage());
         }
-    }
+    }*/
 
 
     public void sendConfirmationEmail(Id caseId, Id contactId, Boolean success) {
@@ -336,6 +357,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
+
+        if (ets.isEmpty()) return;
+
         EmailTemplate et = ets[0];
 
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
