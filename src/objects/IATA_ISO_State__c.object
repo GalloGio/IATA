@@ -169,6 +169,19 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Valid_for_EBC</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>IEC_Valid_SAP__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Valid for EBC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Valid_for_Ecommerce</fullName>
         <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>

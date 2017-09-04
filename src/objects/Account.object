@@ -2491,6 +2491,21 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_IEP_HE_AccntNum__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IEP_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Financial_Review_Result__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -2850,7 +2865,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>        
+        <description>Triggers Cash Condition throught risk Status assessment</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
@@ -17705,6 +17721,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>E&amp;F Clients</label>
         <language>en_US</language>
         <sharedTo>
+            <group>EFServices</group>
             <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>

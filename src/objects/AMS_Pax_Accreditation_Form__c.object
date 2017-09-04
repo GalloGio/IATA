@@ -1198,6 +1198,7 @@
     </fieldSets>
     <fields>
         <fullName>AE_separate_Legal_Entity__c</fullName>
+        <description>Define if the AE will use the same legal entity.</description>
         <externalId>false</externalId>
         <label>AE separate Legal Entity</label>
         <picklist>
@@ -1251,6 +1252,7 @@
     </fields>
     <fields>
         <fullName>ANG_Accreditation_type__c</fullName>
+        <description>Global picklist with all the types of accreditation.</description>
         <externalId>false</externalId>
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation type</label>
@@ -1706,6 +1708,7 @@
     </fields>
     <fields>
         <fullName>ANG_AE_SameLegal__c</fullName>
+        <description>Auxiliar field to store the user's choice in the field AE_separate_Legal_Entity__c</description>
         <externalId>false</externalId>
         <label>ANG_AE_SameLegal</label>
         <length>255</length>
@@ -2047,6 +2050,7 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
     </fields>
     <fields>
         <fullName>Enable_Credit_Card_FOP__c</fullName>
+        <description>Defines if the user wants to use credit card.</description>
         <externalId>false</externalId>
         <label>Enable Credit Card FOP</label>
         <picklist>
@@ -2267,6 +2271,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     </fields>
     <fields>
         <fullName>IATAN_Agent_Account__c</fullName>
+        <description>Lookup to account (Agent Account)</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>IATAN Agent Account</label>
@@ -2280,6 +2285,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     </fields>
     <fields>
         <fullName>IATAN_Code__c</fullName>
+        <description>Contains the account's IATA Code.</description>
         <externalId>false</externalId>
         <label>* IATAN Code</label>
         <length>8</length>
@@ -2327,6 +2333,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     </fields>
     <fields>
         <fullName>IATA_Registered_IATAN_Agent__c</fullName>
+        <description>Defines if the user has a registered IATAN account.</description>
         <externalId>false</externalId>
         <label>* IATA Registered IATAN Agent</label>
         <picklist>

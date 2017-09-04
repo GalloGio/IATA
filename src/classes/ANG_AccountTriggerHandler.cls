@@ -139,6 +139,15 @@ public class ANG_AccountTriggerHandler {
 	private void createVMFROscars(List<Account> allAccounts, Map<Id, Id> contacts){
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 
+		//to prevent errors on test classes
+		if(Test.isRunningTest()){
+			insert new ANG_AgencyChangesConfig__c(Name = 'ChangeVFMR', TC_VMFR__c = true,
+		                    TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
+		                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
+		                    TC_Major_Shareholding__c = false, TC_Ownership__c = false,
+		                    TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+		}
+
 		//filter accounts
 		List<Account> accounts = new List<Account>();
 		for(Account acc : allAccounts){
@@ -179,7 +188,9 @@ public class ANG_AccountTriggerHandler {
 			c.Region__c = acc.Region_formula__c;
 			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
 			c.ContactId = contacts.get(acc.Id);
-			c.OwnerId = objects.get(acc.Id).oscar.OwnerId;
+
+			String oscarOwner = objects.get(acc.Id).oscar.OwnerId;
+			if(!String.isEmpty(oscarOwner)) c.OwnerId = oscarOwner;
 
 			cases.add(c);
 			objects.get(acc.Id).commCase = c;

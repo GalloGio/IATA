@@ -38,6 +38,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>TCA_Requires_Manager_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to know when an OSCAR can be closed with going through the Manager Approval</description>
+        <externalId>false</externalId>
+        <label>Requires Manager Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TCA_Sanity_check__c</fullName>
         <description>Change Code to be applied after sanity check</description>
         <externalId>false</externalId>

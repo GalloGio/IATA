@@ -397,6 +397,6 @@ j$.get(&quot;/&quot; + objectPrefix + &quot;/e&quot;, function( data ) {
         <masterLabel>Send email to the Airline</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/_ui/core/email/author/EmailAuthor?retURL=%2F{!Airline_Input__c.Id}&amp;p3_lkid={!Airline_Input__c.Id }&amp;template_id=00Xw0000001yTGQ&amp;p4=info.sce@iata.org</url>
+        <url>/_ui/core/email/author/EmailAuthor?retURL=%2F{!Airline_Input__c.Id}&amp;p3_lkid={!Airline_Input__c.Id }&amp;template_id=00Xw0000001yTGQ</url>
     </webLinks>
 </CustomObject>

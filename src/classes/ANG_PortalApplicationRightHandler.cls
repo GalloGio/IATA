@@ -42,6 +42,13 @@ public class ANG_PortalApplicationRightHandler {
 			contactIds.add(access.Contact__c);			
 		}
 
+		List<UserProvAccount> auxUpa = [Select ExternalUserId From UserProvAccount Where ExternalUserId in : contactIds];
+
+		Set<String> existingUpa = new Set<String>();
+		for(UserProvAccount u : auxUpa) {
+			existingUpa.add(u.ExternalUserId);
+		}
+
 		List<User> users = [Select id, contactId from User where contactId in : contactIds];
 
 		Map<String, String> userMap = new Map<String, String>();
@@ -50,15 +57,20 @@ public class ANG_PortalApplicationRightHandler {
 		}
 
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
-            UserProvAccount upa = new UserProvAccount (
-                ExternalUserId = access.Contact__c,
-                SalesforceUserId = userMap.get(access.Contact__c),
-                ConnectedAppId = connectedAppId,
-                LinkState = 'Linked',
-                Status = 'Active'
-            );
 
-            upal.add(upa);
+			System.debug(LoggingLevel.ERROR, 'access.Contact__c UserProvAccount -----> ' + access.Contact__c);
+
+			if(!existingUpa.contains(access.Contact__c)) {
+	            UserProvAccount upa = new UserProvAccount (
+	                ExternalUserId = access.Contact__c,
+	                SalesforceUserId = userMap.get(access.Contact__c),
+	                ConnectedAppId = connectedAppId,
+	                LinkState = 'Linked',
+	                Status = 'Active'
+	            );
+	            upal.add(upa);
+	            existingUpa.add(access.Contact__c);
+        	}
             
 		}
 

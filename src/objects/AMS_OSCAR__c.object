@@ -204,6 +204,7 @@
     </fields>
     <fields>
         <fullName>ANG_Type_of_change_hidden__c</fullName>
+		<description>Used to display the selected types of changes on the left side panel.</description>
         <externalId>false</externalId>
         <formula>BR() + 
 IF( ISBLANK(ANG_Type_Of_Change__c) , &quot;No types of change selected.&quot;, &quot;&quot; ) +
@@ -1702,6 +1703,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>Effective_date__c</fullName>
+		<description>Date when the approval finalization is Passed on the OSCAR</description>
         <externalId>false</externalId>
         <label>Effective date</label>
         <required>false</required>
@@ -2169,6 +2171,7 @@ Format: YYYY</inlineHelpText>
     </fields>
     <fields>
         <fullName>Is_PCI_compliant__c</fullName>
+		<description>Determines if an agency is PCI Compliant</description>
         <externalId>false</externalId>
         <label>Is PCI compliant</label>
         <picklist>
@@ -2352,6 +2355,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>New_parent__c</fullName>
+		<description>On a change of hierarchy process this field determines which will be the new parent of the agencies that are changing to another hierarchy</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>New parent</label>
@@ -2580,6 +2584,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>Previous_FS_released__c</fullName>
+		<description>Saves the date of the previous financial security released</description>
         <externalId>false</externalId>
         <label>Previous FS released</label>
         <required>false</required>
@@ -3697,6 +3702,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>Release_previous_FS_if_applicable__c</fullName>
+		<description>Will update the Date on field Previous FS Released when the value is set to true</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Release previous FS if applicable</label>
@@ -5668,6 +5674,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>Suspend_Agency__c</fullName>
+		<description>When set to true will update the NOC Deadline Date</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Suspend Agency</label>
@@ -5719,6 +5726,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>Terminate_Agency__c</fullName>
+		<description>When set to true will update the Termination Date of the agency.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Terminate Agency</label>

@@ -57,6 +57,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>ANG_Description_Label__c</fullName>
+        <description>API name of the label to be used as the product name in the product comparisson page.</description>
         <externalId>false</externalId>
         <formula>Related_Product__r.ANG_Description_Label__c</formula>
         <label>Description Label</label>
@@ -67,6 +68,7 @@
     </fields>
     <fields>
         <fullName>ANG_Description__c</fullName>
+        <description>Product description</description>
         <externalId>false</externalId>
         <formula>Related_Product__r.Description</formula>
         <label>Description</label>
@@ -77,6 +79,7 @@
     </fields>
     <fields>
         <fullName>ANG_Tooltip__c</fullName>
+        <description>API name of the label to be used as a product tooltip in the product comparisson page.</description>
         <externalId>false</externalId>
         <formula>Related_Product__r.ANG_Tooltip__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

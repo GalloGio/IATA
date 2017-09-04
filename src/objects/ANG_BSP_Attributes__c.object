@@ -160,6 +160,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Operation__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>Lookup field to theh BSP Attribute field (AMS Operation Code)</description>
         <externalId>false</externalId>
         <label>Operation</label>
         <referenceTo>AMS_Operation__c</referenceTo>
@@ -181,6 +182,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Remittances_Per_Year__c</fullName>
+        <description>Number of remittances per year to compute the most frequence value.</description>
         <externalId>false</externalId>
         <formula>CASE( UPPER(TEXT(Remittance_Frequency__c)) , 
       
@@ -204,6 +206,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>UniqueKey__c</fullName>
+        <description>Unique identifier on the object to ensure no duplicates.</description>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
         <label>UniqueKey</label>

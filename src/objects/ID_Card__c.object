@@ -975,6 +975,24 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>VALID_ID_Cards</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Type_of_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Active_Card__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>VALID ID Cards</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>must_synch_with_aims</fullName>
         <columns>NAME</columns>
         <columns>MustSyncWithAIMS__c</columns>

@@ -387,24 +387,25 @@
                     </apex:panelGrid>
                     <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                 
-                <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}"><!-- LHS --></apex:outputPanel>
-                    <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
-                        <!--<apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                            <apex:outputlabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" />
-                            <apex:outputfield value="{!newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c}"/> 
-                        </apex:panelGrid>-->
-                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+                <apex:outputPanel rendered="{!AND(newForm.Notify_Change_Ownership__c, newForm.ISSP_AMS_Legal_Status__c=='Corporation')}"><!-- LHS --></apex:outputPanel>
+                <apex:outputPanel rendered="{!AND(newForm.Notify_Change_Ownership__c, newForm.ISSP_AMS_Legal_Status__c=='Corporation')}">
+                    <!--<apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                        <apex:outputlabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" />
+                        <apex:outputfield value="{!newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c}"/> 
+                    </apex:panelGrid>-->
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
                         <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Issued_share_capital__c.Label}" />
                         <apex:outputfield value="{!newForm.Issued_share_capital__c}"/>                             
                     </apex:panelGrid>
-                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
                         <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Paidup_capital__c.Label}" />
                         <apex:outputfield value="{!newForm.ISSP_AMS_Paidup_capital__c}"/>                             
                     </apex:panelGrid>
-                    </apex:outputPanel>
+                </apex:outputPanel>
 
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
-                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent">
+                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!newForm.Notify_Change_Ownership__c}">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
@@ -422,6 +423,7 @@
                   </apex:panelGrid>
 
                 </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                     
                 <apex:outputPanel >
                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</apex:outputPanel>
@@ -475,7 +477,7 @@
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
                                 <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
                                 <apex:outputText rendered="{!agencycon.Agency_role__c}" escape="false" value="{!CASE(roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
-                            </apex:column>                                                      
+                            </apex:column>                                                  
                         </apex:dataTable>
                   </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
@@ -502,8 +504,8 @@
                     </apex:outputPanel>
                     <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>
 
-                    <apex:outputPanel><!-- LHS--></apex:outputPanel>
-                    <apex:outputPanel>
+                    <apex:outputPanel ><!-- LHS--></apex:outputPanel>
+                    <apex:outputPanel rendered="{!newForm.Notify_Change_Ownership__c}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
@@ -514,11 +516,11 @@
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" />
                             <apex:outputfield value="{!newForm.ISSP_AMS_Principal_business_Org__c}"/>                             
                         </apex:panelGrid>
-
                     </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
 
-                    <apex:outputPanel><!-- LHS--></apex:outputPanel>
-                    <apex:outputPanel id="newOwnerQuestions" rendered="{!List_CurrentCompanies.size > 0}">
+                    <apex:outputPanel ><!-- LHS--></apex:outputPanel>
+                    <apex:outputPanel id="newOwnerQuestions" rendered="{!AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0)}">
                         <!-- Section 6 - Sales estimates for non-IATA owners -->
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</apex:outputPanel>
                         <div class="col-md-12">

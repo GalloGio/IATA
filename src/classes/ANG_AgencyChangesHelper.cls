@@ -222,6 +222,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateLNFChangeCode(oscar, accountsCurrentChangeCode, changesContainer);
 			
+			}else if(oldOSCAR.Status__c != AMS_Utils.OSCAR_CLOSED && oscar.Status__c == AMS_Utils.OSCAR_CLOSED){
+
+				validationBeforeClosure(oscar, config);
+
 			}
 
 			if(changesContainer != null){
@@ -1136,6 +1140,13 @@ public with sharing class ANG_AgencyChangesHelper {
         }
 
         return changesContainer;
+    }
+
+    public static void validationBeforeClosure(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config){
+
+    	if(ANG_AgencyChangesConfigHelper.getManagerApprovalRequired(config.config))
+    		oscar.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
+
     }
 
 }

@@ -68,7 +68,7 @@
         <label>AIMS ID</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -79,7 +79,7 @@
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -291,7 +291,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_ISO_Country_Code__c</formula>
+        <formula>Related_GDP_Address__r.Address_IATA_Custom_ISO_Country_Code__c</formula>
         <label>Country ISO Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -302,7 +302,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
+        <formula>Related_GDP_Address__r.Address_Country_Name_Uppercase__c</formula>
         <label>Country Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -751,7 +751,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -985,94 +985,20 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     </fields>
     <label>GDP Products - Account View</label>
     <listViews>
-        <fullName>Agencies_USA</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Country_ISO_Code__c</columns>
-        <columns>Agency_Status__c</columns>
-        <columns>Location_Type__c</columns>
-        <columns>State_Province_Code__c</columns>
-        <columns>Accredited_By__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Country_ISO_Code__c</field>
-            <operation>equals</operation>
-            <value>CA</value>
-        </filters>
-        <filters>
-            <field>Agency_Status_Code__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>0</value>
-        </filters>
-        <label>Agencies USA</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Agency_by_Country</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Sub_Continent__c</columns>
-        <columns>Country_ISO_Code__c</columns>
-        <columns>Agency_Status__c</columns>
-        <columns>Agency_Status_Code__c</columns>
-        <columns>State_Province_Code__c</columns>
-        <columns>Email_Address__c</columns>
-        <columns>Accreditation_Class__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Country_ISO_Code__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>Agency_Status_Code__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>4</value>
-        </filters>
-        <label>Agencies by Country</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <fullName>All_No_Criteria</fullName>
         <columns>NAME</columns>
         <columns>Agency_Code__c</columns>
-        <columns>Incorporation_Type__c</columns>
-        <columns>Agency_Status_Code__c</columns>
-        <columns>Agency_Status__c</columns>
+        <columns>Accreditation_Class__c</columns>
         <columns>Location_Type__c</columns>
         <columns>Parent_GDP_Account_View__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Related_Accreditation_Class__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>AIMS_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>WebStar_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>All- Clean</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_AIMS</fullName>
-        <columns>Agency_Code__c</columns>
-        <columns>NAME</columns>
-        <columns>City__c</columns>
-        <columns>Country_Name__c</columns>
-        <columns>Location_Type__c</columns>
         <columns>Agency_Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Incorporation_Type__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Accredited_By__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>AIMS_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>All AIMS</label>
+        <label>All - No Criteria</label>
         <language>en_US</language>
     </listViews>
     <nameField>

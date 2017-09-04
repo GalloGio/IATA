@@ -100,8 +100,8 @@ public class ANG_AgencyChangesHelperTest {
 			if(a.Id == a1.Id){
 
 				System.assertEquals('HE', a.Location_Type__c);
-				System.assertEquals(null, a.ANG_IEP_HE_AccntNum__c);
-				System.assertEquals('No IEP Account', a.ANG_IEP_Status__c);
+				System.assertEquals('1232132323', a.ANG_IEP_HE_AccntNum__c);
+				System.assertEquals('Suspended', a.ANG_IEP_Status__c);
 				System.assertEquals(true, a.ANG_HE_CashCondition__c);
 				System.assertEquals('Not Applicable', a.ANG_HE_RiskHistoryAssessment__c);
 				System.assertEquals('Not Applicable', a.ANG_HE_RiskStatus__c);

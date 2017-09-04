@@ -193,6 +193,7 @@
     </fields>
     <fields>
         <fullName>ANG_Description_Label__c</fullName>
+        <description>API name of the label to be used as the product name in the product comparisson page.</description>
         <externalId>false</externalId>
         <label>Description Label</label>
         <length>255</length>
@@ -247,6 +248,7 @@
     </fields>
     <fields>
         <fullName>ANG_Tooltip__c</fullName>
+        <description>API name of the label to be used as a product tooltip in the product comparisson page.</description>
         <externalId>false</externalId>
         <label>Tooltip</label>
         <length>255</length>

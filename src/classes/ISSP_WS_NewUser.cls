@@ -464,7 +464,7 @@ global class ISSP_WS_NewUser {
                                 //create user and app access
                                 Contact con = contactList[0];
                                 con.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
-                                if(con.Community__c == ''){
+                                if(con.Community__c == '' || con.Community__c == null){
                                     if(isCNS){
                                         con.Community__c = 'CNS Customer Portal';                                      
                                     }else{

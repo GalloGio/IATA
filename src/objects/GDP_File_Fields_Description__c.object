@@ -307,7 +307,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Remove the field from the XML file type generation</inlineHelpText>
         <label>XML Hidden Column</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -339,6 +339,25 @@
     </fields>
     <label>GDP File Fields Description</label>
     <listViews>
+        <fullName>Field_Details_GSS_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member</value>
+        </filters>
+        <label>Field Details - GSS Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Field_Details_GSS_Non_Member_TXT</fullName>
         <columns>NAME</columns>
         <columns>API_Name__c</columns>
@@ -355,6 +374,60 @@
             <value>Reference - GSS Non Member</value>
         </filters>
         <label>Field Details - GSS Non Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member</value>
+        </filters>
+        <label>Field Tracking - GSS Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Non_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>Field Tracking - GSS Non Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_MDP_NO_Address</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - MDP NO Address</value>
+        </filters>
+        <label>Field Tracking - MDP NO Address</label>
         <language>en_US</language>
     </listViews>
     <nameField>
