@@ -299,6 +299,10 @@ global class AMS_OSCAR_Webservice {
             message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Authorize Disapproval" in this step.';
             throw new OSCARException(message);
         }
+        if (step=='DGR') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
         throw new OSCARException('Step ' + step + ' is invalid');
     }
 

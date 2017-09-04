@@ -14,7 +14,8 @@ public with sharing class SidraLiteHelperForOSCAR {
         '12' => 'Financial Security Non-compliance (OSCAR Change)',
         '14' => 'Non submission of PSAA',
         '26' => 'Late/Absence of Notification of Change',
-        'RPM' => 'Change Deficiency'
+        'RPM' => 'Change Deficiency',
+        'DGR' => 'Failure to submit DGR certificate by deadline'
     };
 
     public static void checkBussinessRules(Case cse) {

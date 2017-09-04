@@ -182,6 +182,22 @@ public class AMS_OSCAR_WebserviceTest {
     static testMethod void test_createSidraLite5() {
         
         setup();
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
+        oscar6.Step6__c='Failed';
+        update oscar6;
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, 'DGR');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite6() {
+        
+        setup();
         oscar6.Step6__c='Failed';
         update oscar6;
         
