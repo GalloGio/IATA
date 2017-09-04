@@ -256,6 +256,7 @@ global class AMS_OSCAR_Webservice {
     private static Case findOscarParentCase(Id oscarId) {
         List<Case> cases = [
             SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+            SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
             oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.RPM_Approval__c
             FROM Case
             WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
@@ -308,6 +309,13 @@ global class AMS_OSCAR_Webservice {
             Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
             
             if (createCase) {
+                // change the reason and NOT date based on the selected step
+                sidraCase.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+                if (step == 'RPM') {
+                    sidraCase.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,oscarCase.BusinessHoursId).date();
+                } else {
+                    sidraCase.NOT_Date__c = Date.today();
+                }
                 insert sidraCase;
             }
             return sidraCase.Id;

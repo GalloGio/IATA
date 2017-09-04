@@ -15,7 +15,6 @@ public class AMS_OSCAR_WebserviceTest {
     private static Case oscarCase;
 
     private static void setup(){
-        
         oscar = new AMS_OSCAR__c(Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         insert oscar;
 
@@ -25,9 +24,9 @@ public class AMS_OSCAR_WebserviceTest {
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         a1 = new Account(RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
-        a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
-        a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
-        a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
+        a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Class__c='C',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
+        a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Class__c='C',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
+        a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Class__c='C',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
 
         
         insert new List<Account>{a1, a2, a3, a4, a5};
@@ -37,6 +36,8 @@ public class AMS_OSCAR_WebserviceTest {
         oscar4 = new AMS_OSCAR__c(Account__c = a3.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         oscar5 = new AMS_OSCAR__c(Account__c = a4.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         oscar6 = new AMS_OSCAR__c(Account__c = a5.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
+            //Step6__c = 'Failed', Step9__c = 'Failed', Step11__c = 'Failed', Step12__c = 'Failed', Step14__c = 'Failed',
+            //Step26__c = 'Failed', RPM_Approval__c = 'Authorize Disapproval');
         
         insert new List<AMS_OSCAR__c>{oscar2, oscar3, oscar4, oscar5, oscar6};
 
@@ -125,8 +126,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id,true);
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id, '6', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id, '6');
         Test.stopTest();
     }
     
@@ -135,73 +136,69 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar2.Id, true);
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar2.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '1', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '9', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '11', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '12', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '14', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '26', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'RPM', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
         Test.stopTest();
     }
     
     static testMethod void test_createSidraLite3() {
         
         setup();
+        oscar6.Step6__c='Failed';
+        update oscar6;
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar3.Id,true);
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar3.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
         Test.stopTest();
     }
     
     static testMethod void test_createSidraLite4() {
         
         setup();
+        oscar6.Validation_Status__c = 'Passed';
+        oscar6.RPM_Approval__c='Authorize Disapproval';
+        update oscar6;
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar4.Id,true);
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar4.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'RPM', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, 'RPM');
         Test.stopTest();
     }
     
     static testMethod void test_createSidraLite5() {
         
         setup();
+        oscar6.Step6__c='Failed';
+        update oscar6;
         
-        Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar5.Id,true);
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar5.Id);
-        Test.stopTest();
-    }
-    
-    static testMethod void test_createSidraLite6() {
-        
-        setup();
-        
-        Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
-        
-        oscarCase.Reason1__c = 'Certificate DGR';
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS2).get(0);
         update oscarCase;
-        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
         
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
         try {
             oscarCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
             update oscarCase;
-            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
-            System.assert(false, 'Exception Expected');
-        } catch(WSSidraLite.ShowConfirmationException e) {
+            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+            System.assert(false, 'Exception expected');
+        } catch (WSSidraLite.ShowConfirmationException e) {
             System.assert(true);
         }
-        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id);
-        Test.stopTest();
-    }
-
-    static testMethod void test_updateSidraLite() {
-        
-        setup();
-        
-        Test.startTest();
-
-        String result1 = AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
-        System.assert(result1.startsWithIgnoreCase('error'), 'Error expected');
-
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
         Test.stopTest();
     }
 

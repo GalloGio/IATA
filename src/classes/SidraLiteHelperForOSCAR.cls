@@ -69,6 +69,7 @@ public with sharing class SidraLiteHelperForOSCAR {
         newCase.SIDRA_Lite_Reason__c = getOSCARReason(cse);
 
         if (SidraLiteUtil.isAccountActive(cse.account)) {
+            newCase.NOT_Date__c = Date.today();
             newCase.SIDRA_Lite_Default_Date__c = Date.Today();
             newCase.Reason_for_Default__c = 'Disapproval of Change';
             newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
