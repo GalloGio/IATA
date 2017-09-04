@@ -182,6 +182,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             	list<Account> newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];
 				system.assertEquals(1, newMSO.size());
 
+				ctrl.goBackToForm();
+
 				ctrl.cancelRequest();
 				newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];
 				system.assertEquals(0, newMSO.size());
