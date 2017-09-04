@@ -42,7 +42,7 @@ public with sharing class AMS_OSCAR_Automation {
                 if (lstProcessesToValidateDGR.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     AMS_Pax_Accreditation_Form__c form = [SELECT Id, Agent_Type__c, Location_Type__c, Is_your_firm_handling_Dangerous_Goods__c, Branch_Office_Country__c, Branch_Office_Country__r.EACP_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
 
-                    if (true) {//(form.Agent_Type__c == 'IATA Cargo Agent' || form.Agent_Type__c == 'EACP Intermediary') && !(form.Branch_Office_Country__r.EACP_Country__c && form.Is_your_firm_handling_Dangerous_Goods__c == 'No')) {
+                    if ((form.Agent_Type__c == 'IATA Cargo Agent' || form.Agent_Type__c == 'EACP Intermediary') && !(form.Branch_Office_Country__r.EACP_Country__c && form.Is_your_firm_handling_Dangerous_Goods__c == 'No')) {
                         
                         Integer cntCrtDanGoodsContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName = 'Trained_Staff' AND Training_dangerous_goods_completed__c = 'Yes'];
                         Integer limitNum = form.Location_Type__c == 'HO' ? 2 : 1;
