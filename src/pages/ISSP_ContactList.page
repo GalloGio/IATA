@@ -190,13 +190,13 @@
       <!-- buttons to export data -->
       <div class="row text-right">
         <span style="margin: 15px">
+            <apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="/ISSP_ContactListPDF?selectedList={!selectedList}" target="_blank">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                {!$Label.ISSP_Download_in_PDF}
+            </apex:outputlink>
             <apex:outputLink styleclass="btn btn_iata_primary btn-xs" value="/ISSP_ContactListCSV?selectedList={!selectedList}">
                 <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
                 {!$Label.ISSP_Download_in_CSV}
-            </apex:outputlink>
-            <apex:outputLink styleclass="btn btn_iata_primary btn-xs" value="/ISSP_ContactListPDF?selectedList={!selectedList}" target="_blank">
-                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-                {!$Label.ISSP_Download_in_PDF}
             </apex:outputlink>
         </span>
       </div>
