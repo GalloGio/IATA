@@ -1073,9 +1073,9 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CREATED_DATE</field>
+            <field>Status__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>Sent to Zuora</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>
