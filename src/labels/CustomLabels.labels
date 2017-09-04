@@ -8940,11 +8940,18 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Legal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
+        <value>A new MSO account has been successfully generated with the following IATA Code: </value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_StepFinal_Thanks</shortDescription>
-        <value>Thank you for submitting your Accreditation application for a new MSO.</value>
+        <value>Thank you for submitting your request for a new MSO.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>

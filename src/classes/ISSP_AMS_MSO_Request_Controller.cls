@@ -39,7 +39,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             if (caseId == null) {
                 oscarCase = new Case();
             } else {
-                oscarCase = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Account__c FROM Case WHERE Id = :caseId];
+                oscarCase = [SELECT Id, CaseNumber, IATAcode__c, OSCAR__c, OSCAR__r.Account__c FROM Case WHERE Id = :caseId];
             }
         }
 
@@ -183,9 +183,14 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscar.Account__c = msoAccount.Id;
                 insert oscar;
 
+                // avoid sending notification email
+                Id noEmailContactId = null;
+                if (ISSP_CS__c.getValues('No Notification Email Contact Id') != null && ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c != null)
+                    noEmailContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
+
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
-                oscarCase.ContactId = currentUser.ContactId;
+                oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
                 oscarCase.Subject = 'New MSO - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
@@ -218,6 +223,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 app.OSCAR__c = oscar.Id;
                 insert app;
 
+                // update the case contact
+                //updateCaseContact(oscarCase.Id, currentUser.ContactId);
+
             } else {
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
@@ -232,16 +240,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     }
 
     public PageReference submitAndApproveCase() {
-        // validate accepted T&C
-        if (accreditationForm.Accept_terms_and_conditions__c != true) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Accept_Terms_Warning));
-            return null;
-        }        
-
         try {
-
             // try to generate IATA Code 
-            generateMsoIataCode(msoAccount.Id, accreditationForm.Id, oscar.Id);
+            Boolean success = generateMsoIataCode(msoAccount.Id, accreditationForm.Id, oscar.Id, oscarCase.Id);
+
+            if (!success) sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false); // for success update the case with the IATA code and send confirmation after, to have the code in the email
         } catch (Exception ex){
             system.debug('error processing the OSCAR: ' + ex.getMessage());
             // don't block, as the OSCAR has been correctly created at this point
@@ -265,32 +268,44 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }*/
     }
 
-    public void generateMsoIataCode (Id accountId, Id accreditationId, Id oscarId) {
+    // return false for failure, true for success
+    public Boolean generateMsoIataCode (Id accountId, Id accreditationId, Id oscarId, Id caseId) {
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
-        if (accountId == null || accreditationId == null || oscarID == null)  return;
+        if (accountId == null || accreditationId == null || oscarID == null)  return false;
 
         String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
-        if (generateResult[0] != '1') return;
+        if (generateResult[0] != '1') return false;
 
         //oscar.STEP10__c = 'Passed';
 
         String copyResult = AMS_OSCAR_Webservice.copyDataToAccount(oscarId);
-        if (copyResult != 'OK') return;
+        if (copyResult != 'OK') return false;
 
         //oscar.Flag_Data_to_Account__c = true;
 
         String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
-        if (changeCodeResult != 'OK') return;
+        if (changeCodeResult != 'OK') return false;
 
         //update oscar;
 
+        // update case with IATA Code and correct Contact 
+        oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+        Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
+        update c;
+
+        // send confirmation email
+        sendConfirmationEmail(caseId, currentUser.ContactId, true);
+
         closeOscar(oscarId);
+
+        return true;
     }
 
     @future
     public static void closeOscar(Id oscarId) {
         try {
+
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             oscar.STEP10__c = 'Passed';
             oscar.Flag_Data_to_Account__c = true;
@@ -300,6 +315,45 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             update oscar;
         } catch (DmlException ex) {
             system.debug('Error closing the OSCAR: ' + ex.getMessage());
+        }
+    }
+
+    @future
+    public static void updateCaseContact(Id caseId, Id contactId) {
+        try {
+            Case c = new Case(Id = caseId, ContactId = contactId);
+            //update c;
+        }  catch (DmlException ex) {
+            system.debug('Error updating the OSCAR Communication case contact: ' + ex.getMessage());
+        }
+    }
+
+
+    public void sendConfirmationEmail(Id caseId, Id contactId, Boolean success) {
+        String emailTemplateName = success ? 'IDFS_Case confirmation - MSO self-service' : 'IDFS_Case confirmation - phone, e-mail HTML (English)';
+
+        SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+
+        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+        List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
+        EmailTemplate et = ets[0];
+
+        OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+        
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setTemplateID(et.Id);
+        if ( owea.size() > 0 ) {
+            mail.setOrgWideEmailAddressId(owea[0].Id);
+        }
+        
+        mail.setTargetObjectId(contactId);
+        mail.setWhatId(caseId);
+        mail.setSaveAsActivity(true);
+
+        emails.add(mail);
+        if (!Test.IsRunningTest()) {
+            //SYSTEM.DEBUG('Sending confirmation email');
+            Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
         }
     }
 

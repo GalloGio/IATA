@@ -83,18 +83,16 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             ctrl.refreshStates();
             ctrl.billingState = isos.Id;
 
-            //ctrl.save(); <<< UN-COMMENT WHEN PROCESS BUILDERS BECOME STABLE. Commented to avoid the RANDOM "Too many SOQL queries" errors thrown, most likely because of the process builders (errors thrown by the call on line 91)
+            //ctrl.save(); <<< Commented to avoid the RANDOM "Too many SOQL queries" errors thrown, most likely because of the process builders (errors thrown by the call on line 91)
             
-            Test.startTest();
-				ctrl.accreditationForm.Accept_terms_and_conditions__c = true;
-            	
+            Test.startTest();            	
             	ctrl.submitAndApproveCase(); // fails because no records created. will no longer fail when line 86 ctrl.save()  is un-commented
 
             	ISSP_AMS_MSO_Request_Controller.closeOscar(null); 
 			Test.stopTest();
         }
 
-        /* <<< UN-COMMENT WHEN PROCESS BUILDERS BECOME STABLE, together with line 86 ctrl.save()
+        /* <<< Commented together with line 86 ctrl.save()
 
 		list<Case> cases = [SELECT Id, OSCAR__c, Status FROM Case WHERE AccountId = :acc.Id];
 		system.assertEquals(1, cases.size());
@@ -183,9 +181,6 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 
             	list<Account> newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];
 				system.assertEquals(1, newMSO.size());
-
-				// fails because T&C not accepted
-				system.assertEquals(null, ctrl.submitAndApproveCase());
 
 				ctrl.cancelRequest();
 				newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];
