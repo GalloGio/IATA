@@ -253,7 +253,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean isAgencyChanges{
         get{
-            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES || oscarObj.Process__c == AMS_Utils.NGCHANGES)) return true;
+            //FM 10-03-2017 - Added Correction, since correction will act like the change process
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES || oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
         }
         private set;
