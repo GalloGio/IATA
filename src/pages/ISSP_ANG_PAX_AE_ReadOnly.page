@@ -94,7 +94,7 @@
         <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!newForm.Account_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
 
-        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
+        <apex:outputField styleClass="LegalStatusLabel" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputtext ></apex:outputtext>
         <apex:outputtext rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"></apex:outputtext>
         <apex:outputField label="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" style="float: right;"/>

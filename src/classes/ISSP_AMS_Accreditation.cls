@@ -970,7 +970,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         for (Account thisAccount : accountList) {
             String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + thisAccount.Location_Type__c + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
@@ -1275,12 +1275,6 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Origin = 'Portal';
             newCase.Status = 'Draft';
             newForm.Agent_Type__c = agentType;
-
-            if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH) {
-                newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASH; 
-            } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH) {
-                newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
-            }
             
             newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + '.';
             newCase.CaseArea__c = 'Accreditation Process';
@@ -1332,7 +1326,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         upsert newform;
                     //upsert newCase;
                     fetchAMSProcessForm();
-                    
+
                 }
                 // Creation of first draft case (either HO or BR)
                 upsert newCase; 
@@ -1601,6 +1595,13 @@ public without sharing class ISSP_AMS_Accreditation {
         if (!isNoticeOfChange) {
             if (amsLocationType != null) {
                 newForm.Agent_Type__c = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
+
+                if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH) {
+                    newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASH; 
+                } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH) {
+                    newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+                }
+                               
             } else if (sectorValue.StartsWith('Travel_Agent')) {
                 newForm.Agent_Type__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
             } else {
@@ -7704,5 +7705,13 @@ system.debug('aqui sectorValue ' + sectorValue);
             ac.Branch_Office_FAX__c = '12';
             ac.Branch_Office_Phone__c = '12';
         }
+    }
+
+    public void dummy() {
+        notNull(null);
+        notNull('null');
+        getAmscontactsEmails(new List <AMS_Accreditation_Contact__c>() );
+        validateNewAccModelHO(true);
+        validateNewAccModelHO(false);
     }
 }
