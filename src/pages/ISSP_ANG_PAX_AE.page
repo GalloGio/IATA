@@ -890,7 +890,7 @@
                                 </div>
                                 <apex:outputPanel layout="none">
                                   <div style="width:174.4px; float:left;">
-                                    <apex:outputField value="{!newForm.Account_Name__c}" style="width:174.4px" />
+                                    <apex:outputField value="{!hqAccount.name}" style="width:174.4px" />
                                   </div>
                                 </apex:outputPanel>
                               </apex:outputPanel>
@@ -903,7 +903,7 @@
                                 </div>
                                 <apex:outputPanel layout="none">
                                   <div style="width:174.4px; float:left;">
-                                    <apex:outputField value="{!newForm.Trade_Name__c}" style="width:174.4px" />
+                                    <apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" />                                    
                                   </div>
                                 </apex:outputPanel>
                               </apex:outputPanel>
@@ -911,6 +911,7 @@
 
                             <apex:pageBlockSectionItem rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
                               <apex:outputPanel >
+                                <div class="LegalStatusLabel" display="none"></div>
                                 <div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:19px;">
                                   <apex:outputText value="{!SUBSTITUTE($Label.ISSP_AMS_CGO_ReadOnly_LBL1, '* ', '')}" />
                                 </div>
@@ -1086,8 +1087,7 @@
                   </apex:pageblock>
                   <script>
                     $j( document ).ready(function() {
-                      var legalStatus = $j('[id$=LegalStatusLabel]')[0],
-                         dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
+                      var dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
                          licenseNo = $j('[for$=license-no]')[0],
                          tradeRegNo = $j('[for$=trade-reg-no]')[0],
                          dateLicenseGranted = $j('[for$=date-license-granted]')[0],

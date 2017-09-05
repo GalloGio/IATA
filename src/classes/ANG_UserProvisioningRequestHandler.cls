@@ -24,7 +24,7 @@ public class ANG_UserProvisioningRequestHandler {
 		Set<String> iepNames = new Set<String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {	
-			if(role.Connected_App__c.contains('IATA EasyPay')) {
+			if(role.Connected_App__c != null && role.Connected_App__c.contains('IATA EasyPay')) {
 				connectedAppRoles.add(role.Connected_App_Provisioning_Name__c);
 				iepNames.add(role.Connected_App__c);
 			}
