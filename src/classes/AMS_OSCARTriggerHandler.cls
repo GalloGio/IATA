@@ -2069,7 +2069,15 @@ public class AMS_OSCARTriggerHandler {
 
 							Case c = cList.get(0);
 
-							list<WrapperAttach> attchs = WrapperAttach.getListAttachments(c.Id);
+							list<WrapperAttach> attchs;
+							
+							try{
+							
+								attchs = WrapperAttach.getListAttachments(c.Id);
+							
+							}catch(Exception e){
+								System.debug(e.getStackTraceString());
+							}
 
 							List<AmazonFile__c> amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];
 

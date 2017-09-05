@@ -210,7 +210,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	public Boolean closeTab{
+	@TestVisible public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
 			return closeTab;
@@ -226,14 +226,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	public Boolean editable {
+	@TestVisible public Boolean editable {
 		get{
 			return (oscar.STEP6__c != AMS_Utils.PASSED);
 		}
 		set;
 	}
 
-	public Boolean showTargetAgency{
+	@TestVisible public Boolean showTargetAgency{
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
 
@@ -248,7 +248,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 	
-	public Boolean showTopPanel{
+	@TestVisible public Boolean showTopPanel{
 		get{
 			return true;
 		}
@@ -377,7 +377,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
-	private Boolean performValidations(){
+	@TestVisible private Boolean performValidations(){
 
 		//clear error checks
 		errorChecks = null;
@@ -444,7 +444,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return true;
 	}
 
-	private Boolean updateRelatedRecords() {
+	@TestVisible private Boolean updateRelatedRecords() {
 		//DTULLO: Added Record Type
 		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
@@ -617,7 +617,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return false;
 	}
 
-	public boolean isSingleDestinationHierarchy(Id accountId){
+	@TestVisible public boolean isSingleDestinationHierarchy(Id accountId){
 
 		Set<Id> hierarchies = new Set<Id>();
 
