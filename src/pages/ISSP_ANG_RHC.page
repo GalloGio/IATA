@@ -184,15 +184,15 @@
             </tr>
             <tr>
               <td>
-                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Accreditation type
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
                 <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
               </td>
-              <td>Standard Accreditation with Cash</td>
+              <td>{! accreditationType}</td>
             </tr>
             <tr>
               <td>
-                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Risk Status
-                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /> {! riskStatus}
               </td>
               <td>B</td>
             </tr>

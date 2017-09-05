@@ -1,4 +1,7 @@
 public with sharing class ISSP_ANG_RHC {
+
+	public String accreditationType {get; set;}
+	public String riskStatus {get; set;}
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
 	public Contact contact {get;set;}
 	private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
@@ -14,7 +17,9 @@ public with sharing class ISSP_ANG_RHC {
 
 	public ISSP_ANG_RHC() {
 		init();
+		initFormsOfPayment();
 		initializeRemittanceFrequency();
+		initRiskProfile();
 	}
 
 	private Boolean hasRightAccess(String service) {
@@ -41,11 +46,15 @@ public with sharing class ISSP_ANG_RHC {
 											Account.ANG_IEP_Status_FF__c,
 											Account.ANG_Accreditation_Model__c,
 											Account.Location_Type__c,
-											Account.Top_Parent__r.Location_Type__c
+											Account.Top_Parent__r.Location_Type__c,
+											Account.ANG_RiskStatus__c,
+											Account.ANG_CashCondition__c
 									   FROM Contact
-									  WHERE Id = :contactId];
-		this.contact = contactList.isEmpty() ? null : contactList[0];
-	
+									  WHERE Id = :contactId];		
+		this.contact = contactList.isEmpty() ? null : contactList[0];									  
+	}	
+
+	private void initFormsOfPayment() {		
 		List<Agency_Authorization__c> authorizations;
 		List<Portal_Application_Right__c> services;
 
@@ -80,5 +89,11 @@ public with sharing class ISSP_ANG_RHC {
 		];
 		this.remittanceFrequency = remittanceFrequencyList.isEmpty() ? null : remittanceFrequencyList[0];
 	}
-	
+
+	private void initRiskProfile() {
+
+		this.accreditationType = this.Contact.Account.ANG_Accreditation_Model__c;
+		this.riskStatus = this.Contact.Account.ANG_RiskStatus__c;
+
+	}	
 }
