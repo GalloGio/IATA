@@ -115,6 +115,16 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_Enable_Calculation__c</fullName>
+        <description>Reports the account status. Used to prevent queries on the RHC trigger.</description>
+        <externalId>false</externalId>
+        <formula>NOT(ISPICKVAL(ANG_AccountId__r.Status__c, &apos;Terminated&apos;))</formula>
+        <label>Enable Amount Recalculation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Exceeding_Financial_Security__c</fullName>
         <description>Helper field: reports the amount of FS provided over the minimum</description>
         <externalId>false</externalId>
