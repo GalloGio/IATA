@@ -22,6 +22,7 @@ public class ANG_AccountTriggerHandler {
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
+		setCashConditionOnRHC();
 	}
 
 	public void onBeforeDelete(){}
@@ -296,8 +297,22 @@ public class ANG_AccountTriggerHandler {
             if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
         }
 
-        if(involvedAccounts.isEmpty()) return;
+        if(involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+    }
 
-        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+    private void setCashConditionOnRHC() {
+    	Map<Id, Boolean> currentConditions = new Map<Id, Boolean>();
+
+    	for(Account a : triggerNew) if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) currentConditions.put(a.Id, a.ANG_CashCondition__c);
+
+    	if(currentConditions.isEmpty()) return;
+
+    	List<ANG_RHC_Information__c> rhcToUpdate = new List<ANG_RHC_Information__c>();
+    	for(ANG_RHC_Information__c rhcInfo : [SELECT Id, ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :currentConditions.keySet()]){
+    		rhcInfo.ANG_CashCondition__c = currentConditions.get(rhcInfo.ANG_AccountId__c);
+    		rhcToUpdate.add(rhcInfo);
+    	}
+
+    	if(!rhcToUpdate.isEmpty()) update rhcToUpdate;
     }
 }
