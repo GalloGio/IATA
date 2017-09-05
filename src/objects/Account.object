@@ -81976,7 +81976,7 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Airline_HO_Trade_Name</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>The trade name for Member airlines can only be updated by the account management team or membership.</description>
         <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;  
 RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp; 
