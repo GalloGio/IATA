@@ -24,7 +24,7 @@ public with sharing class FeedItemHelper {
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
 
-		Pattern p = Pattern.compile('.*#\\w+(?s).*');
+		Pattern p = Pattern.compile('.*&#\\d{1,3};.*#\\w+(?s).*');
 		Matcher regexMatcher = p.matcher(fi.body.toUpperCase());
 
  	   		if (String.valueOf(fi.ParentId).startsWith('001') 
