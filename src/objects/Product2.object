@@ -1489,6 +1489,14 @@ SIS Charge Code Type.</description>
                 <fullName>TG8</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OI2</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -11971,6 +11979,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GRH</fullName>
                 <default>false</default>
             </values>
@@ -12092,6 +12104,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>OFL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI2</fullName>
                 <default>false</default>
             </values>
             <values>
