@@ -82378,7 +82378,6 @@ IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
 
@@ -82394,7 +82393,6 @@ IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
 
