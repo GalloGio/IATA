@@ -7851,6 +7851,14 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
                 <fullName>Spanish</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Turkish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -27252,7 +27260,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkish</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
