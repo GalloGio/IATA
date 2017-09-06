@@ -214,6 +214,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Age_with_IATA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Case_Thread_ID__c</field>
             </layoutItems>
         </layoutColumns>
