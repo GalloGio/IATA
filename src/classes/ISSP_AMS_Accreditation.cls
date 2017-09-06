@@ -6447,7 +6447,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public boolean getIsGSARequired() {
         Boolean isreq;
 
-        if (sector != null && sector.startsWith('Travel Agent') && amsLocationType != 'New TIDS HO - IATA Passenger Sales Agent' && amsLocationType != 'New TIDS BR - IATA Passenger Sales Agent' && !isNoticeOfChange) {
+        if (sectorValue != null && sectorValue.startsWith('Travel_Agent') && amsLocationType != 'New TIDS HO - IATA Passenger Sales Agent' && amsLocationType != 'New TIDS BR - IATA Passenger Sales Agent' && !isNoticeOfChange) {
             isreq = true;
         } else {
             isreq = false;
