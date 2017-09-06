@@ -25,7 +25,7 @@ public with sharing class FeedItemHelper {
 		for (FeedItem fi : lstTriggerNew) {
 			//check apostrophe ' (&#39) RN-INC339011
 			String check = fi.body.toUpperCase();
-			string finalS;
+			string finalS = fi.body.toUpperCase();
 			if(check.contains('&#39;')){
 				finalS = check.remove('&#39;');
 			}
