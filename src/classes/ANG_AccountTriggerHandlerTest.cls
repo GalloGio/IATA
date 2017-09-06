@@ -9,9 +9,11 @@ private class ANG_AccountTriggerHandlerTest {
 		Account a = new Account(Name = 'Test', IATACode__c = '123', RecordTypeId = accRT, Location_Type__c = AMS_Utils.HE);
 		insert a;
 
-		ANG_Agency_Risk_Calculation__c calcA = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A);
-		ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B);
-		ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.FAILED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c);
+		insert new ANG_RHC_Information__c (ANG_AccountId__c = a.Id);
+
+		ANG_Agency_Risk_Calculation__c calcA = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A, ANG_Limit_Cash_Condition__c = false);
+		ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B, ANG_Limit_Cash_Condition__c = false);
+		ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.FAILED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c, ANG_Limit_Cash_Condition__c = true);
 		insert new List<ANG_Agency_Risk_Calculation__c>{calcA, calcB, calcC};
 
 	}
@@ -49,6 +51,21 @@ private class ANG_AccountTriggerHandlerTest {
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_C, a.ANG_RiskStatus__c);
 		System.assertEquals(2, a.Cases.size());
 		System.assertEquals('OSCAR_Communication', a.Cases[1].RecordType.DeveloperName);
+		System.assert([SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].ANG_CashCondition__c);
+
+		Test.stopTest();
+	}
+
+	static testMethod void test_RHCupdate() {
+		
+		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
+		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+		update a;
+
+		Test.startTest();
+
+		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		update a;
 
 		Test.stopTest();
 	}
