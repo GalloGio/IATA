@@ -2,6 +2,7 @@
   <apex:attribute name="helperParam" type="ANG_ProgressBarHelper" description="Helper" assignTo="{! helper}" />
 
   <style>
+  /*
 	*, *:after, *:before {
 	  margin: 0;
 	  padding: 0;
@@ -9,6 +10,7 @@
 	  font-family: "Open Sans";
 	  font-weight: bold; 
 	}
+	*/
 	/* Form ANG_progress */
 	.ANG_progress {
 	  width:  95%;
