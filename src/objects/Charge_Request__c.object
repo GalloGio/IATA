@@ -882,6 +882,12 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>AISTLM_FILE</fullName>
+                <default>false</default>
+                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>BSPFEE_ADELW</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
@@ -1012,6 +1018,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <fullName>CASFEE_JOIN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASFEE_JOINS</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
