@@ -21,11 +21,16 @@ public with sharing class FeedItemHelper {
 		}
 
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();
+		set<Id> setRelatedAccountIds = new set<Id>();		
 		for (FeedItem fi : lstTriggerNew) {
-
-		Pattern p = Pattern.compile('.*#\\w+(?s).*');
-		Matcher regexMatcher = p.matcher(fi.body.toUpperCase());
+			//check apostrophe ' (&#39) RN-INC339011
+			String check = fi.body.toUpperCase();
+			string finalS;
+			if(check.contains('&#39;')){
+				finalS = check.remove('&#39;');
+			}
+			Pattern p = Pattern.compile('.*#\\w+(?s).*');
+			Matcher regexMatcher = p.matcher(finalS);
 
  	   		if (String.valueOf(fi.ParentId).startsWith('001') 
  	   			&& !regexMatcher.matches() 
