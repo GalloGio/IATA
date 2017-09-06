@@ -1,6 +1,6 @@
 @isTest
 private class ISSP_ObjectFactoryTest {
-	Giving intermittent CPU time exceeded
+	//Giving intermittent CPU time exceeded
 	/*
     static testMethod void testAll() {
         
