@@ -60,6 +60,22 @@
         font-size: 12px;
       }
 
+      div.customTable {
+        width: 100%;
+      }
+
+      div.customTable>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 60%;
+        float: left;
+      }
+
+      div.customTable>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 40%;
+        float: left;
+      }      
+
       @media (max-width: 992px) {
         .fa-money {
           font-size: 200px;
@@ -175,7 +191,108 @@
           <c:AFP_Component wrapperClass='{!afpWrapper}'/>
           
         </section>
+
+
         <section name="right-side" class="col-md-6 col-sm-12">
+          <table class="table">
+            <tr>
+              <th class="section-header">
+                <i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <div class="customTable">
+                  <div>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </div>
+                  <div>                  
+                    {! accreditationType}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="customTable">
+
+                  <div>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </div>
+                  <div>
+                    {! riskStatus}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$ObjectType.Account.fields.ANG_CashCondition__c.Label}
+                    <!--apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /-->
+                  </div>
+                  <div>
+                    {! cashConditions}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$ObjectType.Account.fields.Financial_Review_Result__c.Label} 
+                    <!--apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /-->
+                  </div>
+                  <div>
+                    {! financialReviewResult}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$ObjectType.Account.fields.ANG_RiskHistoryAssessment__c.Label} 
+                    <!--apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /-->
+                  </div>
+                  <div>
+                    {! riskHistoryAssessment}
+                  </div>
+
+                </div>
+              </td>
+            </tr>
+
+            <!--tr>
+              <td style="padding-left: 30px">
+                {!$ObjectType.Account.fields.ANG_CashCondition__c.Label}
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                 {! cashConditions}
+              </td>
+            </tr-->
+          </table>
+        </section>
+
+        <!-- Risk Event History -->
+
+        <section name="right-side" class="col-md-6 col-sm-12">
+          <table class="table">
+            <tr>
+              <th class="section-header">
+                <i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RH}
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <div class="customTable">
+                  <div>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> Risk Event Status </strong>
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </div>
+                  <div>                  
+                    {! riskEventStatus}
+                  </div>
+                </div>
+                <div class="customTable">
+
+                </div>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+
+        <!--section name="right-side" class="col-md-6 col-sm-12">
           <table class="table">
             <tr>
               <th class="section-header" colspan="2">
@@ -192,12 +309,19 @@
             <tr>
               <td>
                 <i class="fa fa-arrow-circle-right" aria-hidden="true"></i><strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
-                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /> {! riskStatus}
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
               </td>
-              <td>B</td>
+              <td>{! riskStatus}</td>
+            </tr>
+            <tr>
+              <td style="padding-left: 30px">
+                {!$ObjectType.Account.fields.ANG_CashCondition__c.Label}
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+              </td>
+              <td> {! cashConditions}</td>
             </tr>
           </table>
-        </section>
+        </section-->
       </div>
 
 

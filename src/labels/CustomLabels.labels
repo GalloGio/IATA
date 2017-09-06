@@ -1373,6 +1373,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_RHC_HUB_RH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Risk History</shortDescription>
+        <value>Risk Events History</value>
+    </labels>
+    <labels>
         <fullName>API_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>

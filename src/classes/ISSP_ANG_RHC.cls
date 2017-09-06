@@ -2,6 +2,10 @@ public with sharing class ISSP_ANG_RHC {
 
 	public String accreditationType {get; set;}
 	public String riskStatus {get; set;}
+	public String cashConditions {get; set;}
+	public String financialReviewResult {get; set;}	
+	public String riskHistoryAssessment {get; set;}	
+	public String riskEventStatus {get; set;}
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
 	public Contact contact {get;set;}
 	private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
@@ -48,7 +52,9 @@ public with sharing class ISSP_ANG_RHC {
 											Account.Location_Type__c,
 											Account.Top_Parent__r.Location_Type__c,
 											Account.ANG_RiskStatus__c,
-											Account.ANG_CashCondition__c
+											Account.ANG_CashCondition__c,
+											Account.Financial_Review_Result__c,
+											Account.ANG_RiskHistoryAssessment__c
 									   FROM Contact
 									  WHERE Id = :contactId];		
 		this.contact = contactList.isEmpty() ? null : contactList[0];									  
@@ -94,6 +100,41 @@ public with sharing class ISSP_ANG_RHC {
 
 		this.accreditationType = this.Contact.Account.ANG_Accreditation_Model__c;
 		this.riskStatus = this.Contact.Account.ANG_RiskStatus__c;
+		if(this.riskStatus == null) this.riskStatus = '-';
+		if(this.Contact.Account.ANG_CashCondition__c)
+			this.cashConditions = 'Yes';
+		else
+			this.cashConditions = 'No';
 
-	}	
+		if(this.contact.Account.Financial_Review_Result__c != null && this.contact.Account.Financial_Review_Result__c.startsWith('Unsatisfactory'))
+			this.financialReviewResult = System.Label.ISSP_Unsatisfactory;
+		else 
+			this.financialReviewResult = System.Label.ISSP_Satisfactory;
+
+		this.riskHistoryAssessment = this.Contact.Account.ANG_RiskHistoryAssessment__c;
+	}
+
+	public class RiskEvent {
+		public String description {get; set;}
+		public Date dateAssigned {get; set;}
+		public Date dateExpired {get; set;}
+		public String iataCode {get; set;}
+		public String caseNumber {get; set;}
+		public String status {get; set;}
+
+		public RiskEvent(String description,
+						 Date dateAssigned,
+						 Date dateExpired,
+						 String iataCode,
+						 String caseNumber,
+						 String status) {
+
+			this.description = description;
+			this.dateAssigned = dateAssigned;
+			this.dateExpired = dateExpired;
+			this.iataCode = iataCode;
+			this.caseNumber = caseNumber;
+			this.status = status;
+		}
+	}
 }
