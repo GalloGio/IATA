@@ -77,6 +77,6 @@ public class ANG_RHCInformationTriggerHandler{
 			}
 		}
 
-		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum, false);
+		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
 	}
 }

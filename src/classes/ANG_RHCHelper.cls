@@ -1,6 +1,11 @@
 public class ANG_RHCHelper {
+
+
+	/*public static void calculateRHCAmount(List<Account> accounts) {
+		calculateRHCAmount([SELECT Id, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
+	}*/
 	
-	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo, Boolean doUpdate) {
+	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
@@ -21,7 +26,5 @@ public class ANG_RHCHelper {
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}
 		}
-
-		if(doUpdate) update rhcInfo;
 	}
 }

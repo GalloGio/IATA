@@ -55,5 +55,19 @@ private class ANG_AccountTriggerHandlerTest {
 
 		Test.stopTest();
 	}
+
+	static testMethod void test_RHCupdate() {
+		
+		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
+		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+		update a;
+
+		Test.startTest();
+
+		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		update a;
+
+		Test.stopTest();
+	}
 	
 }
