@@ -738,7 +738,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>

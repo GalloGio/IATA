@@ -535,8 +535,9 @@
         <fields>Territory_ISO_Country__c</fields>
         <fields>Territory_State_Abbreviation__c</fields>
         <fields>Territory_Description__c</fields>
+        <fields>Accreditation_ID__c</fields>
         <relatedList>GSA_Territory__c.Related_GDP_Products_Account_View__c</relatedList>
-        <sortField>Airline_Name__c</sortField>
+        <sortField>Accreditation_ID__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
