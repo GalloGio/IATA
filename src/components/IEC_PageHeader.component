@@ -291,7 +291,7 @@
                     <li class="has-child"> 
                         <a class="js-open-nav-content" href="#">{!$Label.Products}</a>
                         <div class="nav-content">
-                            <div class="inner-wrapper"> 
+                            <div class="inner-wrapper">
                                 <apex:repeat value="{!categories}" var="cat">
                                     <div class="category-container "><!-- {!cat.value} -->
                                         <div class="category-title">{!cat.label}</div>
