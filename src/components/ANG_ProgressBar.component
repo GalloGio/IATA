@@ -25,8 +25,16 @@
 	  background: #fff;
 	  width: 40px; height: 40px;
 	  border-radius: 40px;
-	  border: 1px solid #d5d5da;
+	  border: 1px solid #848489;	 
 	}
+	.ANG_progress .circle.done {
+	  margin-top: 10px;
+	  display: inline-block;
+	  background: #fff;
+	  width: 40px; height: 40px;
+	  border-radius: 40px;
+	  border: 2px solid #58d152;	  
+	}	
 	.ANG_progress .bar {
 	  position: relative;
 	  width: 80px;
@@ -54,14 +62,24 @@
       justify-content: center;
       align-items: center;
 	}
+	.centerOk {
+	  top: 5px !important;
+	  margin-left: -3px !important;
+	}	
+	.centerError {
+	  top: 5px !important;
+	  margin-left: -2px !important;
+	}		
 
 	/* Done / Active */
-	.ANG_progress .bar.done,
-	.ANG_progress .circle.done {
-	  background: #eee;
+	.ANG_progress .bar.done {
+	  background: #d3d1d1;
 	}
+	/*.ANG_progress .circle.done {
+	  background: #d3d1d1;
+	}*/
 	.ANG_progress .circle.done .label {
-	  margin-top: 3px;
+	  margin-top: 2px;
 	  color: #FFF;
 	  background: #58d152;
 	}
@@ -107,7 +125,7 @@
 	  	  	<span class="bar done"></span>
 	  	  </apex:outputPanel>  	
 		  <div class="circle done">
-		  	<span class="label"></span>
+		  	<span class="label"><i class="glyphicon glyphicon-ok centerOk"></i></span>
 		    <span class="title">{! node.title}</span>
 		  </div>
 	  	</apex:outputPanel>
@@ -117,7 +135,7 @@
 	  	  	<span class="bar done"></span>
 	  	  </apex:outputPanel>
 		  <div class="circle error">
-		  	<span class="label"></span>
+		  	<span class="label"><i class="glyphicon glyphicon-remove centerError"></i></span>
 		    <span class="title">{! node.title}</span>
 		  </div>
 	  	</apex:outputPanel>
