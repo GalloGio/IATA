@@ -26,7 +26,7 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 
                 // validate that owners are present
-                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES};
+                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateOwnership.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     
                     Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner')];
@@ -38,7 +38,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
 
                 // validate that certified trained staff is present
-                set<String> lstProcessesToValidateDGR = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES};
+                set<String> lstProcessesToValidateDGR = new set<String>{AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateDGR.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     AMS_Pax_Accreditation_Form__c form = [SELECT Id, Agent_Type__c, Location_Type__c, Is_your_firm_handling_Dangerous_Goods__c, Branch_Office_Country__c, Branch_Office_Country__r.EACP_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
 
@@ -55,7 +55,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
 
                 // validate attachments are present; skipping this check on child cases (as attachments are on the parent case anyway)
-                set<String> lstProcessesToValidateAttachments = new set<String>{AMS_Utils.BANKACCCHANGES, AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES};
+                set<String> lstProcessesToValidateAttachments = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateAttachments.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     list<Case> cse = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null OR Parent.RecordType.Name != 'OSCAR Communication' ) ];
                     if(cse.size() > 0) {
