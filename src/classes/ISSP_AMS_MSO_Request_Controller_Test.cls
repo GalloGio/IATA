@@ -69,7 +69,7 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             ISSP_AMS_MSO_Request_Controller ctrl = new ISSP_AMS_MSO_Request_Controller();
 
             system.assertEquals('/ISSP_Homepage', ctrl.cancel().getUrl());
-            system.assertEquals(null, ctrl.securityCheck());
+            system.assertEquals('/ISSP_Homepage', ctrl.securityCheck().getUrl()); 
             
             ctrl.accreditationForm.Branch_Office_Street_name_number__c = 'streetname';
             ctrl.accreditationForm.Branch_Office_City__c = 'cityname';
@@ -151,8 +151,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			username = 'someuser@iata.org',
 			email = 'someuser@iata.org',
 			emailencodingkey = 'UTF-8',
-			localesidkey = 'en_US',
-			languagelocalekey = 'en_US',
+			localesidkey = 'de',
+			languagelocalekey = 'de',
 			timezonesidkey = 'America/Los_Angeles',
 			alias='nuser',
 			lastname='lastname',
@@ -176,13 +176,20 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             ctrl.billingState = isos.Id;
 
 			Test.startTest();
+				ctrl.accreditationForm.Branch_Office_Email__c = 'a';
             	ctrl.save();
+
+				ctrl.accreditationForm.Branch_Office_Email__c = '';
+				ctrl.save();
             	ctrl.save();
 
             	list<Account> newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];
 				system.assertEquals(1, newMSO.size());
 
 				ctrl.goBackToForm();
+
+				Test.setCurrentPage(new PageReference('/apex/ISSP_AMS_MSO_Request?caseId=' + ctrl.oscarCase.Id));
+				ISSP_AMS_MSO_Request_Controller ctrl2 = new ISSP_AMS_MSO_Request_Controller();
 
 				ctrl.cancelRequest();
 				newMSO = [SELECT Id, Name FROM Account WHERE Location_Class__c = 'M' AND Name = 'Airline HQ'];

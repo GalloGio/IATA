@@ -8940,6 +8940,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Legal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Office_Email</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Office_Email</shortDescription>
+        <value>Office Email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
         <language>en_US</language>
         <protected>false</protected>

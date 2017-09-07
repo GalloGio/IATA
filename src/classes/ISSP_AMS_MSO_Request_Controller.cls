@@ -73,8 +73,23 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     }
 
     public Pagereference securityCheck() {
+        // checkIfUserHasAccessToService
         if (currentUserContact.Account.RecordType.DeveloperName != 'IATA_Airline' && currentUserContact.Account.RecordType.DeveloperName != 'IATA_Airline_BR') 
             return new Pagereference('/ISSP_Homepage');
+
+        User u = [SELECT Id, ContactId From User WHERE Id =: UserInfo.getUserId()];
+        if(u != null){
+            List<Portal_Application_Right__c> par;
+            par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c 
+                        WHERE Contact__c =: u.ContactId 
+                        AND Right__c = 'Access Granted'
+                        AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin')
+                        AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
+
+            if(par.size()==0) // No access right => return to home page
+                return new PageReference('/ISSP_Homepage');
+        }
+
         return null;
     }
 
@@ -177,6 +192,14 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Billing_State_ErrMsg));
             isValid = false;
         }
+
+        if (accreditationForm.Branch_Office_Email__c != null && accreditationForm.Branch_Office_Email__c != '') { // email is optional
+            if (accreditationForm.Branch_Office_Email__c.indexOf('@') < 1 || accreditationForm.Branch_Office_Email__c.indexOf('.', accreditationForm.Branch_Office_Email__c.indexOf('@') + 2) < 0 || accreditationForm.Branch_Office_Email__c.length() < accreditationForm.Branch_Office_Email__c.lastIndexOf('.')+3) {
+                isValid = false;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid email address'));
+            }
+        }
+
 
         if (!isValid) {
             return null;

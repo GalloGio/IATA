@@ -250,7 +250,7 @@
 				            </div>
 
 				            <div class="col-lg-9" style="padding-top:7px;">				            	
-				                <apex:inputField id="emailAddress" required="false" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_Office_Email}"/>
+				                <apex:inputField id="emailAddress" required="false" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_AMS_MSO_Office_Email}"/>
 				            </div>
 					        
 				        </apex:pageBlockSection>
@@ -331,7 +331,7 @@
                             </div>
 
                             <div class="col-lg-9" style="padding-top:7px;">                             
-                                <apex:outputField id="emailAddress" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_Office_Email}"/>
+                                <apex:outputField id="emailAddress" value="{!accreditationForm.Branch_Office_Email__c}" label="{!$Label.ISSP_AMS_MSO_Office_Email}"/>
                             </div>
                             
                         </apex:pageBlockSection>
