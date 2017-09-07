@@ -32,7 +32,7 @@
       <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
       <i class="{! wrapper.isCash}" aria-hidden="true"></i>
       <apex:outputPanel rendered="{! wrapper.isCashless}">
-      	<apex:outputText escape="false" value="{! $Label.ANG_ISSP_AFP_CashlessMessage}"/>
+      	<apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
       </apex:outputPanel>      
     </div>
     <div class="col-md-4 col-sm-12 text-center">

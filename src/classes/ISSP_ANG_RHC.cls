@@ -6,7 +6,10 @@ public with sharing class ISSP_ANG_RHC {
 	public String financialReviewResult {get; set;}	
 	public String riskHistoryAssessment {get; set;}	
 	public String riskEventStatus {get; set;}
+	public List<RiskEvent> riskEventsList;
+	public String riskStatusFilter {get; set;}
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
+	public Boolean isAll {get; set;}
 	public Contact contact {get;set;}
 	private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c remittanceFrequency {get;set;}
@@ -20,6 +23,7 @@ public with sharing class ISSP_ANG_RHC {
 	} set;}
 
 	public ISSP_ANG_RHC() {
+		this.riskStatusFilter = 'Active';
 		init();
 		initFormsOfPayment();
 		initializeRemittanceFrequency();
@@ -98,7 +102,16 @@ public with sharing class ISSP_ANG_RHC {
 
 	private void initRiskProfile() {
 
-		this.accreditationType = this.Contact.Account.ANG_Accreditation_Model__c;
+		System.debug('this.Contact.Account.ANG_Accreditation_Model__c-->' + this.Contact.Account.ANG_Accreditation_Model__c);
+
+		if(this.Contact.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+			this.accreditationType = System.Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+		} else if(this.Contact.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+			this.accreditationType = System.Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+		} else {
+			this.accreditationType = this.Contact.Account.ANG_Accreditation_Model__c;
+		}
+
 		this.riskStatus = this.Contact.Account.ANG_RiskStatus__c;
 		if(this.riskStatus == null) this.riskStatus = '-';
 		if(this.Contact.Account.ANG_CashCondition__c)
@@ -122,19 +135,68 @@ public with sharing class ISSP_ANG_RHC {
 		public String caseNumber {get; set;}
 		public String status {get; set;}
 
-		public RiskEvent(String description,
-						 Date dateAssigned,
-						 Date dateExpired,
-						 String iataCode,
-						 String caseNumber,
-						 String status) {
-
-			this.description = description;
-			this.dateAssigned = dateAssigned;
-			this.dateExpired = dateExpired;
-			this.iataCode = iataCode;
-			this.caseNumber = caseNumber;
-			this.status = status;
+		public RiskEvent(ANG_Agency_Risk_Event__c event) {
+			this.description = event.ANG_Risk_Type__r.ANG_Description__c;
+			this.dateAssigned = event.ANG_Issued_Date__c;
+			this.dateExpired = event.ANG_expiration_date_ff__c;
+			this.iataCode = event.ANG_AccountId__r.IATACode__c;
+			this.caseNumber = event.ANG_CaseId__c;
+			this.caseNumber = '7953544';
+			this.status = translateStatus(event.ANG_Event_Status__c, event.ANG_Expired__c);
 		}
+
+		private String translateStatus(String status, Boolean expired) {
+			String retStatus = status;
+			if(expired) {
+				retStatus = 'Expired';
+			} else if(status == 'Inactive_Withdrawn' || status == 'Inactive_Revoked') {
+				retStatus = 'Inactive';
+			}
+			return retStatus;
+		}
+	}
+
+    public PageReference refreshRiskEventsTable() {
+        riskEventsList = null;
+        
+        return null;
+    }
+
+	public List<RiskEvent> getRiskEventList() {
+		riskEventsList = new List<RiskEvent>();
+
+		String soqlStr = 'Select ANG_Risk_Type__r.ANG_Description__c,' +
+								'ANG_Issued_Date__c,' +
+								'ANG_Event_Status__c,' +
+								'ANG_expiration_date_ff__c,' +
+								'ANG_AccountId__r.IATACode__c,' +
+								'ANG_CaseId__c,' +
+								'ANG_Expired__c' +
+						  ' From ANG_Agency_Risk_Event__c' +
+						 ' Where ANG_HE_AccountId__c = \'' + this.contact.Account.id + '\'';
+
+		this.isAll = false;
+		String filter = ' And ';
+		if(this.riskStatusFilter == 'Active') {
+			filter += 'ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
+		} else if(this.riskStatusFilter == 'Expired') {
+			//filter += 'ANG_Event_Status__c = \'Inactive\' And ANG_Expired__c = true';
+			filter += 'ANG_Expired__c = true';
+		} else if(this.riskStatusFilter == 'Inactive') {
+			filter += 'ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
+		} else if(this.riskStatusFilter == 'All') {
+			this.isAll = true;
+			filter += 'ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
+		}
+
+		soqlStr += filter;
+
+		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
+
+		for(ANG_Agency_Risk_Event__c event : events) {
+			riskEventsList.add(new RiskEvent(event));
+		}
+
+		return riskEventsList;
 	}
 }

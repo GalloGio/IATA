@@ -11,6 +11,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public String iepLink {get; set;}
 	public String modalErrorMessage {get; set;}
 	public String modalErrorMessageFlag {get; set;}
+	public String cashlessMessage {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services) {
 		this.isCash = NO;
@@ -21,6 +22,25 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.modalErrorMessageFlag = '';
 
 		this.isCashless = (contact.Account.ANG_Accreditation_Model__c != null && contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+
+		if(this.isCashless) {
+			Boolean hasAccess = false;
+			for(Portal_Application_Right__c par: services) {
+				System.debug('par.Application_Name__c-->' + par.Application_Name__c);
+
+				if(par.Application_Name__c == Ams_Utils.IATA_ACCREDITATION_AND_CHANGES && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
+					hasAccess = true;
+					break;
+				}
+			}
+			if(hasAccess) {
+				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessage;
+			} else {
+				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;				
+			}
+
+			System.debug('this.cashlessMessage--->' + this.cashlessMessage);
+		}
 
 		if(authorizations != null) {
 			for(Agency_Authorization__c auth : authorizations) {
@@ -33,6 +53,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				}
 			}
 		}
+
 		if(contact.Account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			Boolean hasAccess = false;
@@ -44,7 +65,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				}
 			}
 			if(hasAccess) {
-				this.iepLinkLabel = System.Label.ANG_ISSP_IATA_EasyPay;
+				this.iepLinkLabel = System.Label.ANG_ISSP_REH_AccessEasyPay;
 			} else {
 				this.iepLinkLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
 				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
