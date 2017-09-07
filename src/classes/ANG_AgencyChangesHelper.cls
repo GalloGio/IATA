@@ -142,6 +142,7 @@ public with sharing class ANG_AgencyChangesHelper {
 						accountHierarchyRelationships = extractAllAccounts(AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}));
 						accountHierarchyRelationships.add(oscar.Account__c);
                 		isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+                        System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 					
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c));
@@ -255,7 +256,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		Set<Id> allAccountsInvolved = fetchAccountIdsToBeProcessed(oscar.Id);
 		allAccountsInvolved.add(oscar.Account__c);
         
-		return accountHierarchyRelationships.containsAll(allAccountsInvolved);
+        System.debug('[ANG_AgencyChangesHelper] allAccountsInvolved are ' + allAccountsInvolved);
+        System.debug('[ANG_AgencyChangesHelper] accountHierarchyRelationships are ' + accountHierarchyRelationships);
+
+		return allAccountsInvolved.containsAll(accountHierarchyRelationships);
 
 	}
 
