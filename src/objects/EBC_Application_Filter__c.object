@@ -52,7 +52,7 @@ Dedicated to the eBroadcast application.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -79,6 +79,7 @@ Dedicated to the eBroadcast application.</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -90,6 +91,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Label Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -102,6 +104,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Object</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -114,6 +117,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Value Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -124,6 +128,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Where Clause</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -155,6 +160,7 @@ Dedicated to the eBroadcast application.</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -166,6 +172,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Description</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -178,6 +185,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -190,6 +198,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Related List Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -202,6 +211,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Related List</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -224,6 +234,7 @@ Dedicated to the eBroadcast application.</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -272,6 +283,7 @@ Dedicated to the eBroadcast application.</description>
     <nameField>
         <displayFormat>FT-{0000}</displayFormat>
         <label>EBC Application Filter Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>EBC Application Filters</pluralLabel>

@@ -255,8 +255,8 @@
         </filters>
         <filters>
             <field>start_date__c</field>
-            <operation>greaterThan</operation>
-            <value>8/21/2017 12:00 AM</value>
+            <operation>equals</operation>
+            <value>8/30/2017 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

@@ -2049,6 +2049,54 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Status_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Action plan ongoing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed effective</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed effectiveness pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed not effective</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deprioritized</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Input pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Investigation</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Subject__c</fullName>
         <externalId>false</externalId>
         <label>Subject</label>
@@ -3703,6 +3751,45 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Status_del__c</picklist>
+            <values>
+                <fullName>Action plan ongoing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed effective</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed effectiveness pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed not effective</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deprioritized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Input pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investigation</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
@@ -3717,7 +3804,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <fullName>OI_Overall_effectiveness_of_improvement</fullName>
         <active>true</active>
         <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</description>
-        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
+        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;), Datevalue(Date_Time_Closed__c)&gt;DATE(2017,08,21))</errorConditionFormula>
         <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
         <errorMessage>OI  can not be closed. Please fill &quot;Overall effectiveness of improvement&quot;.</errorMessage>
     </validationRules>

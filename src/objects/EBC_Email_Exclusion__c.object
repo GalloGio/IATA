@@ -371,7 +371,7 @@
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>gm-tour@hanmail.net</value>
+            <value>@iata.org</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>

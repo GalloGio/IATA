@@ -313,6 +313,28 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>KAVItoda</fullName>
+        <columns>NAME</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Success__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>equals</operation>
+            <value>Standards Setting Workspace</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>KAVI - today</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAAdmins</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>SIS</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>

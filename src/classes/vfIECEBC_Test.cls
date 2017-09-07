@@ -57,6 +57,9 @@ public class vfIECEBC_Test {
     public static testMethod void testCampaignIDCardSendMassMailing() {
         vfIECEBC_TestSuite.testCampaignIDCardSendMassMailing();
     }
+    public static testMethod void testElasticQuery() {
+        vfIECEBC_TestSuite.testElasticQuery();
+    }
     public static testMethod void testOptOut() {
         vfIECEBC_TestSuite.testOptOut();
     }
@@ -67,7 +70,12 @@ public class vfIECEBC_Test {
     public static testMethod void testCleanOutOfDateOptOut() {
         vfIECEBC_TestSuite.testCleanOutOfDateOptOut();
     }
-    
+    public static testMethod void testCampaignRecipientMock() {
+        vfIECEBC_TestSuite.testCampaignRecipientsExistingListMock();
+    }
+    public static testMethod void testRecipientsCountMock() {
+        vfIECEBC_TestSuite.testRecipientsCountExistingListMock();
+    }
      
     /*
      * Those methods become useless once we test the Pay Using Credits

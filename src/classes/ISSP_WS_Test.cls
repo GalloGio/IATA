@@ -230,6 +230,7 @@ private class ISSP_WS_Test {
         newAppRight.Right__c = 'Access Granted';
         insert newAppRight;
         
+		Test.startTest();
         ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
         myInput.firstName = 'test';
         myInput.lastName = 'test';
@@ -248,6 +249,7 @@ private class ISSP_WS_Test {
         con.status__c = 'Inactive';
         update con;
         ISSP_WS_NewUser.createUser(myInput);
+		Test.stopTest();
     }
     
     static testMethod void NewUser_5() {
