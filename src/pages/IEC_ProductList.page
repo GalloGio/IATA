@@ -57,7 +57,7 @@
 										else
 											document.title = "{!selectedTopicLabel} - {!$Label.SiteTitle}";
 									</script>
-								</li>
+								</li> 
 							</ol>
 							<h1 class="page-title punctuations">{! IF(selectedTopicLabel == null || selectedTopicLabel == '', selectedCategory.label, selectedTopicLabel)}</h1>
 
