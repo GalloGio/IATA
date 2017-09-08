@@ -428,8 +428,8 @@
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
-        <columns>Visible__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
         <columns>Do_not_Track__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
