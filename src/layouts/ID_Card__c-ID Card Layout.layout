@@ -302,7 +302,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Now_Date_Time__c</field>
+                <field>Now_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

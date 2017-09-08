@@ -138,8 +138,9 @@ private class ISSP_WS_Test {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
-        con.User_Portal_Status__c = 'Rejected';
+        con.User_Portal_Status__c = 'Approved User';
         con.Email = 'test.issp.interface@testisspinterface.com';
+        con.Community__c = 'ISSP';
         insert con;
         
         Portal_Applications__c newApp = new Portal_Applications__c();
@@ -229,6 +230,7 @@ private class ISSP_WS_Test {
         newAppRight.Right__c = 'Access Granted';
         insert newAppRight;
         
+		Test.startTest();
         ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
         myInput.firstName = 'test';
         myInput.lastName = 'test';
@@ -240,11 +242,14 @@ private class ISSP_WS_Test {
         myInput.services = 'CASS01';
         myInput.sisMemberId = '';
         myInput.description = '';
-        ISSP_WS_NewUser.createUser(myInput);
-        
+        ISSP_WS_NewUser.createUser(myInput);        
         newAppRight.Right__c = 'Access Denied';
         update newAppRight;
         ISSP_WS_NewUser.createUser(myInput);
+        con.status__c = 'Inactive';
+        update con;
+        ISSP_WS_NewUser.createUser(myInput);
+		Test.stopTest();
     }
     
     static testMethod void NewUser_5() {
@@ -442,6 +447,7 @@ private class ISSP_WS_Test {
         con.LastName = 'test';
         con.User_Portal_Status__c = 'Approved User';
         con.Email = 'test.issp.interface@testisspinterface.com';
+        con.Community__c = 'ISSP';
         insert con;
         
         User thisUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -483,7 +489,7 @@ private class ISSP_WS_Test {
             update thisUser;
             ISSP_WS_NewUser.createUser(myInput);
             myInput.services = 'CASS04';
-            con.Community__c = '';
+            //  con.Community__c = '';
             con.User_Portal_Status__c = 'Pending Approval';
             update con;
             ISSP_WS_NewUser.createUser(myInput);
@@ -590,6 +596,7 @@ private class ISSP_WS_Test {
         insert newAppRight;
         
         User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+        Test.startTest();
         system.runAs(myUser){
             ISSP_WS_DisableUser.UserInputData myInput = new ISSP_WS_DisableUser.UserInputData();
             myInput.fedId = '';
@@ -613,8 +620,7 @@ private class ISSP_WS_Test {
             
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.disableUser(myInput);
-            
-			Test.startTest();
+
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
@@ -624,8 +630,8 @@ private class ISSP_WS_Test {
 			
             myInput.services = 'BSPLink';
             ISSP_WS_DisableUser.disableUser(myInput);
-			Test.stopTest();
         }
+        Test.stopTest();
     }
     
     static testMethod void NewUser_11() {
@@ -729,6 +735,7 @@ private class ISSP_WS_Test {
         insert newAppRight;
         
         User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+        Test.startTest();
         system.runAs(myUser){
             ISSP_WS_DisableUser.UserInputData myInput = new ISSP_WS_DisableUser.UserInputData();
             myInput.fedId = '';
@@ -749,22 +756,20 @@ private class ISSP_WS_Test {
             
             myInput.services = 'CASS03';
             ISSP_WS_DisableUser.reactivateUser(myInput);
-            
-			Test.startTest();
+
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.reactivateUser(myInput);
-			
             
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
-			Test.stopTest();
             
             myInput.services = 'BSPLink';
-            //ISSP_WS_DisableUser.disableUser(myInput);
+            ISSP_WS_DisableUser.disableUser(myInput);
         }
+        Test.stopTest();
     }
 
      static testMethod void asdDeactivateUser() { 

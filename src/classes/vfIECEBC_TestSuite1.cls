@@ -512,7 +512,9 @@ public class vfIECEBC_TestSuite1 {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
-        newContact.FirstName = 'Name';
+		newContact.FirstName = 'Name';
+        newContact.Phone='5142640908';
+        newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -737,6 +739,7 @@ insert gpavs;*/
             recipientEditCon.validateNewFilter();
             System.assertEquals(3, recipientEditCon.newListStepNumber);
             
+            recipientEditCon.newFilter.Name = 'EBC_TEST_RUN';
             Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
             System.assert(cnt > 0);
             recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
