@@ -295,8 +295,11 @@
                                 <apex:repeat value="{!categories}" var="cat">
                                     <div class="category-container "><!-- {!cat.value} -->
                                         <div class="category-title">{!cat.label}</div>
+                                        
                                         <ul class="nav">
+                                            <!-- INC340004 - Cannot view all publications on the store - susana alves
                                             <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}">{!$Label.View_all}</a></li>
+                                            -->
                                             <apex:repeat value="{!subCategories[cat.value]}" var="topic">
                                                 <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
                                             </apex:repeat>

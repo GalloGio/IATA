@@ -66,8 +66,9 @@
 									<h2 class="group-title">Category</h2>
 									<div class="show-more-less-container">
 					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
+					                        <!-- INC340004 - Cannot view all publications on the store - susana alves
 					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
-					                        
+					                        -->
 					                        <apex:variable value="{!0}" var="counter" />
 					                        <apex:repeat var="cat" value="{!subCategories[selected_category]}">
 					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>

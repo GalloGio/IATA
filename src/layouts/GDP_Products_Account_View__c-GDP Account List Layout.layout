@@ -63,6 +63,10 @@
         <label>Agency Status, Type &amp; Class</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Accredited_By__c</field>
             </layoutItems>
@@ -105,6 +109,10 @@
         <editHeading>true</editHeading>
         <label>Location Address</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_GDP_Address__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Location_Address__c</field>
@@ -401,7 +409,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Now_Date_Time__c</field>
+                <field>Now_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -535,8 +543,9 @@
         <fields>Territory_ISO_Country__c</fields>
         <fields>Territory_State_Abbreviation__c</fields>
         <fields>Territory_Description__c</fields>
+        <fields>Accreditation_ID__c</fields>
         <relatedList>GSA_Territory__c.Related_GDP_Products_Account_View__c</relatedList>
-        <sortField>Airline_Name__c</sortField>
+        <sortField>Accreditation_ID__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>

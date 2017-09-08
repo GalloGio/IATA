@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -265,6 +268,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Country_ISO_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>state_numeric_code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -603,6 +610,9 @@
         <fields>Status__c</fields>
     </miniLayout>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
@@ -716,6 +726,8 @@
         <fields>City__c</fields>
         <fields>Country__c</fields>
         <fields>Address_Type__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Address__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
