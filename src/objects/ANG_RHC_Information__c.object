@@ -259,6 +259,12 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Prevent_Forecast_Changes</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ANG_Enable_Calculation__c) &amp;&amp; ISCHANGED(ANG_RME_Amount__c)</errorConditionFormula>
+        <errorMessage>You are not allowed to confirm a new RHC amount for a terminated agent</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Confirm_RHC</fullName>
         <availability>online</availability>
@@ -275,11 +281,16 @@ rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;;
 
 rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
 
-console.info(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;);
-console.info(rhcInfo);
-sforce.connection.update([rhcInfo]);
+var result = sforce.connection.update([rhcInfo]);
 
-window.location.reload();</url>
+console.info(&quot;result&quot;);
+console.info(result[0]);
+
+if (result[0].success == &quot;true&quot;) {
+window.location.reload();
+} else {
+alert(result[0].errors.message);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Request_RHC_Calculation</fullName>
