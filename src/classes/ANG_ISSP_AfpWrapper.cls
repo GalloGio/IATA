@@ -21,7 +21,9 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.modalErrorMessage = '';
 		this.modalErrorMessageFlag = '';
 
-		this.isCashless = (contact.Account.ANG_Accreditation_Model__c != null && contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+		this.isCashless = (contact != null && 
+						   contact.Account.ANG_Accreditation_Model__c != null && 
+						   contact.Account.ANG_Accreditation_Model__c == 'Cashless');
 
 		if(this.isCashless) {
 			Boolean hasAccess = false;
