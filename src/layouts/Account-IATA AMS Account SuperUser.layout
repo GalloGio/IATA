@@ -269,6 +269,10 @@
                 <behavior>Readonly</behavior>
                 <field>Country_ISO_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>state_numeric_code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -621,6 +625,9 @@
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
     </miniLayout>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
