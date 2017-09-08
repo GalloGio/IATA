@@ -5347,11 +5347,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent);
                             errorFound = true;
                         }
-                    }
                     
-                    if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-                        newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs);
-                        errorFound = true;
+                        if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+                            newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs);
+                            errorFound = true;
+                        }
                     }
                     
                     //Legal / Registered name required for Branches Abroad, Terminated Agent and Accred Agent applying for New HO

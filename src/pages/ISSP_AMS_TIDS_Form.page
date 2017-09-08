@@ -1256,7 +1256,7 @@
 
                 <apex:pageblocksection columns="1" rendered="{!amsOfficeType=='HO'}">
                     <apex:pageblocksectionitem >
-                        <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
+                        <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs_Not_Mandatory}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
                     <!--
