@@ -139,8 +139,10 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 					
 					if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
-						accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}).keySet();
+						accountHierarchyRelationships = extractAllAccounts(AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}));
+						accountHierarchyRelationships.add(oscar.Account__c);
                 		isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+                        System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 					
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c));
@@ -239,22 +241,25 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static void performRiskEventActions(AMS_OSCAR__c oscar, String oldParentHierarchyId, Boolean isAllHierarchySelected){
-
-		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
-			System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
-
+		    
+		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY,AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
+            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
+		
 		if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c) && isAllHierarchySelected)
-			System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId]));
-
-	}
+            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId]));
+        
+        }
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
 
 		Set<Id> allAccountsInvolved = fetchAccountIdsToBeProcessed(oscar.Id);
 		allAccountsInvolved.add(oscar.Account__c);
+        
+        System.debug('[ANG_AgencyChangesHelper] allAccountsInvolved are ' + allAccountsInvolved);
+        System.debug('[ANG_AgencyChangesHelper] accountHierarchyRelationships are ' + accountHierarchyRelationships);
 
-		return accountHierarchyRelationships.containsAll(allAccountsInvolved);
+		return allAccountsInvolved.containsAll(accountHierarchyRelationships);
 
 	}
 
@@ -1144,9 +1149,23 @@ public with sharing class ANG_AgencyChangesHelper {
 
     public static void validationBeforeClosure(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config){
 
-    	if(ANG_AgencyChangesConfigHelper.getManagerApprovalRequired(config.config))
+    	if(ANG_AgencyChangesConfigHelper.getManagerApprovalRequired(config.config) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
     		oscar.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
 
     }
 
+    public static Set<Id> extractAllAccounts(Map<Id, List<AMS_Agencies_relationhip__c>> relations){
+
+    	Set<Id> toReturn = new Set<Id>();
+
+    	for(List<AMS_Agencies_relationhip__c> relationsLst: relations.values())
+    		for(AMS_Agencies_relationhip__c rel : relationsLst){
+
+    			toReturn.add(rel.Parent_Account__c);
+    			toReturn.add(rel.Child_Account__c);
+
+    	}
+
+    	return toReturn;
+    }
 }
