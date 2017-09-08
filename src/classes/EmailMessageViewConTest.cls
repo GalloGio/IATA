@@ -1,4 +1,4 @@
-@isTest
+@isTest(SeeAllData=true)
 public class EmailMessageViewConTest{
     
     static testMethod void testEmailMessageViewCon()
@@ -26,6 +26,9 @@ public class EmailMessageViewConTest{
         ca.Status = 'Action Needed';
         ca.accountId = account1.Id;
         ca.contactId = contact1.Id;
+        ca.Region__c = 'Europe';
+        Id sMapRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)').getRecordTypeId();
+        ca.RecordTypeId = sMapRt;
         Insert ca;
         
         EmailMessage em = new EmailMessage();
@@ -35,8 +38,24 @@ public class EmailMessageViewConTest{
         em.TextBody = 'hello';
         em.Subject= 'Test';      
         em.MessageDate = datetime.now();
-        Insert em;
+    insert em;
         
+        Tracked_Email__c te = new Tracked_Email__c();
+        te.Case__c = ca.Id;
+        
+        insert te;
+        
+        EmailMessage am = new EmailMessage();
+        am.ParentId = ca.Id;
+        am.ToAddress = 'im.remon@gmail.com';
+        am.CcAddress = 'im.remon@gmail.com';
+        am.TextBody = 'hello';
+        am.Subject= 'Test';      
+        am.MessageDate = datetime.now();
+        insert am;
+        
+        Archived_Message__c archived = new Archived_Message__c(name = 'archived message 1', EmailMessage__c = am.Id, Case__c = ca.Id);
+        insert archived;
         
         Case ca1 = new Case();
         ca1.BounceEmailSubject__c = 'Test';
@@ -69,6 +88,7 @@ public class EmailMessageViewConTest{
         Insert em2;
         
         
+        
         Case ca3 = new Case();
         ca3.BounceEmailSubject__c = 'Test';
         ca3.BounceEmailCounter__c = 3;
@@ -84,28 +104,6 @@ public class EmailMessageViewConTest{
         em3.MessageDate = datetime.now();
         Insert em3;
         
-        list<Archived_Message__c> listMessage = new list<Archived_Message__c>{
-            new Archived_Message__c(
-                Name = 'mesg',
-                EmailMessage__c = em.Id,
-                Case__c = ca.Id),
-            new Archived_Message__c(
-                Name = 'mesg1',
-                EmailMessage__c = em1.Id,
-                Case__c = ca1.Id),
-            new Archived_Message__c(
-                Name = 'mesg2',
-                EmailMessage__c = em2.Id,
-                Case__c = ca2.Id),
-            new Archived_Message__c(
-                Name = 'mesg3',
-                EmailMessage__c = em3.Id,
-                Case__c = ca3.Id)
-        };
-        insert listMessage ;
-        
-        Test.setCreatedDate(em1.Id, DateTime.now().addDays(-1));
-        Test.setCreatedDate(em2.Id, DateTime.now());
        
         Case testCase = [SELECT id, CaseNumber FROM Case where id =:ca.Id];
         Test.startTest(); 
@@ -117,7 +115,18 @@ public class EmailMessageViewConTest{
         EmailMessagesViewCon controller = new EmailMessagesViewCon(sc);          
         controller.cse = ca;
         controller.getEmails();
-        controller.getCse(); 
+        controller.getCse();
+        
+        controller.getShowSendTrackedEmailButton();
+        
+        List<EmailMessagesViewCon.EmailWrapper> unifiedList = controller.unifiedList;
+        
+        System.assert(unifiedList.size() > 0);
+        EmailMessagesViewCon.EmailWrapper wrappedEmail = unifiedList.get(0);
+        String s = wrappedEmail.displayEmailActions;
+        s = wrappedEmail.displayArchivedActions;
+        s = wrappedEmail.displayTrackedActions;
+        s = wrappedEmail.displayEmailAddress;
         
         //Generate an exception
         PageReference pageRef1 = Page.EmailMessagesView;   
@@ -130,16 +139,8 @@ public class EmailMessageViewConTest{
         emai = IDFS_Util.getIATACountryEmail('caseBSPCountry');
         IDFS_Util.DeleteEmail(em3.Id);
         IDFS_Util.DeleteEmail('NoId');
-        controller1.getShowSendTrackedEmailButton();
-        controller1.getACaseId();
+        Test.stopTest();     
         
-        em1 = [Select id, CreatedDate from EmailMessage  where id = :em1.id];
-        em2 = [Select id, CreatedDate from EmailMessage  where id = :em2.id];
-        EmailMessagesViewCon.EmailWrapper wrap1 = new EmailMessagesViewCon.EmailWrapper(em1, false, null);
-        EmailMessagesViewCon.EmailWrapper wrap2 = new EmailMessagesViewCon.EmailWrapper(em2, false, null);
-        System.assertEquals(-1, wrap1.compareTo(wrap2));
-        
-        Test.stopTest();          
+           
     }
-
 }

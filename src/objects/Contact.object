@@ -27743,9 +27743,9 @@ ISCHANGED(ISSP_Contact_Name__c )
     </validationRules>
     <validationRules>
         <fullName>Contact_First_name_mandatory</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Forcing the standard field (first name) mandatory</description>
-        <errorConditionFormula>TRIM (FirstName) == &apos;&apos;</errorConditionFormula>
+        <errorConditionFormula>AND(TRIM (FirstName) == &apos;&apos; &amp;&amp;  $Profile.Name  &lt;&gt; &apos;IATA Portal Integration Profile&apos;)</errorConditionFormula>
         <errorMessage>Please insert the first name</errorMessage>
     </validationRules>
     <validationRules>

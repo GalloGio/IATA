@@ -1,0 +1,19 @@
+<apex:page controller="TrackedEmailPreviewController" showHeader="false">
+    <head>
+        <style>
+            p {
+                margin-top:0px;
+                margin-bottom:0px;
+            }
+        </style>
+    </head>
+    <table style="width:100%">
+        <tr>
+            <td style="width:30%;">&nbsp;</td>
+            <td style="width:40%;">
+                <apex:outputText title="Html Body" style="text-align:left;" value="{!htmlBody}" escape="false"/>
+            </td>
+            <td style="width:30%;">&nbsp;</td>
+        </tr>
+    </table>
+</apex:page>
