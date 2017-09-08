@@ -89,7 +89,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         // Create an Accreditation Contact record of type Account Ownership and expect a relevant account role to be created
         // Later expect updated values on AC record to match the role record
-        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
+        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(First_Name__c = 'Name', AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
         acList.add(companyOwnershipAC);
         upsert acList;
         

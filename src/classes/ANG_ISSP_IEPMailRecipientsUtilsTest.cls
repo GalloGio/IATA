@@ -78,6 +78,7 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
         String accountId = String.valueOf(a.id).substring(0, 15);
 
         Contact c = new Contact (
+                FirstName = 'Name',
                 LastName = 'ContactTest',
                 accountID = a.id
             );

@@ -62,7 +62,7 @@ private class MITA_TxtCtrlTest {
 		
 		List<Contact> contacts = new List<Contact>();
 		for(Account a : accounts)
-			contacts.add(new Contact(LastName='Contact '+a.Name, AccountId=a.Id, Email='contact@'+a.Name.replace(' ','')+'.com', MITA_Contact_Type__c='CGO Billing'));
+			contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, Email='contact@'+a.Name.replace(' ','')+'.com', MITA_Contact_Type__c='CGO Billing'));
 		insert contacts;
 
 	}

@@ -135,6 +135,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Valid_for_GDP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for GDP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>numeric_code__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Used by GDP</inlineHelpText>
@@ -157,6 +166,42 @@
         <columns>CURRENCY_ISO_CODE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Valid_for_EBC</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>IEC_Valid_SAP__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Valid_for_GDP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Valid for EBC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Valid_for_Ecommerce</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>IEC_Valid_SAP__c</columns>
+        <columns>Valid_for_Address__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IEC_Valid_SAP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Valid for Ecommerce</label>
         <language>en_US</language>
     </listViews>
     <nameField>

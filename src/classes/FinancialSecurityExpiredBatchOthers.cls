@@ -14,7 +14,8 @@ global class FinancialSecurityExpiredBatchOthers implements Database.Batchable<s
 		for (Financial_Security__c fs : scope) {
 			fs.Security_Status__c = 'Expired';
 		}
-		update scope;
+		//update scope;
+		List<Database.SaveResult> sr = Database.update(scope, false);
 	}
 
 	global void finish(Database.BatchableContext BC) {

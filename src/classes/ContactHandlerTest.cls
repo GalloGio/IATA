@@ -168,6 +168,7 @@ private class ContactHandlerTest {
 
         Test.startTest();
         contact.User_Portal_Status__c = 'Active';
+        contact.Community__c = 'ISS Customer Portal';
         update contact;
         Test.stopTest();
 

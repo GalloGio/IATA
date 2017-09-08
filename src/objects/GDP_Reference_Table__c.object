@@ -119,6 +119,15 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Valid_for_GDP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for GDP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>GDP Reference Table</label>
     <listViews>
         <fullName>AIRSYS_GDS</fullName>
@@ -252,6 +261,25 @@
             <value>ORGCLASS</value>
         </filters>
         <label>Class Table</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>LOCTYP</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>LOCTYP</value>
+        </filters>
+        <label>LOCTYP</label>
         <language>en_US</language>
     </listViews>
     <listViews>

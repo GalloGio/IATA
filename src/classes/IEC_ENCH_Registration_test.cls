@@ -173,4 +173,14 @@ private class IEC_ENCH_Registration_test {
 		Test.stopTest();
 	}
 	
+	public static testMethod void testUtilitySplitAddress() {
+		Test.startTest();
+		Utility.splitAddress('4TH FLOOR WEST WING ADMIN BLDG SOUTHERN SUPPORT ZONE', 35);
+		Utility.splitAddress('4TH FLOOR WEST WING ADMIN BUILDING SOUTHERN SUPPORT ZONE UNIT 77786', 35);
+		Utility.splitAddress('4THFLOORWESTWINGADMINBUILDINGSOUTHERNSUPPORTZONEUNIT77786', 35);
+		Utility.splitAddress('4TH FLOORWESTWINGADMINBUILDINGSOUTHERNSUPPORTZONEUNIT77786ssssssssssss', 35);
+		Utility.splitAddress('', 35);
+		Test.stopTest();
+	}
+	
 }

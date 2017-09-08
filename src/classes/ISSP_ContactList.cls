@@ -557,7 +557,7 @@ public with sharing class ISSP_ContactList {
 				Savepoint sPointContact = Database.setSavepoint();
 				//thisContact.User_Portal_Status__c = action;
 				//update thisContact;
-				String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason);
+				String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
 				system.debug('theResult: ' + theResult);
 				if (theResult != ''){
 					Database.rollback(sPointContact);

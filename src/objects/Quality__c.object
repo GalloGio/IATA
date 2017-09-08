@@ -72089,4 +72089,23 @@ if ( &quot;{!Quality__c.Status__c}&quot; == &quot;Under Investigation&quot; || &
     j$(&apos;[name=&quot;piSubmit&quot;]&apos;).click();
 }</url>
     </webLinks>
+    <webLinks>
+        <fullName>Submit_for_Approval_SF1</fullName>
+        <availability>online</availability>
+        <description>Submit for approval button for Salesforce1</description>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Submit for Approval</masterLabel>
+        <openType>newWindow</openType>
+        <page>QualityApproval</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
 </CustomObject>

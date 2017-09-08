@@ -170,7 +170,9 @@ public without sharing class IECUserManager {
 
                 System.debug('login user event');
 
-                storeCart.loginUserEvent();
+                //susana alves INC332088
+                if(storeCart.getCartOrderContent() != null)
+                  storeCart.loginUserEvent();
 
                 System.debug('get cart');
 
