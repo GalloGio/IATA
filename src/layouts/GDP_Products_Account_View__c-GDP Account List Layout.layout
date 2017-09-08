@@ -63,6 +63,10 @@
         <label>Agency Status, Type &amp; Class</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Accredited_By__c</field>
             </layoutItems>
@@ -105,6 +109,10 @@
         <editHeading>true</editHeading>
         <label>Location Address</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_GDP_Address__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Location_Address__c</field>
