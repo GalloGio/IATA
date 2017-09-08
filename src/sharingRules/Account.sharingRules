@@ -39,6 +39,25 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Accounts will be shared with IFG Team when a contact from a specific account request access to IFG service</description>
+        <label>Account Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Record_Sharing_Criteria_AUX__c</field>
+            <operation>contains</operation>
+            <value>IFG Active Users</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Account_Sharing_Rule_with_the_role_Corporate_Compliance</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>

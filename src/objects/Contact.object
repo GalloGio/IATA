@@ -5519,6 +5519,28 @@ IF(Account.IATACode__c != &apos;&apos;
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Contact Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( Phone ) = 0, &quot;Phone, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( Email) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( MailingStreet ) = 0, &quot;Complete Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(Title) = 0, &quot;Job Title, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL( Salutation,&quot;&quot;), &quot;Salutation&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN( Phone) = 0, 0,20) + IF( LEN( Email) = 0, 0,20) + IF( LEN(MailingStreet) = 0, 0,20) + IF( LEN(Title) = 0, 0,20) + IF( ISPICKVAL(Salutation,&quot;&quot;), 0,20)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -6512,7 +6534,7 @@ TotalRows-Successes-Errors</description>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
             <operation>equals</operation>
-            <value>IFG Pre-Production</value>
+            <value>IFG Sandbox</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Right__c</field>
@@ -27720,6 +27742,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_First_name_mandatory</fullName>
+        <active>false</active>
+        <description>Forcing the standard field (first name) mandatory</description>
+        <errorConditionFormula>AND(TRIM (FirstName) == &apos;&apos; &amp;&amp;  $Profile.Name  &lt;&gt; &apos;IATA Portal Integration Profile&apos;)</errorConditionFormula>
+        <errorMessage>Please insert the first name</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
@@ -27804,6 +27833,13 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
    ,ISBLANK(Senior_Contact_Phone__c))
   )</errorConditionFormula>
         <errorMessage>Please fill a phone number or an email address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Community</fullName>
+        <active>true</active>
+        <description>Contact first Community</description>
+        <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c),ISBLANK(Community__c))</errorConditionFormula>
+        <errorMessage>Please select a value for Community</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Validate_FA_Contact_creation</fullName>

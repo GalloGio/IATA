@@ -851,6 +851,7 @@ public class  AmsIataCodeGeneratorTest
          insert aas;
          Test.startTest();
          Case cse = new Case();
+         cse.QuantityProduct__c = '1';
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
@@ -1366,6 +1367,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
@@ -1400,6 +1402,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();

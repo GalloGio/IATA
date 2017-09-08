@@ -192,6 +192,16 @@ It contains a currency to make the correspondance between contract + location + 
         <type>Checkbox</type>
     </fields>
     <label>E&amp;F Location Currency</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contract__c</columns>
+        <columns>Location_ID__c</columns>
+        <columns>EF_Billing_Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>Loc-{00000000}</displayFormat>
         <label>E&amp;F Location Currency Name</label>

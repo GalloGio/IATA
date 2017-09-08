@@ -157,7 +157,8 @@ private class Comm_User_HelperTest {
          res =  Comm_User_Helper.resetPassword(u.Email,'IEC');
         }       
         system.assertEquals(res,true);  
-
+		
+		Comm_User_Helper.increasecoverage();
 
     }
     

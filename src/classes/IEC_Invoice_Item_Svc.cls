@@ -49,15 +49,16 @@ global without sharing class IEC_Invoice_Item_Svc {
 			mapObjectId_IsUsed.put(invItem.Invoice__r.Zuora__External_Id__c, false);
 			mapZInvNum_Status.put(invItem.Invoice__r.Name, '');
 		}
+		//INC330514
+		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
 		//INC306838
-		//Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
-		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubZId_ZInvNum.keySet());
+		Map<String, Zuora__Subscription__c> mapSubZName_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubZId_ZInvNum.keySet());
 		
 		//*** quit on error of missing subscription
-		if (mapSubZId_Subscription.isEmpty() || mapSubZId_Subscription.size() != mapSubZId_ZInvNum.size())
+		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubZId_ZInvNum.size())
 		{
 			for (String SubZId : mapSubZId_ZInvNum.keySet())
-				if (!mapSubZId_Subscription.containsKey(SubZId))
+				if (!mapSubZName_Subscription.containsKey(SubZId))
 				{
 					//*** log error for invoice
 					mapZInvNum_Status.put(mapSubZId_ZInvNum.get(SubZId), mapZInvNum_Status.get(mapSubZId_ZInvNum.get(SubZId)) + ', Error - Missing subscription "' + SubZId + '"');
@@ -106,7 +107,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		{
 			//INC306838
 			//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
-			oSub = mapSubZId_Subscription.get(invItem.Subscription_Number__c);
+			oSub = mapSubZName_Subscription.get(invItem.Subscription_Number__c);
 			
 			// We only require an order if the OrderID is not specified on the subscription i.e. subscription created from Zuora
 			// OR if the version number is greater than 1 which means there is an amendment on it
@@ -291,7 +292,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 				//*** get the payment method for order
 				//INC306838
 				//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
-				oSub = mapSubZId_Subscription.get(invItem.Subscription_Number__c);
+				oSub = mapSubZName_Subscription.get(invItem.Subscription_Number__c);
 				
 				Zuora__CustomerAccount__c oBillingAccount = mapContactID_BillingAccount.get(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
 				String sPaymentMethod = null;
