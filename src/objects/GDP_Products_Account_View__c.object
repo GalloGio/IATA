@@ -733,7 +733,8 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Related_Accreditation_Class__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Related Accreditation Class</label>
+        <inlineHelpText>Link to GDP Accreditation</inlineHelpText>
+        <label>Related Accreditation</label>
         <referenceTo>Accreditation__c</referenceTo>
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
