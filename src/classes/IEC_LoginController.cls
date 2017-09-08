@@ -41,7 +41,8 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 // Ecommerce Enhancements - redirect using Javascript so that Cookies take effect
                 Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl + tt + DateTime.now().getTime()); 
 
-                redirectUrl = pr.getUrl();
+                if (pr != null)
+                    redirectUrl = pr.getUrl();
 
                 // Ecommerce Enhancements - do not redirect via redirect, use JavaScript to allow cookies to store
 
