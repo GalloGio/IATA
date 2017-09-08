@@ -1,49 +1,33 @@
 public with sharing class CaseLanguageDetector {
 
-    public static void setLanguageForNewISSPCases(list<Case> listCase) {
-        list<Id> listCasesToUpdate = new list<Id>();
-        for (Case cse: listCase) {
-            if(cse.Origin == 'Portal') {
-                listCasesToUpdate.add(cse.Id);
-            }
-        }
-        if (!listCasesToUpdate.isEmpty()) {
-            detectBatchCaseLanguage(listCasesToUpdate);
-        }
-    }
-
-    @future(callout=true)
-    public static void detectBatchCaseLanguage(list<Id> listCaseId) {
+    public static String detectCaseLanguage(Case cse) {
         try {
-            list<String> listQueryText = new list<String>();
-            list<Case> listCase = new list<Case>();
-            for (Case cse: [SELECT Id, Description, Case_Language__c
-                    FROM Case
-                    WHERE Id in :listCaseId]) {
-                String description = cleanDescription(cse.Description);
-                if (description > '') {
-                    listQueryText.add(description);
-                    listCase.add(cse);
-                }
-            }
+            String cleanedDescription = cleanDescription(cse.Description);
+            if (String.isBlank(cleanedDescription)) return '';
+            list<String> listQueryText = new list<String>{cleanedDescription};
+
             list<DetectLanguageRest.Detection> listDetection = DetectLanguageRest.query(listQueryText);
-            list<Case> listUpdateCase = new list<Case>();
-            for (Integer i=0; i<listDetection.size(); i++) {
-                DetectLanguageRest.Detection detection = listDetection.get(i);
-                Case cse = listCase.get(i);
-                if (detection.isReliable) {
-                    cse.Case_Language__c = detection.getLanguageName();
-                    listUpdateCase.add(cse);
-                }
+            DetectLanguageRest.Detection detection = listDetection.get(0);
+            if (detection.isReliable) {
+                return detection.getLanguageName();
+            } else {
+                String subject = 'Detection Language not reliable: case with subject "' + cse.Subject + '" created by user ' + UserInfo.getName();
+                String message = 'QUERY TEXT: ' + listQueryText + '\n';
+                message += 'RESULT ' + detection;
+                sendEmail(subject,message);
+                System.debug(subject + '\n' + message);
             }
-            if (!listUpdateCase.isEmpty()) update listUpdateCase; 
 
         } catch (Exception e) {
-            System.debug('ERROR in detectCaseLanguage(' + listCaseId+ ') ' + e.getMessage());
+            String subject = 'Detection Language Error: case with subject "' + cse.Subject + '" created by user ' + UserInfo.getName();
+            String message = 'EXCEPTION:\n' + e.getMessage();
+            sendEmail(subject,message);
+            System.debug(subject + '\n' + message);
         }
+        return '';
     }
     
-    public static final Integer WORDS_NUMBER = 10;
+    public static final Integer WORDS_NUMBER = 15;
     public static String cleanDescription(String text) {
         text = text.left(150);
         text = text.replaceAll('[0-9\n\t!@#$*()<>?_+]',' ');
@@ -60,4 +44,17 @@ public with sharing class CaseLanguageDetector {
         }
         return String.join(listOut,' ');
     }
+    
+    
+    public static final list<String> ERROR_EMAILS = new list<String>{'tenaj@iata.org','shalbakf@iata.org'}; 
+    public static void sendEmail(String subject, String message) {
+        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage(); 
+        email.setSubject(subject);
+        email.setPlainTextBody(message );
+        email.setToAddresses(ERROR_EMAILS);
+
+        // Sends the email
+        if (!Test.isRunningTest()) Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+    }
+
 }

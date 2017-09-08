@@ -726,7 +726,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(trgCase){
 			system.debug('trgCase Trigger.isUpdate');
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
-			CaseLanguageDetector.setLanguageForNewISSPCases(Trigger.new);
 		}
 		/*trgCase Trigger.isInsert*/
 	/*Trigger.isInsert*/

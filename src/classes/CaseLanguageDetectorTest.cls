@@ -13,7 +13,22 @@ private class CaseLanguageDetectorTest {
         );
 
         Test.startTest();
-        insert cse;
+        CaseLanguageDetector.detectCaseLanguage(cse);
+        Test.stopTest();
+    }
+    
+    static testMethod void testsetLanguageForNewISSPCases_NotReliable() {
+        DetectLanguageRest.TESTSTRING = '{"data": {"detections": [[{"language": "en","isReliable": false,"confidence": 8}]]}}';
+        
+        Case cse = new Case(
+            RecordtypeId = RT_ISSCASE,
+            Description = 'Test description',
+            Case_Language__c = null,
+            Origin = 'Portal'
+        );
+
+        Test.startTest();
+        CaseLanguageDetector.detectCaseLanguage(cse);
         Test.stopTest();
     }
     
@@ -28,7 +43,7 @@ private class CaseLanguageDetectorTest {
         );
 
         Test.startTest();
-        insert cse;
+        CaseLanguageDetector.detectCaseLanguage(cse);
         Test.stopTest();
     }
     
@@ -47,7 +62,7 @@ private class CaseLanguageDetectorTest {
         );
 
         Test.startTest();
-        insert cse;
+        CaseLanguageDetector.detectCaseLanguage(cse);
         Test.stopTest();
     }
 }
