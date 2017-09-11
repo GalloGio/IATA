@@ -192,13 +192,10 @@ public with sharing class ISSP_ANG_RHC {
 								'ANG_AccountId__r.IATACode__c,' +
 								'ANG_CaseId__c,' +
 								'ANG_CaseId__r.CaseNumber,' +
-								'ANG_Expired__c' +
+								'ANG_Expired__c,' +
+								'ANG_CaseId__r.Visible_on_ISS_Portal__c' +
 						  ' From ANG_Agency_Risk_Event__c' +
 						 ' Where ANG_HE_AccountId__c = \'' + accountIdTP + '\'';
-
-// Implement case link
-// Test if the case link belong to the user and he has access to it
-
 
 		this.isAll = false;
 		String filter = ' And ';
@@ -218,7 +215,8 @@ public with sharing class ISSP_ANG_RHC {
 		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
 
 		for(ANG_Agency_Risk_Event__c event : events) {
-			riskEventsList.add(new RiskEvent(event));
+			if(event.ANG_CaseId__c == null || (event.ANG_CaseId__c != null && event.ANG_CaseId__r.Visible_on_ISS_Portal__c))
+				riskEventsList.add(new RiskEvent(event));
 		}
 
 		return riskEventsList;
