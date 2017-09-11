@@ -80,7 +80,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
     }
 
     public void refreshMsoGsaList() {
-        String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c ';
+        String strQuery = 'SELECT Id, Account__r.Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c ';
 
         if (!isMSO) {
             strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r ORDER BY ISO_Country__r.Name ASC) ';
