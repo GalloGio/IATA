@@ -409,7 +409,6 @@
             <picklistValues>
                 <fullName>New</fullName>
                 <default>false</default>
-                <controllingFieldValues>data-and-statistics</controllingFieldValues>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -1487,6 +1486,14 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>TG8</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OI2</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -11971,6 +11978,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GRH</fullName>
                 <default>false</default>
             </values>
@@ -12092,6 +12103,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>OFL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI2</fullName>
                 <default>false</default>
             </values>
             <values>

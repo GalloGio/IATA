@@ -2202,10 +2202,6 @@
             <recipient>boceke@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>garcias@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/EUR_CaseassignmentITSCE</template>
     </alerts>
@@ -2552,10 +2548,6 @@
         <protected>false</protected>
         <recipients>
             <recipient>boceke@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garcias@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

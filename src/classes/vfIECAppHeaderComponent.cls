@@ -27,13 +27,19 @@ public with sharing class vfIECAppHeaderComponent {
     
 	public DateTime dtDBLastUpdate {
 		get {
-			
-			if (dtLastUpdate == null) 
-				dtLastUpdate = IECUtil.GetBatchReplication('GDP Replicate: Account Update').Last_Modified_Date__c;
-			
-			return dtLastUpdate;
+
+			if (dtLastUpdate == null) {
+				List<AMS_GDP_Batch__c> lstBtch = [SELECT Id, Batch_Name__c, Last_Sync_End_Date__c
+				FROM AMS_GDP_Batch__c WHERE Batch_Name__c = 'Job 1: GDP Products - Account View'];
+
+				return (lstBtch.size() > 0)
+				? lstBtch.get(0).Last_Sync_End_Date__c
+				: DateTime.newInstance(1999, 1, 1);
+			}
+			return dtDBLastUpdate;
 		}
 	}
+	
 	
 	public vfIECAppHeaderComponent() {
 		bShowSubscriptioninfo = true;
