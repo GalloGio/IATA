@@ -381,7 +381,7 @@ global with sharing class ANG_ConversionHelper {
 
 		set<Id> accsToCreateRisks = new set<Id>();
 		for(ANG_ConversionHelper.HierarchyStructure i :toReturn.validHierarchies.values()){
-			accsToCreateRisks.add(i.topParentId);
+			accsToCreateRisks.addAll(i.allAgencies);
 		}
 
 		Map<String,Integer> nRiskEventTypes = new Map<String,Integer>();
