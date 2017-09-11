@@ -922,9 +922,9 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>MustSyncWithAIMS__c</columns>
         <columns>NAME</columns>
         <columns>Related_Contact__c</columns>
+        <columns>Photo__c</columns>
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
-        <columns>Photo__c</columns>
         <columns>Missing_Information__c</columns>
         <columns>CIN__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
