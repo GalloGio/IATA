@@ -146,6 +146,8 @@ public with sharing class ISSP_ANG_RHC {
 		public Date dateExpired {get; set;}
 		public String iataCode {get; set;}
 		public String caseNumber {get; set;}
+		public String caseId  {get; set;}
+		public String caseNumberLink {get; set;}
 		public String status {get; set;}
 
 		public RiskEvent(ANG_Agency_Risk_Event__c event) {
@@ -154,13 +156,12 @@ public with sharing class ISSP_ANG_RHC {
 			this.dateExpired = event.ANG_expiration_date_ff__c;
 			this.iataCode = event.ANG_AccountId__r.IATACode__c;
 
-			if(event.ANG_CaseId__c != null) {
-				this.caseNumber = '&lt;a href=&quot;/ISSP_Case?caseId=' + event.ANG_CaseId__c + '&mid=M1S2&amp;quot;&gt;&lt;/a&gt;' + event.ANG_CaseId__c;
+			if(event.ANG_CaseId__r.CaseNumber != null && event.ANG_CaseId__c != null) {
+				this.caseId = event.ANG_CaseId__c;
+				this.caseNumber = event.ANG_CaseId__r.CaseNumber;
+				this.caseNumberlink = '<a href="/ISSP_Case?caseId=' + this.caseId + '&mid=M1S2">' + this.caseNumber + '</a>';				
 			}
-
-			this.caseNumber = event.ANG_CaseId__c;
-
-
+		
 			this.status = translateStatus(event.ANG_Event_Status__c, event.ANG_Expired__c);
 		}
 
@@ -190,6 +191,7 @@ public with sharing class ISSP_ANG_RHC {
 								'ANG_expiration_date_ff__c,' +
 								'ANG_AccountId__r.IATACode__c,' +
 								'ANG_CaseId__c,' +
+								'ANG_CaseId__r.CaseNumber,' +
 								'ANG_Expired__c' +
 						  ' From ANG_Agency_Risk_Event__c' +
 						 ' Where ANG_HE_AccountId__c = \'' + accountIdTP + '\'';

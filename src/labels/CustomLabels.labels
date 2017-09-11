@@ -1389,11 +1389,11 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Risk Description</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_REH_DateAssigned</fullName>
+        <fullName>ANG_ISSP_REH_DateIssued</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ANG ISSP REH DateAssigned</shortDescription>
-        <value>Date Assigned</value>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_AccessEasyPay</fullName>
@@ -1407,7 +1407,8 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Request ICE</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;Request access to the ICE - IATA Customer E-Statement&lt;/a&gt; in order to view your upcoming payments &amp; remittance dates</value>
+        <value>In order to view your upcoming payments &amp; remittance dates&lt;br/a&gt;
+            &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;Request access to the ICE - IATA Customer E-Statement&lt;/a&gt;</value>
     </labels>   
     <labels>
         <fullName>ANG_ISSP_RP_Cash_Conditions</fullName>

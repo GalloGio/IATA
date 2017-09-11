@@ -104,6 +104,10 @@
         width: 100%;
       }
 
+      input + label {
+        font-weight:normal;
+      } 
+
       @media (max-width: 992px) {
         .fa-money {
           font-size: 200px;
@@ -313,7 +317,7 @@
                             <tr>
                                 <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
                                 <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
-                                <th class="tableFormat">{!$Label.ANG_ISSP_REH_DateAssigned}</th>
+                                <th class="tableFormat">{!$Label.ANG_ISSP_REH_DateIssued}</th>
                                 <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
                                 <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
                                 <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
@@ -335,7 +339,9 @@
                                 </apex:outputText>
                               </td>
                               <td class="tableFormat">{! riskEvent.iataCode}</td>
-                              <td class="tableFormat">{! riskEvent.caseNumber}</td>
+                              <td class="tableFormat">
+                                <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
+                              </td>
                             </tr>                            
                           </apex:repeat>
                         </tbody>
