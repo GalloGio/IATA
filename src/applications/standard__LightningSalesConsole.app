@@ -10,7 +10,6 @@
     <tab>standard-ContentNote</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
-    <tab>standard-Feed</tab>
     <tab>standard-CollaborationGroup</tab>
     <tab>standard-File</tab>
 </CustomApplication>
