@@ -79,6 +79,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_City_Uppercase__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Address_City__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address City Uppercase</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_City__c</fullName>
         <externalId>false</externalId>
         <label>Address City</label>
@@ -159,7 +171,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <description>Remove bar from Address line 1. 
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
-        <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
+        <formula>UPPER(SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;))</formula>
         <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
@@ -180,12 +192,36 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Line_2_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(SUBSTITUTE( Address_Line_2__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Line 2 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_Line_2__c</fullName>
         <externalId>false</externalId>
         <label>Address Line 2</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Line_3_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(SUBSTITUTE( Address_Line_3__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Line 3 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
