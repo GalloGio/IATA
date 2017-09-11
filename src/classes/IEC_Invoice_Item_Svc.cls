@@ -55,7 +55,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		Map<String, Zuora__Subscription__c> mapSubZName_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubZId_ZInvNum.keySet());
 		
 		//*** quit on error of missing subscription
-		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubZId_ZInvNum.size())
+		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubName_ZInvNum.size())
 		{
 			for (String SubZId : mapSubZId_ZInvNum.keySet())
 				if (!mapSubZName_Subscription.containsKey(SubZId))
