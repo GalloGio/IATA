@@ -66,7 +66,6 @@ global class AMS_2_MDM_Webservice {
             
             System.debug('Requested Agencies from MDM PI - ' + ids);
 
-
             List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -83,7 +82,9 @@ global class AMS_2_MDM_Webservice {
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
   
@@ -250,7 +251,6 @@ global class AMS_2_MDM_Webservice {
         
         try{
             
-
             Account ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -268,7 +268,10 @@ global class AMS_2_MDM_Webservice {
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     IATA_ISO_Country__r.Region__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c,
+                    ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
                     FROM Account where id = :agencyId];
             
  
