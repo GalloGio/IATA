@@ -149,7 +149,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private List<AMS_Operation__c> operationCodes{
         get{
             if(this.operationCodes == null)
-                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, accreditationObj.Branch_Office_Country__c);
+                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, accreditationObj.Branch_Office_Country__c, accreditationObj.Location_Class__c);
 
             return this.operationCodes;            
         } set;
