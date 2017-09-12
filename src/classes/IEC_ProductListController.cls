@@ -51,7 +51,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     //susana
     private final Product2 prods; 
-    public List<EComProduct_DTO> productList = new List<EComProduct_DTO>();
+    public List<EComProduct_DTO> productList {get;set;}
 
 
     /**************************************************************************************************************
@@ -76,7 +76,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     {
         buildQueryConditions();
 
-        queryProducts();
+        //queryProducts();
 
         //refreshDisplayedProducts();
         
@@ -138,13 +138,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     private void queryProducts()
-    {
+    {   system.debug('queryProducts - start');
         //-- Fetch ecom Products
-        //allProducts = productRecordsList();
-        allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy, true); 
+        //allProducts = getproductRecordsList();
+        //allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy, true); 
         system.debug('queryProducts - allProducts : ' + allProducts);
         system.debug('queryProducts - allProducts size : ' + allProducts.size());
-        
+        system.debug('queryProducts - end');
         /*for(EComProduct_DTO prod : allProducts)
         {
             prod.ProductDesc = '';
@@ -156,11 +156,14 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
 
         totalNumberOfPages = (Math.mod(allProducts.size(), MAX_PRODUCTS_PER_PAGE) == 0 ) ?   (Integer)Math.ceil(allProducts.size() / MAX_PRODUCTS_PER_PAGE)  :   1+ (Integer)Math.ceil(allProducts.size() / MAX_PRODUCTS_PER_PAGE);
-
+        system.debug('queryProducts - totalNumberOfPages : ' + totalNumberOfPages);
+        system.debug('queryProducts - MAX_PRODUCTS_PER_PAGE : ' + MAX_PRODUCTS_PER_PAGE);
         pages = new List<Integer>();
         if(totalNumberOfPages > 0)
             for(Integer x = 1; x <= totalNumberOfPages; x++)
                 pages.add(x);
+
+        system.debug('queryProducts - pages : ' + pages);*/
     }
 
     /**************************************************************************************************************
@@ -168,8 +171,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     private void refreshDisplayedProducts()
-    {
+    {   
         Integer totalNumberOfProducts = allProducts.size();
+        system.debug('### allProducts.size() :: ' + allProducts.size());
 
         if(currentPageNumber == null) currentPageNumber = 1;
 
@@ -233,6 +237,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
             filters.add(fw);  
         }        
+        system.debug('### buildRefinementFilters filters :: ' + filters);
     }
 
     /**************************************************************************************************************
@@ -323,20 +328,24 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             if(productRecords == null) {
                 productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
                     // sets the number of records to show in each page view
-                    //productRecords.setPageSize(PAGE_SIZE);
+                    productRecords.setPageSize(10);
             }
+            system.debug('### productRecords :: ' + productRecords.getRecords().size());
             return productRecords;
         }
         private set;
     }
 
-    public List<EComProduct_DTO> productRecordsList() {
+    public List<EComProduct_DTO> getProductRecordsList() {
+        system.debug('### productRecordsList start ');
         List<Product2> listFilteredProduct;
         Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
         Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
         Product_Sel exe = new Product_Sel();
+        productList = new List<EComProduct_DTO>();
 
         String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
+        system.debug('### productRecordsList customerType :: ' + customerType);
 
         // Filter products based on compliance requirements
         Contact contactCurrent = IECUserManager.getContact();
@@ -350,7 +359,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             listFilteredProduct = new List<Product2>();
             Boolean bAddProduct;
 
-
+            system.debug('### productRecordsList productRecords.getRecords() :: ' + productRecords.getRecords());
             for (Product2 prod : (List<Product2>) productRecords.getRecords()) {
                     if (prod.Non_Compliance_Countries__r == null) {
                         listFilteredProduct.add(prod);
@@ -374,7 +383,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             listFilteredProduct = (List<Product2>) productRecords.getRecords();
         }
 
-
+        system.debug('### productRecordsList listFilteredProduct :: ' + listFilteredProduct);
         // Filter price info for products not related to Phase 1& 2 products only
         for (Product2 p : listFilteredProduct)
         {
@@ -385,6 +394,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         }            
 
         mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
+        system.debug('### productRecordsList mapProductNumber_Price :: ' + mapProductNumber_Price);
 
         //*** get picklist translations
         mapPickList_Label.put('Category', Utility.getPicklistValue_Label('Product2', 'Line_of_Business__c'));
@@ -396,6 +406,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         for (Product2 p : listFilteredProduct)
             productList.add(new EComProduct_DTO(p, mapProductNumber_Price, mapPickList_Label, false, customerType));
 
+        system.debug('### productRecordsList productList :: ' + productList);
         return productList;
     }
 

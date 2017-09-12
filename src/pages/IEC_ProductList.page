@@ -155,11 +155,11 @@
 							</div>
 
 							<apex:outputPanel styleClass="main-container" id="main_container">
-								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
+								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!ProductRecordsList.size == 0}">
 									NO PRODUCT FOUND
 								</apex:outputPanel>
 
-								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!products.size > 0}">
+								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!ProductRecordsList.size > 0}">
 					                <label for="sort_by" class="input-label">{!$Label.SortBy}</label>
 					                <div class="custom-user-input select">
 					                    <i class="icon chevron-down"></i>
@@ -180,12 +180,17 @@
 					            </apex:outputPanel>
 
 
-					            <apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
-									<ul class="list product-list">
+					            <apex:outputPanel layout="block" id="productList" rendered="{!ProductRecordsList.size > 0}">
+									
 										<apex:pageBlock title="Products List">
 								  <apex:form id="theForm">
+								  <apex:panelGrid columns="2">
+								      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
+								      <apex:commandLink action="{!next}">Next</apex:commandlink>
+								    </apex:panelGrid>
 								    <apex:pageBlockSection >
-								      <apex:dataList var="prod" value="{!productList}" type="1">
+								    <ul class="list product-list">
+								      <apex:repeat var="prod" value="{!ProductRecordsList}">
 								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
@@ -241,15 +246,13 @@
 													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
 												</div>
 											</li>
-								      </apex:dataList>
+								      </apex:repeat>
+								      </ul>
 								    </apex:pageBlockSection>
-								    <apex:panelGrid columns="2">
-								      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
-								      <apex:commandLink action="{!next}">Next</apex:commandlink>
-								    </apex:panelGrid>
+								    
 								  </apex:form>
 								</apex:pageBlock>
-									</ul>
+									
 								</apex:outputPanel>
 
 								<!-- Pagination AJAX functions -->
