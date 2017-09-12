@@ -681,7 +681,9 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys];
+        Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+
+        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys and RecordTypeId =:formOfPaymentRTId and Status__c = 'Active' ];
 
         if(mAgencyAuthorizations == null)
             mAgencyAuthorizations =  new Map<Id, List<Agency_Authorization__c>>();
