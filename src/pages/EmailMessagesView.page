@@ -280,7 +280,7 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!message.emailId}" target="_parent">{!message.subject}</a>
+                                <a style="font-weight: bold;"  href="/{!message.emailId}" target="_parent" onclick="openSubTab('{!message.emailId}');return false;">{!message.subject}</a>
                                 <br/> 
                                 <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                             </td>
