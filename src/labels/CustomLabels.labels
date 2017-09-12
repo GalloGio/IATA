@@ -1432,6 +1432,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Risk History</value>
     </labels>   
     <labels>
+        <fullName>ANG_ISSP_RHC_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information</shortDescription>
+        <value>RHC Information</value>
+    </labels>       
+    <labels>
         <fullName>ISSP_RHC_HUB_RH</fullName>
         <language>en_US</language>
         <protected>false</protected>
