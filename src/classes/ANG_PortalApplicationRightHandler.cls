@@ -58,18 +58,16 @@ public class ANG_PortalApplicationRightHandler {
 
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
 
-			System.debug(LoggingLevel.ERROR, 'access.Contact__c UserProvAccount -----> ' + access.Contact__c);
-
 			if(!existingUpa.contains(access.Contact__c)) {
 	            UserProvAccount upa = new UserProvAccount (
 	                ExternalUserId = access.Contact__c,
 	                SalesforceUserId = userMap.get(access.Contact__c),
-	                ConnectedAppId = connectedAppId,
+	                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
 	                LinkState = 'Linked',
 	                Status = 'Active'
 	            );
 	            upal.add(upa);
-	            existingUpa.add(access.Contact__c);
+	            //existingUpa.add(access.Contact__c);
         	}
             
 		}
@@ -80,16 +78,6 @@ public class ANG_PortalApplicationRightHandler {
 	}
 
 	private void setConnectedAppsSSOPermission() {
-		//fetch all connected app roles that need to grant a permission set
-		Map<String, Connected_App_Roles__c> roles = new Map<String, Connected_App_Roles__c>();
-
-		for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {
-			if(role.Permission_set_SSO__c != null) {
-				roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
-			}
-		}
-
-		System.debug('<---------------------------------------------------------------->');
 
 		//no Connected app roles found
 		if(roles.isEmpty()) return;

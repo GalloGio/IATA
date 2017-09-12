@@ -11,9 +11,9 @@ public class ANG_UserProvisioningRequestHandler {
 		checkIataEasyPayUserProvisioning();
 	}
 
-	public void onAfterInsert() {
+	/*public void onAfterInsert() {
 		checkIataEasyPayUserProvisioning();
-	}
+	}*/
 
 	//
 	// Find all failing EasyPay Provisioning request and delete their portal service access requests (Status = "Access requested")
@@ -24,7 +24,7 @@ public class ANG_UserProvisioningRequestHandler {
 		Set<String> iepNames = new Set<String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {	
-			if(role.Connected_App__c.contains('IATA EasyPay')) {
+			if(role.Connected_App__c != null && role.Connected_App__c.contains('IATA EasyPay')) {
 				connectedAppRoles.add(role.Connected_App_Provisioning_Name__c);
 				iepNames.add(role.Connected_App__c);
 			}
@@ -45,7 +45,9 @@ public class ANG_UserProvisioningRequestHandler {
         }
 
         List<Portal_Application_Right__c> parList = [Select id,
-        												    contact__c 
+        												    contact__c,
+        												    Application_Name__c,
+        												    ANG_Portal_Service_Role__c
                                                        From Portal_Application_Right__c 
                                                       Where contact__c in : contactsIds 
                                                         and Application_Name__c in : iepNames
@@ -53,10 +55,11 @@ public class ANG_UserProvisioningRequestHandler {
 
 		if(!parList.isEmpty()) {
 
-			Map<Id, Portal_Application_Right__c> parMap = new Map<Id, Portal_Application_Right__c>();
+			Map<String, Portal_Application_Right__c> parMap = new Map<String, Portal_Application_Right__c>();
 
 			for(Portal_Application_Right__c par : parList) {
-				parMap.put(par.Contact__c, par);
+				String provisioningApp = roles.get(par.Application_Name__c + ' - ' + par.ANG_Portal_Service_Role__c).Connected_App_Provisioning_Name__c;
+				parMap.put(par.Contact__c+provisioningApp, par);
 			}
 
 			List<Portal_Application_Right__c> parToDelete = new List<Portal_Application_Right__c>();
@@ -69,9 +72,10 @@ public class ANG_UserProvisioningRequestHandler {
 											  newUp.ConnectedAppId,
 											  newUp.State));
 
-					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)));
+					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)+newUp.AppName));
 				}
 			}
+
 			delete parToDelete;
 			insert logs;
 		}
@@ -87,5 +91,22 @@ public class ANG_UserProvisioningRequestHandler {
 			Success__c = false
 		);
 		return log;
+	}
+
+
+	private Map<String, Connected_App_Roles__c> roles{
+		get{
+			if(roles == null){
+				roles = new Map<String, Connected_App_Roles__c>();
+				for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+					if(role.Permission_set_SSO__c != null){
+						roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
+					}
+				}
+				
+			}
+			return roles;
+		}
+		set;
 	}
 }

@@ -117,7 +117,7 @@
         <!-- ****************************************************************************** -->
         <!-- ***** SECTION 2 - Identification of Agency for which Approval Requested *****  -->
         <!-- ****************************************************************************** -->
-        <apex:outputPanel>
+        <apex:outputPanel >
                 <div style="page-break-after:always;">
                     <table class="aptable">
                         <tr>
@@ -444,21 +444,21 @@
           <div style="page-break-after:always;" class="pdf-section">
                   <apex:pageBlock >
                       <table class="aptable">
-                          <tr>
-                              <td colspan="2" class="bluebg">
-                                  <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
-                              </td>
-                          </tr>
-                        <apex:outputPanel rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-                            <tr>
-                                <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
-                                <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
-                            </tr>
-                            <tr>
-                                <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
-                                <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
-                            </tr>
-                        </apex:outputPanel>
+                        <tr>
+                            <td colspan="2" class="bluebg">
+                                <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
+                            </td>
+                        </tr>
+
+                        <tr style="display:{!IF(con.Account.ANG_Accreditation_Model__c!='Cashless','','none')}">
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
+                            <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
+                        </tr>
+                        <tr style="display:{!IF(con.Account.ANG_Accreditation_Model__c!='Cashless','','none')}">
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
+                            <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
+                        </tr>
+
                         <tr>
                             <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>                            
                             <td style="padding:10px 10px">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>

@@ -65,17 +65,16 @@
         <relationshipName>RHC_Informations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
-        <description>Reports the cash condition of the account. Used to determine the actual and forecasted RHC Amounts</description>
+        <defaultValue>false</defaultValue>
+        <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>
         <externalId>false</externalId>
-        <formula>ANG_AccountId__r.ANG_CashCondition__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Cash Conditions Equal to FS</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -87,7 +86,7 @@
         <externalId>false</externalId>
         <label>Consumed RHC Last Update</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -99,7 +98,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
@@ -111,9 +110,19 @@
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Enable_Calculation__c</fullName>
+        <description>Reports the account status. Used to prevent queries on the RHC trigger.</description>
+        <externalId>false</externalId>
+        <formula>NOT(ISPICKVAL(ANG_AccountId__r.Status__c, &apos;Terminated&apos;))</formula>
+        <label>Enable Amount Recalculation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>ANG_Exceeding_Financial_Security__c</fullName>
@@ -159,7 +168,7 @@
         <externalId>false</externalId>
         <label>Provisional RHC Amount Last Update</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -167,21 +176,11 @@
         <fullName>ANG_RHC_Amount_Forecasted__c</fullName>
         <description>Holds the information regarding what is the expected RHC Amount if the user clicks on the button &quot;Confirm Forecasted RHC&quot;</description>
         <externalId>false</externalId>
-        <formula>IF(
-    ANG_AccountId__r.ANG_CashCondition__c &amp;&amp; ANG_Financial_Security__c &gt; 0,
-    ANG_Financial_Security__c,
-    IF(
-        ANG_Financial_Security__c  &gt; (ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c) ,
-        ANG_Financial_Security__c , 
-        ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Forecasted RHC Amount</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -199,23 +198,13 @@
     </fields>
     <fields>
         <fullName>ANG_RHC_Amount__c</fullName>
-        <description>The current RHC Amount for the agent.</description>
+        <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>
-        <formula>IF(
-    ANG_AccountId__r.ANG_CashCondition__c &amp;&amp; ANG_Financial_Security__c &gt; 0,
-    ANG_Financial_Security__c,
-    IF(
-        ANG_Financial_Security__c  &gt; (ANG_RME_Amount__c + ANG_Exceeding_Financial_Security__c) ,
-        ANG_Financial_Security__c , 
-        ANG_RME_Amount__c + ANG_Exceeding_Financial_Security__c
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>RHC Amount</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -225,7 +214,7 @@
         <externalId>false</externalId>
         <label>RHC Amount Effective Date</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -237,7 +226,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -258,7 +247,7 @@
     <nameField>
         <displayFormat>RHCI-{000000000}</displayFormat>
         <label>RHC Information Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>RHC Information Records</pluralLabel>
@@ -270,6 +259,12 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Prevent_Forecast_Changes</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ANG_Enable_Calculation__c) &amp;&amp; ISCHANGED(ANG_RME_Amount__c)</errorConditionFormula>
+        <errorMessage>You are not allowed to confirm a new RHC amount for a terminated agent</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Confirm_RHC</fullName>
         <availability>online</availability>
@@ -286,11 +281,16 @@ rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;;
 
 rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
 
-console.info(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;);
-console.info(rhcInfo);
-sforce.connection.update([rhcInfo]);
+var result = sforce.connection.update([rhcInfo]);
 
-window.location.reload();</url>
+console.info(&quot;result&quot;);
+console.info(result[0]);
+
+if (result[0].success == &quot;true&quot;) {
+window.location.reload();
+} else {
+alert(result[0].errors.message);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Request_RHC_Calculation</fullName>

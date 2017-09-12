@@ -613,17 +613,17 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Now_Date_Time__c</fullName>
-        <description>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</description>
+        <fullName>Now_Date__c</fullName>
+        <description>Date Auto-Populated Formula used to validate EBC Daily Master Sync</description>
         <externalId>false</externalId>
         <formula>Now()</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
-        <label>Now Date/Time</label>
+        <inlineHelpText>Date Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
+        <label>Now Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>DateTime</type>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Parent_Account_AIMS_ID__c</fullName>
@@ -733,12 +733,13 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Related_Accreditation_Class__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Related Accreditation Class</label>
+        <inlineHelpText>Link to GDP Accreditation</inlineHelpText>
+        <label>Related Accreditation</label>
         <referenceTo>Accreditation__c</referenceTo>
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -784,7 +785,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     <fields>
         <fullName>State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_State_Name__c</formula>
+        <formula>UPPER(Related_GDP_Address__r.Address_State_Name__c)</formula>
         <label>State/Province</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

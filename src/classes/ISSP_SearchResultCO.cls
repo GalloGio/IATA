@@ -170,14 +170,31 @@ public with sharing class ISSP_SearchResultCO {
     	}
 
 		String soqlQuery = generalFieldName;
+		Boolean hasStatus = false;
+
 		for(Schema.FieldSetMember tbMember : tableColumnList) {
-			if(!generalFieldName.equalsIgnoreCase(tbMember.getFieldPath())) 
+
+			if(!generalFieldName.equalsIgnoreCase(tbMember.getFieldPath())){
+
 				soqlQuery += ',' + tbMember.getFieldPath();
+
+				if(tbMember.getFieldPath().equalsIgnoreCase('Status')){
+
+					hasStatus = true;
+
+				}
+			} 	
 		}
 
 		//basto1p
-		if (objectName == 'Case')
-			soqlQuery += ', Contact.Name, Status';
+		if (objectName == 'Case'){
+			
+			soqlQuery += ', Contact.Name';
+
+			if (!hasStatus) {
+				soqlQuery += ', Status';
+			}
+		}
 		
 		soqlQuery = 'SELECT ' + soqlQuery + ' FROM '+ objectName;
         if(String.isNotBlank(conditional)){

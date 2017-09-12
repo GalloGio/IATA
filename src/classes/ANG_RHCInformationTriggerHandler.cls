@@ -12,13 +12,15 @@ public class ANG_RHCInformationTriggerHandler{
 	
 	public void onBeforeInsert(){
 		convertAndSumFS();
+		sumRHCAmount();
 	}
 	public void onAfterInsert(){
 
 	}
 
 	public void onBeforeUpdate(){
-		 convertAndSumFS();
+		convertAndSumFS();
+		sumRHCAmount();
 	}
 	public void onAfterUpdate(){
 		
@@ -55,5 +57,26 @@ public class ANG_RHCInformationTriggerHandler{
 				update fsList;
 			}
 		}
-	}	
+	}
+
+	private void sumRHCAmount() {
+		List<ANG_RHC_Information__c> rhcToSum = new List<ANG_RHC_Information__c>();
+		for(ANG_RHC_Information__c rhcInfo : triggerNew){
+			if(
+				rhcinfo.ANG_Enable_Calculation__c &&
+				(
+					Trigger.isInsert
+					|| rhcInfo.ANG_CashCondition__c != oldMap.get(rhcInfo.Id).ANG_CashCondition__c
+					|| rhcInfo.ANG_RME_Amount__c != oldMap.get(rhcInfo.Id).ANG_RME_Amount__c
+					|| rhcInfo.ANG_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Financial_Security__c
+					|| rhcInfo.ANG_Minimum_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Minimum_Financial_Security__c
+					|| rhcInfo.ANG_RHC_Amount_Provisional__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Provisional__c
+				)
+			){
+				rhcToSum.add(rhcInfo);
+			}
+		}
+
+		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
+	}
 }

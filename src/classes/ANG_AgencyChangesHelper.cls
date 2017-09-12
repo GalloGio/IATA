@@ -1060,9 +1060,9 @@ public with sharing class ANG_AgencyChangesHelper {
 	/**
 	Returns operationCodes and respective BSP Configurations 
 	*/
-	private static List<AMS_Operation__c> fetchOperationCodeConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds) {
+	private static List<AMS_Operation__c> fetchOperationCodeConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds, String classType) {
 
-		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Operation__c WHERE Settlement__r.RecordtypeID = :settlementRTId' + (CountryIds != null ? ' AND Country__c IN :countryIds' : '' ) + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));
+		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Operation__c WHERE Settlement__r.RecordtypeID = :settlementRTId' + (CountryIds != null ? ' AND Country__c IN :countryIds' : '' ) + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));
 	}
 
 	/**
@@ -1070,15 +1070,15 @@ public with sharing class ANG_AgencyChangesHelper {
 	*/
 	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Set<Id> operationsIds) {
 
-		return fetchOperationCodeConfiguration(null, settlementRTId, operationsIds);
+		return fetchOperationCodeConfiguration(null, settlementRTId, operationsIds, null);
 	}
 
 	/**
 	Returns operationCodes and respective BSP Configurations 
 	*/
-	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Id countryId) {
+	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Id countryId, String classType) {
 
-		return fetchOperationCodeConfiguration(new Set<Id>{countryId}, settlementRTId, null);
+		return fetchOperationCodeConfiguration(new Set<Id>{countryId}, settlementRTId, null, classType);
 	}
 
 	/**

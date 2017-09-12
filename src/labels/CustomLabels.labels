@@ -829,7 +829,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -1620,7 +1620,7 @@ Payment required on receipt of this Payment Advice
 &lt;/p&gt;
 &lt;p&gt;
     &lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
-    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, QuÃ©bec, CANADA&lt;br /&gt;
+    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
     Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
 &lt;/p&gt;
 
@@ -3745,7 +3745,7 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CaptchaError</shortDescription>
-        <value>Captcha Error. Please note for all the accented characters such as Ã±, Ã¡, Ã , etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
+        <value>Captcha Error. Please note for all the accented characters such as ñ, á, à, etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
     </labels>
     <labels>
         <fullName>IDCard_CardDuration</fullName>
@@ -4483,14 +4483,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturaciÃ³n y el Plan de LiquidaciÃ³n (BSP) de informes y envÃ­o de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrÃ¡ las habilidades para: Entender cÃ³mo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicaciÃ³n de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturaciÃ³n Agente BSP. Al completar este curso usted tendrÃ¡ las habilidades para: Entender los conceptos bÃ¡sicos del sistema BSP; Referencia tÃ©rminos y definiciones BSP; Explicar el proceso de presentaciÃ³n de informes BSP; Ventas de informe a travÃ©s del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
@@ -4669,7 +4669,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
-        <value>Le niveau de satisfaction de la clientÃ¨le influence les dÃ©cisions d&apos;achat et la fidÃ©lisation. L&apos;objectif de ce cours sur le service Ã  la clientÃ¨le est de prÃ©senter les stratÃ©gies essentielles pour faire en sorte que le contact de premiÃ¨re ligne avec le client constitue une expÃ©rience positive et mÃ©morable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -4720,7 +4720,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentaciÃ³n de informes del agente en el Plan de FacturaciÃ³n y LiquidaciÃ³n (BSP) y cÃ³mo interpretar los informes de facturaciÃ³n. Este mÃ³dulo de aprendizaje es parte de un nuevo curso de seis mÃ³dulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrÃ¡ las habilidades para: Seguir con el proceso de presentaciÃ³n de informes BSP; Identificar los documentos de presentaciÃ³n de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturaciÃ³n; Interpretar los informes de facturaciÃ³n BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -13387,7 +13387,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
-        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:â€¦</value>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
@@ -15920,6 +15920,13 @@ Please add below all your company valid email domains, including different ones 
         <value>The below contact has been registered as BSP/CASS Payment contact for your account:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_BSP_CASS_Payment_contact1_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_BSP/CASS Payment contact1 CNS</shortDescription>
+        <value>The below contact has been registered as Payment contact for your account:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_BSP_CASS_Payment_contact2</fullName>
         <categories>S12.1, Portal</categories>
         <language>en_US</language>
@@ -15933,7 +15940,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_BSP_CASS_Payment_contact2_CNS</shortDescription>
-        <value>This person will be used by CNS as point of contact for notifications about short/non payment for BSP/CASS operations and eventually receive electronic copies of Irregularity and Default notices for your Account.</value>
+        <value>This person will be used by CNS as point of contact for notifications about short/non payment for CASS operations.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_BSP_CASS_Payment_contact3</fullName>
@@ -15995,7 +16002,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseComment_Subject</shortDescription>
-        <value>New comment on case nÂº</value>
+        <value>New comment on case n°</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_CaseResolution</fullName>
@@ -16424,7 +16431,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_aNewComment</shortDescription>
-        <value>The new comment below has been posted on your case nÂº</value>
+        <value>The new comment below has been posted on your case n°</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_do_not_reply</fullName>
@@ -16432,7 +16439,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>Note that this is a system generated message. Please do not respond to this email.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -18248,7 +18255,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
-        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
@@ -18289,7 +18296,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGSA_CNS</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
@@ -18309,7 +18316,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
         <value>No Company was found for these search criteria. Please modify your search and try again.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
@@ -20690,7 +20697,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_generalError_CNS</shortDescription>
-        <value>It is not possible to finalize your registration process. 
+        <value>It is not possible to finalize your registration process. 
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal please contact us at Tel: 786-413-1000</value>
     </labels>
@@ -25170,7 +25177,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Bosnian</shortDescription>
-        <value>Ð±Ð¾ÑÐ°Ð½ÑÐºÐ¸</value>
+        <value>босански</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_cy</fullName>
@@ -25204,8 +25211,8 @@ title,Title,Name</value>
         <fullName>pkb2_lang_es</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>EspaÃ±ol</shortDescription>
-        <value>EspaÃ±ol</value>
+        <shortDescription>Español</shortDescription>
+        <value>Español</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_et</fullName>
@@ -25247,7 +25254,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Hindi</shortDescription>
-        <value>à¤¹à¤¿à¤¨à¥à¤¦à¥€</value>
+        <value>हिन्दी</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_hr</fullName>
@@ -25261,7 +25268,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Armenian</shortDescription>
-        <value>Õ€Õ¡ÕµÕ¥Ö€Õ§Õ¶</value>
+        <value>Հայերէն</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_in</fullName>
@@ -25275,7 +25282,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Icelandic</shortDescription>
-        <value>Ãslenska</value>
+        <value>Íslenska</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_it</fullName>
@@ -25289,49 +25296,49 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Japanese</shortDescription>
-        <value>æ—¥æœ¬ã®</value>
+        <value>日本の</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ka</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Georgian</shortDescription>
-        <value>áƒ¥áƒáƒ áƒ—áƒ£áƒšáƒ˜</value>
+        <value>ქართული</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ko</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Korean</shortDescription>
-        <value>í•œêµ­ì–´</value>
+        <value>한국어</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lb</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Luxembourgish</shortDescription>
-        <value>LÃ«tzebuergesch</value>
+        <value>Lëtzebuergesch</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lt</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Lithuanian</shortDescription>
-        <value>LietuviÅ³ Kalba</value>
+        <value>Lietuvių Kalba</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lv</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Latvian</shortDescription>
-        <value>LatvieÅ¡u Valoda</value>
+        <value>Latviešu Valoda</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mk</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Macedonian</shortDescription>
-        <value>Ð¼Ð°ÐºÐµÐ´Ð¾Ð½ÑÐºÐ¸</value>
+        <value>македонски</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mt</fullName>
@@ -25352,28 +25359,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese (Brazilian)</shortDescription>
-        <value>PortuguÃªs</value>
+        <value>Português</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_pt_PT</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese</shortDescription>
-        <value>PortuguÃªs</value>
+        <value>Português</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ro_MD</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Moldovan</shortDescription>
-        <value>Ð»Ð¸Ð¼Ð±Ð° Ð¼Ð¾Ð»Ð´Ð¾Ð²ÐµÐ½ÑÑÐºÑ</value>
+        <value>лимба молдовеняскэ</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ru</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Russian</shortDescription>
-        <value>Ñ€ÑƒÑÑÐºÐ¸Ð¹</value>
+        <value>русский</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sh</fullName>
@@ -25387,14 +25394,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovak</shortDescription>
-        <value>SlovenÄina</value>
+        <value>Slovenčina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sl</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovenian</shortDescription>
-        <value>SlovenÅ¡Ã„Âina</value>
+        <value>Slovenščina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sq</fullName>
@@ -25408,7 +25415,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Serbian Cyrillic</shortDescription>
-        <value>ÑÑ€Ð¿ÑÐºÐ¸</value>
+        <value>српски</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sv</fullName>
@@ -25422,7 +25429,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Thai</shortDescription>
-        <value>à¸ à¸²à¸©à¸²à¹„à¸—à¸¢</value>
+        <value>ภาษาไทย</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_tl</fullName>
@@ -25436,28 +25443,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Urdu</shortDescription>
-        <value>Ø§Ø±Ø¯Ùˆ</value>
+        <value>اردو</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_vi</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Vietnamese</shortDescription>
-        <value>Tiáº¿ng Viá»‡t</value>
+        <value>Tiếng Việt</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>ä¸­å›½çš„</value>
+        <value>中国的</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>ä¸­åœ‹çš„</value>
+        <value>中國的</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>
