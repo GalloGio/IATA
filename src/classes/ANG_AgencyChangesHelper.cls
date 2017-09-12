@@ -19,6 +19,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changeCodesToCreate = new List<Agency_Applied_Change_code__c>();
 			changeCodesToCreateDef = new List<AMS_OSCAR_JSON.ChangeCode>();
 			accountsChanged = new Set<Id>();
+			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 		}
 
 		public void addAccount(Account account){
@@ -94,6 +95,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		List<Map<String, String>> configs = ANG_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
+		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.STEP6__c == AMS_Utils.PASSED && ((Map<Id,AMS_OSCAR__c>)Trigger.oldMap).get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.ANG_Type_Of_Change__c == null && !isMigrationRunning){
+			oscar.addError('Cannot pass Sanity Check before choosing a type of change.');
+			return;
+		}
 
 		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null && validateTypeOfChange(oscar, configs)){
 
@@ -142,8 +147,10 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
-						accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}).keySet();
-						isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+						accountHierarchyRelationships = extractAllAccounts(AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}));
+						accountHierarchyRelationships.add(oscar.Account__c);
+                		isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+                        System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c));
@@ -225,6 +232,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			}else if (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) {
 
 				changesContainer = generateLNFChangeCode(oscar, accountsCurrentChangeCode, changesContainer);
+			
+			}else if(oldOSCAR.Status__c != AMS_Utils.OSCAR_CLOSED && oscar.Status__c == AMS_Utils.OSCAR_CLOSED){
+
+				validationBeforeClosure(oscar, config);
 
 			}
 
@@ -245,22 +256,25 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static void performRiskEventActions(AMS_OSCAR__c oscar, String oldParentHierarchyId, Boolean isAllHierarchySelected){
-
-		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
-			System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
-
+		    
+		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY,AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
+            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
+		
 		if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c) && isAllHierarchySelected)
-			System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId]));
-
-	}
+            System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId]));
+        
+        }
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
 
 		Set<Id> allAccountsInvolved = fetchAccountIdsToBeProcessed(oscar.Id);
 		allAccountsInvolved.add(oscar.Account__c);
+        
+        System.debug('[ANG_AgencyChangesHelper] allAccountsInvolved are ' + allAccountsInvolved);
+        System.debug('[ANG_AgencyChangesHelper] accountHierarchyRelationships are ' + accountHierarchyRelationships);
 
-		return accountHierarchyRelationships.containsAll(allAccountsInvolved);
+		return allAccountsInvolved.containsAll(accountHierarchyRelationships);
 
 	}
 
@@ -649,7 +663,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-		Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 
 		Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
 
@@ -755,12 +769,16 @@ public with sharing class ANG_AgencyChangesHelper {
 				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
 
 				toReturn.addAccount(acc);
-				accountsToUpdate.put(acc.Id,acctChangesStruct);
+				if(toReturn.changesStruct.get(acc.Id) == null)
+					toReturn.changesStruct.put(acc.Id,acctChangesStruct);
+				else
+					toReturn.changesStruct.get(acc.Id).changes.addAll(objectChangesList);
 			}
 
 		}
 
-		toReturn.addChangesStruct(accountsToUpdate);
+		//this would overwrite existing struct, create a new method in the wrapper to add content in this struct
+		//toReturn.addChangesStruct(accountsToUpdate);
 
 		return toReturn;
 
@@ -778,14 +796,53 @@ public with sharing class ANG_AgencyChangesHelper {
 		Set<Id> cloneFromHoSet = accountsAffected.clone();
 		stagingToAccount.put(oscarToProcess.AMS_Online_Accreditation__c, cloneFromHoSet);
 
-		AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection);
+		// get from the struct
+		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+		Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
+
+		oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection);
+
+		System.debug('[ANG_AgencyChangesHelper] oldAndNewOwnersMap -> ' + oldAndNewOwnersMap);
 
 		cloneFromHoSet = accountsAffected.clone();
 		cloneFromHoSet.remove(oscarToProcess.Account__c);
 
 		cloneOwnersFromHo(cloneFromHoSet,oscarToProcess.Account__c);
 
+		/*Capture Owner history for change codes*/
+
+		for(Id accId : accountsAffected) {
+
+			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
+
+			if (oldNewOwnersByOscar != null) {
+
+				String oldOwnerCSV, newOwnerCSV = '';
+
+				if (oldNewOwnersByOscar.getOldOwnersByAccountId(accId) != null) oldOwnerCSV = oldNewOwnersByOscar.getOldOwnersByAccountId(accId).allOwnersCSV;
+				if (oldNewOwnersByOscar.getNewOwnersByAccountId(accId) != null) newOwnerCSV = oldNewOwnersByOscar.getNewOwnersByAccountId(accId).allOwnersCSV;
+
+				AMS_ChangeCodesHelper.ObjectChange objectChangesOwnership;
+
+				if (oldOwnerCSV != newOwnerCSV) objectChangesOwnership = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Owners', oldOwnerCSV, newOwnerCSV);
+
+				//if there are still no changes for the current account, add new change entry in the map for it
+				if (objectChangesOwnership != null && toReturn.changesStruct.get(accId) == null) {
+					AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{
+							objectChangesOwnership
+					});
+					toReturn.changesStruct.put(accId, acctChangesStruct);
+					//system.debug('DDD accountsToUpdate add Owners Info:' + accountsToUpdate.get(acc.Id));
+				} else if (objectChangesOwnership != null)
+					toReturn.changesStruct.get(accId).changes.add(objectChangesOwnership);
+
+			}
+
+		}
+		//toReturn.addChangesStruct(accountsToUpdate);
+
 		return toReturn;
+
 	}
 
 	public static AChangeStructure applyChangeOfAccreditationType(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn){
@@ -915,6 +972,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar, List<Map<String, String>> configs) {
+
+		System.debug('[ANG_AgencyChangesHelper] Validating type of change for ANG Changes process.');
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
@@ -1161,4 +1220,25 @@ public with sharing class ANG_AgencyChangesHelper {
 		return changesContainer;
 	}
 
+    public static void validationBeforeClosure(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config){
+
+    	if(ANG_AgencyChangesConfigHelper.getManagerApprovalRequired(config.config) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
+    		oscar.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
+
+    }
+
+    public static Set<Id> extractAllAccounts(Map<Id, List<AMS_Agencies_relationhip__c>> relations){
+
+    	Set<Id> toReturn = new Set<Id>();
+
+    	for(List<AMS_Agencies_relationhip__c> relationsLst: relations.values())
+    		for(AMS_Agencies_relationhip__c rel : relationsLst){
+
+    			toReturn.add(rel.Parent_Account__c);
+    			toReturn.add(rel.Child_Account__c);
+
+    	}
+
+    	return toReturn;
+    }
 }
