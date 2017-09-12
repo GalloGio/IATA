@@ -363,7 +363,7 @@ public with sharing class AMS_XML_Generator {
         }
         
 
-        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c 
+        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c,Reason_Code__c,Reason_Description__c 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
