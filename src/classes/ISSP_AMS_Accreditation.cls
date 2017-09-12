@@ -132,6 +132,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean isEligableForChange {get; set;}
     public boolean isTerminatedAgent {get; set;}
     public boolean isNewHOforAccredAgent {get; set;}
+    public Boolean isOldTypeAccount {get; set;} // HO with no accreditation type
 
     public Case newCase {get; set;}
     public Contact con {get; set;}
@@ -310,6 +311,8 @@ public without sharing class ISSP_AMS_Accreditation {
         if(hqAccount.Status__c == 'Terminated')
             isTerminatedAgent = true;
         
+        isOldTypeAccount = (con.Account.Location_Type__c == 'HO' && (con.Account.ANG_Accreditation_Model__c == '' || con.Account.ANG_Accreditation_Model__c == null));
+
         hqCountryISOCode = hqAccount.IATA_ISO_Country__r.ISO_Code__c;
         newForm.HO_Account__c = vHQAccountId;
 
@@ -764,19 +767,21 @@ public without sharing class ISSP_AMS_Accreditation {
                 'Asia & Pacific' => 'China & North Asia', 'China & North Asia' => 'Asia & Pacific'
             };
 
-            if (applyLanguage == 'es') {
+            if (applyLanguage == 'es') {                            
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
                            IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
+                           ANG_Enable_NewGen__c
                            FROM IATA_ISO_Country__c
                            WHERE Case_BSP_Country__c != null
                            AND (Region__c = :isocountry.Region__c OR Region__c = :mapRegionToOtherRegion.get(isocountry.Region__c))
-                           AND Case_BSP_Country__c != ''
+                           AND Case_BSP_Country__c != ''                           
                            ORDER BY IATA_Country_SP__c];
             } else if (applyLanguage == 'fr') {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
                            IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
+                           ANG_Enable_NewGen__c
                            FROM IATA_ISO_Country__c
                            WHERE Case_BSP_Country__c != null
                            AND (Region__c = :isocountry.Region__c OR Region__c = :mapRegionToOtherRegion.get(isocountry.Region__c))
@@ -785,17 +790,24 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
                 IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
+                ANG_Enable_NewGen__c
                 FROM IATA_ISO_Country__c
                 WHERE Case_BSP_Country__c != null
                 AND (Region__c = :isocountry.Region__c OR Region__c = :mapRegionToOtherRegion.get(isocountry.Region__c))
                 AND Case_BSP_Country__c != ''
                 ORDER BY Name];
             }
-            
-
+ 
             options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
             for (IATA_ISO_Country__c iso : isoList) {
+                //
+                // For all HO without accreditation type we can't create branch offices in NAM enabled countries.
+                //
+                if(isOldTypeAccount && iso.ANG_Enable_NewGen__c) {
+                    continue;
+                }
+                
                 if (applyLanguage == 'es') {
                     if (iso.IATA_Country_SP__c != null)
                         options.add(new SelectOption(iso.ISO_Code__c , iso.IATA_Country_SP__c));
