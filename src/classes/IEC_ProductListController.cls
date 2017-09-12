@@ -49,6 +49,10 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String selectedFilters{get;set;}
     public String pageNumber{get;set;}
 
+    //susana
+    private final Product2 prods; 
+    public List<EComProduct_DTO> productList = new List<EComProduct_DTO>();
+
 
     /**************************************************************************************************************
      *  IEC_ProductListController: Class Constructor                                                              *
@@ -74,7 +78,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
         queryProducts();
 
-        refreshDisplayedProducts();
+        //refreshDisplayedProducts();
         
         //--Advance search filters
         buildRefinementFilters();
@@ -125,6 +129,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             selectedCustomerType = pageParams.get('customer_type');
             searchCondition += ' AND Display_Ecom_Customer_Type__c INCLUDES(\''+selectedCustomerType+'\') ';
         }
+
+        system.debug('buildQueryConditions - searchCondition : ' + searchCondition);
     }
 
     /**************************************************************************************************************
@@ -134,9 +140,12 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     private void queryProducts()
     {
         //-- Fetch ecom Products
-        allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
-
-        for(EComProduct_DTO prod : allProducts)
+        //allProducts = productRecordsList();
+        allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy, true); 
+        system.debug('queryProducts - allProducts : ' + allProducts);
+        system.debug('queryProducts - allProducts size : ' + allProducts.size());
+        
+        /*for(EComProduct_DTO prod : allProducts)
         {
             prod.ProductDesc = '';
         }
@@ -174,8 +183,14 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
         products = new List<EComProduct_DTO>();
         for(Integer x= 0; x<allProducts.size(); x++)
-            if(min <= x   && x <= max)
+            if(min <= x   && x <= max){
                 products.add(allProducts[x]);
+                system.debug('queryProducts - products size : ' + products.size());
+                system.debug('queryProducts - min : ' + min);
+                system.debug('queryProducts - max : ' + max);
+                system.debug('queryProducts - x : ' + x);
+                system.debug('---- queryProducts -----');
+            }
     }
 
     /**************************************************************************************************************
@@ -297,4 +312,127 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         currentPageNumber = Integer.valueOf(pageNum);
         refreshDisplayedProducts();
     }
+
+    //susana
+    public IEC_ProductListController(ApexPages.StandardSetController controller) {
+        this.prods = (Product2)controller.getRecord(); 
+    } 
+
+    public ApexPages.StandardSetController productRecords {
+        get {
+            if(productRecords == null) {
+                productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
+                    // sets the number of records to show in each page view
+                    //productRecords.setPageSize(PAGE_SIZE);
+            }
+            return productRecords;
+        }
+        private set;
+    }
+
+    public List<EComProduct_DTO> productRecordsList() {
+        List<Product2> listFilteredProduct;
+        Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
+        Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
+        Product_Sel exe = new Product_Sel();
+
+        String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
+
+        // Filter products based on compliance requirements
+        Contact contactCurrent = IECUserManager.getContact();
+        if (contactCurrent != null) {
+            Set<String> setCountry = new Set<String>();
+            
+            if (contactCurrent.MailingCountry != null) setCountry.add(contactCurrent.MailingCountry);
+            if (contactCurrent.Account.ShippingCountry != null) setCountry.add(contactCurrent.Account.ShippingCountry);
+            if (contactCurrent.Account.BillingCountry != null) setCountry.add(contactCurrent.Account.BillingCountry);
+            
+            listFilteredProduct = new List<Product2>();
+            Boolean bAddProduct;
+
+
+            for (Product2 prod : (List<Product2>) productRecords.getRecords()) {
+                    if (prod.Non_Compliance_Countries__r == null) {
+                        listFilteredProduct.add(prod);
+                    }
+                    else {
+                        bAddProduct = true;
+                        
+                        for (Non_Compliant_Country__c country : prod.Non_Compliance_Countries__r) {
+                            if (setCountry.contains(country.IATA_ISO_Country__r.Name) && !country.Display_in_E_Com__c) {
+                                bAddProduct = false;
+                                break;
+                            }
+                        }
+                        
+                        if (bAddProduct)
+                            listFilteredProduct.add(prod);
+                    }
+                }
+        }
+        else {
+            listFilteredProduct = (List<Product2>) productRecords.getRecords();
+        }
+
+
+        // Filter price info for products not related to Phase 1& 2 products only
+        for (Product2 p : listFilteredProduct)
+        {
+            if (p.IEC_Product_Information__c == null)
+            {
+                mapProductNumber_Price.put(p.SAP_Material_Number__c, null);
+            }
+        }            
+
+        mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
+
+        //*** get picklist translations
+        mapPickList_Label.put('Category', Utility.getPicklistValue_Label('Product2', 'Line_of_Business__c'));
+        mapPickList_Label.put('Media', Utility.getPicklistValue_Label('Product2', 'Media__c'));
+        mapPickList_Label.put('Language', Utility.getPicklistValue_Label('Product2', 'Language__c'));  //*** do not use Refinement_Language__c because less values
+        mapPickList_Label.put('InvStatus', Utility.getPicklistValue_Label('Product2', 'Inventory_Status__c'));
+        
+        //*** build ECom products list
+        for (Product2 p : listFilteredProduct)
+            productList.add(new EComProduct_DTO(p, mapProductNumber_Price, mapPickList_Label, false, customerType));
+
+        return productList;
+    }
+
+
+    
+    //Boolean to check if there are more records after the present displaying records
+    public Boolean hasNext
+    {
+        get
+        {
+            return productRecords.getHasNext();
+        }
+        set;
+    }
+ 
+    //Boolean to check if there are more records before the present displaying records
+    public Boolean hasPrevious
+    {
+        get
+        {
+            return productRecords.getHasPrevious();
+        }
+        set;
+    }
+ 
+
+
+    //Returns the previous page of records
+    public void previous()
+    {
+        productRecords.previous();
+    }
+ 
+    //Returns the next page of records
+    public void next()
+    {
+        productRecords.next();
+    }
+
 }

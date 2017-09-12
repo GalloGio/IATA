@@ -66,9 +66,9 @@
 									<h2 class="group-title">Category</h2>
 									<div class="show-more-less-container">
 					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
-					                        <!-- INC340004 - Cannot view all publications on the store - susana alves
+					                        
 					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
-					                        -->
+					                        
 					                        <apex:variable value="{!0}" var="counter" />
 					                        <apex:repeat var="cat" value="{!subCategories[selected_category]}">
 					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
@@ -179,10 +179,14 @@
 					                </div>
 					            </apex:outputPanel>
 
-								<apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
+
+					            <apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
 									<ul class="list product-list">
-										<apex:repeat value="{!products}" var="prod">
-											<li class="list-item">
+										<apex:pageBlock title="Products List">
+								  <apex:form id="theForm">
+								    <apex:pageBlockSection >
+								      <apex:dataList var="prod" value="{!productList}" type="1">
+								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
 														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
@@ -237,7 +241,14 @@
 													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
 												</div>
 											</li>
-										</apex:repeat>
+								      </apex:dataList>
+								    </apex:pageBlockSection>
+								    <apex:panelGrid columns="2">
+								      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
+								      <apex:commandLink action="{!next}">Next</apex:commandlink>
+								    </apex:panelGrid>
+								  </apex:form>
+								</apex:pageBlock>
 									</ul>
 								</apex:outputPanel>
 
@@ -279,8 +290,8 @@
 					                    </ol>
 					                </div>
 					            </div>
-
-					            <div class="pagination mobile">
+								
+													            <div class="pagination mobile">
 					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
 						                <div class="control prev">
 						                    <a href="javascript:gotoPrevious();">
@@ -316,6 +327,11 @@
 						                </div>
 					                </apex:variable> 
 					            </div>
+
+
+
+
+
 
 							</apex:outputPanel>
 
