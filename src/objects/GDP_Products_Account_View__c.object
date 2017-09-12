@@ -291,7 +291,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_ISO_Country_Code__c</formula>
+        <formula>Related_GDP_Address__r.Address_IATA_Custom_ISO_Country_Code__c</formula>
         <label>Country ISO Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -302,7 +302,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
+        <formula>Related_GDP_Address__r.Address_Country_Name_Uppercase__c</formula>
         <label>Country Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -479,6 +479,17 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Legal_Name_1_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_1__c)</formula>
+        <label>Legal Name 1 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Legal_Name_1__c</fullName>
         <externalId>false</externalId>
         <label>Legal Name 1</label>
@@ -490,12 +501,35 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Legal_Name_2_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Legal Name 2 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Legal_Name_2__c</fullName>
         <externalId>false</externalId>
         <label>Legal Name 2</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Name_3_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_3__c)</formula>
+        <label>Legal Name 3 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -591,10 +625,34 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Manager_First_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Manager_First_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager First Name Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Manager_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Manager First Name</label>
         <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_Last_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Manager_Last_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager Last Name Upper</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -613,17 +671,17 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Now_Date_Time__c</fullName>
-        <description>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</description>
+        <fullName>Now_Date__c</fullName>
+        <description>Date Auto-Populated Formula used to validate EBC Daily Master Sync</description>
         <externalId>false</externalId>
         <formula>Now()</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
-        <label>Now Date/Time</label>
+        <inlineHelpText>Date Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
+        <label>Now Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>DateTime</type>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Parent_Account_AIMS_ID__c</fullName>
@@ -733,12 +791,13 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Related_Accreditation_Class__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Related Accreditation Class</label>
+        <inlineHelpText>Link to GDP Accreditation</inlineHelpText>
+        <label>Related Accreditation</label>
         <referenceTo>Accreditation__c</referenceTo>
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -784,7 +843,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     <fields>
         <fullName>State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_State_Name__c</formula>
+        <formula>UPPER(Related_GDP_Address__r.Address_State_Name__c)</formula>
         <label>State/Province</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -837,10 +896,34 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Ticketing_Agent_First_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Ticketing_Agent_First_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ticketing Agent First Name Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Ticketing_Agent_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Ticketing Agent First Name</label>
         <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticketing_Agent_Last_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Ticketing_Agent_Last_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ticketing Agent Last Name Upper</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -859,12 +942,35 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Trading_Name_1_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Trading_Name_1__c)</formula>
+        <label>Trading Name 1 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Trading_Name_1__c</fullName>
         <externalId>false</externalId>
         <label>Trading Name 1</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Name_2_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Trading_Name_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Trading Name 2 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

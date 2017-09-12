@@ -104,6 +104,8 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			// Update Dates and Times
 			eBprof.Last_NotificationBatch_Run__c = system.now();
 			profileUpdateDates.add(eBprof);
+
+			AMS_CustomSettingsUtils.resetVariables();
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);

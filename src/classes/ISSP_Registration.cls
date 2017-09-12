@@ -479,7 +479,7 @@ public without sharing class ISSP_Registration {
                 	errorMessage.add(Label.ISSP_IATA_Code_Agency);
                 	return null;
         		}
-        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountry, 'Agency');    
+        		accList = searchCompany(searchIATACode, companyName, searchCountry, 'Agency');    
         		handleSearchResults();
         	} catch(Exception e) {
         		log(e);
