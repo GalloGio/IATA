@@ -941,6 +941,9 @@ public with sharing class ANG_AgencyChangesHelper {
         else if (action == AMS_Utils.WITHDRAWAL)
             changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
 
+        // get the forms of payment for all accounts involved in the changes to display on eBulletin
+        Map<Id,List<Agency_Authorization__c>> fOPs = fetchFormsOfPayment(allHierarchyAccountsToApplyCC);
+
         system.debug('[ANG_AgencyChangesHelper] : Change code to apply: ' + changeCodeIdentifier);
 
         if (changeCodeIdentifier != null) {
@@ -951,7 +954,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
                 if (accToUpdateStatus != null) {
                     changeCodeDef = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
-                    changeCode = createChangeCode(changeCodeDef, oscar, acc);
+                    changeCode = createChangeCode(changeCodeDef, oscar, acc, fOPs.get(acc));
 
                     changesContainer.addChangeCode(changeCode);
                     
@@ -978,14 +981,14 @@ public with sharing class ANG_AgencyChangesHelper {
 		changeCodeDef.reasonCode = lastChangeCode.Reason_Code__c;
 		changeCodeDef.reasonDesc = lastChangeCode.Reason_Description__c;
 
-		changeCode = createChangeCode(changeCodeDef, oscar, oscar.Account__c);
+		changeCode = createChangeCode(changeCodeDef, oscar, oscar.Account__c, null);
         changesContainer.addChangeCode(changeCode);
 
         return changesContainer;
 
     }
 
-    public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
+    public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId, List<Agency_Authorization__c> fOPs){
 
     	String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
@@ -999,6 +1002,7 @@ public with sharing class ANG_AgencyChangesHelper {
             , Reason_Description__c = changeCodeDefinition.reasonDesc
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
+            , Forms_Of_Payment__c = generateFOPString(fOPs)
             //, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
         );
 
@@ -1130,6 +1134,35 @@ public with sharing class ANG_AgencyChangesHelper {
         }
 
         return changesContainer;
+    }
+
+    private static String generateFOPString(List<Agency_Authorization__c> fOPs){
+
+        String fopString = '';
+
+        if(fOPs != null){	
+	        for(Agency_Authorization__c fop : fOPs)
+	            fopString += fop.Authority__c + ' - ' + fop.Status__c + ';';
+	        
+	        fopString.removeEnd(';');
+        }
+
+        return fopString;
+    }
+
+    private static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
+
+        Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId]){
+            if(fOPs.keySet().contains(fop.Account__c))
+                fOPs.get(fop.Account__c).add(fop);
+            else
+                fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
+        }
+
+        return fOPs;
     }
 
 }
