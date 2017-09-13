@@ -2,35 +2,38 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 
 	global static String fetchEndPoint(ANG_CalloutMapping__c mappingObj){
-
 		return mappingObj.Credential__c;
 	}
-
-	global static String serializeData(Object obj){
-
-		return String.valueOf(obj);
-
-	}
 	
-	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId){
-		
-		String body = serializeData(obj);
-
-		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId);
-
+	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId,String agencyUpdateId , Boolean isRunningBatch){
+		sendCallout(JSON.serialize(obj),mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId,agencyUpdateId, isRunningBatch);
 	}
+
+	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId,Boolean isRunningBatch){
+		if(isRunningBatch)
+			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+		else
+			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+	}
+
 
 	@future (callout=true)
-	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId){
+	private static void executeCalloutFuture(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId){
+		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+	}
+
+
+	private static void executeCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId){
 
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
 	 	req.setTimeout(120000);
 		//req.setEndpoint('https://iata-agencies-process.cloudhub.io'+endPointCredential+body+'?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
-		req.setEndpoint('callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret);
+		req.setEndpoint('callout:'+namedCredential+endPointCredential+'?client_id='+clientId+'&client_secret='+clientSecret);
+		req.setBody(body);
 
-		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req);
+		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req.getBody());
    
         
 		Http http = new Http();
@@ -39,9 +42,21 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		try{
 			res = http.send(req);	
 		}catch(CalloutException e){
+
 			System.debug('ANG_CalloutIEPMasterdata: Exception:'+e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
-			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();log.Agency_Applied_Change_code__c = changeCodeId;log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;log.Method__c = action;
-			log.Web_Service__c = String.valueOf(req);log.Error_Code__c = 'Exception sending request';log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());log.Success__c = false;insert log;return;
+
+			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+			log.Agency_Applied_Change_code__c = changeCodeId;
+			log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+			log.Method__c = action;
+			log.Web_Service__c = String.valueOf(req);
+			log.Error_Code__c = 'Exception sending request';
+			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
+			log.Success__c = false;
+			insert log;
+
+			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);
+			return;
 		}
 
 		System.debug('ANG_CalloutIEPMasterdata: Request Status:'+res.getStatus());
@@ -53,7 +68,6 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
 		log.Method__c = action;
 		log.Web_Service__c = String.valueOf(req);
-
 
 		if(!(res.getStatusCode() > ANG_IEP_CalloutHelper.STATUSOKLOWER   && res.getStatusCode() < ANG_IEP_CalloutHelper.STATUSOKHIGHER )){
 			System.debug('ANG_CalloutIEPMasterdata: Payload could not be sent with success.');
@@ -68,8 +82,6 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		}
 
 		insert log;
-
-
+		ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,log.Success__c);
 	}
-
 }

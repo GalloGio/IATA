@@ -56,6 +56,25 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Account_Portal_Service__c</fullName>
+        <description>Technical field to define the value to add on eventType parameter in mulesoft request</description>
+        <externalId>false</externalId>
+        <formula>IF(
+AND(
+!ISBLANK(Account__r.ANG_IEP_Status_FF__c ),
+Account__r.ANG_IEP_Status_FF__c!=&apos;No IEP Account&apos;
+),
+Account__r.IATA_ISO_Country__r.ANG_Portal_Service__r.Name,
+null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Portal Service</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -233,6 +252,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Delete_Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

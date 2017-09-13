@@ -25,9 +25,19 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Change_Code__c</fullName>
+        <fullName>Credential__c</fullName>
         <externalId>false</externalId>
-        <label>Change Code</label>
+        <label>Credential</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Type</label>
         <length>255</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
@@ -35,9 +45,10 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Credential__c</fullName>
+        <fullName>Field__c</fullName>
+        <description>field match</description>
         <externalId>false</externalId>
-        <label>Credential</label>
+        <label>Field</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -50,6 +61,17 @@
         <label>Named Credential</label>
         <length>255</length>
         <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>object match type</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <length>80</length>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

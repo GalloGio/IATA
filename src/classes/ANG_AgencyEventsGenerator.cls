@@ -30,13 +30,13 @@ public class ANG_AgencyEventsGenerator{
         
         for(sObject obj: newRecList){
             for(ANG_CalloutMapping__c cm:calloutmappingList){
-                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
+                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Event_type__c) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
                     if(!insertedRecordsSet.contains(String.valueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField))+opType)){
                         AMS_Agency_Updates__c auRec = new AMS_Agency_Updates__c(
                             Account__c = String.ValueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField)), 
                             Update_Type__c = opType,
                             Integration_System__c='Mulesoft',
-                            Change_Code__c=cmType=='ChangeCode'?String.valueOf(obj.get('Change_Code__c')):'',
+                            Change_Code__c=cm.Event_type__c,
                             ConfigurationID__c=cm.id
                         );
                         insertedRecordsSet.add(String.valueOf(auRec.account__c)+auRec.Update_Type__c);
