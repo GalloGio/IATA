@@ -38,7 +38,7 @@ public class ANG_RHC_Information_test{
        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
         	ANG_AccountId__c =a.id,
         	CurrencyIsoCode ='USD',
-        	RecordTypeId = ANG_Risk_Helper.RECTYPE_STDRHCINFO,
+        	RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
         	ANG_Financial_Security__c=0
         );
         insert rhcInfo;
