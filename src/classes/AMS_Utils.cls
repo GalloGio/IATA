@@ -1223,7 +1223,7 @@ public without sharing class AMS_Utils {
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
-            if(!createRHCInfo.isEmpty()) ANG_Risk_Helper.createRHCInfo(createRHCInfo, false);
+            if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
             return changes;
 
