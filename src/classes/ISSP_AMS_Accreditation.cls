@@ -625,8 +625,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
         }
 
-        if(isocountry.ANG_Enable_NewGen__c == true) 
-            newAccreditationModels = true;
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
 
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
