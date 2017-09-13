@@ -544,6 +544,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Change_effective_as_of__c</fullName>
+        <externalId>false</externalId>
+        <formula>OSCAR__r.Change_effective_as_of__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change effective as of</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>CreatedDate_User__c</fullName>
         <externalId>false</externalId>
         <label>HUB Effective Date</label>
@@ -648,6 +659,28 @@ AND(
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>End_of_Grace_Period_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End of Grace Period Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c),
@@ -664,6 +697,18 @@ AND(
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IATA_Code_Top_Parent__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.Top_Parent__c &lt;&gt; null , Account__r.Top_Parent__r.IATACode__c,Account__r.IATACode__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Code Top Parent</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <description>Show the IATA Code from the related Account</description>
         <externalId>false</externalId>
@@ -674,6 +719,33 @@ AND(
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEPPayload__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(Account__r.ANG_IEP_Status_FF__c = &apos;No IEP Account&apos;, ISBLANK(Account__r.ANG_IEP_Status_FF__c)) , null, 
+IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;))),Account__r.IATACode__c,IF(AND(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),NOT(OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;)))),Account__r.IATACode__c,IF(NOT(OR(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),ISPICKVAL(Change_Code__c , &apos;IEP&apos;))),Account__r.IATACode__c,null))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEPPayload</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IRR_Acumulated_irregularities__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Accumulated_Irregularities__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR: Accumulated irregularities</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -692,6 +764,30 @@ AND(
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>IRR_Period__c</fullName>
+        <externalId>false</externalId>
+        <formula>SIDRA_Case__r.Remittance_Period__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR Period</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IRR_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(SIDRA_Case__r.IRR_Withdrawal_Reason__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Irregularities_Expired__c</fullName>
@@ -714,6 +810,17 @@ AND(
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Irregularity_Sequence__c</fullName>
+        <externalId>false</externalId>
+        <label>Irregularity Sequence</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -807,7 +914,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -820,6 +927,19 @@ AND(
         <length>5</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Amount__c</fullName>
+        <description>Value to be displayed at Outstanding Amount column on eBulletin report</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to be displayed at Outstanding Amount column on eBulletin report</inlineHelpText>
+        <label>Outstanding Amount</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1176,7 +1296,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1211,6 +1331,17 @@ AND(
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Termination_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Termination Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>To_Publish_in_e_Bulletin__c</fullName>

@@ -34,6 +34,7 @@ private class AMS_AccreditationContactHelperTest {
         testCase.Account_Concerned__c = acc1.Id;
         testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;
+        testCase.QuantityProduct__c = '1';
         insert testCase;
 
  		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);

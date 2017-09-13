@@ -85,7 +85,7 @@ public without sharing class Order_Svc
             request.DistChannel         = (mapEntry!=null) ? mapEntry.SAP_Distribition_Channel__c : '';
             request.Division            = (mapEntry!=null) ? mapEntry.SAP_Division__c : '';
             //request.PaymentMethod       = getSAPPaymentType(ord.Payment_Type__c);
-            request.PaymentMethod       = ((ord.Payment_Type__c == 'Credit Card') ? 'CRC' : ((ord.Payment_Type__c == 'Bill me later') ? null : ord.Payment_Type__c));
+            request.PaymentMethod       = ((ord.Payment_Type__c == 'Credit Card' || ord.Payment_Type__c == 'Credit Card Deferred') ? 'CRC' : ((ord.Payment_Type__c == 'Bill me later') ? null : ord.Payment_Type__c));
 
             //-- new fields added on 06/09/2016
             request.Email               = ord.ShipToContact_Email__c; 
@@ -146,8 +146,10 @@ public without sharing class Order_Svc
                 //shipTo.Company              = Utility.truncate(ord.ShipToAccount_Name__c,35);
                 shipTo.Name                 = Utility.truncate(shipToLocation.Account_Name__c,35);
                 //shipTo.Name                 = Utility.truncate(ord.ShipToContact_Name__c,35);
-                shipTo.AddressLine1         = Utility.truncate(shipToLocation.Street__c,35);
-                shipTo.AddressLine2         = Utility.truncate(shipToLocation.Street__c,35,35);
+                //TC: Enhancement
+                List<String> addressLines 	= Utility.splitAddress(shipToLocation.Street__c, 35);
+                shipTo.AddressLine1         = addressLines[0];
+                shipTo.AddressLine2         = addressLines[1];
                 shipTo.City                 = Utility.truncate(shipToLocation.City__c,35);
                 shipTo.PostalCode           = Utility.truncate(shipToLocation.ZipCode__c,9);
                 //shipTo.Province             = Utility.truncate(shipToLocation.ISO_State_Code_SAP__c,3);
@@ -832,6 +834,110 @@ public without sharing class Order_Svc
         }
         
     }
+
+    /**
+
+        Get the Email Template Id by Developer Name.
+
+    */
+    public static Id getEmailTemplateByDeveloperName(String emailTemplateDeveloperName) {
+        List<EmailTemplate> emailTemplateList = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName = :emailTemplateDeveloperName];
+        Id emailTemplateId = null;
+
+        if (emailTemplateList != null && emailTemplateList.isEmpty() == false) {
+            EmailTemplate emailTemplate = emailTemplateList.get(0);
+
+            if (emailTemplate != null) {
+                emailTemplateId = emailTemplate.Id;
+            }
+        }
+
+        return emailTemplateId;
+    }
+
+    /**
+        Send email notification when credit card payment has been declined or failed.
+
+    */
+    public static void sendEmailWhenPaymentDeclined(Map<Id,Order> newMap, Map<Id,Order> oldMap) {
+        Integer maxEmails = Utility.getIntegerSetting('Email batch max value');
+        List<Mail_DTO> emailList = new List<Mail_DTO>();
+        Mail_DTO clientMail;
+        Id emailTemplateId = getEmailTemplateByDeveloperName(Utility.getTextSetting('Order payment err template for client'));
+
+        System.debug('maxEmails: ' + maxEmails);
+        System.debug('emailTemplateId: ' + emailTemplateId);
+
+        if (emailTemplateId != null) {
+            for (Order order : newMap.values()) {
+                Order oldOrder = oldMap.get(order.Id);
+                
+                System.debug('orderId: ' + order.Id + ', Status: ' + order.Status + ', order.Status[old]: ' + (oldOrder != null ? oldOrder.Status : 'NULL'));
+
+                if (order.Status == 'Payment Failure' && oldOrder != null && oldOrder.Status != order.Status) {
+                    Set<String> emails = new Set<String>();
+
+                    clientMail = new Mail_DTO();
+                    
+                    clientMail.whatId = order.Id;
+                    clientMail.templateId = emailTemplateId;
+                    clientMail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
+                    clientMail.recipients = new List<String>();
+
+                    if (order.BillToContact_Email__c != null) {
+                        emails.add(order.BillToContact_Email__c);
+                    }
+
+                    if (order.ShipToContact_Email__c != null) {
+                        emails.add(order.ShipToContact_Email__c);
+                    }
+
+                    System.debug('Adding recipient email(s): ' + emails);
+
+                    if (emails.size() > 0) {
+                        clientMail.recipients.addAll(emails);
+
+                        emailList.add(clientMail);
+                    }
+                }
+            }
+
+            if(emailList.size() > 0){
+                if(emailList.size() > maxEmails){
+                    //Sending email by batch of maxEmails size
+                    List<List<Mail_DTO>> listOfMailsToSend = new List<List<Mail_DTO>>();
+                    Integer  i = 0;
+                    Integer j = 0;
+
+                    for (Mail_DTO mail : emailList){
+                        if (j == 0) {
+                            listOfMailsToSend.add(new List<Mail_DTO>{mail});
+                        } else if (j < maxEmails) {
+                            listOfMailsToSend[i].add(mail);
+                        }
+
+                        j++;
+
+                        if (j == maxEmails) {
+                            j = 0;
+                            i++;
+                        }
+                    }
+
+                    for (List<Mail_DTO> lstMail : listOfMailsToSend) {
+                        System.debug('Sending bulkEmails');
+
+                        Utility.sendBulkEmails(lstMail);
+                    }
+                } else {
+                    System.debug('Sending bulkEmails');
+
+                    Utility.sendBulkEmails(emailList);
+                }
+            }
+        }
+    }
+
     
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-08
@@ -842,7 +948,7 @@ public without sharing class Order_Svc
 
         set<Id> orderIds = new set<Id>();
         set<String> paymentMethod = new set<String>();
-        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');
+        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');paymentMethod.add('Credit Card');
 
         //map of Order sold Id
         map<Id,Boolean> orderId_Sold = new map<Id,Boolean>();
@@ -1797,9 +1903,19 @@ public without sharing class Order_Svc
 
                         }
                         else{
+                            String errorText = '';
+
+                            Zuora.zObject[] subErrors = subResponse.errors;
+                            for (Zuora.zObject error : subErrors) {
+                                errorText += (String)error.getValue('Code') + ': ' + (String)error.getValue('Message');
+                            }
+
                             //Set the invoice error
                             orderIdsForFailedSub.put(ordItem.OrderId,subResponse.SubscriptionId);
-                            itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed');
+                            
+                            //itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed');
+
+                            itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed: ' + errorText);
                         }
 
                     }else{
@@ -1849,15 +1965,22 @@ public without sharing class Order_Svc
                 }
                 orderItemsToUpdate.clear();
 
+/**
+
+    Ecommerce Enhancements R1, do not delete Zuora Subscription. --- reverted comment on 2017-06-19.
+
+*/
                 //Delete all of the Subscription on Zuora
                 if (system.isBatch() || system.isFuture())
                     deleteZuoraSubscriptionNow(orderIdsForFailedSub.keySet());
                 else
                     deleteZuoraSubscription(orderIdsForFailedSub.keySet());
 
+
                 //*** should not throw exception because no update nor rollback is performed
                 //throw Exception
                 //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' '));
+
                 return itemsStatus;
             }
 
@@ -1898,10 +2021,10 @@ public without sharing class Order_Svc
                             }else{
                                 orderIdsForFailedSub.put(orderId,zResult);
                                 if (itemsStatus.containsKey(orderId))
-                                    itemsStatus.put(orderId, 'Failed');
+                                    itemsStatus.put(orderId, 'Failed: ' + zResult);
                                 for (OrderItem oi : orderId_Items.get(orderId))
                                     if (oi.Id != null && itemsStatus.containsKey(oi.Id))
-                                        itemsStatus.put(oi.Id, 'Failed');
+                                        itemsStatus.put(oi.Id, 'Failed: ' + zResult);
                             }
                         }
                     }
@@ -1964,6 +2087,11 @@ public without sharing class Order_Svc
                     }
                     orderItemsToUpdate.clear();
                     
+/**
+
+    Ecommerce Enhancements R1, do not delete Zuora Subscription. --- reverted comment on 2017-06-19.
+
+*/
                     if (system.isBatch() || system.isFuture())
                         deleteZuoraSubscriptionNow(orderIdsForFailedSub.keySet());
                     else
@@ -2112,6 +2240,7 @@ public without sharing class Order_Svc
             {
                 ipd = new Zuora.zObject('InvoicePayment');
                 zInvoice = invoiceMap.get(order.IEC_Zuora_ST_InvoiceId__c);
+                
                 ipd.setValue('Amount',(Decimal)zInvoice.getValue('Balance'));
                 ipd.setValue('InvoiceId', order.IEC_Zuora_ST_InvoiceId__c);
                 ipd.setValue('RefundAmount', 0);
@@ -2129,9 +2258,11 @@ public without sharing class Order_Svc
                     ipd = new Zuora.zObject('InvoicePayment');
                     //get OrderItem Amount from Invoice
                     zInvoice = invoiceMap.get(oi.Zuora_InvoiceId__c);
+
                     ipd.setValue('Amount',(Decimal)zInvoice.getValue('Balance'));
                     ipd.setValue('InvoiceId', oi.Zuora_InvoiceId__c);
                     ipd.setValue('RefundAmount', 0);
+
                     lstInvoicePaymentData.add(ipd);
 
                     //Calcul the total amount to paid
@@ -2516,7 +2647,7 @@ public without sharing class Order_Svc
             rpcd.setValue('RatePlanCharge', rpc);
             ratePlanCharge.add(rpcd);
         }
-
+        
         //Set to zero the orther charges
         list<zqu__ProductRatePlanCharge__c> setValuesToZero = ProductRatePlanCharge_Sel.getChargesToSetToZero(orderItem.Zuora_Rate_Plan_Id__c,orderItem.Zuora_Rate_Plan_Charge_Id__c);
         for(zqu__ProductRatePlanCharge__c prpcZ : setValuesToZero)
@@ -2555,12 +2686,15 @@ public without sharing class Order_Svc
 
                 Zuora.zObject discount_rpc = new Zuora.zObject('RatePlanCharge');
                 discount_rpc.setValue('ProductRatePlanChargeId', c.Zuora_Rate_Plan_Charge_Id__c);
+
                 Zuora.zObject discount_rpcd = new Zuora.zObject('RatePlanChargeData');
                 discount_rpcd.setValue('RatePlanCharge', discount_rpc);
                 
                 Zuora.zObject discount_rp = new Zuora.zObject('RatePlan');
                 discount_rp.setValue('ProductRatePlanId', c.Zuora_Rate_Plan_Id__c);
+
                 Zuora.zObject discount_rpd = new Zuora.zObject('RatePlanData');
+                
                 discount_rpd.setValue('RatePlan', discount_rp);
                 discount_rpd.setValue('RatePlanChargeData', new List<Zuora.zObject>{rpcd});
                 
@@ -2954,7 +3088,7 @@ public without sharing class Order_Svc
                 }
 
             }catch(Exception ex){
-
+                System.debug(ex.getStackTraceString());
             }
         }
         return prodId_Qty;
@@ -3549,6 +3683,10 @@ public without sharing class Order_Svc
         List<Decimal> calc = new List<Decimal>();
         
         item.unitPrice = getUnitPrice(item.PriceInfo, item.quantity, sCustomerType);
+
+        System.debug('item.UnitPrice: ' + item.unitPrice);
+        System.debug('item.quantity: ' + item.quantity);
+
         item.subTotal = item.quantity * item.unitPrice;
         calc.add(0);   //*** item 0 contains discount amount, items after are percentages
         exe.getDiscountFromPlanDTO(item, calc, item.PriceInfo.customerPrice);
@@ -3576,10 +3714,25 @@ public without sharing class Order_Svc
         List<Coupon_Used__c> lstCoupon = new List<Coupon_Used__c>();
         Id idAccount = [select AccountId from Contact where Id = :idContact limit 1][0].AccountId;
 
-        for (OrderItem oi : [select Product__c, Coupon__c from OrderItem where OrderId = :idOrder and Coupon__c != null])
-            lstCoupon.add(new Coupon_Used__c(Account__c=idAccount, Product__c=oi.Product__c, Coupon__c=oi.Coupon__c));
-        if (lstCoupon.size() > 0)
-            insert lstCoupon;
+        for (OrderItem oi : [select Id, Product__c, Coupon__c from OrderItem where OrderId = :idOrder and Coupon__c != null]) {
+            String uniqueKey = oi.Id + '_' + oi.Coupon__c;
+
+            lstCoupon.add(
+                new Coupon_Used__c(
+                    Account__c = idAccount,
+                    Product__c = oi.Product__c,
+                    Coupon__c  = oi.Coupon__c,
+                    Order__c   = idOrder,
+                    Order_Product__c = oi.Id,
+                    Unique_Key__c = uniqueKey
+                )
+            );
+        }
+
+        if (lstCoupon.size() > 0) {
+            //insert lstCoupon;
+            upsert lstCoupon Unique_Key__c;
+        }
     } //*** end of "saveCouponUsed"
 
 
@@ -3681,7 +3834,7 @@ public without sharing class Order_Svc
                 else {
                     // Operation failed, so get all errors                
                     for(Database.Error err : sr.getErrors()) {
-                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', '', false));
+                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', null, false));
                     }
                 }
             }
@@ -3913,6 +4066,68 @@ public without sharing class Order_Svc
     } //*** end of "setOrderItemToPaid"
 
 
+    /** Ecommerce Enhancements R2 **/
+    public static void setOrderAcceptedPaymentMethods(List<Order> newList, Map<Id,Order> oldList) {
+        Map<Id,Order> orderMap = new Map<Id,Order>();
+        Set<Id> orderIdSet = new Set<Id>();
+        Map<Id,Set<String>> orderAcceptedPaymentMethodsMap = new Map<Id,Set<String>>();
+        Map<Id,List<OrderItem>> orderItemMap = new Map<Id,List<OrderItem>>();
+
+        for (Order order : newList) {
+            orderIdSet.add(order.Id);
+            orderMap.put(order.Id, order);
+        }
+
+        for (OrderItem orderItem : [SELECT Id, OrderId, Accepted_Payment_Methods__c FROM OrderItem WHERE OrderId IN :orderIdset]) {
+            List<OrderItem> orderItemList;
+
+            if (orderItemMap.containsKey(orderItem.OrderId) == false) {
+                orderItemMap.put(orderItem.OrderId, new List<OrderItem>());
+            }
+
+            orderItemList = orderItemMap.get(orderItem.OrderId);
+
+            orderItemList.add(orderItem);
+        }
+
+        for (Id orderId : orderIdSet) {
+            Order order = orderMap.get(orderId);
+            Set<String> orderPaymentMethodSet = new Set<String>();
+            List<OrderItem> orderItemList = orderItemMap.get(orderId);
+
+            if (orderItemList != null) {
+                Integer counter = 0;
+
+                for (OrderItem orderItem : orderItemList) {
+                    Set<String> orderItemPaymentMethodSet;
+
+                    if (orderItem.Accepted_Payment_Methods__c != null && orderItem.Accepted_Payment_Methods__c.trim().equals('') == false) {
+                        orderItemPaymentMethodSet = new Set<String>(orderItem.Accepted_Payment_Methods__c.split(';'));
+                    } else {
+                        orderItemPaymentMethodSet = new Set<String>();
+                    }
+
+                    if (counter == 0) {
+                        orderPaymentMethodSet.addAll(orderItemPaymentMethodSet);
+                    } else {
+                        orderPaymentMethodSet.retainAll(orderItemPaymentMethodSet);
+                    }
+
+                    counter++;
+                }
+            }
+
+            if (orderPaymentMethodSet.isEmpty() == false) {
+                List<String> orderPaymentMethodsList = new List<String>();
+
+                orderPaymentMethodsList.addAll(orderPaymentMethodSet);
+
+                order.Accepted_Payment_Methods__c = String.join(orderPaymentMethodsList, ';');
+            } else {
+                order.Accepted_Payment_Methods__c = null;
+            }
+        }
+    }
 
 
 }

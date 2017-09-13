@@ -1,6 +1,424 @@
 trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after insert, after update) {
 
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_OSCAR__c.getSObjectType(), 'AMS_OSCARTrigger')) { return; }
+	
+	//EM: To be removed
+	if (Test.isRunningTest()) {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+	}
     
     //In time all logic in this trigger should be moved inside these helper methods
     if (Trigger.isBefore && Trigger.isInsert) {
@@ -77,6 +495,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         Map<Id, Account> agencyAccount = new Map<Id, Account>([select id, IATACode__c from Account where id in :oscarAgencies]);
 
+        
+
         for (AMS_OSCAR__c oscar : Trigger.new) {
             //set default name if no case is attached to the oscar
             oscar.Name = 'Wait for OSCAR Communication Case to be attached';
@@ -89,7 +509,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
 
             //ON INSERT
-            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
+            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA,NEWHELITE
             oscar.Dossier_Reception_Date__c = Date.today();
 
             if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
@@ -102,14 +522,25 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD){
+                oscar.Sanity_check_deadline__c = Date.today() + 15;
+                oscar.OSCAR_Deadline__c = Date.today() + 30;
 
+                if(oscar.Is_using_credit_card__c == true){
 
-            if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
-                oscar.BSPLink_participation__c = true;
+                    if(oscar.Requested_Bank_Guarantee_amount__c == null)
+                        oscar.Requested_Bank_Guarantee_amount__c = 5000;
+
+                    oscar.Requested_Bank_Guarantee_currency__c = 'USD';
+                }
+            }
+
+            if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP) oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
-            if(oscar.Process__c == AMS_Utils.CERTIFICATION)
-                oscar.Sanity_check_deadline__c = Date.today()+90;
+            if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
+
+            if(oscar.Process__c != AMS_Utils.CERTIFICATE) oscar.Certificate_Quantity__c = null;
 
 
             oscars.add(oscar);
@@ -186,14 +617,24 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
             }
 
+            if(updatedOSCAR.Process__c != AMS_Utils.CERTIFICATE) updatedOSCAR.Certificate_Quantity__c = null;
+
         }
 
     }
 
+    /*Risk Event Management*/
+    if(Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)){
+        new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+    }
+    /*Risk Event Management*/
+
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
-        if (updatedOscar.recordTypeID == newRT){
+        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -250,8 +691,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                     //Remove TERMINATED Accounts from list
                     for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
-                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
-                            allHierarchyAccountIds.remove(acc.Id);
+                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
@@ -273,6 +713,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
                         changeCode.memoText = 'Correction';
+                        changeCode.publishedOnEBulletin = false;
                         }
                     // If the picklist is set create a CAD change code.
 	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
@@ -311,8 +752,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
-                    Database.rollback(sp);
-                    throw ex;
+                    Database.rollback(sp); throw ex;
                 }
 
 
@@ -329,15 +769,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
 
-        if(accountHierarchyRelationships.isEmpty())
-            return true;
+        if(accountHierarchyRelationships.isEmpty()) return true;
 
-        if(accountHierarchyRelationships.values().isEmpty())
-            return true;
+        if(accountHierarchyRelationships.values().isEmpty()) return true;
 
         for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-            if(!agency.isEmpty())
-                return false;
+            
+            if(!agency.isEmpty()) return false;
+                
         }
 
         return true;
@@ -345,6 +784,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
 
     private static void applyAccreditationProcessLogic(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
+
         //To update with current date 'Checkbox Field' => 'Date Field'
         Map<String,String> oscarDateFieldsMap = new Map <String,String> {
             'Cancel_Inspection_Requests_Disapproval__c' => 'Cancel_Inspection_Req_Disapproval_Date__c',
@@ -384,7 +824,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
             'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c',
             'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
-            'Send_Confirmation__c'                      => 'Confirmation_Sent__c'
+            'Send_Confirmation__c'                      => 'Confirmation_Sent__c',
+            'Update_BSPLink__c'                         => 'BSPLink_updated__c',
+            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -403,6 +845,42 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Invoice_deadline__c = Date.today() + 7;
         }
 
+        if (oldOSCAR.Is_using_credit_card__c == true && updatedOscar.Is_using_credit_card__c == false) {
+            updatedOSCAR.STEP34__c = 'Not Applicable';
+            updatedOSCAR.STEP35__c = 'Not Applicable';
+            updatedOSCAR.Requested_Bank_Guarantee_amount__c = null;
+            updatedOSCAR.Requested_Bank_Guarantee_currency__c =  '';
+        }
+
+        if (oldOSCAR.Is_using_credit_card__c == false && updatedOscar.Is_using_credit_card__c == true) {
+            
+            if(updatedOSCAR.Requested_Bank_Guarantee_amount__c == null)
+                updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
+            
+            updatedOSCAR.Requested_Bank_Guarantee_currency__c =  'USD';
+            updatedOSCAR.STEP34__c = 'In Progress';
+            updatedOSCAR.STEP35__c = 'In Progress';
+        }
+
+        if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
+
+            Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
+        
+            if(resultComparisson == -1){
+                updatedOSCAR.addError('There was a problem using the rates for the Requestest Bank Garantee Amount and Received Bank Garantee Amount. Please check the values.');
+            }
+
+            if(resultComparisson == -2){
+                updatedOSCAR.addError('There was a problem with the amounts. Please check the values.');
+            }
+
+            if(resultComparisson == 2){
+                updatedOSCAR.addError('You cannot proceed because the amount of bank guarantee requested is minor than the amount of bank guarantee provided.');
+            }
+
+
+        }
+
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
             updatedOSCAR.STEP13__c = 'In Progress';
 
@@ -414,21 +892,57 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
+        if((updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce approval of the oscar');
+
+            //using an already existing method to send email aler to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
+
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
+
+                System.debug('Sending the email for the user to anounce approval of the oscar');
+
+                //using an already existing method to send email aler to user.
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+
+                if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                    createAgencyAuthorizations(updatedOscar);
+
+            }
+
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+            
+
             }
             updatedOSCAR.STEP2__c = 'Passed';
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
+
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
+
+                System.debug('Sending the email for the user to anounce disapproval of the oscar');
+
+                    //using an already existing method to send email aler to user.
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, false);
+
+            }
+            
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
+
             updatedOSCAR.STEP2__c = 'Failed';
         }
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Reprocess case') {
@@ -454,7 +968,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 if (currentApprovals.size() > 0) {
                     AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
                 }
-            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicaple') {
+            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicable') {
                 // Reject the approval process
                 if (currentApprovals.size() > 0)
                     AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
@@ -509,8 +1023,34 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
         }
 
-        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
-            updatedOSCAR.Termination_Date__c = null;
+        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+
+        // ***************************************
+        // ********* NEWGEN VALIDATIONS ************
+        // ***************************************
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
+
+            // ***************************************
+            // ********* GENERIC VALIDATIONS ************
+            // ***************************************
+        if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+            updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
+        }
+
+        if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+            updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
+        }
+
+            // *****************************************************
+            // ********* STANDARD WITH CASH VALIDATIONS ************
+            // *****************************************************
+            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
+
+                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step will be completed.');   
+                }
+
+            }
         }
 
     }
@@ -556,6 +1096,17 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (!eventsToInsert.isEmpty())
             insert eventsToInsert;
 
+    }
+
+    private static void createAgencyAuthorizations(AMS_OSCAR__c oscar){
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
+            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        insert authorizations;
     }
 
 

@@ -125,6 +125,7 @@ global class Order_Ext
     ****************************************************************************************************/
     public Order_Ext(ApexPages.StandardController controller) {
         
+
         labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3, '\n', ':');
         
         //*** get order's record
@@ -747,6 +748,12 @@ global class Order_Ext
         showProductSelection = false;
         showAddProducts = false;
 
+        // Ecommerce Enhancements R2
+        // Refresh the Order Fields
+        if(vfOrder.Id != null) {
+            vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
+        }
+
         return null; 
     }
 
@@ -820,9 +827,10 @@ public void getContactLocations(){
 
     refreshBillingInfo(billToLocation);
 
-    User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
-    if(vfOrder.BillToContactId != null && user != null)
-        vfOrder.OwnerId = user.Id;
+    //INC331542
+    //User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+    //if(vfOrder.BillToContactId != null && user != null)
+    //    vfOrder.OwnerId = user.Id;
 
 }
 
@@ -1698,6 +1706,10 @@ public void changeBillToState() {
 ****************************************************************************************************/
 public void payOrder_Prepare() {
     
+    if(vfOrder.Id != null) {
+        vfOrder = Order_Sel.getOrderForVF(vfOrder.Id);
+    }
+
     //Validate BillToLocation & ShipToLocation are valid in SAP 
     List<Location__c> locations = new Location_Sel().getLocations(new Set<Id>{
         vfOrder.BillTo_Location__c,
@@ -1960,6 +1972,13 @@ public PageReference saveOrder() {
             vfOrder.ShipTo_Location__c = shippingLocation.Id;
         }
         
+        //INC331542
+        //Set the user associated to the assigned contact as the ownerId
+        User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+        if(vfOrder.BillToContactId != null && user != null){
+            vfOrder.OwnerId = user.Id;
+        }
+        
         //*** save order
         upsert vfOrder;
     } catch (Exception e) {
@@ -2018,11 +2037,50 @@ public String callSAP_Freight_Tax() {
 void buildPaymentTypePicklist() {
     //if (listPaymentType == null) {
     if (isPaying) {
+        List<String> adminUsersProfiles = Utility.getTextSettingToArray('IEC Admin Users Profiles for CSR', ',');
+        Set<String> adminUsersProfilesSet = new Set<String>();
         List<String> allowedPaymentType = Utility.getTextSettingToArray('Order Payment Types allowed for CSR', ',');
         Map<String, String> mapPaymentType = Utility.getPicklistValue_Label('Order', 'Payment_Type__c');
         //String paymentType = '';
         Decimal TotalAmount = 0;
-        
+        Boolean isAdminUserProfile = false;
+        Profile userProfile = [SELECT Id, Name FROM Profile WHERE Id = :userInfo.getProfileId() LIMIT 1];
+        String userProfileName = userProfile.Name;
+
+        for (String profileName : adminUsersProfiles) {
+            adminUsersProfilesSet.add(profileName);
+        }
+
+        if (adminUsersProfilesSet.contains(userProfileName)) {
+            isAdminUserProfile = true;
+        }
+
+        // Ecommerce Enhancements R2
+        Map<String,String> uiToPaymentMethodMap = new Map<String,String> {
+            'Bank Transfer'         => IECConstants.PaymentThresholdType_BankTransfer,
+            'Credit Card'           => IECConstants.PaymentThresholdType_CreditCard,
+            'IATA Clearing House'   => IECConstants.PaymentThresholdType_ICH
+        };
+        String acceptedPaymentMethods = vfOrder.Accepted_Payment_Methods__c;
+        List<String> acceptedPaymentMethodsList = new List<String>();
+        Set<String> acceptedPaymentMethodsSet = new Set<String>();
+
+        System.debug('OrderId: ' + vfOrder.Id + ', AcceptedPaymentMethods: ' + acceptedPaymentMethods);
+
+        if (acceptedPaymentMethods != null) {
+            acceptedPaymentMethodsList = acceptedPaymentMethods.split(';');
+        }
+
+        for (String accepted : acceptedPaymentMethodsList) {
+            String pm = uiToPaymentMethodMap.get(accepted);
+
+            if (pm != null) {
+                System.debug('OrderId: ' + vfOrder.Id + ', Payment Method Accepted: ' + pm);
+
+                acceptedPaymentMethodsSet.add(pm);
+            }
+        }
+
         if (listPaymentType == null)
             listPaymentType = new List<SelectOption>();
         else
@@ -2036,38 +2094,44 @@ void buildPaymentTypePicklist() {
         for (String payType : allowedPaymentType)
             if (mapPaymentType.containsKey(payType)) {
                 if (payType == 'Credit Card Deferred') {
-                    if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_CreditCard, TotalAmount))
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
-                    else
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_CreditCard)) {
+                        if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_CreditCard, TotalAmount))
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                        else
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    }
                 }
                 else if (payType == 'Bank Transfer' || payType == 'Check') {
-                    if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_BankTransfer, TotalAmount))
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
-                    else
-                        listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_BankTransfer)) {
+                        if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_BankTransfer, TotalAmount))
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                        else
+                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                    }
                 }
                 else if (payType == 'ICH') {
-                    try { //*** try-catch because error may happen sometime mostly new customer
-                        //IECCustomer customer = new IECCustomer(vfOrder.BillToContactId);
+                    if (isAdminUserProfile || acceptedPaymentMethodsSet.contains(IECConstants.PaymentThresholdType_ICH)) {
+                        try { //*** try-catch because error may happen sometime mostly new customer
+                            //IECCustomer customer = new IECCustomer(vfOrder.BillToContactId);
 
-                        //Get the Ecom user base on the order BillTocontactId
-                        User iecCustomer = new User_sel().getUserByContactId(vfOrder.BillToContactId);
-                        Customer_DTO customerDto;
-                        if(iecCustomer != null)
-                            customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
+                            //Get the Ecom user base on the order BillTocontactId
+                            User iecCustomer = new User_sel().getUserByContactId(vfOrder.BillToContactId);
+                            Customer_DTO customerDto;
+                            if(iecCustomer != null)
+                                customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
 
-                        if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
-                        if (customerDto != null)
-                        {
-                            if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))
-                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                            if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
+                            if (customerDto != null)
+                            {
+                                if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))
+                                    listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));
+                                else
+                                    listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
+                            }
                             else
-                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeThreshold'), true));
-                        }
-                        else
-                            listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeNotAllowed'), true));
-                    } catch (Exception e) {}
+                                listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType) + labels.get('msgPayTypeNotAllowed'), true));
+                        } catch (Exception e) {}
+                    }
                 }
                 else if (payType == 'Bill me later') {
                     Account soldToAccount = [select Payment_Term__c from Account where Id = :vfOrder.AccountId limit 1][0];

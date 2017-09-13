@@ -61,7 +61,7 @@
 	<aura:attribute name="termsOK" type="Boolean" default="false"/>
     <aura:attribute name="captchaOK" type="Boolean" default="false"/>
     <aura:attribute name="vfHost" type="String" default=""/>
-    <aura:attribute name="commName" type="String" default="{!$Label.c.OneId_Community_Name}"/>
+    <aura:attribute name="commName" type="String" default=""/>
 
 	<aura:attribute name="emailLocked" type="Boolean" default="false"/>
 

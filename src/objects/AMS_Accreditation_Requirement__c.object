@@ -69,6 +69,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Model__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>File_Identifier2__c</fullName>
         <externalId>false</externalId>
         <label>File Identifier</label>
@@ -473,6 +483,25 @@
         <active>true</active>
         <label>Cargo Agent</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -784,6 +813,25 @@
         <active>true</active>
         <label>Change</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -1083,6 +1131,25 @@
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -1372,6 +1439,17 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Accreditation_Model_Required</fullName>
+        <active>true</active>
+        <description>for travel agents</description>
+        <errorConditionFormula>AND( 
+ISBLANK(ANG_Accreditation_Model__c),
+RecordType.DeveloperName = &apos;Travel_Agent&apos; 
+)</errorConditionFormula>
+        <errorDisplayField>ANG_Accreditation_Model__c</errorDisplayField>
+        <errorMessage>Travel agent requirements must contain an Accreditation Model</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Location_Type_Required</fullName>
         <active>true</active>

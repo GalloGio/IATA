@@ -8,6 +8,8 @@
 
 <c:ISSP_Header ></c:ISSP_Header>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}"/>
+<script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
 
 <script>
   $(document).ready( function () {
@@ -81,6 +83,7 @@
   <c:ISSP_CustomNavigation />
 
   <apex:form id="mainForm" styleclass="form-inline">
+    <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
 
     <div class="alert alert-danger" style="display:{!if(listMessages.size==0,'none','')}">
       <apex:repeat value="{!listMessages}" var="er" id="theRepeat">
@@ -117,19 +120,26 @@
 
 			<div class="row">
 				<div class="col-xs-12">
-          <apex:outputPanel layout="block" styleclass="main-filters" rendered="{!listCurrency.size>1}">
+          <div styleclass="main-filters">
             <div class="form-group form-group-sm">
-              <label class="control-label" for="currencyFilter">{!$Label.ISSP_Currency_filter}</label>
-              <select class="form-control" id="currencyFilter">
-                <option></option>
-                <apex:repeat var="currency" value="{!listCurrency}">
-                  <option>{!currency}</option>
-                </apex:repeat>
-              </select>
+              <apex:outputPanel rendered="{!listCurrency.size>1}">
+                  <label class="control-label" for="currencyFilter">{!$Label.ISSP_Currency_filter}</label>
+                  <select class="form-control" id="currencyFilter">
+                    <option></option>
+                    <apex:repeat var="currency" value="{!listCurrency}">
+                      <option>{!currency}</option>
+                    </apex:repeat>
+                  </select>
+              </apex:outputPanel>
             </div>
-          </apex:outputPanel>
+            <apex:outputPanel id="notificationsSwitch" layout="block" style="float:right;">
+                <script>$('.toggle').bootstrapToggle();</script>
+                <label class="control-label">{!$Label.ISSP_Account_Statement_Notifications_Button}&nbsp;</label>
+                <apex:inputfield styleclass="toggle" value="{!appRight.Enable_Notifications__c}" html-data-toggle="toggle" html-data-onstyle="blue" html-data-offstyle="default" html-data-size="small" onchange="updateAppRight();"/>
+            </apex:outputPanel>
+        </div>
 
-          <div class="table-responsive">
+          <div class="table">
           <table id="maintable" class="table table-hover table-condensed">
             <thead>
               <tr>
@@ -254,8 +264,12 @@
           </table>
           </div>
 
+          <apex:variable value="{!AND(account.Country_ISO_Code__c=='CN',account.Sector__c = 'Travel Agent')}" var="ChinaDisclaimer" />
           <div class="col-xs-12 small text-left">
-            {!$Label.ISSP_Account_Statements_Disclaimer}
+            <p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer}"></apex:outputText></p>
+          </div>
+          <div class="col-xs-12 small text-left">
+            <p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent}" rendered="{!ChinaDisclaimer}"></apex:outputText></p>
           </div>
 
 				</div>

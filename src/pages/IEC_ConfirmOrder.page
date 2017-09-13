@@ -54,6 +54,11 @@
 						        	<apex:pageMessages escape="false"/>
 					        	</apex:outputPanel>
 
+								<!-- Warning Message -->
+	        					<apex:outputPanel styleClass="alert primary" rendered="{!hasWarning}" layout="block">
+						        	<apex:pageMessages escape="false"/>
+					        	</apex:outputPanel>
+
 					        	<!-- Success Message -->
 					        	<apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
 						        	<apex:pageMessages escape="false"/>
@@ -150,7 +155,7 @@
 						                </div>
 						                <div class="columns small-12 medium-6">
 						                    <section class="group-container shipping-address">
-											    <h2 class="group-title">Shipping address</h2>
+											    <h2 class="group-title">Delivery address</h2>
 
 											    <div class="shipping-address-container">
 
@@ -200,7 +205,7 @@
 											        </div> -->
 
 											        <div class="group-container shipping-instructions">
-											            <h3 class="group-title">Shipping instructions</h3>
+											            <h3 class="group-title">Delivery instructions</h3>
 
 											            <div class="field-group output inline">
 											                <span class="input-label">{!$Label.Company_name}</span>

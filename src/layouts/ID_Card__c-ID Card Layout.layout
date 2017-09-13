@@ -300,6 +300,10 @@
                 <behavior>Edit</behavior>
                 <field>Missing_Information__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Now_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

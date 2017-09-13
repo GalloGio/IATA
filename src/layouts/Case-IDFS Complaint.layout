@@ -491,6 +491,14 @@
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Name</fields>
+        <fields>Owner</fields>
+        <fields>StartTime</fields>
+        <fields>EndTime</fields>
+        <fields>Status</fields>
+        <relatedList>RelatedLiveChatTranscriptList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>X2015_Overall_Satisfaction__c</fields>
         <fields>X2015_CES__c</fields>

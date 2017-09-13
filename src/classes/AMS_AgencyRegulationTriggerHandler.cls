@@ -1,27 +1,44 @@
 public class AMS_AgencyRegulationTriggerHandler {
 
     public static void handleBeforeInsert() {
-        
+
     }
 
     public static void handleBeforeUpdate() {
 
         processPostNotifSentActions((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
-        
+
     }
 
     //Create renewals and send notifications for expiring DGRs
     public static void processPostNotifSentActions(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues){
 
         List<AMS_Agency_Regulation__c> dgrRegulationsExpiringIn90Days = new List<AMS_Agency_Regulation__c>();
+        Map<Id,String> regulationTypePesAccount = new Map<Id,String>();
+        Map<String,Integer> renewalCertPerAccount = new Map<String,Integer>();
 
         Set<Id> accountIds = new Set<Id>();
+        Set<String> regulationPerAccount = new Set<String>();
+
+        Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
+        for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
+        {
+            agencyRegulationsAccStatus.put(agRegStatus.Id, agRegStatus.Account__r.Status__c);
+        }
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
-            accountIds.add(agReg.Account__c);
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
-                dgrRegulationsExpiringIn90Days.add(agReg);
+            if(agencyRegulationsAccStatus.get(agReg.Id) != AMS_Utils.ACC_S0_TERMINATED){
+
+                accountIds.add(agReg.Account__c);
+
+                if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
+                    dgrRegulationsExpiringIn90Days.add(agReg);
+                    if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+                        renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
+
+            }
+            
         }
 
         if(!dgrRegulationsExpiringIn90Days.isEmpty()){
@@ -32,8 +49,9 @@ public class AMS_AgencyRegulationTriggerHandler {
             //get all accounts
             List<Account> allAccounts = new List<Account>([SELECT Id, Top_Parent__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
 
+
             Set<Id> accountIdsHOs = new Set<Id>();
-            Map<Id, Id> parentPerBR = new Map<Id, Id>();
+            Map<Id, Set<Id>> parentPerBR = new Map<Id, Set<Id>>();
 
             //check if the account is an AO or HO to get the contacts of TopParent
             for(Account ac: allAccounts){
@@ -41,13 +59,15 @@ public class AMS_AgencyRegulationTriggerHandler {
                     accountIds.remove(ac.Id);
                     accountIdsHOs.add(ac.Top_Parent__c);
                     if(!parentPerBR.containsKey(ac.Top_Parent__c))
-                        parentPerBR.put(ac.Top_Parent__c, ac.Id);
+                        parentPerBR.put(ac.Top_Parent__c, new Set<Id>());
+                    
+                    parentPerBR.get(ac.Top_Parent__c).add(ac.Id);
                 }
             }
 
             //get contacts of first accounts
             if(!accountIds.isEmpty()) {
-                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
                 for(Contact c: allContacts){
                     if(!keyContactsPerAccount.containsKey(c.AccountId))
@@ -59,21 +79,29 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             //get contacts of topParents and relate them with first account
             if(!accountIdsHOs.isEmpty()){
-                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
                 for(Contact cHO: allContactsHOs){
-                    if(!keyContactsPerAccount.containsKey(parentPerBR.get(cHO.AccountId)))
-                        keyContactsPerAccount.put(parentPerBR.get(cHO.AccountId), new List<Contact>());
 
-                    keyContactsPerAccount.get(parentPerBR.get(cHO.AccountId)).add(cHO);
+                    if(parentPerBR.containsKey(cHO.AccountId)){
+
+                        for(Id idBR : parentPerBR.get(cHO.AccountId)){
+
+                            if(!keyContactsPerAccount.containsKey(idBR))
+                                keyContactsPerAccount.put(idBR, new List<Contact>());
+
+                            keyContactsPerAccount.get(idBR).add(cHO);
+                            
+                        }
+                    }
                 }
             }
 
-            AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount); 
+            AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount, renewalCertPerAccount);
             database.executebatch(b,1);
         }
     }
-	
+
 	 public void isTestCompliant () {
         if (Test.isRunningTest()) {
             AMS_Oscar__c oscar = new AMS_Oscar__c();

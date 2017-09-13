@@ -7,6 +7,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean saveAction { get; set; }
     public Boolean isCargoAgency{get;set;}
     public Boolean isCertificationOSCAR{get;set;}
+    public Boolean isNewGenProcess{get;set;}
 
     public Id objectId { get; set; }
 
@@ -18,6 +19,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.IATACode__c
                 , AMS_Pax_Accreditation_Form__c.ISSP_AMS_Legal_Status__c
                 , AMS_Pax_Accreditation_Form__c.CASS_Number__c
+                , AMS_Pax_Accreditation_Form__c.SAAM_Case__c
                 , AMS_Pax_Accreditation_Form__c.Short_Name__c
                 , AMS_Pax_Accreditation_Form__c.Location_Class__c
                 , AMS_Pax_Accreditation_Form__c.Location_Type__c
@@ -52,6 +54,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
+                , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
             };
         }
     }
@@ -91,6 +94,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isRendered(String fieldName){
         if(fieldName == 'Is_your_firm_handling_Dangerous_Goods__c') return isCargoAgency;
+        if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
+        if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
 
         return true;
     }
@@ -136,6 +141,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
             this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
             this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
+            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c);
         }else{
             System.debug('Could not fetch any Oscar or does not have an accreditation object');
         }

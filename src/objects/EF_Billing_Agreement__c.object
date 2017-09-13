@@ -597,6 +597,23 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>E_F_Billing_Agreements</fullName>
+        <columns>NAME</columns>
+        <columns>BillingAgreement_Name__c</columns>
+        <columns>Airline__c</columns>
+        <columns>Client__c</columns>
+        <columns>Contract__c</columns>
+        <columns>Contract_Group_Code__c</columns>
+        <columns>EF_Airline_Id__c</columns>
+        <columns>EF_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>E&amp;F Billing Agreements</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
         <label>E&amp;F Airline Billing Agreement Number</label>

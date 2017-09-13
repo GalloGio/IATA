@@ -5,6 +5,7 @@ public class ContactHandler{
 	**/
 	public static void afterInsert( list<Contact> listNews) {
 		findParentAcountsToUpdate(listNews);
+		ANG_ActivatePortalUsers.activate(listNews);
 	}
 
 	/**
@@ -12,6 +13,7 @@ public class ContactHandler{
 	**/
 	public static void afterUpdate( list<Contact> listNews, list<Contact> listOlds) {
 		findParentAcountsToUpdate(listNews, listOlds);
+		ANG_ActivatePortalUsers.activate(listNews, listOlds);
 	}
 
 	/**

@@ -3387,6 +3387,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl2.newform.Will_such_change_affect_the_managers__c = 'Yes';
             ctrl2.newForm.Have_any_having_authorization_to_act__c = 'Yes';
             ctrl2.newForm.Will_the_change_of_ownership_cause__c = 'Yes';
+            ctrl2.newForm.Will_such_change_affect_locations__c = 'No';
 
             pr1 = ctrl2.goToFinalStep();
 
@@ -4645,7 +4646,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newContact.Name = 'xpto';
             accr.newContact.Financial_interest__c = 1;
 
-            accr.createAgencyContact();
+            //accr.createAgencyContact();
 
             //pageRef = accr.securityCheck();
         }
@@ -5133,7 +5134,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Been_a_sole_proprietor__c = null;
             accr.newForm.Been_director_or_had_a_financial__c = null;
 
-            accr.highLightPageForErrors();
+            //accr.highLightPageForErrors();
         }
 
         Test.stopTest();        
@@ -5216,7 +5217,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Account_Name__c = 'Xpto';
             accr.newForm.ISSP_AMS_Legal_Status__c = 'Sole Proprietorship';
 
-            accr.highLightPageForErrors();
+            //accr.highLightPageForErrors();
         }
 
         Test.stopTest();        

@@ -5,4 +5,9 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <description>Email Messages new Custom View with links to each email</description>
     <label>EmailMessagesView</label>
+    <packageVersions>
+        <majorNumber>4</majorNumber>
+        <minorNumber>48</minorNumber>
+        <namespace>E2CP</namespace>
+    </packageVersions>
 </ApexPage>

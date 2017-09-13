@@ -1,5 +1,17 @@
 public without sharing class LightningConnectedAppHelper {
 
+    //One_Id_User_Applications__c field Action Options
+    public static final string OID_USER_APP_ACTION_ADD='Add';
+    public static final string OID_USER_APP_ACTION_REMOVE='Remove';
+    
+    //One_Id_User_Applications__c field Status Options
+    public static final string OID_USER_APP_STATUS_STARTED='Started';
+    public static final string OID_USER_APP_STATUS_REQUESTED='Requested';
+    public static final string OID_USER_APP_STATUS_FAILED='Failed';
+    public static final string OID_USER_APP_STATUS_COMPLETED='Completed';
+    public static final string OID_USER_APP_STATUS_DELETED='Deleted';
+
+    
 	//Get List of connected apps
     @AuraEnabled
     public Static List <String> ConnectedAppsList () {
@@ -66,12 +78,14 @@ public without sharing class LightningConnectedAppHelper {
             System.debug('role ' + role);
             sp = Database.setSavepoint();
 
-            if(String.isNotBlank(role)) {
+            /*if(String.isNotBlank(role)) {
                 User usr = new User();
                 usr.id = UserInfo.getUserId();
                 usr.Portal_App_Role__c = role;
                 update usr;
-            }
+				
+                
+            }*/
 
             List<One_Id_App_Config_Detail__c> apps = OneIdProvisioningDAO.getAppPermissionSetListForAppicker(connectedapp);
 
@@ -86,7 +100,10 @@ public without sharing class LightningConnectedAppHelper {
                     anUserApp.Identity_User__c = UserInfo.getUserId();
                     anUserApp.One_Id_App_Bundle__c = app.One_Id_Service_Provider_Config__r.Service_Bundle__r.id;
                     anUserApp.One_Id_Service_Provider_Config__c = app.One_Id_Service_Provider_Config__r.id;
-                    anUserApp.Provisioning_Status__c = 'Started';
+                    anUserApp.Provisioning_Status__c = OID_USER_APP_STATUS_STARTED;
+                    if(String.isNotBlank(role))
+                    	anUserApp.Selected_Role__c = role;
+                    
                     anUserApp.App_Key__c  = LightningConnectedAppHelper.OneIdBuildUserAppKey(anUserApp);
                     userAppsIn.add(anUserApp);
                 }
@@ -151,9 +168,25 @@ public without sharing class LightningConnectedAppHelper {
             List<One_Id_Service_Provider_Config__c> bundles = OneIdProvisioningDAO.getAppDescListForAppicker(connectedapp);
 
             if(!bundles.isEmpty()){
+				
+				String confCLabel = bundles.get(0).Description_Custom_Label__c;
+				
+				LabelTranslator translator = new LabelTranslator(); 
+				
+				String translatedString = translator.translate(confCLabel,UserInfo.getLanguage());				
+				 
+                description = translatedString;
 
-                description = bundles.get(0).Description__c;
-
+            }
+            else{
+				String confCLabelNo = 'OneId_No_Apps_Availablr_for_You';
+				
+				LabelTranslator translatorNo = new LabelTranslator(); 
+				
+				String translatedStringNo = translatorNo.translate(confCLabelNo,UserInfo.getLanguage());				
+				 
+                description = translatedStringNo;            	
+            	
             }
 
         }catch(Exception err){
@@ -162,7 +195,26 @@ public without sharing class LightningConnectedAppHelper {
 
     	return description;
     }
+    @AuraEnabled
+    public static String getAppTerms (String connectedapp) {
+        String termsText = '';
 
+        try {
+
+            List<One_Id_Service_Provider_Config__c> bundles = OneIdProvisioningDAO.getAppTermsForAppicker(connectedapp);
+
+            if(! bundles.isEmpty()) {
+
+                termsText = bundles.get(0).TermConditions__c;
+
+            }
+
+        } catch(Exception err) {
+            System.debug(err);
+        }
+
+        return termsText;
+    }
 /*
     //@future
     public static void assignpermissionset (String permissionsetid, String connectedappprovisioning) {
@@ -347,4 +399,59 @@ public without sharing class LightningConnectedAppHelper {
         HTTPResponse httpResponse = new Http().send(httpRequest);
     }
 */
+
+    public static void resetSCIMProvisioning(Set<id> oneIdUserApps ){
+
+        Set<String> permissionsetNamesToRemove = new Set<String>();
+        Set<Id> usersList = new Set<Id>();
+        Map<String, Id> mapPerm = new Map<String, Id>();
+
+        if(oneIdUserApps.isEmpty()) return;
+
+        List<One_Id_User_Applications__c> workToProcess = [select id,Action__c, Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_SSO__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
+                from One_Id_User_Applications__c where id = :oneIdUserApps] ;
+
+        for(One_Id_User_Applications__c anUap : workToProcess){
+            permissionsetNamesToRemove.add(anUap.Application__r.PermissionSet_Provisioning__c);
+            permissionsetNamesToRemove.add(anUap.Application__r.PermissionSet_SSO__c);
+            usersList.add(anUap.Identity_User__c);
+        }
+
+        List<PermissionSet> listOfPermS = [SELECT id, name FROM PermissionSet WHERE name = :permissionsetNamesToRemove];
+
+        for(PermissionSet ap : listOfPermS){
+            mapPerm.put(ap.name, ap.id);
+        }
+
+        List<PermissionSetAssignment> toDelete = [SELECT AssigneeId,Id,PermissionSetId FROM PermissionSetAssignment where AssigneeId in :usersList and PermissionSetId in :mapPerm.values()];
+
+        delete toDelete;
+
+        //delete workToProcess;
+        LightningConnectedAppHelper.deleteSObjects(oneIdUserApps);
+
+        /*
+        List<One_Id_User_Applications__c> workToDelete = [select id,Action__c, Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_SSO__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
+                from One_Id_User_Applications__c where Identity_User__c = :usersList and Application__r.PermissionSet_SSO__c in :permissionsetNamesToRemove and Application__r.PermissionSet_Provisioning__c in :permissionsetNamesToRemove] ;
+
+        if(!workToDelete.isEmpty()) delete workToDelete;
+        */
+    }
+
+    @future
+    public static void deleteSObjects(Set<id> oneIdUserApps){
+
+        if(oneIdUserApps.isEmpty()) return;
+
+
+        List<One_Id_User_Applications__c> listOne = new List<One_Id_User_Applications__c>();
+        for(id anId : oneIdUserApps){
+            One_Id_User_Applications__c anObj = new One_Id_User_Applications__c();
+            anObj.id = anId;
+            listOne.add(anObj);
+        }
+
+        delete listOne;
+    }
+
 }

@@ -1,29 +1,18 @@
+/**
+ * Created by Manuel Conde on 10/05/2017.
+ */
 @isTest
 public class OneIDLanguageHandlerControllerTEST {
-	
-	@isTest static void Metodostest()
-	{
-		
-		Map<String,String> langMap = new Map<String,String>{
-			'en_US' => 'English',		
-			'fr' => 'French',		
-			'pt_BR' => 'Portuguese (Brazilian)',
-			'ar' => 'Arabic'
-		};
 
-		user u = new user(id=userinfo.getuserid(), LanguageLocaleKey ='en_US');
-		update u;
+    @isTest static void Metodostest()
+        {
 
-		
-		
-		
-		System.runAs(u){
-			Test.startTest();
+            Test.startTest();
 
-			OneIdLanguageHandlerController.getSupportedLanguagesMap();
-			OneIdLanguageHandlerController.changeLanguage('pt_BR');
-			Test.stopTest();
-		}
+            OneIdLanguageHandlerController.getLanguageInfo();
+            OneIdLanguageHandlerController.changeLanguage('pt_BR');
 
-	}
+            Test.stopTest();
+
+        }
 }

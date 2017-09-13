@@ -6,7 +6,7 @@
            action="{!pageLoad}">
     <html>
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
-
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <body>
         <script type="text/javascript">
         window.onload = function toggleButtons() {
@@ -445,6 +445,110 @@
                                                      oncomplete="showArticle()">
                                     <apex:param name="artid" value="" />
                                 </apex:actionfunction>
+                                <apex:actionfunction action="{!addCCOther}" name="submitAddCCOther" rerender="existingCaseForm" status="changeOwnerStatus" >
+                                    <apex:param name="otherEmail" value="" assignTo="{!inputccotheremail}"/>
+                                </apex:actionfunction>
+                                <apex:actionfunction action="{!delCCOther}" name="submitDelCCOther" rerender="existingCaseForm" status="changeOwnerStatus">
+                                    <apex:param name="delEmail" value="" assignTo="{!inputDelCCOther}"/>
+                                </apex:actionfunction>
+
+                                <script>
+                                function getDialog(tag) {
+                                    var tagdialog = $(tag);
+                                    // Dialog modal for remove + linked button actions
+                                    if (!tagdialog.hasClass('ui-dialog-content')) {
+                                        tagdialog.dialog({
+                                            autoOpen: false,
+                                            modal: true,
+                                            width: "400px",
+                                            resizable: false,
+                                            draggable: false,
+                                            open: function (event,ui) {
+                                            $(this).parent().children().children(".ui-dialog-titlebar-close").hide();
+                                            }
+                                        });
+                                    }
+                                    return tagdialog;
+                                }
+                                function openAddDialog() {
+                                    var addDialog = getDialog("#addccotherdialog");
+                                    addDialog.dialog('open');
+                                }
+                                function closeAddDialog() {
+                                    var removeDialog = getDialog("#addccotherdialog");
+                                    removeDialog.dialog('close');
+                                    $(".ui-dialog").hide();
+                                    $(".ui-widget-overlay").remove();
+                                }
+                                function submitAddDialog() {
+                                    var email = "";
+                                    $(".ccotheremail").each(function() {
+                                        email = $(this).val();
+                                    });
+                                    closeAddDialog();
+                                    submitAddCCOther(email);
+                                }
+
+                                function openRemoveDialog() {
+                                    var removeDialog = getDialog("#removeccotherdialog");
+                                    removeDialog.dialog('open');
+                                }
+                                function closeRemoveDialog() {
+                                    var removeDialog = getDialog("#removeccotherdialog");
+                                    removeDialog.dialog('close');
+                                    $(".ui-dialog").hide();
+                                    $(".ui-widget-overlay").remove();
+                                }
+                                function submitRemoveDialog(email) {
+                                    $(".removeCCCheckbox:radio:checked").each(function() {
+                                        var email=$(this).val();
+                                        submitDelCCOther(email);
+                                        closeRemoveDialog();
+                                        return false;
+                                    });
+                                }
+                                </script>
+
+                                <!-- Adding new Teaam Meber Email Dialog -->
+                               <div id="addccotherdialog" title="{!$Label.ISSP_CCOther_Add}" hidden="hidden">
+                                   <div class="row form-group" style="padding-top:20px;">
+                                       <div class="col-lg-3" style="padding-left:15px; padding-top:7px;">
+                                           <apex:outputLabel for="ccotheremail" value="{!$Label.ISSP_CCOthers_Email}" />
+                                       </div>
+                                       <div class="col-lg-9">
+                                           <div class="input-container" style="position: relative;">
+                                               <input id="ccotheremail" style="width: 100%;" class="form-control rec mandatory ccotheremail" type="text" />
+                                           </div>
+                                       </div>
+                                       <p style="text-align:center; padding-top:50px;">
+                                       <div class="col-lg-6">
+                                           <input id="ccothersubmit" value="{!$Label.ISSP_CCOthers_Add}" class="btn btn-block btn_iata_success" onclick="submitAddDialog()"/>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <input value="{! $Label.ISSP_Cancel }" class="btn btn_iata_cancel btn-block" onclick="closeAddDialog();"/>
+                                       </div>
+                                       </p>
+                                   </div>
+                               </div>
+                               
+                               <!-- Remove Team Meber Email Dialog -->
+                               <div id="removeccotherdialog" title="{!$Label.ISSP_CCOther_Remove}" hidden="hidden">
+                                   <div class="row form-group" style="padding-top:20px;">
+                                       <apex:repeat value="{!listCCother}" var="emailccother">
+                                        <div class="col-lg-12">
+                                            <label class="radio-inline"><input type="radio" class="removeCCCheckbox" name="optradio" value="{!emailccother}"/>{!emailccother}</label>
+                                        </div>
+                                           <p style="text-align:center; padding-top:50px;"/>
+                                       </apex:repeat>
+                                       <div class="col-lg-6">
+                                           <input id="ccothersubmit" value="{!$Label.ISSP_CCOther_Remove}" class="btn btn-block btn_iata_success" onclick="submitRemoveDialog();"/>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <input value="{! $Label.ISSP_Cancel }" class="btn btn_iata_cancel btn-block" onclick="closeRemoveDialog();"/>
+                                       </div>
+                                   </div>
+                               </div>
+
                                 <apex:pageblock rendered="{!NOT(isNewCase)}">
                                     <apex:pagemessages />
                                     <apex:pageblockbuttons >
@@ -474,7 +578,17 @@
                                         <!-- END SURVEY BUTTON -->
                                         
                                         <apex:outputfield value="{!newCase.CaseNumber}" rendered="{!NOT(isIFAPCase)}"/>
-                                        <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" />
+                                        <!-- basto1p -->
+                                        <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" rendered="{!IF(statusValMapped=='NO_FIELD_MAP',true,false)}"/>
+                                        <apex:outputPanel rendered="{!IF(statusValMapped!='NO_FIELD_MAP',true,false)}">
+                                            <tr>
+                                                <th class="labelCol vfLabelColTextWrap  first " scope="row">{!$Label.Status}</th>
+                                                <td class="data2Col  first ">
+                                                    <span id="j_id0:existingCaseForm:j_id146:j_id187:j_id191">{!statusValMapped}</span>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+
                                         <apex:outputfield value="{!newCase.Subject}" />
                                         <apex:outputfield value="{!newCase.Description}" rendered="{!NOT(isOSCARCase)}" />
                                         <!-- 222 STATUS = {!newCase.status}<br />PortalStatus = {!newCase.Portal_Case_Status__c }<br />caseType = {!caseType}<br />PWCCase = {!isPWCCase}<br />isDPCuser = {!isDPCUser}<br />isPWCProfile = {!isPWCProfile}-->
@@ -567,11 +681,21 @@
                                                 <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=false'}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change')}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
-												
                                             </apex:outputText>
                                             <!--         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" id="theCommandLink"/>  -->
                                         </apex:pageblocksectionitem>
-
+                                        <!-- CC Others info -->
+                                        <apex:pageblocksectionitem >
+                                            <apex:outputlabel value="{!$Label.ISSP_CCOthers}" for="ccothers" />
+                                            <apex:outputText value="{!AdditionalCC}" id="ccothers"/>
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageBlockSectionItem rendered="{!NOT(HideForClosedCases)}">
+                                            <apex:outputPanel layout="none"/>
+                                            <apex:outputPanel layout="none">
+                                                <input id="btnaddccother" value="{!$Label.ISSP_CCOther_Add}" class="btn" onclick="openAddDialog();"/>
+                                                <input id="btnremoveccother" value="{!$Label.ISSP_CCOther_Remove}" class="btn" onclick="openRemoveDialog();" style="display: {!IF(AdditionalCC=='','none','')}"/>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
                                     </apex:pageblocksection>
                                     
                                <!-- IFAP Financial Review Section --> 
@@ -826,7 +950,7 @@
                                 </apex:actionstatus>
                             </apex:outputpanel>
 
-                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true"/>
+                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(HideForClosedCases)}"/>
                             
                             <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
                             
@@ -929,7 +1053,7 @@
                                 <!-- Case Comments -->
                                 <apex:pageblock rendered="{!AND(NOT(isNewCase),newCase.Status != 'Draft')}" id="CustomList" >   
                                     <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
-                                    <apex:commandbutton rendered="{!NOT(disableCaseComments)}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
+                                    <apex:commandbutton rendered="{!AND(NOT(disableCaseComments),NOT(HideForClosedCases))}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
                                     <apex:pageblocktable value="{!List_CaseComment}" var="o" width="100%" rendered="{!IF(List_CaseComment.size > 0 , true , false)}">
                                         <apex:column headervalue="{!$Label.ISSP_Created_Date}" value="{!o.CreatedDate}" />
                                         <apex:column headervalue="{!$Label.ISSP_Email_Comment}" value="{!o.CommentBody}" />

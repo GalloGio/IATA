@@ -186,9 +186,9 @@ global class BtchGDPReplicateAccount implements Database.Batchable<sObject>, Dat
 					+ '		AND LastModifiedDate < ' + btchRepAcc.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 					+ '		AND (AIMS_ID__c != null OR Webstar_ID__c != null)'
 					+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('Account_Category__c', 'Live') + '\''
-					+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null)';
+					+ '		AND Related_Account__c IN (SELECT Id FROM Account WHERE Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))';
 					
-					// AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN ('IATA','IATAN') AND Class__r.Code__c IN ('C','D','E','F','G','K','M','N','O','P','S','T','V','X') AND Related_Account__r.Id != null)
+					// AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By_Formula__c IN ('IATA','IATAN') AND Class__r.Code__c IN ('C','D','E','F','G','K','M','N','O','P','S','T','V','X') AND Related_Account__r.Id != null)
 				
 				System.debug('SSS: SOQL Query: ' + btchProc.query);
 	

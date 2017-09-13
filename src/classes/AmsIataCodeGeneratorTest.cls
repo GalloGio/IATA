@@ -319,6 +319,8 @@ public class  AmsIataCodeGeneratorTest
          System.debug('********* [UNITTEST][testHole]generator Result :'+s2[0]+' /  '+s2[1]);
          // system.assertEquals('IATA Code generated correctly: 02300111240', s2[1]);
          System.assertEquals(agf2.IATACode__c, '02310111241');
+
+         system.assertEquals(0, AmsIataCodeGenerator.compare2Codes('1a234d f', ' 1234'));
     }
 
     static testMethod void testIterative(){
@@ -849,6 +851,7 @@ public class  AmsIataCodeGeneratorTest
          insert aas;
          Test.startTest();
          Case cse = new Case();
+         cse.QuantityProduct__c = '1';
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
@@ -1176,9 +1179,32 @@ public class  AmsIataCodeGeneratorTest
                          Location_Class__c = 'C', Location_Type__c = 'BR', Status__c = 'New application pending',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
                         ,CASS_Number__c ='002', Top_Parent__c = account1.Id, IATACode__c = '123456789');
+
+
+
+        //BR
+        Account account3Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                        ,CASS_Number__c ='002', Top_Parent__c = account1.Id);
+
+        //BR
+        Account account4Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Travel Agent', Category__c = 'Non-IATA Travel Agent', 
+                         Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                        ,CASS_Number__c = null, Top_Parent__c = account1.Id);
+
+        //BR
+        Account account5Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                        ,CASS_Number__c ='002', Top_Parent__c = account1.Id);
        
         
-        List<Account> accounts = new List<Account>{account1Br,account2Br};
+        List<Account> accounts = new List<Account>{account1Br, account2Br, account3Br, account4Br, account5Br};
         insert accounts;
 
         Contact contact1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = account1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
@@ -1194,6 +1220,9 @@ public class  AmsIataCodeGeneratorTest
         
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account1Br.Id, HO_Flag__c = 'true'));
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account2Br.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account3Br.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account4Br.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account5Br.Id, HO_Flag__c = 'true'));
 
         insert rels;
 
@@ -1203,6 +1232,9 @@ public class  AmsIataCodeGeneratorTest
         AMS_OSCAR__c oscar1 = createCaseAndOSCARNoCass(account1,contact1,null);
         AMS_OSCAR__c oscar2 = createCaseAndOSCARNoCass(account1Br,contact1,null);
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,null);
+        AMS_OSCAR__c oscar4 = createCaseAndOSCAR(account3Br,contact1,null);
+        AMS_OSCAR__c oscar5 = createCaseAndOSCARNoCass(account4Br,contact1,null);
+        AMS_OSCAR__c oscar6 = createCaseAndOSCARNoCass(account5Br,contact1,null);
 
         AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , CASS_Number__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
         accreditationObj.CASS_Number__c = null;
@@ -1219,7 +1251,7 @@ public class  AmsIataCodeGeneratorTest
 
       
         accreditationObj = [SELECT ID , IATACode__c, Location_Class__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar3.Id)];
-        accreditationObj.Location_Class__c = 'A';
+        accreditationObj.Location_Class__c = 'Z';
         accreditationObj.IATACode__c = null;
         update accreditationObj;
 
@@ -1229,6 +1261,12 @@ public class  AmsIataCodeGeneratorTest
         String[] result4 = AmsIataCodeGenerator.generatedAgencyIATACode(account2Br.Id,oscar3.AMS_Online_Accreditation__c);       
 
 
+        //accreditationObj = [SELECT ID , IATACode__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar4.Id)];
+        //accreditationObj.IATACode__c = '123456789';
+        //update accreditationObj;
+              
+
+
         System.assertEquals(result2[0],'2');
         System.assertEquals(result2[1].contains('C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA CODE.'),true);
 
@@ -1236,7 +1274,19 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals(result3[1].contains('This account has already an existing IATA code.'),true);
 
         System.assertEquals(result4[0],'2');
-        System.assertEquals(result4[1], 'IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.');
+        System.assertEquals(result4[1], 'IATA Code Generation is only allowed for A, C, D, I, K, P, Q, R, T, M, G, X and P Location Classes.');
+
+
+        String[] result5 = AmsIataCodeGenerator.generatedAgencyIATACode(account3Br.Id,oscar4.AMS_Online_Accreditation__c);       
+
+        String[] result6 = AmsIataCodeGenerator.generatedAgencyIATACode(account4Br.Id,oscar5.AMS_Online_Accreditation__c);
+
+        accreditationObj = [SELECT ID , IATACode__c, Location_Class__c, Branch_Office_Country__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar6.Id)];
+        accreditationObj.Location_Class__c = 'G';
+        accreditationObj.Branch_Office_Country__c = c2.id;
+        update accreditationObj;
+
+        String[] result7 = AmsIataCodeGenerator.generatedAgencyIATACode(account5Br.Id,oscar6.AMS_Online_Accreditation__c);
 
         Test.stopTest();
 
@@ -1317,6 +1367,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
@@ -1351,6 +1402,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();

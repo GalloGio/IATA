@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
     <customConsoleComponents>
@@ -51,8 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -128,15 +127,15 @@
                 <behavior>Readonly</behavior>
                 <field>Has_a_Financial_Assessment_Contact_Formu__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Accreditation_Model__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -149,6 +148,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Category__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Segmentation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Key_Customer_Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -165,6 +172,38 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Has_an_Administrator_User_Portal_Formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IEP_Account_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IEP_Status_FF__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IsNewGenAgency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_CashCondition__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_RiskStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_RiskHistoryAssessment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -270,6 +309,18 @@
                 <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Main_Accreditation_Organization__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Date_Organisation_Status_attained__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Organization_Last_Change_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -291,6 +342,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Expiry_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Default_date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -332,6 +387,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Year_End__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Number_of_GDI_financial_securities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -482,6 +541,37 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>SIS Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_SIS_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_SIS_Designator__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_ID__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_Sub_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>System information</label>
         <layoutColumns>
             <layoutItems>
@@ -551,6 +641,22 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>AMS History</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_AccountTrackingHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -570,7 +676,11 @@
         <fields>Address__c</fields>
         <fields>Country__c</fields>
         <fields>Type__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Location__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
@@ -640,6 +750,8 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <customButtons>New_Agency_Authorization</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Authority__c</fields>
@@ -687,6 +799,8 @@
         <fields>City__c</fields>
         <fields>Country__c</fields>
         <fields>Address_Type__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Address__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -726,6 +840,18 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Year__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
+        <fields>IsAgencyEligibleForCountryAverage__c</fields>
+        <fields>IsAgencyEligible__c</fields>
+        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
+        <sortField>Year__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -770,9 +896,6 @@
         <relatedList>AMS_Agency_Airport__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>IEC_Subscription_History__c.Related_Account__c</relatedList>
     </relatedLists>
@@ -787,18 +910,6 @@
         <fields>Child_Account__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>AmountLastYearSales__c</fields>
-        <fields>Amount_Currency__c</fields>
-        <fields>Year__c</fields>
-        <fields>Number_Of_Vouchers__c</fields>
-        <fields>IsAgencyEligibleForCountryAverage__c</fields>
-        <fields>IsAgencyEligible__c</fields>
-        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
-        <sortField>Year__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

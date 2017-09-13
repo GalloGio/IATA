@@ -61,6 +61,53 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>ANG_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Customer_Country_ISO__c</fullName>
+        <description>2-letter ISO Code of the IATA ISO Country related to the contact’s Account (Agency)</description>
+        <externalId>false</externalId>
+        <formula>Contact.Account.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Country ISO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Is_Accredited_Agent__c</fullName>
+        <description>Determine if the Agency is accredited</description>
+        <externalId>false</externalId>
+        <formula>AND( 
+Contact.Account.RecordType.Name=&apos;Agency&apos;,
+OR(
+  ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
+  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Accredited Agent</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Sector__c</fullName>
+        <description>Sector for the contact’s Agency</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Sector__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sector</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Air_Transport_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Air Transport Expertise</label>
@@ -497,6 +544,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EmailForSSO__c</fullName>
+        <description>This is a copy of the standard email field. Required for the connected app configuration.</description>
+        <externalId>false</externalId>
+        <formula>Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EmailForSSO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Employee_Number_PPD__c</fullName>
         <description>IATA Employee Number</description>
         <externalId>false</externalId>
@@ -679,6 +737,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <externalId>false</externalId>
         <label>IFAP Close from any Status</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IFG_Account_Member__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.IFG_Member__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFG Account Member</label>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -1534,27 +1600,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ZMG__Zoomerang_Security_Token__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang Security Token</label>
-        <length>500</length>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>LongTextArea</type>
-        <visibleLines>2</visibleLines>
-    </fields>
-    <fields>
-        <fullName>ZMG__Zoomerang_User_ID__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang User ID</label>
-        <length>100</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>isSISUser__c</fullName>
         <externalId>false</externalId>
         <formula>if(  
@@ -1678,6 +1723,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <field>CORE.PROFILE.USERTYPE</field>
             <operation>equals</operation>
             <value>S</value>
+        </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
         </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>
@@ -2771,16 +2821,16 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <active>true</active>
         <description>User license cost center format validation - first 3 Alphabets (Capitals), next 3 numeric, next 2 Alphabets (Capitals) and last 2 numeric</description>
         <errorConditionFormula>AND(
-	ISPICKVAL(UserType, &apos;Standard&apos;),
-	IsActive,
-	NOT(
-		OR(
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
-		)
-	)
+    ISPICKVAL(UserType, &apos;Standard&apos;),
+    IsActive,
+    NOT(
+        OR(
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
+        )
+    )
 )</errorConditionFormula>
         <errorDisplayField>License_Cost_Center__c</errorDisplayField>
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>

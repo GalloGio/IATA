@@ -13,6 +13,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Legal_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Trading_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -20,12 +24,12 @@
                 <field>Agency_Short_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Last_Date_of_Update__c</field>
+                <behavior>Readonly</behavior>
+                <field>EBC_Agency_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Profit_Center__c</field>
+                <behavior>Edit</behavior>
+                <field>Last_Date_of_Update__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -45,6 +49,10 @@
                 <behavior>Edit</behavior>
                 <field>CASS_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Profit_Center__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -54,6 +62,10 @@
         <editHeading>true</editHeading>
         <label>Agency Status, Type &amp; Class</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accredited_By__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agency_Status__c</field>
@@ -74,11 +86,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Accreditation_Class__c</field>
+                <field>Location_Type_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Accredited_By__c</field>
+                <field>Related_Accreditation_Class_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accreditation_Class__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -113,6 +129,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Area__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Sub_Continent__c</field>
             </layoutItems>
             <layoutItems>
@@ -127,10 +147,6 @@
                 <behavior>Readonly</behavior>
                 <field>State_Province_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Area__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -144,8 +160,24 @@
                 <behavior>Edit</behavior>
                 <field>Parent_GDP_Account_View__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>XIATACode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>XIATAChk__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>XArea__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>XIATACass__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CASS_Number_Xref__c</field>
@@ -199,8 +231,16 @@
                 <field>Manager_First_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Manager_First_Name_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Manager_Last_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Manager_Last_Name_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -209,8 +249,16 @@
                 <field>Ticketing_Agent_First_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ticketing_Agent_First_Name_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Ticketing_Agent_Last_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ticketing_Agent_Last_Name_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -276,12 +324,24 @@
                 <field>Legal_Name_1__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_1_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Legal_Name_2__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_2_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Legal_Name_3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_3_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -290,8 +350,16 @@
                 <field>Trading_Name_1__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Trading_Name_1_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Trading_Name_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Trading_Name_2_Upper__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -339,6 +407,33 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_GDP_Address__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Legacy System ID&apos;s</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AIMS_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WebStar_ID__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AgRef__c</field>
             </layoutItems>
@@ -357,22 +452,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AIMS_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>WebStar_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Now_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
@@ -411,6 +498,16 @@
         <relatedList>GDP_Delta__c.Related_GDP_Product_Account_View__c</relatedList>
         <sortField>DeltaLastModifiedDate__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Is_Global__c</fields>
+        <fields>Billing_Account__c</fields>
+        <fields>Is_Email_Changed__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>EBC_Email_Exclusion_Relation__c.GDP_Products_Account_View__c</relatedList>
+        <sortField>Is_Global__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -485,10 +582,14 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Airline_Name__c</fields>
-        <fields>Territory_Description__c</fields>
+        <fields>Airline_Code__c</fields>
         <fields>Territory_ISO_Country__c</fields>
         <fields>Territory_State_Abbreviation__c</fields>
+        <fields>Territory_Description__c</fields>
+        <fields>Accreditation_ID__c</fields>
         <relatedList>GSA_Territory__c.Related_GDP_Products_Account_View__c</relatedList>
+        <sortField>Accreditation_ID__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

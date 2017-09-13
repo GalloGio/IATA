@@ -25,7 +25,7 @@ public without sharing class ISSP_TD {
 		List <Portal_Applications__c> tdServiceList = 
 			[SELECT Id, Name, Agency__c, Aplication_Start_Icon__c, Application_icon__c,
 			Application_icon_URL__c, Application_URL__c, Case_creation_record_type__c, Confirm_Box__c,
-			Confirm_Text__c, Description__c, GSA__c, GSSA__c, Hide_on_Homepage__c,
+			Confirm_Text__c, Description__c, GSSA__c, Hide_on_Homepage__c,
 			ICH_Airline__c, New_Window__c, Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
 			Requestable__c, Restricted_App__c, Visible__c, Service_Description__c, TD_Access_Level__c
 			FROM Portal_Applications__c

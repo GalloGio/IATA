@@ -37,10 +37,20 @@ private class OneIdProvisioningDAOTest {
         OneIdProvisioningDAO.getAppPicListForAppicker('xau');
 
         OneIdProvisioningDAO.getAppDescListForAppicker('vm');
+        
+        OneIdProvisioningDAO.getAppTermsForAppicker('vm');
+
+        OneIdProvisioningDAO.getAppInfo('Bundle');
 
         OneIdProvisioningDAO.getAppPermissionSetListForAppicker('vm1');
+
+        OneIdProvisioningDAO.getAppPermissionSetListForSSO();
         
-        Test.stopTest();   
+        List<String> aa = new List<String>();
+        aa.add('vm1');
+        OneIdProvisioningDAO.getAppPermissionSetListForISSP(aa);
+
+        Test.stopTest();
 
     }
 

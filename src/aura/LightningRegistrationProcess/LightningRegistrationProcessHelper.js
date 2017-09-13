@@ -572,4 +572,13 @@
         component.set("v.language",lang);
 
     },
+   getCommunityName : function(component, event) {
+        var commName = component.get("c.getCommunityName");
+        commName.setCallback(this, function(response) {            
+            console.log('getCommunityName response ' + response.getReturnValue());
+            component.set("v.commName",response.getReturnValue());
+        });    
+        $A.enqueueAction(commName); 
+
+    },
 })

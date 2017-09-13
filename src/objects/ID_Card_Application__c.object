@@ -986,7 +986,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Start_Date_Agency_Month__c</fullName>
         <description>Start date of employment with above agency</description>
         <externalId>false</externalId>
-        <label>Start Date Agency Month</label>
+        <label>Start Month in the Agency</label>
         <picklist>
             <picklistValues>
                 <fullName>January</fullName>
@@ -1048,7 +1048,7 @@ Completed: Process is complete</inlineHelpText>
         <description>Start date (year) of employment for above agency</description>
         <externalId>false</externalId>
         <inlineHelpText>Numeric value. (YYYY format)</inlineHelpText>
-        <label>Start Date Agency Year</label>
+        <label>Start Year in the Agency</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1061,7 +1061,7 @@ Completed: Process is complete</inlineHelpText>
         <description>Start date of employment in the industry</description>
         <externalId>false</externalId>
         <inlineHelpText>YYYY</inlineHelpText>
-        <label>Start Date Industry Year</label>
+        <label>Start Year in the Industry</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1198,7 +1198,7 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <fields>
         <fullName>VER_Number__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>VER#</label>
         <length>18</length>
         <required>false</required>
@@ -1274,7 +1274,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990038761</value>
+            <value>5484010057</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>
@@ -1341,7 +1341,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990036269</value>
+            <value>Z5990059462</value>
         </filters>
         <label>Incomplete/Unpaid ID Card Applications</label>
         <language>en_US</language>

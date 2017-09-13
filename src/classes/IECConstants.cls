@@ -11,6 +11,8 @@ global class IECConstants {
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
   public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
   public static final String ORDER_STATUS_CHECK = 'Check';
+  public static final String ORDER_STATUS_PENDING_PAYMENT = 'Pending Payment';
+  public static final String ORDER_STATUS_PAYMENT_FAILURE = 'Payment Failure';
 
   public static final String ORDER_TYPE_QUOTE = 'Quote';
   public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
@@ -19,6 +21,8 @@ global class IECConstants {
 
   public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';
 
+  // Zuora Payment Method
+  public static final String ZUORA_PAYMENT_METHOD_PREFIX_CREDIT_CARD = 'Credit Card';
 
   // GET parameters constants
   public static final string PARAM_PRODUCT_CODE =     'ProductCode';

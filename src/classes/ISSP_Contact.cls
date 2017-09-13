@@ -101,6 +101,15 @@ public class ISSP_Contact{
         return p;
     }
     
+    /**
+        Send to another page to relocate user (change its parent account)
+    **/
+    public Pagereference RelocateContact(){
+        Pagereference p  = new Pagereference ('/ISSP_RelocateContact?id='+contact.Id + '&mid=M4S1');
+      	p.setredirect(true);
+        return p;
+    }
+    
     public Pagereference ChangePortalStatus(){
         try {
             errorMessage = new list<string>();

@@ -42,6 +42,7 @@ private class InstantSurveyTriggerHelperTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,

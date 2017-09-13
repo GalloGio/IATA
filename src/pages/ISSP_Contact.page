@@ -11,6 +11,17 @@
      
   <div class="container">
       <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+      
+          <h4>
+            {!$Label.ISSP_Company_Administration}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contacts}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contact_Information}
+            <br/>
+            <small></small>
+          </h4>
+
           <div class="panel panel-primary">
               <div class="panel-heading head_panel_green">
                   <h3 class="panel-title">{!$Label.ISSP_Contact_Information}</h3>
@@ -23,9 +34,9 @@
                         <div class="row">
                             
                             <div class="col-md-12">
-                                <div class="col-lg-2">&nbsp;</div>
+                                <div class="col-lg-3"><apex:commandButton action="{!RelocateContact}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_Relocate_Contact}" id="relocateContact"/></div>
                                 <div class="col-lg-4"><apex:commandButton action="{!AssignIFAPContact}" styleclass="btn_iata_primary btn btn-block" rendered="{!AND(isIATAAgencyAcct, isPortalAdminUser)}" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/></div>
-                                <div class="col-lg-4"><apex:commandButton action="{!ChangePortalStatus}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_ChangeUserPortalStatus}" id="changePortalStatus"/></div>
+                                <div class="col-lg-3"><apex:commandButton action="{!ChangePortalStatus}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_ChangeUserPortalStatus}" id="changePortalStatus"/></div>
                                 <div class="col-lg-2"><apex:commandButton action="{!edit}" styleclass="btn_iata_primary btn btn-block" rendered="{!AND(isPortalAdminUser, NOT(isEditMode))}" value="{!$Label.ISSP_Edit}" id="edit"/></div>
                             </div>
                         </div>

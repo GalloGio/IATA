@@ -35,7 +35,7 @@ private class CalculateBusinessHoursAgesTest {
 
         Account a = new Account(name = 'test', recordtypeid = RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') );
         insert a;
-        Contact con = new Contact(accountid = a.id, LastName = 'Test', phone = '321321', recordtypeid = RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
+        Contact con = new Contact(accountid = a.id, FirstName = 'Name', LastName = 'Test', phone = '321321', recordtypeid = RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
         insert con;
 
         Case myCase = [select  id, Short_Payment_Date__c, status, First_closure_date__c, ClosedSameDay__c, Short_Payment_Next_Business_Date__c, CreatedDate , contactId, AccountId
@@ -84,7 +84,7 @@ private class CalculateBusinessHoursAgesTest {
         Account a = new Account(Name = 'test', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') );
         insert a;
         
-        Contact con = new Contact(AccountId = a.id, LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
+        Contact con = new Contact(AccountId = a.id, FirstName = 'Name', LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
         insert con;
         
         Case c = new Case(ContactId = con.Id, Status = 'Open', BusinessHoursId = defaultBusinessHours.id, RecordTypeId = casesEurRT);

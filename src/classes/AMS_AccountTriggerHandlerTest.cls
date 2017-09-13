@@ -218,6 +218,7 @@ private class AMS_AccountTriggerHandlerTest {
 		acc1.Name = 'HO Account 1';
 		acc1.Type = 'IATA Cargo Agent';
 		acc1.WebStar_ID__c = 'Some Test';
+		acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
 		acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
 
 		try{
@@ -229,9 +230,13 @@ private class AMS_AccountTriggerHandlerTest {
 			insert acc1;	
 		}
 
-
 		IECTestUtil.bIgnoreCurrentUserProfile = true;
+		AMS_Agency_Regulation__c certificate1 = new AMS_Agency_Regulation__c(Last_Name__c = 'test1', Account__c = acc1.Id, Expiry_Date__c = Date.today().addDays(365), Type_of_Certificate__c = 'DGR', Is_your_firm_handling_Dangerous_Goods__c = 'No');
+		insert certificate1;
+		acc1.Reason_for_creation__c = 'Account is missing';
 		acc1.Last_Modified_by_Source__c = System.now();
+		acc1.Sector__c = AMS_Utils.SECTOR_CARGO;
+		acc1.Is_your_firm_handling_Dangerous_Goods__c = 'Yes';
 		update acc1;
 	}
 

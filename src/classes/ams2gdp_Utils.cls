@@ -102,7 +102,9 @@ public class ams2gdp_Utils
     	if(logs.size() > 0) insert logs;
     	if(body != '')	{
     		message.plainTextBody = body;
-    		try{//Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+    		try{
+				// System.debug('aaaaaa ' + message);
+				// Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
     	}
     		catch(Exception ex){}}
     }

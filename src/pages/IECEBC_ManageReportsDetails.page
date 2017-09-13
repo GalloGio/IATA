@@ -192,15 +192,15 @@
                 <div class="inner-wrapper">
                     <h1 class="page-title"><a href="{!URLFOR($Page.IECEBC_CampaignPreview, null, [id=EBC_Campaign__c.EBC_Design__c])}" onclick="window.open(this.href); return false;">{!EBC_Campaign__c.Name}</a></h1>
                     
-                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to {!EBC_Campaign__c.Number_of_Recipients__c} recipients</h2>
+                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!EBC_Campaign__c.NumberSent__c}" /></apex:outputText> recipients</h2>
                     <div class="tab-container"> 
                         <div class="tab-content js-tabs">
                             <div class="tab-pane is-open" id="pane-1">                              
                                 <ul class="list campaign-info">
-                                    <li>List used for the Campaign: <strong>{!EBC_Campaign__c.Name}</strong></li>
+                                    <li>List used for the Campaign: <strong>{!EBC_Campaign__c.EBC_Master_Filter__r.Name}</strong></li>
                                     <li>Subject of the Campaign: <strong>{!EBC_Campaign__c.Subject__c}</strong></li>
                                     <li>Campaign sent on: 	<strong>
-                                                                <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                                <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss a zz}">
                                                                     <apex:param value="{!EBC_Campaign__c.Send_Datetime__c + timezoneOffset}" /> 
                                                                 </apex:outputText>
                                                             </strong>

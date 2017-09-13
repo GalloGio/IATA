@@ -119,7 +119,7 @@
                                                 <!-- Start shipping address section -->
                                                 <section class="group-container shipping-address">
                                                     <h2 class="group-title">{!$Label.Shipping_address}</h2>
-
+						                        	
                                                     <div class="shipping-address-container">
                                                         <div class="field-group output inline">
                                                             <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -452,7 +452,10 @@
                                             <div class="columns small-12 medium-6">
                                                 <!-- Billing Address -->
                                                 <section class="group-container billing-address">
-                                                    <h2 class="group-title">Billing address</h2>
+                                                    <h2 class="group-title">
+                                                    	Billing address
+                                                    	<p style="font-size: 11px; margin:0px;">&#8203;</p>
+                                                    </h2>
                                                     <div class="field-group output inline">
                                                         <span class="input-label">{!$Label.Address_Line_1}</span>
                                                         <span class="output-value">{!vfOrder.billToAddress.street1}</span>
@@ -491,7 +494,10 @@
                                                 <input type="hidden" id="hiddenShippingRegion" />
                                                 <!-- Shipping Address -->
                                                 <section class="group-container shipping-address">
-                                                    <h2 class="group-title">Shipping address</h2>
+                                                    <h2 class="group-title">
+                                                    	Delivery address
+                                                    	<p style="color: #C90435; font-size: 11px; margin: 0px;">{!$Label.IEC_PO_BOX_MSG}</p>	
+                                                    </h2>
                                                     
                                                     <div class="field-group radio inline">
                                                         <div class="radio-box">
@@ -506,7 +512,7 @@
                                                                 <input class="user-input radio validate[required]" type="radio" name="shipping-address" onclick="different_shipping_address();" id="shipping-address-different"/>
                                                                 <label class="custom-radio" for="shipping-address-different"><i class="icon"></i></label>
                                                             </div>
-                                                            <label class="input-label" for="shipping-address-different">Ship to a different address</label>
+                                                            <label class="input-label" for="shipping-address-different">Deliver to a different address</label>
                                                         </div>
                                                         <apex:actionStatus id="runningShipToStatus">
                                                             <apex:facet name="start">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
@@ -531,6 +537,7 @@
                                                         
                                                         <apex:outputPanel id="shippingFormValidationError">
                                                             <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                                                            	<strong>{!$Label.ISSP_Error} </strong>
                                                                 <apex:pageMessages escape="false"/>
                                                                 <script type="text/javascript">
                                                                     if ({!showNewAddress} == true)
@@ -555,14 +562,15 @@
                                                             <div class="field-group text inline">
                                                                 <label>
                                                                     <span class="input-label">{!$Label.Address_Line_1} <span class="required">*</span></span>
-                                                                    <apex:inputText styleClass="user-input text validate[required]" id="shippingAddress1" value="{!newShipToAddress.street1}" />
+                                                                    <apex:inputText styleClass="user-input text validate[required]" maxlength="70" id="shippingAddress1" value="{!newShipToAddress.street1}" />
                                                                 </label>
                                                             </div>
                                                             <apex:outputPanel id="postalCode">
                                                             <div class="field-group text inline">
+                                                            	<apex:outputText value="{!unlockZipCode}"/>
                                                                 <label>
                                                                     <span class="input-label">{!$Label.Postal_code} <span style="{!if(newShipToAddress.isPostalCodeRequired,'','display: none;')}" class="required">*</span></span>
-                                                                    <apex:inputText styleClass="user-input text" id="shippingPostalCode" value="{!newShipToAddress.postalCode}" />{!newShipToAddress.isPostalCodeRequired}
+                                                                    <apex:inputText styleClass="user-input text" id="shippingPostalCode" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" value="{!newShipToAddress.postalCode}" />{!newShipToAddress.isPostalCodeRequired}
                                                                 </label>
                                                             </div>
                                                             </apex:outputPanel>
@@ -636,7 +644,7 @@
                                                     <!-- Shipping Instructions -->
                                                     <!-- <div class="group-container shipping-instructions"> -->
                                                     <apex:outputPanel layout="block" styleClass="group-container shipping-instructions" id="shippingInstructionSection">
-                                                        <h3 class="group-title">Shipping instructions</h3>
+                                                        <h3 class="group-title">Delivery instructions</h3>
                                                         <div class="field-group text inline">
                                                             <label>
                                                                 <span class="input-label">{!$Label.Company_name} <span class="required">*</span></span>
@@ -1020,11 +1028,12 @@
                                             
                                             <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">
                                                 <ul class="list actions">
-                                                    <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}">
+                                                    <!--INC331542
+                                                     <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}"> -->
                                                     <li>
                                                         <a href="javascript:;" onclick="openModal('#quote-modal')" class="button secondary">{!$Label.Generate_Quote}</a>
                                                     </li>
-                                                    </apex:variable>
+                                                    <!-- </apex:variable> -->
         
                                                     <li>
                                                         <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
@@ -1211,6 +1220,21 @@
                     </section>
                 </div>
             </div>
+            <div class="formError" id="addressStreetMSG" style="width: 170px; opacity: 0.87; position: absolute; top: 0px; left: 443.4px; right: initial; margin-top: -47px; display: none;">
+				<div class="formErrorContent"></div>
+				<div class="formErrorArrow">
+					<div class="line10"><!-- --></div>
+					<div class="line9"><!-- --></div>
+					<div class="line8"><!-- --></div>
+					<div class="line7"><!-- --></div>
+					<div class="line6"><!-- --></div>
+					<div class="line5"><!-- --></div>
+					<div class="line4"><!-- --></div>
+					<div class="line3"><!-- --></div>
+					<div class="line2"><!-- --></div>
+					<div class="line1"><!-- --></div>
+				</div>
+			</div>
 
 
             <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
@@ -1236,8 +1260,7 @@
                 </script>
             </apex:outputPanel>
 
-            <script type="text/javascript">
-
+            <script type="text/javascript">            	
                 var setLabelFor = function(){
                     var total_items = $("#total_items").val();
                     for(i=1; i<=total_items; i++){
@@ -1403,6 +1426,8 @@
                     $("input[id$=shipToSameAsBilTo]").val('false');
                     changeShipToAddressOption();
                 }
+                
+                
 
                 $(document).ready(function(){
                     setLabelFor();
@@ -1492,6 +1517,27 @@
                     $("input[id*='shipInst']").on('focus', function(){
                         activeButton();
                     });
+                    
+                    
+                    var elem = $('#addressStreetMSG').detach();
+					elem.insertBefore($("input[id*='shippingAddress1']"));
+					$("input[id*='shippingAddress1']").keyup(function() {
+						var valueField = $("input[id*='shippingAddress1']").val();
+						var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
+						if(valueField.length >= 70) {
+							$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+							$('#addressStreetMSG').show();
+						} else if (valueField.match(pattern)) {
+							$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_PO_BOX_MSG}');						
+							$('#addressStreetMSG').show();
+						} else if($('#addressStreetMSG').css('display') != 'none') {
+							$('#addressStreetMSG').hide();
+						}
+						 
+					});
+					$("input[id*='shippingAddress1']").blur(function() {
+						$('#addressStreetMSG').hide();
+					});                    
 
                 });
 

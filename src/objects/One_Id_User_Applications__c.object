@@ -56,6 +56,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Add</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remove</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>App_Key__c</fullName>
         <caseSensitive>true</caseSensitive>
         <externalId>true</externalId>
@@ -67,6 +89,18 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>App_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>One_Id_Service_Provider_Config__r.Service_Provider_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>App Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Application__c</fullName>
@@ -124,6 +158,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Portal_Service_Access__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Portal Service Access</label>
+        <referenceTo>Portal_Application_Right__c</referenceTo>
+        <relationshipLabel>One Id User Applications</relationshipLabel>
+        <relationshipName>One_Id_User_Applications</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Provisioning_Status__c</fullName>
         <externalId>false</externalId>
         <label>Provisioning Status</label>
@@ -151,6 +199,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Selected_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Selected Role</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>User_App_State__c</fullName>
@@ -187,6 +247,8 @@
         <columns>One_Id_Service_Provider_Config__c</columns>
         <columns>User_Provisioning_Request__c</columns>
         <columns>User_App_State__c</columns>
+        <columns>Action__c</columns>
+        <columns>Provisioning_Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

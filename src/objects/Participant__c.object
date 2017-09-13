@@ -251,23 +251,17 @@ Contact__r.AccountId
     <fields>
         <fullName>Main_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, HYPERLINK(&apos;/&apos; + Contact__r.AccountId,Contact__r.Account.Name ,&quot;_self&quot;), 
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.Account.Name, 
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, Contact__r.Account.Parent.Name , 
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;, 
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)), 
+Contact__r.Account.Parent.Name , 
+Contact__r.Account.Name ), 
 
+Contact__r.Account.Name 
 
-IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, HYPERLINK(&apos;/&apos; + Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),
-
-
-IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
-
-	IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
-
-		HYPERLINK(&apos;/&apos; +  Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),		
-HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)),
-		
-HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)
-
-)
-)
+) 
+) 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Account</label>
@@ -325,6 +319,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Name of the account that the participant represents for this specific group, if applicable.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>
@@ -379,7 +374,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <language>en_US</language>
     </listViews>
     <nameField>
-        <displayFormat>APJC Participant - {0000}</displayFormat>
+        <displayFormat>Group Participant - {0000}</displayFormat>
         <label>Participant Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
@@ -609,6 +604,7 @@ First Name, Last Name, Title, Email and Account Name. Please complete these info
         <errorConditionFormula>AND(
 AND(
 AND(
+AND(
 NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;,
 OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
@@ -634,10 +630,51 @@ ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
+)),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;
-)</errorConditionFormula>
+),
+AND(
+AND(
+AND(
+NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_Agency&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
+)),
+NOT(OR(Representing__r.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
+Representing__r.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
+)
+),
+NOT(AND( ISPICKVAL(Representing__r.Sector__c,&quot;Association&quot;),
+Representing__r.RecordType.DeveloperName = &quot;Standard_Account&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
+)
+)),NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Representing__r.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
+))
+),
+Group_RecordType__c = &quot;Local_Groups&quot;
+))</errorConditionFormula>
         <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>
     <validationRules>

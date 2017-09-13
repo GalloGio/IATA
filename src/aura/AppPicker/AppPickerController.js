@@ -1,12 +1,19 @@
 ({
 	initialize : function(component, event, helper) {
+	    console.log('initialize');
 		var action = component.get("c.ConnectedAppsList");
 		action.setCallback(this, function(a) {
 			var results = a.getReturnValue();
 			component.set("v.appNames", results);
 			component.set("v.activeApp", results[0]);
+			component.set("v.Terms", false);
+			component.set("v.termsLocked", false);
+			component.set("v.requestAppDisabled", true);
 			helper.getPic(component);
 			helper.getAppDescription(component);
+			helper.getAppTerms(component);
+
+
 		});
     	$A.enqueueAction(action);
 
@@ -16,6 +23,7 @@
 		component.set("v.showPopup", true);
 		var backdrop = component.find("backdrop");
 		$A.util.addClass(backdrop, 'slds-backdrop');
+
 
 	},
 	handleClose : function(component, event, helper) {
@@ -30,8 +38,16 @@
 		component.set("v.activePage", page);
 		var results = component.get("v.appNames");
 		component.set("v.activeApp", results[page]);
+        component.set("v.Terms", false);
+        component.set("v.termsLocked", false);
+        component.set("v.requestAppDisabled", true);
+//        var btnReqApp = component.find("btnReqApp");
+//        btnReqApp.set("v.disabled", true);
 		helper.getPic(component);
 		helper.getAppDescription(component);
+		helper.getAppTerms(component);
+
+
 	},
 	pagePrevious : function(component, event, helper) {
 		var page = component.get("v.activePage");
@@ -41,8 +57,13 @@
 			var results = component.get("v.appNames");
 			component.set("v.activeApp", results[page]);
 			component.set("v.activePage", page);
+			component.set("v.Terms", false);
+			component.set("v.termsLocked", false);
+			component.set("v.requestAppDisabled", true);
 			helper.getPic(component);
 			helper.getAppDescription(component);
+			helper.getAppTerms(component);
+
 		}
 	},
 	pageNext : function(component, event, helper) {
@@ -54,8 +75,13 @@
 			var results = component.get("v.appNames");
 			component.set("v.activeApp", results[page]);
 			component.set("v.activePage", page);
+			component.set("v.Terms", false);
+			component.set("v.termsLocked", false);
+			component.set("v.requestAppDisabled", true);
 			helper.getPic(component);
 			helper.getAppDescription(component);
+			helper.getAppTerms(component);
+
 		}
 	},
 
@@ -63,6 +89,7 @@
 		var activeAppSource = component.find("activeApp");
 		var activeApp = activeAppSource.get("v.value");
 		var action = component.get("c.getroles");
+		component.set("v.submitDisabled", true);
 		// console.log(activeApp);
 		action.setParams({connectedapp : activeApp});
 		action.setCallback(this, function(a) {
@@ -86,6 +113,7 @@
 	clickRadio : function(component, event, helper) {
 		component.set("v.selectedRole", event.getSource().get("v.label"));
 		console.log('LABEL: ' + event.getSource().get("v.label"));
+		component.set("v.submitDisabled", false);
 	},
 	submitRequest : function(component, event, helper) {
 		helper.showSpinner(component, event);
@@ -102,11 +130,12 @@
 				// console.log(state);
 				if (state === "SUCCESS") {
 					var confirm = $A.get("$Label.c.ISSP_Submit_ConnectedApp");
-                    component.set("v.submitDisabled", false);
+                    //component.set("v.submitDisabled", false);
                     var requestFill = component.find("requestFill");
                     $A.util.addClass(requestFill, 'hide');
                     var requestSent = component.find("requestSent");
                     $A.util.removeClass(requestSent, 'hide');
+
 				} else {
 					console.log(state);
 				}
@@ -121,6 +150,20 @@
 		component.set("v.showPopup", false);
 		var backdrop = component.find("backdrop");
         $A.util.removeClass(backdrop, 'slds-backdrop');
-	}
+        $A.get('e.force:refreshView').fire();
+	},
 
+	checkTerms : function(component, event, helper) {
+		var terms = component.get("v.Terms");
+		if(terms){
+            //component.set("v.termsaccepted", true);
+            component.set("v.termsLocked", true);
+            component.set("v.requestAppDisabled", false);
+        }else{
+            //component.set("v.termsaccepted", false);
+            component.set("v.termsLocked", false);
+            component.set("v.requestAppDisabled", true);
+
+        }
+	},
 })

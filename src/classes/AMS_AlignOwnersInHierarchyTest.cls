@@ -243,21 +243,27 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
 
+        auxOwners.parentAccountId = acctsHO.get(0).Id;
+
         auxOwners.alignOwnersInHierarchyByAccountId();
 
+        auxOwners.checkBatchStatus();
+
         Test.stopTest();
+
+        auxOwners.checkBatchStatus();
 
         List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c]; // should be 10 ...
 
         // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
 
-        System.assertEquals(16,rolesFromAllAccounts.size());
+        System.assertEquals(28,rolesFromAllAccounts.size());
 
         oscarAccounts = new  Map<Id, Set<Id>>();
         oscarAccounts.put(oscar.Id, acctsChilds1Set);
 
 
-        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+        System.assertEquals(true,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
         oscarAccounts = new  Map<Id, Set<Id>>();
         oscarAccounts.put(oscar2.Id, acctsChilds1Set2);

@@ -100,14 +100,13 @@ public class ObjectiveHandlerTest {
 	public static testMethod void testSetAccountObjectiveName80() {
 		Objective__c objective = getAccountObjective();
 		Account account = [Select Name from Account where id = :objective.Account__c];
-		Test.startTest();
-        account.Name = 'test80aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+		Test.startTest();        
 		update account;
 		insert objective;		 
 		Test.stopTest();
 
 		Objective__c result = [Select Name, Account__r.name from Objective__c where id = :objective.Id];
-		System.assert(result.name == 'FDS-test80aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-testName-2015');
+		System.assert(result.name == 'FDS-testAccount-testName-2015');
 	}
 
 	public static testMethod void testSetAccountObjectiveNameWithNoAccount() {

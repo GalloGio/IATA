@@ -112,8 +112,8 @@ public class CampaignCustomers_Ctrl_Test
 		insert cm;
 
 		List<Id> lstSelectedProdId = new List<Id>();
-		for (Product2 p : ctrl.selectedProducts)
-			lstSelectedProdId.add(p.Id);
+		for (Integer id : ctrl.selectedProducts.keySet())
+			lstSelectedProdId.add(ctrl.selectedProducts.get(Id).id);
 		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId
 		              from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
 

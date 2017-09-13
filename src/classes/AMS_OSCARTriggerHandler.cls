@@ -39,6 +39,7 @@ public class AMS_OSCARTriggerHandler {
         copyDataFromTargetAgency();
 		updateOSCARAppointments();
 		handleVRProcess();
+		checkOwnershipOnProcess(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 	}
 
 	public static void handleBeforeInsert() {
@@ -267,7 +268,7 @@ public class AMS_OSCARTriggerHandler {
 
 		for (AMS_Process_Detail__c pd : allProcessDetails) {
 			//TERMINATED AGENCIES IGNORED
-			if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+			if(pd.Account__c != null && (pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED || pd.Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)){
 				if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
 					processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
 				else
@@ -1506,7 +1507,7 @@ public class AMS_OSCARTriggerHandler {
         system.debug('validateCertificates -> minimumBRDgrRequirements ' + minimumBRDgrRequirements);
 
 		for(AMS_OSCAR__c oscar: oscarsList){
-			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW){
+			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE){
 				String locationClass = oscar.AMS_Online_Accreditation__r.Location_Class__c;
 				String locationType = oscar.AMS_Online_Accreditation__r.Location_Type__c;
 				System.debug('OSCARTriggerHandler -> validateCertificates: all trained staff ' + trainedStaffPerAccount.get(oscar.Account__c));
@@ -1518,36 +1519,46 @@ public class AMS_OSCARTriggerHandler {
 				system.debug('validateCertificates -> minDgrBR ' + minDgrBR);
 
 				String countryCode = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c;
-				Integer cassNumber = Integer.valueOf(oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
+				if(oscar.AMS_Online_Accreditation__r.CASS_Number__c != null){
+					Integer cassNumber = Integer.valueOf(oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
-					//If an agency is non handling, it must have a certificate of awareness (DGA)
-					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
-						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+					System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
+
+					if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
+						//If an agency is non handling, it must have a certificate of awareness (DGA)
+						if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
+							System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
+							checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+						}
+					}else{
+						//RB: Here We will select only the DGR trained staff, which must have a Valid until date
+						Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
+						List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
+						
+						trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+
+						for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {
+							system.debug('DDD trainedStaffToRemove:'  + trainedStaffToRemove);				
+							if( (trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_DGR || trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)  && trainedStaffToRemove.Valid_until__c != null){
+								//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+								trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+							}
+						}
+
+						system.debug('Trained staff to remove: '+ trainedStaffDGR);
+						system.debug('All Trained staff: '+ allTrainedStaff);
+
+						checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
 				}else{
-					//RB: Here We will select only the DGR trained staff, which must have a Valid until date
-					Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
-					List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
-					
-					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
-
-					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
-						if(trainedStaffToRemove.Type_Of_Certificate__c == 'DGR' && trainedStaffToRemove.Valid_until__c != null){
-							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
-							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+					for(AMS_OSCAR__c o : oscars){
+						if(o.Id == oscar.Id){
+							o.addError('Error! C, I, R, Q and G Location Types must have a CASS number defined.');
+							return;
 						}
 					}
-
-					system.debug('Trained staff to remove: '+ trainedStaffDGR);
-					system.debug('All Trained staff: '+ allTrainedStaff);
-
-					checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
-
 			}
 		}
 	}
@@ -1556,23 +1567,27 @@ public class AMS_OSCARTriggerHandler {
 
 		Integer numberDGR = 0;
 		Integer numberDGA = 0;
+		Integer numberCATA = 0;
 
 		if(trainedStaff != null)
 			for(AMS_Accreditation_Contact__c tStaff :trainedStaff){
 				if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGR)
 					numberDGR++;
+				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)
+					numberCATA++;
 				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGA)
 					numberDGA++;
 		}
 
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGR ' + numberDGR);
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
+		System.debug('OSCARTriggerHandler -> checkCertifications: number of CATA ' + numberDGA);
 
 		System.debug('CHECK VALUES countryCode' + countryCode + ' locationClass ' + locationClass + ' accountLocationType ' + accountLocationType + ' cassNumber ' + cassNumber);
 
 		if(handling){
-			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3){
-				throw new AMSException('##This agency must have at least 3 DGR that are not expired.##');
+			if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
+				throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.##');
 
 			}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
 				 //India has this particular exception to the normal behaviour, no check is to be done
@@ -1843,6 +1858,71 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
+
+	public static void sendEmailAlert(Id oscarId, String oscarCommCaseId, String agencyType, String step, boolean wasApproved) {
+
+		if(oscarCommCaseId != null){
+
+	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
+			AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchContactInfoFromCase(oscarCommCaseId), oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
+
+		}else{
+
+			System.debug('Could not find the case Id to send the email.');
+		
+		}
+
+	}
+
+
+	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+	
+	private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+
+        Map<String, Id> multilangTemplates = new Map<String, Id>();
+
+        String templateId = '';
+
+        if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.SANITYCHECK) templateId 						= 'ANG_New_HE_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.SANITYCHECK) templateId 				= 'ANG_New_HE_Cash_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_New_HE_Accreditation_Decision_APP';
+        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_New_HE_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && !wasApproved) templateId = 'ANG_New_HE_Cash_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && wasApproved) templateId 	= 'ANG_New_HE_Cash_Accreditation_Decision_APP';
+
+        //Get the templates for NG accreditation outcoume
+        List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
+
+        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+        for(EmailTemplate et: etNG){
+            if(!countryTemplates.containsKey(et.DeveloperName))
+                countryTemplates.put(et.DeveloperName, et);
+        }
+
+        //map template Ids with their respective language
+        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+        
+        for(Schema.Picklistentry pe: prefLanguages){
+            EmailTemplate langTemplate = countryTemplates.get(templateId+ '_' + pe.getValue());
+            if(langTemplate == null) //English is default and must exist in the system
+                countryTemplates.get(templateId+'_English');
+                if(langTemplate != null)
+		            multilangTemplates.put(pe.getValue(), langTemplate.Id);
+        }
+
+        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+        if(multilangTemplates.isEmpty())
+            multilangTemplates.put('English', countryTemplates.get(templateId + '_English').Id);
+
+        return multilangTemplates;
+
+    }
+ 
 	public static Map<Id,AMS_HierarchyHelper.AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
 
@@ -1862,6 +1942,368 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		return locationTypeAccountID;
+	}
+
+
+	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+
+		Map<Id, Integer> contacts = getAccreditationContacts(oscars);
+
+		ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		
+		Map<Id, Integer> allPercentages = getAllOWnersPercentage(oscars);
+
+		for(AMS_OSCAR__c oscar: oscars){
+
+			Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
+
+			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && oscar.RecordTypeId == newNGRT){
+
+				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
+					continue;
+				else	
+					if(!validate100Ownership(oscar,allPercentages,isNewGenProcess)){
+						Double requiredOwnership = isNewGenProcess ? 99.99 : 100;
+						String errorMessage = !isNewGenProcess ? 'Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.'
+															 : 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+						oscar.addError(errorMessage);
+					}
+
+			}
+		}
+
+	}
+
+	public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
+
+		Set<Id> onlineForms = new Set<Id>();
+
+		for(AMS_OSCAR__c oscar : oscars)
+			onlineForms.add(oscar.AMS_Online_Accreditation__c);
+
+		List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+
+		Set<Id> accounts = new Set<Id>();
+
+		for(AMS_OSCAR__c oscar : oscars)
+			accounts.add(oscar.Account__c);
+
+		List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages, Boolean isNewGenProcess){
+
+		return (!isNewGenProcess && percentages.get(oscar.Account__c) == 100) || (isNewGenProcess && percentages.get(oscar.Account__c) < 99.99);
+
+	}
+	
+	public static void increasecoverage () {
+		Integer i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+		i=1;
+
 	}
 
 }

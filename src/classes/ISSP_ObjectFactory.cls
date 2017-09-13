@@ -270,9 +270,13 @@ public with sharing class ISSP_ObjectFactory {
         String orgId = UserInfo.getOrganizationId();
         String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
         Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
-        String uniqueName = orgId + String.valueof(datetime.now());
+        String uniqueName = orgId + dateString;
         String conId15 = con.Id;
-		conId15 = conId15.substring(0,15);
+		//conId15 = conId15.substring(0,15);
+        String UserNameStr=uniqueName+ string.valueof(randomInt) + '@test' + orgId + '.org';
+        String ComNickNameStr=con.email.substring(0, con.email.indexOf('@'))+randomInt;//Datetime.now().formatLong().substring(10,15);
+        system.debug('basto1p TEST UserName='+UserNameStr);
+        system.debug('basto1p TEST ComNickNameStr='+ComNickNameStr);
        User newUser = new User(alias = 'dsfsdfds', 
                                 email = con.email, 
                                 emailencodingkey = 'UTF-8', 
@@ -283,9 +287,9 @@ public with sharing class ISSP_ObjectFactory {
                                 contactId = con.Id,
                                 FederationIdentifier = conId15,
                                 timezonesidkey = 'Asia/Dubai',
-                                 Username = uniqueName+ string.valueof(Integer.valueOf(math.rint(math.random()*1000000))) + '@test' + orgId + '.org',
+                                Username = UserNameStr,
                                 PortalRole = 'Manager',
-                                CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+                                CommunityNickname = ComNickNameStr,
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
                                 IsActive = true);
         insert newUser;

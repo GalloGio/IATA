@@ -1,0 +1,70 @@
+<apex:page showHeader="false" sidebar="false" standardController="Account">
+        
+        <apex:includeScript value="/support/console/30.0/integration.js"/>
+        <apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
+        <apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00Nw0000008gnwL'=Account.Name, 'CF00Nw0000008gnwL_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
+        
+        <apex:form >
+            <div id="observed">
+            <c:RelatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" urlForNewRecord="{!newLink}" hideButtons="{!NOT(Account.ANG_IsNewGenAgency__c)}" hideActionLinkDel="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.deletable)}" hideActionLinkEdit="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.updateable)}" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
+            </div>
+        </apex:form>
+
+        <!-- <c:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
+        <c:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" /> -->
+
+        <script>                 
+            // check if table is rerendered
+            var observer = new MutationObserver(function(mutations) {
+                bindLinks(); 
+            });
+
+            function observeBody() {
+                observer.observe(document.getElementById('observed'), { attributes: false, childList: true, characterData: false, subtree: true });
+            }
+
+            function navigateOnConsole(url, title) {
+                sforce.console.getEnclosingPrimaryTabId(function (result) {
+                    sforce.console.openSubtab(result.id , url, true, title, null);
+                });
+            }
+
+            //Record links on the table should open on a new page/tab (except for deleted ones)
+            function bindLinks(){
+                var newButton = document.querySelector('.newButton');
+                if(newButton != null){
+                    newButton.onclick = function(){
+                        if(sforce.console.isInConsole()) navigateOnConsole('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');
+                        else redirectNew();
+                        return false;
+                    }
+                }
+                
+                var links = [].slice.call(document.querySelectorAll(".targetTable a"));
+                links.forEach(function(el){
+                    if(el.innerHTML == 'Del') el.target = "_self";
+                    else if (sforce.console.isInConsole()){
+                        var linkURL = el.getAttribute("href");
+                        el.href = '';
+                        el.addEventListener('click', function(e){
+                            e.preventDefault();
+                            e.stopPropagation();
+                            navigateOnConsole(linkURL, el.innerText)
+                            return false;
+                        }, false);
+                    }else{
+                        el.target = "_top";
+
+                        if((el.innerHTML == 'Edit')){
+                            el.href = el.getAttribute("href").replace(/(retURL=)[^&]+/i, '$1'+'{!accountLink}');
+                            el.href += '&saveURL={!accountLink}';
+                        }
+                    }
+                });
+
+                observeBody(); 
+            }
+
+            bindLinks();
+        </script>
+</apex:page>

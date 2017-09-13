@@ -115,7 +115,7 @@ var dyn_functions = {
                         if (
                             records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true'
                             && records[0].AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c == 'true' 
-                            && (records[0].Process__c == 'NEW.HO.1.0' || records[0].Process__c == 'NEW.BR.ABROAD' || records[0].Process__c == 'NEW.TIDS.1.0')
+                            && (records[0].Process__c == 'NEW.HO.1.0' || records[0].Process__c == 'NEW.BR.ABROAD' || records[0].Process__c == 'NEW.TIDS.1.0' || records[0].Process__c == 'ANG.NEW.HE.LITE.1.0' || records[0].Process__c == 'ANG.NEW.HE.STANDARD.1.0')
                         ){
                             
                             if(records[0].Account__r.Due_Diligence_Status__c == 'In Progress'){
@@ -488,6 +488,51 @@ var dyn_functions = {
                 
                 alert(result);
            
+           },
+
+           createFSObject:function (arg) {
+                var result = this.createFSObjectAux(arg);
+           },
+           createFSObjectAux:function (arg) {
+ 
+                    var changeTab = function(result){
+                        if(result.success == true){
+                            //sforce.console.focusPrimaryTabById(caseId);
+                        }
+                    };
+
+                    var argList = arg.split(", ");
+
+                    accountId = argList[0];
+                    accountName = argList[1];
+
+                    // Use the results primary tab id and open a new subtab
+                   var openSubtab = function(result)
+                   {            
+                        sforce.console.openSubtab(result.id, '/a0p/e?CF00N20000003JfVx='+accountName+'&CF00N20000003JfVx_lkid='+accountId, true, 'Financial Security', null, changeTab);    
+                   };
+                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+              
+
+                return '';           
+           },
+           createRiskEvent:function (arg) {
+                
+                var result;
+
+                var oscarData = sforce.connection.query("SELECT Risk_event_creation_date__c FROM AMS_OSCAR__C WHERE Id ='" + arg + "'");
+
+                var records = oscarData.getArray("records");
+
+                if(records[0].Risk_event_creation_date__c != null){
+                    result = 'The risk event has already been generated.';   
+                }else{
+                    result = sforce.apex.execute("AMS_OSCAR_Webservice", "createRiskEvent", {oscarId: arg});
+                }
+
+                alert('result:\n\r ' + result);
+                    
            }
 
 };

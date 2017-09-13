@@ -520,9 +520,25 @@ global class AMS_HierarchyHelper {
 			accountIdToBeAdded.add(rel.Child_Account__c);
 		}
 
-		// remove the accounts terminated from the list of process detail to be created
-		for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND Status__c = :AMS_Utils.ACC_S0_TERMINATED])
-			accountIdToBeAdded.remove(a.Id);
+		AMS_OSCAR__c oscar = [SELECT Process__c FROM AMS_OSCAR__c WHERE Id = :theOscarId LIMIT 1];
+
+		if(oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+
+			// remove the accounts terminated and not accreditated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c =: AMS_Utils.ACC_S1_NOTACCREDITED)]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		} else {
+
+			// remove the accounts terminated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND Status__c = :AMS_Utils.ACC_S0_TERMINATED]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		}
 
 
 		Set<Id> alreadyThere = new Set<Id>();
@@ -582,7 +598,7 @@ global class AMS_HierarchyHelper {
 				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
 				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
 
-				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
 			}
 		}
 

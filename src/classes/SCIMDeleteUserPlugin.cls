@@ -9,7 +9,8 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
         // The specific operation
         describeResult.Name = 'SCIM: Delete User';
 
-        describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{ 
+        describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{
+            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
         };
         
         return describeResult;
@@ -33,6 +34,13 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
             UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
             if (upa != null && !String.isBlank(upa.externalUserId)) {
+
+                String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
+                if(params != null) SCIMUsersUtility.deleteParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
+
+                System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
+                System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] deleteParams - ' + SCIMUsersUtility.deleteParams);
+
                 Map<String, Object> callResult = SCIMUsersUtility.deleteUser(upa.externalUserId);
                 userProvUtils.debug('HTTP call result was ' + callResult);
 

@@ -74,7 +74,7 @@
                       <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
                       <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
                       <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
-                      <apex:selectOption itemValue="Others " itemLabel="{!$Label.ISSP_Registration_Others}"/>
+                      <apex:selectOption itemValue="Others " itemLabel="{!$Label.ISSP_Registration_Others}" rendered="{!sRefererCommunity != 'iec'}"/>
                     </apex:selectList>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
@@ -95,6 +95,7 @@
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
                   </div>
               </div>
+              
               <div class="form-group" id="Title">
                 <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Registration_JobTitle}</label>
                 <apex:inputField styleclass="form-control rec" value="{!con.Title}"/>
@@ -102,16 +103,19 @@
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobTitle}</p>
                   </div>
               </div>
-              <div class="form-group" id="Function">
-
-                <span class="rec multiSelectFunction">
-                    <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>
-                    <apex:inputField styleclass="form-control" value="{!con.Membership_Function__c}"/>
-                  <div class="hiddenerror" style="display: none;">
-                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobFunction}</p>
-                  </div>
-                </span>
-              </div>
+              
+              <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+	              <div class="form-group" id="Function">
+	
+	                <span class="rec multiSelectFunction">
+	                    <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>
+	                    <apex:inputField styleclass="form-control" value="{!con.Membership_Function__c}"/>
+	                  <div class="hiddenerror" style="display: none;">
+	                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobFunction}</p>
+	                  </div>
+	                </span>
+	              </div>
+              </apex:outputPanel>
               <div class="form-group" id="Phone">
                 <label for="businessphoneinput"><span class="required">*</span>{!$Label.ISSP_Registration_BusinessPhone}</label><br/>
                 <apex:inputHidden id="businessphone" value="{!con.Phone}" />
@@ -119,7 +123,8 @@
                 <apex:inputHidden id="phone2" value="{!phone2}"/>
                 <apex:inputHidden id="phone3" value="{!phone3}"/>
 
-                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" value="{!con.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');"/>
+                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" value="{!con.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" 
+                	onkeyup="setLengthPhone(this,0)"/>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
                   </div>
@@ -130,12 +135,14 @@
               <div class="form-group" id="Phone2">
                 <label   for="exampleInputEmail1">{!$Label.ISSP_Registration_MobilePhone}</label><br/>
                 <apex:inputHidden id="businessmobile" value="{!con.MobilePhone}" />
-                <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!con.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
+                <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!con.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"
+                	onkeyup="setLengthPhone(this,1)"/>
               </div>
               <div class="form-group" id="Fax">
                 <label   for="exampleInputFax">{!$ObjectType.Contact.fields.Fax.Label}</label><br/>
                 <apex:inputHidden id="businessfax" value="{!con.Fax}" />
-                <apex:inputField id="businessfaxinput" styleclass="form-control" value="{!con.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
+                <apex:inputField id="businessfaxinput" styleclass="form-control" value="{!con.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"
+                	onkeyup="setLengthPhone(this,2)"/>
               </div>
 
               <div class="form-group"><!--  onClick="if(!validateNewUser())return false;" {!registerContact}-->
@@ -143,108 +150,144 @@
                 <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewUser())return false;" action="{!submitContact}" value="{!$Label.ISSP_Next}" id="next" />
               </div>
         </apex:form>
-
-
+		<script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
         <script>
+        var $j = jQuery.noConflict();
+        
+        /* iec functions */
+        
+        function setLengthPhone(e, i) {
+        	var phoneVal = e.value;
+        	if(phoneVal && "{!sRefererCommunity}"=="iec") {	        	
+	        	var formatedSize = phoneVal.length;
+	        	var unformatedSize = phoneVal.replace(" ", "").replace("-","").length;
+				
+				if(phoneVal.charAt(0) == "+") {
+					$(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+				} else {
+					var flagDrpd = $j($j(".flag-dropdown")[i]).find("div")[0];
+					if(flagDrpd && flagDrpd.title && flagDrpd.title.split("+")[1]) {
+						var selectedFlagLength = flagDrpd.title.split("+")[1].length;
+						$(e).attr("maxlength", 15 + (formatedSize - unformatedSize) - selectedFlagLength);
+					} else {
+						$(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+					}	
+				}	        	
+        	}
+        }
+        
+        /******/
+        
         //in create contact page
         // description popups
-        $('#Title').popover({placement:'top',trigger:'hover',content:'{!JSENCODE($Label.ISSP_Registration_Title_Bubble)}',title:''});
-        $('#Country').popover({placement:'top',trigger:'hover',content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
+        $j('#Title').popover({placement:'top',trigger:'hover',content:'{!JSENCODE($Label.ISSP_Registration_Title_Bubble)}',title:''});
+        $j('#Country').popover({placement:'top',trigger:'hover',content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
 
         // run at first time (to show the country picklist)
         TypeOfCustomerChange();
 
         if ({!displayNewCaseForm})
-        $("#NewCasePopUp").modal('show');
+        $j("#NewCasePopUp").modal('show');
 
         // if type is General Public - show Country selection
         function TypeOfCustomerChange(){
-            var type = $("select[id*='TypeSelect']").val();
-            $('#Country').hide().removeClass('rec');
-            $('#Country select').removeClass('rec');
+            var type = $j("select[id*='TypeSelect']").val();
+            $j('#Country').hide().removeClass('rec');
+            $j('#Country select').removeClass('rec');
             if(type == 'GeneralPublic'){
-                $('#Country').show();
-                $('#Country select').addClass('rec');
+                $j('#Country').show();
+                $j('#Country select').addClass('rec');
             }
         }
 
         function validateNewUser(){
 
             //Save dial code and country values into hidden fields
-
-            var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
-            var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']").intlTelInput("getSelectedCountryData");
-            var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']").intlTelInput("getSelectedCountryData");
-
-            var input1 = $("input[name='{!$Component.newContact.businessphoneinput}']");
-            var final1 = '+' + input1.intlTelInput("getSelectedCountryData").dialCode;
-            var number1 = input1.intlTelInput("getNumber");
-            number1 = number1.replace(final1,"");
-            number1 = number1.replace("+1","");
-            final1 = final1 + number1;
-            // var temp1 = document.getElementById('j_id0:j_id43:newContact:phone1');
-            var temp1 = document.getElementById('{!$Component.newContact.phone1}');
-            temp1.value = final1;
-            //alert("Final 1: " + final1);
-
-            var input2 = $("input[name='{!$Component.newContact.businessmobileinput}']");
-            var final2 = '+' + input2.intlTelInput("getSelectedCountryData").dialCode;
-            var number2 = input2.intlTelInput("getNumber");
-            if (number2 != "") {
-                number2 = number2.replace(final2,"");
-                number2 = number2.replace("+1","");
-                final2 = final2 + number2;
-                // var temp2 = document.getElementById('j_id0:j_id43:newContact:phone2');
-                var temp2 = document.getElementById('{!$Component.newContact.phone2}');
-                temp2.value = final2;
-                //alert("Final 2: " + final2);
-            }
-
-            var input3 = $("input[name='{!$Component.newContact.businessfaxinput}']");
-            var final3 = '+' + input3.intlTelInput("getSelectedCountryData").dialCode;
-            var number3 = input3.intlTelInput("getNumber");
-            if (number3 != "") {
-                number3 = number3.replace(final3,"");
-                number3 = number3.replace("+1","");
-                final3 = final3 + number3;
-                // var temp3 = document.getElementById('j_id0:j_id43:newContact:phone3');
-                var temp3 = document.getElementById('{!$Component.newContact.phone3}');
-                temp3.value = final3;
-                //alert("Final 3: " + final3);
-            }
-
+			try {
+	            var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+	            var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']").intlTelInput("getSelectedCountryData");
+	            var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']").intlTelInput("getSelectedCountryData");
+	
+	            var input1 = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+	            var final1 = '+' + input1.intlTelInput("getSelectedCountryData").dialCode;
+	            var number1 = input1.intlTelInput("getNumber");
+	            number1 = number1.replace(final1,"");
+	            number1 = number1.replace("+1","");
+	            final1 = final1 + number1;
+	            // var temp1 = document.getElementById('j_id0:j_id43:newContact:phone1');
+	            var temp1 = document.getElementById('{!$Component.newContact.phone1}');
+	            temp1.value = final1;
+	            //alert("Final 1: " + final1);
+	
+	            var input2 = $j("input[name='{!$Component.newContact.businessmobileinput}']");
+	            var final2 = '+' + input2.intlTelInput("getSelectedCountryData").dialCode;
+	            var number2 = input2.intlTelInput("getNumber");
+	            if (number2 != "") {
+	                number2 = number2.replace(final2,"");
+	                number2 = number2.replace("+1","");
+	                final2 = final2 + number2;
+	                // var temp2 = document.getElementById('j_id0:j_id43:newContact:phone2');
+	                var temp2 = document.getElementById('{!$Component.newContact.phone2}');
+	                temp2.value = final2;
+	                //alert("Final 2: " + final2);
+	            }
+	
+	            var input3 = $j("input[name='{!$Component.newContact.businessfaxinput}']");
+	            var final3 = '+' + input3.intlTelInput("getSelectedCountryData").dialCode;
+	            var number3 = input3.intlTelInput("getNumber");
+	            if (number3 != "") {
+	                number3 = number3.replace(final3,"");
+	                number3 = number3.replace("+1","");
+	                final3 = final3 + number3;
+	                // var temp3 = document.getElementById('j_id0:j_id43:newContact:phone3');
+	                var temp3 = document.getElementById('{!$Component.newContact.phone3}');
+	                temp3.value = final3;
+	                //alert("Final 3: " + final3);
+	            }
+			}catch(e) {
+				console.log(e);
+			}
 
 
 
             // var type = $("select[id*='TypeSelect']").val();
             var flag = true;
-            $('#recFields').hide();
-            $('.rec').each(function (){
-                $(this).parents('.form-group').removeClass('has-error');
+            $j('#recFields').hide();
+            $j('.rec').each(function (){
+                $j(this).parents('.form-group').removeClass('has-error');
                 if($(this).hasClass("multiSelectFunction")){
-                    if($(this).find('select[id*="_selected"]').first().find('option').length==0){
+                    if($j(this).find('select[id*="_selected"]').first().find('option').length==0){
                         flag = false;
-                        $(this).parents('.form-group').addClass('has-error');
+                        $j(this).parents('.form-group').addClass('has-error');
                     }
                 }
-                else if(!$(this).val()){
+                else if(!$j(this).val()){
                     flag = false;
-                    $(this).parents('.form-group').addClass('has-error');
+                    $j(this).parents('.form-group').addClass('has-error');
                 }
 
             }
             )
             if(flag == false){
-                $('#recFields').show();
+                $j('#recFields').show();
             }
             return flag;
         }
-    </script>
-    <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+    </script>    
+    <input type="hidden" name="geoCode" id="geoCode" value=""/>
     <script>
-        var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
-        var phone = $("input[name='{!$Component.newContact.businessphone}']");
-        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}";
+    	function getGeoCode() {
+    		if(typeof localStorage !== "undefined") {
+    			return localStorage.getItem("geoCode");
+    		} else {
+    			return "auto";
+    		}
+    	}
+    
+    
+        var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+        var phone = $j("input[name='{!$Component.newContact.businessphone}']");
+        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}" == "" ?  getGeoCode() : "{!country}";        
 
         natphone.intlTelInput({
             defaultCountry: countryCode,
@@ -256,61 +299,61 @@
 
         /*
         natphone.intlTelInput({
-        defaultCountry: "{!country}",
-        nationalMode: true,
-        preferredCountries: [""],
-        numberType: "FIXED_LINE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
-    */
+	        defaultCountry: "{!country}",
+	        nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "FIXED_LINE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+    	});
+    	*/
 
-    var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
-    var mobile = $("input[name='{!$Component.newContact.businessmobile}']");
+		var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']");
+		var mobile = $j("input[name='{!$Component.newContact.businessmobile}']");
 
-    natmobile.intlTelInput({
-        defaultCountry: countryCode,
-        //nationalMode: true,
-        preferredCountries: [""],
-        numberType: "MOBILE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
+	    natmobile.intlTelInput({
+	        defaultCountry: countryCode,
+	        //nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "MOBILE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+	    });
 
-    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
-    var fax = $("input[name='{!$Component.newContact.businessfax}']");
+	    var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']");
+	    var fax = $j("input[name='{!$Component.newContact.businessfax}']");
 
-    natfax.intlTelInput({
-        defaultCountry: countryCode,
-        //nationalMode: true,
-        preferredCountries: [""],
-        numberType: "FIXED_LINE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
+	    natfax.intlTelInput({
+	        defaultCountry: countryCode,
+	        //nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "FIXED_LINE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+	    });
 
-    function setInternationalPhoneNo(p) {
-        if(p=='phone') {
-            phone.val(natphone.intlTelInput("getNumber"));
-        } else if(p=='mobile') {
-            mobile.val(natmobile.intlTelInput("getNumber"));
-        } else {
-            fax.val(natfax.intlTelInput("getNumber"));
-        }
-    }
-
-
-    //Fix EM: If user goes back we need to set again the country code/ country already selected
-
-    var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
-    var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
-    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
+	    function setInternationalPhoneNo(p) {
+	        if(p=='phone') {
+	            phone.val(natphone.intlTelInput("getNumber"));
+	        } else if(p=='mobile') {
+	            mobile.val(natmobile.intlTelInput("getNumber"));
+	        } else {
+	            fax.val(natfax.intlTelInput("getNumber"));
+	        }
+	    }
 
 
+	    //Fix EM: If user goes back we need to set again the country code/ country already selected
+	
+	    var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+	    var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']");
+	    var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']");
 
-    var phonenat = "{!con.Phone}";
-    var phonemobile = "{!con.MobilePhone}";
-    var phonefax = "{!con.Fax}";
-    //alert(phonenat);
-    //alert(phonefax );
-    if (phonenat != "") {
+
+
+	    var phonenat = "{!con.Phone}";
+	    var phonemobile = "{!con.MobilePhone}";
+	    var phonefax = "{!con.Fax}";
+	    //alert(phonenat);
+	    //alert(phonefax );
+	    if (phonenat != "") {
 
 
         natphone.intlTelInput("setNumber", phonenat);

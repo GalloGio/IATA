@@ -123,6 +123,31 @@
         <label>Send To Zuora Listener</label>
     </fieldSets>
     <fields>
+        <fullName>Accepted_Payment_Methods__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please choose the allowed payment methods for the product (hierarchy).</inlineHelpText>
+        <label>Accepted Payment Methods</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Activity_Code__c</fullName>
         <description>This is the 4 digit code used for accounting purposes by IATA</description>
         <externalId>false</externalId>
@@ -384,7 +409,6 @@
             <picklistValues>
                 <fullName>New</fullName>
                 <default>false</default>
-                <controllingFieldValues>data-and-statistics</controllingFieldValues>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -1464,6 +1488,14 @@ SIS Charge Code Type.</description>
                 <fullName>TG8</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OI2</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -2015,7 +2047,7 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2028,6 +2060,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3240,6 +3276,22 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>C-Web Application</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Windows</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Book &amp; Windows</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Book &amp; Mobile</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -4284,7 +4336,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Source</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -4354,7 +4406,7 @@ The product will only appear on the Online Store when the date entered in this f
         <relationshipLabel>Products</relationshipLabel>
         <relationshipName>ZProduct</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -4364,7 +4416,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Zuora Id</label>
         <length>32</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>true</unique>
     </fields>
@@ -4453,6 +4505,7 @@ The product will only appear on the Online Store when the date entered in this f
     <listViews>
         <fullName>GDP_All_Products1</fullName>
         <columns>PRODUCT2.NAME</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
@@ -4510,6 +4563,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4637,6 +4691,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4688,7 +4743,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
         <columns>ZProduct__c</columns>
-        <columns>Zuora_Id__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4712,7 +4767,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
         <columns>ZProduct__c</columns>
-        <columns>Zuora_Id__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4865,6 +4920,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4987,6 +5043,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Display_to_ECommerce__c</columns>
         <columns>Sell_through_eCommerce__c</columns>
@@ -5014,6 +5071,36 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>GDP_Parent_Products_Payment_Methods</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Accepted_Payment_Methods__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>Product_Section__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Mega_Menu__c</columns>
+        <columns>Display_Ecom_Topic__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Section__c</field>
+            <operation>equals</operation>
+            <value>DBP001</value>
+        </filters>
+        <filters>
+            <field>IEC_Parent_Product__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>GDP/Parent Products Payment Methods</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>GDP_Passenger_Agency_List</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
@@ -5035,6 +5122,28 @@ The product will only appear on the Online Store when the date entered in this f
             <value>Passenger Agency List</value>
         </filters>
         <label>GDP/EPUB/Passenger Agency List</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_Products_Formula_Zuora_ID_Check</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>ZProduct__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Effective_To__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <label>GDP Products / Formula Zuora ID Check</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -5290,6 +5399,21 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>GDP</fullName>
         <active>true</active>
         <label>GDP</label>
+        <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
@@ -6704,7 +6828,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6717,6 +6841,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7472,6 +7600,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -7552,6 +7688,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -7581,6 +7721,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8225,6 +8369,21 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>Publication</fullName>
         <active>true</active>
         <label>Publication</label>
+        <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
@@ -9687,7 +9846,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9700,6 +9859,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10459,6 +10622,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -10551,6 +10722,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -10580,6 +10755,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11221,6 +11400,21 @@ The product will only appear on the Online Store when the date entered in this f
         <active>true</active>
         <label>Unclassified</label>
         <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
                 <fullName>Directories</fullName>
@@ -11784,6 +11978,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GRH</fullName>
                 <default>false</default>
             </values>
@@ -11905,6 +12103,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>OFL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12630,7 +12832,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12639,6 +12841,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13386,6 +13592,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -13466,6 +13680,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -13495,6 +13713,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -128,14 +128,14 @@ parentCase.Documentation_Complete__c.format() + ')');
           newCase.Subject = 'SIDRA Lite – Financial Security Non-compliance';
           newCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
           if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-              newCase.Propose_Irregularity__c = DateTime.now();
-              newCase.IRR_Approval_Rejection__c = 'Approved';
-              newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
-              if (SidraLiteUtil.isPassenger(parentCase.account)) {
+              //newCase.Propose_Irregularity__c = DateTime.now();
+              //newCase.IRR_Approval_Rejection__c = 'Approved';
+              //newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+              /*if (SidraLiteUtil.isPassenger(parentCase.account)) {
                   newCase.IRR_Type__c = 'Double Irregularity';
               } else {
                   newCase.IRR_Type__c = 'Single Irregularity';
-              }
+              }*/
               newCase.SIDRA_Lite_Default_Date__c = Date.Today();
               newCase.Reason_for_Default__c = 'Suspension - FS Non Compliance';
           } else {

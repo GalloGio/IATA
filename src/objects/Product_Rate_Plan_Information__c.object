@@ -301,6 +301,22 @@
         <label>CheckACode Rate Plans</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>EBC</fullName>
+        <columns>NAME</columns>
+        <columns>Short_Description__c</columns>
+        <columns>Product_Rate_Plan__c</columns>
+        <columns>Related_Product_Information__c</columns>
+        <columns>Is_Triable__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Product_Information__c</field>
+            <operation>contains</operation>
+            <value>eBroadcast</value>
+        </filters>
+        <label>EBC</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Product Rate Plan Information Name</label>
         <type>Text</type>

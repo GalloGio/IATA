@@ -417,7 +417,7 @@ public without sharing class LightningRegistrationProcess{
     @future
     public static void setFederationId (String userid, String email) {
         User u = new User(id=userid);
-        u.FederationIdentifier = email;
+        u.FederationIdentifier = u.id;
         database.update(u);
     }
 /*    
@@ -441,4 +441,10 @@ public without sharing class LightningRegistrationProcess{
         lang = lang == 'en-US' ? 'en' : lang;
         return lang;
     }
+
+    @AuraEnabled
+    public Static String getCommunityName(){
+        return OneIdUtils.getCommunityUrlName();
+    }    
+    
 }

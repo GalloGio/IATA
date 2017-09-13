@@ -23,6 +23,7 @@ public with sharing class AMS_AccreditationContactController {
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
+    public boolean isNewGenProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -132,6 +133,7 @@ public with sharing class AMS_AccreditationContactController {
 
         blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
                                 && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
+								&& aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
                             || typeOfChangeContainsOwnershipToIATA
@@ -143,8 +145,9 @@ public with sharing class AMS_AccreditationContactController {
 
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
-        isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
+        isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW || aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEWHE)? true : false;
         isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
+        isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(aoa.SAAM_Case__r.OSCAR__r.Process__c) ? true : false;
     }
     
     public void addEmptyRow()
@@ -247,9 +250,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
-        if(!calculateTotalOwnership() && !isCertificationOSCAR)
+        if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
+            return null;
+        }
+
+        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
         }
         
@@ -286,6 +295,8 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
+
+        Integer numberPortalAdmin = 0;
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
@@ -296,7 +307,18 @@ public with sharing class AMS_AccreditationContactController {
                 if(ac.ac.Email__c != '')
                     emailSetToConfirm.add(ac.ac.Email__c);
             }
+
+            if(ac.ac.Portal_administrator__c == true)
+                numberPortalAdmin++;
+
         }
+
+        if(numberPortalAdmin > 1 && isNewGenProcess){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'A maximum of 1 portal administrator is allowed on this page.'));
+            return null;
+        }
+
+
         if(emailSetToConfirm.size() >0)
         {
             Map<Id, Contact> idContactMap = AMS_AccreditationContactHelper.findContactsByEmail(emailSetToConfirm);
@@ -461,7 +483,8 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
+         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
         {
             return false;
         } else
@@ -861,6 +884,7 @@ public with sharing class AMS_AccreditationContactController {
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
+					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
                 }

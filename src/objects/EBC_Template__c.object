@@ -184,7 +184,12 @@
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>EBC_Template__c.Global</value>
+        </filters>
+        <label>All - Non-Global</label>
         <language>en_US</language>
     </listViews>
     <nameField>

@@ -148,6 +148,7 @@ private class AMS_OSCAR_AutomationTest {
 			/*
 				Step 02
 			*/
+			oscar.STEP15__c = 'Passed';
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded');
 			System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('On Hold_Internal', oscar.Status__c);

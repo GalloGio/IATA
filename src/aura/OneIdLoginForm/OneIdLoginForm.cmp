@@ -1,0 +1,90 @@
+<!-- add implements="forceCommunity:availableForAllPageTypes" to surface the component in community builder -->
+<aura:component controller="OneIdLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes">
+    
+    <ltng:require scripts="{!$Resource.jquery321minStandard}" afterScriptsLoaded="{!c.jsLoaded}"/>
+    
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
+    <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister"/>
+    <aura:attribute name="sanctionCountry" type="String" required="false" default="false"/>
+    <aura:attribute name="show90Days" type="Boolean" required="false" default="false"/>
+    <aura:attribute name="siteCompleteUrl" type="String" required="false" default=""/>
+    
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
+    <aura:attribute name="clientIpAddress" type="String" access="private"/>
+   
+    <input type="hidden" id="clientIpAddressAjax" value="" />
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>
+    
+    
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <!-- Please uncomment
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+    -->
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
+    
+    <div>
+        <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+            <span>
+                <aura:renderIf isTrue="{!v.showError}">
+                    <div id="error">
+                        <ui:outputRichText value="{!v.errorMessage}"/>
+                    </div>
+                </aura:renderIf>
+            </span>
+            <aura:renderIf isTrue="{!v.sanctionCountry}">
+                <div id="sanctionCountry">
+                    <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
+                </div>
+            </aura:renderIf>
+            <aura:renderIf isTrue="{!!v.sanctionCountry}">
+                <aura:renderIf isTrue="{!v.show90Days}">
+                    <div id="userFrozen">
+                        <ui:outputRichText value="{!$Label.c.ISSP_Frozen_User_Alert_Message}"/>
+                    </div>
+                </aura:renderIf>
+
+                <div id="sfdc_username_container" class="sfdc">
+                    <span id="sfdc_user" class="login-icon" data-icon="a"></span>
+                    <ui:inputEmail value="" aura:id="username" updateOn="keyup" placeholder="{!$Label.c.OneId_Username}" keyup="{!c.onKeyUp}" 
+                                  class="input sfdc_usernameinput sfdc" label="{!$Label.c.OneId_UsernameLabel}" labelClass="assistiveText"/>
+                </div>
+        
+                <div id="sfdc_password_container" class="sfdc">
+                    <span id="sfdc_lock" class="login-icon sfdc" data-icon="c"></span>
+                    <ui:inputSecret value="" updateOn="keyup" aura:id="password" placeholder="{!$Label.c.OneId_Password}" keyup="{!c.onKeyUp}" 
+                                    class="input sfdc_passwordinput sfdc" label="{!$Label.c.OneId_Password}" labelClass="assistiveText"/>
+                </div>
+        
+                <div class="sfdc">
+                    <ui:button aura:id="submitButton" label="{!$Label.c.OneId_Login}" press="{!c.handleLogin}" class="sfdc_button"/>
+                </div>
+                
+                <div id="sfdc_forgot" class="sfdc">
+                    <span>
+                        <a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">
+                            {!$Label.c.OneId_ForgotPassword}
+                        </a>
+                    </span>
+                    <aura:renderIf isTrue="{!v.isSelfRegistrationEnabled}">
+                        <span class="pipe"> | </span>
+                        <span style="float:right" >
+                            <a href="{!if(v.communitySelfRegisterUrl == null, v.selfRegisterUrl, v.communitySelfRegisterUrl)}">
+                                {!$Label.c.OneId_SelfRegister}
+                            </a>
+                        </span>
+                    </aura:renderIf>                            
+                </div> 
+            </aura:renderIf>
+        </aura:renderIf>
+    </div>
+</aura:component>

@@ -154,6 +154,32 @@ public without sharing class ISSP_Registration {
     public String urlpicture {get;set;}
 	public boolean isChina {get;set;}
 	public String whichcountry {get;set;}
+	
+	//TC
+	public Map<String, Boolean> zipCodeApplicable {get;set;}
+	public Boolean requiredZipCode {
+		get{
+			return zipCodeApplicable != null && !String.isBlank(searchCountryName) ? zipCodeApplicable.get(searchCountryName) : true;
+		}
+		set;
+	}
+	public String countriesNamesWithoutZipCode {
+		get{
+			if(countriesNamesWithoutZipCode == null) {
+				Set<String> countriesNamesWithoutZipCodeLst = new Set<String>();
+				List<IATA_ISO_Country__c> lstCountries = [SELECT Name, IEC_Zip_Postal_Code_required__c 
+														  FROM IATA_ISO_Country__c
+														  WHERE IEC_Zip_Postal_Code_required__c = false];
+				
+				for(IATA_ISO_Country__c c : lstCountries) {
+					countriesNamesWithoutZipCodeLst.add(c.Name.toUpperCase().trim());
+				}
+				
+				countriesNamesWithoutZipCode = JSON.serialize(countriesNamesWithoutZipCodeLst);
+			}
+			return countriesNamesWithoutZipCode;
+		}set;
+	}
 
 
     public ISSP_Registration(){
@@ -391,6 +417,17 @@ public without sharing class ISSP_Registration {
 
 	public PageReference backToAccountPage () {
 		showCreateAccount = false;
+		if(sRefererCommunity == 'iec') {
+			isAgency = selectedCustomerType == Agency;
+			isAirline = selectedCustomerType == Airline;
+			selectType();
+			/*
+			showcreateother = false;
+			showSearchIataCode = isAgency;
+			showSearchCompName = isAgency;
+			toSearchDesignatorCode = isAirline;
+			*/
+		}
 		return null;
 	}
 
@@ -424,6 +461,32 @@ public without sharing class ISSP_Registration {
         showCreateAccount = false;
         showNextAsGP = false;
         createAgency = false;
+        
+        /* TC 2017-05-29 iec enhancements */
+        if(isAirline && sRefererCommunity == constIEC) {
+        	try {
+        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountryAirline, 'Airline');
+        		handleSearchResults();
+        	} catch(Exception e) {
+        		log(e);
+        	}
+        	return null;
+        }
+        
+        if(isAgency && sRefererCommunity == constIEC) {
+        	try {
+        		if (!String.isBlank(searchIATACode) && searchIATACode.length() != 8 && searchIATACode.length() != 11) {
+                	errorMessage.add(Label.ISSP_IATA_Code_Agency);
+                	return null;
+        		}
+        		accList = searchCompany(searchIATACode, companyName, searchCountry, 'Agency');    
+        		handleSearchResults();
+        	} catch(Exception e) {
+        		log(e);
+        	}    	
+        	return null;
+        }
+        /* end */
 
         //check IATA Code format
         decimal iataCodeInput;
@@ -642,7 +705,11 @@ public without sharing class ISSP_Registration {
                         }
                     }
                     else{
-                        errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	if(sRefererCommunity == 'iec') {
+                        	errorMessage.add(Label.IEC_NoRecordsFoundGP);
+                    	} else {
+                    		errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	}
                     }
                 }
                 else{
@@ -732,12 +799,39 @@ public without sharing class ISSP_Registration {
         return null;
     }
 
+	//TC 2017-05-16
+	public Boolean isGPSearchValid() {
+		try {
+			Set<String> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(selectedCustomerType);
+			accList = [SELECT Id,IATACode__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, IATA_ISO_Country__r.Name, 
+							  RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c 
+					   FROM Account 
+					   WHERE RecordType.DeveloperName IN :recordTypesSet AND Sector__c = 'General Public' AND IATA_ISO_Country__c = :searchCountry]; 
+			accountFound = !accList.isEmpty();
+			return !accList.isEmpty();	
+		} catch(Exception e) {
+			log(e);
+			return false;	
+		}					
+	}
+	
+	
 
     /*
      * Back to Contact page - as General Public
      */
     public PageReference nextAsGP() {
         system.debug('nextAsGP: ' + accList);
+        
+        //TC 2017-05-16
+        if(sRefererCommunity == 'iec'){
+         	Boolean isValidSearch = isGPSearchValid();
+         	if(!isValidSearch) {
+         		errorMessage.add(Label.IEC_NOGPAccount);
+         		return null;
+         	}
+        }
+                
         if (!accList.isEmpty()){
             selectedAccId = accList[0].id;
             system.debug('selectedAccId: ' + selectedAccId);
@@ -911,7 +1005,11 @@ public without sharing class ISSP_Registration {
                 acc.IATA_ISO_Country__c = searchCountry;
                 acc.IATA_ISO_Shipping_Country__c = searchCountry;
                 acc.BillingCountry = searchCountryName;
-                acc.ShippingCountry = searchCountryName;
+                if(sRefererCommunity == constIEC) {
+                	acc.ShippingCountry = String.isBlank(acc.ShippingCountry) ? searchCountryName : acc.ShippingCountry;
+                } else {
+                	acc.ShippingCountry = searchCountryName;
+                }
             }
             //acc.TIESS_Code__c = searchTiess;
             system.debug('selectedCustomerType: ' + selectedCustomerType);
@@ -1148,15 +1246,17 @@ public without sharing class ISSP_Registration {
         return null;
     }
 
+	//TC: added IEC_Zip_Postal_Code_required__c to query and fill map
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();
         boolean countryMapEmpty = (countryMap == null);
+        zipCodeApplicable = new Map<String,Boolean>();
         if (countryMapEmpty)
-            countryMap = new Map<Id, String>();
-
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
+            countryMap = new Map<Id, String>();			
+        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
+                zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Postal_Code_required__c);//TC
                 if (countryMapEmpty) {
                     countryMap.put(iso.Id, iso.Name);
                 }
@@ -1269,10 +1369,19 @@ public without sharing class ISSP_Registration {
             //showSearchIataCode = true;
             //showSearchCountry = true;
             //doSearch = true;
+            if(sRefererCommunity == 'iec') {            	
+            	toSearchDesignatorCodeString = 'Yes';
+            	checkSearchDesignatorCode();
+            }
         }
         else if (selectedCustomerType == Agency){
             isAgency = true;
             //showSearchIataCode = true;
+            if(sRefererCommunity == 'iec') {
+            	showSearchIataCode = true;
+            	showSearchCountry = true;
+            	doSearch = true;
+            }
         }
         else if (selectedCustomerType == GSA){
             isGSA = true;
@@ -1302,6 +1411,11 @@ public without sharing class ISSP_Registration {
             isGeneral = true;
             showSearchCountry = true;
             doSearch = true;
+            //TC 2017-05-11
+            if(sRefererCommunity == 'iec'){
+            	doSearch = false;
+            	showNextAsGP = true;      	
+            }
         }
 
 
@@ -1319,14 +1433,23 @@ public without sharing class ISSP_Registration {
         system.debug('getting getCustomerTypeList');
         List<SelectOption> types = new List<SelectOption>();
         types.add(new SelectOption('',Label.ISSP_Select_Type_of_Company));
-        types.add(new SelectOption(Airline,Label.ISSP_Airline));
-        types.add(new SelectOption(GSA,Label.ISSP_GSSA));
-        types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
-        //types.add(new SelectOption(Agency,'IATA Accredited Agent'));
-        //types.add(new SelectOption(NonIATA,'Non IATA Agent'));
-        //types.add(new SelectOption(TIESS,'TIESS'));
-        types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
-        types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
+        //TC 2017-05-16
+        if(sRefererCommunity == 'iec'){
+        	types.add(new SelectOption(Airline,Label.ISSP_Airline));
+        	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
+        	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
+        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        } else {
+        	types.add(new SelectOption(Airline,Label.ISSP_Airline));
+        	types.add(new SelectOption(GSA,Label.ISSP_GSSA));
+        	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
+        	//types.add(new SelectOption(Agency,'IATA Accredited Agent'));
+        	//types.add(new SelectOption(NonIATA,'Non IATA Agent'));
+        	//types.add(new SelectOption(TIESS,'TIESS'));
+        	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
+        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
+        }
+        
         return types;
     }
 
@@ -1495,8 +1618,22 @@ public without sharing class ISSP_Registration {
 
     }
 
-
-
+	//TC 2017-0516
+	public List<SelectOption> shpCountry {
+		get{
+			if(shpCountry == null) {
+				List<SelectOption> options = new List<SelectOption>();
+				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]) {
+					if (iso.Name != 'All Countries'){
+						options.add(new SelectOption(iso.Name,iso.Name));
+					}	
+				}
+				shpCountry = options;
+			}
+			return shpCountry;					
+		}
+		set;
+	}
 
     //TF-SP08 - for first agency user, give access to custom permission set
     @Future
@@ -1511,5 +1648,111 @@ public without sharing class ISSP_Registration {
             }
         }
     }
-
+    
+    /* TC 2017-05-29 iec enhancements */
+    public String companyName {get;set;}
+    
+    public List<Account> searchCompany(String searchTerm, String companyName, String companyLocation, String companyType) {
+    	Set<String> recordTypes = new Set<String>();
+    	if(companyType == 'Airline') {
+    		recordTypes.addAll(new Set<String>{'IATA_Airline_BR', 'IATA_Airline'});
+    	} else if(companyType == 'Agency') {
+    		recordTypes.add('IATA_Agency');
+    	}
+    	String queryStr = 'SELECT Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, '+
+    					  'Airline_designator__c, Airline_Prefix__c FROM Account ';
+    	String whereClause = 'WHERE RecordType.DeveloperName IN :recordTypes AND '+
+    								'IATA_ISO_Country__c = \''+companyLocation+'\' ';
+    	
+    	if(!String.isBlank(searchTerm) && companyType == 'Airline') {
+    		whereClause += 'AND Airline_Search_Field__c LIKE \''+buildSearchExpression(searchTerm)+'\' ';
+    	}
+    	if(!String.isBlank(searchTerm) && companyType == 'Agency') {
+    		whereClause += 'AND (IATACode__c = \''+ searchTerm +'\' OR Airline_Prefix__c = \''+ searchTerm +'\') ';
+    	}
+    	if(!String.isBlank(companyName)) {
+    		whereClause += 'AND Name LIKE \''+buildSearchNameExpression(companyName)+'\' ';
+    	}
+    	
+    	return Database.query(queryStr + whereClause);
+    }
+    
+    private String buildSearchExpression(String searchTerm) {
+    	List<String> temp1 = searchTerm.split('(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)');
+    	List<String> temp2 = new List<String>();
+    	for(String s1 : temp1) {
+    		for(String s2 : s1.split(' ')) {
+    			if(!String.isBlank(s2)) {
+    				temp2.add(s2.replaceAll('[^A-Za-z0-9]', ''));
+    			}
+    		}
+    	}
+    	String res = '';
+    	for(String s3 : temp2) {
+    		res += s3+'%';
+    	}
+    	
+    	return '%'+res;
+    }
+    
+    private String buildSearchNameExpression(String name) {
+    	String res = '';
+    	for(String s : name.split(' ')){
+    		if(!String.isBlank(s)) {
+    			res += s + '%';
+    		}
+    	}
+    	return '%'+res;
+    }
+    
+    public void handleSearchResults() { 	
+    	if(accList != null) {
+    		accountFound = !accList.isEmpty();
+    		if (!accList.isEmpty()) {
+		    	accListRadio = new List<SelectOption>();
+				for (Account thisAccount : accList) {
+		    		accListRadio.add(new SelectOption(thisAccount.Id,thisAccount.Name));
+				}
+				if(accList.size() == 1) {
+					selectedAccId = accList[0].Id;
+				}
+    		} else {
+    			searchCountryISOCode = isAirline ? countryISOCodeMap.get(searchCountryAirline) : countryISOCodeMap.get(searchCountry);	
+    			searchCountryName = isAirline ?	countryMap.get(searchCountryAirline) : countryMap.get(searchCountry);
+    			searchCountry = isAirline ? searchCountryAirline : searchCountry;
+    			showCreateAccount = true;
+    			showcreateother = true;
+    			isOther = true;
+    			infoMessage.add(Label.IEC_NoRecordsFoundCreateAccount);
+    		}
+    	}
+    }
+    
+    public static String isoStates {
+    	get{
+    		if(isoStates == null) {
+	    		List<IATA_ISO_State__c> lstStates = [SELECT IATA_ISO_Country__r.Name,Informatica_Value__c, IATA_ISO_Country__r.ISO_Code__c 
+	    											 FROM IATA_ISO_State__c 
+	    											 WHERE IATA_ISO_Country__r.Name IN ('Canada', 'United States', 'Brazil', 'Australia', 'Venezuela') AND Informatica_Value__c  != null
+	    											 ORDER BY IATA_ISO_Country__r.Name, Informatica_Value__c  ASC];
+	    		
+	    		Map<String,List<String>> mapStates = new Map<String,List<String>>();
+	    		for(IATA_ISO_State__c state : lstStates) {
+	    			List<String> states = mapStates.get(state.IATA_ISO_Country__r.ISO_Code__c);
+	    			if(states == null) {
+	    				states = new List<String>();
+	    				mapStates.put(state.IATA_ISO_Country__r.ISO_Code__c, states);
+	    			}
+	    			states.add(state.Informatica_Value__c);
+	    		}
+	    		isoStates = JSON.serialize(mapStates);
+    		}
+    		
+    		return isoStates;
+    	}
+    	set;
+    }
+    
+    /* end */
+    
 }

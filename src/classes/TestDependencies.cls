@@ -475,4 +475,108 @@ public class TestDependencies {
             From Financial_Institution__c
         ];
     }
+
+    public static testMethod void testIFACPoptoutFields() {
+        list<IFACP_Opt_out__c> lst  = [
+            Select ID,
+            OWNERID,
+            ISDELETED,
+            NAME,
+            CURRENCYISOCODE,
+            RECORDTYPEID,
+            CREATEDDATE,
+            CREATEDBYID,
+            LASTMODIFIEDDATE,
+            LASTMODIFIEDBYID,
+            SYSTEMMODSTAMP,
+            CONNECTIONRECEIVEDID,
+            CONNECTIONSENTID,
+            AGENT_ACCOUNT__C,
+            AGENT_CODE__C,
+            AIRLINE_CODE__C,
+            AIRLINE_COUNTRY_ACCOUNT__C,
+            AIRLINE__C,
+            COUNTRY__C,
+            IFACP_OPT_OUT_ACTIVE__C,
+            OPT_OUT_END_DATE__C,
+            OPT_OUT_START_DATE__C
+            From IFACP_Opt_out__c
+        ];
+    }
+
+    public static testMethod void testRecordTypeFields() {
+        list<RecordType> lst  = [
+            Select IsActive,
+            BusinessProcessId,
+            CreatedById,
+            CreatedDate,
+            Description,
+            LastModifiedById,
+            LastModifiedDate,
+            Name,
+            NamespacePrefix,
+            Id,
+            DeveloperName,
+            SobjectType,
+            SystemModstamp
+            From RecordType
+        ];
+    }
+
+    public static testMethod void testContactFields(){
+         list<Contact> lst  = [
+            Select ACCOUNTID,
+            ASSISTANTNAME,
+            ASSISTANTPHONE,
+            BIRTHDATE,
+            CANALLOWPORTALSELFREG,
+            CONNECTIONRECEIVEDID,
+            CONNECTIONSENTID,
+            CREATEDBYID,
+            CREATEDDATE,
+            CURRENCYISOCODE,
+            DEPARTMENT,
+            DESCRIPTION,
+            DONOTCALL,
+            EMAIL,
+            EMAILBOUNCEDDATE,
+            EMAILBOUNCEDREASON,
+            FAX,
+            FIRSTNAME,
+            HASOPTEDOUTOFEMAIL,
+            HASOPTEDOUTOFFAX,
+            HOMEPHONE,
+            ID,
+            ISDELETED,
+            LASTACTIVITYDATE,
+            LASTCUREQUESTDATE,
+            LASTCUUPDATEDATE,
+            LASTMODIFIEDBYID,
+            LASTMODIFIEDDATE,
+            LASTNAME,
+            LEADSOURCE,
+            MAILINGCITY,
+            MAILINGCOUNTRY,
+            MAILINGPOSTALCODE,
+            MAILINGSTATE,
+            MAILINGSTREET,
+            MASTERRECORDID,
+            MOBILEPHONE,
+            NAME,
+            OTHERCITY,
+            OTHERCOUNTRY,
+            OTHERPHONE,
+            OTHERPOSTALCODE,
+            OTHERSTATE,
+            OTHERSTREET,
+            OWNERID,
+            PHONE,
+            RECORDTYPEID,
+            REPORTSTOID,
+            SALUTATION,
+            SYSTEMMODSTAMP,
+            TITLE
+            From Contact
+        ];
+    }
 }

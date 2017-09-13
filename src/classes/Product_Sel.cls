@@ -803,7 +803,7 @@ public class Product_Sel extends Selector
         
         List<Product2> listProduct, listFilteredProduct;
         List<EComProduct_DTO> listEComProduct = new List<EComProduct_DTO>();
-        
+
         //*** get products list and prepare for additional information
 system.debug('SOQL::'+SOQL);
         listProduct = Database.query(SOQL);

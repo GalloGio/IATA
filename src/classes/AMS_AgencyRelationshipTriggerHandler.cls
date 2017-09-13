@@ -1,5 +1,6 @@
 public class AMS_AgencyRelationshipTriggerHandler {
 
+    public static boolean isToRunTrigger = true;
     public static boolean AMS_HierarchyProcess = false;
     public static Set<Account> accsToUpdateSet = new Set<Account>();
 

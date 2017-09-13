@@ -12,7 +12,7 @@
     border-radius: .25rem;
 
     background: #fff;
-    position: absolute;
+    position: absolute !important;
     top: 150px;
     left: 25%;
     padding: 1em;
@@ -138,6 +138,10 @@
     line-height: 96px;
     text-align: center;
 }
+
+.THIS .activeApp{
+    line-height:28px;
+}
 .THIS .appImage {
     max-width: 96px;
     /*float: left;*/
@@ -158,4 +162,20 @@
 .THIS input:checked + label {
     background: blue;
     color: red
+}
+
+.THIS .inlinewithlabel{
+    display:inline-block;
+    margin-left:6px;
+    vertical-align:middle;
+}
+
+.THIS .floatleft{
+    display:block;
+    position:relative;
+    left:1em;
+}
+
+.THIS .terms{
+    min-width:390px;
 }

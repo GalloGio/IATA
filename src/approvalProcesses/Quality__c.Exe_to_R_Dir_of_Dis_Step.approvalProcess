@@ -22,6 +22,10 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>mulai@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>naouriy@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>

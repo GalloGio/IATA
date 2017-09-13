@@ -97,6 +97,10 @@ public without sharing class ISSP_Login {
             system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);
             if(String.isNotBlank(retURL))
                 pageLink = retURL + commParam;
+            if (oneUser.Portal_User_Frozen_Checkbox__c && String.isNotBlank(retURL) && retUrl.toLowerCase().contains('iec')){
+                ISSP_Login.reactivateIECUser(oneUser);
+                return null;
+            }
 			if (oneUser.Portal_User_Frozen_Checkbox__c){
 				show90Days = true;
 				ISSP_Login.reactivateUser(oneUser);
@@ -109,6 +113,17 @@ public without sharing class ISSP_Login {
 
         if (relayState!=null)
             pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
+		
+		//NEWGEN-660 and other
+		//SSO SP Initiated: we need to send back the SAML Response to the ACS URL.
+		//browser is redirected to ISSP_Login page if user not authenticated and the 
+		//ACS endpoint (with all details) is URLEncoded and put into querystring parameter startURL
+		//Thus, we need to check if startURL is existing and is populated. If so, we need redirect the browser
+		//to the URL after login is done (third parameter of site.login method)
+		
+		string startURL = ApexPages.currentPage().getParameters().get('startURL');
+		if (startURL!=null)
+            pageLink = startURL;
 
 		system.debug('pageLink: ' + pageLink);
         PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
@@ -149,6 +164,15 @@ public without sharing class ISSP_Login {
         }
         //return null;
         */
+    }
+
+
+    public static void reactivateIECUser(User thisUser){
+
+        thisUser.IsActive = true;
+        thisUser.Portal_User_Frozen_Checkbox__c = false;
+        update thisUser;
+        Boolean success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.IEC, false);
     }
 
     @future
