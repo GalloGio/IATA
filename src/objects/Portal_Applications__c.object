@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -83,6 +83,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Approved OR Changes processed OR Listed.</inlineHelpText>
         <label>Accredited Agents Only</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -103,6 +104,7 @@
         <label>Country Coverage</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -123,6 +125,7 @@
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Country Coverage</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -150,6 +153,7 @@
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Restrict Accredited Agent</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -171,6 +175,7 @@
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Restrict Sector</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -204,6 +209,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Restrict by Agency Category</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -258,6 +264,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -281,6 +288,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -291,6 +299,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Enabling this option prevents internal users from granting this portal service to contacts.</inlineHelpText>
         <label>Cannot be granted internally</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -300,6 +309,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Tick if this is the application for the Agent type of customer.</inlineHelpText>
         <label>Agency</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -310,6 +320,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Aplication Start Icon</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -319,6 +330,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <label>Application URL</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
@@ -329,6 +341,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <label>Application icon URL</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
@@ -339,6 +352,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Application icon</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -350,6 +364,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>If ticked the portal admin user will not have visible options to manage this service.</inlineHelpText>
         <label>Cannot be managed by portal admin</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -359,6 +374,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <label>Case creation record type</label>
         <length>60</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -368,6 +384,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Confirm Box</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -376,6 +393,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <label>Confirm Text</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
@@ -385,6 +403,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Critical Service</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -393,9 +412,20 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <label>Description</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GSA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick if this is the application for the GSA type of customer.</inlineHelpText>
+        <label>GSA</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>GSSA__c</fullName>
@@ -403,6 +433,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Make portal service available to all GSSA customers (Partner users belonging to Account of record type &apos;General Sales Agent Headquarters / Branch WITH 3-letter IATA code)</inlineHelpText>
         <label>GSSA</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -412,6 +443,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>If check the application will not be visible on the user homepage</inlineHelpText>
         <label>Hide on Homepage</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -421,6 +453,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Tick if this is the application for the ICH Airline type of customer.</inlineHelpText>
         <label>ICH Airline</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -429,6 +462,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New Window</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -438,6 +472,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <externalId>false</externalId>
         <inlineHelpText>Tick if this is the application for the Airline non-ICH type of customer.</inlineHelpText>
         <label>Not ICH Airline</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -458,6 +493,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -469,6 +505,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <label>Record type for App Rigth</label>
         <length>18</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -479,6 +516,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <description>Indicate if  application That can be requested</description>
         <externalId>false</externalId>
         <label>Requestable</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -487,6 +525,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Restricted App</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -497,6 +536,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <label>SCIM App Name</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -545,6 +585,7 @@ Name
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -578,6 +619,7 @@ Name
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -598,6 +640,7 @@ Name
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -629,6 +672,7 @@ Name
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -673,6 +717,7 @@ Name
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -684,6 +729,7 @@ Name
         <externalId>false</externalId>
         <inlineHelpText>Defines if the service should be visible on the CNS portal branding.</inlineHelpText>
         <label>Visible on CNS</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -728,6 +774,7 @@ OR(
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -789,9 +836,11 @@ OR(
     </listViews>
     <nameField>
         <label>Service</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Portal Services</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
