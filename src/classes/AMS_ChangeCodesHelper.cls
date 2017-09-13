@@ -633,7 +633,7 @@ public class AMS_ChangeCodesHelper {
         return false;
     }
 
-    private static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
+    public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
 
         String fopString = isNewGen ? '' : 'Not Applicable';
 
