@@ -316,6 +316,7 @@
         <fullName>KAVItoda</fullName>
         <columns>NAME</columns>
         <columns>Error_Message__c</columns>
+        <columns>User__c</columns>
         <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
