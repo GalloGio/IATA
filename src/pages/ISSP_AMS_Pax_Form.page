@@ -327,6 +327,7 @@
             $j(".email__c").parent().parent().siblings('.col-lg-5').find("label").html('{!$Label.ISSP_Office_Email}');
             $j("[id$=BillingAddress]").parent().css('text-align', 'right');
             $j("[id$=HOEmail]").parent().css('text-align', 'right');
+            $j(".email__c").wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
             
       });
     }

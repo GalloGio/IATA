@@ -712,7 +712,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         } 
          //inc321684 verification for roleName = 'Staff - TIESS'
         else if (RoleName.contains('Staff - TIESS')) {
-          template = templates.get('Clicktools_Contact_Email_CX_EN');   
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
         } 
 
         else if (
@@ -720,7 +720,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'China & North Asia' &&
           AccountCountry == 'People\'s Republic of China'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ZH');
+          template = templates.get('Clicktools_Contact_Email_CX_ZH_AUG17');
 
 
         else if (
@@ -746,7 +746,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             || AccountCountry == 'Morocco' || AccountCountry == 'Tunisia' || AccountCountry == 'Algeria')
           )
         )
-          template = templates.get('Clicktools_Contact_Email_CX_FR');
+          template = templates.get('Clicktools_Contact_Email_CX_FR_AUG17');
 
         /*
         else if(
@@ -762,7 +762,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Europe' &&
           (AccountCountry == 'Austria' || AccountCountry == 'Germany')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_DE');
+          template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
 
 
         else if (
@@ -770,7 +770,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Indonesia'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ID');
+          template = templates.get('Clicktools_Contact_Email_CX_ID_AUG17');
 
 
         else if (
@@ -778,7 +778,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Europe' &&
           AccountCountry == 'Italy'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_IT');
+          template = templates.get('Clicktools_Contact_Email_CX_IT_AUG17');
 
 
         else if (
@@ -786,7 +786,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Japan'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_JA');
+          template = templates.get('Clicktools_Contact_Email_CX_JA_AUG17');
 
 
         else if (
@@ -794,7 +794,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Korea, Republic of'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_KO');
+          template = templates.get('Clicktools_Contact_Email_CX_KO_AUG17');
 
 
         else if (
@@ -806,7 +806,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             AccountCountry == 'Brazil'))
 
         )
-          template = templates.get('Clicktools_Contact_Email_CX_PT');
+          template = templates.get('Clicktools_Contact_Email_CX_PT_AUG17');
 
         /*
         else if(
@@ -830,7 +830,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
              AccountCountry == 'Paraguay' || AccountCountry == 'Uruguay' )))
 
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ES');
+          template = templates.get('Clicktools_Contact_Email_CX_ES_AUG17');
 
 
         else if (
@@ -838,7 +838,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Thailand'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_TH');
+          template = templates.get('Clicktools_Contact_Email_CX_TH_AUG17');
 
         /*
         else if(
@@ -854,7 +854,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Vietnam'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_VI');
+          template = templates.get('Clicktools_Contact_Email_CX_VI_AUG17');
 
         else if (
           (RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
@@ -862,7 +862,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
            AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_AR');
+          template = templates.get('Clicktools_Contact_Email_CX_AR_AUG17');
 
         else if (
           (RoleName.contains('A&P Customer Service Staff') &&
@@ -902,7 +902,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
            c.Region__c == 'Asia & Pacific' &&
            AccountCountry == 'Australia')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_EN');
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
         else {
           noNation3++;
           noNationlog3 += c.id + ', ';

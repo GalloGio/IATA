@@ -70,14 +70,17 @@ private class Ifap_ReminderBatchTestClass {
             
             List<Contact> conts = new List<Contact>();
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[0].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[1].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[2].id,
                                      Financial_Assessment_Contact__c = true));

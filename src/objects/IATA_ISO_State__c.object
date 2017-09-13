@@ -130,7 +130,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Valid for Address</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -139,7 +139,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Valid for GDP</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -150,7 +150,7 @@
         <label>numeric code</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -164,8 +164,28 @@
         <columns>ISO_CODE_STANDARD__c</columns>
         <columns>Local_Language__c</columns>
         <columns>CURRENCY_ISO_CODE</columns>
+        <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Valid_for_EBC</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>IEC_Valid_SAP__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>numeric_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Valid_for_GDP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Valid for EBC</label>
         <language>en_US</language>
     </listViews>
     <listViews>

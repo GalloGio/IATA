@@ -138,7 +138,7 @@ public class clsCaseCommentManager {
         Account acc = new Account(Name='Test Account',BillingCity='Montreal', BillingCountry='Canada');
         insert acc;
         
-        Contact cont = new Contact(LastName = 'Test Contact', email ='test@test.com', AccountId = acc.Id);
+        Contact cont = new Contact(FirstName = 'Name', LastName = 'Test Contact', email ='test@test.com', AccountId = acc.Id);
         insert cont;
         
         Case case2 = new Case(contactId=cont.Id, Subject='Test Case');

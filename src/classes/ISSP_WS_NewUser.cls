@@ -262,7 +262,7 @@ global class ISSP_WS_NewUser {
                         else{
                             List <Contact> contactList = [SELECT Id, Status__c, User_Portal_Status__c, Email,
                                                         FirstName, LastName, AccountId, Salutation,
-                                                        Preferred_Language__c
+                                                        Preferred_Language__c, Community__c
                                                         FROM Contact WHERE Id = :thisUser.ContactId];
                             if (contactList.isEmpty()){
                                 //contact not found
@@ -308,6 +308,13 @@ global class ISSP_WS_NewUser {
                                     Contact thisContact = contactList[0];
                                     if (thisContact.User_Portal_Status__c == 'Pending Approval'){
                                         thisContact.User_Portal_Status__c = 'Approved User';
+                                        if(thisContact.Community__c == ''){
+                                            if(isCNS){
+                                                thisContact.Community__c = 'CNS Customer Portal';                                      
+                                            }else{
+                                                thisContact.Community__c = 'ISS Customer Portal';
+                                            }
+                                         }
                                         update thisContact;
                                     }
                                     List <Portal_Application_Right__c> appRightList = [SELECT Id, Right__c FROM
@@ -428,7 +435,7 @@ global class ISSP_WS_NewUser {
                         //user with that email doesn't exist
                         List <Contact> contactList = [SELECT Id, Email, AccountId, Account.RecordType.DeveloperName,
                                                     User_Portal_Status__c, Status__c, FirstName, LastName,
-                                                    Preferred_Language__c, Salutation
+                                                    Preferred_Language__c, Salutation, Community__c
                                                     FROM Contact WHERE Email = :userEmail];
                         if (!contactList.isEmpty()){
                             theContact = contactList[0].Id;
@@ -457,10 +464,17 @@ global class ISSP_WS_NewUser {
                                 //create user and app access
                                 Contact con = contactList[0];
                                 con.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
+                                if(con.Community__c == '' || con.Community__c == null){
+                                    if(isCNS){
+                                        con.Community__c = 'CNS Customer Portal';                                      
+                                    }else{
+                                        con.Community__c = 'ISS Customer Portal';
+                                    }
+                                }
                                 update con;
                                 String conId15 = con.Id;
                                 conId15 = conId15.substring(0,15);
-                                User u = ISSP_WS_Utilities.createUser(userFirstName, userLastName, userEmail, con.Account.RecordType.DeveloperName, con.Id);
+                                User u = ISSP_WS_Utilities.createUser(userFirstName, userLastName, userEmail, con.Account.RecordType.DeveloperName, con.Id, isCNS);
                                 List <Portal_Application_Right__c> appRightList = [SELECT Id, Right__c FROM
                                                                     Portal_Application_Right__c
                                                                     WHERE Contact__c = :con.Id
@@ -661,7 +675,7 @@ global class ISSP_WS_NewUser {
 
                                 return retResponseOne;
                             }
-                            User u = ISSP_WS_Utilities.createUser(userFirstName, userLastName, userEmail, userAccountType, con.Id);
+                            User u = ISSP_WS_Utilities.createUser(userFirstName, userLastName, userEmail, userAccountType, con.Id, isCNS);
                             Portal_Application_Right__c appRight = ISSP_WS_Utilities.createApp(appId, con.Id);
                             try{
                                 //String userId = Site.createPortalUser(u, userAccount, null, true);

@@ -198,6 +198,11 @@ public without sharing virtual class IEC_Cart {
 	private Order cartOrder;
 	private List<OrderItem> cartOrderItems;
 
+	//susana alves INC332088
+	public Order getCartOrderContent(){
+		return cartOrder;
+	}
+
 	protected IEC_Cart() {
 		cartItemMap = new Map<String,CartItem>();
 

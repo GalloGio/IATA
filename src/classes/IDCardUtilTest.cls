@@ -697,7 +697,7 @@ private class IDCardUtilTest {
         long VER = IDCardUtil.generateVERforMultipleAccounts(new List<Account>{a}).get('Canada');
         IDCardUtil.generateUIRforMultipleAccounts(new List<Account>{a});
         
-        Contact c = new Contact(LastName = 'Contact', Email = 'ase@asd.asd', AccountId = a.id, UIR__c = IDCardUtil.generateUIR(a), VER_Number_2__c = String.valueOf(VER));
+        Contact c = new Contact(FirstName = 'Name', LastName = 'Contact', Email = 'ase@asd.asd', AccountId = a.id, UIR__c = IDCardUtil.generateUIR(a), VER_Number_2__c = String.valueOf(VER));
         insert c;
         
         IDCardUtil.generateVERforMultipleAccounts(new List<Account>{a}).get('Canada');

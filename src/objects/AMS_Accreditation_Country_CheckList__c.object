@@ -133,21 +133,6 @@
     </fields>
     <label>AMS Accreditation Country Checklist</label>
     <listViews>
-        <fullName>All_Countries</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Operation__c</columns>
-        <columns>License_required__c</columns>
-        <columns>Registration_required__c</columns>
-        <columns>Statement_of_International_Sales__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Countries</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Enhanced_view</fullName>
         <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>
