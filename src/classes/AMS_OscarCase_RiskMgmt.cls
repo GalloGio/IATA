@@ -216,7 +216,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
 								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
-								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
+								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  , Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
@@ -479,16 +479,16 @@ public class AMS_OscarCase_RiskMgmt {
             }
         	extraMemoText = childs.size() > 1 ? cc.Extra_memo_text_for_HO__c : '';
         }
-		Boolean isHO = (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null));
+		Boolean isHO = (acc != null ? (acc.parentId == null) : (!mapCases.isEmpty() && mapCases.get(idCase).Account.ParentId == null));
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 		AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
-														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId), extraMemoText, isHO).toUpperCase();
+														, mapIRRS.get(AccountId), mapFinancialSecurity.containsKey(AccountId)?mapFinancialSecurity.get(AccountId):null, extraMemoText, isHO).toUpperCase();
 
 
 
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
-        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
+        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO && mapFinancialSecurity.containsKey(AccountId)) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 		AACC.Outstanding_Amount__c = (cc.Calculate_Outstanding_Amount__c && mapCases.get(idCase).Outstanding_Amount__c != null) ? string.valueOf(mapCases.get(idCase).Outstanding_Amount__c) : '';
 		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),mapCases.get(idCase)) : '';
 		AACC.End_of_Grace_Period_Date__c = (cc.Calculate_End_Grace_Period_Date__c && mapCases.get(idCase).End_of_Grace_Period_Date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).End_of_Grace_Period_Date__c) : '';
