@@ -138,10 +138,19 @@ public class AMS_ChangeCodesHelper {
 
         Integer index = 0;
 
-        Set<Account> accountsToUpdate = new Set<Account>();        
-        
+        Set<Account> accountsToUpdate = new Set<Account>();
+
+        Set<Id> accountIds = new Set<Id>();
+        for(Account acc: oscarAgencies)
+            accountIds.add(acc.Id);
+
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
-        
+
+        // get the forms of payment for all accounts involved in the changes to display on eBulletin
+        Map<Id,List<Agency_Authorization__c>> fOPs = null;
+
+        if(oscarAgencies.get(0).ANG_IsNewGenAgency__c)
+            fOPs = fetchFormsOfPayment(accountIds);
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
@@ -159,11 +168,15 @@ public class AMS_ChangeCodesHelper {
             
             if(objectChanges != null && !objectChanges.isEmpty())
                 objectChangesByChangeCode = objectChanges.get(index);
-            
-            ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive);
+
+            List<Agency_Authorization__c> accFOPs = null;
+
+            if(oscarAgencies.get(0).ANG_IsNewGenAgency__c)
+                accFOPs = fOPs.get(oscarAgencies.get(index).Id);
+
+            ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive, accFOPs);
 
             aaccToInsert.add(changeCodeResult.changeCode);
-            
         
             aaccHistoryToProcess.put(oscarAgencies.get(index).Id, changeCodeResult);
             aaccHistoryPerAcct.put(oscarAgencies.get(index).Id, changeCodeResult);
@@ -252,7 +265,7 @@ public class AMS_ChangeCodesHelper {
      Add Change Code to be Created NeW method with Change Code History
     */
 
-    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive, List<Agency_Authorization__c> fOPs) {
 
 
         Id oscarId = null;
@@ -273,6 +286,7 @@ public class AMS_ChangeCodesHelper {
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
             , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
+            , Forms_Of_Payment__c = generateFOPString(fOPs, oscarAgency.ANG_IsNewGenAgency__c)
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
@@ -382,7 +396,7 @@ public class AMS_ChangeCodesHelper {
     */
    
     private static ChangeCodeStruct createAAChangeCode(AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
-        return createAAChangeCode( null, changeCode, oscar, oscarAgency, isActive);
+        return createAAChangeCode( null, changeCode, oscar, oscarAgency, isActive, null);
     }
 
 
@@ -615,6 +629,35 @@ public class AMS_ChangeCodesHelper {
             else return false;
         }
         return false;
+    }
+
+    private static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
+
+        String fopString = isNewGen ? '' : 'Not Applicable';
+
+        if(fOPs != null && isNewGen){
+            for(Agency_Authorization__c fop : fOPs)
+                fopString += fop.Authority__c + ' - ' + fop.Status__c + ';';
+
+            fopString.removeEnd(';');
+        }
+
+        return fopString;
+    }
+
+    public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
+
+        Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId]){
+            if(fOPs.keySet().contains(fop.Account__c))
+                fOPs.get(fop.Account__c).add(fop);
+            else
+                    fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
+        }
+
+        return fOPs;
     }
 
 }

@@ -1161,6 +1161,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<Account> accountsToUpdate = new Set<Account>();
 
+		// get the forms of payment for all accounts involved in the changes to display on eBulletin
+		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(new Set<Id>(oscarAgencies));
+
 		AMS_ChangeCodesHelper.ObjectChangesStruct objectChangesByChangeCode = null;
 
 		//Account ID => Change Code Struct
@@ -1188,7 +1191,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					objectChangesByChangeCode = objectChanges.get(index);
 
 				system.debug('[ANG_AgencyChangesHelper] Change Codes Check:'+ cc);
-				AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), acct, isActive);
+				AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), acct, isActive, fOPs.get(acctId));
 
 				system.debug('[ANG_AgencyChangesHelper] Change Codes Check2:'+ cc);
 				changesContainer.addChangeCode(changeCodeResult.changeCode);
