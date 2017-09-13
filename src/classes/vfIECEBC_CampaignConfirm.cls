@@ -265,7 +265,10 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
     // please note that the detail on the product rate plan charge will be recalculated and reselected
     // this ensure the data integrity and simplify the caller
     public PageReference goToPaymentPage()
-    {
+    {   String id = ApexPages.currentPage().getParameters().get('id');
+        ebcCampaignId = id;
+        system.debug('goToPaymentPage ebcCampaignId :: ' + ebcCampaignId);
+
         String campaignPaymentOption = payWithExactAmount ? EBC_PAYMENT_CAMPAIGN_EXACT 
                                     : ( payWithEmailPackage ? EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE  
                                         : ( payWithRatePlan ? EBC_PAYMENT_CAMPAIGN_RATE_PLAN : null )
