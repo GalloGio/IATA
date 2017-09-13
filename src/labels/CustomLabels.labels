@@ -972,7 +972,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProgressBarNode1</shortDescription>
-        <value>Draft (Label)</value>
+        <value>ProgressBarNode1</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProgressBarNode2</fullName>
@@ -980,7 +980,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProgressBarNode2</shortDescription>
-        <value>Submitted to IATA (Label)</value>
+        <value>ProgressBarNode2</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProgressBarNode3</fullName>
@@ -988,8 +988,32 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProgressBarNode3</shortDescription>
-        <value>Sanity Check (Label)</value>
+        <value>ProgressBarNode3</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode4</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode4</shortDescription>
+        <value>ProgressBarNode4</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode5</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode5</shortDescription>
+        <value>ProgressBarNode5</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode6</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode6</shortDescription>
+        <value>ProgressBarNode6</value>
+    </labels>        
     <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
