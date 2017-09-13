@@ -132,7 +132,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean isEligableForChange {get; set;}
     public boolean isTerminatedAgent {get; set;}
     public boolean isNewHOforAccredAgent {get; set;}
-    public Boolean isOldTypeAccount {get; set;} // HO with no accreditation type
+    public Boolean isNotNewgenAccount {get; set;} // HO with no accreditation type
 
     public Case newCase {get; set;}
     public Contact con {get; set;}
@@ -311,7 +311,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if(hqAccount.Status__c == 'Terminated')
             isTerminatedAgent = true;
         
-        isOldTypeAccount = (con.Account.Location_Type__c == 'HO' && (con.Account.ANG_Accreditation_Model__c == '' || con.Account.ANG_Accreditation_Model__c == null));
+        isNotNewgenAccount = (con.Account.Location_Type__c == 'HO' && (con.Account.ANG_Accreditation_Model__c == '' || con.Account.ANG_Accreditation_Model__c == null));
 
         hqCountryISOCode = hqAccount.IATA_ISO_Country__r.ISO_Code__c;
         newForm.HO_Account__c = vHQAccountId;
@@ -804,7 +804,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 //
                 // For all HO without accreditation type we can't create branch offices in NAM enabled countries.
                 //
-                if(isOldTypeAccount && iso.ANG_Enable_NewGen__c) {
+                if(isNotNewgenAccount && iso.ANG_Enable_NewGen__c) {
                     continue;
                 }
                 
