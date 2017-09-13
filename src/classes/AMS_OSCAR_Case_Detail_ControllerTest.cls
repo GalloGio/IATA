@@ -78,59 +78,59 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		insert a;
 
-		AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
-
-		accredForm.Branch_Office_Country__c = country.Id;
-
-		update accredForm;
-
-		AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != ''];
-
-		oscar.Account__c = a.Id;
-		oscar.Process__c = AMS_Utils.NEWHELITE;
-
-		update oscar;
-
-
-		Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
-
-		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
-			Name = 'test settlement',
-			RecordTypeId = settlementRTId
-		);
-
-		insert settlement;
-
-		AMS_Operation__c opCode = new AMS_Operation__c(
-			Name = 'test operation',
-			Settlement__c = settlement.id,
-			Allow_multiple_remittances__c = true,
-			Country__c = country.id
-		);
-
-		insert opCode;
-
-		ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
-			Class_Type__c  = 'P',
-			Remittance_Frequency__c = 'Daily',
-			Operation__c = opCode.Id
-		);
-
-		insert bSPAttributes;
-
-		AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
-			Account__c = a.id,
-			Operation__c = opCode.Id
-		);
-
-		insert agencyOp;
-
-
-		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
-		pg.getParameters().put('id', c.Id);
-		Test.setCurrentPage(pg);
-
 		Test.startTest();
+
+			AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
+
+			accredForm.Branch_Office_Country__c = country.Id;
+			accredForm.Location_Class__c = 'P';
+
+			update accredForm;
+
+			AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != ''];
+
+			oscar.Account__c = a.Id;
+			oscar.Process__c = AMS_Utils.NEWHELITE;
+
+			update oscar;
+
+			Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+
+			AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+				Name = 'test settlement',
+				RecordTypeId = settlementRTId
+			);
+
+			insert settlement;
+
+			AMS_Operation__c opCode = new AMS_Operation__c(
+				Name = 'test operation',
+				Settlement__c = settlement.id,
+				Allow_multiple_remittances__c = true,
+				Country__c = country.id
+			);
+
+			insert opCode;
+
+			ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
+				Class_Type__c  = 'P',
+				Remittance_Frequency__c = 'Daily',
+				Operation__c = opCode.Id
+			);
+
+			insert bSPAttributes;
+
+			AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
+				Account__c = a.id,
+				Operation__c = opCode.Id
+			);
+
+			insert agencyOp;
+
+
+			PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+			pg.getParameters().put('id', c.Id);
+			Test.setCurrentPage(pg);
 
 			AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();	
 					
