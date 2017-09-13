@@ -182,7 +182,7 @@
 
 					            <apex:outputPanel layout="block" id="productList" rendered="{!ProductRecordsList.size > 0}">
 									
-										<apex:pageBlock title="Products List">
+								<apex:pageBlock title="Products List">
 								  <apex:form id="theForm">
 								    <ul class="list product-list">
 								      <apex:repeat var="prod" value="{!ProductRecordsList}">
@@ -246,12 +246,12 @@
 								      </apex:form>
 								      <apex:pageBlockSection >
 								    </apex:pageBlockSection >
-								    <apex:form id="thePages">
-								    <apex:panelGrid columns="5">
-								    	  <apex:commandButton value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
-								          <apex:commandButton value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
-								          <apex:commandButton value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
-								          <apex:commandButton value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
+								    <apex:form id="thePages" >
+								    <apex:panelGrid columns="5" style="margin: 0 auto;">
+								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
+								          <apex:commandButton styleClass="button secondary" value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
+								          <apex:commandButton styleClass="button secondary" value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
+								          <apex:commandButton styleClass="button secondary" value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
 								    </apex:panelGrid> 
 								    </apex:form>
 								    <apex:pageBlockSection >
