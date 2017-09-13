@@ -390,6 +390,23 @@ global with sharing class ANG_ConversionHelper {
 
 		List<Account> allAccountsSingleHierarchyHO = [SELECT Id  from Account where Location_Type__c in :LOCATIONTYPESNEWGEN and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :countryName and Id not in:accountsMigrated];
 
+		set<Id> accsToCreateRisks = new set<Id>();
+		for(ANG_ConversionHelper.HierarchyStructure i :toReturn.validHierarchies.values()){
+			accsToCreateRisks.addAll(i.allAgencies);
+		}
+
+		Map<String,Integer> nRiskEventTypes = new Map<String,Integer>();
+		Map<Id, ANG_Risk_Event_Type__c> mapTypes = new Map<ID, ANG_Risk_Event_Type__c>([SELECT Name FROM ANG_Risk_Event_Type__c]);
+
+		for(ANG_Agency_Risk_Event__c a :  (new ANG_RiskEventMigrationHelper(accsToCreateRisks)).convertChangeCodesToRiskEvents()){
+			if(nRiskEventTypes.containsKey(mapTypes.get(a.ANG_Risk_Type__c).Name))
+				nRiskEventTypes.put(mapTypes.get(a.ANG_Risk_Type__c).name ,nRiskEventTypes.get(mapTypes.get(a.ANG_Risk_Type__c).Name)+1);
+			else
+				nRiskEventTypes.put(mapTypes.get(a.ANG_Risk_Type__c).Name, 1);
+		}
+
+		toReturn.RisksToAdd = nRiskEventTypes;
+
 		toReturn.totalMigratedHierarchies+=allAccountsSingleHierarchyHO.size();
 		toReturn.totalHierarchies+=allAccountsSingleHierarchyHO.size();
 
@@ -667,6 +684,8 @@ global with sharing class ANG_ConversionHelper {
 
 	public class StatisticGeneratorStructure{
 
+		public Map<String,Integer> RisksToAdd{get;set;}
+
 		public Integer totalHierarchies{get;set;}
 
 		public Integer totalValidHierarchies{get;set;}
@@ -797,6 +816,8 @@ global with sharing class ANG_ConversionHelper {
 
 	global class ControllerLightStructure{
 
+		public Map<String,Integer> risksToAdd{get;set;}
+
 		public Integer totalHierarchies{get;set;}
 
 		public Integer totalValidHierarchies{get;set;}
@@ -808,6 +829,7 @@ global with sharing class ANG_ConversionHelper {
 		public Map<Integer,List<ANG_ConversionHelper.HierarchyStructure>> inValidHierarchies;
 
 		public ControllerLightStructure(StatisticGeneratorStructure struct){
+			this.risksToAdd = struct.risksToAdd;
 
 			this.totalHierarchies = struct.totalHierarchies;
 
