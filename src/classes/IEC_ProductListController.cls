@@ -328,7 +328,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             if(productRecords == null) {
                 productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
                     // sets the number of records to show in each page view
-                    productRecords.setPageSize(10);
+                    productRecords.setPageSize(12);
             }
             system.debug('### productRecords :: ' + productRecords.getRecords().size());
             return productRecords;
@@ -432,8 +432,6 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         set;
     }
  
-
-
     //Returns the previous page of records
     public void previous()
     {
@@ -444,6 +442,32 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public void next()
     {
         productRecords.next();
+    }
+
+    //Page number of the current displaying records
+    public Integer pageNumbers
+    {
+        get
+        {
+            return productRecords.getPageNumber();
+        }
+        set;
+    }
+
+    /** total number of pages for page */
+    Public Integer getTotalPages(){
+     Decimal totalSize = productRecords.getResultSize();
+     Decimal pageSize = productRecords.getPageSize();
+     Decimal pages = totalSize/pageSize;
+     return (Integer)pages.round(System.RoundingMode.CEILING);
+    }
+
+    public void first() {
+       productRecords.first();
+    }
+
+    public void last() {
+       productRecords.last();
     }
 
 }

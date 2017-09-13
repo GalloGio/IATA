@@ -184,11 +184,6 @@
 									
 										<apex:pageBlock title="Products List">
 								  <apex:form id="theForm">
-								  <apex:panelGrid columns="2">
-								      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
-								      <apex:commandLink action="{!next}">Next</apex:commandlink>
-								    </apex:panelGrid>
-								    <apex:pageBlockSection >
 								    <ul class="list product-list">
 								      <apex:repeat var="prod" value="{!ProductRecordsList}">
 								        	<li class="list-item">
@@ -248,9 +243,21 @@
 											</li>
 								      </apex:repeat>
 								      </ul>
+								      </apex:form>
+								      <apex:pageBlockSection >
+								    </apex:pageBlockSection >
+								    <apex:form id="thePages">
+								    <apex:panelGrid columns="5">
+								    	  <apex:commandButton value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
+								          <apex:commandButton value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
+								          <apex:commandButton value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
+								          <apex:commandButton value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
+								    </apex:panelGrid> 
+								    </apex:form>
+								    <apex:pageBlockSection >
 								    </apex:pageBlockSection>
 								    
-								  </apex:form>
+								  
 								</apex:pageBlock>
 									
 								</apex:outputPanel>
@@ -262,7 +269,7 @@
 				                    </apex:actionFunction>
 
 				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-
+ 
 				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
 								</apex:form>
 								
@@ -337,11 +344,10 @@
 
 
 							</apex:outputPanel>
-
+							
 							<apex:form >
 								<apex:inputHidden id="pageNumber" value="{!pageNumber}" />
 							</apex:form>
-
 						</div>
 					</main>
 
