@@ -1258,7 +1258,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>Standard Accreditation with Cash</value>
+        <value>GOStandard</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
@@ -1266,7 +1266,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>Standard Accreditation with no Cash</value>
+        <value>GOLite</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
@@ -1356,6 +1356,94 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANY</shortDescription>
         <value>ANY</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
+        </value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessageNoAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>
+            Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type
+        </value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_RiskDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH RiskDescription</shortDescription>
+        <value>Risk Description</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_DateIssued</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_AccessEasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH AccessEasyPay</shortDescription>
+        <value>Access your IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Request_ICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Request ICE</shortDescription>
+        <value>In order to view your upcoming payments &amp; remittance dates&lt;br/a&gt;
+            &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;Request access to the ICE - IATA Customer E-Statement&lt;/a&gt;</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Cash_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Cash Conditions</shortDescription>
+        <value>Cash Conditions</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Financial_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Financial Review</shortDescription>
+        <value>Financial Review</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Risk_History</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Risk History</shortDescription>
+        <value>Risk History</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RHC_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information</shortDescription>
+        <value>RHC Information</value>
+    </labels>       
+    <labels>
+        <fullName>ISSP_RHC_HUB_RH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Risk History</shortDescription>
+        <value>Risk Events History</value>
     </labels>
     <labels>
         <fullName>API_URL</fullName>
@@ -18916,6 +19004,78 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP</shortDescription>
+        <value>Available Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Cash</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
+        <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Credit Card</shortDescription>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Curr_Financial_Security</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Curr Financial Security</shortDescription>
+        <value>Current Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Current_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Current Usage</shortDescription>
+        <value>Current usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Last_Updated</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Last Updated</shortDescription>
+        <value>Last Updated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Percentage_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Percentage Usage</shortDescription>
+        <value>Percentage usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_RP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB RP</shortDescription>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
