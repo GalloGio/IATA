@@ -59,13 +59,13 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			}  
 			
 			if(isMajorchange1(a)){
-				reToAdd.ANG_UniqueKey__c    = date.today().format() + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
+				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major1' +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
 			}  
 			
 			if(isMajorchange2(a)){
-				reToAdd.ANG_UniqueKey__c    = date.today().format() + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
+				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
 			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major2' +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
 			}
@@ -163,8 +163,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
 		system.debug('isMajorchange1');
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF  
-			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CSF)

@@ -39,7 +39,7 @@ public with sharing class ANG_Risk_Helper{
     public static final String RISK_TYPE_PAYMENT_DEFAULT           = 'Payment Default';
     public static final String RISK_TYPE_FAIL_FINANCIAL_STATEMENTS = 'Fail Financial Statements';
     public static final String RISK_TYPE_MAJOR_CHANGE              = 'Major change (owner or legal)';
-    public static final String RISK_TYPE_UNREPORTED_CHANGE         = 'Unreported change (owner or legal)';
+    public static final String RISK_TYPE_UNREPORTED_CHANGE         = 'Unreported Major Change';
     public static final String RISK_TYPE_FAIL_FINANCIAL_SECURITY   = 'Fail Financial Security';
     public static final String RISK_TYPE_COMMON_OWNERSHIP_DEFAULT  = 'Common ownership default';
     public static final String RISK_TYPE_PREJUDICED_COLLECTION     = 'Prejudiced collection';
