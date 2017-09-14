@@ -1446,6 +1446,34 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Risk Events History</value>
     </labels>
     <labels>
+        <fullName>ANG_RHC_AmountTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_HUB_Current_UsageTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC HUB Current Usage Tooltip</shortDescription>
+        <value>RHC HUB Current Usage Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Accreditation Model Tooltip</shortDescription>
+        <value>RHC Accreditation Model Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_RiskStatusTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
+        <value>RHC Risk Status Tooltip</value>
+    </labels>    
+    <labels>
         <fullName>API_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>

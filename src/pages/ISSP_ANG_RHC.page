@@ -143,7 +143,7 @@
                 <tr>
                   <td>
                     {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="RHC_AmountTooltip" />
                   </td>
                   <td>
                     {!remittanceFrequency.CurrencyIsoCode} 
@@ -155,7 +155,7 @@
                 <tr>
                   <td>
                     {!$Label.ISSP_RHC_HUB_Current_Usage}
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
                   </td>
                   <td>
                     {!remittanceFrequency.CurrencyIsoCode}
@@ -232,7 +232,7 @@
                 <div class="customTable">
                   <div>
                     <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_Accreditation_ModelTooltip" />
                   </div>
                   <div>                  
                     {! accreditationType}
@@ -246,7 +246,7 @@
 
                   <div>
                   <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_RiskStatusTooltip" />
                   </div>
                   <div>
                     {! riskStatus}
@@ -293,7 +293,6 @@
                 <div class="customTable2">
                   <div>
                     <strong> Risk Event Status </strong>
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </div>
                   <div>  
                     <apex:outputPanel layout="block" styleClass="text-normal">
