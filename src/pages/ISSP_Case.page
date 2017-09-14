@@ -283,9 +283,18 @@
                         <div class="panel-heading head_panel_green">
                             <h3 class="panel-title">{!if(isNewCase, $Label.ISSP_NewCase, $Label.ISSP_CaseNumber+' - '+newCase.CaseNumber)}</h3>
                         </div>
+
+
                         <div class="panel panel-body">
+
+
+
                             <!-- panel body -->
                         <apex:form rendered="{!AND(isNewCase, isAccreditationUploadCase)}">
+
+
+                                <c:ANG_ProgressBar helperParam="{! progressBarHelper}"/>
+
                                 <apex:pageBlock mode="edit" id="amsCase">
                                     <apex:pagemessages /> 
                                     <apex:pageblockbuttons style="padding-top:10px" location="bottom">
@@ -314,6 +323,7 @@
                             </apex:form>
    
                             <apex:form rendered="{!AND(isNewCase, NOT(isAccreditationUploadCase))}">
+
                                 <apex:pageblock mode="edit">
                                     
                                     <apex:pageblockbuttons style="padding-top:10px">
@@ -324,6 +334,9 @@
                                     </apex:pageblockbuttons>
 
                                     <apex:pagemessages />
+
+                                    <c:ANG_ProgressBar helperParam="{! progressBarHelper}"/>
+
                                     <apex:pageblocksection title="" columns="1">
                                         <apex:inputfield value="{!newCase.Subject}" required="true" styleclass="form-control" />
                                         <apex:inputfield value="{!newCase.Description}" required="true" styleclass="form-control" style="height: 100px" />
@@ -568,6 +581,8 @@
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(caseType='IATASR', newCase.isDPCCurrentUser__c, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />
                                         </apex:outputpanel>
                                     </apex:pageblockbuttons>
+
+                                    <c:ANG_ProgressBar helperParam="{! progressBarHelper}"/>
 
                                     <apex:pageblocksection title="{!$Label.IDCard_CaseDetails}" columns="1" rendered="{!NOT(isDPCUser)}">
 

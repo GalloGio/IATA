@@ -329,13 +329,15 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 }            
 
                 for(AMS_Accreditation_Requirement__c req : countryRequirementListAux) {
-                    if (filterLanguage == req.Language__c && req.Requirement_text__c != null) {
+                    if (filterLanguage == req.Language__c) {
 
-                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
-                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
-                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
-
-                        countryRequirementsList.add(req);
+                        if (req.Requirement_text__c != null) {
+                            req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                            req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                            req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
+                        }
+                    
+                        countryRequirementsList.add(req);    
                     }
                 }
             }
@@ -367,7 +369,9 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             accredModel = 'Cash';
         }else{
             accredModel = user.contact.Account.ANG_Accreditation_Model__c;
-        }        
+        }
+
+        accreditationType = accredModel;
 
         if(isHOAccredited && category == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT) {
             if(isNewgenEnabled){

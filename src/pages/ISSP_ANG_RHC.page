@@ -1,0 +1,449 @@
+<apex:page controller="ISSP_ANG_RHC" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false">
+  <html>
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <c:ISSP_Header></c:ISSP_Header>
+    <c:iss_ap_css />
+  </head>
+
+  <body>
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
+
+      main {
+        background-color: white;
+      }
+
+      td>img {
+        padding-bottom: 7px;
+        padding-left: 5px;
+      }
+
+      i.check {
+        color: green;
+      }
+
+      i.wrong {
+        color: red;
+      }
+
+      #gaugeSection {
+        padding-left: 0;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      #gaugeSection > strong {
+        margin-left: 15px;
+      }
+
+      .tableFormat {
+        padding-left : 5px !important;
+        padding-right : 15px !important;
+        padding-bottom: 2px !important;
+        padding-top :  2px !important;
+        vertical-align: middle !important;
+      }
+
+      .last-updated {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: rgb(121, 118, 111);
+        font-size: 12px;
+      }
+
+      div.customTable {
+        width: 100%;
+      }
+
+      div.customTable>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }
+
+      div.customTable>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }      
+
+      div.customTable2 {
+        width: 100%;
+      }
+
+      div.customTable2>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 30%;
+        float: left;
+      }
+
+      div.customTable2>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 70%;
+        float: left;
+      }      
+
+      div.customTable3 {
+        width: 100%;
+      }
+
+      input + label {
+        font-weight:normal;
+      } 
+
+      @media (max-width: 992px) {
+        .fa-money {
+          font-size: 200px;
+        }
+        .fa-credit-card-alt {
+          font-size: 167px;
+        }
+        .fa-credit-card {
+          font-size: 198px;
+        }
+        #gaugeSection > strong {
+          margin-left: 25px;
+          font-size: 20px;
+        }
+        .last-updated {
+          font-size: 13px;
+        }
+      }
+    </style>
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      <apex:form id="mainFrm">
+      <div class="row">
+        <section name="left-side" class="col-md-6 col-sm-12">
+          <section name="remittance-holding" class="row">
+            <header class="col-xs-12">
+              <div class="section-header">
+                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB}</strong>
+              </div>
+            </header>
+            <section id="remittance-holding-table" class="col-md-8 col-sm-12">
+              <table class="table">
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
+                  <td>
+                    {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="RHC_AmountTooltip" />
+                  </td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode} 
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_RHC_Amount__c}"/>
+                    </apex:outputText>
+                  </td>
+                </tr>
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
+                  <td>
+                    {!$Label.ISSP_RHC_HUB_Current_Usage}
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
+                  </td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode}
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC__c}"/>
+                    </apex:outputText>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
+                  </td>
+                  <td>
+                    {!remittanceFrequency.CurrencyIsoCode}
+                    <apex:outputText value="{0, number, ###,##0}">
+                      <apex:param value="{!remittanceFrequency.ANG_Financial_Security__c}"/>
+                    </apex:outputText>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
+                  <td>
+                    {!$ObjectType.Account.fields.Remittance_frequency__c.label}
+                  </td>
+                  <td>{!contact.Account.Remittance_frequency__c}</td>
+                  <td></td>
+                </tr>
+              </table>
+            </section>
+            <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
+              <canvas id="percentageUsageGauge"></canvas>
+              <strong>
+                <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
+                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
+                </apex:outputText>
+              </strong>
+              <span class="last-updated">
+                <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
+                <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Last_Update__c}" />
+                </apex:outputText>
+              </span>
+            </section>
+          </section>
+          <div class="row" style="display: {!IF(( isCashless == false),"block","none")}">
+            <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
+              <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
+              <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
+              <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
+            </div>            
+          </div>
+          <div class="row">
+            <br/>
+          </div>
+
+
+          <!-- Available forms of payment-->
+
+          <c:AFP_Component wrapperClass='{!afpWrapper}'/>
+          
+        </section>
+
+        <!-- Risk Profile-->
+
+        <section name="right-side" class="col-md-6 col-sm-12">
+          <table class="table">
+            <tr>
+              <th class="section-header">
+                <i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <div class="customTable">
+                  <div>
+                    <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_Accreditation_ModelTooltip" />
+                  </div>
+                  <div>                  
+                    {! accreditationType}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr style="display: {!IF(( isCashless == false),"block","none")}">
+              <td>
+                <div class="customTable">
+
+                  <div>
+                  <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_RiskStatusTooltip" />
+                  </div>
+                  <div>
+                    {! riskStatus}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$Label.ANG_ISSP_RP_Cash_Conditions}
+                  </div>
+                  <div>
+                    {! cashConditions}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$Label.ANG_ISSP_RP_Financial_Review}                    
+                  </div>
+                  <div>
+                    {! financialReviewResult}
+                  </div>
+
+                  <div style="padding-left: 30px" class="customTable">
+                    {!$Label.ANG_ISSP_RP_Risk_History} 
+                  </div>
+                  <div>
+                    {! riskHistoryAssessment}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- Risk Event History -->
+
+        <section name="right-side" class="col-md-6 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
+          <table class="table">
+            <tr>
+              <th class="section-header">
+                <i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RH}
+              </th>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="customTable2">
+                  <div>
+                    <strong> Risk Event Status </strong>
+                  </div>
+                  <div>  
+                    <apex:outputPanel layout="block" styleClass="text-normal">
+                        <apex:selectRadio value="{!riskStatusFilter}" layout="pageDirection" id="riskStatusFilter" onchange="riskStatusFilterChange();">
+                          <apex:selectOption itemValue="Active" itemLabel="{!$Label.ISSP_AMS_eBulletin_Enabled}"/>
+                          <apex:selectOption itemValue="Expired" itemLabel="{!$Label.Warning_Expired}"/>
+                          <apex:selectOption itemValue="Inactive" itemLabel="{!$Label.ISSP_AMS_eBulletin_Disabled}"/>
+                          <apex:selectOption itemValue="All" itemLabel="{!$Label.ISSP_All}"/>
+                        </apex:selectRadio>
+                    </apex:outputPanel>
+                    <apex:actionFunction action="{!refreshRiskEventsTable}" name="riskStatusFilterChange" rerender="refreshRiskEventsTableId">
+                    </apex:actionFunction>                  
+                  </div>
+                </div>                
+                <div class="customTable3" id='bla'>
+                  <apex:outputPanel id="refreshRiskEventsTableId">
+                    <apex:pageBlock >
+                    
+                      <table id="riskHistoryTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
+                                <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
+                                <th class="tableFormat">{!$Label.ANG_ISSP_REH_DateIssued}</th>
+                                <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
+                                <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
+                                <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <apex:repeat value="{! riskEventList}" var="riskEvent">
+                            <tr>                            
+                              <td class="tableFormat">{! riskEvent.description}</td>
+                              <td class="tableFormat" style="display:{!IF(isAll,'','none')}">{! riskEvent.status}</td>
+                              <td class="tableFormat">
+                                <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                                  <apex:param value="{! riskEvent.dateAssigned}" />
+                                </apex:outputText>
+                              </td>
+                              <td class="tableFormat">
+                                <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                                  <apex:param value="{! riskEvent.dateExpired}" />
+                                </apex:outputText>
+                              </td>
+                              <td class="tableFormat">{! riskEvent.iataCode}</td>
+                              <td class="tableFormat">
+                                <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
+                              </td>
+                            </tr>                            
+                          </apex:repeat>
+                        </tbody>
+                      </table>
+                      <script type="text/javascript">
+                        $('#riskHistoryTable').dataTable( {
+                          "pageLength": 5,
+                          "lengthMenu": [ 5, 10, 25, 50 ],
+                          "searching": false
+                        } );                      
+                      </script>
+                    </apex:pageBlock>
+                  </apex:outputPanel>                
+                </div>                  
+              </td>
+            </tr>
+          </table>
+        </section>
+      </div>
+      </apex:form>
+
+      <c:ISSP_CustomFooter />
+    </main>
+    <script src="{!URLFOR($Resource.gaugeJS)}"></script>
+    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
+    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>  
+    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
+    <script>
+      (function gaugeScript() {
+        "use strict";
+        var opts = {
+          angle: 0, // The span of the gauge arc
+          lineWidth: 0.47, // The line thickness
+          radiusScale: 1, // Relative radius
+          pointer: {
+            length: 0.6, // // Relative to gauge radius
+            strokeWidth: 0.024, // The thickness
+            color: '#000000' // Fill color
+          },
+          limitMax: true,     // If false, max value increases automatically if value > maxValue
+          limitMin: true,     // If true, the min value of the gauge will be fixed
+          colorStart: '#6FADCF',   // Colors
+          colorStop: '#8FC0DA',    // just experiment with them
+          strokeColor: '#E0E0E0',  // to see which ones work best for you
+          generateGradient: true,
+          highDpiSupport: true,     // High resolution support
+          staticZones: [
+            {strokeStyle: "#30B32D", min: 0, max: 50}, // Green
+            {strokeStyle: "#FFA500", min: 50, max: 75}, // Orange
+            {strokeStyle: "#F03E3E", min: 75, max: 100}  // Red
+          ],
+          staticLabels: {
+            font: "11px Arial",  // Specifies font
+            labels: [0, 50, 75, 100],  // Print labels at these values
+            color: "#000000",  // Optional: Label text color
+            fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+          },
+        };
+        var target = document.getElementById('percentageUsageGauge'); // your canvas element
+        createGauge();
+
+        var windowWidth;
+        $( window ).resize(function() {
+          windowWidth = $( window ).width();
+          if (windowWidth <= 992) {
+            opts.staticLabels.font = '15px Arial';
+            createGauge(windowWidth);
+            target.style.marginLeft = ((target.parentElement.offsetWidth - target.width) / 2) + 'px';
+          } else if (windowWidth > 992) {
+            opts.staticLabels.font = '11px Arial';
+            createGauge(windowWidth);
+          }
+        });
+
+        function setGaugeSize(windowWidth) {
+          var canvasParentWidth = target.parentElement.offsetWidth;
+          if (windowWidth > 992) {
+            target.width = canvasParentWidth;
+            target.height = canvasParentWidth * 0.5 ;
+            target.style.marginLeft = '0px';
+            target.parentElement.style.paddingTop = ((document.getElementById('remittance-holding-table').offsetHeight - target.parentElement.offsetHeight) /2) + 'px';
+          } else {
+            target.width = canvasParentWidth - 50;
+            target.height = target.width * 0.5;
+            target.style.marginLeft = ((canvasParentWidth - target.width) / 2) + 'px';
+            target.parentElement.style.paddingTop = '0px';
+          }
+        }
+
+        function createGauge(windowWidth) {
+          setGaugeSize(windowWidth || $( window ).width());
+          target.style.width = target.width + 'px';
+          target.style.height = (target.height + 10) + 'px';
+          var gauge = new Gauge(target).setOptions(opts);
+          gauge.maxValue = 100;
+          gauge.setMinValue(0);
+          gauge.animationSpeed = 32;
+          gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c});
+        }
+
+      })();
+      
+    </script>
+  </body>
+  </html>
+</apex:page>
