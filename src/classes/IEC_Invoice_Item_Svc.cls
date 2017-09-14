@@ -40,22 +40,24 @@ global without sharing class IEC_Invoice_Item_Svc {
 		
 		//*** retrieve associated subscription information
 		Map<String, String> mapSubZId_ZInvNum  = new Map<String, String>();
+		Map<String, String> mapSubName_ZInvNum  = new Map<String, String>();
 		Map<String, Boolean> mapObjectId_IsUsed = new Map<String, Boolean>();
 		for (Invoice_Item__c invItem : lstInvoiceItem)
 		{
+			//INC330514
+			mapSubZId_ZInvNum.put(invItem.Subscription_Zuora_ID__c, invItem.Invoice__r.Name);
 			//INC306838
-			//mapSubZId_ZInvNum.put(invItem.Subscription_Zuora_ID__c, invItem.Invoice__r.Name);
-			mapSubZId_ZInvNum.put(invItem.Subscription_Number__c, invItem.Invoice__r.Name);
+			mapSubName_ZInvNum.put(invItem.Subscription_Number__c, invItem.Invoice__r.Name);
 			mapObjectId_IsUsed.put(invItem.Invoice__r.Zuora__External_Id__c, false);
 			mapZInvNum_Status.put(invItem.Invoice__r.Name, '');
 		}
 		//INC330514
 		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
 		//INC306838
-		Map<String, Zuora__Subscription__c> mapSubZName_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubZId_ZInvNum.keySet());
+		Map<String, Zuora__Subscription__c> mapSubZName_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubName_ZInvNum.keySet());
 		
 		//*** quit on error of missing subscription
-		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubZId_ZInvNum.size())
+		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubName_ZInvNum.size())
 		{
 			for (String SubZId : mapSubZId_ZInvNum.keySet())
 				if (!mapSubZName_Subscription.containsKey(SubZId))

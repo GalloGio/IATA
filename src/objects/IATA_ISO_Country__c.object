@@ -1407,11 +1407,19 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Martinique</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Mauritania</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Mauritius</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mayotte</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

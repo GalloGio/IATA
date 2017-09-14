@@ -79,6 +79,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_City_Uppercase__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Address_City__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address City Uppercase</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_City__c</fullName>
         <externalId>false</externalId>
         <label>Address City</label>
@@ -159,7 +171,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <description>Remove bar from Address line 1. 
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
-        <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
+        <formula>UPPER(SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;))</formula>
         <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
@@ -180,12 +192,36 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Line_2_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(SUBSTITUTE( Address_Line_2__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Line 2 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_Line_2__c</fullName>
         <externalId>false</externalId>
         <label>Address Line 2</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Line_3_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(SUBSTITUTE( Address_Line_3__c, &apos;|&apos;, &apos;/&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Line 3 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -228,7 +264,7 @@ In case the dash (-) does not exist,  e.g. CA60, it will only display the Countr
 						        IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
     				
 				IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
-        , SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;) 
+        , IF(LEN(IATA_ISO_State__r.ISO_Code__c) = 5,RIGHT(IATA_ISO_State__r.ISO_Code__c, 2), RIGHT(IATA_ISO_State__r.ISO_Code__c, 3))
         , IATA_ISO_Country__r.ISO_Code__c 
     ),
 				
@@ -264,6 +300,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
 							IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
 							IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
 							IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
+                                                        IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
 							IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
 						 IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
     IATA_ISO_State__r.Name,
