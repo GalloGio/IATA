@@ -1362,7 +1362,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
         </value>
     </labels>
     <labels>
@@ -1493,6 +1493,34 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ISSP RHC HUB Risk History</shortDescription>
         <value>Risk Events History</value>
     </labels>
+    <labels>
+        <fullName>ANG_RHC_AmountTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_HUB_Current_UsageTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC HUB Current Usage Tooltip</shortDescription>
+        <value>RHC HUB Current Usage Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Accreditation Model Tooltip</shortDescription>
+        <value>RHC Accreditation Model Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_RiskStatusTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
+        <value>RHC Risk Status Tooltip</value>
+    </labels>    
     <labels>
         <fullName>API_URL</fullName>
         <language>en_US</language>

@@ -439,7 +439,7 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
             ANG_AccountId__c =ag1.id,
             CurrencyIsoCode ='USD',
-            RecordTypeId = ANG_Risk_Helper.RECTYPE_STDRHCINFO,
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
             ANG_Financial_Security__c=0
         );
         
