@@ -256,7 +256,9 @@ public class ISSP_PortalService_Test {
         profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
         insert profileCS2;
         
-               IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		Test.startTest();
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
 			
 		List<Contact> cl = new List<Contact>();
 
@@ -291,7 +293,7 @@ public class ISSP_PortalService_Test {
         ctrl3.getContacts();
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
-        Test.startTest();
+
         ctrl3.CreateNewPortalAccess();
         test.stopTest();
 	}
