@@ -519,7 +519,6 @@
             <picklistValues>
                 <fullName>New</fullName>
                 <default>false</default>
-                <controllingFieldValues>data-and-statistics</controllingFieldValues>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>

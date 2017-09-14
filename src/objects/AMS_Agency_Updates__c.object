@@ -56,6 +56,25 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Account_Portal_Service__c</fullName>
+        <description>Technical field to define the value to add on eventType parameter in mulesoft request</description>
+        <externalId>false</externalId>
+        <formula>IF(
+AND(
+!ISBLANK(Account__r.ANG_IEP_Status_FF__c ),
+Account__r.ANG_IEP_Status_FF__c!=&apos;No IEP Account&apos;
+),
+Account__r.IATA_ISO_Country__r.ANG_Portal_Service__r.Name,
+null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Portal Service</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -93,6 +112,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ConfigurationID__c</fullName>
+        <externalId>false</externalId>
+        <label>Configuration ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Account__r.IATA_ISO_Country__r.ISO_Code__c</formula>
@@ -124,6 +154,27 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integration_System__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration System</label>
+        <picklist>
+            <picklistValues>
+                <fullName>SAP PI</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mulesoft</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
@@ -203,6 +254,10 @@
                 <fullName>Delete_Sent</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -210,7 +265,7 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <label>AMS Agency Update</label>
+    <label>AMS Agency Events</label>
     <listViews>
         <fullName>AMS</fullName>
         <columns>NAME</columns>

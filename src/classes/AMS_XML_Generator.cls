@@ -348,7 +348,8 @@ public with sharing class AMS_XML_Generator {
         //MAIN
         lAgencyUpdates = [SELECT Account__c,CreatedDate,LastModifiedDate,Id,Update_Type__c, Change_Code__c 
                             FROM AMS_Agency_Updates__c 
-                            WHERE Account__c IN :setAgencyKeys 
+                            WHERE Account__c IN :setAgencyKeys
+                            AND Integration_System__c = 'SAP PI'   
                             ORDER BY Account__c,LastModifiedDate desc];                       
         
         AMS_Agency_Updates__c auxAU = new AMS_Agency_Updates__c();
