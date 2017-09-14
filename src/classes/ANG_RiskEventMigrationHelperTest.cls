@@ -14,7 +14,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Payment Default', ANG_Risk_ID__c = '4', ANG_Expiration__c = 24));
 		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Statements', ANG_Risk_ID__c = '5', ANG_Expiration__c = 12));
 		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Major change (owner or legal)', ANG_Risk_ID__c = '6', ANG_Expiration__c = 24));
-		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Unreported change (owner or legal)', ANG_Risk_ID__c = '7', ANG_Expiration__c = 12));
+		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Unreported Major Change', ANG_Risk_ID__c = '7', ANG_Expiration__c = 12));
 		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Change HE location', ANG_Risk_ID__c = '8', ANG_Expiration__c = 12));
 		eventTypes.add(new ANG_Risk_Event_Type__c(Name = 'Fail Financial Security', ANG_Risk_ID__c = '9', ANG_Expiration__c = 12));
 		insert eventTypes;
