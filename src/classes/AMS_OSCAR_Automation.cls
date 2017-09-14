@@ -26,7 +26,7 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 
                 // validate that owners are present
-                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
+                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR_ABROAD, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateOwnership.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     
                     Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person')];
