@@ -417,6 +417,15 @@ OR(
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Account_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.RecordType.DeveloperName</formula>
+        <label>Contact Account Record Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Account_Region__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.IATA_ISO_Country__r.Region__c)</formula>
