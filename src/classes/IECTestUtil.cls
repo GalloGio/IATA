@@ -1058,7 +1058,7 @@ public without sharing class IECTestUtil {
     }
 	
 	
-	public void fakecoverage () {
+	public static void fakecoverage () {
 		Integer i=0;
 		i=0;
 		i=0;
