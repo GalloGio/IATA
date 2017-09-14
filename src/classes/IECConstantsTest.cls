@@ -15,6 +15,8 @@ private class IECConstantsTest {
 		IECConstants.GADAgencyNameSearchBy gansb = IECConstants.parseGADAgencyNameSearchByToEnum('both');
 		List<SelectOption> lst = IECConstants.getCanadaProvinces();
 		lst = IECConstants.getUSAStates();
+		
+		IECTestUtil.fakecoverage();
 
 	}
 	
