@@ -13,6 +13,7 @@ public with sharing class ISSP_ANG_RHC {
 	public Contact contact {get;set;}
 	public Id accountIdTP {get; set;}
 	public Id accountId {get; set;}
+	public Boolean isCashless {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c remittanceFrequency {get;set;}
 	public Boolean hasRightAccessIceService { get {
@@ -76,6 +77,10 @@ public with sharing class ISSP_ANG_RHC {
 				accountIdTP = this.contact.Account.id;
 			}
 		}
+
+		this.isCashless = (this.contact != null && 
+				   		   this.contact.Account.ANG_Accreditation_Model__c != null && 
+				   		   this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
 	}	
 
 	private void initFormsOfPayment() {		
