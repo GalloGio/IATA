@@ -344,6 +344,20 @@ public without sharing class IECTestUtil {
         
         return u;
     }
+
+    public static User createSampleStandardUser(){
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+
+        return testUser;
+
+    }
     
     private static String generateZuoraID() {
         String newId = IECUtil.NewGuid();
