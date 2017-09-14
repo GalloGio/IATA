@@ -870,7 +870,8 @@ public without sharing class vfISSP_FAQ2Case
    public void refreshSubTopicPickList()     {
 
         resetCase();
-       System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
+        this.newCase.IATAcode__c = iataCode;
+        System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
         Integer index = Integer.valueOf(topic.trim());
         system.debug('INTEGER: ' + index);
