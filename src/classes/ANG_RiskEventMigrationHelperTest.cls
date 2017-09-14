@@ -152,8 +152,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
 
-		//creates 2 major changes because of major 1 rule
-		system.assertEquals(listRisks.size() , 2);
+		system.assertEquals(listRisks.size() , 1);
 
 	}
 
