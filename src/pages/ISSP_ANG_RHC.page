@@ -140,7 +140,7 @@
             </header>
             <section id="remittance-holding-table" class="col-md-8 col-sm-12">
               <table class="table">
-                <tr>
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
                   <td>
                     {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="RHC_AmountTooltip" />
@@ -152,7 +152,7 @@
                     </apex:outputText>
                   </td>
                 </tr>
-                <tr>
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
                   <td>
                     {!$Label.ISSP_RHC_HUB_Current_Usage}
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
@@ -176,7 +176,7 @@
                   </td>
                   <td></td>
                 </tr>
-                <tr>
+                <tr style="display: {!IF(( isCashless == false),"block","none")}">
                   <td>
                     {!$ObjectType.Account.fields.Remittance_frequency__c.label}
                   </td>
@@ -185,7 +185,7 @@
                 </tr>
               </table>
             </section>
-            <section id="gaugeSection" class="col-md-4 col-sm-12">
+            <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
               <canvas id="percentageUsageGauge"></canvas>
               <strong>
                 <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
@@ -200,7 +200,7 @@
               </span>
             </section>
           </section>
-          <div class="row">
+          <div class="row" style="display: {!IF(( isCashless == false),"block","none")}">
             <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
               <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
               <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
@@ -240,7 +240,7 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr style="display: {!IF(( isCashless == false),"block","none")}">
               <td>
                 <div class="customTable">
 
@@ -280,7 +280,7 @@
 
         <!-- Risk Event History -->
 
-        <section name="right-side" class="col-md-6 col-sm-12">
+        <section name="right-side" class="col-md-6 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
           <table class="table">
             <tr>
               <th class="section-header">
