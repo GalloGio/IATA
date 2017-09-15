@@ -2491,6 +2491,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+		<displayedFields>
+            <field>ANG_Accreditation_Model__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <displayedFields>
             <field>ANG_IEP_HE_AccntNum__c</field>
             <isFieldManaged>false</isFieldManaged>
