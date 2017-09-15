@@ -230,6 +230,7 @@ private class ISSP_WS_Test {
         newAppRight.Right__c = 'Access Granted';
         insert newAppRight;
         
+		Test.startTest();
         ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
         myInput.firstName = 'test';
         myInput.lastName = 'test';
@@ -248,6 +249,7 @@ private class ISSP_WS_Test {
         con.status__c = 'Inactive';
         update con;
         ISSP_WS_NewUser.createUser(myInput);
+		Test.stopTest();
     }
     
     static testMethod void NewUser_5() {
@@ -618,8 +620,7 @@ private class ISSP_WS_Test {
             
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.disableUser(myInput);
-            
-			Test.startTest();
+
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
@@ -629,7 +630,6 @@ private class ISSP_WS_Test {
 			
             myInput.services = 'BSPLink';
             ISSP_WS_DisableUser.disableUser(myInput);
-			Test.stopTest();
         }
         Test.stopTest();
     }
@@ -756,18 +756,15 @@ private class ISSP_WS_Test {
             
             myInput.services = 'CASS03';
             ISSP_WS_DisableUser.reactivateUser(myInput);
-            
-			Test.startTest();
+
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.reactivateUser(myInput);
-			
             
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
-			Test.stopTest();
             
             myInput.services = 'BSPLink';
             ISSP_WS_DisableUser.disableUser(myInput);

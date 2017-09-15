@@ -170,9 +170,16 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
         <columns>Image_Size__c</columns>
         <columns>Image_Type__c</columns>
-        <columns>Billing_Account__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Image_URL__c</columns>
+        <columns>Thumbnail_URL__c</columns>
+        <columns>Is_Ready__c</columns>
+        <columns>Height__c</columns>
+        <columns>Width__c</columns>
+        <columns>Size_KBytes__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
