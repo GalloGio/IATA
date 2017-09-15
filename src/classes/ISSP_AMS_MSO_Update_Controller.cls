@@ -43,7 +43,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
             applyLanguage = 'en_US';
 
-        list<Account> lstAcc = new list<Account>([SELECT Id, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, Iso_State__c, Email__c, Phone, Company_Type__c FROM Account WHERE Id = :msoId]);
+        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, Iso_State__c, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Link_agent_name__c FROM Account WHERE Id = :msoId]);
 
         if (String.isBlank(action) || String.isBlank(msoId) || lstAcc.isEmpty()) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Invalid_Request));
@@ -59,10 +59,43 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             oscar = new AMS_OSCAR__c(Id = oscarCase.OSCAR__c); 
 
             if (action == ACTION_CORRECTION) {
-                if (oscarCase.Id == null)
-                    accreditationForm = new AMS_Pax_Accreditation_Form__c(Branch_Office_Street_name_number__c = msoAccount.BillingStreet, Branch_Office_Postal_code__c = msoAccount.BillingPostalCode, Branch_Office_City__c = msoAccount.BillingCity, Branch_Office_Email__c = msoAccount.Email__c, Branch_Office_Phone__c = msoAccount.Phone, IATA_ISO_State__c = msoAccount.Iso_State__c, Branch_Office_Country__c = msoAccount.IATA_ISO_Country__c, IATACode__c = msoAccount.IATACode__c);
-                else {
-                    accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATACode__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                if (oscarCase.Id == null) {
+                    accreditationForm = new AMS_Pax_Accreditation_Form__c();
+                    accreditationForm.Branch_Office_Street_name_number__c = msoAccount.BillingStreet;
+                    accreditationForm.Branch_Office_Postal_code__c = msoAccount.BillingPostalCode;
+                    accreditationForm.Branch_Office_City__c = msoAccount.BillingCity;
+                    accreditationForm.Branch_Office_Email__c = msoAccount.Email__c;
+                    accreditationForm.Branch_Office_Phone__c = msoAccount.Phone;
+                    accreditationForm.IATA_ISO_State__c = msoAccount.Iso_State__c;
+                    accreditationForm.Branch_Office_Country__c = msoAccount.IATA_ISO_Country__c;
+                    accreditationForm.IATACode__c = msoAccount.IATACode__c;
+                    accreditationForm.Account_Name__c = msoAccount.Name;
+                    accreditationForm.Short_Name__c = msoAccount.Short_Name__c;
+                    accreditationForm.Trade_Name__c = msoAccount.TradeName__c;
+                    accreditationForm.ISSP_AMS_License_No__c = msoAccount.License_Number__c;
+                    accreditationForm.ISSP_AMS_VAT_number__c = msoAccount.VAT_Number__c;
+                    accreditationForm.Website__c = msoAccount.Website;
+                    accreditationForm.Shipping_Street__c = msoAccount.ShippingStreet;
+                    accreditationForm.Shipping_Postal_Code__c = msoAccount.ShippingPostalCode;
+                    accreditationForm.Branch_Office_FAX__c = msoAccount.Fax;
+                    accreditationForm.Shipping_City__c = msoAccount.ShippingCity;
+                    accreditationForm.Operation__c = msoAccount.Operation__c;
+                    accreditationForm.Abbreviated_name__c = msoAccount.Abbreviated_name__c;
+                    accreditationForm.Abbreviated_Address__c = msoAccount.Abbreviated_address__c;
+                    accreditationForm.Remittance_frequency__c = msoAccount.Remittance_frequency__c;
+                    accreditationForm.Solicitation_Flag__c = msoAccount.Solicitation_Flag__c;
+                    accreditationForm.VAT_Number_2__c = msoAccount.VAT_Number_2__c;
+                    accreditationForm.CASS_Number__c = msoAccount.CASS_Number__c;
+                    accreditationForm.Location_Class__c = msoAccount.Location_Class__c;
+                    accreditationForm.Location_Type__c = msoAccount.Location_Type__c;
+                    accreditationForm.Mobile__c = msoAccount.Mobile__c;
+                    accreditationForm.Is_your_firm_handling_Dangerous_Goods__c = msoAccount.Is_your_firm_handling_Dangerous_Goods__c;
+                    accreditationForm.Shipping_ISO_Country__c = msoAccount.IATA_ISO_Shipping_Country__c;
+                    accreditationForm.Shipping_ISO_State__c = msoAccount.IATA_ISO_Shipping_State__c;
+                    accreditationForm.Link_agent_name__c = msoAccount.Link_agent_name__c;
+
+                } else {
+                    accreditationForm = [SELECT Id, Account_Name__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATACode__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c, Website__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
                 }
                 
                 refreshStates();
@@ -190,9 +223,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 // create new accreditation form
                 accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
-                accreditationForm.Account_Name__c = currentUserContact.Account.Name;
-                accreditationForm.Location_Class__c = 'M';
-                accreditationForm.Location_Type__c = 'HO';
+                //accreditationForm.Account_Name__c = currentUserContact.Account.Name;
+                //accreditationForm.Location_Class__c = 'M';
+                //accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
                 insert accreditationForm;
@@ -256,15 +289,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 update oscar;
 
 
-                closeOscar(oscar.Id);
-
-
-                // Success comment, published so that the contact receives the email notification
-                CaseComment successComment = new CaseComment();
-                successComment.ParentId = oscarCase.Id;
-                successComment.isPublished = true;
-                successComment.CommentBody = '\n\rThe MSO has been successfully terminated.';
-                insert successComment;
+                closeOscar(oscar.Id, oscarCase.Id, ACTION_TERMINATION);
 
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
@@ -280,14 +305,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
 
-            closeOscar(oscar.Id);
-
-            // Success comment, published so that the contact receives the email notification
-            CaseComment successComment = new CaseComment();
-            successComment.ParentId = oscarCase.Id;
-            successComment.isPublished = true;
-            successComment.CommentBody = '\n\rThe correction has been successfully applied to the MSO.';
-            insert successComment;
+            closeOscar(oscar.Id, oscarCase.Id, ACTION_CORRECTION);
 
         } catch (Exception ex){
             ApexPages.addMessages(ex);
@@ -317,8 +335,24 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
     @future
-    public static void closeOscar(Id oscarId) {
+    public static void closeOscar(Id oscarId, Id caseId, String actionType) {
         try {
+            if (actionType == ACTION_TERMINATION) {
+                // Success comment, published so that the contact receives the email notification
+                CaseComment successComment = new CaseComment();
+                successComment.ParentId = caseId;
+                successComment.isPublished = true;
+                successComment.CommentBody = '\n\rThe MSO has been successfully terminated.';
+                insert successComment;
+
+            } else if (actionType == ACTION_CORRECTION) {
+                // Success comment, published so that the contact receives the email notification
+                CaseComment successComment = new CaseComment();
+                successComment.ParentId = caseId;
+                successComment.isPublished = true;
+                successComment.CommentBody = '\n\rThe correction has been successfully applied to the MSO.';
+                insert successComment;
+            }
 
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             //update oscar;
