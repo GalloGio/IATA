@@ -25,19 +25,19 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String IATACODE			= 	'2-Agency Code';
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
-	public static final String LOCATIONCLASS	= 	'6-Program';
+	public static final String LOCATIONCLASS	= 	'9-Program';
 	
-	public static final String HIERARCHY	= 	'7-Hierarchy';
+	public static final String HIERARCHY	= 	'10-Hierarchy';
 
-	public static final String STATE  	        = 	'10-Country or State';
-	public static final String COUNTRY  	    =	'11-Country or State';
+	public static final String STATE  	        = 	'13-Country or State';
+	public static final String COUNTRY  	    =	'14-Country or State';
 
-	public static final String STATUS			= 	'19-Status';
-	public static final String REASON			= 	'23-Reason';
+	public static final String STATUS			= 	'22-Status';
+	public static final String REASON			= 	'26-Reason';
 
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'30-Owner1';
+	public static final String OWNERS 	   	 	   =	'33-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,15 +45,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWLEGALSTATUS	= 	'49-New Legal Status';
-	public static final String NEWHIERARCHY	= 	'50-New Hierarchy';
+	public static final String NEWLEGALSTATUS	= 	'52-New Legal Status';
+	public static final String NEWHIERARCHY	= 	'53-New Hierarchy';
 
-	public static final String NEWSTATE 	    =	'51-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'52-New Country or State';
+	public static final String NEWSTATE 	    =	'57-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'58-New Country or State';
 
-	public static final String IRRREASON 		=	'80-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'81-IRR: Period';
-	public static final String IRRPERIODED		= 	'82-IRR: Period';
+	public static final String IRRREASON 		=	'84-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'85-IRR: Period';
+	public static final String IRRPERIODED		= 	'86-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
