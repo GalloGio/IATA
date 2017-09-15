@@ -169,10 +169,8 @@ public without sharing class IECUserManager {
                 Customer_DTO.setLoginEvent(partnerContactId);
 
                 System.debug('login user event');
-
-                //susana alves INC332088
-                if(storeCart.getCartOrderContent() != null)
-                  storeCart.loginUserEvent();
+                
+                storeCart.loginUserEvent();
 
                 System.debug('get cart');
 

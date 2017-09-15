@@ -269,7 +269,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			String productNumber2Add = p.SAP_Material_Number__c;
 			//Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
-			Map<String, Decimal> cookieContent;
+			Map<String, Decimal> cookieContent = new Map<String, Decimal>();
 
 			if (newShoppingCart == false) {
 				cookieContent = IECOrder_Svc.getItemsInCookie();

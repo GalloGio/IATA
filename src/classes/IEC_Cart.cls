@@ -408,7 +408,8 @@ public without sharing virtual class IEC_Cart {
 			// Store in Database
 			cartOrder = getCartOrder();
 
-			productSwap();
+			//INC339486
+			//productSwap();
 			filterInacessibleProducts();
 
 			saveOrderAndCartItemsToDatabase(cartOrder, getCartContent());
@@ -467,8 +468,8 @@ public without sharing virtual class IEC_Cart {
 					cartItem.id = null;
 				}
 			}
-
-			productSwap();
+			//INC339486
+			//productSwap();
 			filterInacessibleProducts();
 		} else {
 			// Master is Cookies
@@ -526,8 +527,8 @@ public without sharing virtual class IEC_Cart {
 
 				cartItemMap.put(productNumber, cartItem);
 			}
-
-			productSwap();
+			//INC339486
+			//productSwap();
 			filterInacessibleProducts();
 
 			storeCart();
