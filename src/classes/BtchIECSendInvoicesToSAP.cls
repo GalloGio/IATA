@@ -36,37 +36,50 @@ global class BtchIECSendInvoicesToSAP implements Database.Batchable<sObject>, Da
 		List<IEC_SAP_Invoice__c> lstSAPInv = new List<IEC_SAP_Invoice__c>();
 		String strStatus;
 		IEC_SAP_Invoice__c SAPInv;
+		List<String> ordersIDs = new List<String>();
+
 		for (String ZInvNum : mapZInvNum_SAPInv.keySet())
 		{
 			strStatus = mapZInvNum_Status.get(ZInvNum);
+			List<String> exampleStrSplit = strStatus.split(',');
 			SAPInv = mapZInvNum_SAPInv.get(ZInvNum);
 			if (getNextStatus(SAPInv, strStatus)){
 				SAPInv.Error_Message__c = strStatus;
-				SAPInv.Status_Date__c = system.now();
-
+				SAPInv.Status_Date__c = system.now();				
+				
 				if(!strStatus.contains('Error')){
-					string subject = strStatus;
-					Pattern p = Pattern.compile('\\(([^}]*)\\)');
-					Matcher m = p.matcher(subject);
-					if (m.find()){
-					   SAPInv.Order__c = m.group(1);			   
-					}	
+					for(String str :exampleStrSplit){
+						str = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
+						ordersIDs.add(str);
+					}
 				}
 
 				lstSAPInv.add(SAPInv);
 			}
 
 		}
+		
+		//Connecting Order with respective IEC SAP INVOICE -- start
+		Set<Id> oIDtoUodate = new Set<Id>();
+		for(String o :ordersIDs){
+		    Id oID = Id.valueOf(o);
+		    oIDtoUodate.add(oID);
+		}
+
+		List<Order> ordersList = new List<Order>([SELECT Id, SAP_Invoice__c FROM Order where Id IN :oIDtoUodate]);
+		List<Order> orderToUpdate = new List<Order>();
+
+		for(Order order :ordersList){
+			order.SAP_Invoice__c= SAPInv.Id;
+			orderToUpdate.add(order);
+		}
+		//Connecting Order with respective IEC SAP INVOICE -- end
+
 		if (lstSAPInv.size() > 0)
 			update lstSAPInv;
 		
-		/*
-		List<IEC_SAP_Invoice__c> lstSAPInvoicesToSend = new List<IEC_SAP_Invoice__c>();
-		for (sObject sObj : scope) 
-			lstSAPInvoicesToSend.add((IEC_SAP_Invoice__c)sObj);
-		
-		IECSAPManager.sendInvoicesToSAP(lstSAPInvoicesToSend);
-		*/
+		if(orderToUpdate.size() > 0)
+			update orderToUpdate;
     }
 
     global void finish(Database.BatchableContext BC) {

@@ -4135,24 +4135,68 @@ public without sharing class Order_Svc
     public static void sapInvoiceStatusUpdate(Map<Id, Order> newMap, Map<Id, Order> oldMap){
     system.debug(LoggingLevel.ERROR,'sap invoice status update starting...');
      
-     try{   Set<Id> orderId = new Set<Id>();
+        Set<Id> orderId = new Set<Id>();
         List<IEC_SAP_Invoice__c> sapInvoice = new List<IEC_SAP_Invoice__c>();
         List<IEC_SAP_Invoice__c> sapInvoiceToUpdate = new List<IEC_SAP_Invoice__c>();
+
+        Set<Id> sapInvoiceId = new Set<Id>();
+        List<Order> orderList = new List<Order>();
+        Boolean stopSapInvoiceUpdate = false;
 
         for (Order order : newMap.values()) {
                 Order oldOrder = oldMap.get(order.Id);
 
                 if(order.Status == IECConstants.ORDER_PAYMENT_CONFIRMED && oldOrder != null && oldOrder.Status != order.Status && (Order.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer || Order.Payment_Type__c == IECConstants.PaymentThresholdType_ICH))
-                    orderId.add(order.Id);
+                    //orderId.add(order.Id);
+                    sapInvoiceId.add(order.SAP_Invoice__c);
+
         }
-        system.debug('orderId :' + orderId);
+
+        /**
+        INC295559
+         checking if all the orders related to the Invoice are with status Payment Confirmed.
+         IF Yes :
+            - we will change the IEC SAP Invoice status to Zuora Ready
+         IF No:
+            - nothing happens with the IEC SAP Invoice Status
+        **/
+
+        if(sapInvoiceId.size() > 0){
+            orderList = [SELECT id, SAP_Invoice__c, Status FROM Order where SAP_Invoice__c IN :sapInvoiceId];
+
+            if(!orderList.isEmpty()){
+                for(Order o : orderList){
+                    if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED){
+                        stopSapInvoiceUpdate = true;
+                    }
+                }
+            }
+        system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
+            if(!stopSapInvoiceUpdate){ // all the related orders have the status Payment Confirmed
+                sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Id IN :sapInvoiceId];
+
+                if(!sapInvoice.isEmpty()){
+                    for(IEC_SAP_Invoice__c sapInv : sapInvoice){
+                        sapInv.Status__c = IECConstants.IECSAPInvoice_Status_ZuoraReady;
+                        sapInv.Payment_Date__c = Date.today();
+                        sapInv.Zuora_Billing_Account_ID__c = sapInv.Billing_Account__r.Zuora__External_Id__c;
+                        sapInvoiceToUpdate.add(sapInv);
+                    }
+                }
+                if(!sapInvoiceToUpdate.isEmpty())
+                    update sapInvoiceToUpdate;
+            }
+        }
+
+       /* system.debug('orderId : ' + orderId);
         if(!orderId.isEmpty()){
-            sapInvoice = [SELECT id, Order__c FROM IEC_SAP_Invoice__c where Order__c IN :orderId];
+            sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Order__c IN :orderId];
 
             if(!sapInvoice.isEmpty()){
                 for(IEC_SAP_Invoice__c sapInv : sapInvoice){
                     sapInv.Status__c = IECConstants.IECSAPInvoice_Status_ZuoraReady;
                     sapInv.Payment_Date__c = Date.today();
+                    sapInv.Zuora_Billing_Account_ID__c = sapInv.Billing_Account__r.Zuora__External_Id__c;
                     sapInvoiceToUpdate.add(sapInv);
                 }
             }

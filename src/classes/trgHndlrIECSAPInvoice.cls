@@ -6,7 +6,7 @@
   */
 public with sharing class trgHndlrIECSAPInvoice {
 
-	public static void OnBeforeInsert (List<IEC_SAP_Invoice__c> newRecords){ // tiago
+	public static void OnBeforeInsert (List<IEC_SAP_Invoice__c> newRecords){ // INC295559
 		Set<String> invoiceNumber = new Set<String>();		
 		Map<String,Id> invoiceIdMap = new Map<String,Id>();
 		List<IEC_SAP_Invoice__c> toUpdate = new List<IEC_SAP_Invoice__c>();
