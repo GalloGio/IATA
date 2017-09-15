@@ -84,6 +84,7 @@
         <inlineHelpText>Last Sync Start Date taken on First Execution of Job 1. Date used by Job 1 Second Pass for population of formulas</inlineHelpText>
         <label>Job 1 Original Start Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -136,9 +137,9 @@
         <columns>Batch_Name__c</columns>
         <columns>Total_Records_Processed__c</columns>
         <columns>Total_Failed_Records__c</columns>
-        <columns>Failed_Records__c</columns>
         <columns>Last_Sync_Start_Date__c</columns>
         <columns>Last_Sync_End_Date__c</columns>
+        <columns>Job_1_Original_Start_Date__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All Batches with Details</label>
