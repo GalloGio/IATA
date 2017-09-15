@@ -75,7 +75,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public PageReference onLoadAction()
     {
         buildQueryConditions();
-
+        getProductRecordsList();
         //queryProducts();
 
         //refreshDisplayedProducts();
@@ -138,13 +138,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     private void queryProducts()
-    {   system.debug('queryProducts - start');
+    {   //system.debug('queryProducts - start');
         //-- Fetch ecom Products
         //allProducts = getproductRecordsList();
         //allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy, true); 
-        system.debug('queryProducts - allProducts : ' + allProducts);
-        system.debug('queryProducts - allProducts size : ' + allProducts.size());
-        system.debug('queryProducts - end');
+        //system.debug('queryProducts - allProducts : ' + allProducts);
+        //system.debug('queryProducts - allProducts size : ' + allProducts.size());
+        //system.debug('queryProducts - end');
         /*for(EComProduct_DTO prod : allProducts)
         {
             prod.ProductDesc = '';
@@ -203,8 +203,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      **************************************************************************************************************/
     public void sortProducts()
     {
-        queryProducts();
-        refreshDisplayedProducts();
+        //queryProducts();
+        system.debug('sortProducts');
+        productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
+        // sets the number of records to show in each page view
+        productRecords.setPageSize(12);
+        //refreshDisplayedProducts();
+        getProductRecordsList();
     }
 
     /**************************************************************************************************************
