@@ -259,7 +259,12 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 closeOscar(oscar.Id);
 
 
-                // POST SUCCESS COMMENT HERE
+                // Success comment, published so that the contact receives the email notification
+                CaseComment successComment = new CaseComment();
+                successComment.ParentId = oscarCase.Id;
+                successComment.isPublished = true;
+                successComment.CommentBody = '\n\rThe MSO has been successfully terminated.';
+                insert successComment;
 
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
@@ -277,7 +282,12 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
             closeOscar(oscar.Id);
 
-            // POST SUCCESS COMMENT HERE
+            // Success comment, published so that the contact receives the email notification
+            CaseComment successComment = new CaseComment();
+            successComment.ParentId = oscarCase.Id;
+            successComment.isPublished = true;
+            successComment.CommentBody = '\n\rThe correction has been successfully applied to the MSO.';
+            insert successComment;
 
         } catch (Exception ex){
             ApexPages.addMessages(ex);
