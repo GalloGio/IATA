@@ -320,12 +320,14 @@ public class ANG_AccountTriggerHandler {
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
+		if(rhcToUpdate.isEmpty()) return;
+
 		//first we set the Cash Conditions that changed
-		for(Id acc : changedConditions.keySet())rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
+		for(Id acc : changedConditions.keySet()) if(rhcToUpdate.containsKey(acc)) rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
 		
 		//then set the recalculated values
 		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
-		for(Id acc : changedStatus) reactivatedRHC.add(rhcToUpdate.get(acc));
+		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) reactivatedRHC.add(rhcToUpdate.get(acc));
 
 		ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
 		
