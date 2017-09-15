@@ -145,7 +145,7 @@ public with sharing class ANG_AgencyChangesHelper {
                         System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 					
-					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c));
+					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
 
 
 				}
@@ -248,7 +248,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c) && isAllHierarchySelected)
             System.enqueueJob(new ANG_Risk_Helper.FutureHandler([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId]));
         
-        }
+    }
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
@@ -278,19 +278,15 @@ public with sharing class ANG_AgencyChangesHelper {
 		return false;
 	} 
 
-	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean doesItContainAccreditationType) {
+	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected) {
 		
         System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
         System.debug('[ANG_AgencyChangesHelper] - ChangesContainer is'+changesContainer);
-        
-		Set<String> tocList = new Set<String>();
-		tocList.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
 
-
-		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
+		if (containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
 			changesContainer = applyChangeOfLocationType(oscar, changesContainer);
-		else if (tocList.contains(AMS_Utils.ANG_HIERARCHY))
-			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet,doesItContainAccreditationType);
+		else if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c))
+			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
 
 		return changesContainer;
 	}
@@ -310,11 +306,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
 
-		For(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
+		for(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -342,6 +338,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				toReturn.addAccount(parentAccount);
 				toReturn.addAccount(childAccount);
 
+				ANG_RHCHelper.moveRHCInfos(parentAccount.RHC_Informations__r, new Map<Id,Id>{rel.Child_Account__c => oscarToProcess.Account__C});
+
 			} else{
 
 				Account relAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ? toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c); 
@@ -362,17 +360,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static AChangeStructure applyChangeOfHierarchy(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Set<Id> accountIdsInvolvedSet, Boolean doesItContainAccreditationType){
+	public static AChangeStructure applyChangeOfHierarchy(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected){
 
 		System.debug('[ANG_AgencyChangesHelper] Performing change of Hierarchy');
-
-		System.debug('[ANG_AgencyChangesHelper] - doesItContainAccreditationType is set to ' + doesItContainAccreditationType);
 
 		String newAccreditationModel = '';
 		String newRemittanceFrequency = '';
 		Boolean switchAccreditationModel = false;
 		Boolean switchRemittanceFrequency = false;
+		Boolean doesItContainAccreditationType = containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscarToProcess.ANG_Type_Of_Change__c);
 		Set<Id> accountsAffected = new Set<Id>();
+
+		System.debug('[ANG_AgencyChangesHelper] - doesItContainAccreditationType is set to ' + doesItContainAccreditationType);
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
@@ -477,6 +476,19 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(!toUpsert.isEmpty())
 					upsert toUpsert;
 			}
+
+			//Perform changes on RHC object
+
+			//Moving to external HE
+			if(!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c)){
+				if(isAllHierarchySelected) ANG_RHCHelper.deactivateRHCInfo(accountIdsInvolvedSet);
+				// if the hierarchy is not entirely selected, it means we are only moving AEs and nothing needs to be done
+			}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
+				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
+			}
+
+
+
 
 			return toReturn; // no more processing needed.
 		}
@@ -798,10 +810,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
         List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless')
+        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless'){
         	toUpsert = performCashLessTransformation(accountsAffected);
-        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash')
+        	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
+        }
+        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
+        	ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+        }
 
         if(!toUpsert.isEmpty())
         	upsert toUpsert;
@@ -1053,7 +1069,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
