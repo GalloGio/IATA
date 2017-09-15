@@ -8916,7 +8916,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
-        <value>SECTION 2 - Identification of Office Location for which Approval is Requested</value>
+        <value>Identification of Office Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>

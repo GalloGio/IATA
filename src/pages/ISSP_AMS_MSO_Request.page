@@ -185,17 +185,7 @@
 			                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true"  reRender="newMSOform"/>
 			                    </apex:outputPanel></apex:facet>
 			                </apex:actionStatus>
-						</apex:pageBlockButtons>              
-
-						<apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
-		                    <apex:facet name="header">
-		                        <apex:outputpanel >
-		                            {!$Label.ISSP_AMS_STEP_3_1_HO_Title}
-		                        </apex:outputpanel>
-	                        </apex:facet>
-		                    
-		                    <apex:inputField value="{!accreditationForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" label="{!$Label.ISSP_AMS_MSO_Legal_Status}"/>
-		                </apex:pageBlockSection>
+						</apex:pageBlockButtons>
 
 		                <apex:pageBlockSection columns="1" id="addressSection" collapsible="false">
 		                    <apex:facet name="header">
@@ -283,17 +273,6 @@
 
                         <apex:pageBlockSection columns="1" collapsible="false">
                             <apex:outputText escape="false" value="{!$Label.ISSP_AMS_MSO_Application_Review}"/>
-                        </apex:pageBlockSection>
-
-                        <apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
-                            <apex:facet name="header">
-                                <apex:outputpanel >
-                                    {!$Label.ISSP_AMS_STEP_3_1_HO_Title}
-                                    <apex:commandButton styleclass="btn btn-default" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
-                                </apex:outputpanel>
-                            </apex:facet>
-                            
-                            <apex:outputField value="{!accreditationForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" label="{!$Label.ISSP_AMS_MSO_Legal_Status}"/>
                         </apex:pageBlockSection>
 
                         <apex:pageBlockSection columns="1" id="addressSection" collapsible="false">
