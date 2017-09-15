@@ -254,7 +254,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         buildQueryConditions();
 
         if(String.isNotBlank(selectedFilters))
-        {
+        {   system.debug('### lst_selected_filters:: ' + selectedFilters);
             List<String> lst_selected_filters =  selectedFilters.split(':');
             Map<String, List<String>> filterConditions = new Map<String, List<String>>(); 
             for(String filter : lst_selected_filters)
@@ -287,9 +287,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         } 
 
         System.debug('searchCondition::'+searchCondition);  
-
-        queryProducts();
-        refreshDisplayedProducts();
+        system.debug('refine');
+        //productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
+        // sets the number of records to show in each page view
+        //productRecords.setPageSize(12);
+        //queryProducts();
+        getProductRecordsList();
+        //refreshDisplayedProducts();
     }    
 
     /**************************************************************************************************************
@@ -335,7 +339,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                     // sets the number of records to show in each page view
                     productRecords.setPageSize(12);
             }
-            system.debug('### productRecords :: ' + productRecords.getRecords().size());
+            system.debug('### productRecords :: ' + productRecords.getRecords());
+            system.debug('### productRecords size :: ' + productRecords.getRecords().size());
             return productRecords;
         }
         private set;
@@ -385,6 +390,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                 }
         }
         else {
+            system.debug('getProductRecordsList else');
             listFilteredProduct = (List<Product2>) productRecords.getRecords();
         }
 
