@@ -6,6 +6,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	public static final Integer STATUSOKHIGHER = 300;
 	public static final Integer THRESHOLD = 40;
 	public static boolean isRunningTestForThreshold = false;
+	public static String INTEGRATIONSYSTEM_MULESOFT = 'Mulesoft';
 
 
 
@@ -55,14 +56,18 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper> records2SendList = new list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper>();
 		for(AMS_Agency_Updates__c ae: agencyEventsList){
-			ANG_IEP_CalloutHelper.AgencyEvent2Send tempchw =new ANG_IEP_CalloutHelper.AgencyEvent2Send(ae.Update_Type__c,(ae.ANG_Account_Portal_Service__c!=null?ae.ANG_Account_Portal_Service__c+'.':'')+ ae.Change_Code__c,ae.IATACode__c);
-			records2SendList.add( new ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper(calloutMappingMap.get(ae.ConfigurationID__c),tempchw,calloutMappingMap.get(ae.ConfigurationID__c).Type__c=='ChangeCode'?ae.Change_Code__c:null,ae.id));
+			if(ae.Integration_System__c==INTEGRATIONSYSTEM_MULESOFT){
+				ANG_IEP_CalloutHelper.AgencyEvent2Send tempchw =new ANG_IEP_CalloutHelper.AgencyEvent2Send(ae.Update_Type__c,(ae.ANG_Account_Portal_Service__c!=null?ae.ANG_Account_Portal_Service__c+'.':'')+ ae.Change_Code__c,ae.IATACode__c);
+				records2SendList.add( new ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper(calloutMappingMap.get(ae.ConfigurationID__c),tempchw,ae.Agency_Applied_Change_code__c,ae.id));
+			}
 		}
 	
 
 		//so since Salesforce governor limits don't allow us to have more than 50 future calls in a single apex transition, and some times change codes propagate to 
 		// an hierarchy that has > 50 agencies, we need to queue the calls in a batch.
 
+		system.debug('ANG_IEP_CalloutHelper records2SendList'+records2SendList);
+		
 		if(records2SendList.size() < THRESHOLD && !isRunningTestForThreshold){
 
 			System.debug('The change codes size is bellow THRESHOLD ('+THRESHOLD+'). Running future method process.');
@@ -73,7 +78,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		}else{
 
-			ANG_IEPChangecodeInvocationBatch iEPChangecodeInvocationBatch = new ANG_IEPChangecodeInvocationBatch();
+			ANG_IEPChangecodeInvocationBatch iEPChangecodeInvocationBatch = new ANG_IEPChangecodeInvocationBatch(records2SendList);
 
 			Id iEPChangecodeInvocationBatchId;
 

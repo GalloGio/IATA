@@ -12,7 +12,7 @@ public class ANG_AgencyAChangeCodeTriggerHandler{
 	public void onBeforeInsert(){
 	}
 	public void onAfterInsert() {
-		 new ANG_AgencyEventsGenerator('Create',triggerNew,null,triggerNew.getSObjectType(),'ChangeCode','account', 'account').run();
+		 new ANG_AgencyEventsGenerator('Create',triggerNew,null,triggerNew.getSObjectType(),'ChangeCode','account__c', 'account__c').run();
 	}
 
 	public void onBeforeUpdate(){
