@@ -6147,6 +6147,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>CasesRussia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Russia</label>
+        <queue>CasesRussia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Cases_ARM_Africa_Middle_East_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Agency Risk Management - A&amp;ME</label>
