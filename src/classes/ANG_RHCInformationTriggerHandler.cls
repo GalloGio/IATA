@@ -15,14 +15,14 @@ public class ANG_RHCInformationTriggerHandler{
 		sumRHCAmount();
 	}
 	public void onAfterInsert(){
-		 new ANG_AgencyEventsGenerator('Create',triggerNew,oldMap,triggerNew.getSObjectType(),'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		 new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
 	}
 	public void onBeforeUpdate(){
 		convertAndSumFS();
 		sumRHCAmount();
 	}
 	public void onAfterUpdate(){
-		new ANG_AgencyEventsGenerator('Update',triggerNew,oldMap,triggerNew.getSObjectType(),'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
 	}
 
 	public void onBeforeDelete(){}

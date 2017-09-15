@@ -23,7 +23,7 @@ public class ANG_AccountTriggerHandler {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
 		updateRHCInformation();
-		new ANG_AgencyEventsGenerator('Update',triggerNew,oldMap,triggerNew.getSObjectType(),'Account','id', 'Top_Parent__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id', 'Top_Parent__c').run();
 	}
 
 	public void onBeforeDelete(){}
