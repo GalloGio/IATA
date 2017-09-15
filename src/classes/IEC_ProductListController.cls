@@ -53,7 +53,6 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     private final Product2 prods; 
     public List<EComProduct_DTO> productList {get;set;}
 
-
     /**************************************************************************************************************
      *  IEC_ProductListController: Class Constructor                                                              *
      *  Author: David Daboué                                                                                      *  
@@ -73,15 +72,17 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     public PageReference onLoadAction()
-    {
+    {   system.debug('onLoadAction');
         buildQueryConditions();
         getProductRecordsList();
         //queryProducts();
 
         //refreshDisplayedProducts();
-        
+            
         //--Advance search filters
         buildRefinementFilters();
+        
+        
 
         return null; 
     }
@@ -91,7 +92,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *   Author: David Daboué                                                                                     *  
      **************************************************************************************************************/
     private void buildQueryConditions()
-    {
+    {   system.debug('buildQueryConditions');
         //Set default Mega Menu to Publication
         selected_category = (pageParams != null && pageParams.containsKey('category')) ? pageParams.get('category') : 'publications'; 
 
@@ -217,7 +218,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     private void buildRefinementFilters()
-    {
+    {   system.debug('buildRefinementFilters');
         //-- Get list of fields for refinement 
         List<Schema.FieldSetMember> fields  = Utility.readFieldSet('Product2', 'ECOM_Refinement_FIelds');
         filters = new List<FilterWrapper>();
@@ -250,7 +251,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
     public void refine()
-    {
+    {   system.debug('refine start');
         buildQueryConditions();
 
         if(String.isNotBlank(selectedFilters))
@@ -287,13 +288,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         } 
 
         System.debug('searchCondition::'+searchCondition);  
-        system.debug('refine');
-        //productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
+        
+        productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
         // sets the number of records to show in each page view
-        //productRecords.setPageSize(12);
-        //queryProducts();
-        getProductRecordsList();
+        productRecords.setPageSize(12);
         //refreshDisplayedProducts();
+        getProductRecordsList();
+        system.debug('refine end');
     }    
 
     /**************************************************************************************************************
@@ -329,18 +330,21 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     //susana
     public IEC_ProductListController(ApexPages.StandardSetController controller) {
+        system.debug('IEC_ProductListController 1');
         this.prods = (Product2)controller.getRecord(); 
     } 
 
     public ApexPages.StandardSetController productRecords {
-        get {
+        get {system.debug('productRecords start');
             if(productRecords == null) {
+                system.debug('productRecords is null');
                 productRecords = new ApexPages.StandardSetController(Product_Sel.getListOfProducts(null, false, searchCondition, sortBy, true));
                     // sets the number of records to show in each page view
                     productRecords.setPageSize(12);
             }
             system.debug('### productRecords :: ' + productRecords.getRecords());
             system.debug('### productRecords size :: ' + productRecords.getRecords().size());
+            system.debug('productRecords end');
             return productRecords;
         }
         private set;
@@ -386,6 +390,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                         
                         if (bAddProduct)
                             listFilteredProduct.add(prod);
+
+                        system.debug('listFilteredProduct...');
                     }
                 }
         }
@@ -418,6 +424,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             productList.add(new EComProduct_DTO(p, mapProductNumber_Price, mapPickList_Label, false, customerType));
 
         system.debug('### productRecordsList productList :: ' + productList);
+        system.debug('### productRecordsList productList size :: ' + productList.size());
+        system.debug('### productRecordsList end ');
         return productList;
     }
 
@@ -451,8 +459,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
  
     //Returns the next page of records
     public void next()
-    {
+    {system.debug('### next start ');
         productRecords.next();
+        system.debug('### next end ');
     }
 
     //Page number of the current displaying records
