@@ -636,10 +636,14 @@ public class AMS_ChangeCodesHelper {
     public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
 
         String fopString = isNewGen ? '' : 'Not Applicable';
+        
+        String authRelabel;
 
         if(fOPs != null && isNewGen){
-            for(Agency_Authorization__c fop : fOPs)
-                fopString += fop.Authority__c + ' - ' + fop.Status__c + ';';
+            for(Agency_Authorization__c fop : fOPs) {
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
+                fopString += authRelabel + ' - ' + fop.Status__c + ';';
+            }
 
             fopString.removeEnd(';');
         }
