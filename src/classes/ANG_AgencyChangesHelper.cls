@@ -477,19 +477,6 @@ public with sharing class ANG_AgencyChangesHelper {
 					upsert toUpsert;
 			}
 
-			//Perform changes on RHC object
-
-			//Moving to external HE
-			if(!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c)){
-				if(isAllHierarchySelected) ANG_RHCHelper.deactivateRHCInfo(accountIdsInvolvedSet);
-				// if the hierarchy is not entirely selected, it means we are only moving AEs and nothing needs to be done
-			}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
-				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
-			}
-
-
-
-
 			return toReturn; // no more processing needed.
 		}
 
@@ -1181,6 +1168,18 @@ public with sharing class ANG_AgencyChangesHelper {
     			toReturn.add(rel.Child_Account__c);
 
     	}
+
+		
+
+		//Perform changes on RHC object
+
+		//Moving to external HE
+		if(!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c)){
+			if(isAllHierarchySelected) ANG_RHCHelper.deactivateRHCInfo(accountIdsInvolvedSet);
+			// if the hierarchy is not entirely selected, it means we are only moving AEs and nothing needs to be done
+		}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
+			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
+		}
 
     	return toReturn;
     }
