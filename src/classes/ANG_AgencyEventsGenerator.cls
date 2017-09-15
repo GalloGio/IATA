@@ -37,6 +37,7 @@ public class ANG_AgencyEventsGenerator{
                             Update_Type__c = opType,
                             Integration_System__c='Mulesoft',
                             Change_Code__c=cm.Event_type__c,
+                            Agency_Applied_Change_code__c=cmType=='ChangeCode'?String.ValueOf(obj.get('id')):null,
                             ConfigurationID__c=cm.id
                         );
                         insertedRecordsSet.add(String.valueOf(auRec.account__c)+auRec.Update_Type__c);
