@@ -16,11 +16,11 @@ global class ANG_MasterData_Interface{
             
             if(sMode == null || sMode=='') sMode = 's';
             
-            list<Account> lsAccnt = [select Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
+            list<Account> lsAccnt = [select Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
-                                            VAT_Number__c, ANG_RiskStatus__c,Top_Parent__r.IATACode__c,
+                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false), //List of children
                                             (Select Id, ANG_RHC_Amount__c, ANG_ConsumedRHC__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
@@ -76,10 +76,10 @@ global class ANG_MasterData_Interface{
     /* RHC Information */
     private class RHCInfoClass{
         public string RiskStatus;
-        public double RHCAmount; //Number + currency
-        public double RHCConsumed;  //Numeber + currency
+        public Decimal RHCAmount; //Number + currency
+        public Decimal RHCConsumed;  //Numeber + currency
         public string sCurrency;
-        public RHCInfoClass(string RiskStatus, double RHCAmount, double RHCConsumed, string sCurrency){
+        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, Decimal RHCConsumed, string sCurrency){
             this.RiskStatus = RiskStatus;
             this.RHCAmount = RHCAmount;
             this.RHCConsumed = RHCConsumed;
@@ -149,7 +149,7 @@ global class ANG_MasterData_Interface{
                 this.PurgeCode = acc.Purge_Flag__c;
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
                 this.DefaultDate = FormatDateMS(acc.Default_date__c);
-                this.LastStatusChangeDate = null;
+                this.LastStatusChangeDate = acc.Date_Organisation_Status_attained__c ;
                 
                 this.AccreditationType = acc.ANG_Accreditation_Model__c;
                 this.agencyType = '';
@@ -174,10 +174,9 @@ global class ANG_MasterData_Interface{
                 this.portalServiceName = acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name;
                 this.Region = acc.IATA_ISO_Country__r.Region__c;
 
-                string reqValue=acc.Reason__c==null?acc.Reason__c:acc.Reason__c.split('-').get(0);
-                this.RelinquishmentCode =reqValue!=null?(reqValue.length()<2?'0'+reqValue:reqValue):reqValue;
+                this.RelinquishmentCode =acc.Reason__c!=null?acc.Reason__c.split('-').get(0).leftPad(2,'0'):acc.Reason__c;
                 this.RemittanceFrequency = acc.Remittance_frequency__c;
-                this.Segmentation = ''; //??
+                this.Segmentation = acc.Segmentation__c;
                 this.status = acc.Status__c;
                 this.TaxID = acc.Tax_ID_1__c;
                 this.TradeName = acc.TradeName__c;
@@ -186,7 +185,7 @@ global class ANG_MasterData_Interface{
                 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
-                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, double.valueOf(rhc.ANG_RHC_Amount__c), double.valueOf(rhc.ANG_ConsumedRHC__c), rhc.CurrencyIsoCode);
+                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.ANG_ConsumedRHC__c, rhc.CurrencyIsoCode);
                 
                 //List  of children IATACode
                 //Returned only if specifically requested
