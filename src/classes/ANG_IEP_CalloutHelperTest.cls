@@ -49,7 +49,7 @@ private class ANG_IEP_CalloutHelperTest {
 
 		//create custom setting
 		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
-		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
 
 		insert customsettings;
 
@@ -68,9 +68,15 @@ private class ANG_IEP_CalloutHelperTest {
 		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
 
 		insert aacc1;
-
-
 		Test.stopTest();
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c,Integration_System__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id];
+
+		system.assertEquals(1,agencyEventsList.size());
+
+		system.assertEquals('Mulesoft',agencyEventsList.get(0).Integration_System__c);
+		system.assertEquals('Update_Sent',agencyEventsList.get(0).Update_Type__c);
+
+		
 	}
 	
 	@isTest static void validateIncorrectResponse() {
@@ -80,24 +86,19 @@ private class ANG_IEP_CalloutHelperTest {
 		Test.setMock(HttpCalloutMock.class, new MockHttpResponseFailureGenerator());
 
 		Account acct = [Select Id, ANG_IEP_Status__c, IATACode__c, Location_Type__c from Account LIMIT 1];
-
-
-		//aacc1 = [Select Id, Account__c, Change_Code__c,IEPPayload__c from Agency_Applied_Change_code__c LIMIT 1 ];		
-
+		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP', Sent_to_external_system__c = false);
 		
 		try{
-
-			Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP', Sent_to_external_system__c = false);
-
 			insert aacc1;
-			
-			Test.stopTest();
-
 		}catch(Exception e){
-
 			System.assertEquals('ANG_CalloutIEPMasterdata: The masterdata could not be sent to IEP. Status:400 - Reason:null' , e.getMessage());
-
 		}
+
+		Test.stopTest();		
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id];
+
+		system.assertEquals(1,agencyEventsList.size());
+		system.assertEquals('Error',agencyEventsList.get(0).Update_Type__c);
 	}
 
 	@isTest static void validateCorrectResponseAboveThreshold() {
