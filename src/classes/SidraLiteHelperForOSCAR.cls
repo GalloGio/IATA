@@ -6,6 +6,8 @@ public with sharing class SidraLiteHelperForOSCAR {
     public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Certificate DGR','Major Change'};
     public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change'};
     public static final set<String> VALID_REASONS2 = new set<String>{'Certificate DGR'};
+    
+    public static String CHECK_STEP = null;
 
     public static final map<String,String> MAP_STEP_REASON = new map<String,String>{
         '6' => 'Non submission of supporting documents',
@@ -164,9 +166,14 @@ public with sharing class SidraLiteHelperForOSCAR {
 
     public static Case getRelatedCase(Case parentCase) {
         if (VALID_REASONS1.contains(parentCase.Reason1__c)) {
-            // for first valid reason we check a possible valid OSCAR reason
-            // if not possible it will throw an exception
-            getOSCARReason(parentCase);
+            String reasonToCheck = MAP_STEP_REASON.get(CHECK_STEP);
+            if (CHECK_STEP!=null) {
+                for (Case cse: parentCase.Cases) {
+                    if (cse.SIDRA_lite_Reason__c == reasonToCheck) {
+                        return cse;
+                    }
+                }
+            }
         } else if (VALID_REASONS2.contains(parentCase.Reason1__c)) {
             if (parentCase.Cases.size() > 0) {
                 return parentCase.Cases.get(0);

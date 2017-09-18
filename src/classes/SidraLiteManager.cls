@@ -348,10 +348,14 @@ public with sharing class SidraLiteManager {
 
         if (SidraLiteUtil.isAccountActive(account)) {
             cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-            if (parentCase.BusinessHoursId == null) {
-                cse.NOT_Date__c = DateTime.now().addDays(5).date();
-            } else {
-                cse.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,parentCase.BusinessHoursId).date();
+            // The NOT date must be filled in the Console Sidra Lite action button located in some oscar steps
+            // If something happens and the date is not filled then we set a default date here
+            if (cse.NOT_Date__c==null) {
+                if (parentCase.BusinessHoursId == null) {
+                    cse.NOT_Date__c = DateTime.now().addDays(5).date();
+                } else {
+                    cse.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,parentCase.BusinessHoursId).date();
+                }
             }
             cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(cse.NOT_Date__c.addMonths(1));
         } else {

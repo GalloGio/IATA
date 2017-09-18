@@ -310,6 +310,7 @@ global class AMS_OSCAR_Webservice {
         try {
             Case oscarCase = findOscarParentCase(oscarId);
             checkOscarStep(oscarCase.oscar__r, step);
+            SidraLiteHelperForOSCAR.CHECK_STEP = step;
             Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
             
             if (createCase) {
