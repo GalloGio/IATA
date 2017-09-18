@@ -43,21 +43,26 @@ public with sharing class ANG_ProgressBarHelper {
 									String valueError,
 									Map<String, String> objectsIds) {
 
-		String soqlStr = 'Select ' + soqlField + ' From ' + soqlObject + ' Where id = \'' + objectsIds.get(soqlObject) + '\'';
+		if(objectsIds.containsKey(soqlObject)) {
+			String soqlStr = 'Select ' + soqlField + ' From ' + soqlObject + ' Where id = \'' + objectsIds.get(soqlObject) + '\'';
 
-		List<sObject> sobjList = Database.query(soqlStr);
+			List<sObject> sobjList = Database.query(soqlStr);
 
-		if(!sobjList.isEmpty()) {
-			SObject so = sobjList[0];
-			Object testValue = so.get(soqlField);
-			if(testValue == valueOk) {
-				return DONE;
-			} else if(testValue == valueError) {
-				return ERROR;
-			} else {
-				return NOT_DONE;
-			}
-		}		
-		return NOT_DONE;
-	}
+			if(!sobjList.isEmpty()) {
+				SObject so = sobjList[0];
+				Object testValue = so.get(soqlField);
+				if(testValue == valueOk) {
+					return DONE;
+				} else if(testValue == valueError) {
+					return ERROR;
+				} else {
+					return NOT_DONE;
+				}
+			}		
+			return NOT_DONE;
+		} else {
+			System.debug(LoggingLevel.ERROR, 'Missing id for the sObject : ' + soqlObject);
+			return NOT_DONE;
+		}
+	}	
 }
