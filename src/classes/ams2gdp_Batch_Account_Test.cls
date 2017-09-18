@@ -26,6 +26,20 @@ private class ams2gdp_Batch_Account_Test
 			//settings.Notification_Email__c = 'hello@world.com'; 
 		upsert settings AMS_2_GDP_Settings__c.Id;
 
+		Account new_account = ams2gdp_TestDataGenerator.generateAccounts(1,false)[0];
+		new_account.Website = ams2gdp_TestDataGenerator.generateRandomString(101);
+		insert new_account;
+
+		upsert new AMS_GDP_Batch__c(
+			Batch_Name__c='Job 1: GDP Products - Account View', 
+			Last_Sync_Start_Date__c=Datetime.now(), 
+			Last_Sync_End_Date__c=Datetime.now(),
+			Job_1_Original_Start_Date__c = Datetime.now(),
+			Total_Failed_Records__c = 1,
+			Total_Records_Processed__c = nb,
+			Failed_Records__c = new_account.Id
+		) Batch_Name__c; 
+
 		Test.startTest();
 			// Schedule the test job
 			String CRON_EXP = '0 0 0 15 3 ? 2022';
@@ -74,6 +88,7 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 1: GDP Products - Account View', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
+			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = accounts[0].Id
@@ -93,6 +108,7 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 4: GDS & Account Category', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
+			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = accounts[0].Id
@@ -109,6 +125,16 @@ private class ams2gdp_Batch_Account_Test
 		Account new_account = ams2gdp_TestDataGenerator.generateAccounts(1,false)[0];
 		new_account.Website = ams2gdp_TestDataGenerator.generateRandomString(101);
 		insert new_account; 
+
+		upsert new AMS_GDP_Batch__c(
+			Batch_Name__c='Job 1: GDP Products - Account View', 
+			Last_Sync_Start_Date__c=Datetime.now(), 
+			Last_Sync_End_Date__c=Datetime.now(),
+			Job_1_Original_Start_Date__c = Datetime.now(),
+			Total_Failed_Records__c = 1,
+			Total_Records_Processed__c = nb,
+			Failed_Records__c = new_account.Id
+		) Batch_Name__c; 
 
 		Test.startTest(); 
 			ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false);
