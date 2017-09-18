@@ -109,7 +109,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		if(aeId!=null){
 			AMS_Agency_Updates__c aeRecord= [select id,Update_Type__c from AMS_Agency_Updates__c where id =:aeId];
-			aeRecord.Update_Type__c=isSuccess?aeRecord.Update_Type__c+'_Sent':'Error';
+			aeRecord.Update_Type__c=isSuccess?(aeRecord.Update_Type__c+'_Sent'):'Error';
 			update aeRecord;
 		}
 	}
