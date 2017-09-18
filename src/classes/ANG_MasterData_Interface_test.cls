@@ -7,7 +7,6 @@ private class ANG_MasterData_Interface_test {
 
 	@testSetup static void testSetup(){
 
-
                 Account acc = new Account(
                         name='acc1',
                         Location_Type__c=AMS_Utils.HE,
@@ -18,7 +17,6 @@ private class ANG_MasterData_Interface_test {
                         IATACode__c ='123',
                         Accreditation_date__c = Date.valueOf('2017-01-01')
                 );
-
 
                 Account acc1 = new Account(
                         name='acc2',
@@ -31,7 +29,7 @@ private class ANG_MasterData_Interface_test {
                         Accreditation_date__c = Date.valueOf('2017-01-01')
                 );
 
-                 Account acc2 = new Account(
+                Account acc2 = new Account(
                         name='acc2',
                         Location_Type__c=AMS_Utils.HE,
                         Location_Class__c= AMS_Utils.LC_PASSENGER,
@@ -43,7 +41,6 @@ private class ANG_MasterData_Interface_test {
                 );
 
                 insert new list<account>{acc,acc1,acc2};
-
 
                 Account accChild = new Account(
                         ParentId = acc.id,
@@ -58,8 +55,6 @@ private class ANG_MasterData_Interface_test {
 
                 insert accChild;
 
-
-
                 Agency_Authorization__c agAurthRec = new Agency_Authorization__c(
                         Account__c= acc.id,
                         Email_Used_for_BSP_Creation__c ='asd@iata.org',
@@ -68,11 +63,9 @@ private class ANG_MasterData_Interface_test {
                         ANG_FormOfPayment_ID__c='CC',
                         recordtypeId =  AMS_Utils.getId('Agency_Authorization__c','BSPLink'),
                         Unique_Identifier__c='aa'
-
-
                 );
 
-                 Agency_Authorization__c agAurthRec2 = new Agency_Authorization__c(
+                Agency_Authorization__c agAurthRec2 = new Agency_Authorization__c(
                         Account__c= accChild.id,
                         Email_Used_for_BSP_Creation__c ='as5d@iata.org',
                         recordtypeId =  AMS_Utils.getId('Agency_Authorization__c','FormOfPayment'),
@@ -80,100 +73,61 @@ private class ANG_MasterData_Interface_test {
                         status__c = 'Active',
                         ANG_FormOfPayment_ID__c='CC',
                         Unique_Identifier__c='bbb'
-
-
                 );
                 insert new list<Agency_Authorization__c>{agAurthRec,agAurthRec2};
 
-
                 ANG_RHC_Information__c rhcRec = new ANG_RHC_Information__c(
                         ANG_AccountId__c = acc.id
-
-
                 );
-
                 insert rhcRec;
-
 	}
-
-        static testmethod void testHTTPrequestToWebserviceSuccess (){
-                RestRequest request = new RestRequest(); 
+        private static RestResponse doCallOutToWS(String iataCode,Boolean getChildren){
+                 RestRequest request = new RestRequest(); 
                 RestResponse response = new RestResponse();
                 
-                request.requestURI = '/ANG_GetMasterData/12223';  
+                request.requestURI = '/ANG_GetMasterData/'+iataCode;  
                 request.httpMethod = 'GET';
+                if(getChildren)  request.addParameter('mode', 'f');
 
                 RestContext.request = request;
                 RestContext.response = response;
-
                 ANG_MasterData_Interface.doGet();
+
+                return response;
+        }
+
+        static testmethod void testHTTPrequestToWebserviceSuccess (){
+              
+                RestResponse response = doCallOutToWS('12223',false);
                 System.assertEquals(HTTP_STATUS_OK, response.statusCode);
         }
 
          static testmethod void testHTTPrequestToWebserviceSuccessWithChilds (){
-                RestRequest request = new RestRequest(); 
-                RestResponse response = new RestResponse();
-                
-                request.requestURI = '/ANG_GetMasterData/123';  
-                request.httpMethod = 'GET';
-                request.addParameter('mode', 'f');
 
-                RestContext.request = request;
-                RestContext.response = response;
-
-                ANG_MasterData_Interface.doGet();
+                RestResponse response = doCallOutToWS('123',true);
                 System.assertEquals(HTTP_STATUS_OK, response.statusCode);
         }
 
         static testmethod void testHTTPrequestToWebserviceUnsuccessNoAccountForIATACode (){
-                RestRequest request = new RestRequest(); 
-                RestResponse response = new RestResponse();
-                
-                request.requestURI = '/ANG_GetMasterData/888';  
-                request.httpMethod = 'GET';
-                request.addParameter('mode', 'f');
-
-                RestContext.request = request;
-                RestContext.response = response;
-                ANG_MasterData_Interface.doGet();
-
-                System.assertEquals(HTTP_NOT_FOUND, response.statusCode);
-                
+               
+                RestResponse response = doCallOutToWS('888',true);
+                System.assertEquals(HTTP_NOT_FOUND, response.statusCode);      
         }
 
         static testmethod void testHTTPrequestToWebserviceUnsuccessMultipleAccountMatch(){
-                RestRequest request = new RestRequest(); 
-                RestResponse response = new RestResponse();
-                
-                request.requestURI = '/ANG_GetMasterData/999';  
-                request.httpMethod = 'GET';
-
-                RestContext.request = request;
-                RestContext.response = response;
-                ANG_MasterData_Interface.doGet();
-
-                System.assertEquals(HTTP_MULTIPLE_FOUND, response.statusCode);
-                
+               
+                RestResponse response = doCallOutToWS('999',false);
+                System.assertEquals(HTTP_MULTIPLE_FOUND, response.statusCode); 
         }
 
 
         static testmethod void testHTTPrequestToWebserviceUnsuccessNoCodeSent(){
-                RestRequest request = new RestRequest(); 
-                RestResponse response = new RestResponse();
+               
                 
-                request.requestURI = '/ANG_GetMasterData/';  
-                request.httpMethod = 'GET';
-
-                RestContext.request = request;
-                RestContext.response = response;
-                ANG_MasterData_Interface.doGet();
-
-                System.assertEquals(HTTP_STATUS_BAD_REQUEST, response.statusCode);
-                
+                RestResponse response = doCallOutToWS('',false);
+                System.assertEquals(HTTP_STATUS_BAD_REQUEST, response.statusCode);       
         }
 
 
-
-
-
+        
 }

@@ -39,18 +39,11 @@ global class ANG_MasterData_Interface{
             }
             
             //All is good. Proceeding in generating payload
-            //integer i = 0/0;
             GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F')), 200);
         }
         catch(exception e){
             GenerateResponse(json.serialize(new ErrorPayload('500', e.getMessage()) ), 500);
         }
-        
-        //system.debug('DTULLO --> ' + IATACode);
-        //system.debug('DTULLO --> ' + sMode);
-        //system.debug('DTULLO --> ' + req);
-        //system.debug('DTULLO --> ' + req.params);
-        //system.debug('DTULLO --> ' + req.requestURI);
     }
     
     private static void GenerateResponse(string sBody, integer iStatusCode){
@@ -99,11 +92,8 @@ global class ANG_MasterData_Interface{
         /* Agency Information */
         public string isBranchAbroad;
         public boolean PurgeCode;
-        //public date AccreditationDate;
         public string AccreditationDate;
         public string DefaultDate;
-        //public date DefaultDate;
-        //public date LastStatusChangeDate;
         public date LastStatusChangeDate;
         public string AccelyaEmail;     //From Agency Authorization
         public string AccreditationType;
@@ -130,7 +120,7 @@ global class ANG_MasterData_Interface{
         public string Region;
         public string RelinquishmentCode; //ReasonCode
         public string RemittanceFrequency;
-        public string Segmentation; //??
+        public string Segmentation; 
         public string status;
         public string TaxID;
         public string TradeName;
