@@ -1,19 +1,15 @@
 public class ANG_AgencyEventsGenerator{
-	private String opType;
 	private String cmType;
 	private String accField;
 	private String topParentField;
-	private Schema.SObjectType sobjTp;
 	private list<sObject> newRecList;
 	private map<id,sObject>oldRecMap;
 
 
-	public ANG_AgencyEventsGenerator(String ot,list<sObject> nrL,map<id,sObject>orM,Schema.SObjectType sobjt,string cmt,string acf, string tpf){
-		opType=ot;
+	public ANG_AgencyEventsGenerator(list<sObject> nrL,map<id,sObject>orM,string cmt,string acf, string tpf){
 		cmType=cmt;
 		accField=acf;
 		topParentField=tpf;
-		sobjTp=sobjt;
 		newRecList=nrL;
 		oldRecMap=orM;
 	}
@@ -30,13 +26,13 @@ public class ANG_AgencyEventsGenerator{
         
         for(sObject obj: newRecList){
             for(ANG_CalloutMapping__c cm:calloutmappingList){
-                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Event_type__c) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
-                    if(!insertedRecordsSet.contains(String.valueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField))+opType)){
+                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
+                    if(!insertedRecordsSet.contains(String.valueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField))+cm.Event_type__c)){
                         AMS_Agency_Updates__c auRec = new AMS_Agency_Updates__c(
                             Account__c = String.ValueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField)), 
-                            Update_Type__c = opType,
+                            Update_Type__c = cm.Event_type__c,
                             Integration_System__c='Mulesoft',
-                            Change_Code__c=cm.Event_type__c,
+                            Change_Code__c=cm.Change_Code__c,
                             Agency_Applied_Change_code__c=cmType=='ChangeCode'?String.ValueOf(obj.get('id')):null,
                             ConfigurationID__c=cm.id
                         );
