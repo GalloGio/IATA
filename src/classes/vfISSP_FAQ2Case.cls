@@ -823,6 +823,7 @@ public without sharing class vfISSP_FAQ2Case
         System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();
+        this.newCase.IATAcode__c = iataCode;
         this.currentButtonsToShow = OnlyCancel;
         system.debug('Kerensen refreshTopicPickList: After  resetCase(); '+topic+'     Env.SelectOptionDefaultValue===>'+Env.SelectOptionDefaultValue  );
         if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
