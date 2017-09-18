@@ -4471,7 +4471,6 @@
                   "Issue_credit_note_if_applicable__c",
                   "Release_FS_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "Close_IFAP_Disapproval__c",
                   "Cancel_Inspection_Requests_Disapproval__c",
                   "STEP3__c"
@@ -5015,7 +5014,6 @@
                   "Issue_credit_note_if_applicable__c",
                   "Release_FS_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "Close_IFAP_Disapproval__c",
                   "Cancel_Inspection_Requests_Disapproval__c",
                   "STEP3__c"
@@ -5399,7 +5397,6 @@
                   "Issue_disapproval_pack__c",
                   "Issue_credit_note_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "STEP3__c"
                 ],
                 "IsDependent": false

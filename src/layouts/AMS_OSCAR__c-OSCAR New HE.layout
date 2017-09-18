@@ -414,10 +414,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Update_AIMS_Disapproval_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Close_IFAP_Disapproval_Date__c</field>
             </layoutItems>
             <layoutItems>
