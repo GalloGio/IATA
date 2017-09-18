@@ -9,6 +9,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> changesStruct;
 		public List<Agency_Applied_Change_code__c> changeCodesToCreate;
 		public List<AMS_OSCAR_JSON.ChangeCode> changeCodesToCreateDef;
+		public List<Account> accountsToApplyChangeCodes;
 
 		public Set<Id> accountsChanged;
 
@@ -20,6 +21,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changeCodesToCreateDef = new List<AMS_OSCAR_JSON.ChangeCode>();
 			accountsChanged = new Set<Id>();
 			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+			accountsToApplyChangeCodes = new List<Account>();
 		}
 
 		public void addAccount(Account account){
@@ -35,8 +37,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			this.changeCodesToCreate.add(changeCode);
 		}
 
-		public void addChangeCodeDef(AMS_OSCAR_JSON.ChangeCode changeCodeDef){
+		public void addChangeCodeDef(AMS_OSCAR_JSON.ChangeCode changeCodeDef, Account acc){
 			this.changeCodesToCreateDef.add(changeCodeDef);
+			this.accountsToApplyChangeCodes.add(acc);
 		}
 
 		public Boolean runUpsert(){
@@ -242,7 +245,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint5 changesCodes are:'+ changesContainer.changeCodesToCreateDef);
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint6 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 			if(changesContainer.changesStruct != null)
-				changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+				changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint4 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 			if(changesContainer != null){
@@ -1015,6 +1018,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
 
 		system.debug('[ANG_AgencyChangesHelper] : Change code to apply: ' + changeCodeIdentifier);
+		system.debug('[ANG_AgencyChangesHelper] : allHierarchyAccountsToApplyCC: ' + allHierarchyAccountsToApplyCC);
 
 		if (changeCodeIdentifier != null) {
 
@@ -1025,7 +1029,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				if (accToUpdateStatus != null) {
 					changeCodeDef = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
 					system.debug('[ANG_AgencyChangesHelper] : Change code def: ' + changeCodeDef);
-					changesContainer.addChangeCodeDef(changeCodeDef);
+					changesContainer.addChangeCodeDef(changeCodeDef, accToUpdateStatus);
 
 					if(changeCodeDef.status != null){
 						accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
@@ -1049,8 +1053,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		changeCodeDef.reasonCode = lastChangeCode.Reason_Code__c;
 		changeCodeDef.reasonDesc = lastChangeCode.Reason_Description__c;
 
+		Account acc = changesContainer.accountsMap.get(oscar.Account__c);
+
 		//changeCode = createChangeCode(changeCodeDef, oscar, oscar.Account__c);
-		changesContainer.addChangeCodeDef(changeCodeDef);
+		changesContainer.addChangeCodeDef(changeCodeDef, acc);
 
 		return changesContainer;
 
@@ -1155,14 +1161,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
     */
 
-	public static AChangeStructure ANGcreateAAChangeCodes(List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Id> oscarAgencies, Boolean isToUpdateAccounts, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
+	public static AChangeStructure ANGcreateAAChangeCodes(List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
 
 		Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
 		Set<Account> accountsToUpdate = new Set<Account>();
 
+		Set<Id> accountIds = new Set<Id>();
+		for(Account acc: oscarAgencies)
+			accountIds.add(acc.Id);
+
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
-		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(new Set<Id>(oscarAgencies));
+		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
 
 		AMS_ChangeCodesHelper.ObjectChangesStruct objectChangesByChangeCode = null;
 
@@ -1172,7 +1182,38 @@ public with sharing class ANG_AgencyChangesHelper {
 		system.debug('[ANG_AgencyChangesHelper] The list of agencies to insert the change codes are the following:'+oscarAgencies);
 		system.debug('[ANG_AgencyChangesHelper] Change Codes:'+ changeCodes);
 
+		Integer index = 0;
+
 		for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
+
+			Id accId = oscarAgencies.get(index).Id;
+
+			Account acct = changesContainer.accountsMap.get(accId) != null ?  changesContainer.accountsMap.get(accId) : new Account(Id = accId);
+
+			Boolean isActive = false;
+
+			if (!accountsChecker.containsKey(acct)) {
+				accountsChecker.put(acct, false);
+				isActive = true;
+			}
+
+			if(objectChanges != null && !objectChanges.isEmpty())
+				objectChangesByChangeCode = objectChanges.get(index);
+
+			AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
+
+			changesContainer.addChangeCode(changeCodeResult.changeCode);
+
+			aaccHistoryToProcess.put(accId, changeCodeResult);
+
+			if (!accountsToUpdate.contains(changeCodeResult.acct)){
+				changesContainer.addAccount(changeCodeResult.acct);
+			}
+
+			index++;
+		}
+
+		/*for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
 			Integer index = 0;
 
@@ -1207,7 +1248,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			index++;
-		}
+		}*/
 
 		if(changesContainer.changeCodesToCreate != null && !changesContainer.changeCodesToCreate.isEmpty())
 		{
