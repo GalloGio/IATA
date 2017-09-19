@@ -1438,7 +1438,7 @@ public without sharing class ISSP_Registration {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
         	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
-        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        //	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
         } else {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(GSA,Label.ISSP_GSSA));
