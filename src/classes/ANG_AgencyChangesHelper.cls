@@ -1178,5 +1178,7 @@ public with sharing class ANG_AgencyChangesHelper {
     			toReturn.add(rel.Child_Account__c);
 
     	}
+
+    	return toReturn;
     }
 }
