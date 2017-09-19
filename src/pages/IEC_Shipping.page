@@ -731,6 +731,7 @@
                                                                             <div class="tooltip-description">
                                                                                 <h3 class="title">{!$Label.PurchaseAsAutoRenew}</h3>
                                                                                 <p>{!$Label.PurchaseAsAutoRenewInfo}</p>
+                                                                                <a href="http://www.iata.org/services/Pages/direct-sales.aspx?">{!$Label.contacting_us}</a>
                                                                             </div>
                                                                         </div>
                                                                     </apex:outputPanel>
