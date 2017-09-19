@@ -608,7 +608,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
 		}
 
-    	return toReturn;
+		return toReturn;
 	}
 
 	public static Boolean verifyNewHierarchy(List<AMS_Agencies_relationhip__c> rels, Id targetAccount){
