@@ -533,7 +533,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                     oscar.Requested_Bank_Guarantee_currency__c = 'USD';
                 }
-            }
+            }else
+            	if(oscar.recordTypeId == AMS_Utils.RECTYPE_NGCHANGES && oscar.Process__c == AMS_Utils.BANKACCCHANGES){
+            		oscar.Sanity_check_deadline__c = Date.today() + 15;
+            	}
 
             if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP) oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
