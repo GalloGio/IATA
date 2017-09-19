@@ -1,6 +1,6 @@
 <aura:component >
     <aura:attribute name="account" type="Account"/>
-    
+    <aura:registerEvent name="AccountIdSelected" type="c:AMP_AccountIdSelected"/>  
     <!-- PAGE HEADER -->
     <div class="slds-page-header" role="banner">
         
@@ -41,6 +41,9 @@
             <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
             <div class="slds-col slds-no-flex slds-align-middle">
                 <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button--neutral">
+                        <a href="" onclick="{!c.backToSeach}">Back to Search</a>
+                    </button>
                     <button class="slds-button slds-button--neutral">
                         <a href="{!'/' + v.account.Id}">Back to Classic View</a>
                     </button>
