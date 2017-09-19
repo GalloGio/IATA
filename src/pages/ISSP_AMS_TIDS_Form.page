@@ -1049,7 +1049,7 @@
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Step3_4_People_SubTitle}</strong></div>
                       
-                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),IF(newlabels,$Label.ISSP_AMS_Step3_4_People_New,$Label.ISSP_AMS_Step3_4_People),IF(newlabels, $Label.ISSP_AMS_Step3_4_Branch_People_New, $Label.ISSP_AMS_Step3_4_Branch_People))}" styleClass="col-md-12" escape="false"/>
+                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_TIDS_Step3_4_People_New, IF(newlabels, $Label.ISSP_AMS_Step3_4_Branch_People_New, $Label.ISSP_AMS_Step3_4_Branch_People))}" styleClass="col-md-12" escape="false"/>
                        
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}

@@ -5879,6 +5879,14 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label>Service d'Identification de l'Industrie Touristique (TIDS) - Succursale</label>
+        <name>ISSP_AMS_OPTION_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Service d'Identification de l'Industrie Touristique (TIDS) - Nouveau siège social</label>
+        <name>ISSP_AMS_OPTION_TIDS_HO</name>
+    </customLabels>    
+    <customLabels>
         <label><!-- ISSP_AMS_Office_Full_Address --></label>
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
@@ -5981,6 +5989,14 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label>Nouveau siège social</label>
         <name>ISSP_AMS_Reason_New_HO</name>
+    </customLabels>
+    <customLabels>
+        <label>Nouvelle Succursale TIDS</label>
+        <name>ISSP_AMS_Reason_New_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Nouveau siège social TIDS</label>
+        <name>ISSP_AMS_Reason_New_TIDS_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Registration_Number --></label>
@@ -6677,6 +6693,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label>Veuillez indiquer le(s) GDS (système de réservation électronique) avec le(s)quel(s) vous avez signé un contrat</label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Not_Mandatory</name>
+    </customLabels>
+    <customLabels>
         <label>Adresse complète du bureau pour lequel la demande d&apos;approbation est réalisée</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -6773,6 +6793,14 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_StepFinal_Thanks</name>
     </customLabels>
     <customLabels>
+        <label>Nous vous remercions d&apos;avoir envoyé votre demande d&apos;accréditation pour la nouvelle succursale de votre agence TIDS.</label>
+        <name>ISSP_AMS_StepFinal_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous vous remercions d&apos;avoir envoyé votre demande d&apos;accréditation pour le siège social de votre agence TIDS.</label>
+        <name>ISSP_AMS_StepFinal_TIDS_HO</name>
+    </customLabels>    
+    <customLabels>
         <label>Votre numéro de dossier est le</label>
         <name>ISSP_AMS_StepFinal_Your_CaseNumber</name>
     </customLabels>
@@ -6848,6 +6876,32 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <label>&lt;p&gt;Le candidat se déclare prêt à payer les frais inhérents à la demande, les frais d&apos;admission et les frais annuels, au montant fixé par la Conférence en consultation avec le directeur général et sur recommandation de l&apos;administrateur de l&apos;Agence en vue d&apos;une intégration et d&apos;un référencement dans la liste de l&apos;Agence. Dans le cas où la demande serait rejetée, les frais d&apos;admission et les frais d&apos;Agence annuels initiaux seront reversés au candidat.&lt;br/&gt;&lt;/p&gt;</label>
         <name>ISSP_AMS_T_Cs3</name>
     </customLabels>
+    
+    <customLabels>
+        <label>Si vous êtes membre d’une association nationale des agents de voyages, veuillez indiquer ci-dessous le nom de l’association et votre numéro de membre (joignez svp une preuve d’appartenance)</label>
+        <name>ISSP_AMS_TIDS_National_Association_Member</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez indiquer le nom de l’association</label>
+        <name>ISSP_AMS_TIDS_National_Association_Names</name>
+    </customLabels>
+    <customLabels>
+        <label>Si vous n’êtes pas membre de votre association nationale des agents de voyages, veuillez svp inclure une (1) lettre de recommandation d'une compagnie aérienne membre IATA ou d'un système de distribution (GDS) tel que: Amadeus, Galileo, Sabre, Worldspan ou deux (2) lettres de professionnels de l’industrie du tourisme tels que grandes chaines hôtelières, sociétés de location de voitures, parcs d’attractions, etc.</label>
+        <name>ISSP_AMS_TIDS_National_Association_Not_Member</name>
+    </customLabels>
+    <customLabels>
+        <label>Nature de l’entreprise (ex. agence de voyages, tour opérateur, organisateur de conférences, etc.)</label>
+        <name>ISSP_AMS_TIDS_Step2_Type_of_Business</name>
+    </customLabels>
+    <customLabels>
+        <label>Saisissez les noms et fonctions des directeurs et agents d&apos;une entreprise, et les informations concernant les gérants de l&apos;agence.&lt;br/&gt;&lt;br/&gt;Sélectionnez au moins un signataire autorisé.</label>
+        <name>ISSP_AMS_TIDS_Step3_4_People_New</name>
+    </customLabels>
+    <customLabels>
+        <label>SECTION 5 - Autres informations</label>
+        <name>ISSP_AMS_TIDS_Step3_5_Other_Info</name>
+    </customLabels>
+
     <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Title</name>

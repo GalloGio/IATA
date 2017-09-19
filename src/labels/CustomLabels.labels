@@ -12603,6 +12603,15 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Type of business (e.g. Travel Agency, Tour Operator, Conference or Event Organiser etc.)</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_4_People_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
+Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_TIDS_Step3_5_Other_Info</fullName>
         <language>en_US</language>
         <protected>false</protected>

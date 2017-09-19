@@ -5868,6 +5868,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label>Servicio Designador de la Industria de Viajes (TIDS) - Oficina de sucursal</label>
+        <name>ISSP_AMS_OPTION_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicio Designador de la Industria de Viajes (TIDS) - Nueva oficina central</label>
+        <name>ISSP_AMS_OPTION_TIDS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Office_Full_Address --></label>
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
@@ -5970,6 +5978,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Nueva oficina central</label>
         <name>ISSP_AMS_Reason_New_HO</name>
+    </customLabels>
+    <customLabels>
+        <label>Nueva sucursal TIDS</label>
+        <name>ISSP_AMS_Reason_New_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Nueva oficina central TIDS</label>
+        <name>ISSP_AMS_Reason_New_TIDS_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Registration_Number --></label>
@@ -6666,6 +6682,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label>Indique los GDS con los que ha firmado un contrato</label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Not_Mandatory</name>
+    </customLabels>
+    <customLabels>
         <label>Dirección completa de la oficina para la que se presenta la solicitud de aprobación</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -6762,6 +6782,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_StepFinal_Thanks</name>
     </customLabels>
     <customLabels>
+        <label>Gracias por enviar su solicitud de acreditación para la sucursal de su agencia de viajes TIDS.</label>
+        <name>ISSP_AMS_StepFinal_TIDS_BR</name>
+    </customLabels>
+    <customLabels>
+        <labelGracias por enviar su solicitud de acreditación para la sede central de su agencia de viajes TIDS.</label>
+        <name>ISSP_AMS_StepFinal_TIDS_HO</name>
+    </customLabels>
+    <customLabels>
         <label>Su número de caso es</label>
         <name>ISSP_AMS_StepFinal_Your_CaseNumber</name>
     </customLabels>
@@ -6836,6 +6864,30 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>&lt;p&gt;El solicitante comprende y acuerda pagar la solicitud, las cuotas de ingreso y las anuales, en las cantidades determinadas por la Conferencia junto con el Director General, y según lo informado por el administrador de agencias, para su admisión y mantenimiento en la lista de agencias. En el caso de que se rechazara la solicitud, las cuotas iniciales y de ingreso anuales de agencia se devolverán al solicitante.&lt;br/&gt;&lt;/p&gt;</label>
         <name>ISSP_AMS_T_Cs3</name>
+    </customLabels>
+    <customLabels>
+        <label>Si es miembro de la Asociación Nacional de Agentes de Viajes de su país, favor de indicar el nombre de la asociación y su numéro de afiliación (favor de adjuntar comprobante de membresía tal como certificado o carta emitida por la asociación)</label>
+        <name>ISSP_AMS_TIDS_National_Association_Member</name>
+    </customLabels>
+    <customLabels>
+        <label>Indicar el nombre de la asociación</label>
+        <name>ISSP_AMS_TIDS_National_Association_Names</name>
+    </customLabels>
+    <customLabels>
+        <label>Si no es miembro de la Asociación Nacional de Agentes de Viajes, favor de proporcionar una (01) carta de recomendación emitida por una aerolínea miembro de IATA o un Sistema de Distribución Global (GDS) como ABACUS, AXESS, AMADEUS, GALILEO, SABRE, WORLDSPAN, etc. O bien, dos (02) cartas de recomendación cartas de recomendación de un proveedor de servicios en la industria de viajes y turismos tales como: una importante cadena hotelera, una compañía de alquiler de autos, etc.</label>
+        <name>ISSP_AMS_TIDS_National_Association_Not_Member</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo de negocio (agencia de viajes, operador turístico, organización de conferencias o eventos, etc.)</label>
+        <name>ISSP_AMS_TIDS_Step2_Type_of_Business</name>
+    </customLabels>
+    <customLabels>
+        <label>Introduzca los nombres y cargos de los directores y directivos de una empresa, y los datos de los gerentes de la agencia.&lt;br/&gt;&lt;br/&gt;Seleccione al menos un signatario autorizado y elija el contacto de evaluación financiera y el administrador del portal.</label>
+        <name>ISSP_AMS_TIDS_Step3_4_People_New</name>
+    </customLabels>
+    <customLabels>
+        <label>SECCIÓN 5 - Otra información</label>
+        <name>ISSP_AMS_TIDS_Step3_5_Other_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
