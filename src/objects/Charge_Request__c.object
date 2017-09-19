@@ -882,6 +882,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>AISTLM_FILE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>BSPFEE_ADELW</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
