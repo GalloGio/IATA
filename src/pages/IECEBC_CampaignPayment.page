@@ -10,7 +10,7 @@
 		<apex:define name="pageScriptAdditions">
 			<!-- If any page specific .js, add them here -->
 		</apex:define>
-		<apex:define name="pageContent"> Campaign: {!campaign}
+		<apex:define name="pageContent">
 			<!-- Start of Page Content -->
 			<main class="main-content">
 				<div class="inner-wrapper">
