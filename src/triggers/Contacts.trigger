@@ -2,13 +2,11 @@ trigger Contacts on Contact (after delete, after insert, after undelete,
     after update, before delete, before insert, before update) {
 
     if (Trigger.isBefore) {
-        ANG_ContactHandler angHandler = new ANG_ContactHandler();
         if (Trigger.isInsert) {
             AccountDomainContactHandler.beforeInsert(Trigger.new);
         }
         if(Trigger.isUpdate) {
             AccountDomainContactHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
-            angHandler.handleBeforeUpdate();
         }
     }
 
