@@ -245,7 +245,7 @@
 								      </ul>
 								      </apex:form>
 								      <apex:pageBlockSection >
-								    </apex:pageBlockSection >
+								    </apex:pageBlockSection>
 								    <apex:form id="thePages" >
 								    <apex:panelGrid columns="5" style="margin: 0 auto;">
 								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
@@ -378,8 +378,6 @@
 		                $(this).height(h);
 		            });
 				}
-
-				//Reload page with selected filters
 				
 
 				
