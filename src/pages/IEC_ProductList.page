@@ -380,15 +380,9 @@
 				}
 
 				//Reload page with selected filters
-				var jsBackButonRefine = function(){
-					backButonRefine();
-				}
+				
 
-				//Go to the giving page number
-				var jsGotoPage = function(page){
-					$('input[id$=pageNumber]').val(page);
-					gotoPage(page);
-				}
+				
 
 				$(document).ready(function(){
 
@@ -399,10 +393,7 @@
 				    }
 
 				    //If the page number is not empty go the the page number
-				    var pageNumber = $('input[id$=pageNumber]').val();
-				    if(pageNumber != ''){
-				    	gotoPage(pageNumber);
-				    }
+				    
 				    
 				    $('body').bind('change', function(eventObject){
 				    	//console.log(eventObject);

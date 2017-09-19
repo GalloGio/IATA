@@ -210,7 +210,6 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         // sets the number of records to show in each page view
         productRecords.setPageSize(12);
         //refreshDisplayedProducts();
-        getProductRecordsList();
     }
 
     /**************************************************************************************************************
@@ -293,7 +292,6 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         // sets the number of records to show in each page view
         productRecords.setPageSize(12);
         //refreshDisplayedProducts();
-        getProductRecordsList();
         system.debug('refine end');
     }    
 
