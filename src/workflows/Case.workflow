@@ -1263,11 +1263,23 @@
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
+            <recipient>abbadid@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>al-maanis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1279,7 +1291,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>farisd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>haddada@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ibrahimf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>isicheic@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jaradata@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>katkhudan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>khalailehk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1331,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>moutany@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nabulsis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajputf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1308,6 +1372,26 @@
         </recipients>
         <recipients>
             <recipient>schuchardm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sughayerm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>tadrosc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>yeboahm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zidans@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
