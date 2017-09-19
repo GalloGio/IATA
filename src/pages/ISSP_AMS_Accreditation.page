@@ -263,7 +263,7 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
                     
-                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
+                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
                     } else {
                         operationType = 'Cargo_Agent';
