@@ -289,6 +289,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>CCL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>CHC</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1903,6 +1907,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>CCF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCL</fullName>
                 <default>false</default>
             </values>
             <values>
