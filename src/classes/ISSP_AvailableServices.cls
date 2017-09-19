@@ -30,6 +30,7 @@ public with sharing class ISSP_AvailableServices{
     public Map<String, String> iepRoles {get; set;}
     public Boolean redirect {get; set;}
     public Boolean provError {get; set;}
+    public Integer failedCount  {get; set;}
 
     Integer count = 0;
 
@@ -616,6 +617,10 @@ public with sharing class ISSP_AvailableServices{
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin, isAuthorisedSignatory);
 
+        List<UserProvisioningRequest> uprFailed = [Select id From UserProvisioningRequest where SalesforceUserId =: currentPortalUser.id And State = 'Failed'];
+
+        this.failedCount = uprFailed.size();
+
         this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
 
         system.debug('XXX Serv : '+Serv);
@@ -676,9 +681,10 @@ public with sharing class ISSP_AvailableServices{
             this.pollerOn = false;
             this.redirect = true;
         } else {
-            List<Portal_Application_Right__c> l2 = [SELECT Id FROM Portal_Application_Right__c WHERE Portal_Application__c =: Serv.recordService.id AND Contact__c =: conId];
 
-            if(l2.size() == 0) {
+            List<UserProvisioningRequest> l2 = [Select id From UserProvisioningRequest where SalesforceUserId =: currentPortalUser.id And State = 'Failed'];
+
+            if(l2.size() != this.failedCount) {
                 this.provError = true;
             }            
         }                
