@@ -647,7 +647,7 @@ public class AMS_ChangeCodesHelper {
 
             }
 
-            fopString.removeEnd(' - ');
+            fopString = fopString.removeEnd(' - ');
         }
 
         return fopString;
