@@ -333,7 +333,7 @@
 			</apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" rerender="theSecondModal, theRepeat,Contacts" StyleClass="btn btn-default"/>
+          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" rerender="theSecondModal, theRepeat" StyleClass="btn btn-default"/>
           	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
