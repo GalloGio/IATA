@@ -138,7 +138,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  queryProducts: method to return the list of products that will be displayed in the page                   *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    private void queryProducts()
+    /*private void queryProducts()
     {   //system.debug('queryProducts - start');
         //-- Fetch ecom Products
         //allProducts = getproductRecordsList();
@@ -164,14 +164,14 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             for(Integer x = 1; x <= totalNumberOfPages; x++)
                 pages.add(x);
 
-        system.debug('queryProducts - pages : ' + pages);*/
-    }
+        system.debug('queryProducts - pages : ' + pages);
+    }*/
 
     /**************************************************************************************************************
      *  refreshDisplayedProducts: method calls the set the products to be displayed in the current page           *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    private void refreshDisplayedProducts()
+    /*private void refreshDisplayedProducts()
     {   
         Integer totalNumberOfProducts = allProducts.size();
         system.debug('### allProducts.size() :: ' + allProducts.size());
@@ -196,7 +196,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                 system.debug('queryProducts - x : ' + x);
                 system.debug('---- queryProducts -----');
             }
-    }
+    }*/
 
     /**************************************************************************************************************
      *  sortProducts: method calls when customer change the sort by value                                         *
@@ -299,32 +299,32 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  gotoNext: method calls when customer clicks on Next button in the pagination section                      *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    public void gotoNext()
+    /*public void gotoNext()
     {
         currentPageNumber++;
         refreshDisplayedProducts();
-    }
+    }*/
 
     /**************************************************************************************************************
      *  gotoPrevious: method calls when customer clicks on Previous button in the pagination section              *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    public void gotoPrevious()
+    /*public void gotoPrevious()
     {
         currentPageNumber--;
         refreshDisplayedProducts();
-    }
+    }*/
 
     /**************************************************************************************************************
      *  gotoPage: method call when customer clicks on a specific page number in the pagination section            *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    public void gotoPage()
+    /*public void gotoPage()
     {
         String pageNum = ApexPages.currentPage().getParameters().get('pageNum');
         currentPageNumber = Integer.valueOf(pageNum);
         refreshDisplayedProducts();
-    }
+    }*/
 
     //susana
     public IEC_ProductListController(ApexPages.StandardSetController controller) {

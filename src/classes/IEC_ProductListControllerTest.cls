@@ -6,6 +6,11 @@ private class IEC_ProductListControllerTest {
 
 		Test.setCurrentPage(Page.IEC_ProductList);
 		IEC_ProductListController ctrl = new IEC_ProductListController();
+		List<EComProduct_DTO> prods;
+
+		Integer TotalPages;
+		Boolean hasNext;
+		Boolean hasPrev;
 
 		//-- Load Page 
 		ApexPages.currentPage().getParameters().put('topic', 'Cargo');
@@ -28,11 +33,23 @@ private class IEC_ProductListControllerTest {
 		ctrl.refine(); 
 
 		//-- Go to next 
-		ctrl.gotoNext(); 
-		ctrl.gotoPrevious();
+		ctrl.Next(); 
+		ctrl.Previous();
+		ctrl.First(); 
+		ctrl.Last();
 
-		ApexPages.currentPage().getParameters().put('pageNum', '1');
-		ctrl.gotoPage();
+		ctrl.getTotalPages();
+		TotalPages = ctrl.pageNumbers;
+		hasNext = ctrl.hasNext;
+		hasPrev = ctrl.hasPrevious;
+		prods = ctrl.getProductRecordsList();
+
+
+
+		//ApexPages.currentPage().getParameters().put('pageNum', '1');
+		//ctrl.gotoPage();
+
+
 
 	}
 	
