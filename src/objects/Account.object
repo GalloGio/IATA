@@ -4101,7 +4101,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Participant_formula__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( BSP_Participant_value__c &gt; 0 || Airline_BSP_Participations__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formula>IF( BSP_Participant_value__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>BSP Participant</label>
         <required>false</required>
@@ -5040,7 +5040,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>Cass_Participant_formula__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( CASS_Participant_value__c &gt; 0 || Airline_CASS_Participations__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formula>IF ( CASS_Participant_value__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>CASS Participant</label>
         <required>false</required>

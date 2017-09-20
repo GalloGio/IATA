@@ -231,8 +231,16 @@
                 <field>Manager_First_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Manager_First_Name_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Manager_Last_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Manager_Last_Name_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -241,8 +249,16 @@
                 <field>Ticketing_Agent_First_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ticketing_Agent_First_Name_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Ticketing_Agent_Last_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ticketing_Agent_Last_Name_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -308,12 +324,24 @@
                 <field>Legal_Name_1__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_1_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Legal_Name_2__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_2_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Legal_Name_3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Legal_Name_3_Upper__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -322,8 +350,16 @@
                 <field>Trading_Name_1__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Trading_Name_1_Upper__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Trading_Name_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Trading_Name_2_Upper__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
