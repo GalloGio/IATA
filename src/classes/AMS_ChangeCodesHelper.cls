@@ -636,16 +636,18 @@ public class AMS_ChangeCodesHelper {
     public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
 
         String fopString = isNewGen ? '' : 'Not Applicable';
-        
+
         String authRelabel;
 
         if(fOPs != null && isNewGen){
             for(Agency_Authorization__c fop : fOPs) {
                 authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
-                fopString += authRelabel + ' - ' + fop.Status__c + ';';
+                //fopString += authRelabel + ' - ' + fop.Status__c + ';';
+                fopString += authRelabel + ' - ';
+
             }
 
-            fopString.removeEnd(';');
+            fopString.removeEnd(' - ');
         }
 
         return fopString;
@@ -656,7 +658,7 @@ public class AMS_ChangeCodesHelper {
         Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
-        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId]){
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);
             else
