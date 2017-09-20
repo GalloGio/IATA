@@ -626,7 +626,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Approval_disapproval_date__c = Date.today();
+                oscar.Disapproval_date__c = Date.today();
                 oscar.Status__c = 'On Hold_Internal';
                 res = True;
 

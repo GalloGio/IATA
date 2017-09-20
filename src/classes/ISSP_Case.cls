@@ -533,8 +533,8 @@ public without sharing class ISSP_Case {
         statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
         Map<String, String> objectsIds = new Map<String, String>();
-        objectsIds.put('AMS_OSCAR__c', newCase.OSCAR__c);
-        objectsIds.put('case', newCase.id);
+        objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
+        objectsIds.put('CASE', newCase.id); 
 
         progressBarHelper = new ANG_ProgressBarHelper(newCase.Oscar__r.Process__c, objectsIds);
 
