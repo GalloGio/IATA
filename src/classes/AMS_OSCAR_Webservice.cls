@@ -239,7 +239,8 @@ global class AMS_OSCAR_Webservice {
             changeCode.reasonDesc  = 'NEW APPLICATION';
             changeCode.status  = '2';
 
-            Account acct = new Account(Id = theOSCAR.Account__c);
+            //Account acct = new Account(Id = theOSCAR.Account__c);
+            Account acct = [SELECT Id, ANG_IsNewGenAgency__c, Status__c FROM Account WHERE Id =:theOSCAR.Account__c];
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, true);
 
             return 'OK';
