@@ -299,32 +299,32 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      *  gotoNext: method calls when customer clicks on Next button in the pagination section                      *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    /*public void gotoNext()
+    public void gotoNext()
     {
         currentPageNumber++;
-        refreshDisplayedProducts();
-    }*/
+        //refreshDisplayedProducts();
+    }
 
     /**************************************************************************************************************
      *  gotoPrevious: method calls when customer clicks on Previous button in the pagination section              *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    /*public void gotoPrevious()
+    public void gotoPrevious()
     {
         currentPageNumber--;
-        refreshDisplayedProducts();
-    }*/
+        //refreshDisplayedProducts();
+    }
 
     /**************************************************************************************************************
      *  gotoPage: method call when customer clicks on a specific page number in the pagination section            *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-    /*public void gotoPage()
+    public void gotoPage()
     {
         String pageNum = ApexPages.currentPage().getParameters().get('pageNum');
         currentPageNumber = Integer.valueOf(pageNum);
-        refreshDisplayedProducts();
-    }*/
+        //refreshDisplayedProducts();
+    }
 
     //susana
     public IEC_ProductListController(ApexPages.StandardSetController controller) {

@@ -42,7 +42,9 @@ private class IEC_ProductListControllerTest {
 		hasNext = ctrl.hasNext;
 		hasPrev = ctrl.hasPrevious;
 		prods = ctrl.getProductRecordsList();
-
+		ctrl.gotoNext(); 
+		ctrl.gotoPrevious();
+		ctrl.gotoPage(); 
 
 
 		//ApexPages.currentPage().getParameters().put('pageNum', '1');
