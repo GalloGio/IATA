@@ -37,7 +37,6 @@ private class IEC_ProductListControllerTest {
 		ctrl.Previous();
 		ctrl.First(); 
 		ctrl.Last();
-
 		ctrl.getTotalPages();
 		TotalPages = ctrl.pageNumbers;
 		hasNext = ctrl.hasNext;

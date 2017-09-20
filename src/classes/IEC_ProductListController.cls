@@ -50,7 +50,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String pageNumber{get;set;}
 
     //susana
-    private final Product2 prods; 
+    private final Product2 prods;
     public List<EComProduct_DTO> productList {get;set;}
 
     /**************************************************************************************************************
