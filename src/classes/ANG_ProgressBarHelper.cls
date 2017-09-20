@@ -27,7 +27,7 @@ public with sharing class ANG_ProgressBarHelper {
 
 			progressNodes.add(new ANG_ProgressNode(setting.Label__c, 
 												   setting.Label_Translatable__c,
-											       executeSOQLQuery(setting.Object__c,
+											       executeSOQLQuery(setting.Object__c.toUpperCase(),
 											   					    setting.Field__c,
 											   					    setting.ValueOk__c,
 											   					    setting.ValueError__c,
