@@ -70,11 +70,11 @@ global class ANG_MasterData_Interface{
     private class RHCInfoClass{
         public string RiskStatus;
         public Decimal RHCAmount; //Number + currency
-        public string sCurrency;
-        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string sCurrency){
+        public string RHCCurrency;
+        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency){
             this.RiskStatus = RiskStatus;
             this.RHCAmount = RHCAmount;
-            this.sCurrency= sCurrency;
+            this.RHCCurrency= RHCCurrency;
         }
     }
     
