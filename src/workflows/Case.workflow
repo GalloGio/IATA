@@ -1263,11 +1263,23 @@
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
+            <recipient>abbadid@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>al-maanis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1279,7 +1291,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>farisd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>haddada@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ibrahimf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>isicheic@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jaradata@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>katkhudan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>khalailehk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1331,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>moutany@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nabulsis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajputf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1308,6 +1372,26 @@
         </recipients>
         <recipients>
             <recipient>schuchardm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sughayerm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>tadrosc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>yeboahm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zidans@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -14703,7 +14787,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13)) AND 16) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -14783,6 +14867,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
             <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Request of PSSA / Agreement</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
