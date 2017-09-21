@@ -443,7 +443,7 @@
           <!-- *********************************************** -->
           <div style="page-break-after:always;" class="pdf-section">
                   <apex:pageBlock >
-                      <table class="aptable">
+                      <table class="aptable" style="width: 100%;">
                         <tr>
                             <td colspan="2" class="bluebg">
                                 <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>

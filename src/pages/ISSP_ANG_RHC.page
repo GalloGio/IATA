@@ -164,11 +164,11 @@
                     </apex:outputText>
                   </td>
                 </tr>
-                <tr>
+                <tr style="display: block;">
                   <td>
                     {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
                   </td>
-                  <td>
+                  <td style="text-align: left !important;">
                     {!remittanceFrequency.CurrencyIsoCode}
                     <apex:outputText value="{0, number, ###,##0}">
                       <apex:param value="{!remittanceFrequency.ANG_Financial_Security__c}"/>
@@ -181,17 +181,19 @@
                     {!$ObjectType.Account.fields.Remittance_frequency__c.label}
                   </td>
                   <td>{!contact.Account.Remittance_frequency__c}</td>
-                  <td></td>
                 </tr>
               </table>
             </section>
             <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
               <canvas id="percentageUsageGauge"></canvas>
-              <strong>
-                <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
-                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
-                </apex:outputText>
-              </strong>
+              <br/>
+              <span>
+                <strong>
+                  <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
+                    <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
+                  </apex:outputText>
+                </strong>
+              </span>
               <span class="last-updated">
                 <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
                 <apex:outputText value="{0, date, EEE, d MMM yyyy}">
@@ -245,7 +247,7 @@
                 <div class="customTable">
 
                   <div>
-                  <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                    <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_RiskStatusTooltip" />
                   </div>
                   <div>
