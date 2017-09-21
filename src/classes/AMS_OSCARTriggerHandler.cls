@@ -31,6 +31,7 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 
 	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
+		AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(oscars[0].Process__c));
 		prepopulateValues();
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		//create agency regulation objects for Cargo agencies
