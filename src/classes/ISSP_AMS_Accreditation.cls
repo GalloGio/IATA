@@ -5548,12 +5548,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
 
         if(newform.AE_separate_Legal_Entity__c == 'Yes' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
-        ApexPages.Message myMsg;            
+            ApexPages.Message myMsg;        
+
             if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
-                if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship') {
-                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership);
+                if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership_AE);
                 } else {
-                        myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2);
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2_AE);
                 }
             ApexPages.addMessage(myMsg);
             ngErrorFoundBR = true;
@@ -5923,14 +5924,23 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 if ((newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE ) && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
                     if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
                         ApexPages.Message myMsg;
-                        if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship') {
-                            myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership);
-                        } else {
-                            myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2);
-                    }
 
-                    ApexPages.addMessage(myMsg);
-                    errorFound = true;
+                        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+                            if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
+                                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership);
+                            } else {
+                                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2);
+                            }
+                        } else {
+                            if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
+                                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership_AE);
+                            } else {
+                                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2_AE);
+                            }
+                        }
+
+                        ApexPages.addMessage(myMsg);
+                        errorFound = true;
                     }
                 } 
             }
