@@ -357,7 +357,7 @@
         </filters>
         <filters>
             <field>Filter_Field_API_Name__c</field>
-            <operation>contains</operation>
+            <operation>notContain</operation>
             <value>Index</value>
         </filters>
         <label>Field Details - GSS Member - TXT</label>

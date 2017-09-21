@@ -522,7 +522,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
-        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c) ) )</formula>
+        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
