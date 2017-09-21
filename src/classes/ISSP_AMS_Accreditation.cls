@@ -4093,12 +4093,20 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             system.debug('amsOfficeType:' + amsOfficeType);
             system.debug('iatanAccount:' + iatanAccount);
 
+            Set<String> categories = new Set<String>();
+            categories.add(AMS_UTILS.IATAN_PASSENGER_AGENT);
+            categories.add(AMS_UTILS.ARC_TRAVEL_AGENT_USA_ONLY);
+            categories.add(AMS_UTILS.IATAN_PASSENGER_SALES_AGENT_USA_ONLY);
+            categories.add(AMS_UTILS.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY);
+
             if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT){                
                 agentaccountITAN = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                                  BillingCountry, Name
                                  FROM Account
-                                 WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode AND Category__c = :AMS_UTILS.IATAN_PASSENGER_AGENT
+                                 WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode 
+                                 AND Category__c in :categories
                                 ];
+
                 system.debug('agentaccountITAN ' + agentaccountITAN);
             }
 
