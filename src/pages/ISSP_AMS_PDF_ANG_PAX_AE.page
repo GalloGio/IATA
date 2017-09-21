@@ -57,7 +57,7 @@
     <!-- ****************************************************************************** -->
     <apex:outputPanel >
       <div style="page-break-after:always;">
-        <table class="aptable">
+        <table class="aptable" style="width: 100%;">
           <tr>
             <td colspan="3" class="bluebg">
               <p class="whitetext">
