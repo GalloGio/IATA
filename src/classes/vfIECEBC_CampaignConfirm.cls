@@ -284,6 +284,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                             , ebcCampaignId // campaignId
                             , emailCreditPurchased // emailCreditAmount
                             );
+        system.debug('paymentPage :: ' + paymentPage);
         return paymentPage;
     }
     
