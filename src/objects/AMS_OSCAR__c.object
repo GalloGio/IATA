@@ -340,7 +340,7 @@
     <fields>
         <fullName>Approval_disapproval_date__c</fullName>
         <externalId>false</externalId>
-        <label>Approval / disapproval date</label>
+        <label>Approval date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -1587,6 +1587,16 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Disapproval_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Disapproval date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Disapproval_pack_sent__c</fullName>
@@ -6132,6 +6142,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <filterScope>Queue</filterScope>
         <label>AGM Non Compliance - Europe</label>
         <queue>CasesACCEuropeRisk</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesRussia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Russia</label>
+        <queue>CasesRussia</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
