@@ -246,6 +246,7 @@
 								      </apex:form>
 								      <apex:pageBlockSection >
 								    </apex:pageBlockSection>
+								    <!--
 								    <apex:form id="thePages" >
 								    <apex:panelGrid columns="5" style="margin: 0 auto;">
 								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
@@ -254,6 +255,7 @@
 								          <apex:commandButton styleClass="button secondary" value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
 								    </apex:panelGrid> 
 								    </apex:form>
+									-->
 								    <apex:pageBlockSection >
 								    </apex:pageBlockSection>
 								    
@@ -268,9 +270,9 @@
 				                        <apex:param name="pageNum" value="" />
 				                    </apex:actionFunction>
 
-				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!Next}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
  
-				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!Previous}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
 								</apex:form>
 								
 								<!-- Pagination -->
@@ -380,7 +382,16 @@
 				}
 				
 
-				
+				//Go to the giving page number
+                var jsGotoPage = function(page){
+                    $('input[id$=pageNumber]').val(page);
+                    gotoPage(page);
+                }
+ 
+                //Reload page with selected filters
+                var jsBackButonRefine = function(){
+                    backButonRefine();
+                }
 
 				$(document).ready(function(){
 

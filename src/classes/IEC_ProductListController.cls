@@ -40,7 +40,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public Boolean showPrevious{get;set;}
     public Boolean showNext{get;set;}
     public Integer currentPageNumber{get;set;}
-   
+    
     public String sortBy{get;set;}
     public List<SelectOption> sortingFields{get;set;}
 
@@ -301,7 +301,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      **************************************************************************************************************/
     public void gotoNext()
     {
-        currentPageNumber++;
+        next();
         //refreshDisplayedProducts();
     }
 
@@ -311,7 +311,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
      **************************************************************************************************************/
     public void gotoPrevious()
     {
-        currentPageNumber--;
+        previous();
         //refreshDisplayedProducts();
     }
 
@@ -324,6 +324,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         String pageNum = ApexPages.currentPage().getParameters().get('pageNum');
         currentPageNumber = Integer.valueOf(pageNum);
         //refreshDisplayedProducts();
+        productRecords.setpageNumber(currentPageNumber);
     }
 
     //susana
@@ -398,6 +399,18 @@ public with sharing class IEC_ProductListController extends IEC_PageController
             listFilteredProduct = (List<Product2>) productRecords.getRecords();
         }
 
+        if(listFilteredProduct.size() > 0){
+            totalNumberOfPages = getTotalPages();
+            currentPageNumber = 1;
+            showPrevious =(currentPageNumber >= 1);
+            showNext = (currentPageNumber <= totalNumberOfPages);
+        }
+ 
+        pages = new List<Integer>();
+        if(totalNumberOfPages > 0)
+            for(Integer x = 1; x <= totalNumberOfPages; x++)
+                pages.add(x);
+
         system.debug('### productRecordsList listFilteredProduct :: ' + listFilteredProduct);
         // Filter price info for products not related to Phase 1& 2 products only
         for (Product2 p : listFilteredProduct)
@@ -457,9 +470,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
  
     //Returns the next page of records
     public void next()
-    {system.debug('### next start ');
+    {
         productRecords.next();
-        system.debug('### next end ');
     }
 
     //Page number of the current displaying records
