@@ -81,6 +81,14 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             AddError(Label.IDCard_EnterNewDifferentIATACode);
             return null;
         }
+        String feature = theAccount.ID_Card_KeyAccount_features__c;
+            if (feature == null)feature = '';
+            if (theAccount.IDCard_Key_Account__c != null && feature.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
+                Managed_Agency__c ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false];
+                errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma.Contact__r.Name + ': ' + ma.Contact__r.IDcard_Email__c + ').';
+                AddError(errMsg);
+                return null;
+            }
         try {
             theAccount = [Select a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.Name, a.Short_Name__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Is_AIMS_Account__c, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode AND  (Status__c in : IDCardUtil.ALLOWED_ACCOUNT_STATUS ) AND Is_AIMS_Account__c = true AND  (a.type in :IDCardUtil.ALLOWED_ACCOUNT_TYPES) limit 1];
             NewAgencySection = true;
@@ -122,12 +130,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             String feature = theAccount.ID_Card_KeyAccount_features__c;
             system.debug('[REPLACEMENT] original Application Record type:' + idCardApp.RecordTypeId);
             if (feature == null)feature = '';
-            if (theAccount.IDCard_Key_Account__c != null && feature.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
-                Managed_Agency__c ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false];
-                errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma.Contact__r.Name + ': ' + ma.Contact__r.IDcard_Email__c + ').';
-                AddError(errMsg);
-                return null;
-            } else if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {
+            if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {
                 idCardApp.RecordTypeId = singleKAIDCAppId;
                 idCardApp.Application_Status__c = 'Temp' ;
             } else
