@@ -870,6 +870,15 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>ParentId</fields>
+        <fields>EF_SIS_Designator__c</fields>
+        <fields>EF_SIS_Code__c</fields>
+        <fields>SIS_ID__c</fields>
+        <fields>SIS_Status__c</fields>
+        <fields>SIS_Sub_Status__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Account__c</fields>
