@@ -33,6 +33,13 @@ private class IEC_ProductListControllerTest {
 		ctrl.refine(); 
 
 		//-- Go to next 
+    	//ctrl.gotoNext(); 
+    	//ctrl.gotoPrevious();
+
+    	//ApexPages.currentPage().getParameters().put('pageNum', '1');
+    	//ctrl.gotoPage();
+
+		//-- Go to next 
 		ctrl.Next(); 
 		ctrl.Previous();
 		ctrl.First(); 
@@ -42,13 +49,7 @@ private class IEC_ProductListControllerTest {
 		hasNext = ctrl.hasNext;
 		hasPrev = ctrl.hasPrevious;
 		prods = ctrl.getProductRecordsList();
-		ctrl.gotoNext(); 
-		ctrl.gotoPrevious();
-		ctrl.gotoPage(); 
 
-
-		//ApexPages.currentPage().getParameters().put('pageNum', '1');
-		//ctrl.gotoPage();
 
 
 
