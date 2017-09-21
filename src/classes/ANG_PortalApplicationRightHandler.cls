@@ -60,7 +60,7 @@ public class ANG_PortalApplicationRightHandler {
 
 			if(!existingUpa.contains(access.Contact__c)) {
 	            UserProvAccount upa = new UserProvAccount (
-	                ExternalUserId = access.Contact__c,
+	            	ExternalUserId = (access.Contact__c == null ? '' : string.ValueOf(access.Contact__c).left(15)),
 	                SalesforceUserId = userMap.get(access.Contact__c),
 	                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
 	                LinkState = 'Linked',
