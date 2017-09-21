@@ -402,8 +402,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         if(listFilteredProduct.size() > 0){
             totalNumberOfPages = getTotalPages();
             currentPageNumber = 1;
-            showPrevious =(currentPageNumber >= 1);
-            showNext = (currentPageNumber <= totalNumberOfPages);
+            showPrevious =(currentPageNumber > 1);
+            showNext = (currentPageNumber < totalNumberOfPages);
         }
  
         pages = new List<Integer>();
