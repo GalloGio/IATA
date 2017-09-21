@@ -24,6 +24,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_Sync_End_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Job_1_Original_Start_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
