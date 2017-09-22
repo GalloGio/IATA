@@ -130,7 +130,7 @@
                         
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
-                            <td colspan="2">{!newForm.Account_Name__c} -- {!newForm.AE_separate_Legal_Entity__c}</td>
+                            <td colspan="2">{!newForm.Account_Name__c}</td>
                         </tr>
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
