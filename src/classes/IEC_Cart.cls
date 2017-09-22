@@ -74,6 +74,7 @@ public without sharing virtual class IEC_Cart {
 	private static Map<String,EComProduct_DTO> ecomProductByProductNumberMap;
 	private static Map<Id,PricebookEntry> pricebookEntryMap;
 	private static Pricebook2 standardPricebook;
+	private static Order pendingOrder;
 
 	// Static Initializer
 	static {
@@ -493,7 +494,7 @@ public without sharing virtual class IEC_Cart {
 		if (isUserLoggedIn()) {
 			cartOrder = getCartOrder();
 			cartOrderItems = getCartOrderItems();
-		
+
 			// Perform merge taking in consideration the cookies present
 			for (OrderItem orderItem : cartOrderItems) {
 				String productNumber = orderItem.PricebookEntry.Product2.SAP_Material_Number__c;
@@ -978,7 +979,10 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public Order getCartOrder() {
-		Order pendingOrder = IECOrder_Svc.getPenddingOrder(true);
+		
+		if(pendingOrder == null){
+			pendingOrder = IECOrder_Svc.getPenddingOrder(true);
+		}
 
 		System.debug('getCartOrder() returning: ' + pendingOrder);
 

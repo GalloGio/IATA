@@ -161,20 +161,10 @@ public without sharing class IECUserManager {
                 IEC_Cart storeCart = IEC_Cart.getInstance();
                 List<IEC_Cart.CartItem> cartContent = storeCart.getCartContent();
 
-                System.debug('Before Login Event:');
-                System.debug('CART CONTENT: ' + cartContent);
-
-                System.debug('partnerContactId: ' + partnerContactId);
-
                 Customer_DTO.setLoginEvent(partnerContactId);
-
-                System.debug('login user event');
                 
                 storeCart.loginUserEvent();
 
-                System.debug('get cart');
-
-                System.debug('CART CONTENT: ' + storeCart.getCartContent());
               }
 
               System.debug('IECUserManager.login after login user event');
