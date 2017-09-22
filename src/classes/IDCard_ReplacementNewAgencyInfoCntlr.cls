@@ -81,6 +81,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             AddError(Label.IDCard_EnterNewDifferentIATACode);
             return null;
         }
+        if(theAccount != null){
         String feature = theAccount.ID_Card_KeyAccount_features__c;
             if (feature == null)feature = '';
             if (theAccount.IDCard_Key_Account__c != null && feature.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
@@ -89,6 +90,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
                 AddError(errMsg);
                 return null;
             }
+        }
         try {
             theAccount = [Select a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.Name, a.Short_Name__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Is_AIMS_Account__c, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode AND  (Status__c in : IDCardUtil.ALLOWED_ACCOUNT_STATUS ) AND Is_AIMS_Account__c = true AND  (a.type in :IDCardUtil.ALLOWED_ACCOUNT_TYPES) limit 1];
             NewAgencySection = true;
