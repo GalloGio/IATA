@@ -344,14 +344,6 @@ public with sharing class OrderItem_Sel  extends Selector
 	}
 
 
-	/**
-		Retrieves the number of items in the passed order
-	*/
-	public static Integer getNumberOfItemsInOrder(Id orderId){
-		return [SELECT count() FROM OrderItem WHERE OrderId = :orderId];
-
-	}
-
 	//ORDER_ID => SET_OF_PRODUCT_IDS
 	public Map<Id, Set<Id>> getProductIdsByOrder(set<Id> orderIds)
 	{
