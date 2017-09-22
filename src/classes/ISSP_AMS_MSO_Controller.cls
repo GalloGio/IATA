@@ -80,7 +80,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
     }
 
     public void refreshMsoGsaList() {
-        String strQuery = 'SELECT Id, Account__r.Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c ';
+        String strQuery = 'SELECT Id, Account__r.Id, Account__r.Name, Account__r.Status__c, Account__r.Expiry_Date__c, Account__r.Accreditation_date__c, Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c ';
 
         if (!isMSO) {
             strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r ORDER BY ISO_Country__r.Name ASC) ';
@@ -88,14 +88,15 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
         strQuery += 'FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
         strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
-        strQuery += 'AND Account__r.Status__c = \'Approved\'';
+        //strQuery += 'AND Account__r.Status__c = \'Approved\'';
 
         if (!isMSO) {
             strQuery += ' AND Accreditation_Endorsement_organisation__r.Name <> \'' + IATAORGNAME + '\'';
         }
         
         if (isExcludingTerminated) {
-            strQuery += ' AND Accreditation_Endorsement_Status_code__c <> \'0\'';
+            //strQuery += ' AND Accreditation_Endorsement_Status_code__c <> \'0\'';
+            strQuery += ' AND Account__r.Status__c <> \'Terminated\'';
         }
 
         if (searchText != null && searchText != '') {
