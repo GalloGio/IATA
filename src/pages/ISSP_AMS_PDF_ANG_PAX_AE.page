@@ -130,7 +130,7 @@
                         
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
-                            <td colspan="2">{!newForm.Account_Name__c} -- {!newForm.AE_separate_Legal_Entity__c}</td>
+                            <td colspan="2">{!newForm.Account_Name__c}</td>
                         </tr>
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
@@ -202,14 +202,14 @@
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                           <td colspan="3" width="40%"><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></td>                            
                         </tr>
-                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
+                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','','none')}">
                           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}</td>
                           <td colspan="2">{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}</td>
                         </tr>
-                          <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
-                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}</td>
-                            <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
-                          </tr>
+                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','','none')}">
+                          <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}</td>
+                          <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
+                        </tr>
                           <tr>
 	                        <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}</td>
                             <td colspan="2">
