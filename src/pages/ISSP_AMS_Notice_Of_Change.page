@@ -2157,6 +2157,12 @@
 		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
 		<script>
+			//NEWGEN-1885
+			$j ( document ).ready(function() {
+				$j('[id$=UpdatedLegalStatus]').val() !== 'Corporation' && $j('[id$=currcorporatedetails]').hide();
+			});
+			//END - NEWGEN-1885
+			
 			//NoC Changes
 			var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
 				  lScopeOfChange = '{!newForm.Scope_of_Change__c}',
