@@ -172,6 +172,8 @@
             <apex:pageMessages ></apex:pageMessages>
        </apex:outputPanel>
     </apex:outputPanel>
+
+    <apex:include pageName="AMS_Change_Code_Notification"/>
      
     <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
 
