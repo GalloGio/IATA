@@ -704,8 +704,8 @@
             <p>{!$Label.ISSP_AMS_Jump_To}</p>
           </div>
           <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
-          <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1_ApproRequest}</a></p>
-          <p><a href="#nav_two">{!$Label.ISSP_AMS_LeftNav_Section2_GenInfo}</a></p>
+          <p><a href="#nav_one">{!$Label.ISSP_ANG_LeftNav_Section1_AE_Details}</a></p>
+          <p><a href="#nav_two">{!$Label.ISSP_AMS_LeftNav_Section1_ApproRequest_2}</a></p>
           <p><a href="#nav_three">{!$Label.ISSP_AMS_LeftNav_Section3_AgencyContacts}</a></p>
           <p><a href="#nav_four">{!$Label.ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets}</a></p>
           <p><a href="#nav_five">{!$Label.ISSP_AMS_LeftNav_Section5_Other_Info}</a></p>
