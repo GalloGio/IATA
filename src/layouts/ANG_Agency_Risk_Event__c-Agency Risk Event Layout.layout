@@ -23,7 +23,7 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>ANG_Event_Status__c</field>
             </layoutItems>
             <layoutItems>
