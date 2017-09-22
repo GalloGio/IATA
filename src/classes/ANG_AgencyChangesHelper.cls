@@ -477,6 +477,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					upsert toUpsert;
 			}
 
+			ANG_RHCHelper.deactivateRHCInfo(oscarToProcess.Account__c);
+
 			return toReturn; // no more processing needed.
 		}
 
