@@ -253,6 +253,16 @@ public without sharing class Order_Svc
         
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
 
+        //-- Verify if the status of the order is valid before send the order to SAP
+        //-- if the order is not paid and status is Payment Failure, the order cannot be created on SAP
+        for(Order o : orderById.values())
+        {
+            if(o.Is_Paid__c == false && o.Status == IECConstants.ORDER_STATUS_PAYMENT_FAILURE) //Payment Failure
+            {
+                orderById.remove(o.id);
+            }
+        }
+
         //-- SFDC <=> SAP Mapping table 
         Map<String, SFDC_SAP_Mapping__c> sapTable = orderSelector.getOrderMapTable();
 
