@@ -269,7 +269,7 @@
 								<td>
 									<!--{!CASE(a.appointment.Accreditation_Endorsement_Status_code__c, '0', $Label.ISSP_AMS_MSO_GSA_Appointment_Terminated, '9', $Label.ISSP_AMS_MSO_GSA_Appointment_Active, a.appointment.Accreditation_Endorsement_Status_code__c)}-->
 									{!a.appointment.Account__r.Status__c}
-									<img src="/img/msg_icons/info16.png" title="{!IF(a.appointment.Account__r.Status__c == 'Terminated', $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated + ': ' + TEXT(a.appointment.Account__r.Expiry_Date__c), $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment+ ': ' + TEXT(a.appointment.Account__r.Accreditation_date__c)) }" style="float: right;" styleClass="hidden-print" />
+									<img src="/img/msg_icons/info16.png" title="{! $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment+ ': ' + TEXT(a.appointment.Account__r.Accreditation_date__c)}{!IF(a.appointment.Account__r.Status__c == 'Terminated', '  |  ' + $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated + ': ' + TEXT(a.appointment.Account__r.Expiry_Date__c), '') }" style="float: right;" styleClass="hidden-print" />
 									</td>
 								<td>{!a.territories}</td>
 								<td>{!a.appointment.Account__r.BillingCity}</td>
