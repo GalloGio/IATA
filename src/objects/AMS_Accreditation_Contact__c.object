@@ -135,6 +135,26 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_AE_fromOnlineForm__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was created on the portal.</description>
+        <externalId>false</externalId>
+        <label>ANG_AE_fromOnlineForm</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_contactFromAccount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was not created on the portal (originated on the account).</description>
+        <externalId>false</externalId>
+        <label>ANG_contactFromAccount</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Accredited_employer_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
