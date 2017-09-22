@@ -10,8 +10,8 @@ trigger UserInfoUpdate on Case (before insert, before update)
     // Update L.Faccio ----------------
     //When a case is closed, I save the user who closed the case.
     for(Case c : Trigger.new){
-        if((Trigger.isInsert && c.Status == 'Closed') || 
-            (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
+        if((Trigger.isInsert && c.isClosed == true) || 
+            (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true)){
             
             c.WhoClosedCase__c = UserInfo.getUserId();
         }if(c.Status != 'Closed')
