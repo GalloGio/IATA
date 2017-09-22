@@ -936,7 +936,7 @@
                                   <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
                                 </div>
                                 <apex:outputPanel layout="none">
-                                  <div class="field-wrapper">
+                                  <div>
                                     <apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" />                                    
                                   </div>
                                 </apex:outputPanel>
