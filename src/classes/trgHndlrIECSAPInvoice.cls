@@ -7,10 +7,11 @@
 public with sharing class trgHndlrIECSAPInvoice {
 
 	public static void OnBeforeInsert (List<IEC_SAP_Invoice__c> newRecords){ // INC295559
-		Set<String> invoiceNumber = new Set<String>();		
-		Map<String,Id> invoiceIdMap = new Map<String,Id>();
+		system.debug('trgHndlrIECSAPInvoice - OnBeforeInsert() starting...');
 		List<IEC_SAP_Invoice__c> toUpdate = new List<IEC_SAP_Invoice__c>();
-
+		Set<String> invoiceNumber = new Set<String>();
+		Map<String,Id> invoiceIdMap = new Map<String,Id>();
+		
 		for(IEC_SAP_Invoice__c zInvoice : newRecords ){
 			if(zInvoice.Name != null){
 			 invoiceNumber.add(zInvoice.Name);
@@ -19,12 +20,12 @@ public with sharing class trgHndlrIECSAPInvoice {
 		}
 
 		if(invoiceNumber.isEmpty() == false){
-			for(Zuora__Payment__c zp : [SELECT Id, Zuora__InvoiceNumber__c, Order__c, Zuora__PaymentMethod__c, Order__r.Payment_Type__c from Zuora__Payment__c where Zuora__InvoiceNumber__c IN :invoiceNumber]){
-				invoiceIdMap.put(zp.Zuora__InvoiceNumber__c,zp.Order__c);
+			for(OrderItem oi : [SELECT Id, Zuora_InvoiceNumber__c, OrderId from OrderItem where Zuora_InvoiceNumber__c IN :invoiceNumber]){
+				invoiceIdMap.put(oi.Zuora_InvoiceNumber__c,oi.OrderId);
 			}
 		}
 
-		system.debug(LoggingLevel.ERROR, 'invoiceIdMap' + invoiceIdMap);
+		system.debug('invoiceIdMap' + invoiceIdMap);
 
 			for(IEC_SAP_Invoice__c iecsap : newRecords){				
 				String sapInvoiceNumber = iecsap.Name;
@@ -32,8 +33,12 @@ public with sharing class trgHndlrIECSAPInvoice {
 
 				if(orderId != null)
 					iecsap.Order__c = orderId;
-			}	
+					
+			}
+
+			
 	}
+
 
 	public static void OnAfterUpdate(List<IEC_SAP_Invoice__c> newRecords, Map<Id, IEC_SAP_Invoice__c> newRecordsMap, List<IEC_SAP_Invoice__c> oldRecords, Map<Id, IEC_SAP_Invoice__c> oldRecordsMap) {
 		

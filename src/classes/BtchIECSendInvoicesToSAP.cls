@@ -41,19 +41,26 @@ global class BtchIECSendInvoicesToSAP implements Database.Batchable<sObject>, Da
 		for (String ZInvNum : mapZInvNum_SAPInv.keySet())
 		{
 			strStatus = mapZInvNum_Status.get(ZInvNum);
-			List<String> exampleStrSplit = strStatus.split(',');
+			List<String> strStatusSplit = strStatus.split(',');
 			SAPInv = mapZInvNum_SAPInv.get(ZInvNum);
 			if (getNextStatus(SAPInv, strStatus)){
 				SAPInv.Error_Message__c = strStatus;
 				SAPInv.Status_Date__c = system.now();				
-				
-				if(!strStatus.contains('Error')){
-					for(String str :exampleStrSplit){
-						str = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
-						ordersIDs.add(str);
+				String orderIdstr;
+				String orderNumberstr;
+				List<String> orderNumberstrLst = new List<String>();
+				system.debug('strStatus ' + strStatus);
+				if(!strStatus.contains('Error') && strStatus != '' && !strStatusSplit.isEmpty() && strStatusSplit != null){					
+					for(String str :strStatusSplit){
+						system.debug('strStatusSplit ' + strStatusSplit);
+						orderIdstr = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
+						orderNumberstr = str.substring(str.indexOf(' ') + 1, str.indexOf('('));
+						orderNumberstrLst.add('Order- ' + orderNumberstr);
+						ordersIDs.add(orderIdstr);
 					}
 				}
-
+				String allstring = string.join(orderNumberstrLst,',');
+				SAPInv.Related_Orders__c = allstring;
 				lstSAPInv.add(SAPInv);
 			}
 
@@ -70,16 +77,18 @@ global class BtchIECSendInvoicesToSAP implements Database.Batchable<sObject>, Da
 		List<Order> orderToUpdate = new List<Order>();
 
 		for(Order order :ordersList){
-			order.SAP_Invoice__c= SAPInv.Id;
+			order.SAP_Invoice__c = SAPInv.Id;
 			orderToUpdate.add(order);
 		}
-		//Connecting Order with respective IEC SAP INVOICE -- end
+		
 
 		if (lstSAPInv.size() > 0)
 			update lstSAPInv;
 		
 		if(orderToUpdate.size() > 0)
 			update orderToUpdate;
+
+		//Connecting Order with respective IEC SAP INVOICE -- end
     }
 
     global void finish(Database.BatchableContext BC) {

@@ -12,7 +12,7 @@ trigger trgIECSAPInvoice on IEC_SAP_Invoice__c (before insert, before update, af
 
 	if (Trigger.isBefore) { //INC295559
 		if(Trigger.isInsert || Trigger.isUpdate){
-			trgHndlrIECSAPInvoice.OnBeforeInsert(Trigger.new);
+			trgHndlrIECSAPInvoice.OnBeforeInsert(Trigger.new);			
 		}
 	}
 }
