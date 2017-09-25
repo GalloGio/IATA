@@ -41,7 +41,7 @@ public class ANG_RiskEventHistoryPagination_Test {
 
 	static testmethod void pageMethodsCoverage(){
 		Test.startTest();
-			ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select id,name,ANG_Source_Id__c,ANG_Risk_Type__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]);
+			ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select Id, Name, ANG_AccountId__c, ANG_Source_Id__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_Event_Status__c from ANG_Agency_Risk_Event__c]);
 			rehp.first();
 			rehp.next();
 			rehp.previous();

@@ -1,14 +1,22 @@
 public with sharing class ANG_RiskEventMigrationHelper {
 	
-	public Set<Account> accountsToUpdated;
 	Set<string> risksToWithdraw;
 	Map<string, ANG_Agency_Risk_Event__c> risksToInsert;
 
+	List<Agency_Applied_Change_code__c> listChangeCodes;
+
 	public ANG_RiskEventMigrationHelper(Set<Account> accs) {
 		system.debug('starting migrating change codes');
-		accountsToUpdated = accs;
 		risksToWithdraw = new Set<string>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
+		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND CreatedDate = LAST_N_DAYS:730];
+	}
+
+	public ANG_RiskEventMigrationHelper(Set<Id> accs) {
+		system.debug('starting migrating change codes');
+		risksToWithdraw = new Set<string>();
+		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
+		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND CreatedDate = LAST_N_DAYS:730];
 	}
 
     public List<ANG_Agency_Risk_Event__c> convertChangeCodesToRiskEvents(){
@@ -16,7 +24,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
     	for(ANG_Risk_Event_Type__c ret: [SELECT Name, Id,ANG_Risk_ID__c  from ANG_Risk_Event_Type__c]){
     		mapRiskEventTypes.put(ret.Name,ret);
     	}
-    	for(Agency_Applied_Change_code__c a :  [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accountsToUpdated]){
+    	for(Agency_Applied_Change_code__c a : listChangeCodes){
     		
     		ANG_Agency_Risk_Event__c reToAdd = new ANG_Agency_Risk_Event__c(
                                         ANG_Issued_Date__c  = date.newinstance(a.Created_Date_To_Show__c.year(), a.Created_Date_To_Show__c.month(), a.Created_Date_To_Show__c.day()) , 
