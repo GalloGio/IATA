@@ -5,6 +5,7 @@ public with sharing class ams2gdp_SchedulerPageController
     public Boolean processNext{get;set;}
     public String query{get;set;}
     public List<String> jobIds{get;set;}
+    public Boolean isManual {get; set;}
 
 	public List<SelectOption> availableJobs{get;set;}
 	public List<AsyncApexJob> jobs{get{
@@ -73,10 +74,11 @@ public with sharing class ams2gdp_SchedulerPageController
 
 		if(jobName == 'ams2gdp_Batch_Account')
 		{
+            
 
             if(processNext && specificRecordIds.size() >0)
             {
-            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false,specificRecordIds);
+            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false,specificRecordIds, isManual);
 	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
 
@@ -122,12 +124,12 @@ public with sharing class ams2gdp_SchedulerPageController
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9)));
 
 	            //Start Job 1 again
-				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds)));
+				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds,isManual)));
             	
             }
             else
             {
-            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(processNext,specificRecordIds);
+            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(processNext,specificRecordIds, isManual);
 	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
             }
