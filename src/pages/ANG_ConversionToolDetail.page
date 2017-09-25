@@ -21,15 +21,11 @@
 		<apex:pageBlockSection title="Exception management" collapsible="false" id="Overview"  rendered="true" columns="1">
 			<h1>{!DetailMessage} for {!selectedCountryName}</h1>
 			<br />
-			The system identified some hierarchies containing branches abroad. There are an exception because the Multicountry accreditation type is not supported yet.
+			{!LongDetailMessage}
 			<br /><br />
 			<h1>Workaround</h1>
 			<br />
-			The system will convert all the hierarchies selected by the User applying the following rules:
-			<ul>
-				<li>Branches abroad will be converted in AE but they may have the flag "Is New Gen Agency" set to false!</li>
-				<li>The location class will not be changed for any Agency so the flag "Is New Gen Agency" may still be false for some agencies</li>
-			</ul>
+			{!$Label['ANG_Conversion_Tool_Workaround']}
 		</apex:pageBlockSection>
 		
 		<apex:pageBlockSection title="{!DetailMessage}, ISO country: {!selectedCountryName}" collapsible="true" id="exList"  rendered="true" columns="1">

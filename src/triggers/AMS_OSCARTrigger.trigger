@@ -513,8 +513,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             oscar.Dossier_Reception_Date__c = Date.today();
 
             if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
-            	oscar.Sanity_check_deadline__c = Date.today() + 30;
-            	oscar.OSCAR_Deadline__c = Date.today() + 30;
+                oscar.Sanity_check_deadline__c = Date.today() + 30;
+                oscar.OSCAR_Deadline__c = Date.today() + 30;
             }
             else if(oscar.Process__c == AMS_Utils.new_TIDS){
                 oscar.Sanity_check_deadline__c = Date.today()+3;
@@ -522,7 +522,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -634,7 +634,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
-        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT){
+        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -703,30 +703,30 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
-					if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
+                    if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-						changeCode.status  = null;
-	
-	                    // If the picklist is set create a COR change code.
-	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
+                        changeCode.status  = null;
+    
+                        // If the picklist is set create a COR change code.
+                        if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
                         changeCode.memoText = 'Correction';
                         changeCode.publishedOnEBulletin = false;
                         }
                     // If the picklist is set create a CAD change code.
-	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
+                        else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         changeCode.name = 'CAD';
                         changeCode.memoText = 'Minor Changes';
-                    	}
-						// If the picklist is set create a LET change code.
-	                    /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
-	                        changeCode.name = 'LET';
-	                        changeCode.memoText = '';
-                    	}*/
+                        }
+                        // If the picklist is set create a LET change code.
+                        /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
+                            changeCode.name = 'LET';
+                            changeCode.memoText = '';
+                        }*/
 
-						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
+                        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
 
                         if(accountActiveChangeCode.size() > 0){
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
@@ -826,7 +826,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
             'Send_Confirmation__c'                      => 'Confirmation_Sent__c',
             'Update_BSPLink__c'                         => 'BSPLink_updated__c',
-            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c'
+            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c',
+            'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c',
+            'Suspend_Agency__c'                         => 'NOC_Requested__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -889,10 +891,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
-            updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
+
+            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c))
+                updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 40;
+            else
+                updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
-        if((updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
@@ -901,10 +907,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         }
 
-
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
 
                 System.debug('Sending the email for the user to anounce approval of the oscar');
 
@@ -913,6 +918,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
+                else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
+                    copyAgencyAuthorizationsFromParent(updatedOscar);
 
             }
 
@@ -991,7 +998,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_AHA_BSP)
             updatedOSCAR.Process__c = AMS_Utils.new_AHA;
 
-        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true && !AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)) {
 
             //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
             Set<String> tocList = new Set<String>();
@@ -1009,48 +1016,92 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
             }
         }
+
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true && AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)) {
+
+            //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+            Set<String> tocList = new Set<String>();
+            if(updatedOscar.ANG_Type_of_change__c != null) tocList.addAll(updatedOscar.ANG_Type_of_change__c.split(';'));
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
+            if(
+                !tocList.contains(AMS_Utils.ANG_LEGAL_NAME)
+                && !tocList.contains(AMS_Utils.ANG_LEGAL_STATUS)
+                && !tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+                && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)
+                && !tocList.contains(AMS_Utils.ANG_OWNERSHIP)
+            ){
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY);
+            }
+        }
+
         if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
             updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
         }
 
-        if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
-            updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
-        }
-        
-        if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-            DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
-            updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
-            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
-        }
+        if(!AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
+            if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
+                updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
+            }
+            
+            if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
+                System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+            }
 
-        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+            if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+        }
 
         // ***************************************
         // ********* NEWGEN VALIDATIONS ************
         // ***************************************
         if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
 
-            // ***************************************
-            // ********* GENERIC VALIDATIONS ************
-            // ***************************************
-        if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
-            updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
-        }
+            // ************************************************************
+            // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
+            // ************************************************************
+            if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
+                if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+                    updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
+                }
 
-        if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
-            updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
-        }
+                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
+                }
+            }
 
             // *****************************************************
             // ********* STANDARD WITH CASH VALIDATIONS ************
             // *****************************************************
-            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
+            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCHANGES){
+
+                
+                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && (updatedOscar.RPM_Approval__c == 'Not Started' || updatedOscar.RPM_Approval__c == null)){
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
+                }
 
                 if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
-                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step will be completed.');   
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step is completed.');   
                 }
 
             }
+
+            //*********************
+            //****PENALTY NEWGEN***
+            //*********************
+            if (oldOSCAR.Suspend_Agency__c == false && updatedOscar.Suspend_Agency__c == true) {
+                updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
+            }
+            
+            if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
+                System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+            }
+
+            if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
         }
 
     }
@@ -1105,6 +1156,19 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        insert authorizations;
+    }
+
+    private static void copyAgencyAuthorizationsFromParent(AMS_OSCAR__c oscar){
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
+        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
+
+        for(Agency_Authorization__c fop: parentFormsOfPayment)
+            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
 
         insert authorizations;
     }
