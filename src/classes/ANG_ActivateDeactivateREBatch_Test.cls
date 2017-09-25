@@ -32,21 +32,24 @@
 			Account acc1= new Account(
 				name='Acc1',
 				IATA_ISO_Country__c=isoCntr.id,
-				Location_Type__c='HE'
+				Location_Type__c= AMS_Utils.HE,
+				recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
 				);
 			accountList.add(acc1);
 
 			Account acc2= new Account(
 				name='Acc2',
 				IATA_ISO_Country__c=isoCntr2.id,
-				Location_Type__c='HE'
+				Location_Type__c= AMS_Utils.HE,
+				recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
 				);
 			accountList.add(acc2);
 
 			Account acc3= new Account(
 				name='Acc3',
 				IATA_ISO_Country__c=isoCntr3.id,
-				Location_Type__c='HE'
+				Location_Type__c= AMS_Utils.HE,
+				recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
 				);
 			accountList.add(acc3);
 			
@@ -66,7 +69,7 @@
 				ANG_AccountId__c=acc1.id,
 				ANG_Risk_Type__c=ret.id,
 				ANG_Issued_Date__c =System.today(),
-				ANG_Event_Status__c='Inactive'
+				ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE
 			);
 			listAREs.add(are1); // ARE to be activated
 
@@ -76,7 +79,7 @@
 				ANG_Risk_Type__c=ret.id,
 				ANG_Issued_Date__c =System.today().addMonths(-1*Integer.ValueOf(ret.ANG_Expiration__c)),
 				ANG_Expiration_Date__c =System.today(),
-				ANG_Event_Status__c='Active'
+				ANG_Event_Status__c=ANG_Risk_Helper.STATUS_ACTIVE
 			);	
 			listAREs.add(are2);// ARE to be deactivated
 
@@ -84,7 +87,7 @@
 				ANG_AccountId__c=acc3.id,
 				ANG_Risk_Type__c=ret.id, 
 				ANG_Issued_Date__c =System.today().addDays(5),
-				ANG_Event_Status__c='Inactive'
+				ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE
 			);	 
 			listAREs.add(are3);// ARE to be ignored
 
@@ -97,18 +100,18 @@
 	    TestMethod static void testBatch(){ // testing batch 3 records(one to be set active, one to be set inactive, one to ignore)
 			
 			Test.startTest();
-		     	ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'\'Europe\'','\'Americas\'','\'Asia\''});
-				bat.execute(null);
+				ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'\'Europe\'','\'Americas\'','\'Asia\''});
+			bat.execute(null);
 			test.StopTest();
 
 			ANG_Agency_Risk_Event__c resultRe1 = [select id,ANG_Event_Status__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.IATA_ISO_Country__r.Region__c='Europe' limit 1].get(0);
-			System.assertEquals(resultRe1.ANG_Event_Status__c,'Active','RE1 should be activate');
+			System.assertEquals(resultRe1.ANG_Event_Status__c,ANG_Risk_Helper.STATUS_ACTIVE,'RE1 should be activate');
 
 			ANG_Agency_Risk_Event__c resultRe3 = [select id,ANG_Event_Status__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.IATA_ISO_Country__r.Region__c='Asia' limit 1].get(0);
-			System.assertEquals(resultRe3.ANG_Event_Status__c,'Inactive','RE2 should be inactive');
+			System.assertEquals(resultRe3.ANG_Event_Status__c,ANG_Risk_Helper.STATUS_INACTIVE,'RE2 should be inactive');
 
 			ANG_Agency_Risk_Event__c resultRe2 = [select id,ANG_Event_Status__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.IATA_ISO_Country__r.Region__c='Americas'  limit 1].get(0);
-			System.assertEquals(resultRe2.ANG_Event_Status__c,'Inactive','RE3 should be inactive'); 
+			System.assertEquals(resultRe2.ANG_Event_Status__c,ANG_Risk_Helper.STATUS_INACTIVE,'RE3 should be inactive'); 
 			
 	    }
  

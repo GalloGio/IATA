@@ -172,6 +172,9 @@ private class GlobalContactTriggerTest {
         cs.Label_API_name__c = 'ISSP_Contacts_MyCompanyContacts';
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
+        
+        Test.startTest();
+        
         ctrl.initialization();
         List <Contact> testContactList = ctrl.getContacts();
         ctrl.refresh();
@@ -180,7 +183,9 @@ private class GlobalContactTriggerTest {
         ctrl.contactList[1].selected = true;
         ctrl.contactStatus = 'Retired';
         //ctrl.inactivate();
-    }
+        Test.stopTest();
+
+}
 
     static testMethod void myUnitTest_7() {
 
