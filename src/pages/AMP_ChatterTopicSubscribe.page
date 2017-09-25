@@ -1,0 +1,77 @@
+<apex:page showHeader="true" sidebar="true" controller="AMP_ChatterTopicSubscribeController">
+<h1>Digest for Chatter Posts by Topic(s) – Email Settings</h1>
+By selecting the topic(s) you wish to follow and the frequency of digests, you will automatically receive emails showing all posts made on the topic(s) selected at the prescribed frequency. This feature only applies to chatter posts made on IATA member airline headquarter accounts.
+
+Please select the topic(s) that you would like to follow:
+
+	<apex:form>
+
+	<table>
+		<apex:repeat value="{!TopicWrappers}" var="t">
+		<tr>
+			<td>
+				<apex:inputCheckBox value="{!t.active}" >
+						<apex:actionSupport event="onchange" rerender="feeditems" action="{!filterTopicFeedItems}"/>
+				</apex:inputcheckbox>
+			</td>
+			<td><apex:outputText value="{!t.topic}"	/></td></tr>
+		</apex:repeat>
+	</table>
+	How frequently would you like to receive the digest?
+	<apex:selectRadio value="{!dailyOrWeekly}">
+		<apex:selectOptions value="{!DailyOrWeeklyOptions}"/>
+		<apex:actionSupport event="onchange" rerender="feeditems" action="{!filterTopicFeedItems}"/>
+	</apex:selectRadio>
+	<apex:commandButton value="Save" action="{!savePreferences}" rerender="" />
+	<apex:commandButton value="Unsubscribe" action="{!unsubscribe}" rerender="" />
+	</apex:form>
+	<apex:outputPanel id="feeditems" rendered="{!showPreview}">
+	<apex:repeat value="{!lsTopicFeedItems}" var="tfi">
+		<apex:outputPanel rendered="{!tfi.active}">
+			<div class="topicHeader"><h1>{!tfi.topic}</h1></div>
+			<apex:repeat value="{!tfi.lsFeedItems}" var="fi">
+			<div class="feedItem">
+				<div class="feedItemWho">
+					<div class="left">
+						<apex:image url="{!fi.userPhotoUrl}"  width="50" />
+					</div>
+					<div class="right">
+						<div class="CreatedByName">{!fi.feeditm.CreatedBy.FirstName} {!fi.feeditm.CreatedBy.LastName}</div>
+						<div class="CreatedDate"><apex:outputText value="{0, date, E MMMM d','  yyyy HH:mm }">
+							<apex:param value="{!fi.feeditm.CreatedDate}" />
+						</apex:outputText>
+					</div>
+				</div>
+
+				</div>
+				<apex:outputText value="{!fi.feeditm.Body}" escape="false"/> <br />
+				<br />
+				<apex:outputPanel rendered="{!fi.lsTopics.size>0}">
+					<span class="bold">Broadcast:</span>
+					<apex:repeat value="{!fi.lsTopics}" var="tpc">
+					{!tpc.Name}
+					</apex:repeat>
+					<br />
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!AND(fi.lsTopics.size==0,fi.lsAccounts.size>0)}">
+					<span class="bold">Accounts:</span>
+					<apex:repeat value="{!fi.lsAccounts}" var="acc">
+					{!acc.Name}
+					</apex:repeat>
+				</apex:outputPanel>
+			</div>
+			<hr />
+			</apex:repeat>
+		</apex:outputPanel>
+	</apex:repeat>
+	</apex:outputPanel>
+	<style>
+		div.topicHeader {display: block; background-color: #eee; width: 50%; height: 4em;}
+		h1 {display: block; font-size: 120%;}
+		div.left, div.right {display: inline-block;}
+		div.feedItem {display: block; width: 50%;}
+		div.CreatedByName {display: block; font-size: 120%;}
+		div.CreatedDate {display: block; color: #aaa;}
+		span.bold {font-weight: bold;}
+	</style>
+</apex:page>

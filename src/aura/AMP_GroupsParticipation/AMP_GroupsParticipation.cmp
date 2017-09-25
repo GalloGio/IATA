@@ -2,13 +2,14 @@
     <aura:attribute name="accountId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="ParticipantWrappers" type="Object" access="private"/>
-    
+
+    <aura:attribute name="representativesFound" type="Boolean" default="false" />
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
     <!--<ltng:require scripts="{!join(',', $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />-->
 
-    
+
     <div class="slds-card">
-        
+
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -19,15 +20,15 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="slds-card__body">
-            
+
             <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-no-row-hover">
                 <thead>
                     <tr class="headerRow" >
                         <th style="width: 17%;"><span>IATA Group Name</span></th>
                         <th style="width: 12%;"><span>IATA Group Owner</span></th>
-                        <th style="width: 30%;"><span>Mission of IATA Group (Reg/Div Groups Only)</span></th>
+                        <th style="width: 30%;"><span>Mission of IATA Group</span></th>
                         <th style="width: 11%;"><span>Role Within Group</span></th>
                         <th style="width: 5%;"><span>Salut.</span></th>
                         <th style="width: 8%;"><span>First Name</span></th>
@@ -35,7 +36,7 @@
                         <th style="width: 9%;"><span>Title</span></th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
                         <aura:if isTrue="{! participant.Under != ''}">
@@ -43,8 +44,8 @@
                                 <td colspan="8">Under <ui:outputText value="{!participant.Under}" /></td>
                             </tr>
                         </aura:if>
-                        
-                        <tr>                            
+
+                        <tr>
                             <aura:if isTrue="{!participant.Rowspan>0}">
                                 <td rowspan="{!participant.Rowspan}"><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
                                 <td rowspan="{!participant.Rowspan}"><ui:outputText value="{!participant.GroupOwner}" /></td>
@@ -54,14 +55,29 @@
                             <td><ui:outputText value="{!participant.Salutation}" /></td>
                             <td><ui:outputText value="{!participant.FirstName}" /></td>
                             <td><ui:outputText value="{!participant.LastName}" /></td>
-                            <td><ui:outputText value="{!participant.Title}" /></td>                            
+                            <td>
+                                <ui:outputText value="{!participant.Title}" />
+                                <aura:if isTrue="{!participant.Representing != null}">
+                                    <div class="slds-media__figure blue-icon">
+                                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                                    </div>
+                                </aura:if>
+
+                            </td>
                         </tr>
-                        
+
                     </aura:iteration>
                 </tbody>
             </table>
+            <aura:if isTrue="{!v.representativesFound}">
+
+                <div class="slds-media__figure blue-icon">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                </div>
+                 = This participant represents the account on that specific group.
+            </aura:if>
         </div>
-        
+
     </div>
 
 </aura:component>

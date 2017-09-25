@@ -10,3 +10,13 @@
 .THIS .slds-popover {
     width: auto !important;
 }
+
+@media (max-width: 1200px) {
+    .THIS .uiMenuItem {
+        font-size: 200%;
+    }
+
+    .THIS button {
+        display: block !important;
+    }
+}

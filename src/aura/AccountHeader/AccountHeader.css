@@ -1,3 +1,15 @@
 .THIS img{
     max-height: 100px;
 }
+.THIS .slds-tabs--default__link {
+    word-break: break-all !important;
+    height: auto !important;
+
+}
+
+@media (max-width: 1200px) {
+    .THIS .slds-truncate {
+        word-wrap: break-word !important;
+        white-space: normal !important;
+    }
+}

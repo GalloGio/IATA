@@ -10,12 +10,16 @@ public with sharing class AMP_Groups_ParticipationController {
 
     @AuraEnabled
     public static List<Participant__c>  getParticipants(Id accountId) {
+
+      String accountIdmin = String.valueOf(accountId).left(15);
       list<Participant__c> tmpList =
         [SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Participant_Type__c,
                 Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c,
-                Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Local_Governance__r.AM_Under__r.Name
+                Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name,Local_Governance__r.Group_Owner_Text__c, Local_Governance__r.AM_Under__r.Name,
+                Representing__c
         FROM Participant__c
-        WHERE Head_Quartier__c = :accountId
+        WHERE (Hidden_Account_Id__c = :accountIdmin OR Representing__c = :accountIdmin)
+        AND Local_Governance__r.Active__c = true
         AND Local_Governance__r.AM_Under__c <> null
         ORDER BY Local_Governance__r.AM_Under__r.Name, Local_Governance__r.Name, Participant_Type__c];
       return tmpList;

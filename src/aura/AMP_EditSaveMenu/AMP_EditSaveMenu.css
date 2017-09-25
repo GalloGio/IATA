@@ -1,3 +1,13 @@
 .THIS .uiMenuList--default .uiMenuItem>a {
       height: 2em;
 }
+
+@media (max-width: 1200px) {
+    .THIS .uiMenuItem {
+        font-size: 200%;
+    }
+
+    .THIS button {
+        display: block;
+    }
+}

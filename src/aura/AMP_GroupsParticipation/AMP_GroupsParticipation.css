@@ -7,3 +7,20 @@
 .THIS .underGroup {
     background-color: rgb(160, 195, 248);
 }
+
+.THIS .blue-icon {
+    display: inline;
+    margin-left: 1em;
+}
+
+.THIS .blue-icon > .slds-icon {
+    fill: blue;
+}
+
+@media (max-width: 1200px) {
+    .THIS td {
+        word-wrap: break-word !important;
+        white-space: normal !important;
+    }
+
+}
