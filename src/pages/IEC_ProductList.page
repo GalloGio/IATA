@@ -202,7 +202,7 @@
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
-													
+
 													<!-- Scenario 1: In Stock -->
                                                     <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
@@ -218,7 +218,7 @@
 		                                            </apex:outputPanel>
 
 		                                            <!-- Regular Price if exist -->
-                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
+                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null && prod.Sell_Through_eCommerce}">
 														<apex:outputText styleClass="price-value" value="{0, number, currency}">
 		                                                    <apex:param value="{!prod.RegularPrice}" />
 		                                                </apex:outputText>
