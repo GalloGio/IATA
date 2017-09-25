@@ -28,3 +28,18 @@
 .THIS td.allignTop {
   vertical-align: top;
 }
+
+@media (max-width: 1200px) {
+    .THIS .uiMenuItem {
+        font-size: 200%;
+    }
+
+    .THIS .slds-button {
+        display: block !important;
+    }
+
+    .THIS .slds-truncate {
+        word-break: break-all !important;
+        white-space: normal !important;
+    }
+}

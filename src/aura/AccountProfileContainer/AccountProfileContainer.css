@@ -1,8 +1,14 @@
 .THIS .slds-tabs--default__item{
     margin-left: 0 !important;
 }
+@media (max-width: 1200px) {
 .THIS .slds-tabs--default__link{
     padding: 0 0.7rem !important;
+    word-break: break-all !important;
+    height: auto !important;
+    line-height: 2em !important;
+    white-space: normal !important;
+}
 }
 .THIS .tab-link {
     cursor: pointer;

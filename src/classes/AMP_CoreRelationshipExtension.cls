@@ -11,6 +11,7 @@ public with sharing class AMP_CoreRelationshipExtension {
 		public String lastName {get;set;}
 		public String role {get;set;}
 		public String title {get;set;}
+		public String representing {get;set;}
 	}
 
 
@@ -62,9 +63,10 @@ public with sharing class AMP_CoreRelationshipExtension {
 			lsParticipants =
 				[SELECT Id, Local_Governance__c, Local_Governance__r.Name,	Participant_Type__c,
 						Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
-						Contact__r.Title
+						Contact__r.Title, Representing__c
 				FROM Participant__c
-				WHERE Contact__r.AccountId = :accountId
+				WHERE (Contact__r.AccountId = :accountId OR Representing__c = :accountId)
+				AND Local_Governance__r.Active__c = true 
 				AND Local_Governance__r.Name IN :groupNames];
 			return lsParticipants;
 		}
@@ -89,6 +91,7 @@ public with sharing class AMP_CoreRelationshipExtension {
 						p.firstName = pa.Contact__r.FirstName;
 						p.lastName = pa.Contact__r.LastName;
 						p.title = pa.Contact__r.Title;
+						p.representing = pa.Representing__c;
 						found = true;
 						lsParticipantWrappers.add(p);
 						// break;
