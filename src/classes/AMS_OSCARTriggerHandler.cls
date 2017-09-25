@@ -217,7 +217,7 @@ public class AMS_OSCARTriggerHandler {
 		for (AMS_OSCAR__c oscar : oscars) {
 			if (oscar.recordTypeID == changeRT) {
 				AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
-				if ((oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) || (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) || (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) || (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c))
+				if ((oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) || (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) || (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) || (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) || oscar.Change_effective_as_of__c > Date.today())
 					changeOscars.add(oscar);
 
 			}
@@ -437,6 +437,13 @@ public class AMS_OSCARTriggerHandler {
 					system.debug(LoggingLevel.ERROR,'[LF]: SAS affected: '+SAsInvolved);
 					system.debug(LoggingLevel.ERROR,'[LF]: SAS NOT affected: '+SAsNotInvolved);
 				}
+
+				if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c <> AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
+					system.debug('RB: Entering process future dates');
+					oscar.status__c = 'Accepted_Future Date';
+					oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
+				}
+
 				if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
 					isSanityCheck = true;

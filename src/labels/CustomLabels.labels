@@ -7014,6 +7014,14 @@ msgDeleted: is deleted.</value>
         <value>Please fill required fields with the correct format</value>
     </labels>
     <labels>
+        <fullName>IE_Warning</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IE Warning</shortDescription>
+        <value>For a better user experience, please do not use Internet Explorer. It is recommended to use Chrome, Firefox, Safari or Edge.</value>
+    </labels>
+    <labels>
         <fullName>IFAPAllFilesCheck</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13478,6 +13486,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <shortDescription>ISSP AMS Validation Percent Ownership2</shortDescription>
         <value>SECTIONS 4.1 PEOPLE &amp; 4.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership for AE</shortDescription>
+        <value>SECTION 3.1 PEOPLE - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership2_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership2 for AE</shortDescription>
+        <value>SECTIONS 3.1 PEOPLE &amp; 3.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>    
     <labels>
         <fullName>ISSP_AMS_Validation_Portal_Admin</fullName>
         <categories>ISSP, AMS</categories>
@@ -24420,7 +24444,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PurchaseAsAutoRenewInfo</shortDescription>
-        <value>Purchase as auto renewal information</value>
+        <value>We&apos;ll charge your credit card or IATA Clearing House account at the applicable rate once a new edition of this publication is released and shipped. You can cancel your subscription prior to the release by</value>
     </labels>
     <labels>
         <fullName>QTY</fullName>
@@ -25009,6 +25033,14 @@ title,Title,Name</value>
         <value>Taxes</value>
     </labels>
     <labels>
+        <fullName>ThankYou</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Thank you</shortDescription>
+        <value>Thank you.</value>
+    </labels>
+    <labels>
         <fullName>The_attachments_you_select_will_be_copied_to_the_target_case</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -25308,6 +25340,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Zuora Hosted Payment Method error message</shortDescription>
         <value>An error has occurred was trying to create your new card</value>
+    </labels>
+    <labels>
+        <fullName>contacting_us</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contacting us</shortDescription>
+        <value>contacting us.</value>
     </labels>
     <labels>
         <fullName>days_left</fullName>
