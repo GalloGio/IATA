@@ -1842,4 +1842,19 @@ private static List<Terms_and_Conditions__c> getCurrentTermsAndCondition(String 
     return listTC; 
     
 }
+
+
+/**
+* Cancel button on iecebc_campaignpayment page
+* redirects the user to IECEBC_CampaignSchedule page
+*/
+public PageReference backToPreviousStep(){
+        system.debug('backToPreviousStep start');
+        PageReference pr=Page.IECEBC_CampaignSchedule;
+        pr.getParameters().put( 'id', ebcCampaignId);
+        pr.setRedirect(true);
+        return pr;
+}
+
+
 } // end of class vfIECEBC_PaymentComponentController
