@@ -411,7 +411,7 @@
                                                             <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
                                                         </apex:outputpanel>
                                                         <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
-                                                            <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!iataCode}" required="false" size="1" rendered="{!field.listOptions!=null}">
+                                                            <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!newCase[field.fieldValue]}" required="false" size="1" rendered="{!field.listOptions!=null}">
                                                                 <apex:selectOptions value="{!if(field.listOptions.size == 1, field.listOptions[0], field.listOptions[1])}" />
                                                                 <apex:selectOptions value="{!if(field.listOptions.size == 3, field.listOptions[2], "")}" rendered="{!if(field.listOptions.size == 3, true, false)}"/>
                                                                 <apex:selectOptions value="{!if(field.listOptions.size == 4, field.listOptions[3], "")}" rendered="{!if(field.listOptions.size == 4, true, false)}"/>

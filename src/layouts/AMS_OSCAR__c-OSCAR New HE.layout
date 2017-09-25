@@ -363,10 +363,6 @@
                 <behavior>Edit</behavior>
                 <field>Country_Specifics_Approval_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Change_effective_as_of__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
