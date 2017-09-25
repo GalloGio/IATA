@@ -158,7 +158,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, Sell_through_eCommerce__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' +
@@ -176,7 +176,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, Sell_through_eCommerce__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' , 
