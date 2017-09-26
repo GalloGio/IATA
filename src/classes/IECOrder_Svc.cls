@@ -701,8 +701,6 @@ public with sharing class IECOrder_Svc {
 
     public static Order getPenddingOrder(Boolean createOrder)
     {
-        Order pendingOrder;
-        
         Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
 
         //-- Data Selectors 
@@ -710,10 +708,11 @@ public with sharing class IECOrder_Svc {
         
         //-- Check if current User has pending Order: if not create one
         System.debug('pendding order for::'+oCurrentCustomer.sfUser.Id);
-        pendingOrder = orderSelector.getPenddingOrder(oCurrentCustomer.sfUser.Id);
+        Order pendingOrder = orderSelector.getPenddingOrder(oCurrentCustomer.sfUser.Id);
 
         //if no pending orders where the user is the ownerId it will check if there is orders for the user contact on the billToContactId
         if(pendingOrder == null){
+            System.debug('pendding order for::'+oCurrentCustomer.sfUser.ContactId);
             pendingOrder = orderSelector.getPendingOrderByBillToContactId(oCurrentCustomer.sfUser.ContactId);
         }
 

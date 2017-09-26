@@ -335,6 +335,7 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public void reloadOrder() {
+		system.debug('aqui reloadOrder...');
 		clearCartInCookies();
 		retrieveCart();
 	}
@@ -408,10 +409,13 @@ public without sharing virtual class IEC_Cart {
 
 			// Store in Database
 			cartOrder = getCartOrder();
+			///////ADDED angielaz
+			//cartOrderItems = getCartOrderItems();
 
 			//INC339486
 			//productSwap();
-			filterInacessibleProducts();
+			//doProductSwap(cartOrderItems);
+			//filterInacessibleProducts();
 
 			saveOrderAndCartItemsToDatabase(cartOrder, getCartContent());
 		} else {
@@ -431,16 +435,18 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public void retrieveCart() {
-		System.debug('retrieveCart start');
+		System.debug('retrieveCart start ' + isUserLoggedIn());
 
 		if (isUserLoggedIn()) {
 			// Master is Database
-			
+			System.debug('aqui cartItemMap retrieveCart() ' + cartItemMap);
 			// clear current image in-memory
 			cartItemMap.clear();
 
 			cartOrder = getCartOrder();
 			cartOrderItems = getCartOrderItems();
+			System.debug('aqui cartOrder ' + cartOrder);
+				System.debug('aqui cartOrderItems ' + cartOrderItems);
 
 			for (OrderItem orderItem : cartOrderItems) {
 				String productNumber;
@@ -471,7 +477,8 @@ public without sharing virtual class IEC_Cart {
 			}
 			//INC339486
 			//productSwap();
-			filterInacessibleProducts();
+			//doProductSwap(cartOrderItems);
+			//filterInacessibleProducts();
 		} else {
 			// Master is Cookies
 			deserializeCartFromCookies();
@@ -527,12 +534,16 @@ public without sharing virtual class IEC_Cart {
 				}
 
 				cartItemMap.put(productNumber, cartItem);
+				System.debug('cartItemMap at loginUserEvent: ' + cartItemMap);
 			}
 			//INC339486
 			//productSwap();
-			filterInacessibleProducts();
+			doProductSwap_OBOM();
+			//filterInacessibleProducts();
 
 			storeCart();
+			//INC339486
+			//doProductSwap(getCartOrderItems());
 			clearCartInCookies();
 			cartItemMap.clear();		// clear all items from Cart (it will be reloaded later).
 		}
@@ -676,6 +687,9 @@ public without sharing virtual class IEC_Cart {
 				listProductId.add(p.Id);
 			}
 
+			//Product Swap in case it as swap configured
+            /////////////////doProductSwap(items, listProductId);
+
 			List<EComProduct_DTO> ecomProducts = getEcomProductsByProductIdList(listProductId);
 
 			String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
@@ -720,6 +734,108 @@ public without sharing virtual class IEC_Cart {
 
 		return orderItems;
 	}
+
+
+	private void doProductSwap_OBOM(){
+		Map<Id, Product2> srcProductRatePlaneToProductMap = new Map<Id, Product2>();
+		Map<Id, Swap_Configuration__c> trgSwapConfMap = new Map<Id, Swap_Configuration__c>();
+		//Source product from cartItem
+		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
+			FROM Product2 where SAP_Material_Number__c in :cartItemMap.keySet()]);
+		system.debug('aqui srcProductList ' + srcProductList); 
+		//Map of source ProductRatePlaces mapped by Product rate planes
+		for(Product2 scrProduct : srcProductList){
+			srcProductRatePlaneToProductMap.put(scrProduct.IEC_Product_Rate_Plan_Information__c, scrProduct);
+		}
+
+		system.debug('aqui IEC_Product_Rate_Plan_Information__c' + srcProductRatePlaneToProductMap);
+		//Retrieves the swap configurations
+		List<Swap_Configuration__c> swapConfigurationList = new List<Swap_Configuration__c>();
+		swapConfigurationList = [SELECT id,Relationship_Type__c, Source_Product_Rate_Plan_Information__c, Target_Product_Rate_Plan_Information__c 
+			from Swap_Configuration__c where Relationship_Type__c = :IECConstants.SwappingType_Swap and 
+			Source_Product_Rate_Plan_Information__c in :srcProductRatePlaneToProductMap.keySet()];
+
+		system.debug('aqui swapConfigurationList' + swapConfigurationList);
+
+		for(Swap_Configuration__c swapConf : swapConfigurationList){
+			//Target product
+			List<Product2> trgProduct = new List<Product2>([SELECT id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
+			FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c limit 1]);
+			//Source product
+			Product2 srcProduct = srcProductRatePlaneToProductMap.get(swapConf.Source_Product_Rate_Plan_Information__c);
+			//Source CartItem
+			CartItem srcCarItem = cartItemMap.get(srcProduct.SAP_Material_Number__c);
+			//Remove source Item
+			cartItemMap.remove(srcProduct.SAP_Material_Number__c);
+			//Build the target item and add it to the cartItemMap
+			CartItem trgCarItem = new CartItem (srcCarItem.Id, trgProduct[0].SAP_Material_Number__c, srcCarItem.quantity, srcCarItem.coupon);
+			cartItemMap.put(trgProduct[0].SAP_Material_Number__c, trgCarItem);
+
+		}
+
+		system.debug('aqui doProductSwap_OBOM-->cartItemMap: ' + cartItemMap);
+
+	}
+
+	/****************************************************************************************************
+        doProductSwap, function that retrieves a list of pricebookEntries for given
+                                     pricebook and product
+        @Id pricebookId, Id of the pricebook
+        @Id productId, Id of the product
+        @return, list of priceEntry by ProductId
+        
+        Author: Angela Lazaro 
+    ****************************************************************************************************/
+    private void doProductSwap(List<OrderItem> items){
+
+    	System.debug('doProductSwap start ' + items);
+
+    	Map<Id, OrderItem> orderItemMappedByProductId  = new Map<Id, OrderItem>();
+
+    	Map<Id, OrderItem> orderItemMappedByProductRatePlan = new Map<Id, OrderItem>();
+
+    	//Keeps a map of the orderItem to productId
+    	for(OrderItem orderItem : items){
+    		orderItemMappedByProductId.put(orderItem.PricebookEntry.Product2Id, orderItem);
+
+    	}
+    	System.debug('aqui orderItemMappedByProductId  ' + orderItemMappedByProductId);
+    	//Fetch the product rate plan information configured in the product
+    	List<Product2> productsList = [Select Id, IEC_Product_Rate_Plan_Information__c from Product2 where Id in :orderItemMappedByProductId.keySet()];
+    	System.debug('aqui productsList  ' + productsList);
+    	//Keeps a map of the orderItem to productRatePlan
+    	for(Product2 product : productsList){
+    		orderItemMappedByProductRatePlan.put(product.IEC_Product_Rate_Plan_Information__c, orderItemMappedByProductId.get(product.Id));
+    	}
+
+    	System.debug('angielaz, doProductSwap-->orderItemMappedByProductId: ' + orderItemMappedByProductId);
+    	System.debug('angielaz, doProductSwap-->orderItemMappedByProductRatePlan: ' + orderItemMappedByProductRatePlan);
+
+        List<Swap_Configuration__c> swapConfList = [Select Id, Relationship_Type__c, Source_Product_Rate_Plan_Information__c, Target_Product_Rate_Plan_Information__c
+                            from Swap_Configuration__c where Source_Product_Rate_Plan_Information__c in :orderItemMappedByProductRatePlan.keySet() and Relationship_Type__c = :IECConstants.SwappingType_Swap];
+        
+        for(Swap_Configuration__c swapConf : swapConfList){
+
+            //Format from 18 digits Id to 15 digits Id
+            /*String srcProductPlan = String.valueOf(swapConf.Source_Product_Rate_Plan_Information__c);
+            srcProductPlan = srcProductPlan.substring(0, srcProductPlan.length() - 3);
+
+            String trgProductPlan = String.valueOf(swapConf.Target_Product_Rate_Plan_Information__c);
+            trgProductPlan = trgProductPlan.substring(0, trgProductPlan.length() - 3);
+            */
+
+            if(orderItemMappedByProductRatePlan.get(swapConf.Source_Product_Rate_Plan_Information__c) != null){
+            	OrderItem orderItem = orderItemMappedByProductRatePlan.get(swapConf.Source_Product_Rate_Plan_Information__c);
+            	List<Product2> products = [Select Id from Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c limit 1];
+            	orderItem.PricebookEntry.Product2Id = products[0].Id;
+
+            	System.debug('angielaz, orderItem: ' + orderItem);
+
+            }
+        }
+
+        System.debug('doProductSwap end');
+    }
 
 	/**
 		Check if User is Logged In.
@@ -790,8 +906,13 @@ public without sharing virtual class IEC_Cart {
 		if (String.isBlank(customerType)) {
 			customerType = IECConstants.PARAM_CUSTOMERTYPE_DEFAULT;
 		}
-
+	
+	System.debug('aqui customerType ' + customerType);
+	System.debug('aqui cartItemMap ' + cartItemMap.keySet());
+	System.debug('aqui productAccessMap ' + productAccessMap);		
+	
 		for (String productNumber : cartItemMap.keySet()) {
+			System.debug('aqui productNumber ' + productNumber);
 			Set<String> productAccessSet = productAccessMap.get(productNumber);
 
 			if (
@@ -854,6 +975,8 @@ public without sharing virtual class IEC_Cart {
 
 			ecomProducts = getEcomProductsByProductIdList(productIdList);
 			
+			System.debug('angielaz, saveOrderAndCartItemsToDatabase-->ecomProducts: ' + ecomProducts);
+
 			if (ecomProducts != null) {
 				for (EComProduct_DTO ecomProduct : ecomProducts) {
 					ecomProductByIdMap.put(ecomProduct.ProductId, ecomProduct);
