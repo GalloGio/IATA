@@ -4111,6 +4111,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -5151,6 +5152,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false

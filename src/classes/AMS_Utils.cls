@@ -151,6 +151,8 @@ public without sharing class AMS_Utils {
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
 
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
 
@@ -1214,6 +1216,10 @@ public without sharing class AMS_Utils {
                 if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
+
+                if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
+                    acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                }
 
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
