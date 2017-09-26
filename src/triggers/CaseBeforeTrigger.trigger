@@ -674,7 +674,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                 WebIATAcode = WebIATAcode.substring(0, 10);
                             system.debug('IATA CODE 2: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                             //in case the user enters 7 digits we need to get the 8th digit  
-                            if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7) {
+                            if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7 && WebIATAcode.isNumeric() ) {
                                 String t = WebIATAcode.trim();
                                 Long a = Long.valueof(t);
                                 Long remainder = math.mod(a, 7);
@@ -682,7 +682,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             }
                             system.debug('IATA CODE 3: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                             //in case the user enters 10 digits we need to get the 11th digit
-                            if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10) {
+                            if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10 && WebIATAcode.isNumeric() ) {
                                 String t = WebIATAcode.trim();
                                 Long a = Long.valueof(t);
                                 Long remainder = math.mod(a, 7);

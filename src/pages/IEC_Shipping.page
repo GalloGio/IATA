@@ -8,6 +8,28 @@
         <html lang="en" class="ie ie9">
     <![endif]-->
     <!--[if !IE]><!-->
+
+    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+    <script type="text/javascript">
+        j$ = jQuery.noConflict(); 
+       function blockme() {
+           j$.blockUI({ css: {
+               border: 'none',
+               padding: '15px',
+               backgroundColor: '#000',
+               '-webkit-border-radius': '10px',
+               '-moz-border-radius': '10px',
+               opacity: .5,
+               color: '#fff'
+               } }); 
+         }
+
+    </script>
+
     
     <html lang="{!language}">
     <!--<![endif]-->
@@ -731,6 +753,7 @@
                                                                             <div class="tooltip-description">
                                                                                 <h3 class="title">{!$Label.PurchaseAsAutoRenew}</h3>
                                                                                 <p>{!$Label.PurchaseAsAutoRenewInfo}</p>
+                                                                                <a href="http://www.iata.org/services/Pages/direct-sales.aspx?">{!$Label.contacting_us}</a>
                                                                             </div>
                                                                         </div>
                                                                     </apex:outputPanel>
@@ -1039,7 +1062,7 @@
                                                         <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
 
                                                         <apex:outputPanel id="buttonJs">
-                                                        <button class="button wide" type="button" onclick="jsProcessPayment();">
+                                                        <button class="button wide" type="button" onclick="jsProcessPayment();blockme();" oncomplete="j$.unblockUI();">
                                                             {!$Label.IDCard_Continue_Button}
                                                             <apex:actionStatus id="payStatus"> 
                                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
