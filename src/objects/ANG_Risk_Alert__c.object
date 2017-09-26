@@ -69,7 +69,7 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Account__c</fullName>
+        <fullName>ANG_Account__c</fullName>
         <description>The master account this alert is related to</description>
         <externalId>false</externalId>
         <label>Account</label>
@@ -83,7 +83,7 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Direction__c</fullName>
+        <fullName>ANG_Direction__c</fullName>
         <description>Information if the agency was below the threshold and it&apos;s now over it, if it&apos;s in the same leve or if is downgrading.</description>
         <externalId>false</externalId>
         <label>Direction</label>
@@ -108,7 +108,7 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>EventId__c</fullName>
+        <fullName>ANG_EventId__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>Hold the event Id on the external system</description>
         <externalId>true</externalId>
@@ -120,7 +120,7 @@
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>RME_Last_Update__c</fullName>
+        <fullName>ANG_RME_Last_Update__c</fullName>
         <description>The last date time when the latest information came from the external system</description>
         <externalId>false</externalId>
         <label>RME Last Update</label>
@@ -129,7 +129,7 @@
         <type>DateTime</type>
     </fields>
     <fields>
-        <fullName>Threshold_Level__c</fullName>
+        <fullName>ANG_Threshold_Level__c</fullName>
         <description>Holds the Threshold that was met with this alert</description>
         <externalId>false</externalId>
         <label>Threshold Level</label>
@@ -152,7 +152,7 @@
         <description>Used to receive RHC information alerts from the external system</description>
         <label>Risk Alert</label>
         <picklistValues>
-            <picklist>Direction__c</picklist>
+            <picklist>ANG_Direction__c</picklist>
             <values>
                 <fullName>DOWN</fullName>
                 <default>false</default>
