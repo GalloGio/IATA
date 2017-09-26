@@ -126,6 +126,16 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Threshold_Level__c</fields>
+        <fields>Direction__c</fields>
+        <fields>RME_Last_Update__c</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_RHC_Information__c</relatedList>
+        <sortField>RME_Last_Update__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
