@@ -975,8 +975,10 @@ public without sharing virtual class IEC_Cart {
 
 			System.debug('angielaz, saveOrderAndCartItemsToDatabase-->productIdList: ' + productIdList);
 
-			ecomProducts = getEcomProductsByProductIdList(productIdList);
+			//ecomProducts = getEcomProductsByProductIdList(productIdList);
 			
+			ecomProducts = Product_Sel.getEComProduct(productIdList, false, null, null, false);
+
 			System.debug('angielaz, saveOrderAndCartItemsToDatabase-->ecomProducts: ' + ecomProducts);
 
 			if (ecomProducts != null) {
