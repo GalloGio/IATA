@@ -333,7 +333,10 @@
 			</apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" rerender="theSecondModal, theRepeat" StyleClass="btn btn-default"/>
+          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" 
+              rerender="theSecondModal, theRepeat,Contacts, loadStatusSpinner" 
+              status="loadStatusSpinner"
+              StyleClass="btn btn-default"/>
           	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
@@ -362,6 +365,48 @@
 
  </apex:form>
   <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+  <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+  <div class="loadingBox overlay"> </div>
+
+  <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+
+  <style>
+      .overlay {
+          display: none;
+          height: 100%;
+          left: 0;
+          position: fixed;
+          top: 0;
+          opacity: 0.3;
+          -moz-opacity: 0.3;
+          width: 100%;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+          filter: alpha(opacity=30);
+          background: #000;
+          -khtml-opacity: 0.3;
+          z-index: 1000;
+      }
+      .loader {
+          background: url('/img/loading32.gif') scroll no-repeat 0 0;
+          width: 32px;
+          height: 32px;
+          position: absolute;
+          left: 50%;
+      }
+  </style>
+
+  <script type="text/javascript">
+      function startLoading(){
+          $('#load_scrl').css('top', $(document).scrollTop() + 200);
+          $('.loadingBox').show();
+      }
+      function endLoading(){
+           $('.loadingBox').hide();
+      }
+  </script> 
+
+
 </div><!-- end container -->
      </body>
     </html>

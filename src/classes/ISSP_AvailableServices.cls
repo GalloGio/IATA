@@ -8,8 +8,9 @@ public with sharing class ISSP_AvailableServices{
     private String sortDirection = 'ASC';
     private String sortExp  = 'CreatedDate'; 
     
-    public Boolean isAdmin {get;set;} 
-     
+    public Boolean isAdmin {get;set;}
+    public Boolean isAuthorisedSignatory {get;set;}
+
     public String conId {get; set;}
     public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
     public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
@@ -28,6 +29,8 @@ public with sharing class ISSP_AvailableServices{
     public boolean pollerOn {get; set;}
     public Map<String, String> iepRoles {get; set;}
     public Boolean redirect {get; set;}
+    public Boolean provError {get; set;}
+    public Integer failedCount  {get; set;}
 
     Integer count = 0;
 
@@ -90,7 +93,8 @@ public with sharing class ISSP_AvailableServices{
         this.iepRoles = new Map<String, String>();
 
         this.redirect = false;
-
+        this.provError = false;
+        
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
             if(role.Permission_set_SSO__c != null){
                 iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
@@ -121,6 +125,7 @@ public with sharing class ISSP_AvailableServices{
 
             this.count = 0;
             this.pollerOn = false;
+            this.isAuthorisedSignatory = false;
 
             initFilters();
             initServiceListViewMap();
@@ -153,6 +158,8 @@ public with sharing class ISSP_AvailableServices{
                 // Get the contact's data.
                 //
                 Contact contAcc = AMS_Utils.getIEPContact(conId);
+
+                this.isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);                
                 
                 System.debug('[FM] initialization contAcc - '+ contAcc);
 
@@ -162,19 +169,28 @@ public with sharing class ISSP_AvailableServices{
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
-                if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open')
+                if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open') {
+                    isIEPAccountEnable = true;                
+                } else if(isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
+                                     (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
                     isIEPAccountEnable = true;
-                else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
-                    isIEPAccountEnable = true;
+                }
 
-                //
-                // The poller only sets on when the user is an admin
-                //
-                
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                } else if (contAcc.Account.Location_Type__c == 'AO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'AO') {
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
+                }
+
+                if (!isIEPAccountEnable) {
+                    isModalErrorMessageEnable = true;
+                } else {
+                    if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
+                        modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
+                        isModalErrorMessageEnable = true;
+                    }
                 }
 
                 if (!isIEPAccountEnable) {
@@ -352,7 +368,7 @@ public with sharing class ISSP_AvailableServices{
         public boolean accountNotOpenError {get; set;}
         public String lineErrorMessage {get; set;}
 
-        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
+        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin, Boolean isAuthorisedSignatory){
             this.Status = getServiceStatus(inRecord);
             this.selected = false;
             this.recordService = inRecord;   
@@ -370,13 +386,9 @@ public with sharing class ISSP_AvailableServices{
                 this.accountNotOpenError = false;
             }
 
-            System.debug('IepStatus--->' + IepStatus);
-            System.debug('this.accountNotOpenError--->' + this.accountNotOpenError);
-            System.debug('this.addUsersEnable--->' + this.addUsersEnable);
-
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
-            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin) {
+            if (flagIsIepPortalService && (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT || IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) && isAdmin && isAuthorisedSignatory) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
                 this.useDefaultRole = true;
             } else {
@@ -388,7 +400,6 @@ public with sharing class ISSP_AvailableServices{
                 }
             }
         }
-
 
         public string getServiceStatus(Portal_Applications__c inService){
             
@@ -428,7 +439,7 @@ public with sharing class ISSP_AvailableServices{
         List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
 
         for (Portal_Applications__c thisService : allServices){
-            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin);
+            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin, isAuthorisedSignatory);
             allServiceList.add(thisServiceRecord);
         }
         
@@ -481,7 +492,7 @@ public with sharing class ISSP_AvailableServices{
                         system.debug('FOUND: ' + thisApp.Name);
                         if (!appIds.contains(thisApp.Id)){
                             system.debug('ADDING FINAL: ' + thisApp.Name);
-                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus, isAdmin);
+                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus, isAdmin, isAuthorisedSignatory);
                             allServiceList.add(thisServiceRecord);
                         }
                     }
@@ -604,7 +615,11 @@ public with sharing class ISSP_AvailableServices{
 
         List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c,Cannot_be_managed_by_portal_admin__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
-        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
+        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin, isAuthorisedSignatory);
+
+        List<UserProvisioningRequest> uprFailed = [Select id From UserProvisioningRequest where SalesforceUserId =: currentPortalUser.id And State = 'Failed'];
+
+        this.failedCount = uprFailed.size();
 
         this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
 
@@ -645,6 +660,7 @@ public with sharing class ISSP_AvailableServices{
                 app.ANG_Portal_Service_Role__c = portalServiceRole;                    
             }
         }
+        System.debug('-->Insert');
         insert app;
 
         return 'ok';             
@@ -664,8 +680,14 @@ public with sharing class ISSP_AvailableServices{
         if(l.size() != 0) {
             this.pollerOn = false;
             this.redirect = true;
-        }            
-                
+        } else {
+
+            List<UserProvisioningRequest> l2 = [Select id From UserProvisioningRequest where SalesforceUserId =: currentPortalUser.id And State = 'Failed'];
+
+            if(l2.size() != this.failedCount) {
+                this.provError = true;
+            }            
+        }                
         return null;
     }
 }

@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
         <fullName>ANG_Risk_Calculation_UK_Adjustment</fullName>
-        <description>+ &apos;_&apos; +TEXT(ANG_Parent_Occurences__c)</description>
         <field>ANG_UniqueKey__c</field>
         <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(ANG_Calculation_Rule__r.ANG_Accreditation_Model__c ) + &apos;_&apos; + TEXT(ANG_Calculation_Rule__r.ANG_Occurrence_Num__c) + &apos;_&apos; + TEXT(ANG_Calculation_Rule__r.ANG_Adjusted__c) + &apos;_&apos; + TEXT(ANG_Parent_Occurences__c) + &apos;_&apos; + TEXT(ANG_Remittance_Frequency__c )</formula>
         <name>ANG Risk Calculation UK Adjustment</name>

@@ -6,7 +6,7 @@ public class ISSP_Contact{
     public boolean isIATAAgencyAcct {get;set;}
     public boolean isPortalAdminUser {get;set;}
     public boolean isEditMode {get;set;}
-    
+    public String userPortalStatus {get;set;}
     public list<String> errorMessage {get; set;}
 
     //CNS
@@ -30,6 +30,11 @@ public class ISSP_Contact{
         if (action == 'edit'){
             isEditMode = true;
         }
+
+        User user = [SELECT id, Contact.User_Portal_Status__c from User where id =:UserInfo.getUserId()];
+        if(user != null){
+            userPortalStatus = user.Contact.User_Portal_Status__c;
+        }
         
         contactList =new List<Contact>([select id , Name , Email , Phone ,OtherPhone,
                                         User_Portal_Status__c , Fax, MobilePhone, ISO_Country__c,
@@ -37,7 +42,8 @@ public class ISSP_Contact{
                                         Title, Membership_Function__c  , AccountId , Financial_Assessment_Contact__c,
                                         Account.Name, Account.Category__c, Account.Location_Type__c,
                                         Salutation, FirstName, LastName, Account.IATA_ISO_Country__r.Name,
-                                        Invoicing_Contact__c, BSP_CASS_Payment_contact__c, Services__c, Airline_Contact_Type__c
+                                        Invoicing_Contact__c, BSP_CASS_Payment_contact__c, Services__c, Airline_Contact_Type__c,Authorized_Signatory__c
+                                        
                                         From Contact
                                         Where Id =: contactId ]);
                                                    
@@ -63,7 +69,7 @@ public class ISSP_Contact{
                     isPortalAdminUser = false;
             }
          
-         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
+         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.ANG_Portal_Service_Role__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
                                                                    From Portal_Application_Right__c p 
                                                                    where p.Contact__c =: ContactId and 
                                                                        
