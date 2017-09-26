@@ -61,9 +61,10 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 			String[] toAddresses = new String[] {u.Email};
 			mail.setToAddresses(toAddresses);
 			mail.setSubject('Chatter digest ');
-			mail.setHtmlBody(getEmailBody(u));
+			String emailBody = getEmailBody(u);
+			mail.setHtmlBody(emailBody);
 			System.debug(getEmailBody(u));
-			lsEmails.add(mail);
+			if (emailBody != '') lsEmails.add(mail);
 
 		}
 		Messaging.sendEmail(lsEmails);
@@ -116,12 +117,16 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		// emailBody += '    <div style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; font-size: 14px; font-family: '+fonts+';" class="text">  <span style="font-size: 24px;font-weight:light;text-align:center">';
 		emailBody += '<span emloc="_salutation_"><center>Hi '+currentUser.FirstName +', catch up on activity from the past '+dayOrWeek+'.</center></span></span> </div> </td> </tr>';
 		emailBody += '<tr><td>';
+
+		String topicBody = '';
 		for(String t : lsFavouriteTopics) {
-			emailBody += getTopicBody(currentUser, t, lsAccountIds);
+			topicBody += getTopicBody(currentUser, t, lsAccountIds);
 		}
-		// emailBody += '<tr><td>';
+		emailBody += topicBody;
 		emailBody += '</td><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD> </tr></TBODY></table></TBODY></table>\n';
 		emailBody +='</body></html>';
+
+		if(topicBody == '') { emailBody = ''; }
 		return emailBody;
 	}
 

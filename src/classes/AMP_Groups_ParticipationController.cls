@@ -60,6 +60,10 @@ public with sharing class AMP_Groups_ParticipationController {
 
     }
 
+    @AuraEnabled
+    public static String  getReportId() {
+        return [SELECT Id FROM Report WHERE DeveloperName='Industry_Groups_Participation' LIMIT 1].Id;
+    }
 
     public AMP_Groups_ParticipationController(ApexPages.StandardController stdController) {
         acc = (Account)stdController.getRecord();

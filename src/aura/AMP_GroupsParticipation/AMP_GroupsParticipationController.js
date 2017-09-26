@@ -1,5 +1,6 @@
 ({
 	doInit : function(component, event, helper) {
+		helper.getReportId(component);
 		var action = component.get("c.getParticipants");
 		var accountId = component.get("v.accountId");
 
