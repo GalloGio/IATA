@@ -909,10 +909,10 @@ public with sharing class AMS_AccreditationContactController {
             this.prev2To = String.valueOf(acParam.Prev_Job2_To__c);
             
             this.ac = acParam;
-            if(this.ac.Company__c == null)
+            /*if(this.ac.Company__c == null)
             {
-                //this.ac.Company__c = acParam.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
-            }
+                this.ac.Company__c = acParam.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+            }*/
             if(acParam.Person_AMS__c != null)
             {
                 this.recordId = acParam.Person_AMS__c;
