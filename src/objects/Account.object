@@ -6441,7 +6441,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>DDS_Status_Parent__c</fullName>
         <externalId>false</externalId>
-        <formula>TEXT(Parent.DDS_Status__c)</formula>
+        <formula>IF(isblank(ParentId), text(DDS_Status__c), TEXT(Parent.DDS_Status__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>EU Agent Consent Status (Parent)</label>
         <required>false</required>
