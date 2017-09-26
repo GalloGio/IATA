@@ -1,28 +1,41 @@
 public with sharing class AMS_Change_Code_Notification_Controller {
 
 	public String caseId {get; set;}
+    public Case currentCase {get; set;}
+    public Boolean isSidra {get; set;}
 
     public AMS_Change_Code_Notification_Controller(ApexPages.StandardController stdController) {
-        caseId = stdController.getId(); //ApexPages.currentPage().getParameters().get('Id');
+        caseId = stdController.getId(); 
+        isSidra = false;
+
+        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, OSCAR__c FROM Case WHERE Id = :caseId];
+        if (!lstCases.isEmpty()) {
+            currentCase = lstCases[0];
+
+            if (currentCase.RecordType.DeveloperName == 'SIDRA' || currentCase.RecordType.DeveloperName == 'SIDRA_Lite') 
+                isSidra = true;
+        }
+
+
     }
 
     public void setNotificationMessage() {
 
         list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, OSCAR__c FROM Case WHERE Id = :caseId];
 
-        if (!lstCases.isEmpty()) {
+        if (currentCase != null) {
             list<Agency_Applied_Change_code__c> lstRecentChangeCodes = new list<Agency_Applied_Change_code__c>();
             Datetime dateRange = Datetime.now().addMinutes(-1);
             Boolean isOscar = false;
 
-            if (lstCases[0].RecordType.DeveloperName == 'OSCAR_Communication' && lstCases[0].OSCAR__c != null) {
+            if (currentCase.RecordType.DeveloperName == 'OSCAR_Communication' && currentCase.OSCAR__c != null) {
                 // OSCAR Communication Cases - change code linked to the oscar
-                lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :lstCases[0].OSCAR__c AND CreatedDate > :dateRange];
+                lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :currentCase.OSCAR__c AND CreatedDate > :dateRange];
                 isOscar = true;
 
-            } else if (lstCases[0].RecordType.DeveloperName == 'SIDRA' || lstCases[0].RecordType.DeveloperName == 'SIDRA_Lite') {
+            } else if (currentCase.RecordType.DeveloperName == 'SIDRA' || currentCase.RecordType.DeveloperName == 'SIDRA_Lite') {
                 // SIDRA Cases - change code linked to the case
-                lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE SIDRA_Case__c = :lstCases[0].Id AND CreatedDate > :dateRange];
+                lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE SIDRA_Case__c = :currentCase.Id AND CreatedDate > :dateRange];
             }
 
             if (!lstRecentChangeCodes.isEmpty()) {
