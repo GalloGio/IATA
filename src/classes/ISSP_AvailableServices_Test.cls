@@ -608,7 +608,7 @@ public class ISSP_AvailableServices_Test {
 
             ISSP_AvailableServices cttr = new ISSP_AvailableServices();
 
-            ISSP_AvailableServices.ServiceWrapper sr = new ISSP_AvailableServices.ServiceWrapper(easyPayServ, 'Open', true);
+            ISSP_AvailableServices.ServiceWrapper sr = new ISSP_AvailableServices.ServiceWrapper(easyPayServ, 'Open', true, true);
 
             cttr.Serv = sr;
 

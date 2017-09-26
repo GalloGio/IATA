@@ -33,7 +33,7 @@ private class ANG_PortalApplicationRightTest {
 
 		insert new List<Contact>{contact, contact2, contact3};
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'ANG_App');
+		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA EasyPay - Tester');
 		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'IATA EasyPay');
 		
 		insert new List<Portal_Applications__c>{app, app2};
@@ -55,9 +55,6 @@ private class ANG_PortalApplicationRightTest {
 			);
 
 			insert new List<PermissionSet>{ang_ssoapp, ang_provapp};
-
-			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_ssoapp - ' + ang_ssoapp);
-			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_provapp - ' + ang_provapp);
 			
 			insert new User(
 				Alias = 'dsfsdfds', 
@@ -78,10 +75,11 @@ private class ANG_PortalApplicationRightTest {
 
 			Connected_App_Roles__c car = new Connected_App_Roles__c(
 				Name = 'ANG Test'
-				, Connected_App__c = 'ANG_App'
+				, Connected_App__c = 'IATA EasyPay - Tester'
 				, Permission_set_SSO__c = 'ANG_SSOApp'
 				, PermissionSet_Provisioning__c = 'ANG_ProvApp'
 				, Provisioning_Id__c = capp.Id
+				, Connected_App_Provisioning_Name__c = capp.Name
 				, Role__c = 'Tester'
 				, Min_Users_With_Role__c = 0
 			);
@@ -189,6 +187,21 @@ private class ANG_PortalApplicationRightTest {
 
 		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(0, assignments);
+	}
+	
+	static testMethod void test_failProvisioning() {
+		UserProvisioningRequest request = [SELECT Id, SalesforceUserId, AppName, State FROM UserProvisioningRequest];
+
+		Test.startTest();
+
+		request.State = 'Failed';
+		update request;
+
+		Test.stopTest();
+
+		List<Portal_Application_Right__c> parList = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
+		System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - test_failProvisioning] parList - ' + parList);
+		System.assert(parList.isEmpty());
 	}
 
 	static testMethod void test_checkMinimumUsersAllowedUpdateAndDelete() {

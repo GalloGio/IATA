@@ -81,9 +81,20 @@
         <defaultValue>false</defaultValue>
         <description>Service can only be subscribed by accredited agents.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Active OR Changes processed.</inlineHelpText>
+        <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Approved OR Changes processed OR Listed.</inlineHelpText>
         <label>Accredited Agents Only</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Cannot_move_contact_between_Agencies__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another.</inlineHelpText>
+        <label>Cannot move contact between Agencies</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -92,7 +103,7 @@
         <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
         <externalId>false</externalId>
         <label>Country Coverage</label>
-        <length>100</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>

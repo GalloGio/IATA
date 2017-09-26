@@ -2713,8 +2713,17 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
-        <label>Cash Condition</label>
+        <formula>IF(
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+                false,
+                    IF(
+              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+                ANG_HE_CashCondition__c,  
+                Top_Parent__r.ANG_HE_CashCondition__c
+              )
+            )</formula>
+        <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
+        <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2750,7 +2759,7 @@
     <fields>
         <fullName>ANG_IEP_Account_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Parent.ANG_IEP_HE_AccntNum__c)</formula>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Top_Parent__r.ANG_IEP_HE_AccntNum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Account Number</label>
         <required>false</required>
@@ -2775,7 +2784,7 @@
         <fullName>ANG_IEP_Status_FF__c</fullName>
         <description>To show analysts information about Easy Pay’s account status</description>
         <externalId>false</externalId>
-        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Parent.ANG_IEP_Status__c))</formula>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Top_Parent__r.ANG_IEP_Status__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Status</label>
         <required>false</required>
@@ -2840,9 +2849,27 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Triggers Cash Condition throught risk Status assessment</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Condition</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), TEXT(ANG_HE_RiskHistoryAssessment__c), TEXT(Parent.ANG_HE_RiskHistoryAssessment__c))</formula>
+        <formula>IF(
+        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+            &apos;Not Applicable&apos;,
+                IF(
+          ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+            TEXT(ANG_HE_RiskHistoryAssessment__c),  
+            TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
+          )
+        )</formula>
         <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2852,7 +2879,15 @@
     <fields>
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), TEXT(ANG_HE_RiskStatus__c), TEXT(Parent.ANG_HE_RiskStatus__c))</formula>
+        <formula>IF(
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+                &apos;Not Applicable&apos;,
+                    IF(
+              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+                TEXT(ANG_HE_RiskStatus__c),  
+                TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
+              )
+            )</formula>
         <label>Risk Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -6406,7 +6441,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>DDS_Status_Parent__c</fullName>
         <externalId>false</externalId>
-        <formula>TEXT(Parent.DDS_Status__c)</formula>
+        <formula>IF(isblank(ParentId), text(DDS_Status__c), TEXT(Parent.DDS_Status__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>EU Agent Consent Status (Parent)</label>
         <required>false</required>
@@ -11363,7 +11398,8 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
@@ -34429,7 +34465,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -80341,7 +80405,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82155,6 +82247,18 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
+),
+TEXT(Location_Type__c) = &apos;AE&apos;,
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;
+)</errorConditionFormula>
+        <errorMessage>An Associate Entity must have a parent account with location type HE</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>
@@ -82255,6 +82359,45 @@ Source_System__c  &lt;&gt; &apos;AIMS&apos;
 )</errorConditionFormula>
         <errorDisplayField>Industry</errorDisplayField>
         <errorMessage>Industry is a required field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Limit_Remittance_Frequency_Options</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+NOT(Country_ISO_Code__c  = &apos;BR&apos;),
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+Country_ISO_Code__c  = &apos;BR&apos;,
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
+
+)</errorConditionFormula>
+        <errorDisplayField>Remittance_frequency__c</errorDisplayField>
+        <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>

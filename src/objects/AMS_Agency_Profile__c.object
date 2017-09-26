@@ -973,6 +973,26 @@ TR- % Tour Packages</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <label>Agency Profile</label>
+    <listViews>
+        <fullName>Agency_Profiles_By_Agency</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Agency__c</columns>
+        <columns>GR_Code__c</columns>
+        <columns>GR_Item__c</columns>
+        <columns>Last_synchronization__c</columns>
+        <columns>Legacy_External_ID__c</columns>
+        <columns>Legacy_System__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>MAGNOLIA TRAVEL GROUP LLC</value>
+        </filters>
+        <label>Agency Profiles By Agency</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AP-{000000}</displayFormat>
         <label>Agency Profile Name</label>
