@@ -337,6 +337,7 @@ private class  OneIdLightningLoginFormControllerTest {
         Auth.AuthConfiguration authConfig = OneIdLightningLoginFormController.getAuthConfig();
         System.assertNotEquals(null, authConfig);
     }
+    
 
 
 }
