@@ -513,6 +513,10 @@
                 <fullName>OTHERS</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -975,6 +979,10 @@
             </values>
             <values>
                 <fullName>OTHERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
