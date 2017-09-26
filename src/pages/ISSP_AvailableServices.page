@@ -12,6 +12,7 @@
        <script type="text/javascript">
      
     var redirected = false;
+    var requested = 0
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
@@ -42,13 +43,14 @@
       if (doInsert == 0) {
           document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
       } else {
+          requested = 1;
           if (appPortalRole != 'SKIP') {
               closeDialog();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
-            $('#ModalNewIepServiceRequest').modal('toggle');            
+            showModal('#ModalNewIepServiceRequest');
           } else {
-            $('#ModalNewServiceRequest').modal('toggle');
+            showModal('#ModalNewServiceRequest');
           }
                     
           if (doInsert == 1) {
@@ -70,21 +72,38 @@
       
     }
 
-    function onCompleteUserProvisioning(redirect, page){
-      if (redirect == 'true' && !redirected) {
-        $('#ModalNewIepServiceRequest').modal('toggle');
-          
-        var win = window.open(page, '_blank');
-        if (win) {
-            //Browser has allowed it to be opened
-            win.focus();
-        } else {
-            //Browser has blocked it
-            alert('Please allow popups for this website');            
-        }          
-        redirected = true;          
+    function onCompleteUserProvisioning(redirect, page, provError) {
+      if(provError == 'true' && requested == 1) {
+        hideModal('#ModalNewIepServiceRequest');
+        errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
+      } else {
+        if (redirect == 'true' && !redirected) {
+          hideModal('#ModalNewIepServiceRequest');
+            
+          var win = window.open(page, '_blank');
+          if (win) {
+              //Browser has allowed it to be opened
+              win.focus();
+          } else {
+              //Browser has blocked it
+              alert('Please allow popups for this website');            
+          }          
+          redirected = true;          
+        }
       }
     }
+
+    function showModal(modalName) {
+      if (! $(modalName).is(":visible")) {
+        $(modalName).modal('show');  
+      }
+    }
+
+    function hideModal(modalName) {
+      if ($(modalName).is(":visible")) {
+        $(modalName).modal('hide');  
+      }
+    }    
 
     function refreshPage() {
       var currentTime = new Date().getTime();
@@ -106,7 +125,11 @@
 
     function errorMessageModal(errorMsg) {
       $('[id$="errorMessage"]').text(errorMsg);
-      $('[id$="ModalErrorMessage"]').modal('toggle');
+      showModal('#ModalErrorMessage');
+    }
+
+    function errorMessageModalClose() {
+      location.reload(true);
     }
 
     function dopopup(){
@@ -166,7 +189,7 @@
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
     <!-- <apex:pageMessages /> -->
 
-    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}');"/>
+    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}', '{!provError}');"/>
     
     <img src="/s.gif" alt="Service" class="pageTitleIcon" title="Service"/>
     <!--
@@ -316,25 +339,25 @@
               <table>
 
                 <tr><td> 
-                    <span class="appfocus">
-                      <a  id="appReq{!Serv.recordService.Id}"  title="">
-                        <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" />
-                      </a>
-                    </span>
+                  <span class="appfocus">
+                    <a  id="appReq{!Serv.recordService.Id}"  title="">
+                      <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" />
+                    </a>
+                  </span>
                   </td>
                   <!--span>
                       <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!Serv.recordService.Name}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                   </span-->
                   <td style="padding-left: 10px">
-                    <span>
-                        <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
+                  <span>
+                      <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
                           <apex:outputLabel escape = "false" value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
 
-                          <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
-                        </apex:outputPanel>
-                        
-                        <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
+                        <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                      </apex:outputPanel>
+                      
+                      <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
 
                           <!--apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}" /-->
                           <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_EasyPayLegalConfirmation}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable && Serv.useDefaultRole}"/>
@@ -345,13 +368,13 @@
 
                           <apex:outputLabel escape = "false" value="{!modalErrorMessage}" rendered="{!!Serv.recordService.Confirm_Box__c && isModalErrorMessageEnable}" />
 
-                          <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                      <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
 
-                        </apex:outputPanel>  
-                    </span>
+                      </apex:outputPanel>  
+                  </span>
                     </td>
                 </tr>
-                
+
                 <tr>
                   <td>
                   </td>
@@ -372,7 +395,7 @@
                       <span>
                         <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_3}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
                         <b><a href="{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link}">{!$Label.ISSP_Email_Here}</a>.</b>
-                      </span>                    
+                  </span>
                     </apex:outputPanel>                      
                   </td>
                 </tr>                      
@@ -381,23 +404,23 @@
                   <td>
                   </td>
                   <td style="padding-left: 10px; padding-top: 10px">
-                    <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
-                      <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
-                      <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
-                        <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                        <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
-                      </apex:selectList>                  
-                    </apex:outputPanel>                    
+                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
+                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
+                    <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
+                      <apex:selectOptions value="{!availablePortalServiceRoles}"/>
+                      <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
+                    </apex:selectList>                  
+                  </apex:outputPanel>
                   </td>
                 </tr>
               </table>
 
-              <script> 
-                if('{!JSENCODE(Serv.recordService.Description__c)}'!=''){ 
-                  var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(Serv.recordService.Description__c)}'+'</div>';
-                  $('#appReq{!Serv.recordService.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
-                }
-              </script>
+                <script> 
+                  if('{!JSENCODE(Serv.recordService.Description__c)}'!=''){ 
+                    var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(Serv.recordService.Description__c)}'+'</div>';
+                    $('#appReq{!Serv.recordService.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
+                  }
+                </script>
 
 
               <apex:outputPanel rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}"> 
@@ -503,7 +526,7 @@
           <div class="modal-footer">
             <div class="row">
               <div class="col-md-12">
-                <a onclick="errorMessageModal()" class="btn_iata_cancel btn-block btn">
+                <a onclick="errorMessageModalClose()" class="btn_iata_cancel btn-block btn">
                   {!$label.ISSP_Cancel}
                 </a>
               </div>

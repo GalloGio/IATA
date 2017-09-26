@@ -1274,6 +1274,18 @@
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Name_Link_FF__c</fields>
+        <fields>ANG_Account_IATA_Code__c</fields>
+        <fields>ANG_Risk_Type__c</fields>
+        <fields>ANG_Issued_Date__c</fields>
+        <fields>ANG_Source__c</fields>
+        <fields>ANG_expiration_date_ff__c</fields>
+        <fields>ANG_Event_Status__c</fields>
+        <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

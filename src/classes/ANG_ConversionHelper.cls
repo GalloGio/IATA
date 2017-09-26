@@ -33,7 +33,18 @@ global with sharing class ANG_ConversionHelper {
         -7 => 'Hierarchies with agencies missing top parent',
         -8 => 'Orphan Branches (BR)',
 		-9 => 'Different Top Parent in the Hierarchies'
-    };   
+    };
+
+    public static Map<Integer, String> errorMessagesLongDescription = new Map<Integer, String> {
+        -2 => Label.ANG_Conversion_Tool_Error_2,
+        -3 => Label.ANG_Conversion_Tool_Error_3,
+        -4 => Label.ANG_Conversion_Tool_Error_4,
+        -5 => Label.ANG_Conversion_Tool_Error_5,
+        -6 => Label.ANG_Conversion_Tool_Error_6,
+        -7 => Label.ANG_Conversion_Tool_Error_7,
+        -8 => Label.ANG_Conversion_Tool_Error_8,
+		-9 => Label.ANG_Conversion_Tool_Error_9
+    };
 
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
             
@@ -408,6 +419,8 @@ global with sharing class ANG_ConversionHelper {
 
 		Map<Id,AMS_Agencies_Hierarchy__c> allHierarchiesInvolvedMap = fetchAllHierarchiesInvolved(structures);
 
+		Set<Id> topParents = new Set<Id>();
+
 		for(ANG_ConversionHelper.HierarchyStructure struct: structures){
 
 			allAgencies = new Set<Account>();
@@ -431,17 +444,21 @@ global with sharing class ANG_ConversionHelper {
 			container.struct.migrated = true;
 
 			toReturn.add(container.struct);
+			topParents.add(container.struct.topParentId);
 
 		}
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-
+		ANG_RiskEventMigrationHelper reHelper = new ANG_RiskEventMigrationHelper(accountsToUpdate);
 		update new List<Account>(accountsToUpdate);
+		insert reHelper.convertChangeCodesToRiskEvents();
 
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
+
+		//ANG_Risk_Helper.createRHCInfo(topParents, true);
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
@@ -567,6 +584,7 @@ global with sharing class ANG_ConversionHelper {
 		else{
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
+					rel.Is_Newgen_Relation__c = true;
 					rel.Parent_Account__c = struct.topParentId;
 					
 					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
@@ -607,14 +625,24 @@ global with sharing class ANG_ConversionHelper {
         
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         
-        for(Account acct:accts){
+        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
+        
+        for(Account acct:acctToInsert){
 
+        	if(isAcctElegibleToCreateAuthorization(acct)){
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+			}
 		}
 
         insert authorizations;
+    }
+
+    public static boolean isAcctElegibleToCreateAuthorization(Account acct){
+
+    	return !(acct.IATACode__c == null ||  acct.Status__c == 'New application pending' || acct.Status__c == 'Not accreditated' || acct.Purge_Flag__c == true);
+
     }
 
 	public class MigrationContainer{

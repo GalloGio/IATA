@@ -1,7 +1,7 @@
 public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
     public static final ID formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
-
+    public static Map<Id,String> accountsName = new Map<Id,String>(); 
     public static void handleBeforeInsert(List<Agency_Authorization__c> newMap){
 		verifyAAUniqueness(newMap);
 	}
@@ -37,7 +37,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 			}
 		}
 
-		List<Agency_Authorization__c> aaFromAccounts = [Select ID,Account__c,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c where Account__c in:accountsInvolved and RecordTypeId = :formOfPaymentRT and Status__c = 'Active' and Id not in :newMap];
+		List<Agency_Authorization__c> aaFromAccounts = [Select ID,Account__c, Account__r.IATACode__c,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c where Account__c in:accountsInvolved and RecordTypeId = :formOfPaymentRT and Status__c = 'Active' and Id not in :newMap];
 
 		Map<Id,List<Agency_Authorization__c>> accountsAAMap = new Map<Id,List<Agency_Authorization__c>>();
 
@@ -48,6 +48,9 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 			}
 			else
 				accountsAAMap.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
+
+			//Populate MapAccountName for show in error
+			accountsName.put(aa.Account__c, aa.Account__r.IATACode__c);
 		}
 
 		For(Id accountId: accountsAAMap.keySet()){
@@ -63,7 +66,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 		for(Agency_Authorization__c aa: newAAValues){
 
 			if(hasMatchingConditions(aa,currentAccountList))
-				aa.addError('There is already an Agency Authorization with the same Type/FormOfPayment for the Account ' + aa.Account__c);
+				aa.addError('There is already an Agency Authorization with the same Type/FormOfPayment for the Account ' + accountsName.get(aa.Account__c));
 		}
 	}
 
