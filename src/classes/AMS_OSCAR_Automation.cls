@@ -60,7 +60,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
@@ -499,11 +499,13 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step15_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null) {
+            if (oscar != null && oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
+            } else {
+                oscar.addError('Validation can\'t be passed if Manage Financial Security step is Not Started or In Progress.');
             }
 
             return res;
@@ -520,7 +522,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
                 
-                if(oscar.Process__c == AMS_Utils.NEWHELITE)
+                if(oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE)
                     oscar.Status__c = 'Pending Approval';
                 else
                     oscar.Status__c = 'On Hold_Internal';
@@ -552,11 +554,15 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step25_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null) {
+            if (oscar != null && (oscar.STEP12__c == AMS_Utils.PASSED || oscar.STEP12__c == AMS_Utils.NOT_APPLICABLE)) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
+            } else if(oscar != null && oscar.STEP12__c == AMS_Utils.FAILED) {
+                oscar.addError('Validation can\'t be Passed when Manage Financial Security step is Failed.');
+            } else {
+                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable or Passed.');
             }
 
             return res;
@@ -579,6 +585,22 @@ public with sharing class AMS_OSCAR_Automation {
             return res;
         }
     }
+
+    public class AMS_OSCAR_Step25_inProgress implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step25_inProgress.processWork');
+            Boolean res = False;
+
+            if (oscar != null && oscar.STEP12__c == AMS_Utils.FAILED) {
+                oscar.addError('Validation can only be Failed when Manage Financial Security step is Failed.');
+            } else {
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
 
     /*public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
     {
@@ -604,12 +626,14 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step2_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null && (oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed')) {
+            if (oscar != null && (oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') {
 
                 oscar.Approval_disapproval_date__c = Date.today();
                 oscar.Status__c = 'On Hold_Internal';
                 res = True;
 
+            } else if(oscar != null && oscar.STEP12__c == 'Failed') {
+                oscar.addError('Approval can\'t be set when Manage Financial Security step is Failed.');
             } else {
                 oscar.addError('Approval can only be set after the validation Qualification Criteria is passed');
             }
