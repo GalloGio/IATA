@@ -9667,7 +9667,14 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
         <value>1. Identification of Agency for which Approval Requested</value>
-    </labels>
+    </labels>    
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>2. Identification of Agency for which Approval Requested</value>
+    </labels>        
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section2</fullName>
         <categories>ISSP, AMS</categories>

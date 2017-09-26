@@ -154,7 +154,7 @@
 		<apex:pageBlockSection columns="1" rendered="{!List_AgencyContacts.size > 0}" collapsible="false"> 
 		    <apex:facet name="header">
 		        <apex:outputpanel >
-		            {!$Label.ISSP_AMS_Step3_4_People_SubTitle}
+		            {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1}
 		        </apex:outputpanel>
 		    </apex:facet>                                    
 		    <apex:pageBlockTable styleClass="summary-table" value="{!List_AgencyContacts}" var="agencycon" >
@@ -227,7 +227,7 @@
 		<apex:pageBlockSection columns="1" rendered="{!List_AgencyCompanies.size > 0}">
 		    <apex:facet name="header">
 		        <apex:outputpanel >
-		            {!$Label.ISSP_AMS_Step3_4_Companies_SubTitle}
+		            {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_2}
 		        </apex:outputpanel>
 		    </apex:facet>                      
 		    <apex:pageBlockTable styleClass="summary-table" value="{!List_AgencyCompanies}" var="agencycon" >
