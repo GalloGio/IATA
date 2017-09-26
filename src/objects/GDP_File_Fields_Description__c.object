@@ -52,7 +52,7 @@
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -357,7 +357,7 @@
         </filters>
         <filters>
             <field>Filter_Field_API_Name__c</field>
-            <operation>notContain</operation>
+            <operation>contains</operation>
             <value>Index</value>
         </filters>
         <label>Field Details - GSS Member - TXT</label>
