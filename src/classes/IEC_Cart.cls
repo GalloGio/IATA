@@ -759,7 +759,7 @@ public without sharing virtual class IEC_Cart {
 
 		for(Swap_Configuration__c swapConf : swapConfigurationList){
 			//Target product
-			List<Product2> trgProduct = new List<Product2>([SELECT id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
+			List<Product2> trgProduct = new List<Product2>([SELECT Id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
 			FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c limit 1]);
 			//Source product
 			Product2 srcProduct = srcProductRatePlaneToProductMap.get(swapConf.Source_Product_Rate_Plan_Information__c);
@@ -768,7 +768,7 @@ public without sharing virtual class IEC_Cart {
 			//Remove source Item
 			cartItemMap.remove(srcProduct.SAP_Material_Number__c);
 			//Build the target item and add it to the cartItemMap
-			CartItem trgCarItem = new CartItem (srcCarItem.Id, trgProduct[0].SAP_Material_Number__c, srcCarItem.quantity, srcCarItem.coupon);
+			CartItem trgCarItem = new CartItem (trgProduct[0].Id, trgProduct[0].SAP_Material_Number__c, srcCarItem.quantity, srcCarItem.coupon);
 			cartItemMap.put(trgProduct[0].SAP_Material_Number__c, trgCarItem);
 
 		}
@@ -972,6 +972,8 @@ public without sharing virtual class IEC_Cart {
 					productIdList.add(product.Id);
 				}
 			}
+
+			System.debug('angielaz, saveOrderAndCartItemsToDatabase-->productIdList: ' + productIdList);
 
 			ecomProducts = getEcomProductsByProductIdList(productIdList);
 			
