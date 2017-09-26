@@ -4607,7 +4607,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP6__c"
+                  "STEP6__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }
@@ -6038,7 +6039,8 @@
                 "DisplayFields": [
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
-                  "AMS_Correction_change_code__c"                  
+                  "AMS_Correction_change_code__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }

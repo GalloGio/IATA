@@ -21,8 +21,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
+    public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -71,11 +72,11 @@ global without sharing class AMS_RecordCreatorWebservice {
             if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
 
                 String selectedAccount = cases.get(0).Account_Concerned__c;
-                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId);
+                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 
             } else {
 
-                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId);
+                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
 
             }
 
@@ -99,7 +100,7 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE))
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
                     if(oscarCase.AccountId != realAccountId)
                         oscarCase.AccountId = realAccountId;
 
@@ -277,7 +278,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     } 
 
-    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId){
+    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId, Id parentAccount){
 
         AMS_OSCAR__c oscar;
         AMS_Pax_Accreditation_Form__c accreditationObj;
@@ -291,7 +292,11 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+        if(processType.equalsIgnoreCase(AMS_Utils.NEWAE)){
+            fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
+        }
+
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
@@ -299,8 +304,11 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             String typeOfChange = getFormatedTypeOfChange(processType,accreditationObj);
 
-            oscar.Type_of_change__c = typeOfChange;
-
+            if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
+                oscar.Type_of_change__c = typeOfChange;
+            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
+                oscar.ANG_Type_Of_Change__c = typeOfChange;
+            
         }
 
         // this needs to be fetched from Accreditation Object. For now just use this.
@@ -319,11 +327,27 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
         return oscar.id;
+    }
+
+    public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
+        
+        //Let's get the parent account
+        Account acct = [Select Id, ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :parentId];
+
+        AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
+        accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+        update accredObject;
+
+        Account acctChild = new Account(Id = accountId);
+        acctChild.ANG_Accreditation_Model__c = acct.ANG_Accreditation_Model__c;
+
+        update acctChild;
+
     }
 
     private static void handleOwners(AMS_Pax_Accreditation_Form__c accreditationObj){
@@ -384,7 +408,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
     }
 
@@ -672,7 +696,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             AMS_MigrationToolHelper.createAccreditationContacts(accreditationObj, parentAccount.Id, typeOfProcess);
 
-            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null);
+            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null, null);
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');

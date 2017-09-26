@@ -2511,6 +2511,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>Is_PCI_compliant__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -9459,6 +9464,28 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_PCI_compliant__c</fullName>
+        <description>Determines if an agency is PCI Compliant</description>
+        <externalId>false</externalId>
+        <label>Is PCI compliant</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
@@ -25425,6 +25452,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -28430,6 +28468,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -31262,6 +31311,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -33987,6 +34047,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -37578,6 +37649,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -40813,6 +40895,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -45387,6 +45480,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -48214,6 +48318,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -52617,6 +52732,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -57055,6 +57181,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -59531,6 +59668,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -61938,6 +62086,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64457,6 +64616,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -69622,6 +69792,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -75222,6 +75403,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -79679,6 +79871,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
