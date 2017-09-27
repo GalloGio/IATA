@@ -7110,6 +7110,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case_Update</fullName>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
+        <field>dgAI2__DG_Capture_Analytics__c</field>
+        <literalValue>1</literalValue>
+        <name>DG_Capture_Analytics_Closed_Case_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>sMAP_Update_Decision_Date</fullName>
         <field>Decision_Date__c</field>
         <formula>NOW()</formula>
@@ -18551,6 +18561,21 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Europe</value>
         </criteriaItems>
         <description>SIDRA</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case</fullName>
+        <actions>
+            <name>dgAI2__DG_Capture_Analytics_Closed_Case_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

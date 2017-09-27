@@ -11,7 +11,9 @@ private class LightningRegistrationProcess_Test {
         
         LightningRegistrationProcess.createcontact();
         LightningRegistrationProcess.checkemail('test@test1.it');
-        LightningRegistrationProcess.checkemail(anUser.email);
+        String checkedEmail = LightningRegistrationProcess.checkemail(anUser.email);
+        System.assertEquals('user_exists', checkedEmail);
+        
         LightningRegistrationProcess.GetContactSalutationValues();
         LightningRegistrationProcess.GetContactJobFunctionValues();
         //LightningRegistrationProcess.GetAccountSectorValues();
@@ -44,7 +46,36 @@ private class LightningRegistrationProcess_Test {
         LightningRegistrationProcess.getHostURL();
         LightningRegistrationProcess.setFederationId(anUser.id, anUser.email);
         LightningRegistrationProcess.getCommunityName();
-
+        
+        String orgUrl = URL.getSalesforceBaseUrl().getHost();
+        String comunityUrl=Site.getBaseUrl();
+        
+        LightningRegistrationProcess.createUserFromExistingContact(oContact.Email);
+        LightningRegistrationProcess.assignIdentityPermissionSet(anUser.id);
+        
+        LightningRegistrationProcess.getLanguageFromURL();
+        
+        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact' AND IsActive = true];
+        Contact c = new Contact(FirstName = 'firstName', LastName = 'L', Email = 'test@test.com', phone='(514) 111 2222',AccountId=oAccount.Id, RecordTypeId= rt.id);
+        insert c;
+                
+        checkedEmail = LightningRegistrationProcess.checkemail(c.email);
+        //System.assertEquals('create_user', checkedEmail);
+        
+        String userId = LightningRegistrationProcess.createUserFromExistingContact(c.Email);
+        System.assertEquals(null, userId);
+        
+        rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='IATA_Service_Provider_Contact' AND IsActive = true];
+        Contact c1 = new Contact(FirstName = 'firstName1', LastName = 'L2', Email = 'test2@test.com', phone='(513) 141 2125',AccountId=oAccount.Id, RecordTypeId= rt.id);
+        insert c1;
+        
+        checkedEmail = LightningRegistrationProcess.checkemail(c1.email);
+        System.assertEquals('create_contactanduser', checkedEmail);
+        
+        userId = LightningRegistrationProcess.createContactAndAccount(c1, oAccount, 'Airline');
+        //System.assertEquals(null, userId);
+        
+        LightningRegistrationProcess.checkConAvailable(new Contact(FirstName = 'firstName2', LastName = 'L3', Email = 'test3@test.com', phone='(515) 146 2178',AccountId=oAccount.Id, RecordTypeId= rt.id));
         
     }
     
