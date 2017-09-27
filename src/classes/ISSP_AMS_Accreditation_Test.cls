@@ -2588,7 +2588,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.con.Account.Category__c = 'Courier';
             ctrl.getOfficeTypes();
 
-            ctrl.con.Account.Category__c = 'Import Agent';
+            ctrl.con.Account.Category__c = 'Recipient';
             ctrl.getOfficeTypes();
             
             ctrl.iatacode = '100';

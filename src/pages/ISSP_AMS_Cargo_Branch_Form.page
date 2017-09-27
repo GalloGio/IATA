@@ -401,7 +401,7 @@
                                         IF(amsAgentType == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                                             IF(amsAgentType == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                                                 IF(amsAgentType == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
-                                                    IF(amsAgentType == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
+                                                    IF(amsAgentType == 'Recipient', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
                                                         IF(amsAgentType == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title))))))}
             </h3>
         </div>
