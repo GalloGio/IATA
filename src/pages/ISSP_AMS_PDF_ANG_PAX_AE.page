@@ -218,15 +218,17 @@
                                 </apex:outputText>
                             </td>
 	                      </tr>
-                          <tr>
+                          <tr style="display: {!IF(countryCheckList.License_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_License_No__c}</td>
                           </tr>
-                          <tr>
+
+                          <tr style="display: {!IF(countryCheckList.Registration_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_Trade_Reg_No__c}</td>
                           </tr>
-                          <tr>
+
+                          <tr style="display: {!IF(countryCheckList.License_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}</td>
                               <td colspan="2">
                                 <apex:outputText value="{0,date, MMMM d,  yyyy}">
@@ -234,7 +236,8 @@
                                 </apex:outputText>
                               </td>
                           </tr>
-                        <tr>
+
+                        <tr style="display: {!IF(countryCheckList.Registration_required__c==true,'','none')}">
                           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}</td>
                           <td colspan="2">
                               <apex:outputText value="{0,date, MMMM d,  yyyy}">
