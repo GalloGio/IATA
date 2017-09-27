@@ -105,7 +105,7 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('userListConfirmTempPassword '+ userListConfirmTempPassword[0]);
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
-                lgn = Site.login(username, password, '/identity/s/changePassword');
+                lgn = Site.login(username, password, '/s/changePassword');
                 userListConfirmTempPassword[0].UID__c ='';
                 update userListConfirmTempPassword[0];
                 
