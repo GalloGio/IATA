@@ -26,6 +26,11 @@
                     <label>AI Chat</label>
                     <page>dglc__LiveChat</page>
                 </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Suggestion</label>
+                    <page>DG_ProposedTemplate</page>
+                </sidebarComponents>
                 <style>Accordion</style>
                 <unit>Pixel</unit>
                 <width>300</width>
