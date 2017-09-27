@@ -41,29 +41,31 @@ global class BtchIECSendInvoicesToSAP implements Database.Batchable<sObject>, Da
 		for (String ZInvNum : mapZInvNum_SAPInv.keySet())
 		{
 			strStatus = mapZInvNum_Status.get(ZInvNum);
-			List<String> strStatusSplit = strStatus.split(',');
-			SAPInv = mapZInvNum_SAPInv.get(ZInvNum);
-			if (getNextStatus(SAPInv, strStatus)){
-				SAPInv.Error_Message__c = strStatus;
-				SAPInv.Status_Date__c = system.now();				
-				String orderIdstr;
-				String orderNumberstr;
-				List<String> orderNumberstrLst = new List<String>();
-				system.debug('strStatus ' + strStatus);
-				if(!strStatus.contains('Error') && strStatus != '' && !strStatusSplit.isEmpty() && strStatusSplit != null){					
-					for(String str :strStatusSplit){
-						system.debug('strStatusSplit ' + strStatusSplit);
-						orderIdstr = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
-						orderNumberstr = str.substring(str.indexOf(' ') + 1, str.indexOf('('));
-						orderNumberstrLst.add('Order- ' + orderNumberstr);
-						ordersIDs.add(orderIdstr);
-					}
-				}
-				String allstring = string.join(orderNumberstrLst,',');
-				SAPInv.Related_Orders__c = allstring;
-				lstSAPInv.add(SAPInv);
-			}
 
+			if(strStatus != null){
+				List<String> strStatusSplit = strStatus.split(',');
+				SAPInv = mapZInvNum_SAPInv.get(ZInvNum);
+				if (getNextStatus(SAPInv, strStatus)){
+					SAPInv.Error_Message__c = strStatus;
+					SAPInv.Status_Date__c = system.now();				
+					String orderIdstr;
+					String orderNumberstr;
+					List<String> orderNumberstrLst = new List<String>();
+					system.debug('strStatus ' + strStatus);
+					if(!strStatus.contains('Error') && strStatus != '' && !strStatusSplit.isEmpty() && strStatusSplit != null){					
+						for(String str :strStatusSplit){
+							system.debug('strStatusSplit ' + strStatusSplit);
+							orderIdstr = str.substring(str.indexOf('(') + 1, str.indexOf(')'));
+							orderNumberstr = str.substring(str.indexOf(' ') + 1, str.indexOf('('));
+							orderNumberstrLst.add('Order- ' + orderNumberstr);
+							ordersIDs.add(orderIdstr);
+						}
+					}
+					String allstring = string.join(orderNumberstrLst,',');
+					SAPInv.Related_Orders__c = allstring;
+					lstSAPInv.add(SAPInv);
+				}
+			}
 		}
 		
 		//Connecting Order with respective IEC SAP INVOICE -- start
