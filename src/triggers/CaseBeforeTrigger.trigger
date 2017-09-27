@@ -1452,7 +1452,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /****************************************************************************************************************************************************/    
     
     else if (Trigger.isUpdate) {
-        fakeMethod();
+        if (Test.isRunningTest())	fakeMethod();
         /*trgCase Trigger.isUpdate*/
         if(trgCase){//FLAG
             system.debug('trgCase Trigger.isUpdate');
