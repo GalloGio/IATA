@@ -418,6 +418,11 @@
 	                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}</td>
 	                            <td colspan="2">{!newForm.IATAN_Code__c}</td>
 	                        </tr>
+
+                            <tr style="display: {!IF(amsOfficeType=='HO','','none')}">
+                                <td class="label">{!$Label.ISSP_AMS_Step3_Indicate_GDSs}</td>
+                                <td colspan="2">{!newForm.ISSP_AMS_GDS_with_signed_contract__c}</td>
+                            </tr>                            
 	                    </table>
 	                </apex:pageBlock>
 	            </div>
