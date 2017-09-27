@@ -29204,6 +29204,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>ANG_Remittance_frequency_mandatory</fullName>
+        <active>true</active>
+        <description>Do not allow approval until the remittance frequency field is populated</description>
+        <errorConditionFormula>(TEXT(Process__c) = &quot;ANG.NEW.HE.LITE.1.0&quot; || TEXT(Process__c) = &quot;ANG.NEW.HE.STANDARD.1.0&quot;) &amp;&amp;  ISCHANGED(RPM_Approval__c) &amp;&amp;
+TEXT(RPM_Approval__c) = &quot;Authorize Approval&quot; &amp;&amp; ISBLANK(AMS_Online_Accreditation__r.Remittance_frequency__c)</errorConditionFormula>
+        <errorMessage>The OSCAR cannot be approved until the remittance frequency is populated.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Effective_date_mandatory_in_VR</fullName>
         <active>true</active>
         <errorConditionFormula>AND(

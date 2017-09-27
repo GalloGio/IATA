@@ -407,6 +407,9 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>Office Email</li>
                     <li>Office Phone</li>
+                    <!--<li>Remittance Frequency</li>-->
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
                     <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>

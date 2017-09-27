@@ -21,7 +21,7 @@ public class AMS_OSCAR_ProcessViewerController {
     public Boolean showRequiredOverlay{
         get{
             // NG Processes specific conditions
-            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (
                     oscar != null
                     && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
@@ -48,6 +48,15 @@ public class AMS_OSCAR_ProcessViewerController {
                 && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
                 //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
+    public Boolean isNewGenHEProcess{
+        get{
+            return (
+                oscar != null
+                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             );
         }
     }
