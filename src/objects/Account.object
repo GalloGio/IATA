@@ -82019,6 +82019,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <active>true</active>
         <description>Cannot change the Location Type from HO if the account has a financial assessment contact linked to it or the expiry date is not empty.</description>
         <errorConditionFormula>AND(
+  RecordType.DeveloperName = 'IATA_Agency',
   ISCHANGED(Location_Type__c),
   ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
   OR(
