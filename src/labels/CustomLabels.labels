@@ -11168,14 +11168,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT BRANCH</shortDescription>
-        <value>Import Agent - Branch Office</value>
+        <value>Recipient - Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_IMPORT_HO</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT HO</shortDescription>
-        <value>Import Agent - New Head Office</value>
+        <value>Recipient - New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_BRANCH</fullName>
@@ -13026,7 +13026,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_StepsAll_Import_Agent_Title</shortDescription>
-        <value>Application for Approval as an Import Agent</value>
+        <value>Application for Approval as an Recipient</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Passenger_Title</fullName>
