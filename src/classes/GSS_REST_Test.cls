@@ -1459,7 +1459,7 @@ global class GSS_REST_Test {
         
         GSS_REST_FileProduction.FieldStructureCls fieldStruct = new GSS_REST_FileProduction.FieldStructureCls();
         // call public String ExtractField(Integer TypeList, String ObjectName)
-        fieldStruct.ExtractField(0, 'Account');
+        fieldStruct.ExtractField(0,0, 'Account');
         
         // call public void LoadFieldStructure(...)
         String vFieldAPIName = 'Name|Name|Name';
