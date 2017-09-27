@@ -431,7 +431,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
-            <value>IATA Cargo Agent,Import Agent,CASS Associate,Couriers</value>
+            <value>IATA Cargo Agent,Recipient,CASS Associate,Couriers</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>

@@ -476,6 +476,11 @@
             <picklistValues>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recipient</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Courier</fullName>
@@ -828,7 +833,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1146,7 +1151,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
