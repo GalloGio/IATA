@@ -96,7 +96,7 @@ private class ams2gdp_Batch_Account_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Account(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Account(true, true));
 		Test.stopTest();
 	}
 
@@ -116,7 +116,7 @@ private class ams2gdp_Batch_Account_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Account2(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Account2(false, false));
 		Test.stopTest();
 	}
 
@@ -137,7 +137,7 @@ private class ams2gdp_Batch_Account_Test
 		) Batch_Name__c; 
 
 		Test.startTest(); 
-			ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false);
+			ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(true,false);
 				batch.throwException = true; 
  			Database.executeBatch(batch);
 		Test.stopTest();
@@ -150,7 +150,7 @@ private class ams2gdp_Batch_Account_Test
 		insert new_account; 
 
 		Test.startTest(); 
-			ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false);
+			ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false, false);
 				batch.throwException = true; 
  			Database.executeBatch(batch);
 		Test.stopTest();
@@ -165,7 +165,7 @@ private class ams2gdp_Batch_Account_Test
 			setting.Location_Classes__c = 'D';
 			insert setting;
 			Test.startTest(); 
-				ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false);
+				ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false, true);
 					batch.throwException = true; 
 				Database.executeBatch(batch);
 			Test.stopTest();
