@@ -636,13 +636,18 @@ public class AMS_ChangeCodesHelper {
         String fopString = isNewGen ? '' : 'Not Applicable';
 
         String authRelabel;
+        List<String> orderedFOPs = new List<String>();
 
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
             for(Agency_Authorization__c fop : fOPs) {
                 authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
-                //fopString += authRelabel + ' - ' + fop.Status__c + ';';
-                fopString += authRelabel + ' - ';
-
+                orderedFOPs.add(authRelabel);
+            }
+            
+            orderedFOPs.sort();
+            
+            for(String fop: orderedFOPs){
+                fopString += fop + ' - ';
             }
 
             fopString = fopString.removeEnd(' - ');
