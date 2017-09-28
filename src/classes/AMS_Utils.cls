@@ -150,6 +150,8 @@ public without sharing class AMS_Utils {
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+    public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
+                                                                                    ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
