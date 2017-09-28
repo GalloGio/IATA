@@ -7,11 +7,11 @@
 
 
 @media (max-width: 1200px) {
-    .THIS .uiMenuItem {
-        font-size: 200%;
-    }
 
-    .THIS .slds-button {
+    .THIS button {
         display: block !important;
+    }
+    .THIS .slds-button +  .slds-button {
+        margin-left: 0 !important;
     }
 }

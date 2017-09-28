@@ -13,7 +13,7 @@
 			<apex:outputPanel rendered="{! participant.title != null }">
 			{!participant.title}
 				<apex:outputPanel rendered="{! participant.Representing != null }">
-					<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" title="This participant represents the account on that specific group."/>
+					<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
 				</apex:outputPanel>
 			</apex:outputPanel>
 			</apex:column>

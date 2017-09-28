@@ -3,6 +3,11 @@
   margin-top: 1em;
 }
 
+.THIS td {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+}
+
 .THIS .blue-icon {
     display: inline;
     margin-left: 1em;

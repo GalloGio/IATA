@@ -1,5 +1,6 @@
 <aura:component controller="AMP_Groups_ParticipationController">
     <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="reportId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="ParticipantWrappers" type="Object" access="private"/>
 
@@ -19,6 +20,20 @@
                     <span class="slds-text-heading--small">Industry Groups Participation</span>
                 </div>
             </div>
+            &nbsp;&nbsp;
+            <button class="slds-button slds-button--neutral slds-col--bump-left" >
+                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;excel=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+                    Print
+                </a>
+            </button>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <button class="slds-button slds-button--neutral slds-col--bump-left" >
+                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+                    Export Details
+                </a>
+            </button>
+            &nbsp;&nbsp;
         </div>
 
         <div class="slds-card__body">
@@ -74,7 +89,7 @@
                 <div class="slds-media__figure blue-icon">
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
                 </div>
-                 = This participant represents the account on that specific group.
+                This participant represents the account on that specific group.
             </aura:if>
         </div>
 

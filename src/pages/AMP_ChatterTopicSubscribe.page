@@ -26,7 +26,8 @@ Please select the topic(s) that you would like to follow:
 	<apex:commandButton value="Unsubscribe" action="{!unsubscribe}" rerender="" />
 	</apex:form>
 	<apex:outputPanel id="feeditems" rendered="{!showPreview}">
-	<apex:repeat value="{!lsTopicFeedItems}" var="tfi">
+	<apex:outputText escape="false" value="{!preview}" />
+	<!-- <apex:repeat value="{!lsTopicFeedItems}" var="tfi">
 		<apex:outputPanel rendered="{!tfi.active}">
 			<div class="topicHeader"><h1>{!tfi.topic}</h1></div>
 			<apex:repeat value="{!tfi.lsFeedItems}" var="fi">
@@ -63,7 +64,7 @@ Please select the topic(s) that you would like to follow:
 			<hr />
 			</apex:repeat>
 		</apex:outputPanel>
-	</apex:repeat>
+	</apex:repeat> -->
 	</apex:outputPanel>
 	<style>
 		div.topicHeader {display: block; background-color: #eee; width: 50%; height: 4em;}

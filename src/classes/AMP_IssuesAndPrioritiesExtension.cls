@@ -179,6 +179,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
             Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
             issue.RecordTypeId = objectiveRecordTypeId;
         }
+        System.debug(issue);
         upsert issue;
         return issue;
     }

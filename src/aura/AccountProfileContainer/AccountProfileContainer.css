@@ -1,15 +1,30 @@
 .THIS .slds-tabs--default__item{
     margin-left: 0 !important;
 }
+
 @media (max-width: 1200px) {
-.THIS .slds-tabs--default__link{
-    padding: 0 0.7rem !important;
-    word-break: break-all !important;
-    height: auto !important;
-    line-height: 2em !important;
-    white-space: normal !important;
+    .THIS .slds-tabs--default__item{
+    }
+
+    .THIS .slds-tabs--default__link{
+        height: auto !important;
+        white-space: normal !important;
+        line-height: 1.4em !important;
+        padding: 0 0.3rem !important;
+        text-overflow: clip !important;
+    }
 }
+
+@media (min-width: 48em) {
+    .THIS .slds-tabs--default__item {
+        /* margin-left: 1.5rem; */
+        margin-left: 0.3em !important;
+        /*max-width: 12em;*/
+        min-width: 8em;
+        /* margin-right: 0.3em !important; */
+    }
 }
+
 .THIS .tab-link {
     cursor: pointer;
 }
