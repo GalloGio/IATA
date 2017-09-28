@@ -10,7 +10,7 @@ public without sharing class OneIdForgotPasswordController {
         Boolean success;
         
         try {
-            if(!Site.isValidUsername(username.trim())) {
+            if(!Site.isValidUsername(username) {
                 return Label.Site.invalid_email;
             }
             
