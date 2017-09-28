@@ -593,7 +593,7 @@ public with sharing class IECOrder_Svc {
             doProductSwap(items, listProductId);
 
             //-- Get product informations 
-            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false);
+            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false, null);
             Map<String, EComProduct_DTO> ecomProductById = new Map<String, EComProduct_DTO>();
 
             System.debug('#ecomProducts: ' + ecomProducts.size());
@@ -813,7 +813,7 @@ public with sharing class IECOrder_Svc {
             for(String pCode : productByCode.keySet())
                 listProductId.add(productByCode.get(pCode).Id);
 
-            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false);
+            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false, null);
             Map<Id, EComProduct_DTO> ecomProductById = new Map<Id, EComProduct_DTO>();
             Map<String, EComProduct_DTO> ecomProductByCode = new Map<String, EComProduct_DTO>();
 

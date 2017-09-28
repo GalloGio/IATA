@@ -95,6 +95,7 @@ private class IEC_ShoppingCartControllerTest
 		List<OrderItem> lstOrderItem = new List<OrderItem>();
 		for (PricebookEntry pbe : [select Id from PricebookEntry where Product2Id in :lstProductId])
 			lstOrderItem.add(new OrderItem(OrderId=oOrder.Id, PriceBookEntryId=pbe.Id, Quantity=1, UnitPrice=15, Charge_Shipping__c = true, ServiceDate=Date.Today()));
+
 		insert lstOrderItem;
 
 		System.assert(lstProduct.size() == lstOrderItem.size(), 'Created ' + lstOrderItem.size() + ' order items  instead of ' + lstProduct.size());
@@ -224,8 +225,8 @@ private class IEC_ShoppingCartControllerTest
 
 		IEC_ShoppingCartController ctrl;
 
-		oOrder.Type = 'Quote';
-		update oOrder;
+		//oOrder.Type = 'Quote';
+		//update oOrder;
 
 		//*** have a request order and add product already existed
 
@@ -242,6 +243,7 @@ private class IEC_ShoppingCartControllerTest
 				//*** remove product
 				ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
 				ctrl.removeProduct();
+
 				ctrl.onLoadAction();
 
 				system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1, got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);

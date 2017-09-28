@@ -97,19 +97,16 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			iColWidth = 100;
 
 			String searchCond = 'SAP_Material_Number__c=\''+productNumber+'\'';
-			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true);
+			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true, null);
 
 			if(ecomProducts.size() > 0)
 			{
 				//Parent found 
 				ecomProduct = ecomProducts[0];
 
-				
-
-
 				//Query sub-products 
 				String subCond = 'IEC_Parent_Product__c=\''+ecomProduct.ProductId+'\'';
-				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false);
+				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false, null);
 
 				//Query sub-product's RatePlanInfo
 				Set<Id> productRatePlanInfoIds = new Set<Id>(); 
