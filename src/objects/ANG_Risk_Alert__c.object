@@ -56,19 +56,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>ANG_RHC_Information__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>The RHC infomation record this alert is related to.</description>
-        <externalId>false</externalId>
-        <label>RHC Information</label>
-        <referenceTo>ANG_RHC_Information__c</referenceTo>
-        <relationshipLabel>Risk Alerts</relationshipLabel>
-        <relationshipName>Risk_Alerts</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>ANG_Account__c</fullName>
         <description>The master account this alert is related to</description>
         <externalId>false</externalId>
@@ -120,6 +107,19 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>ANG_RHC_Information__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The RHC infomation record this alert is related to.</description>
+        <externalId>false</externalId>
+        <label>RHC Information</label>
+        <referenceTo>ANG_RHC_Information__c</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ANG_RME_Last_Update__c</fullName>
         <description>The last date time when the latest information came from the external system</description>
         <externalId>false</externalId>
@@ -133,11 +133,11 @@
         <description>Holds the Threshold that was met with this alert</description>
         <externalId>false</externalId>
         <label>Threshold Level</label>
-        <precision>18</precision>
+        <length>10</length>
         <required>false</required>
-        <scale>5</scale>
         <trackTrending>false</trackTrending>
-        <type>Percent</type>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Risk Alert</label>
     <nameField>
