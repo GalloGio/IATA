@@ -864,7 +864,7 @@ public class ams2gdp_BusinessLogic
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
 				, Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c 
 				, Territory_IATA_Numeric_Country_Code__c = territory.Appointment__r.Account__r.state_numeric_code__c
-				, Territory_Country_Name__c = territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Territory_Country_Name__c = (territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Territory_State_Abbreviation__c = territory.ISO_State__r.ISO_Code__c
 				, Territory_Description__c = (String.isNotBlank(territory.Comments__c))? territory.Comments__c.left(40):null
 			));
