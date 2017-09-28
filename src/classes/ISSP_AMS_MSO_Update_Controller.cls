@@ -205,17 +205,21 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 if (ISSP_CS__c.getValues('No Notification Email Contact Id') != null && ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c != null)
                     noEmailContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
 
+                // avoid case subject change
+                AMS_OscarMigrationFromCase.changeSubject = false;
+
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name;
+                oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'Corrections';
                 oscarCase.Origin = 'Portal';
                 oscarCase.Type_of_customer__c = 'IATA Travel Agent';
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';
+                oscarCase.IATAcode__c = msoAccount.IATACode__c;
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
@@ -266,17 +270,21 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 if (ISSP_CS__c.getValues('No Notification Email Contact Id') != null && ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c != null)
                     noEmailContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
 
+                // avoid case subject change
+                AMS_OscarMigrationFromCase.changeSubject = false;
+
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');
-                oscarCase.Subject = 'CLO - Closure - ' + currentUserContact.Account.Name;
+                oscarCase.Subject = 'CLO - Closure - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'CLO - Closure';
                 oscarCase.Origin = 'Portal';
                 oscarCase.Type_of_customer__c = 'IATA Travel Agent';
                 oscarCase.OSCAR__c = oscar.Id;
-                oscarCase.Status = 'Draft';
+                oscarCase.Status = 'Draft';                
+                oscarCase.IATAcode__c = msoAccount.IATACode__c;
                 insert oscarCase;
 
                 // AUTOMATICALLY APPROVE & TERMINATE
@@ -288,6 +296,10 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscar.STEP31__c = AMS_Utils.PASSED;
                 update oscar;
 
+                oscarCase.ContactId = currentUser.ContactId;
+                update oscarCase;
+
+                sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false);
 
                 closeOscar(oscar.Id, oscarCase.Id, ACTION_TERMINATION);
 
@@ -301,9 +313,14 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference submitAndApproveCase() {
         try {
+            // avoid case subject change
+            AMS_OscarMigrationFromCase.changeSubject = false;
+
             oscar.AMS_Correction_change_code__c = 'COR';
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
+
+            sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, true);
 
             closeOscar(oscar.Id, oscarCase.Id, ACTION_CORRECTION);
 
@@ -319,6 +336,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
     public PageReference cancelRequest() {
+        // avoid case subject change
+        AMS_OscarMigrationFromCase.changeSubject = false;
+
         oscar.Status__c = 'Closed_Withdrawn';
         update oscar;
 
@@ -337,30 +357,47 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     @future
     public static void closeOscar(Id oscarId, Id caseId, String actionType) {
         try {
-            if (actionType == ACTION_TERMINATION) {
-                // Success comment, published so that the contact receives the email notification
-                CaseComment successComment = new CaseComment();
-                successComment.ParentId = caseId;
-                successComment.isPublished = true;
-                successComment.CommentBody = '\n\rThe MSO has been successfully terminated.';
-                insert successComment;
-
-            } else if (actionType == ACTION_CORRECTION) {
-                // Success comment, published so that the contact receives the email notification
-                CaseComment successComment = new CaseComment();
-                successComment.ParentId = caseId;
-                successComment.isPublished = true;
-                successComment.CommentBody = '\n\rThe correction has been successfully applied to the MSO.';
-                insert successComment;
-            }
+            // avoid case subject change
+            AMS_OscarMigrationFromCase.changeSubject = false;
 
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
-            //update oscar;
-            
             oscar.Status__c = 'Closed';
             update oscar;
+
         } catch (DmlException ex) {
             system.debug('Error closing the OSCAR: ' + ex.getMessage());
+        }
+    }
+
+
+    public void sendConfirmationEmail(Id caseId, Id contactId, Boolean isCorrection) {
+        String emailTemplateName = isCorrection ? 'IDFS_Case confirmation - MSO Correction self-service' : 'IDFS_Case confirmation - MSO Termination self-service';
+
+        SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+
+        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+        List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
+
+        if (ets.isEmpty()) return;
+
+        EmailTemplate et = ets[0];
+
+        OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+        
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setTemplateID(et.Id);
+        if ( owea.size() > 0 ) {
+            mail.setOrgWideEmailAddressId(owea[0].Id);
+        }
+        
+        mail.setTargetObjectId(contactId);
+        mail.setWhatId(caseId);
+        mail.setSaveAsActivity(true);
+
+        emails.add(mail);
+        if (!Test.IsRunningTest()) {
+            //SYSTEM.DEBUG('Sending confirmation email');
+            Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
         }
     }
 

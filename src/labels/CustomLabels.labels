@@ -9472,7 +9472,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
-        <value>This will generate a voluntary relinquishment of the selected MSO account.</value>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
@@ -9480,6 +9480,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
         <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Thank_You</fullName>
@@ -9507,7 +9514,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
-        <value>The requested changes have been successfully applied to the MSO.</value>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>

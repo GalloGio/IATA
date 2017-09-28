@@ -314,7 +314,7 @@
 	                        <apex:pageMessages />
 
 	                        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
-		                        {!$Label.ISSP_AMS_MSO_Termination_Confirmation_Text}
+		                        {!$Label.ISSP_AMS_MSO_Termination_Confirmation_Text}: &nbsp; {!msoAccount.IATACode__c}.
 		                        <br/><br/>
 		                        {!$Label.ISSP_SureToContinue}
 	                        </div>
@@ -357,7 +357,7 @@
                                 <br/> <br/> 
                                 {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
                                 <br/><br/>
-                                {!$Label.ISSP_AMS_MSO_Update_Request_Successfull}
+                                {!$Label.ISSP_AMS_MSO_Update_Request_Successfull}: &nbsp; {!msoAccount.IATACode__c}.
                             </apex:outputPanel>
 
 				        </div>
@@ -376,7 +376,7 @@
                                 <br/> <br/> 
                                 {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
                                 <br/><br/>
-                                {!$Label.ISSP_AMS_MSO_Update_Request_Successfull}
+                                {!$Label.ISSP_AMS_MSO_Termination_Request_Successfull}: &nbsp; {!msoAccount.IATACode__c}.
                             </apex:outputPanel>
 
 				        </div>
