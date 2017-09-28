@@ -1,6 +1,12 @@
 public class AMS_OSCAR_ProcessViewerController {
     
-    public AMS_OSCAR__c oscar {get;set;}
+    public AMS_OSCAR__c oscar { 
+        get{ 
+            if(this.oscar == null)
+                return new AMS_OSCAR__c();
+            else return this.oscar;
+        }
+        set;}
 
     public Case oscarCase{get;set;}
 
@@ -20,6 +26,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean showRequiredOverlay{
         get{
+            if(this.oscar.Account__c == null)
+                return false;
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
                 return (
