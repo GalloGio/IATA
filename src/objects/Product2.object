@@ -2165,6 +2165,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Lost Found Property Chart</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2242,6 +2246,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Security Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEMS Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12925,6 +12933,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lost Found Property Chart</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -12998,6 +13010,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEMS Manual</fullName>
                 <default>false</default>
             </values>
             <values>
