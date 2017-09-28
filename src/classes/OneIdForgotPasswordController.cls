@@ -6,7 +6,7 @@ public without sharing class OneIdForgotPasswordController {
     @AuraEnabled
     public static String forgotPassword(String username, String checkEmailUrl) {
         System.debug('basto1p -> forgotPassword username='+username);
-        username = username.trim();
+
         Boolean success;
         
         try {
