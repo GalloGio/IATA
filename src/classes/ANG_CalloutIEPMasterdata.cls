@@ -69,6 +69,10 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		log.Method__c = action;
 		log.Web_Service__c = String.valueOf(req);
 
+		try{ 
+		  log.Response__c = res.getBody(); 
+		}catch(exception e){}
+
 		if(!(res.getStatusCode() > ANG_IEP_CalloutHelper.STATUSOKLOWER   && res.getStatusCode() < ANG_IEP_CalloutHelper.STATUSOKHIGHER )){
 			System.debug('ANG_CalloutIEPMasterdata: Payload could not be sent with success.');
 			//throw new AMS_ApplicationException('ANG_CalloutIEPMasterdata: The masterdata could not be sent to IEP. Status:' + res.getStatusCode() + ' - Reason:'+ res.getStatus());
