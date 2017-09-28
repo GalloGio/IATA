@@ -225,7 +225,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                   
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
                 }else if((oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
-                    
+
                     if(!agencyOperations.isEmpty()){                     
                         for(AMS_Operation__c opCode: operationCodes) {
                             //Make sure attributes are related with the current account
@@ -253,8 +253,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean isAgencyChanges{
         get{
-            //FM 10-03-2017 - Added Correction, since correction will act like the change process
-            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES || oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES  || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
         }
         private set;

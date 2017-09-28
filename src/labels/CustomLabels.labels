@@ -679,6 +679,14 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>ANG_AE_separate_Legal_Entity</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_AE_separate_Legal_Entity</shortDescription>
+        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
+    </labels>
+    <labels>
         <fullName>ANG_Conversion_Tool_Error_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -882,7 +890,7 @@
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
         <value>Return to comparison of accreditation type</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -7585,6 +7593,22 @@ IFG Customer Services</value>
         <value>New Associate Entity - Cashless</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
+        <value>New Associate Entity - Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
+        <value>New Associate Entity - Cashless</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7612,13 +7636,6 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Branch Office address details</shortDescription>
         <value>Branch Office address details:</value>
-    </labels>
-     <labels>
-        <fullName>ISSP_ANG_Branch_Office_address_details</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Branch Office address details</shortDescription>
-        <value>Associate Entity address details:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Branch_Offices</fullName>
@@ -9508,62 +9525,6 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS LABEL Listed Shares</shortDescription>
         <value>* Is your organization a legal entity whose shares are listed on a security exchange or are regularly traded in an over-the-counter market?</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
-        <value>1. IATA Accredited Head Entity Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_Step1_HE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Step1_HE</shortDescription>
-        <value>&lt;strong&gt;Associate Entity &lt;/strong&gt; of the following IATA Approved agent:</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
-        <value> IATA Passenger Sales - Standard with Cash</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_OPTION_PAX_HE_lite</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
-        <value> IATA Passenger Sales - Standard with no Cash</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</shortDescription>
-        <value>If your travel agency is owned by an organization other than the Head Entity mentioned above, answer the following with respect to the parent organization:</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_Assoc_Entity</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Assoc_Entity</shortDescription>
-        <value> New Associate Entity</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>        
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</shortDescription>
-        <value>SECTION 1 - IATA Accredited Head Entity Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_StepFinal_AE_Thanks</fullName>        
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
-        <value> Thank you for submitting your Accreditation application for your Associate Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LS_Association</fullName>
@@ -12107,14 +12068,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Choose the language you would like for the application form display.</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Step1_Legal_Display_Help</fullName>
-        <categories>ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Step1  Lang Display Help</shortDescription>
-        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step1_Operation_Type</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13088,14 +13041,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 IATAN Travel Agent</shortDescription>
         <value>* Is your agency an IATAN (International Airlines Travel Agent Network) Accredited Agent?</value>
-    </labels>
-    <labels>
-        <fullName>ANG_AE_separate_Legal_Entity</fullName>
-        <categories>ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_AE_separate_Legal_Entity</shortDescription>
-        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar</fullName>
@@ -14106,12 +14051,33 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Assoc_Entity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Assoc_Entity</shortDescription>
+        <value>New Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Branch_Office_address_details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Branch Office address details</shortDescription>
+        <value>Associate Entity address details:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Country_Req</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Country_Req</shortDescription>
         <value>View Country Requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
+        <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
@@ -14121,6 +14087,27 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Passenger Sales - Associate Entity</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OPTION_PAX_HE_lite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
+        <value>IATA Passenger Sales - Standard with no Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
+        <value>IATA Passenger Sales - Standard with Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</shortDescription>
+        <value>SECTION 1 - IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14128,11 +14115,40 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>SECTION 2 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Step1_HE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step1_HE</shortDescription>
+        <value>&lt;strong&gt;Associate Entity &lt;/strong&gt; of the following IATA Approved agent:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_Legal_Display_Help</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1  Lang Display Help</shortDescription>
+        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Step1_Office_FullAddress</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Step1_Office_FullAddress</shortDescription>
         <value>Full Address of the Head Entity for which Application for Approval is made</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</shortDescription>
+        <value>If your travel agency is owned by an organization other than the Head Entity mentioned above, answer the following with respect to the parent organization:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_StepFinal_AE_Thanks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your Associate Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AN_Step1_AE_Full_Address</fullName>
@@ -19582,6 +19598,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <shortDescription>ISSP_Registration_UserExist</shortDescription>
         <value>This Email is already registered in customer portal. 
 If you are an E-Commerce user, please use your E-Commerce credentials. 
+If you are an Identity Portal user, please use your Identity Portal credentials.
 If you want to reset your password, go back to login screen and use &quot;forgot your password function&quot;.</value>
     </labels>
     <labels>
@@ -22717,6 +22734,17 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Please enter your Business Phone Number</value>
     </labels>
     <labels>
+        <fullName>OneId_Registration_UserExist</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Registration_UserExist</shortDescription>
+        <value>This Email is already registered with us.
+If you are an E-Commerce user, please use your E-Commerce credentials.
+If you are a Customer Portal user, please use your Customer Portal credentials.
+If you want to reset your password, go back to login screen and use &quot;forgot your password&quot; function.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Request_Access</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -22818,6 +22846,15 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId URL javaScript</shortDescription>
         <value>https://identity.iata.org</value>
+    </labels>
+    <labels>
+        <fullName>OneId_User_CreatedFromContact</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_User_CreatedFromContact</shortDescription>
+        <value>Thank you for your registration.
+Please check your mailbox to finalize the registration process.</value>
     </labels>
     <labels>
         <fullName>OneId_Username</fullName>

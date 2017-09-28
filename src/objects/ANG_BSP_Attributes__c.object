@@ -52,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -206,8 +207,8 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>UniqueKey__c</fullName>
-        <description>Unique identifier on the object to ensure no duplicates.</description>
         <caseSensitive>false</caseSensitive>
+        <description>Unique identifier on the object to ensure no duplicates.</description>
         <externalId>true</externalId>
         <label>UniqueKey</label>
         <length>100</length>

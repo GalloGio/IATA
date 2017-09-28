@@ -109,6 +109,7 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <externalId>false</externalId>
         <inlineHelpText>If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another.</inlineHelpText>
         <label>Cannot move contact between Agencies</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

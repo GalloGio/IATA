@@ -2734,15 +2734,14 @@
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
                 false,
                     IF(
-              ISPICKVAL(Location_Type__c ,'HE'),
+              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
                 ANG_HE_CashCondition__c,  
-                Top_parent__r.ANG_HE_CashCondition__c
+                Top_Parent__r.ANG_HE_CashCondition__c
               )
-            )
-        </formula>
+            )</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
@@ -2870,9 +2869,9 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Limit_Cash_Condition__c</fullName>        
-        <description>Triggers Cash Condition throught risk Status assessment</description>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Triggers Cash Condition throught risk Status assessment</description>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
         <trackFeedHistory>false</trackFeedHistory>
@@ -2883,12 +2882,12 @@
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-        ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
-            'Not Applicable',
+        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+            &apos;Not Applicable&apos;,
                 IF(
-          ISPICKVAL(Location_Type__c ,'HE'),
+          ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
             TEXT(ANG_HE_RiskHistoryAssessment__c),  
-            TEXT(Top_parent__r.ANG_HE_RiskHistoryAssessment__c)
+            TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
           )
         )</formula>
         <label>Risk History Assessment</label>
@@ -2901,12 +2900,12 @@
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
-                'Not Applicable',
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+                &apos;Not Applicable&apos;,
                     IF(
-              ISPICKVAL(Location_Type__c ,'HE'),
+              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
                 TEXT(ANG_HE_RiskStatus__c),  
-                TEXT(Top_parent__r.ANG_HE_RiskStatus__c)
+                TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
               )
             )</formula>
         <label>Risk Status</label>
@@ -6462,7 +6461,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>DDS_Status_Parent__c</fullName>
         <externalId>false</externalId>
-        <formula>TEXT(Parent.DDS_Status__c)</formula>
+        <formula>IF(isblank(ParentId), text(DDS_Status__c), TEXT(Parent.DDS_Status__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>EU Agent Consent Status (Parent)</label>
         <required>false</required>

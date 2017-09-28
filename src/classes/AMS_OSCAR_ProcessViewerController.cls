@@ -98,6 +98,12 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public boolean isNewgenRT{
+        get{
+            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
+        }
+    }
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
