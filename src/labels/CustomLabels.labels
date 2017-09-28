@@ -7593,22 +7593,6 @@ IFG Customer Services</value>
         <value>New Associate Entity - Cashless</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
-        <value>New Associate Entity - Cash</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
-        <value>New Associate Entity - Cashless</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
