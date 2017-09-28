@@ -857,7 +857,7 @@ public class ams2gdp_BusinessLogic
 				, IATA_Code__c = (territory.Appointment__r.Account__r.IATACode__c != null)? territory.Appointment__r.Account__r.IATACode__c.left(7) : null
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
-				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Location_Country_Name__c = (territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Airline_Code__c = code
 				, Airline_Name__c = name
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
