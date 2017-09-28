@@ -316,6 +316,7 @@
         <fullName>KAVItoda</fullName>
         <columns>NAME</columns>
         <columns>Error_Message__c</columns>
+        <columns>User__c</columns>
         <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -326,7 +327,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>9/14/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>

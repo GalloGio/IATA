@@ -89,7 +89,8 @@
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
 OR(
   ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;)
+  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+  ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)  
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -412,6 +413,15 @@ OR(
         <formula>Contact.Account.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Account Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.RecordType.DeveloperName</formula>
+        <label>Contact Account Record Type</label>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -1598,6 +1608,15 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <trackFeedHistory>false</trackFeedHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>dgai__active_user_settings__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>active user settings</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>isSISUser__c</fullName>

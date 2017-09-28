@@ -110,6 +110,22 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Miami</fullName>
+        <columns>Region__c</columns>
+        <columns>NAME</columns>
+        <columns>Date__c</columns>
+        <columns>Value__c</columns>
+        <columns>Closed_Cases__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <label>Miami</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Backlog history Name</label>
         <trackHistory>false</trackHistory>

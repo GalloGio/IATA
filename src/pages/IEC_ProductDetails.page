@@ -105,7 +105,7 @@
                                         <div class="table-container">
                                             <table class="data-table table-product-data">                                           
                                                 <!-- Regular Price if exist -->
-                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0) }">
+                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
                                                     <tr>
                                                         <th scope="row">{!$Label.regular_price}</th>
                                                         <td>
