@@ -89,7 +89,7 @@
                 <div class="slds-media__figure blue-icon">
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
                 </div>
-                 = This participant represents the account on that specific group.
+                This participant represents the account on that specific group.
             </aura:if>
         </div>
 

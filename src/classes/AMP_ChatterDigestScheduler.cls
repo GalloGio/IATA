@@ -1,7 +1,5 @@
 global class AMP_ChatterDigestScheduler implements Schedulable {
 	global void execute(SchedulableContext sc) {
-		//MyBatchClass b = new MyBatchClass();
-		//database.executebatch(b);
 		//-- SChedule next job execution
 		Datetime nextScheduleTime = system.now().addHours(24);
 		string month = string.valueof(nextScheduleTime.month());
@@ -11,7 +9,6 @@ global class AMP_ChatterDigestScheduler implements Schedulable {
 		string second = string.valueof(nextScheduleTime.second ());
 		string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
 		string jobName = 'AMP Chatter Email Digest ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
-
 
 		System.debug(jobName);
 		System.schedule(jobName, cronvalue , new AMP_ChatterDigestScheduler());

@@ -92,6 +92,7 @@
                     <button class="slds-button slds-button--neutral">
                         <a href="" onclick="{!c.backToSeach}">Back to Search</a>
                     </button>
+                    &nbsp;&nbsp;
                     <button class="slds-button slds-button--neutral">
                         <a href="{!'/' + v.account.Id}">Back to Classic View</a>
                     </button>

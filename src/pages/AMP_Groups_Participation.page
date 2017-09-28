@@ -45,7 +45,7 @@
 					<td class="dataCell" >
 						{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }
 						<apex:outputPanel rendered="{! pWrapper.participant.Representing__c != null }">
-							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" title="This participant represents the account on that specific group."/>
+							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="15px" title="This participant represents the account on that specific group."/>
 						</apex:outputPanel>
 					</td>
 

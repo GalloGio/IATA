@@ -4,8 +4,11 @@
 
 @media (max-width: 1200px) {
     .THIS .uiMenuItem {
-        font-size: 200%;
+        /*font-size: 200%;*/
+        /*line-height: 25px;*/
+        margin: 12pt;
     }
+
 
     .THIS button {
         display: block;

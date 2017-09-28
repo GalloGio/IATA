@@ -68,7 +68,6 @@
                 component.set("v.issues", issues);
 
                 if(isNewLine) {
-
                     var issuesBackup = component.get("v.issuesBackup");
                     issuesBackup.push(issue);
                     component.set("v.issuesBackup", issuesBackup);
