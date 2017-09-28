@@ -531,7 +531,7 @@ public without sharing class LightningRegistrationProcess{
         String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
         String template = 'Identity_Portal_New_User';
         string prefix = OneIdUtils.getSiteCompleteUrl();
-        String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
+        String link = 'https://identity.iata.org/s/IdentityFirstLogin?' + encodedPart;
         
         Map<String,String> emailWrap = new Map<String,String>();
         
