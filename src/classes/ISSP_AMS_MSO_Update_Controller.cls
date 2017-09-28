@@ -205,9 +205,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 if (ISSP_CS__c.getValues('No Notification Email Contact Id') != null && ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c != null)
                     noEmailContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
 
-                // avoid case subject change
-                AMS_OscarMigrationFromCase.changeSubject = false;
-
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
@@ -270,9 +267,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 if (ISSP_CS__c.getValues('No Notification Email Contact Id') != null && ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c != null)
                     noEmailContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
 
-                // avoid case subject change
-                AMS_OscarMigrationFromCase.changeSubject = false;
-
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
@@ -313,9 +307,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference submitAndApproveCase() {
         try {
-            // avoid case subject change
-            AMS_OscarMigrationFromCase.changeSubject = false;
-
             oscar.AMS_Correction_change_code__c = 'COR';
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
@@ -336,9 +327,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
     public PageReference cancelRequest() {
-        // avoid case subject change
-        AMS_OscarMigrationFromCase.changeSubject = false;
-
         oscar.Status__c = 'Closed_Withdrawn';
         update oscar;
 
@@ -357,9 +345,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     @future
     public static void closeOscar(Id oscarId, Id caseId, String actionType) {
         try {
-            // avoid case subject change
-            AMS_OscarMigrationFromCase.changeSubject = false;
-
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             oscar.Status__c = 'Closed';
             update oscar;

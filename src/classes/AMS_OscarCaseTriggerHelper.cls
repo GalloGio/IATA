@@ -446,7 +446,7 @@ public class AMS_OscarCaseTriggerHelper {
             if(c.reason1__c != null)
                 newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
-            if(newCaseSubject != null && c.Subject != newCaseSubject && AMS_OscarMigrationFromCase.changeSubject)
+            if(newCaseSubject != null && c.Subject != newCaseSubject && !c.Subject.startsWith(newCaseSubject) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
         }
     }
