@@ -44,16 +44,31 @@ public with sharing class ANG_ProgressBarHelper {
 									Map<String, String> objectsIds) {
 
 		if(objectsIds.containsKey(soqlObject)) {
+
+			Boolean flagNotinOk = valueOk.contains('<notin>');
+			if(flagNotinOk) {
+				valueOk = valueOk.replace('<notin>','');
+			}
+
+			Boolean flagNotinError = valueError.contains('<notin>');
+			if(flagNotinError) {
+				valueError = valueError.replace('<notin>','');
+			}
+
+			Set<String> okSet = new Set<String>(valueOk.split(';'));
+			Set<String> errorSet = new Set<String>(valueError.split(';'));
+
 			String soqlStr = 'Select ' + soqlField + ' From ' + soqlObject + ' Where id = \'' + objectsIds.get(soqlObject) + '\'';
 
 			List<sObject> sobjList = Database.query(soqlStr);
 
 			if(!sobjList.isEmpty()) {
 				SObject so = sobjList[0];
-				Object testValue = so.get(soqlField);
-				if(testValue == valueOk) {
+				String testValue = (String)so.get(soqlField);
+
+				if( (!flagNotinOk && okSet.contains(testValue)) || (flagNotinOk && !okSet.contains(testValue)) ) {
 					return DONE;
-				} else if(testValue == valueError) {
+				} else if( (!flagNotinError && errorSet.contains(testValue)) || (flagNotinError && !errorSet.contains(testValue)) ) {
 					return ERROR;
 				} else {
 					return NOT_DONE;
