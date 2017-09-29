@@ -66,7 +66,7 @@ public with sharing class AMP_CoreRelationshipExtension {
 						Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
 						Contact__r.Title, Representing__c
 				FROM Participant__c
-				WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId)
+				WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId15)
 				AND Local_Governance__r.Active__c = true
 				AND Local_Governance__r.Name IN :groupNames];
 			return lsParticipants;
