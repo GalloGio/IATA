@@ -342,6 +342,21 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     @future
     public static void closeOscar(Id oscarId, Id caseId, Id contactId, String actionType) {
         try {
+            if (actionType == ACTION_TERMINATION) {
+                CaseComment successComment = new CaseComment();
+                successComment.ParentId = caseId;
+                successComment.isPublished = true;
+                successComment.CommentBody = 'The MSO has been successfully terminated.';
+                insert successComment;
+
+            } else if (actionType == ACTION_CORRECTION) {
+                CaseComment successComment = new CaseComment();
+                successComment.ParentId = caseId;
+                successComment.isPublished = true;
+                successComment.CommentBody = 'The correction has been successfully applied to the MSO.';
+                insert successComment;
+            }
+
             Case oscarCase = new Case(Id = caseId, ContactId = contactId);
             update oscarCase;
 
