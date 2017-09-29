@@ -851,7 +851,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner_Text__c</columns>
+        <columns>Group_Owner__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -876,7 +876,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups_Pending_Approval</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner_Text__c</columns>
+        <columns>Group_Owner__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -1808,7 +1808,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     ISCHANGED(Group_Owner__c),
     ISCHANGED(Country__c),
     ISCHANGED(Cluster__c),
-    
+
     ISCHANGED(Name),
     ISCHANGED(Division__c),
     ISCHANGED(Abbreviation__c),
@@ -1858,7 +1858,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Deacitvate</masterLabel>
+        <masterLabel>Deactivate</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)}

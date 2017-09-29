@@ -16,7 +16,7 @@
             <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
             <apex:inputField value="{!LocalGovernance__c.Group_Owner_Text__c}" required="true" />
             <apex:inputField value="{!LocalGovernance__c.Active__c}"  />
-
+            
         </apex:pageBlockSection>
 
         <apex:pageBlockSection title="Terms of Reference"  id="torSection" >

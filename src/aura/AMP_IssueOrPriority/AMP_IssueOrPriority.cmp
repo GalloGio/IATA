@@ -1,6 +1,6 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
 
-    <aura:attribute name="issue" type="Objective__c"  default="{ 'sobjectType': 'Objective__c', 'Status__c' : 'Open'}" />
+    <aura:attribute name="issue" type="Objective__c" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedContact" type="Contact" default="{ 'sobjectType': 'Contact'}" />
     <aura:attribute name="index" type="Integer" />

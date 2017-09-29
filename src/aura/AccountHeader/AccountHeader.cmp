@@ -168,12 +168,12 @@
                     </dt>
                     <dd>
 
-                        <aura:if isTrue="{!v.account.Airline_Business_Model_Detail__c != undefined}">
+                        <!-- <aura:if isTrue="{!v.account.Airline_Business_Model_Detail__c != undefined}">
                             {!v.account.Airline_Business_Model_Detail__c}
                             <aura:set attribute="else">
                                 {!v.account.Airline_Model_Type__c}
                             </aura:set>
-                        </aura:if>
+                        </aura:if> -->
                     </dd>
                 </dl>
             </div>
