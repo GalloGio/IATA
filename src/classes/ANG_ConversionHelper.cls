@@ -46,6 +46,15 @@ global with sharing class ANG_ConversionHelper {
 		-9 => Label.ANG_Conversion_Tool_Error_9
     };
 
+    public static boolean isMigrationTool{
+		get{
+			if(isMigrationTool ==null) isMigrationTool=false;
+			return isMigrationTool;
+		}
+
+		Set;
+	}
+
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
             
         Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
@@ -417,6 +426,8 @@ global with sharing class ANG_ConversionHelper {
 	public static List<ANG_ConversionHelper.HierarchyStructure> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
 
 		System.debug('Preparing to convert:'+structures);
+
+		ANG_ConversionHelper.isMigrationTool=true;//skip agencyEventGenerator
 
 		Map<Id,Account> allAgenciesFinalMap = null;
 
