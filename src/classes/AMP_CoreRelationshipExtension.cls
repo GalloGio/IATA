@@ -59,14 +59,15 @@ public with sharing class AMP_CoreRelationshipExtension {
 		@AuraEnabled
 		public static List<Participant__c> getParticipants(Id accountId) {
 			List<String> groupNames = getGroupNames();
+			String accountId15 = String.valueOf(accountId).substring(0, 15);
 			List<Participant__c> lsParticipants = new List<Participant__c>();
 			lsParticipants =
 				[SELECT Id, Local_Governance__c, Local_Governance__r.Name,	Participant_Type__c,
 						Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
 						Contact__r.Title, Representing__c
 				FROM Participant__c
-				WHERE (Contact__r.AccountId = :accountId OR Representing__c = :accountId)
-				AND Local_Governance__r.Active__c = true 
+				WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId15)
+				AND Local_Governance__r.Active__c = true
 				AND Local_Governance__r.Name IN :groupNames];
 			return lsParticipants;
 		}

@@ -45,8 +45,8 @@ console.log(JSON.stringify(account));
 									Representing : participants[i].Representing__c
 								};
 								if(pWrapper.Representing !== undefined) {
-									   console.log('rep');
-									   component.set("v.representativesFound", true);
+								   console.log('rep');
+								   component.set("v.representativesFound", true);
 								}
 								ParticipantWrappers.push(pWrapper);
 							 }
