@@ -16,6 +16,7 @@ public class ANG_AgencyEventsGenerator{
 
 	public void run(){
         
+        if(ANG_ConversionHelper.isMigrationTool) return; //in case of migrating account, prevents following code to be run
         list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();
         for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getAll().values()){
             if(cm.Type__c== cmType) calloutmappingList.add(cm);
