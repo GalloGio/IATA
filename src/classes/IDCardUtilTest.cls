@@ -662,11 +662,12 @@ private class IDCardUtilTest {
     }
     
     TestMethod static void UpdateCaseToApproved_RejectedTest(){
+        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', AIMS_Area_Name__c = 'test', Enable_Minor_Changes_from_Portal__c = true,
                                     Local_language_Agency_details_required__c = true, ISO_Code__c = 'tq');
         insert country;
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
         Account acc= new Account(Name = 'AccountTest', IATACode__c = '12312312',IDCard_Key_Account__c = true,RecordTypeId = rtacc, BillingCountry= 'test');
         insert acc;
         IDCardUtil.generateTMPUIR(acc);
@@ -679,6 +680,7 @@ private class IDCardUtilTest {
         insert listc;
 
         IDCardTestData testd = new IDCardTestData();
+        testd.IDCards_IDCardApplications[3].RecordTypeId = massAppRT;
         listc[0].Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[3].id;
         insert testd.IDCards_IDCardApplications[3];
         update listc;
