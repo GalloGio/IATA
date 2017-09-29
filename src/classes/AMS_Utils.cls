@@ -1149,7 +1149,7 @@ public without sharing class AMS_Utils {
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
                 Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
-                (SELECT Id FROM RHC_Informations__r)
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 

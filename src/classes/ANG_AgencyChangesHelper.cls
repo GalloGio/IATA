@@ -138,14 +138,19 @@ public with sharing class ANG_AgencyChangesHelper {
 				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 					
+					Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = null;
+
 					if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
-						accountHierarchyRelationships = extractAllAccounts(AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}));
+
+						allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
+						accountHierarchyRelationships = extractAllAccounts(allRelationsOnHierarchy);
 						accountHierarchyRelationships.add(oscar.Account__c);
                 		isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
                         System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 					
-					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
+					changesContainer = processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected,allRelationsOnHierarchy);
 
 
 				}
@@ -256,8 +261,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		Set<Id> allAccountsInvolved = fetchAccountIdsToBeProcessed(oscar.Id);
 		allAccountsInvolved.add(oscar.Account__c);
         
-        System.debug('[ANG_AgencyChangesHelper] allAccountsInvolved are ' + allAccountsInvolved);
-        System.debug('[ANG_AgencyChangesHelper] accountHierarchyRelationships are ' + accountHierarchyRelationships);
+        System.debug('[ANG_AgencyChangesHelper.isAllHierarchySelected] allAccountsInvolved are ' + allAccountsInvolved);
+        System.debug('[ANG_AgencyChangesHelper.isAllHierarchySelected] accountHierarchyRelationships are ' + accountHierarchyRelationships);
 
 		return allAccountsInvolved.containsAll(accountHierarchyRelationships);
 
@@ -279,19 +284,66 @@ public with sharing class ANG_AgencyChangesHelper {
 	} 
 
 	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected) {
+		return processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected, null);
+	}
+
+	public static AChangeStructure processHierarchyChangesAux(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected, Map<Id, List<AMS_Agencies_relationhip__c>> allRelations) {
 		
         System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
         System.debug('[ANG_AgencyChangesHelper] - ChangesContainer is'+changesContainer);
+        System.debug('[ANG_AgencyChangesHelper] - isAllHierarchySelected is'+isAllHierarchySelected);
 
 		if (containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
-			changesContainer = applyChangeOfLocationType(oscar, changesContainer);
-		else if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c))
+			changesContainer = applyChangeOfLocationType(oscar, changesContainer,allRelations);
+		else if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
+		
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
+		
+			//For the Change Of Hierarchy (HE Included), we need to take care of the hidden accounts 
+			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
+			if(isAllHierarchySelected){
+				changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
+			}
+		
+		}
+
+		
 		return changesContainer;
 	}
 
-	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn){
+	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
+
+		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
+		
+		List<AMS_Agencies_relationhip__c> relToDelete = new List<AMS_Agencies_relationhip__c>();
+
+		for(List<AMS_Agencies_relationhip__c> rels: allRelations.values()){
+			for(AMS_Agencies_relationhip__c rel:rels){
+				
+				if(terminatedStatus.contains(rel.Child_Account__r.Status__c)){
+					
+					Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?  toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
+
+					childAccount.ParentId = null;
+					childAccount.Top_Parent__c = null;
+
+					toReturn.addAccount(childAccount);
+
+					relToDelete.add(rel);
+				}
+			
+			}
+		}
+
+		if(!relToDelete.isEmpty())
+			delete relToDelete;
+
+		return toReturn;
+
+	}
+
+	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
 
 		// 1) need to fetch all the relations on the hierarchy
 		// 2) need to fetch all the accounts involved in this "swap"
@@ -304,7 +356,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
 
-		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
+		if(accountHierarchyRelationships == null)
+			accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
 
 		for(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
 
@@ -730,6 +783,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
                    	Account acc = toReturn.accountsMap.get(accId) == null ? New Account(Id = accId) : toReturn.accountsMap.get(accId);
 
+
+                    if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.Is_PCI_compliant__c != acc.Is_PCI_compliant__c){
+                        acc.Is_PCI_compliant__c = oscarToProcess.Is_PCI_compliant__c;
+                    }
+                    
                     for(String accFieldApiName: accountFieldNewValue.keySet())
                     {
                         
@@ -1066,7 +1124,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1169,13 +1227,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
     public static Set<Id> extractAllAccounts(Map<Id, List<AMS_Agencies_relationhip__c>> relations){
 
+		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING,AMS_Utils.ACC_S3_NOTINOPERATION, ''};
+
     	Set<Id> toReturn = new Set<Id>();
 
     	for(List<AMS_Agencies_relationhip__c> relationsLst: relations.values())
     		for(AMS_Agencies_relationhip__c rel : relationsLst){
 
     			toReturn.add(rel.Parent_Account__c);
-    			toReturn.add(rel.Child_Account__c);
+    			
+    			if(!terminatedStatus.contains(rel.Child_Account__r.Status__c))
+    				toReturn.add(rel.Child_Account__c);
 
     	}
 

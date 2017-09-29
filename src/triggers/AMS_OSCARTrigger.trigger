@@ -919,7 +919,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 //using an already existing method to send email aler to user.
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
 
-                if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
@@ -1159,13 +1159,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         String statusForCC = 'Active';
 
         if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
-        	statusForCC = oscar.Is_PCI_compliant__c == 'Yes' ? 'Active' : 'Inactive';
+        	statusForCC = oscar.Is_PCI_compliant__c == 'Yes' ? 'Active' : 'Non-Active';
         else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
         	if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
         		statusForCC = 'Active';
         	else
-        		statusForCC = 'Inactive';
+        		statusForCC = 'Non-Active';
     	}
 
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusForCC, RecordTypeId = FormOfPaymentRT));
@@ -1182,9 +1182,27 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
         List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
+        
+        boolean isCCCreated = false;
+        
+        for(Agency_Authorization__c fop: parentFormsOfPayment){
+        	
+        	if(fop.ANG_FormOfPayment_ID__c == 'CC')
+        		isCCCreated = true;
 
-        for(Agency_Authorization__c fop: parentFormsOfPayment)
-            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+        	if(fop.ANG_FormOfPayment_ID__c == 'CC' && oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+    	        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = 'Non-Active', RecordTypeId = fop.RecordTypeId));
+            else
+	            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+		}
+
+		if(!isCCCreated && oscar.Process__c == AMS_Utils.NEWAE){
+
+			if(oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+    	        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
+            else
+	            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		}
 
         insert authorizations;
     }
