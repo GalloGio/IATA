@@ -82473,14 +82473,27 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
     <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(
-OR(
-RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
-),
-TEXT(Location_Type__c) = &apos;AE&apos;,
-TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;
+        <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
+
+&quot;Terminated&quot;, &quot;Not accreditated&quot;,&quot;New application pending&quot; and &quot;Not in Operation&quot;, NULL</description>
+        <errorConditionFormula>OR(
+AND( 
+OR( 
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
+), 
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
+NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
+ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
+ISPICKVAL(Status__c, &quot;New application pending&quot;), 
+ISPICKVAL(Status__c, &quot;Not accreditated&quot;), 
+ISPICKVAL(Status__c, &quot;&quot;) 
+)) 
+),AND(
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
 )</errorConditionFormula>
-        <errorMessage>An Associate Entity must have a parent account with location type HE</errorMessage>
+        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
