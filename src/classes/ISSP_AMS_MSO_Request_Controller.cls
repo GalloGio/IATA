@@ -219,7 +219,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'New MSO - ' + currentUserContact.Account.Name;
+                oscarCase.Subject = 'GSA / MSO / Handling Agent - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'GSA / MSO / Handling Agent';
                 oscarCase.Origin = 'Portal';
