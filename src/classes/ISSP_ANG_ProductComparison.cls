@@ -23,7 +23,13 @@ public with sharing class ISSP_ANG_ProductComparison {
     	Map<String, String> mapProductLabels = new Map<String, String>();
     	Map<String, String> mapTooltipLabels = new Map<String, String>();
 
-    	list<Pricebook2> lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models'];
+		list<Pricebook2> lsPB;
+		if(!Test.isRunningTest()) {
+    		lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models'];
+		} else {
+			lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models test'];
+		}
+
     	if(!lsPB.isEmpty())	thePricebook = lsPB.get(0);
     	
     	allFeaturesPerProduct = new map<string, list<ProdFeature>>();
