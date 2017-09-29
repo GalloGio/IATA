@@ -41,13 +41,8 @@ console.log(JSON.stringify(account));
 									Salutation : participants[i].Contact__r.Salutation,
 									FirstName : participants[i].Contact__r.FirstName,
 									LastName : participants[i].Contact__r.LastName,
-									Title : participants[i].Contact__r.Title,
-									Representing : participants[i].Representing__c
+									Title : participants[i].Contact__r.Title
 								};
-								if(pWrapper.Representing !== undefined) {
-									   console.log('rep');
-									   component.set("v.representativesFound", true);
-								}
 								ParticipantWrappers.push(pWrapper);
 							 }
 							//  console.log(ParticipantWrappers[j].groupName);

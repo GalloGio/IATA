@@ -735,7 +735,7 @@
     <fields>
         <fullName>Restricted_of_Participants__c</fullName>
         <externalId>false</externalId>
-        <label>Restricted Number of Participants</label>
+        <label>Restricted # of Participants</label>
         <picklist>
             <picklistValues>
                 <fullName>Yes</fullName>
@@ -778,52 +778,171 @@ Record Type + Group Type + ISO_Country_Name</description>
     </fields>
     <label>Industry Group</label>
     <listViews>
-        <fullName>Inactive_Local_Groups</fullName>
+        <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Cargo_Passenger__c</columns>
-        <columns>Local_Governance_type__c</columns>
+        <columns>IATA_Office__c</columns>
         <columns>Region__c</columns>
-        <columns>Cluster__c</columns>
-        <columns>Country__c</columns>
-        <columns>Group_Owner__c</columns>
+        <columns>Resolution__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
-            <value>LocalGovernance__c.Local_Groups</value>
         </filters>
-        <filters>
-            <field>Active__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>All Inactive Local Groups</label>
+        <label>All Local Governance</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Inactive_Reg_Div_Groups</fullName>
+        <fullName>AllAmericasAPJC</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner_Text__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
+        <columns>IATA_Office__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Resolution__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>RECORDTYPE</field>
+            <field>Region__c</field>
             <operation>equals</operation>
-            <value>LocalGovernance__c.Reg_Div_Groups</value>
+            <value>Americas</value>
         </filters>
         <filters>
             <field>NAME</field>
-            <operation>notEqual</operation>
-            <value>Annual General Meeting of IATA Members,Director General</value>
+            <operation>contains</operation>
+            <value>APJC</value>
+        </filters>
+        <label>All Americas APJC</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasHUB</group>
+            <role>CountryManagerArgentina</role>
+            <role>CountryManagerBrazil</role>
+            <role>CountryManagerCanada</role>
+            <role>CountryManagerColombia</role>
+            <role>CountryManagerDominicanReplublic</role>
+            <role>CountryManagerPeru</role>
+            <role>CountryManagerTrinidadTobago</role>
+            <roleAndSubordinatesInternal>CountryManagerChile</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllAmericasLCAG</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Office__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Resolution__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
         </filters>
         <filters>
-            <field>Active__c</field>
-            <operation>equals</operation>
-            <value>0</value>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>LCAG</value>
         </filters>
-        <label>All Inactive Reg / Div Groups</label>
+        <label>All Americas LCAG</label>
         <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasHUB</group>
+            <role>CountryManagerArgentina</role>
+            <role>CountryManagerBrazil</role>
+            <role>CountryManagerCanada</role>
+            <role>CountryManagerChile</role>
+            <role>CountryManagerColombia</role>
+            <role>CountryManagerDominicanReplublic</role>
+            <role>CountryManagerPeru</role>
+            <role>CountryManagerTrinidadTobago</role>
+            <roleAndSubordinatesInternal>StaffChile</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllAmericasOthers</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Office__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Resolution__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>LCAG,APJC</value>
+        </filters>
+        <label>All Americas Others</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasHUB</group>
+            <role>CountryManagerChile</role>
+            <roleAndSubordinatesInternal>StaffChile</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllEURAPJC</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Office__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Resolution__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>APJC</value>
+        </filters>
+        <label>All Europe APJC</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasHUB</group>
+            <role>CountryManagerChile</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_Americas</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Office__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_ACTIVITY</columns>
+        <columns>Resolution__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <label>All Americas</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasHUB</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Belgium_meetings</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_Office__c</field>
+            <operation>contains</operation>
+            <value>Belgium</value>
+        </filters>
+        <label>Belgium meetings</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSBelgiumLuxembourg</group>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>Local_Groups</fullName>
@@ -840,12 +959,30 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Local_Groups</value>
         </filters>
-        <filters>
-            <field>Active__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
         <label>All Local Groups</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Local_Groups_ASPAC</fullName>
+        <columns>NAME</columns>
+        <columns>Cargo_Passenger__c</columns>
+        <columns>Local_Governance_type__c</columns>
+        <columns>Region__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Country__c</columns>
+        <columns>Group_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>LocalGovernance__c.Local_Groups</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <label>Local Groups ASPAC</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -864,11 +1001,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             <field>NAME</field>
             <operation>notEqual</operation>
             <value>Annual General Meeting of IATA Members,Director General</value>
-        </filters>
-        <filters>
-            <field>Active__c</field>
-            <operation>equals</operation>
-            <value>1</value>
         </filters>
         <label>All Reg / Div Groups</label>
         <language>en_US</language>
@@ -1807,22 +1939,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     ISCHANGED(Local_Governance_type__c),
     ISCHANGED(Group_Owner__c),
     ISCHANGED(Country__c),
-    ISCHANGED(Cluster__c),
-    
-    ISCHANGED(Name),
-    ISCHANGED(Division__c),
-    ISCHANGED(Abbreviation__c),
-    ISCHANGED(Region__c),
-    ISCHANGED(Reporting_to__c),
-    ISCHANGED(Group_Owner_Text__c),
-    ISCHANGED(Restricted_of_Participants__c),
-    ISCHANGED(Maximum_Number_of_Participiants__c),
-    ISCHANGED(Open_to__c),
-    ISCHANGED(Frequency_of_Face_to_Face_Meetings__c),
-    ISCHANGED(Mission__c),
-    ISCHANGED(Frequency_of_Meetings__c),
-    ISCHANGED(Latest_Successes__c),
-    ISCHANGED(What_is_Group_Working_on_Now__c)
+    ISCHANGED(Cluster__c)
   )
 )</errorConditionFormula>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
