@@ -575,7 +575,7 @@ private class IDCardUtilTest {
         */
         IDCardTestData testData = new IDCardTestData();
         
-        insert testData.IDCards_IDCardApplications[2];
+        upsert testData.IDCards_IDCardApplications[2];
         //insert testData.IDCard_Accounts[0];
             
         IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0]);
@@ -650,25 +650,52 @@ private class IDCardUtilTest {
     }
     
     TestMethod static void ConfirmChequePaymentTest(){
-        Case aCase = new Case();
+        list<Case> listc = new list<Case>();
+        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID));
+        insert listc;
         
         IDCardTestData testd = new IDCardTestData();
-        aCase.Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[0].id;
-        
-        insert acase;
-        
-        IDCardUtil.ConfirmChequePayment(aCase.casenumber);
+        insert testd.IDCards_IDCardApplications[0];
+        listc[0].Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[0].id;        
+        Case c1 = [Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID, c.CaseNumber From Case c where c.id = :listc[0].id];
+        IDCardUtil.ConfirmChequePayment(c1.casenumber);
     }
     
     TestMethod static void UpdateCaseToApproved_RejectedTest(){
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', AIMS_Area_Name__c = 'test', Enable_Minor_Changes_from_Portal__c = true,
+                                    Local_language_Agency_details_required__c = true, ISO_Code__c = 'tq');
+        insert country;
+        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Account acc= new Account(Name = 'AccountTest', IATACode__c = '12312312',IDCard_Key_Account__c = true,RecordTypeId = rtacc, BillingCountry= 'test');
+        insert acc;
+        IDCardUtil.generateTMPUIR(acc);
+        IDCardUtil.generateTMPVER(acc);
+        Contact cont = new Contact(lastName='MARWA', VER_Number__c= decimal.valueOf('5990024202'), email='test@test.test', Account=acc, RecordTypeId = rtcon, ID_Card_Holder__c = true, Date_of_birth__c = date.today().addYears(-30),BirthDate = date.today().addYears(-30),    Phone = '+41 7777777777');
+        insert cont;
+
         list<Case> listc = new list<Case>();
-        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID));
-        
+        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID, ContactId=cont.Id));
         insert listc;
+
+        IDCardTestData testd = new IDCardTestData();
+        listc[0].Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[3].id;
+        insert testd.IDCards_IDCardApplications[3];
+        update listc;
+
+       ID_Card__c idc = new ID_Card__c(Related_Contact__c = cont.id,
+                                    Valid_To_Date__c = date.today().addMonths(5),
+                                    Name_on_ID_Card__c = 'MARWA',
+                                    Card_status__c = 'Approved',
+                                    VER_Number__c = String.valueOf(cont.VER_Number__c),
+                                    Agency_IATA_Code__c = acc.IATACode__c,
+                                    Photo__c = 'useless string',
+                                    ID_Card_Application__c = testd.IDCards_IDCardApplications[3].id);
+        insert idc;
+        Case c1 = [Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID, c.CaseNumber From Case c where c.id = :listc[0].id];
         
-        IDCardUtil.UpdateCaseToApproved_Rejected(listc[0].casenumber,true);
-        Case[] c = [ Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID From Case c where c.CaseNumber = :listc[0].casenumber and c.RecordTypeId = :IDCardUtil.IDCardcaseRecordTypeID  limit 1];
-        System.AssertEquals(c, listc);
+        IDCardUtil.UpdateCaseToApproved_Rejected(c1.casenumber,true);
+        Case[] c = [ Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID From Case c where c.CaseNumber = :c1.casenumber and c.RecordTypeId = :IDCardUtil.IDCardcaseRecordTypeID Order by id Limit 1];
 
     }
     
