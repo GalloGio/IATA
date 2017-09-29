@@ -171,6 +171,7 @@ public class ams2gdp_Utils
         if(isManual){
             upsert new AMS_GDP_Batch__c(
                     Batch_Name__c=batchName,
+                    Is_Manual_Replication__c = true,
                     Total_Failed_Records__c = errorsCount,
                     Total_Records_Processed__c = totalRecords,
                     Failed_Records__c = String.join(failed_records, ';').left(32768)
@@ -178,6 +179,7 @@ public class ams2gdp_Utils
         }else{
             upsert new AMS_GDP_Batch__c(
                     Batch_Name__c=batchName,
+                    Is_Manual_Replication__c = false,
                     Last_Sync_Start_Date__c=syncStartedDate,
                     Last_Sync_End_Date__c=Datetime.now(),
                     Total_Failed_Records__c = errorsCount,
