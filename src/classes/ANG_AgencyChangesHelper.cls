@@ -1222,7 +1222,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
     public static void validationBeforeClosure(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config){
 
-    	if(ANG_AgencyChangesConfigHelper.getManagerApprovalRequired(config.config) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
+    	if(ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
     		oscar.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
 
     }
