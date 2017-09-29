@@ -29530,8 +29530,13 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>ANG_Is_PCI_compliant_mandatory</fullName>
-        <active>false</active>
-        <errorConditionFormula>TEXT(Process__c) = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
+        <active>true</active>
+        <errorConditionFormula>OR(
+TEXT(Process__c) = &apos;ANG.NEW.HE.STANDARD.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.HE.LITE.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.AE.1.0&apos;
+)
+&amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
         <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
     </validationRules>
     <validationRules>

@@ -4111,6 +4111,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -4607,7 +4608,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP6__c"
+                  "STEP6__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }
@@ -5150,6 +5152,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -5536,7 +5539,6 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Is_PCI_compliant__c",
                   "ANG_Type_of_change_hidden__c",
                   "Change_effective_as_of__c",
                   "STEP6__c"
@@ -6038,7 +6040,8 @@
                 "DisplayFields": [
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
-                  "AMS_Correction_change_code__c"                  
+                  "AMS_Correction_change_code__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }
