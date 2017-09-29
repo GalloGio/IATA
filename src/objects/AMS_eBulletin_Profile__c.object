@@ -48,10 +48,10 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>AMS eBulletin Profile</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -63,6 +63,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Agency Changes</inlineHelpText>
         <label>Agency Changes</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -73,6 +74,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Defaults</inlineHelpText>
         <label>Defaults</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -83,6 +85,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Irregularities</inlineHelpText>
         <label>Irregularities</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -93,6 +96,7 @@
         <externalId>false</externalId>
         <inlineHelpText>New Application Processes</inlineHelpText>
         <label>New Application Processes</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -101,6 +105,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Agency_Info_Reinstatements</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -111,6 +116,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Reviews</inlineHelpText>
         <label>Reviews</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -121,6 +127,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Termination &amp; Closures</inlineHelpText>
         <label>Termination &amp; Closures</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -131,6 +138,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 1 - North, Central, South America &amp; Environs</inlineHelpText>
         <label>Area 1</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -141,6 +149,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 2 - Europe, Middle East, Africa</inlineHelpText>
         <label>Area 2</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -151,6 +160,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 3 -  Far East, Australia, New Zealand, Pacific Islands</inlineHelpText>
         <label>Area 3</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -159,6 +169,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>CNS</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -169,6 +180,7 @@
         <inlineHelpText>Countries List</inlineHelpText>
         <label>Countries</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -187,6 +199,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -210,6 +223,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -219,6 +233,7 @@
         <externalId>false</externalId>
         <label>Last Notification Batch Run</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -227,6 +242,7 @@
         <externalId>false</externalId>
         <label>Last Run</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -236,6 +252,7 @@
         <description>Opt in</description>
         <externalId>false</externalId>
         <label>Opt in</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -246,6 +263,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Opt out from Bulletin</inlineHelpText>
         <label>Opt out from Bulletin</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -256,6 +274,7 @@
         <externalId>false</externalId>
         <inlineHelpText>CASS Associates</inlineHelpText>
         <label>CASS Associates, Import, Courier Agents</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -266,6 +285,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Cargo</inlineHelpText>
         <label>Cargo</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -276,6 +296,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Domestic (China, Indonesia)</inlineHelpText>
         <label>Domestic (China, Indonesia)</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -286,6 +307,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Passenger</inlineHelpText>
         <label>Passenger</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -298,6 +320,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -309,6 +332,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Suspend Subscription</inlineHelpText>
         <label>Suspend Subscription</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -324,6 +348,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -337,6 +362,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>AMS_eBulletin_Profiles</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -377,9 +403,11 @@
     </listViews>
     <nameField>
         <label>AMS eBulletin Profile Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>AMS eBulletin Profiles</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Daily</fullName>
         <active>true</active>

@@ -331,17 +331,12 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <filters>
             <field>IATA_ISO_Country__c</field>
             <operation>equals</operation>
-            <value>China (People&apos;s Republic of)</value>
+            <value>Denmark</value>
         </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
             <value>Code_Range__c.IATA_Code</value>
-        </filters>
-        <filters>
-            <field>ProgramCode__c</field>
-            <operation>equals</operation>
-            <value>P</value>
         </filters>
         <label>JG view</label>
         <language>en_US</language>

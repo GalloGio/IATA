@@ -59,6 +59,9 @@ public without sharing class Order_Dom {
         getData(true, true);
         //Prevent modification to some fields at some Status
         Order_Svc.preventModification(newMap,oldMap);
+
+        // Ecommerce Enhancements R2 
+        Order_Svc.setOrderAcceptedPaymentMethods(newList, oldMap);
     }
 
     private void onBeforeDelete() {
@@ -107,6 +110,9 @@ public without sharing class Order_Dom {
 
         //Update IEC Event Subscription for Event renewal
         Order_Svc.updateEventSubcriptions(newList, oldMap);
+
+        //Update iec sap invoice status (Zuora Ready) when order is Payment Confirmed INC295559
+        Order_Svc.sapInvoiceStatusUpdate(newMap, oldMap);
     }
 
     private void onAfterDelete() {

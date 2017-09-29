@@ -70,7 +70,9 @@ public class AMS_OSCAR_HightlightsPanelController {
         
         AMS_OSCAR__c toReturn = null;
 
-        List<AMS_OSCAR__c> oscars = [select Id, Account__c,Status__c,Account__r.IATA_ISO_Country__r.Name,Account__r.IATACode__c,Account__r.RecordType.Name,Account__r.Name, 
+        List<AMS_OSCAR__c> oscars = [select Id, Account__c,Status__c,Account__r.IATA_ISO_Country__r.Name,Account__r.IATACode__c,
+                            Account__r.RecordType.Name,Account__r.Name, 
+                            Account__r.Identify_as_Key_Customer__c, Account__r.Key_Customer__c,
                             Owner.Name,CreatedDate from AMS_OSCAR__c where id =: oscarID LIMIT 1];
 
         if(!oscars.isEmpty()) toReturn = oscars.get(0);

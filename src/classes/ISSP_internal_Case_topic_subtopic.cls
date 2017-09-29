@@ -50,8 +50,10 @@ public list<String> errorMessage {get; set;}
         private void initTopicsList()
         { 
                 this.DataCategoryContainer.lst_DataCategories.sort();
-
+			System.debug('basto1p - lst_DataCategories.lst_DataCategories.size='+this.DataCategoryContainer.lst_DataCategories.size());
+            System.debug('basto1p - lst_DataCategories.lst_DataCategories='+this.DataCategoryContainer.lst_DataCategories);
                 if (parentCase.Topic__c != null && parentCase.Topic__c != ''){
+                System.debug('basto1p - NOT NULL parentCase.Topic__c='+parentCase.Topic__c);
                     String tmpTopic = (parentCase.Topic__c).replace(' ' ,'_');
                         for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
                         {
@@ -73,6 +75,7 @@ public list<String> errorMessage {get; set;}
                         refreshTopicPickList();
                 }
                 else{
+                    System.debug('basto1p - NULL parentCase.Topic__c!');
                         this.lst_selectTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
                         for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
                         {
@@ -85,6 +88,7 @@ public list<String> errorMessage {get; set;}
 
         public void refreshTopicPickList()
         {   
+            system.debug('basto1p refreshTopicPickList.topic='+topic);
             if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
             {
                 this.lst_selectsubTopics = new list<SelectOption>();
@@ -127,6 +131,7 @@ public list<String> errorMessage {get; set;}
             Integer index = Integer.valueOf(topic.trim());
 
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+            System.debug('basto1p - index='+index+' parentCase.SubTopic__c='+parentCase.SubTopic__c+'; selectDataCategory.lst_childs.size()='+selectDataCategory.lst_childs.size());
             if (parentCase.SubTopic__c == null || parentCase.SubTopic__c == '')
             {
                 //subtopic = selectDataCategory.CategoryName;

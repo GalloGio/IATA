@@ -191,6 +191,25 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>DataLoader_GDS_Errors</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>IATACODE__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Stack_Trace__c</columns>
+        <columns>Extra_Information__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>startsWith</operation>
+            <value>DataLoader_WEBSTAR_GDS</value>
+        </filters>
+        <label>DataLoader - Webstar GDS Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Errors_GSS_CACWEB</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
@@ -220,16 +239,18 @@
         <columns>Source__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Data__c</columns>
+        <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
             <operation>equals</operation>
-            <value>Error</value>
+            <value>Error,Warning,Info</value>
         </filters>
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>6/9/2017 12:00 AM</value>
+            <value>6/14/2017 12:00 AM</value>
         </filters>
         <label>Errors by Date</label>
         <language>en_US</language>
@@ -312,6 +333,23 @@
             <value>Info</value>
         </filters>
         <label>Infos</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SourceProcessSalesOrd</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>startsWith</operation>
+            <value>Order_Svc/processSalesOrderResponse</value>
+        </filters>
+        <label>Source_processSalesOrderResponse</label>
         <language>en_US</language>
     </listViews>
     <listViews>

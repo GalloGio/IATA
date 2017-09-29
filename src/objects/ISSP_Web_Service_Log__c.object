@@ -56,6 +56,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Agency_Applied_Change_code__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency Applied Change code</label>
+        <referenceTo>Agency_Applied_Change_code__c</referenceTo>
+        <relationshipLabel>Callout Web Service Logs</relationshipLabel>
+        <relationshipName>Web_Service_Logs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -248,6 +260,80 @@
         </filters>
         <label>BSPlink</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ISSP_WS_NewUser</fullName>
+        <columns>NAME</columns>
+        <columns>Web_Service__c</columns>
+        <columns>Success__c</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Method__c</columns>
+        <columns>System__c</columns>
+        <columns>Login_Ip__c</columns>
+        <columns>Input_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>equals</operation>
+            <value>ISSP_WS_NewUser</value>
+        </filters>
+        <label>ISSP_WS_NewUser</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>KAVI_logs_Mehdi</fullName>
+        <columns>NAME</columns>
+        <columns>Web_Service__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Success__c</columns>
+        <columns>Started__c</columns>
+        <columns>Method__c</columns>
+        <columns>User__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>equals</operation>
+            <value>ISSP_WS_KAVI</value>
+        </filters>
+        <filters>
+            <field>Started__c</field>
+            <operation>greaterThan</operation>
+            <value>5/23/2017 12:38 PM</value>
+        </filters>
+        <label>KAVI logs Mehdi</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>KAVItoda</fullName>
+        <columns>NAME</columns>
+        <columns>Error_Message__c</columns>
+        <columns>User__c</columns>
+        <columns>Success__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>equals</operation>
+            <value>Standards Setting Workspace</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>9/14/2017 12:00 AM</value>
+        </filters>
+        <label>KAVI - today</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAAdmins</group>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>SIS</fullName>

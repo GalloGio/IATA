@@ -79,6 +79,7 @@ private class CountryProfileTriggerHandlerTest {
         AccountId = acc.id,
         RecordTypeId = conRtId, 
         LastName = 'portalUser',
+        FirstName = 'Name',
         User_Portal_Status__c = 'Approved User'
         );
         insert con;

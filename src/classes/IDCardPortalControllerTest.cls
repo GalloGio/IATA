@@ -101,6 +101,8 @@ public class IDCardPortalControllerTest {
     public static TestMethod void TestNext() {
         testData = new IDCardTestData();
 
+        Test.startTest();
+        
         List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
         ID_Card_Application__c idCardApplicationClone = testData.IDCards_IDCardApplications[1].clone();
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
@@ -157,5 +159,7 @@ public class IDCardPortalControllerTest {
             iDCardPortalController_NoCookies.admPayments();
         } catch (Exception e) {
         }
+
+        Test.stopTest();
     }
 }

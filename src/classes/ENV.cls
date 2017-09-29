@@ -54,7 +54,9 @@ public without sharing class ENV {
     public final string NotifyAdminOfAppRequestVF = 'Notify_Admin_of_app_requestVF';
     public final string NotifyAdminOfAppRequestVF_CNS = 'Notify_Admin_of_app_requestVF_CNS';
     public final string ChangeEmailAddress       = 'ISSP_Change_Email_Verification';
-    public final string NotifyAdminNewContact      = 'Notify_Admin_of_user_creationVF';
+    public final string NotifyAdminNewContact      = 'Notify_Admin_of_user_creationVF';    
+    public final string ISSPChangeIEPStatusInProgressToOpen = 'ISSP_Change_IEP_Status_InProgress_to_Open';
+    public final string ISSP_ApprovalOfIATAEasyPayUsers = 'ISSP_Approval_Of_IATA_EasyPay_Users';
   }
   
   public class TeamMemberRoleClass {

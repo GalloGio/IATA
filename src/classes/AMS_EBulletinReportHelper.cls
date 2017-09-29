@@ -37,7 +37,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'27-Owner1';
+	public static final String OWNERS 	   	 	   =	'30-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,15 +45,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWLEGALSTATUS	= 	'46-New Legal Status';
-	public static final String NEWHIERARCHY	= 	'47-New Hierarchy';
-	
-	public static final String NEWSTATE 	    =	'50-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'51-New Country or State';
+	public static final String NEWLEGALSTATUS	= 	'49-New Legal Status';
+	public static final String NEWHIERARCHY	= 	'50-New Hierarchy';
 
-	public static final String IRRREASON 		=	'77-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'78-IRR: Period';
-	public static final String IRRPERIODED		= 	'79-IRR: Period';
+	public static final String NEWSTATE 	    =	'51-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'52-New Country or State';
+
+	public static final String IRRREASON 		=	'80-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'81-IRR: Period';
+	public static final String IRRPERIODED		= 	'82-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};

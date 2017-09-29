@@ -180,6 +180,40 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Enable_NewGen__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To enable the agency’s country to use the new accreditations model used in NewGen and Risk Event</description>
+        <externalId>false</externalId>
+        <label>New Accr. Model &amp; Risk Events enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_GDI_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>GDI Enabled</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Portal_Service__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EasyPay portal service that can be subscribed in the country.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enable this country for IATA EasyPay by selecting the EasyPay Portal Service corresponding to the Vendor that covers this country.</inlineHelpText>
+        <label>IATA EasyPay Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>IATA ISO Countries</relationshipLabel>
+        <relationshipName>IATA_ISO_Countries</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Acli_Country__c</fullName>
         <description>The country name for acli</description>
         <externalId>false</externalId>
@@ -1373,11 +1407,19 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Martinique</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Mauritania</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Mauritius</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mayotte</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1888,7 +1930,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <description>IEC - true means zip/postal code is required for an address</description>
         <externalId>false</externalId>
         <label>Zip/Postal Code required</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1925,7 +1967,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>ISO Country Short Name</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1947,7 +1989,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>International dialing code ISD</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2270,7 +2312,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>VAT Validation Required?</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2289,6 +2331,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
     <listViews>
         <fullName>All_Countries</fullName>
         <columns>NAME</columns>
+        <columns>International_dialing_code_ISD__c</columns>
         <columns>ISO_Code__c</columns>
         <columns>Region__c</columns>
         <columns>Sub_Region__c</columns>
@@ -2303,10 +2346,6 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <filterScope>Everything</filterScope>
         <label>All Countries</label>
         <language>en_US</language>
-        <sharedTo>
-            <group>Account_management_team</group>
-            <group>IDFSAllusersexcludingIWandACCA</group>
-        </sharedTo>
     </listViews>
     <listViews>
         <fullName>All_CountriesISS</fullName>
@@ -2380,6 +2419,28 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <sharedTo>
             <group>IATAAdmins</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Area_Blank</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>AIMS_Area_Name__c</columns>
+        <columns>Case_BSP_Country__c</columns>
+        <columns>AIMS_Area_ID__c</columns>
+        <columns>SLA_Type__c</columns>
+        <columns>Sanctioned_Country__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>AIMS_Area_ID__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>AIMS Area ID IS Blank</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>EUR_Countries</fullName>

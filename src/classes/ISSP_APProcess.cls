@@ -704,7 +704,7 @@ public without sharing class ISSP_APProcess {
             if (strType=='CASS Import') {
                 strReason='CASS Import via GHA' + strReasonMembership;
             } else {
-                strReason='CASS via GSSA' + strReasonMembership;    
+                strReason='CASS Export via GSSA' + strReasonMembership;    
             }
             isCASS = true;
             strLoB = 'CASS';
@@ -847,7 +847,7 @@ public without sharing class ISSP_APProcess {
                 System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
                 
         isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
                              ORDER BY ISO_Country_formula__c];                   
             }    
         }
@@ -979,12 +979,12 @@ public without sharing class ISSP_APProcess {
             if(gssaCountryISOCode != null) {
               existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
                             FROM Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
                              ORDER BY Services_Rendered_to_Airline__r.Name];    
             } else {
                 existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
                             FROM Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
                              ORDER BY Services_Rendered_to_Airline__r.Name];
             }
                        

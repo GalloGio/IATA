@@ -59,14 +59,14 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-	public static List<String> getAMS_InspectionIdsByAccountIds(List<String> accountIds)
+	/*public static List<String> getAMS_InspectionIdsByAccountIds(List<String> accountIds)
 	{
 		List<String> result = new List<String>(); 
 		for(AMS_Inspection__c item:[SELECT Id FROM AMS_Inspection__c WHERE Account__c IN:accountIds])
 			result.add(item.Id);
 		
 		return result;	
-	}
+	}*/
 
 	public static List<String> getAMS_TerritoryIdsByAccountIds(List<String> accountIds)
 	{
@@ -184,7 +184,7 @@ public class ams2gdp_Selector
 	public static AMS_GDP_Batch__c getBatchInfo(String batchName)
 	{
 		List<AMS_GDP_Batch__c> batches =  [
-			SELECT Id, Batch_Name__c, Last_Sync_End_Date__c, Last_Sync_Start_Date__c, Failed_Records__c FROM AMS_GDP_Batch__c WHERE Batch_Name__c = :batchName LIMIT 1
+			SELECT Id, Batch_Name__c, Last_Sync_End_Date__c, Last_Sync_Start_Date__c, Job_1_Original_Start_Date__c, Failed_Records__c FROM AMS_GDP_Batch__c WHERE Batch_Name__c = :batchName LIMIT 1
 		];
 		return (batches.size() >0)? batches[0] : null;
 	}

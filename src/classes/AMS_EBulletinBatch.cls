@@ -15,7 +15,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//this.query = 'select ' + fieldsToRecover + ' from AMS_eBulletin_Profile__c ' + filters;
 		
 
-		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name'},
+		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name','User__r.ContactId'},
 										'recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE', 
 										FALSE);
 
@@ -72,6 +72,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			system.debug('filters.programsList: ' + programsToRecover);
 			system.debug('filters.fromCCDate: ' + filters.fromCCDate);
 			system.debug('filters.toCCDate: ' + filters.toCCDate);
+
+			Datetime fromCCDate = filters.fromCCDate;
+			Datetime toCCDate = filters.toCCDate;
 			
 			Integer count = 0;
 			if(this.typeEBulletin == 'Daily'){	
@@ -81,12 +84,13 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 				String filtersPublished = 'and Published_on_EBulletin__c = TRUE ';
 				String filtersCountries = 'and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesToRecover ';
 				String filtersLC 		= 'and Account__r.Location_Class__c IN :programsToRecover ';
-				String filtersDates		= 'and Created_Date_To_Show__c > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')  + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+				String filtersDates		= 'and Created_Date_To_Show__c > :fromCCDate and Created_Date_To_Show__c < :toCCDate';
 				
 
 				count = Database.countQuery(baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates) ;
 
 				system.debug('Count Query: ' + baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates);
+
 			}
 			else if (this.typeEBulletin == 'Weekly'){
 				count = 1;
@@ -100,6 +104,8 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			// Update Dates and Times
 			eBprof.Last_NotificationBatch_Run__c = system.now();
 			profileUpdateDates.add(eBprof);
+
+			AMS_CustomSettingsUtils.resetVariables();
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);
@@ -136,7 +142,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
         mail.setCharset(emailTemplate.Encoding);
         mail.setSubject(emailTemplate.Subject);
-       	mail.saveAsActivity = false;
+    	mail.setTargetObjectId(eBprof.User__r.ContactId);
+        mail.setWhatId(eBprof.Id);
+        mail.setSaveAsActivity(true);
     	
 		return mail;
 	}

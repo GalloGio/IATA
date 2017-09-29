@@ -286,18 +286,45 @@
                 <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column> 
+            <!--
             <apex:column styleClass="checkbox-td">
                 <apex:facet name="header"><apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Authorised_Sig}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Authorised_signatory__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column> 
-            <apex:column rendered="{!amsOfficeType == 'HO'}" styleClass="checkbox-td">
+            <apex:column rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}" styleClass="checkbox-td"> 
                 <apex:facet name="header"><apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-            </apex:column> 
+            </apex:column>
             <apex:column rendered="{!amsOfficeType == 'HO'}" styleClass="checkbox-td">
                 <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></apex:facet>
                 <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column>                        
+            -->
+            <apex:column  styleClass="checkbox-td">
+                <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Roles_and_Responsibilities}"/></apex:facet>
+                <table>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Authorised_signatory__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+                    </tr>
+
+                    <apex:outputPanel rendered="{!amsOfficeType == 'HO'}" >
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Financial_Assessment_Contact__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.id == newForm.ISSP_AMS_Portal_admin__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Id == newForm.ISSP_AMS_Invoicing_Contact__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
+                    </tr>
+                    </apex:outputPanel>
+                </table>
+                
+            </apex:column>
         </apex:pageBlockTable>
     </apex:pageBlockSection>
     </span>
@@ -363,7 +390,7 @@
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c} {!newForm.CurrencyIsoCode}"/>                 
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}"/>
             <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>
-            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>
+            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>                      
             <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" rendered="{!amsOfficeType == 'HO'}"/>
 
         </apex:pageBlockSection>

@@ -371,7 +371,7 @@ public with sharing class AMS_AccountRoleCreator
             for(AMS_Accreditation_Contact__c ac : accreditationContactsToProcess)
                 acContactIdSet.add(ac.Contact__c);
 
-            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c FROM Contact WHERE Id IN :acContactIdSet];
+            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c FROM Contact WHERE Id IN :acContactIdSet];
 
             for(Contact c :allContactsFromAccreditation)
                 emailContactMap.put(c.id, c);
@@ -488,7 +488,7 @@ public with sharing class AMS_AccountRoleCreator
 
             // now for the new Acreditation Contact, we have to create new AMS Account roles based on the accreditationContactsToInsert list !
             System.debug('Accreditation contacts to insert:'+accreditationContactsToInsert);
-            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW',accountId);
+            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW' || accreditationAndOscars.get(accreditationId) == 'ANG_Agency_Changes',accountId);
             
             // for accreditation contacts that only have contact connectd (not owners), let's update the data
             System.debug('Single contacts to insert:'+accreditationContactsToInsertOnlyContacts);
@@ -513,7 +513,10 @@ public with sharing class AMS_AccountRoleCreator
             contactsToUpdate.addAll(bucket2.contactsToUpdate.values());
             contactsToUpdate.addAll(bucket3.contactsToUpdate.values());
 
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
             update contactsToUpdate;
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
+
 
             List<AMS_Accreditation_Contact__c> aContactsToUpdate = new List<AMS_Accreditation_Contact__c>();
             aContactsToUpdate.addAll(bucket1.accreditationsToUpdate.keySet());
@@ -700,9 +703,10 @@ public with sharing class AMS_AccountRoleCreator
 
 
         if(!newContactsToInsert.isEmpty()){
-        
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 1');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
-        
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
 
@@ -892,7 +896,10 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 2');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         for(AMS_Accreditation_Contact__c ac: contacts){
@@ -1004,7 +1011,10 @@ public with sharing class AMS_AccountRoleCreator
 
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 3');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         for(AMS_Accreditation_Contact__c ac: contacts){
@@ -1123,7 +1133,10 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 4');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         if(!newAccountsToInsert.isEmpty()) insert newAccountsToInsert.values();

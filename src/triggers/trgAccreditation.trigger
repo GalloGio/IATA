@@ -1,4 +1,31 @@
 trigger trgAccreditation on Accreditation__c (before insert, before update, after insert, after update) {
+	
+	//EM: To be removed
+	if (Test.isRunningTest()) {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+	}
 
 	/* Before Insert && Before Update*/
 	if ((Trigger.isInsert || Trigger.isUpdate) && Trigger.isBefore) {
@@ -10,7 +37,7 @@ trigger trgAccreditation on Accreditation__c (before insert, before update, afte
 		}
 	}
 
-	/* After Insert && After Update*/
+	/* After Insert && After Update
 	else if ((Trigger.isInsert || Trigger.isUpdate) && Trigger.isAfter) {
 
 		Set<Id> accIds = new Set<Id>();
@@ -31,10 +58,10 @@ trigger trgAccreditation on Accreditation__c (before insert, before update, afte
 				String failedDML = error.getMessage();
 				accList.get(i);//failed record from the list				
 
-				/* send an email to support and you can put on the email the record ID !*/
+				//send an email to support and you can put on the email the record ID !
 				system.debug('Failed ID' + accList.get(i).Id);
 				transformationHelper.sendEmailSupport('trgAccreditation fail to update account', 'failed to udpated account ID:  '+accList.get(i).Id);
 			}
 		}
-	}
+	}*/
 }

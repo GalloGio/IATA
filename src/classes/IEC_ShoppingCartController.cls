@@ -68,20 +68,36 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 	        		IECOrder_Svc.changePenddingOrder(lstOrders[0]);
 	        	
 				//-- Replace cookie content with renewal items 
-				List<OrderItem> orderItems = oiSelector.getOrderItems(orderId);
-				refreshCookieContent(orderItems, true);
+				if (newShoppingCart == false) {
+					List<OrderItem> orderItems = oiSelector.getOrderItems(orderId);
+					refreshCookieContent(orderItems, true);
+				} else {
+					// new shopping cart by default when logged in serializes in order items as soon as items are added.
+
+					buildOrderItemFromCookie();
+				}
+
 				Order_Svc.getSAP_Freight_Tax(orderId);  //*** re-calculate shipping and tax
 			}
 		}
 		else if(loggedCustomer != null)
 		{
 			//-- Find pending order/orderItems Of the customer
-			Order pendingOrder = IECOrder_Svc.getPenddingOrder(true); // oSelector.getPenddingOrder(loggedCustomer.sfUser.Id);
-			List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
-			refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+			if (newShoppingCart == false) {
+				Order pendingOrder = IECOrder_Svc.getPenddingOrder(true); // oSelector.getPenddingOrder(loggedCustomer.sfUser.Id);
+				List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
+				refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+				orderId = pendingOrder.Id;
+			} else {
+				// new shopping cart by default when logged in serializes in order items as soon as items are added.
+				Order pendingOrder = storeCart.getCartOrder();
+				orderId = pendingOrder.Id;
+
+				buildOrderItemFromCookie();
+			}
 
 			//-- Calculate tax/shipping
-			orderId = pendingOrder.Id;
+			
 			Order_Svc.getSAP_Freight_Tax(orderId);  //*** re-calculate shipping and tax
 		}
 
@@ -125,32 +141,50 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		String productCode = ApexPages.currentPage().getParameters().get('productCode');
 
 		try{
-			//-- Remove product from Cookie 
-			IECOrder_Svc.deleteProductToCookie(productCode);
+			if (newShoppingCart == false) {
+				//-- Remove product from Cookie 
+				IECOrder_Svc.deleteProductToCookie(productCode);
 
-			//-- If user logged-in remove product in pendding cart 
-	        if(loggedCustomer != null)
-			{
-				List<OrderItem> orderItems2delete = new List<OrderItem>();
-
-				//-- Update OrderItem in Database
-				Order pendingOrder =  IECOrder_Svc.getPenddingOrder(true);
-
-				//-- Find OrderItems of pendingOrder with ProductOCde in items.keySet()
-				Map<Id, List<OrderItem>> mapOrderItems =  new OrderItem_Sel().getOrderItems(new Set<Id>{pendingOrder.Id});
-				if(mapOrderItems != null && mapOrderItems.size() > 0)
+				//-- If user logged-in remove product in pendding cart 
+		        if(loggedCustomer != null)
 				{
-					List<OrderItem> items = mapOrderItems.get(pendingOrder.Id);
-					for(OrderItem item : items)
-						if(productCode == item.Product_Number__c)
-							orderItems2delete.add(item);
+					List<OrderItem> orderItems2delete = new List<OrderItem>();
+
+					//-- Update OrderItem in Database
+					Order pendingOrder =  IECOrder_Svc.getPenddingOrder(true);
+
+					//-- Find OrderItems of pendingOrder with ProductOCde in items.keySet()
+					Map<Id, List<OrderItem>> mapOrderItems =  new OrderItem_Sel().getOrderItems(new Set<Id>{pendingOrder.Id});
+					if(mapOrderItems != null && mapOrderItems.size() > 0)
+					{
+						List<OrderItem> items = mapOrderItems.get(pendingOrder.Id);
+						for(OrderItem item : items)
+							if(productCode == item.Product_Number__c)
+								orderItems2delete.add(item);
+					}
+
+					if(orderItems2delete.size() > 0) delete orderItems2delete;
+				}	
+			
+				//-- Build Cart Items to display
+				buildOrderItemFromCookie();
+			} else {
+				storeCart.deleteItem(productCode);
+				//susana alves INC332088
+				//verify if the order don't have related order items
+				Order orderToDelete = storeCart.getCartOrderContent(); 
+				system.debug('orderToDelete : ' + orderToDelete);
+				Boolean canDeleteOrder = !([SELECT count() FROM OrderItem WHERE OrderId = :orderToDelete.Id] > 0);
+				system.debug('canDeleteOrder? : ' + canDeleteOrder);
+				if(canDeleteOrder){
+					// the order don't have related products, so can be deleted
+					system.debug('empty order on the cart to be deleted : ' + storeCart.getCartOrderContent());
+					IECOrder_Svc.deleteOrder(storeCart.getCartOrderContent());
 				}
 
-				if(orderItems2delete.size() > 0) delete orderItems2delete;
-			}	
-		
-			//-- Build Cart Items to display
-			buildOrderItemFromCookie();
+				buildOrderItemFromCookie();
+			}
+
 			validateCountryCompliance();
 
 			addConfirmMessage('Product ' + productCode + ' has been successfully removed.');
@@ -171,13 +205,21 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 		try
 		{
-			if(Decimal.valueOf(quantity) > 0) IECOrder_Svc.modifiedProductToCookie(productCode, Decimal.valueOf(quantity));
-			else IECOrder_Svc.deleteProductToCookie(productCode);
+			if (newShoppingCart == false) {
+				if(Decimal.valueOf(quantity) > 0) IECOrder_Svc.modifiedProductToCookie(productCode, Decimal.valueOf(quantity));
+				else IECOrder_Svc.deleteProductToCookie(productCode);
 
-			buildOrderItemFromCookie();
+				buildOrderItemFromCookie();
 
-			if(loggedCustomer != null) updateOrderItems();
-			
+				if(loggedCustomer != null) updateOrderItems();
+			} else {
+				storeCart.updateItem(productCode, Decimal.valueOf(quantity), null);
+				
+				buildOrderItemFromCookie();
+
+				if(loggedCustomer != null) updateOrderItems();
+			}
+
 			validateCountryCompliance();
 
 			addConfirmMessage('Quantity has been successfully updated.');
@@ -282,18 +324,25 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			return null;
 		}
 
-		//-- Update Database with cookie info
-		updateOrderItems();
+		if (newShoppingCart == false) {
+			//-- Update Database with cookie info
+			updateOrderItems();
 
-		//-- Insert items with vfOrder items, in case there is any
-		insertOrderItemsFromVfOrder();
+			//-- Insert items with vfOrder items, in case there is any
+			insertOrderItemsFromVfOrder();
+		}
 
 		//-- Get Tax & Shipping 
 		Order_Svc.getSAP_Freight_Tax(orderId);
 
-		IECOrder_Svc.createOrderFromCookie();
+		if (newShoppingCart == false) {
+			IECOrder_Svc.createOrderFromCookie();
+		}
+
 		PageReference ref = new PageReference('/IEC_CustomerInformation');
+
 		ref.setRedirect(true);
+
 	    return ref;
 	}
 
@@ -388,7 +437,11 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 	{
 		if(vfOrder == null) vfOrder = new Order_DTO();
 
-		vfOrder.orderItems = IECOrder_Svc.getOrderItemsInCookie();
+		if (newShoppingCart == false) {
+			vfOrder.orderItems = IECOrder_Svc.getOrderItemsInCookie();
+		} else {
+			vfOrder.orderItems = storeCart.getOrderItems();
+		}
 	}
 
 

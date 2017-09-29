@@ -200,6 +200,38 @@ private class  OneIdLightningLoginFormControllerTest {
     }
 
     @isTest
+    static void testLoginWithValidCredentialsIpInfoCallEnabledTrue() {
+		
+        
+        insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
+        
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='PT',Name='Portugal',Region__c='Europe');
+        insert isoCountry;
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+        
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.ParentId = parent.Id;
+        child.IATA_ISO_Country__c = isoCountry.Id ;
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.Top_Parent__c = parent.Id;
+        child.Sector__c = 'Airline';
+        child.BillingCountry = 'Italy';
+        insert child;
+        System.debug('child Id: ' + child.Id);
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        
+        OneIdLightningLoginFormController.findLocation(true);
+
+    }
+
+    @isTest
     static void testLoginWithValidCredentialsFrozen() {
     /*
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='PT',Name='Portugal',Region__c='Europe');
@@ -269,6 +301,7 @@ private class  OneIdLightningLoginFormControllerTest {
     }
     @IsTest
     static void testGetSanctionCountryFalse() {
+    	insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
@@ -305,6 +338,7 @@ private class  OneIdLightningLoginFormControllerTest {
         Auth.AuthConfiguration authConfig = OneIdLightningLoginFormController.getAuthConfig();
         System.assertNotEquals(null, authConfig);
     }
+    
 
 
 }

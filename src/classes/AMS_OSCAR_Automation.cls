@@ -6,15 +6,28 @@ public with sharing class AMS_OSCAR_Automation {
 
     //OK
     public class AMS_OSCAR_Step6_succeeded implements IClassFactory {
+
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            
             system.debug('Start AUTOMATION AMS_OSCAR_Step6_succeeded.processWork');
 
             Boolean res = False;
 
             if (oscar != null) {
+                
                 oscar.Sanity_check_received__c = Date.today();
-                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA) oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
-                else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH) oscar.Process_Start_Date__c = Date.today();
+                
+                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+
+                    oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
+                
+                }
+                else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH){
+
+                    oscar.Process_Start_Date__c = Date.today();
+                
+                }
+
                 oscar.Sanity_check_results__c = AMS_Utils.PASSED;
 
                 res = True;
@@ -38,10 +51,19 @@ public with sharing class AMS_OSCAR_Automation {
                 //    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                 else {
                     List<Account> oscarAccount = new List<Account>([select Location_Class__c from Account where id = : oscar.Account__c]);
+
                     if (oscar.Process__c == AMS_Utils.new_HO && (oscarAccount.get(0).Location_Class__c == 'C' || oscarAccount.get(0).Location_Class__c == 'I' || oscarAccount.get(0).Location_Class__c == 'P' || oscarAccount.get(0).Location_Class__c == 'Q')) {
+                    
                         oscar.Sanity_check_deadline__c = Date.today() + 15;
+                    
                     } else if (oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_SA || oscarAccount.get(0).Location_Class__c == 'R') {
+                    
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
+
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+
+                        oscar.Sanity_check_deadline__c = Date.today() + 15;           
+
                     }
                 }
 
@@ -497,7 +519,12 @@ public with sharing class AMS_OSCAR_Automation {
             if (oscar != null) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
-                oscar.Status__c = 'On Hold_Internal';
+                
+                if(oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE)
+                    oscar.Status__c = 'Pending Approval';
+                else
+                    oscar.Status__c = 'On Hold_Internal';
+
                 res = True;
             }
 
@@ -599,7 +626,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Approval_disapproval_date__c = Date.today();
+                oscar.Disapproval_date__c = Date.today();
                 oscar.Status__c = 'On Hold_Internal';
                 res = True;
 
@@ -1052,6 +1079,56 @@ public with sharing class AMS_OSCAR_Automation {
             }
 
             return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step35_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            // ... Class-specific work goes here
+            system.debug('Start AUTOMATION AMS_OSCAR_Step35_succeeded.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Bank_Guarantee_received__c = Date.today();
+                oscar.Financial_security_result__c = 'Valid';
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step35_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            // ... Class-specific work goes here
+            system.debug('Start AUTOMATION AMS_OSCAR_Step35_failed.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Bank_Guarantee_received__c = Date.today();
+                oscar.Financial_security_result__c = 'Rejected';
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step35_notApplicable implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            // ... Class-specific work goes here
+            system.debug('Start AUTOMATION AMS_OSCAR_Step35_notApplicable.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Financial_security_result__c = 'N/A';
+                res = True;
+            }
+
+            return res;
         }
     }
 
