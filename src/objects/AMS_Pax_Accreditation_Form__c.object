@@ -1302,11 +1302,11 @@
         <label>Accreditation Type</label>
         <picklist>
             <picklistValues>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -5231,11 +5231,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5991,11 +5991,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6751,11 +6751,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7511,11 +7511,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8272,11 +8272,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9044,11 +9044,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9816,11 +9816,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10588,11 +10588,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11359,11 +11359,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12245,11 +12245,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13016,11 +13016,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13788,11 +13788,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14713,11 +14713,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16490,11 +16490,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17822,11 +17822,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18766,11 +18766,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19526,11 +19526,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20401,11 +20401,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
