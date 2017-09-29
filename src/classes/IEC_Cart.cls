@@ -67,8 +67,6 @@ public without sharing virtual class IEC_Cart {
 
 	private static Map<Id,String> productNumberMap;
 	private static Map<String,String> productNameMap;
-	private static Map<Id,String> productRatePlanInformationProductNumberMap;
-	//private static Map<String,Set<String>> productAccessMap;
 	private static Map<String,Product2> productMap;
 	private static Map<String,EComProduct_DTO> ecomProductByProductNumberMap;
 	private static Map<Id,PricebookEntry> pricebookEntryMap;
@@ -89,8 +87,6 @@ public without sharing virtual class IEC_Cart {
 
 		productNumberMap = new Map<Id,String>();
 		productNameMap = new Map<String,String>();
-		productRatePlanInformationProductNumberMap = new Map<Id,String>();
-		//productAccessMap = new Map<String,Set<String>>();
 		ecomProductByProductNumberMap = new Map<String,EComProduct_DTO>();
 		productMap = new Map<String,Product2>();
 		pricebookEntryMap = new Map<Id,PricebookEntry>();
@@ -105,7 +101,7 @@ public without sharing virtual class IEC_Cart {
 			pricebookEntryMap.put(pricebookEntry.Product2Id, pricebookEntry);
 		}
 
-		/*for (
+		for (
 			Product2 product : [
 				SELECT
 					Id,
@@ -124,7 +120,6 @@ public without sharing virtual class IEC_Cart {
 			productMap.put(product.SAP_Material_Number__c, product);
 			productNumberMap.put(product.Id, product.SAP_Material_Number__c);
 			productNameMap.put(product.SAP_Material_Number__c, product.Name);
-			productRatePlanInformationProductNumberMap.put(product.IEC_Product_Rate_Plan_Information__c, product.SAP_Material_Number__c);
 
 			if (
 				product.Restricted_Customer_Type__c == null
@@ -140,8 +135,7 @@ public without sharing virtual class IEC_Cart {
 				}
 			}
 
-			productAccessMap.put(product.SAP_Material_Number__c, customerTypeSet);
-		}*/
+		}
 
 	}
 
