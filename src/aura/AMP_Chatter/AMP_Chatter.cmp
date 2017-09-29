@@ -9,6 +9,6 @@
    <h1>My Feeds</h1>
    <ui:inputSelect aura:id="typeSelect" change="{!c.onChangeType}" label="Type"/>-->
     <div aura:id="feedContainer" class="feed-container">
-        <forceChatter:publisher type="Record" subjectId="{!v.accountId}"/>
+        <forceChatter:feed type="Record" subjectId="{!v.accountId}"/>
     </div>
 </aura:component>
