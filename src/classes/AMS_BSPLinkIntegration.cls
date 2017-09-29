@@ -93,8 +93,14 @@ global class AMS_BSPLinkIntegration {
 	
 	private static list<response> ProcessRequest(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
 		list<response> oReturn = new list<Response>();
+		List<Id> caseIds = new List<Id>();
+		caseIds.add(CaseId);
+		list<Agency_Authorization__c> lsToRemove = new list<Agency_Authorization__c>();
 		
-		list<Agency_Authorization__c> lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
+		if (sTypeOfRemoval.equalsIgnoreCase('FromSidra'))
+			lsToRemove = RetrieveBSPLinkAuthToRemove(caseIds, sTypeOfRemoval);
+		else
+			lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
 		
 		if(lsToRemove.isEmpty()){
 			response r = new response();
@@ -368,7 +374,13 @@ global class AMS_BSPLinkIntegration {
     //In case an agency is without authorization because of errors in creating them previously, it creates it (status: not-set)
     static list<Agency_Authorization__c> RetrieveBSPLinkAuthToRemove(list<id> objectIds, string sType){
 		Set<Id> setAccntToRemove = new Set<Id>();
-		if(sType == 'Hierarchy'){
+		if (sType.equalsIgnoreCase('FromSidra')) {
+			if (objectIds.size() == 1) {
+				id sidraCaseID = objectIds.get(0);
+				for (AMS_Process_Detail__c apd : [SELECT Id, Account__c FROM AMS_Process_Detail__c where Case__c =: sidraCaseID])
+					setAccntToRemove.add(apd.Account__c);
+			}
+		}else if(sType == 'Hierarchy'){
 			if(objectIds.size()==1){
 				setAccntToRemove.add(objectIds.get(0));
 				id theHOId = AMS_BSPLinkIntegration.RetrieveHOId(objectIds.get(0));
