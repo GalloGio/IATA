@@ -224,9 +224,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 // create new accreditation form
                 accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
-                //accreditationForm.Account_Name__c = currentUserContact.Account.Name;
-                //accreditationForm.Location_Class__c = 'M';
-                //accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
                 insert accreditationForm;
@@ -236,8 +233,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 update oscar;
 
 
-                oscarCase.ContactId = currentUser.ContactId;
-                update oscarCase;
+                //oscarCase.ContactId = currentUser.ContactId;
+                //update oscarCase;
 
 
             } else {
@@ -290,12 +287,12 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscar.STEP31__c = AMS_Utils.PASSED;
                 update oscar;
 
-                oscarCase.ContactId = currentUser.ContactId;
-                update oscarCase;
+                //oscarCase.ContactId = currentUser.ContactId;
+                //update oscarCase;
 
-                sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false);
+                //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false);
 
-                closeOscar(oscar.Id, oscarCase.Id, ACTION_TERMINATION);
+                closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_TERMINATION);
 
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
@@ -311,9 +308,9 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
 
-            sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, true);
+            //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, true);
 
-            closeOscar(oscar.Id, oscarCase.Id, ACTION_CORRECTION);
+            closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_CORRECTION);
 
         } catch (Exception ex){
             ApexPages.addMessages(ex);
@@ -343,11 +340,16 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
     @future
-    public static void closeOscar(Id oscarId, Id caseId, String actionType) {
+    public static void closeOscar(Id oscarId, Id caseId, Id contactId, String actionType) {
         try {
+            Case oscarCase = new Case(Id = caseId, ContactId = contactId);
+            update oscarCase;
+
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             oscar.Status__c = 'Closed';
             update oscar;
+
+            sendConfirmationEmail(caseId, contactId, actionType == ACTION_CORRECTION);
 
         } catch (DmlException ex) {
             system.debug('Error closing the OSCAR: ' + ex.getMessage());
@@ -355,7 +357,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
 
-    public void sendConfirmationEmail(Id caseId, Id contactId, Boolean isCorrection) {
+    private static void sendConfirmationEmail(Id caseId, Id contactId, Boolean isCorrection) {
         String emailTemplateName = isCorrection ? 'IDFS_Case confirmation - MSO Correction self-service' : 'IDFS_Case confirmation - MSO Termination self-service';
 
         SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
