@@ -23,7 +23,7 @@
 				{!vfQuote.billToAddress.postalCode}  {!vfQuote.billToAddress.countryLabel}
 			</td>
 			<td valign="top">
-				INTERNATIONAL AIR TRANSPORT ASSOCIATION <br />
+				INTERNATIONAL AIR TRANSPORT ASSOCIATION
 				800 Place Victoria, P.O. Box 113 <br />
 				MONTREAL, QUEBEC H4Z 1M1 <br />
 				CANADA <br />
@@ -59,7 +59,7 @@
 	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.UnitPrice.Label}</th>
 	      	<th align="right" width="5%">{!$ObjectType.OrderItem.fields.Quantity.Label}</th>
 	      	<th align="right" width="10%">Flat fee</th>
-	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.SubTotal__c.Label}</th>
+	      	<th align="right" width="13%">{!$ObjectType.OrderItem.fields.SubTotal__c.Label}</th>
 	      	<th align="right" width="10%">Discount</th>
 	      	<th align="right" width="10%">Shipping</th>
 	      	<th align="right" width="10%">Tax</th>
@@ -78,18 +78,18 @@
 				Product # {!item.productCode}
 			</td>
 			<td align="right" class="item-unitPrice">
-				<apex:outputText value="{0, number, currency}">
-	                <apex:param value="{!item.unitPrice}"/>
+				<apex:outputText value="{0, number, currency} USD">
+	                <apex:param value="{!item.unitPrice}"/> 
 	            </apex:outputText>
 			</td>
 			<td align="right" class="item-quantity">{!item.quantity}</td>
 			<td align="right" class="item-subTotal">
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{!IF(isnull(item.setupFee), '{0, number, currency}', '{0, number, currency} USD')}">
 	                <apex:param value="{!item.setupFee}"/>
 	            </apex:outputText>
 			</td>
 			<td align="right" class="item-subTotal">
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!item.subTotal}"/>
 	            </apex:outputText>
 			</td>
@@ -190,22 +190,22 @@
                 <!-- </apex:repeat> -->
 				<!-- End break down of discount -->
 
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{!IF(isnull(item.discountAmount), '{0, number, currency}', '{0, number, currency} USD')}">
 	                <apex:param value="{!item.discountAmount}"/>
 	            </apex:outputText>
             </td>
             <td align="right">
-            	<apex:outputText value="{0, number, currency}">
+            	<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!item.shippingAmount}"/>
 	            </apex:outputText>
             </td>
             <td align="right">
-            	<apex:outputText value="{0, number, currency}">
+            	<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!item.taxAmount}"/>
 	            </apex:outputText>
             </td>
-			<td align="right" class="item-totalAmount">
-				<apex:outputText value="{0, number, currency}">
+			<td align="right"  class="item-totalAmount">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!item.totalAmount}"/>
 	            </apex:outputText>
 			</td>
@@ -225,8 +225,8 @@
 	  	<tr>
 	    	<td colspan="5" class="blank"> </td>
 	      	<td colspan="3" class="total-line"><b>Subtotal</b></td>
-	      	<td align="right" class="total-value"><div id="subtotal">
-				<apex:outputText value="{0, number, currency}">
+	      	<td align="right" class="total-value" width="15%" ><div id="subtotal">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!vfQuote.orderTotalAmount}"/>
 	            </apex:outputText>
 	      	</div></td>
@@ -236,7 +236,7 @@
 				<td colspan="5" class="blank"> </td>
 	      	<td colspan="3" class="total-line"><b>Shipping</b></td>
 	      	<td align="right" class="total-value"><div id="total">
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!vfQuote.totalFreightCharge}"/>
 	            </apex:outputText>
 	      	</div></td>
@@ -246,7 +246,7 @@
 				<td colspan="5" class="blank"> </td>
 	      	<td colspan="3" class="total-line"><b>Taxes</b></td>
 	      	<td align="right" class="total-value"><div id="total">
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!vfQuote.taxes}"/>
 	            </apex:outputText>
 	      	</div></td>
@@ -256,7 +256,7 @@
 				<td colspan="5" class="blank"> </td>
 	      	<td colspan="3" class="total-line"><b>Total</b></td>
 	      	<td align="right" class="total-value"><div id="total">
-				<apex:outputText value="{0, number, currency}">
+				<apex:outputText value="{0, number, currency} USD">
 	                <apex:param value="{!vfQuote.orderTotalAmount}"/>
 	            </apex:outputText>
 	      	</div></td>
