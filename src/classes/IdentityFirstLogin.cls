@@ -46,12 +46,12 @@ public class IdentityFirstLogin {
                         
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = Site.login(userName, passWord, '/identity/s/changePassword');
-                            aura.redirect(Site.login(userName, passWord, '/s/changePassword'));
+                            aura.redirect(Site.login(userName, passWord, (String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/s/changePassword'));
                         }
                     } else {
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = new PageReference('/identity/s');
-                        	aura.redirect(new PageReference('/s'));
+                        	aura.redirect(new PageReference((String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/s'));
                         }
                     }
                 }
