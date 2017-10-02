@@ -2,7 +2,9 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_New_comment_on_case_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn;accaisis2develop@acca.com.cn</ccEmails>
+        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
+        <ccEmails>yx@acca.com.cn</ccEmails>
         <description>ACCA: New comment on case (ISIS2 &amp; ISIS2D)</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -323,12 +325,12 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Application Change Request (DPC Systems) - ACCA</value>
+            <value>Application Change Request (DPC Systems) - ACCA,Application Change Request (DPC System),Application Change Request (DPC Systems - locked)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSPs,IBSPs-D</value>
+            <value>IBSPs,IBSPs-D,IBSP1</value>
         </criteriaItems>
         <description>Informs ACCA adm team that new case comment has been added by IATA.</description>
         <triggerType>onCreateOnly</triggerType>
