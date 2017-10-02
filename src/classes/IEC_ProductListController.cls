@@ -465,12 +465,16 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     //Returns the previous page of records
     public void previous()
     {
+        Integer pageNum = productRecords.getPageNumber();
+        currentPageNumber = pageNum-1;
         productRecords.previous();
     }
  
     //Returns the next page of records
     public void next()
     {
+        Integer pageNum = productRecords.getPageNumber();
+        currentPageNumber = pageNum+1;
         productRecords.next();
     }
 
