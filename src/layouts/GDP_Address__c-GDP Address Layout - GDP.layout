@@ -50,8 +50,8 @@
                 <field>Address_Country_Short_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_ISO_NCode__c</field>
+                <behavior>Readonly</behavior>
+                <field>IATA_Numeric_Country_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
