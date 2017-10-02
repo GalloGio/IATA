@@ -369,7 +369,7 @@ function buildFunctionCall(func, argList){
     });
 </script>
 
-<apex:pageBlock rendered="{!oscar == null}">
+<apex:pageBlock rendered="{!oscar.Account__c == null}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">UNAVAILABLE</p>
