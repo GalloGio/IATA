@@ -62,6 +62,8 @@ global class ANG_RME_Alert_Service {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] req - ' + req);
 			result.iataCode = req.iataCode;
 
+			String eventType = RestContext.request.params.get('eventType');
+
 			//fetch current information
 			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :result.iataCode];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
@@ -80,8 +82,8 @@ global class ANG_RME_Alert_Service {
 
 				if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
 				//validation passed, perform logic
-				else if(req.eventType == 'RHCAlert') saveAlert(req, rhcInfo);
-				else if(req.eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
+				else if(eventType == 'RHCAlert') saveAlert(req, rhcInfo);
+				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
 				else setResponse('Invalid Event Type: '+req.eventType, 405);
 			}
 
