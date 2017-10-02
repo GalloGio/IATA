@@ -170,40 +170,19 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		// set the greeting to be either day or week
 		String dayOrWeek = 'day';
 		if(currentUser.AMP_Digest_Daily_or_Weekly__c == 'Weekly') dayOrWeek = 'week';
-		emailBody += getEmailHeader(currentUser, dayOrWeek);
 		List<String> lsFavouriteTopics = new List<String>();
-		Set<String> stFavouriteTopics = new Set<String>();
 
-
-		emailBody += '<tr><td>';
-		// we take the user setting and convert it to a Set of Strings
-		// to avoid problems of just string.contains()
 		if(currentUser.AMP_Digest_Topics__c != null) {
 			lsFavouriteTopics = currentUser.AMP_Digest_Topics__c.split(',');
 		}
-		List<Topic> lsBroadcastTopics = getBroadCastTopics();
-		List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
-		String topicBody = '';
-		for(String t : lsFavouriteTopics) {
-			topicBody += getTopicBody(currentUser, t, lsAllFeedItems,lsTopicAssignments, dayOrWeek);
-		}
-		emailBody += topicBody;
-		emailBody += '</td></tr>';
-
-		emailBody += getEmailFooter();
-
-		// if we didn't get anything uder the favouriteTopics return empty
-		if(topicBody == '') { emailBody = ''; }
+		emailBody += getEmailBody( currentUser,  lsAllFeedItems, lsFavouriteTopics,  dayOrWeek);
 		return emailBody;
 	}
 
 	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<String> lsFavouriteTopics, String dayOrWeek) {
 
-		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		emailBody += getEmailHeader(currentUser, dayOrWeek);
-
-		emailBody += '<tr><td>';
 
 		List<Topic> lsBroadcastTopics = getBroadCastTopics();
 		List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
@@ -212,8 +191,6 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			topicBody += getTopicBody(currentUser, t, lsAllFeedItems,lsTopicAssignments, dayOrWeek);
 		}
 		emailBody += topicBody;
-		emailBody += '</td></tr>';
-
 		emailBody += getEmailFooter();
 
 		// if we didn't get anything uder the favouriteTopics return empty
@@ -224,16 +201,68 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public static String getEmailHeader(user currentUser, String dayOrWeek) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
-		emailBody +='<html>';
-		emailBody +='<body style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; background-color: #F2F2F2;" bgcolor="#F2F2F2">';
-		emailBody +='<style type="text/css">'+
-						'.defaultIndentation { width: 10 !important; }'+
-						'table {'+
-							'border-collapse: collapse;'+
-							'mso-table-lspace: 0px;'+
-							'mso-table-rspace: 0px;'+
+
+		emailBody += '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n';
+		emailBody += '<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">\n\n'+
+						'<head>'+
+    					'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'+
+    					'<meta name="viewport" content="width=device-width">'+
+    					'<title>layout email</title>';
+
+		emailBody += '<style>'+
+        '@media only screen {'+
+            'html {'+
+                'min-height: 100%;'+
+                'background: #f2f2f2'+
+            '}'+
 						'}'+
-					' </style>\n\n';
+
+        '@media only screen and (max-width:628px) {'+
+            'table.body img {'+
+                'width: auto;'+
+                'height: auto'+
+            '}'+
+            'table.body center {'+
+                'min-width: 0!important'+
+            '}'+
+            'table.body .container {'+
+                'width: 95%!important'+
+            '}'+
+            'table.body .columns {'+
+                'height: auto!important;'+
+                '-moz-box-sizing: border-box;'+
+                '-webkit-box-sizing: border-box;'+
+                'box-sizing: border-box;'+
+                'padding-left: 28px!important;'+
+                'padding-right: 28px!important'+
+            '}'+
+            'table.body .columns .columns {'+
+                'padding-left: 0!important;'+
+                'padding-right: 0!important'+
+            '}'+
+            'table.body .collapse .columns {'+
+                'padding-left: 0!important;'+
+                'padding-right: 0!important'+
+            '}'+
+            'th.small-12 {'+
+                'display: inline-block!important;'+
+                'width: 100%!important'+
+            '}'+
+            '.columns th.small-12 {'+
+                'display: block!important;'+
+                'width: 100%!important'+
+            '}'+
+        '}'+
+    '</style>';
+		emailBody +=	'</head>';
+
+
+
+		emailBody +=	'<body style="-moz-box-sizing:border-box;-ms-text-size-adjust:100%;'+
+							'-webkit-box-sizing:border-box;-webkit-text-size-adjust:100%;Margin:0;'+
+							'box-sizing:border-box;color:#000000;font-family:Helvetica,Arial,sans-serif;'+
+							'font-size:14px;font-weight:400;line-height:1.3;margin:0;min-width:100%;'+
+							'padding:0;text-align:left;width:100%!important">';
 
 		// blue line on top
 		emailBody +='<TABLE style="COLOR: #2a94d6; BACKGROUND-COLOR: #2a94d6" cellSpacing=0 cellPadding=0 width="100%" border=0><TBODY>'+
@@ -243,54 +272,87 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		emailBody +='<TABLE style="COLOR: #f2f2f2; BACKGROUND-COLOR: #f2f2f2" cellSpacing=0 cellPadding=0 width="100%" border=0><TBODY>'+
 					'<TR> <TD style="FONT-SIZE: 25px; LINE-HEIGHT: 25px" bgColor=#f2f2f2 height=25>&nbsp;</TD></TR></TBODY></TABLE>';
 
-
-		emailBody += '<TABLE class=backgroundTable cellSpacing=0 cellPadding=0 width="100%" align=center bgColor=#f2f2f2 border=0><TBODY> <TR> <TD align=center>\n';
-
-		// // white horizontal space
-		// emailBody += '<TABLE style="COLOR: #ffffff; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 width="100%" border=0><TBODY>'+
-		// 			'<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR></TBODY></TABLE>';
-
-		// // white horizontal space
-		// emailBody += '<TABLE style="COLOR: #ffffff; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 width="100%" border=0><TBODY>'+
-		// '<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR></TBODY></TABLE>';
-		emailBody += '<TABLE  width=600 style="BACKGROUND-COLOR: #f2f2f2" cellSpacing=0 cellPadding=0 align=center bgColor=#f2f2f2 border=0> <TBODY> \n';
-		emailBody += '<tr>\n ';
-		emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
-		emailBody += '<td rowSpan="1" colSpan="1" style="font-family:' + fonts + '">';
-		emailBody += '<TABLE class=container style="MAX-WIDTH: 600px; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 width="100%" border=0><tbody>';
-		// white margin
-		emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>';
+    	emailBody +='<table class="body" style="Margin:0;background:#f2f2f2;border-collapse:collapse;border-spacing:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;height:100%;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;width:100%">';
+        emailBody +='<tr style="padding:0;text-align:left;vertical-align:top">';
+        emailBody +=    '<td class="center" align="center" valign="top" style="-moz-hyphens:auto;-webkit-hyphens:auto;'+
+			'Margin:0;border-collapse:collapse!important;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">';
+        emailBody +='        <center data-parsed="" style="min-width:560px;width:100%">';
 
 
-		emailBody += '<td style="vertical-align:middle">'+
-					'<span style="font-size:22px; font-family:'+fonts+'; font-weight:light">Hi '+currentUser.FirstName +', catch up on activity from the past '+dayOrWeek+'.</span></td>';
-
-		// white margin
-		emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>';
-
-		emailBody += ' </tr></tbody></table></td></tr>';
-
-		// emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
-		emailBody += '<td rowSpan="1" colSpan="1" style="font-family:' + fonts + '">';
-		emailBody += '<TABLE class=container style="MAX-WIDTH: 600px; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 width="100%" border=0><tbody>';
-		// white margin
-		emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>';
 
 
-		emailBody += '<td style="vertical-align:middle">'+
-					'<span style="font-size:18px; font-family:'+fonts+'; font-weight:light">What I Follow</span></td>';
+		emailBody +='<table align="center" class="container float-center" style="Margin:0 auto;background:#fff;border-collapse:collapse;border-spacing:0;float:none;margin:0 auto;padding:0px;text-align:center;vertical-align:top;width:560px">';
+        emailBody +='  <tbody>';
+        emailBody +='  <tr style="padding:0;text-align:left;vertical-align:top">';
+        emailBody +='  <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:40px 20px;text-align:left;vertical-align:top;word-wrap:break-word">';
 
-		// white margin
-		emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>';
+		emailBody +='<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">';
+        emailBody +='    <tbody>'+
+                '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                    '<th class="wrapper small-12 large-12 columns first last" style="Margin:0 auto;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;width:560px">'+
+                        '<table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">'+
+                            '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                '<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">'+
+                                    '<h1 style="Margin:0;Margin-bottom:10px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:24px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left">'+
+										'Hi '+currentUser.FirstName+', catch up on activity for the past '+dayOrWeek+'</h1>'+
+                                '</th>'+
+                                '<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+                            '</tr>'+
+                        '</table>'+
+                    '</th>'+
+                '</tr>'+
+            '</tbody>'+
+        '</table>';
 
-		emailBody += ' </tr></tbody></table></td></tr>';
+		emailBody +='<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">';
+        emailBody +='    <tbody>'+
+                '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                    '<th class="wrapper small-12 large-12 columns first last" style="Margin:0 auto;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;width:560px">'+
+                        '<table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">'+
+                            '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                '<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">'+
+                                    '<h1 style="Margin:0;Margin-bottom:10px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left">'+
+										'What I follow</h1>'+
+                                '</th>'+
+                                '<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+                            '</tr>'+
+                        '</table>'+
+                    '</th>'+
+                '</tr>'+
+            '</tbody>'+
+        '</table>';
+		emailBody += getSpacer(10);
 		return emailBody;
 	}
 
 	public static String getEmailFooter() {
 		String emailBody = '';
-		emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
-		emailBody +='</TBODY></table></TBODY></table>\n</body></html>';
+		// emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
+		// emailBody +='</TBODY></table></TBODY></table>\n</body></html>';
+
+		emailBody +='</td>\n </tr></TBODY></table></table>';
+		emailBody +='</center>';
+		emailBody +='</td>\n </tr> </table>';
+    	emailBody +='<!-- prevent Gmail on iOS font size manipulation -->';
+    	emailBody +='<div style="display:none;white-space:nowrap;font:15px courier;line-height:0">'+
+						'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'+
+        				'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>';
+		emailBody +='</body> </html>';
+		return emailBody;
+	}
+
+	public static String getSpacer(Integer height) {
+		String emailBody = '';
+		emailBody += '<table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">'+
+                        '<tbody>'+
+                            '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                '<td height="'+height+'px" style="-moz-hyphens:auto;-webkit-hyphens:auto;'+
+									'Margin:0;border-collapse:collapse!important;color:#000000;font-family:Helvetica,Arial,sans-serif;'+
+									'font-size:10px;font-weight:400;hyphens:auto;line-height:'+height+'px;margin:0;mso-line-height-rule:exactly;padding:0;'+
+									'text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td>'+
+                            '</tr>'+
+                        '</tbody>'+
+                    '</table>';
 		return emailBody;
 	}
 
@@ -313,26 +375,38 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 				amountOfFeedItems++;
 			}
 		}
+
+		if(amountOfFeedItems == 0) return '';
 		// only add topic if it has chatter posts
 		if(amountOfFeedItems>0) {
 			Integer topicFeedItemCounter = 0;
 
-			emailBody += '<table cellSpacing=0 cellPadding=0 width="100%" border=0><tbody><tr>';
-			emailBody += '<TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>'+
-			 				'<th  style="background-color: #eeeeee; height: 3em; font-size: 16px; padding: 1em; font-family:'+fonts+';" align="left">Topic:' + topicName +'</th>';
-			emailBody += '<TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD>';
-			emailBody += '</tr>';
+			emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
+                                '<tbody>'+
+                                    '<tr style="padding:0;text-align:left;vertical-align:top;background:#f2f2f2;">'+
+                                        '<th class="wrapper small-1 large-1 columns first" style="Margin:0 auto;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0 auto;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:0;text-align:left;width:50px">'+
+                                            '<table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:430px">'+
+                                                '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                                    '<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:1.3;margin:0;padding:0;text-align:left">Topic: '+topicName+'</th>'+
+                                                    '<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+                                                '</tr>'+
+                                            '</table>'+
+                                        '</th>'+
+                                    '</tr>'+
+                                '</tbody>'+
+                            '</table>';
+
+
 			Integer feedItemCounter = 0;
 			for(FeedItem fi : lsAllFeedItems) {
 				// for daily digest ignore older posts
-				if(currentUser.AMP_Digest_Daily_or_Weekly__c == 'Daily' && fi.CreatedDate < System.now().addDays(-1) ) {
+				if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
 					continue;
 				}
 				if(fi.Body.toLowerCase().contains('#'+topicName.toLowerCase())) {
 					topicFeedItemCounter++;
 					lsAccountIds.add(fi.ParentId);
-					// System.debug('this: '+ fi.Body + ' ' + fi.CreatedDate + ' ' + feedItemCounter);
-					// System.debug('yes: '+  System.now().addDays(-1));
+
 					if(feedItemCounter<lsAllFeedItems.size()-1) System.debug('next: '+ lsAllFeedItems[feedItemCounter+1].Body + ' ' + lsAllFeedItems[feedItemCounter+1].CreatedDate + ' ' + feedItemCounter);
 						// see if the next post is the same for different parent
 						if(	feedItemCounter < lsAllFeedItems.size()-1 &&
@@ -349,11 +423,9 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 									}
 								}
 							}
-							emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD><td>';
-							emailBody += getFeedItemBody(fi,  lsAccountIds,  lsFITopics, lsTopicAssignments);
-							emailBody += '</td><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD></tr>';
 
-							// add the separator if this was not the last feeditem uder the topic
+							emailBody += getFeedItemBody(fi,  lsAccountIds,  lsFITopics, lsTopicAssignments);
+
 							if(topicFeedItemCounter < amountOfFeedItems) {
 								emailBody += feeditemSeparator();
 							}
@@ -364,7 +436,6 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 					}
 					feedItemCounter++;
 				}
-			emailBody += '</tbody></table>';
 		}
 		return emailBody;
 	}
@@ -372,16 +443,40 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, List<Topic> lsTopics, List<TopicAssignment> lsTopicAssignments) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
-		emailBody +='<table cellSpacing=0 cellPadding=0 width="100%" border=0><tbody>\n<tr>'+
-
-			'<td rowspan="2" style="width:10%;background-color: #ffffff">'+
-				'<img src="'+ getUserPhotoURL(fi.CreatedById) +'"  width="50" />'+
-			'</td>'+
-			'<td style="background-color: #ffffff; font-size=14px; font-family='+fonts+';vertical-align=middle"><SPAN style="TEXT-DECORATION: none; COLOR: #015ba7"><FONT color=#015ba7>'+
-				fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName + '</FONT></SPAN></td></tr>';
-		emailBody +='<tr><td style="background-color: #ffffff;font-size:12px; font-family:'+fonts+'"><SPAN style="TEXT-DECORATION: none; COLOR: #4f6a92"><FONT color=#4f6a92>' + fi.CreatedDate.format('EEEE MMMM d,  yyyy HH:mm') +'</FONT></SPAN></td>'+
+		emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
+					'<tbody>'+
+						'<tr style="padding:0;text-align:left;vertical-align:middle;">'+
+							'<th class="wrapper small-1 large-1 columns first" style="Margin:0 auto;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0 auto;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:0;text-align:left;width:50px">'+
+								'<table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:50px">'+
+									'<tr style="padding:0;text-align:left;vertical-align:top">'+
+										'<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">'+
+											'<img class=circle border=0 src="'+getUserPhotoURL(fi.CreatedById)+'" alt="'+fi.CreatedBy.FirstName +' ' + fi.CreatedBy.LastName+'"'+
+												'style="-ms-interpolation-mode:bicubic;clear:both;display:block;max-width:100%;outline:0;text-decoration:none;" width=45 height=45></th>'+
+										'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+									'</tr>'+
+								'</table>'+
+							'</th>'+
+							'<th class="wrapper small-11 large-11 columns last" style="Margin:0 auto;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0 auto;padding-top:10px;padding-bottom:10px;padding-left:0;padding-right:10px;text-align:left;width:430px">'+
+								'<table id="informacao" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:430px">'+
+									'<tr style="padding:0;text-align:left;vertical-align:top">'+
+										'<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+											'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;"><a href="https://iata--amp2.cs84.my.salesforce.com/005w0000003Pu27?fromEmail=1&s1oid=00D5E0000008pnX&s1nid=000000000000000&s1uid=005w0000003Pu27&s1ext=0&emkind=chatterUnifiedUserDigest&emtm=1505774399894"'+
+													'style="color:#2f78b5;text-decoration:none;">'+fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName+'</a></p>'+
+											'<p style="Margin:0;margin-bottom:0px;color:#94a4bd;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">Monday, September 18, 2017 12:37 PM</p>'+
+										'</th>'+
+										'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+									'</tr>'+
+								'</table>'+
+							'</th>'+
+						'</tr>'+
+						'<tr style="padding:0;text-align:left;vertical-align:top">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+								'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
+								fi.Body +'</p>'+
+							'</th>'+
+							'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 					'</tr>';
-		emailBody += '<tr><td colspan="2" style="background-color: #ffffff;font-size:12px; font-family:'+fonts+'">' + fi.Body + '</td></tr>\n';
+
 		List<Topic> lsFITopics = new List<Topic>();
 		List<Topic> lsBroadcastTopics = getBroadCastTopics();
 		for(Topic to : lsBroadcastTopics) {
@@ -397,19 +492,29 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			mpAccountId2Account.put(a.Id,a);
 		}
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
-			emailBody += '<tr><td style="font-weight:bold;background-color: #ffffff">Accounts:</td><td style="background-color: #ffffff"> ';
+			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+							'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;'+
+							'margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Accounts: ';
+
 			for(Id i : lsAccountIds) {
 				emailBody += mpAccountId2Account.get(i).Name + ' ';
 			}
-			emailBody += '</td></tr>\n ';
+			emailBody += '</p></th>'+
+			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+			'</tr>';
 		}
 		if(lsFITopics.size()>0) {
-			emailBody +='<tr>';
-			emailBody += '<td style="font-weight:bold;background-color: #ffffff">Broadcast:</td><td style="background-color: #ffffff"> ';
+			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+					'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Broadcast:';
+
 			for(Topic to : lsFITopics) {
 				emailBody += to.Name + ' ';
 			}
-			emailBody += '</td></tr>\n ';
+			emailBody += '</p></th>'+
+			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+			'</tr>';
 		}
 		emailBody +='</tbody></table>\n';
 		return emailBody;
@@ -419,7 +524,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public static String feeditemSeparator() {
 		String emailBody = '';
 
-		emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD><td >\n';
+		// emailBody += '<tr><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD><td >\n';
 
 		emailBody += '<TABLE style="FONT-SIZE: 1px; LINE-HEIGHT: 1px" cellSpacing=0 cellPadding=0 width="100%" border=0><TBODY>';
 		emailBody += '<TR> <TD colspan="3" style="FONT-SIZE: 7px; LINE-HEIGHT: 7px; background-color: #ffffff"   bgColor=#ffffff height=7>&nbsp;</TD></TR>';
@@ -430,11 +535,12 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		emailBody += '<TR>\n';
 		emailBody += '<TD colspan="3" style="FONT-SIZE: 15px; LINE-HEIGHT: 15px; background-color: #ffffff" bgColor=#ffffff height=15>&nbsp;</TD></TR></TBODY></TABLE>\n';
 
-		emailBody += '</td><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD></tr>\n';
+		// emailBody += '</td><TD class=defaultIndentation bgColor=#ffffff width=20>&nbsp;</TD></tr>\n';
 		return emailBody;
 	}
 
 	public static String getUserPhotoURL(String UserId) {
+		if(Test.isRunningTest()) return '';
 	    ConnectApi.Photo ph =  ConnectApi.UserProfiles.getPhoto(null, UserId);
 	    return ph.fullEmailPhotoUrl;
 	}
