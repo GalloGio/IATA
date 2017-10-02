@@ -139,6 +139,14 @@
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
+    <fields>
+        <fullName>ANG_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Email Sent</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Risk Alert</label>
     <nameField>
         <displayFormat>RA-{00000000}</displayFormat>
