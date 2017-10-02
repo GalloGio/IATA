@@ -51,7 +51,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 			if (emailBody != '') lsEmails.add(mail);
 
 		}
-		Messaging.sendEmail(lsEmails);
+		if(!Test.isRunningTest()) Messaging.sendEmail(lsEmails);
 	}
 
 	global void finish(Database.BatchableContext BC) {
