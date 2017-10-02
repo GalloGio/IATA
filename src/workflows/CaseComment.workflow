@@ -272,7 +272,7 @@
             <name>New_comment_on_case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>CaseComment.CreatedDate</field>
             <operation>notEqual</operation>
