@@ -39,7 +39,7 @@ private class AMP_SmallTests {
 		testContact.Function__c = 'testFunction';
 		testContact.Membership_Function__c = 'testFunction';
 		insert testContact;
-		
+
 		testContact.Membership_Function__c = '';
 		try {
 			update testContact;
@@ -101,9 +101,9 @@ private class AMP_SmallTests {
    		System.debug(jobName);
    		System.schedule(jobName, cronvalue , new AMP_ChatterDigestScheduler());
 		System.runAs(u) {
-
+Test.startTest();
 			Id batchId = Database.executeBatch(new AMP_Batch_EmailChatterDigest('daily'));
-
+Test.stopTest();
 			AMP_ChatterTopicSubscribeController con = new AMP_ChatterTopicSubscribeController();
 			PageReference pr = con.savePreferences();
 			pr = con.unsubscribe();
