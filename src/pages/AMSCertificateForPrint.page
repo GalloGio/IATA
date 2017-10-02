@@ -67,10 +67,12 @@
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 8), 1)}"/>
 						</apex:outputText> 
-						<apex:outputText value="{0}-{1} {2}" rendered="{!NOT(acc.Location_Class__c == 'P')}">
+						<apex:outputText value="{0}-{1} {2} {3} {4}" rendered="{!NOT(acc.Location_Class__c == 'P')}">
 							<apex:param value="{!LEFT(acc.IATACode__c, 2)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 3), 1)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
+							<apex:param value="{!LEFT(acc.CASS_Number__c, 3)}"/>
+							<apex:param value="{!acc.Check_Digit__c}"/>
 						</apex:outputText> 
 					</span>
 					{!IF( acc.Region_formula__c == 'China & North Asia', acc.Name, IF(ISBLANK(acc.TradeName__c), acc.Name, acc.TradeName__c))}
