@@ -7582,7 +7582,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
-        <value>New Associate Entity - Cash</value>
+        <value>New Associate Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
@@ -7590,7 +7590,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
-        <value>New Associate Entity - Cashless</value>
+        <value>New Associate Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
@@ -9327,14 +9327,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with Cash</value>
+        <value>New Head Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with no Cash</value>
+        <value>New Head Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
@@ -12828,14 +12828,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoStandard&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoLite&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_FIN_Interest</fullName>
@@ -14075,14 +14075,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
-        <value>IATA Passenger Sales - Standard with no Cash</value>
+        <value>IATA Passenger Sales - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
-        <value>IATA Passenger Sales - Standard with Cash</value>
+        <value>IATA Passenger Sales - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
