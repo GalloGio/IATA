@@ -380,11 +380,7 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Location_Class__c</fields>
-        <fields>Threshold__c</fields>
-        <relatedList>AMS_Country_Specific_Attribute__c.IATA_ISO_Country__c</relatedList>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -393,13 +389,21 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Listed_In__c</fields>
-        <fields>Market_Size__c</fields>
-        <relatedList>Country_Profile__c.Country_Name__c</relatedList>
+        <fields>GDP_Area_Definition__c</fields>
+        <fields>Method__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <relatedList>GDP_Area_Country__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Price_Table__c.ISO_Country__c</relatedList>
+        <fields>Type__c</fields>
+        <fields>Locations__c</fields>
+        <fields>Travel_Agencies__c</fields>
+        <fields>Airline_Sales_Offices__c</fields>
+        <fields>Cargo_Agencies__c</fields>
+        <fields>General_Sales_Agents__c</fields>
+        <fields>Unique_Emails__c</fields>
+        <relatedList>GDP_Agency_Stats__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -407,10 +411,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>EmailTemplate__c.IATA_ISO_Country__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
+        <relatedList>Price_Table__c.ISO_Country__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
