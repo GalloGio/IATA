@@ -2245,11 +2245,11 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Security Manual</fullName>
+                <fullName>Security Management System Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>SEMS Manual</fullName>
+                <fullName>Security Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -13013,7 +13013,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SEMS Manual</fullName>
+                <fullName>Security Management System Manual</fullName>
                 <default>false</default>
             </values>
             <values>
