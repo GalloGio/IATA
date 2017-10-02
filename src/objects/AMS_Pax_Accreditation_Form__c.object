@@ -1302,11 +1302,11 @@
         <label>Accreditation Type</label>
         <picklist>
             <picklistValues>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>

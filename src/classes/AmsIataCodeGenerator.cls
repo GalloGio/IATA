@@ -86,7 +86,7 @@ global class AmsIataCodeGenerator{
             
             AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
             
-            if(theAccreditation.SAAM_Case__r.OSCAR__r.STEP6__c != AMS_Utils.PASSED && (theAccreditation.SAAM_Case__r.OSCAR__r.Process__c != 'NEW.MSO.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c != 'NEW.GSA.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c != 'NEW.AHA.1.0')){
+            if(theAccreditation.SAAM_Case__r.OSCAR__r.STEP6__c != AMS_Utils.PASSED && !(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.MSO.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.GSA.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.AHA.1.0')){
                 returnedValues[0] = '2';
                 returnedValues[1] = 'IATA Code Generation is only allowed after Sanity Check step be passed.';
                 return returnedValues;

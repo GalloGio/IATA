@@ -280,7 +280,7 @@
 					                <div class="page-number">
 					                    <ol class="list page-number">
 					                        <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
-					                        	<li class="prev"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+					                        	<li class="prev(currentPageNumber,' selected')"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
 											</apex:variable>
 											<apex:variable var="max" value="{!7}" />
 											<apex:variable var="firstDot" value="{!0}" />
@@ -297,13 +297,13 @@
 												</apex:variable>
 					                        </apex:repeat>
 					                        <apex:variable var="btnNext" value="1" rendered="{!showNext}">
-					                        	<li class="next"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+					                        	<li class="next(currentPageNumber,' selected')"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
 				                        	</apex:variable>
 					                    </ol>
 					                </div>
 					            </div>
 								
-													            <div class="pagination mobile">
+								<div class="pagination mobile">
 					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
 						                <div class="control prev">
 						                    <a href="javascript:gotoPrevious();">
@@ -402,7 +402,10 @@
 				    }
 
 				    //If the page number is not empty go the the page number
-				    
+				    // var pageNumber = $('input[id$=pageNumber]').val();
+                    //if(pageNumber != ''){
+                    //    gotoPage(pageNumber);
+                    //}
 				    
 				    $('body').bind('change', function(eventObject){
 				    	//console.log(eventObject);
