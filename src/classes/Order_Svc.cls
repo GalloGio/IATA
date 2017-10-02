@@ -147,7 +147,7 @@ public without sharing class Order_Svc
                 shipTo.Name                 = Utility.truncate(shipToLocation.Account_Name__c,35);
                 //shipTo.Name                 = Utility.truncate(ord.ShipToContact_Name__c,35);
                 //TC: Enhancement
-                List<String> addressLines 	= Utility.splitAddress(shipToLocation.Street__c, 35);
+                List<String> addressLines   = Utility.splitAddress(shipToLocation.Street__c, 35);
                 shipTo.AddressLine1         = addressLines[0];
                 shipTo.AddressLine2         = addressLines[1];
                 shipTo.City                 = Utility.truncate(shipToLocation.City__c,35);
@@ -252,7 +252,7 @@ public without sharing class Order_Svc
                 orderItemIds.add(oi.Id);
         
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
-
+        //-- 
         //-- Verify if the status of the order is valid before send the order to SAP
         //-- if the order is not paid and status is Payment Failure, the order cannot be created on SAP
         for(Order o : orderById.values())
