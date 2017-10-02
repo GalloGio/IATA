@@ -765,13 +765,11 @@ public class Product_Sel extends Selector
             "IECProductRelated_Ctrl_Test", etc.
     ****************************************************************************************************/
     public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort) {
-        return getEComProduct (listProductId, includeBOM, productCriteria, productSort, true, null);
+        return getEComProduct (listProductId, includeBOM, productCriteria, productSort, true);
     }
-
-
-    public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent, String customerType) {
+    public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent) {
         System.debug('listProductId::'+listProductId);
-
+        fakeMethod();
         Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
         Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
         Product_Sel exe = new Product_Sel();
@@ -790,9 +788,10 @@ public class Product_Sel extends Selector
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
                     + ((listProductId == null || listProductId.size() == 0) ? '' : ' and Id in :listProductId');
                 
-        customerType = customerType == null ? User_Sel.getCustomerType(UserInfo.getUserId()) : customerType;
+        String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
         
-        SOQL += ' and (Restricted_Customer_Type__c = null' + (String.isBlank(customerType) ? '' : ' or Restricted_Customer_Type__c includes (:customerType)') + ')';
+        //if (UserInfo.getUserType() == 'PowerPartner')
+            SOQL += ' and (Restricted_Customer_Type__c = null' + (String.isBlank(customerType) ? '' : ' or Restricted_Customer_Type__c includes (:customerType)') + ')';
         
         if (productCriteria != null & productCriteria != '')
             SOQL += ' and (' + productCriteria + ')';
@@ -806,7 +805,7 @@ public class Product_Sel extends Selector
         List<EComProduct_DTO> listEComProduct = new List<EComProduct_DTO>();
 
         //*** get products list and prepare for additional information
-        system.debug('SOQL::'+SOQL);
+system.debug('SOQL::'+SOQL);
         listProduct = Database.query(SOQL);
 
         // Filter products based on compliance requirements
@@ -1853,5 +1852,4 @@ i++;
 i++;
 i++;
     }
-
 }

@@ -393,8 +393,8 @@ global with sharing class GSS_REST_FileSpecification{
         if (subscriptiondetail.File_Name_Prefix_Option__c =='Custom') fileNamePrefix = subscriptiondetail.File_name_Custom_Prefix__c;  
         if (subscriptiondetail.File_Name_Suffix_Option__c =='Custom') fileNameSuffix = subscriptiondetail.File_Name_Custom_Suffix__c;                   
         
-        if (fileNameSuffix!='') fileNameSuffix = '_'+fileNameSuffix;
-        if (fileNamePrefix!='') fileNamePrefix = fileNamePrefix + '_';
+        //if (fileNameSuffix!='') fileNameSuffix = '_'+fileNameSuffix;
+        //if (fileNamePrefix!='') fileNamePrefix = fileNamePrefix + '_';
          
         // apply the prefix/suffix pattern to data file as required 
         if (subscriptiondetail.File_Name_Applies_on__c == FILE_NAME_APPLIES_ON_ZIP_AND_DATA )
@@ -481,7 +481,8 @@ global with sharing class GSS_REST_FileSpecification{
     //global static String getZipFFileName(String FileName)
     static String getZipFileName(String FileName)
     {
-      return FileName.replace('.', '')+'.zip'; 
+      //return FileName.replace('.', '')+'.zip'; 
+      return FileName+'.zip'; 
     }
     
     

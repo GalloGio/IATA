@@ -823,6 +823,7 @@ public without sharing class vfISSP_FAQ2Case
         System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();
+        this.newCase.IATAcode__c = iataCode;
         this.currentButtonsToShow = OnlyCancel;
         system.debug('Kerensen refreshTopicPickList: After  resetCase(); '+topic+'     Env.SelectOptionDefaultValue===>'+Env.SelectOptionDefaultValue  );
         if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
@@ -870,7 +871,8 @@ public without sharing class vfISSP_FAQ2Case
    public void refreshSubTopicPickList()     {
 
         resetCase();
-       System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
+        this.newCase.IATAcode__c = iataCode;
+        System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
         Integer index = Integer.valueOf(topic.trim());
         system.debug('INTEGER: ' + index);

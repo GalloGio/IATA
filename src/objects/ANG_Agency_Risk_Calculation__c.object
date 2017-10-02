@@ -124,6 +124,16 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the risk event with this calculations flags the cash condition in the account</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Condition</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Occurrence_Num__c</fullName>
         <externalId>false</externalId>
         <label>Number of occurrence</label>
@@ -221,6 +231,7 @@
         <columns>ANG_Financial_Review_Result__c</columns>
         <columns>ANG_Risk_History_Assessment__c</columns>
         <columns>ANG_Risk_History__c</columns>
+        <columns>ANG_Limit_Cash_Condition__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>

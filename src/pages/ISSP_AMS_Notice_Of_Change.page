@@ -35,9 +35,6 @@
 		.ui-dialog{	
 			z-index:9999 !important;
 		}
-		.pbTitle {
-			width: {!IF(isstep2,'90% !important','40% !important')};
-		}
 		.statusBox{margin-left: 76.6%;margin-top: -25.0%;}
 		.statusBoxOther{margin-left: 172.5%;margin-top: -25%;}
 		.statusBoxMW{margin-left: 59.5%;margin-top: -16.5%;}
@@ -173,7 +170,16 @@
 			.col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
 			.col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
 			.col3 {width:50%}
-		
+		#tooltip-add-ass-contact:hover:after{
+			content: attr(html-title);
+			display:block;
+			padding: 5px;
+			color: #8a6d3b;
+			background-color: #fcf8e3;
+			border-color: #faebcc;
+			border-radius: 4px; 
+			font-size: 14px;
+		}
 	</style>	
 	<script type="text/javascript">
 	var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -464,6 +470,14 @@
 		});
 	}
 
+	function showNewIFAPContactDialog() {
+		$j(function() {
+			$j( '#addNewIFAPContactModal').modal('show');
+			$j('[id$=financialAssContactField]')[0].checked = true;
+			$j('[id$=financialAssContactField]')[0].disabled = true;
+		});
+	}
+
 	function toggleUpdatedLegalStatus(myValue){
 		var theValue = document.getElementById(myValue).value;
 		if (theValue != ''){
@@ -604,6 +618,14 @@
 		});
 	} 
 
+	function confirmIFAPContactDelete(conid, conname, contype) {
+		msg = bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
+			if(result) {
+				deleteIFAPContact(conid);
+			}
+		});
+	} 
+
 	var ownerModalFields = [];
 	ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactFinInterest}";
 	//ownerModalFields[1] = "{!$Component.newContact.contactBlock.contactNumOfShares}";
@@ -631,14 +653,40 @@
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null}">
 			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
+		<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
+			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
+		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
-			<p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</a></p>
+			<p><a href="#nav_two">
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
+				</apex:outputText>
+			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_location__c==true}">
-			<p><a href="#nav_true">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</a></p>
+			<p><a href="#nav_three">
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
+				</apex:outputText>
+			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
-		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
+			<p><a href="#nav_four">
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+				</apex:outputText>
+			</a></p>
+		</apex:outputText>
+		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
+			<p><a href="#nav_five">
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
+				</apex:outputText>
+			</a></p>
 		</apex:outputText>
 		
 	</div>
@@ -685,6 +733,9 @@
 			<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="currContactList,updated-company-owners,currOwnerSummaryList"> 
 				<apex:param value="" name="recordId" assignTo="{!editContactId}" />
 			</apex:actionFunction>
+			<apex:actionFunction name="deleteIFAPContact" action="{!deleteAgencyContact}" rerender="contactIFAPList, comandButtonAddAssContact, theMessages"> 
+				<apex:param value="" name="recordId" assignTo="{!editContactId}" />
+			</apex:actionFunction>
 			<apex:actionFunction name="cancelFormUpdate" action="{!cancelFormUpdate}" status="WaitingStatus" reRender="none"/>
             <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation">
                 <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
@@ -708,10 +759,12 @@
 			</apex:pageBlockButtons>
 			<apex:PageMessages id="msgs"/>
 			<div class="apcontainer" style="border: 1px solid #ececec;">
-				<span id="nav_one"></span>
+				<apex:outputText rendered="{!newform.Is_change_bank_account_details__c && PDFPerRegionCS!=null}">
+					<span id="nav_one"></span>
+				</apex:outputText>
 				<apex:pageBlockSection columns="1" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c && PDFPerRegionCS!=null}">
 					<apex:facet name="header">
-						<apex:outputpanel >
+						<apex:outputpanel>
 							{!$Label.ISSP_AMS_NoC_Change_Bank_Details}
 						</apex:outputpanel>
 					</apex:facet>
@@ -730,14 +783,106 @@
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
 					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
 				</apex:pageBlockSection>
+				<apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
+					<span id="nav_one"></span>
+					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
+						<apex:facet name="header">
+							<apex:outputpanel >
+								{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}
+							</apex:outputpanel>
+						</apex:facet>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
+					
+						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_accreditation_type_are_correct__c==false,newForm.Notify_Change_Accreditation_Type__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_accreditation_type_are_correct__c.Label}" style="color:black;font-size:110%"/>
+							<apex:inputCheckbox id="confirmAccType" value="{!newForm.Confirm_accreditation_type_are_correct__c}" onchange="accreditationModelChanged('isCorrect')"/>
+						</apex:pageBlockSectionItem>
+							
+						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false, newForm.Confirm_accreditation_type_are_correct__c==false, CanChangeAccreditationType), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
+							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)" disabled="{!!CanChangeAccreditationType}"/>
+						</apex:pageBlockSectionItem>
 
+						<apex:pageBlockSection columns="1">	
+							<apex:pageBlockSectionItem labelStyle="width:26%">
+								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
+								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<apex:pageBlockSection columns="1">	
+							<apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
+								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
+								<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
+							</apex:pageBlockSectionItem>
+							<script>
+								cntIFAPContacts = {!cntIFAPContacts};
+							</script>
+							<apex:outputPanel rendered="{!con.Account.ANG_Accreditation_Model__c == 'Cashless'}" style="display: {!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', '', 'none')};" id="addFinancialAssessmentContactItem" >
+								<apex:outputPanel id="comandButtonAddAssContact">
+									<script>
+										cntIFAPContacts = {!cntIFAPContacts};
+									</script>
+									<apex:commandLink rendered="{!(cntIFAPContacts < MAX_IFAP_Contacts)}" style="margin-right:5px" onfocus="showNewIFAPContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_Add_FAP_Contact}</apex:commandLink>
+									<apex:outputText rendered="{!(cntIFAPContacts >= MAX_IFAP_Contacts)}">
+										<span id="tooltip-add-ass-contact" html-title="{!$Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts1 + ' ' + TEXT(MAX_IFAP_CONTACTS) + ' ' + $Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts2 }">
+											<span style="margin-right:5px; opacity: 0.6; text-decoration: underline;"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_Add_FAP_Contact}</span>
+										</span>
+									</apex:outputText>
+								</apex:outputPanel>
+								<apex:outputPanel id="contactIFAPList">
+									<apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
+										<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">
+											{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}
+											<span style="float: right;">
+												<apex:actionStatus id="actEditContact">
+													<apex:facet name="start">
+														<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
+													</apex:facet>
+												</apex:actionStatus>
+												<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewIFAPContactDialog();" rerender="contactIFAPList, newIFAPContact">
+													<apex:param value="{!ifapCon.Id}" name="recordId" assignTo="{!editContactId}" />
+												</apex:commandLink>
+												<span id="agencyConIFAPContact" style="display: none;">{!ifapCon.Id}</span>
+												<apex:commandLink onfocus="confirmIFAPContactDelete('{!ifapCon.Id}', '{!ifapCon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
+											</span>
+										</apex:outputPanel>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.FirstName.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.First_name__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.LastName.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Last_name__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Phone.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Phone__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Email.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Email__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}"/>
+											<apex:outputText style="font-weight: normal;" ><img src="{!IF(ifapCon.Financial_Assessment_Contact__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+										</apex:panelGrid>
+									</apex:repeat>
+								</apex:outputPanel>
+							</apex:outputPanel>
+						</apex:pageBlockSection>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
 				<span id="nav_two"></span>
 				<div style="display:{!IF(newform.Is_change_legal_name__c==true,'','none')}">
 					<apex:pageBlockSection columns="2" collapsible="false" id="legalNameSection">
 
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
+								<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
+                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                                    {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
+                                </apex:outputText>
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Legal_details}</apex:outputPanel>
@@ -815,7 +960,10 @@
 					<apex:pageBlockSection columns="2" id="locationSection" collapsible="false">
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_of_Location_New,$Label.ISSP_AMS_NoC_Change_of_Location)}
+								<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
+                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                                    {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
+                                </apex:outputText>
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NOC_Current_Location_New, $Label.ISSP_AMS_NOC_Current_Location)}</apex:outputPanel>
@@ -826,9 +974,9 @@
 								<apex:inputCheckbox html-data-group="agencyLocation" value="{!newForm.Confirm_Location_Details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						
-						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_Of_Change__c != 'HO - All Branches' , agencyCodesConcernedSize < 1), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
+							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
 
 						<apex:pageBlockSection columns="1">
@@ -963,7 +1111,10 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
+							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+							<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+								{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+							</apex:outputText>
 						</apex:outputpanel>
 					</apex:facet>
                     
@@ -1335,22 +1486,25 @@
 				</apex:outputPanel>
 						
 					
-					
+				<span id="nav_five"></span>	
                 </apex:pageBlockSection>
                 
 						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false}">
 							<apex:facet name="header">
 								<apex:outputpanel >
-									{!$Label.ISSP_AMS_NoC_Additional_Information}
+									<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+									<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+										{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
+									</apex:outputText>
 								</apex:outputpanel>
 							</apex:facet>
 
 
 							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}"/>
-								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');">
+								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}"/>
+								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');" disabled="{!newForm.Scope_Of_Change__c == 'Selected Branches Only'}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
-									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
 								</apex:selectRadio>
 							</apex:pageBlockSectionItem>
                             
@@ -1377,7 +1531,7 @@
                             </apex:outputPanel>
 
 							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}"/>
+								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_AE_Becoming_a_Head_Entity, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Branch_becoming_a_Head_Office__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
@@ -1400,7 +1554,7 @@
 							</apex:pageblocksectionitem>
 							</apex:pageBlockSection>-->
 							<apex:pageBlockSectionItem >
-								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations}"/>
+								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations_New, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Will_such_change_affect_locations__c==null), 'border:2px red solid;', '')}" value="{!newForm.Will_such_change_affect_locations__c}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
@@ -1468,7 +1622,14 @@
 								</apex:pageblocksectionitem>
 							</apex:pageBlockSection>								
 						</apex:outputPanel>
-
+						<!--NEWGEN-668-->
+						<apex:pageblocksection columns="1" rendered="{!isAccreditationModelNotNullOrLegacy}">
+							<apex:pageblocksectionitem labelStyle="width:50%">
+								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS}" />
+								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
+							</apex:pageblocksectionitem>
+						</apex:pageblocksection>   
+						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem>
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
 						</apex:pageBlockSectionItem>
@@ -1825,6 +1986,170 @@
    
 </apex:form> 
 
+<!-- Modal New HO Agency Contact - Person -->
+<apex:form id="newIFAPContact">
+	<div class="modal fade" id="addNewIFAPContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_Add_FAP_Contact}</h4>
+				</div>
+
+				<apex:pageMessages id="theMessages" />
+
+				<div class="modal-body">
+					<apex:pageBlock id="contactBlock">
+						<apex:pageBlockSection id="contactSection" columns="1">
+							<apex:pageBlockSectionItem>
+								<apex:outputLabel style="width: 185px;">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
+								<apex:inputField id="financialAssContactField" value="{!newContact.Financial_Assessment_Contact__c}" />
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<table>
+							<tr>
+								<td style="width:25%">
+									<table>
+										<tr>
+											<td class="modalrow">
+												<apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}" /><br/>
+												<apex:inputField value="{!newContact.Salutation__c}" />
+											</td>
+										</tr>
+										<tr>
+											<td class="modalrow">
+												<apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
+												<apex:inputField value="{!newContact.First_name__c}" required="true" />
+											</td>
+										</tr>
+										<apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
+											<tr>
+												<td class="modalrow">
+													<apex:outputPanel>
+														<apex:outputLabel value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
+														<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+													</apex:outputPanel>
+													<apex:inputField value="{!newContact.Local_First_name__c}" required="true" />
+												</td>
+											</tr>
+										</apex:outputText>
+										<tr>
+											<td class="modalrow">
+												<apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLastNameENG, $ObjectType.Contact.fields.LastName.Label)}" /><br/>
+												<apex:inputField value="{!newContact.Last_name__c}" />
+											</td>
+										</tr>
+										<apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
+											<tr>
+												<td class="modalrow">
+													<apex:outputPanel>
+														<apex:outputLabel value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
+														<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalLastName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+													</apex:outputPanel>
+													<apex:inputField value="{!newContact.Local_Last_Name__c}" required="true" />
+												</td>
+											</tr>
+										</apex:outputText>
+										<tr>
+											<td class="modalrow">
+												<apex:inputHidden value="{!newContact.Phone__c}" id="contactphone" />
+												<apex:outputText value="{!$ObjectType.Contact.fields.Phone.Label}" /><br/>
+												<apex:inputField id="contactphoneinput" html-placeholder="" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" required="true" style="width:85%" />
+											</td>
+										</tr>
+										<tr>
+											<td class="modalrow">
+												<apex:inputHidden value="{!newContact.Mobile__c}" id="contactmobile" />
+												<apex:outputText value="{!$ObjectType.Contact.fields.MobilePhone.Label}" /><br/>
+												<apex:inputField id="contactmobileinput" html-placeholder="" value="{!newContact.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');" style="width:85%" />
+											</td>
+										</tr>
+										<tr>
+											<td class="modalrow">
+												<apex:inputHidden value="{!newContact.FAX__c}" id="contactfax" />
+												<apex:outputText value="{!$ObjectType.Contact.fields.FAX.Label}" /><br/>
+												<apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAXNational__c}" onblur="setInternationalPhoneNo('fax');" style="width:85%" />
+											</td>
+										</tr>
+										<tr>
+											<td class="modalrow">
+												<apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
+												<apex:inputField value="{!newContact.Email__c}" required="true" rendered="{!newContact.Contact__c == null}" />
+												<apex:outputField value="{!newContact.Email__c}" rendered="{!newContact.Contact__c != null}" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</apex:pageBlock>
+				</div>
+
+				<div class="modal-footer">
+					<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeIFAPModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactIFAPList, theMessages, comandButtonAddAssContact">
+						<apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+					</apex:commandButton>&nbsp;
+					<button type="button" class="btn btn-default" onclick="closeIFAPModalByCommandButton(); cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+				</div>
+
+				<script>
+
+					function closeIFAPModalByCommandButton() {
+						$j( '#addNewIFAPContactModal' ).modal('hide');
+            			clearForm('{!$Component.newIFAPContact}');
+					}
+
+					var natphone = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactphoneinput}']");
+					var phone = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactphone}']");
+
+					natphone.intlTelInput({
+						nationalMode: true,
+						defaultCountry: defaultHQCountry,
+						numberType: "FIXED_LINE",
+						utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+					});
+
+					natphone.intlTelInput("setNumber", phone.val());
+
+					var natmobile = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactmobileinput}']");
+					var mobile = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactmobile}']");
+
+					natmobile.intlTelInput({
+						nationalMode: true,
+						defaultCountry: defaultHQCountry,
+						numberType: "MOBILE",
+						utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+					});
+					natmobile.intlTelInput("setNumber", mobile.val());
+
+					var natfax = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactfaxinput}']");
+					var fax = $j("input[name='{!$Component.newIFAPContact.contactBlock.contactfax}']");
+
+					natfax.intlTelInput({
+						nationalMode: true,
+						defaultCountry: defaultHQCountry,
+						numberType: "FIXED_LINE",
+						utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+					});
+
+					natfax.intlTelInput("setNumber", fax.val());
+
+					function setInternationalPhoneNo(p) {
+						if (p == 'phone') {
+							phone.val(natphone.intlTelInput("getNumber"));
+						} else if (p == 'mobile') {
+							mobile.val(natmobile.intlTelInput("getNumber"));
+						} else {
+							fax.val(natfax.intlTelInput("getNumber"));
+						}
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+
+</apex:form>
+
 
 	</div>	
 	</div>
@@ -1832,6 +2157,97 @@
 		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
 		<script>
+			//NoC Changes
+			var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
+				  lScopeOfChange = '{!newForm.Scope_of_Change__c}',
+				  checkb = $j('[id$=notifyChangeLocationCheckbox]'),
+				  iataChangeAccType = $j('[id$=iataChangeAccType]'),
+				  allowedAccreditationModelSelect = $j('[id$=allowedAccreditationModelSelect]'),
+				  addFinancialAssessmentContactItem = $j('[id$=addFinancialAssessmentContactItem]'),
+				  allowedAccreditationModelSelectDisplay = allowedAccreditationModelSelect.parent().parent().children(),
+				  confirmAccType = $j('[id$=confirmAccType]');
+
+			function getWarningBox(message) {
+				var alertDiv = document.createElement('div');
+				alertDiv.className = 'alert alert-warning text-justify';
+				alertDiv.role = 'alert';
+				alertDiv.appendChild(document.createTextNode(message));
+				return alertDiv;
+			} 
+
+			function setWarningBoxOnHover(where, warningMessage) {
+				var whereToAppend = where.parent().parent().next().children().last();
+				// where.parent() because disabled elements does not have mouse events
+				where.parent().hover(function() {
+					whereToAppend.append(getWarningBox(warningMessage));
+				}, function() {
+					whereToAppend.html('');
+				});
+			}
+
+			//NEWGEN-523
+			function hideAccreditationTypeSelectSection() {
+				allowedAccreditationModelSelect.val('');
+				addFinancialAssessmentContactItem.css('display', 'none');
+				allowedAccreditationModelSelectDisplay.css('display', 'none');
+			}
+
+			function accreditationModelChanged(element) {
+				if (element === 'isCorrect') {
+					if (cntIFAPContacts > 0) {
+						bootbox.confirm('{!$Label.ISSP_NoC_Switch_Selection_Warning}', function(result) {
+							if(result) {
+								deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+								hideAccreditationTypeSelectSection();
+								iataChangeAccType[0].checked = false;
+							} else {
+								confirmAccType[0].checked = false;
+								iataChangeAccType[0].checked = true;
+								allowedAccreditationModelSelectDisplay.css('display', '');
+							}
+						});
+					} else {
+						iataChangeAccType[0].checked = false;
+						hideAccreditationTypeSelectSection();
+					}
+				} else {
+					if(element.checked === false) {
+						allowedAccreditationModelSelect.val('');
+						allowedAccreditationModelSelectDisplay.css('display', 'none');
+					} else if (element.checked === true) {
+						confirmAccType[0].checked = false; 
+						allowedAccreditationModelSelectDisplay.css('display', '');
+					}
+					if (element.checked === false || element.value !== 'Cash') {
+						addFinancialAssessmentContactItem.css('display', 'none');
+					} else {
+						addFinancialAssessmentContactItem.css('display', '');
+					}
+				}
+			}
+			//END NEWGEN-523
+
+			//NEWGEN-1227
+			if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || {!agencyCodesConcernedSize} > 1) {
+				checkb.prop('checked', false);
+				checkb.prop('disabled', true);
+				setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
+			}
+			//END - NEWGEN 1227
+					
+			if ({!isAccreditationModelNotNullOrLegacy}) {
+				$("option[value='" + accreditationModel + "']").remove();
+				var contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
+					scopeOfChange = '{!newForm.Scope_of_Change__c}';
+				if ({!!CanChangeAccreditationType}) {
+					setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
+					if (cntIFAPContacts > 0) {
+						deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+					}
+				}
+			}
+			//END - NoC Changes
+			
 						
 		var natmobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemMobile.locationmobileinput}']");                
 							var mobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationmobile}']");

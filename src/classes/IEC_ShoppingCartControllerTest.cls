@@ -17,7 +17,6 @@ private class IEC_ShoppingCartControllerTest
 		);
 
 		insert f;
-		IECQuotePDFEmailNotification_Ctrl.fakemethod(); 
 	}
 
 	static void testSetupOldShoppingCart() {
@@ -175,7 +174,9 @@ private class IEC_ShoppingCartControllerTest
 
 		oOrder.Type = 'Quote';
 		update oOrder;
-
+		IECQuotePDFEmailNotification_Ctrl const1 = new IECQuotePDFEmailNotification_Ctrl();
+		const1.orderId = oOrder.id;
+		Order_DTO order1 = const1.vfQuote;
 		Test.startTest();
 			System.runAs(oUser)
 			{

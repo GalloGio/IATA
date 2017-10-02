@@ -50,6 +50,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_Restrict_internal_selection__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Cannot_move_contact_between_Agencies__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Critical_Service__c</field>
             </layoutItems>
             <layoutItems>
@@ -75,6 +83,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Agency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Others__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
