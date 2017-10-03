@@ -64,7 +64,7 @@
                             <aura:if isTrue="{!participant.Rowspan>0}">
                                 <td rowspan="{!participant.Rowspan}"><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
                                 <td rowspan="{!participant.Rowspan}"><ui:outputText value="{!participant.GroupOwner}" /></td>
-                                <td rowspan="{!participant.Rowspan}" class="longText"><ui:outputText value="{!participant.Mission}" /></td>
+                                <td rowspan="{!participant.Rowspan}" class="longText"><c:AMP_LongText text="{!participant.Mission}" /></td>
                             </aura:if>
                             <td class="{!participant.Rowspan==0 ? 'dontIndent':''}"><ui:outputText value="{!participant.Role}" /></td>
                             <td><ui:outputText value="{!participant.Salutation}" /></td>
