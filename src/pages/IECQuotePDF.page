@@ -56,14 +56,14 @@
 		<thead>
 		<tr>
 	      	<th valign="left" width="15%">{!$ObjectType.OrderItem.fields.Product_Name__c.Label}</th>
-	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.UnitPrice.Label}</th>
+	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.UnitPrice.Label} USD</th>
 	      	<th align="right" width="5%">{!$ObjectType.OrderItem.fields.Quantity.Label}</th>
-	      	<th align="right" width="10%">Flat fee</th>
-	      	<th align="right" width="13%">{!$ObjectType.OrderItem.fields.SubTotal__c.Label}</th>
-	      	<th align="right" width="10%">Discount</th>
-	      	<th align="right" width="10%">Shipping</th>
-	      	<th align="right" width="10%">Tax</th>
-	      	<th align="right" width="10%">Total</th>
+	      	<th align="right" width="10%">Flat fee USD</th>
+	      	<th align="right" width="13%">{!$ObjectType.OrderItem.fields.SubTotal__c.Label} USD</th>
+	      	<th align="right" width="10%">Discount USD</th>
+	      	<th align="right" width="10%">Shipping USD</th>
+	      	<th align="right" width="10%">Tax USD</th>
+	      	<th align="right" width="10%">Total USD</th>
 	  	</tr>
 	  	<tr>
 	  		<td colspan="9"><hr /></td>
@@ -78,18 +78,18 @@
 				Product # {!item.productCode}
 			</td>
 			<td align="right" class="item-unitPrice">
-				<apex:outputText value="{0, number, currency} USD">
-	                <apex:param value="{!item.unitPrice}"/> 
+				<apex:outputText value="{0, number, currency}">
+	                <apex:param value="{!item.unitPrice}"/>
 	            </apex:outputText>
 			</td>
 			<td align="right" class="item-quantity">{!item.quantity}</td>
 			<td align="right" class="item-subTotal">
-				<apex:outputText value="{!IF(isnull(item.setupFee), '{0, number, currency}', '{0, number, currency} USD')}">
+				<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.setupFee}"/>
 	            </apex:outputText>
 			</td>
 			<td align="right" class="item-subTotal">
-				<apex:outputText value="{0, number, currency} USD">
+				<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.subTotal}"/>
 	            </apex:outputText>
 			</td>
@@ -190,22 +190,22 @@
                 <!-- </apex:repeat> -->
 				<!-- End break down of discount -->
 
-				<apex:outputText value="{!IF(isnull(item.discountAmount), '{0, number, currency}', '{0, number, currency} USD')}">
+				<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.discountAmount}"/>
 	            </apex:outputText>
             </td>
             <td align="right">
-            	<apex:outputText value="{0, number, currency} USD">
+            	<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.shippingAmount}"/>
 	            </apex:outputText>
             </td>
             <td align="right">
-            	<apex:outputText value="{0, number, currency} USD">
+            	<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.taxAmount}"/>
 	            </apex:outputText>
             </td>
-			<td align="right"  class="item-totalAmount">
-				<apex:outputText value="{0, number, currency} USD">
+			<td align="right" class="item-totalAmount">
+				<apex:outputText value="{0, number, currency}">
 	                <apex:param value="{!item.totalAmount}"/>
 	            </apex:outputText>
 			</td>
