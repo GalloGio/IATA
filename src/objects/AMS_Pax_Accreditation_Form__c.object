@@ -4403,6 +4403,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Every 5 day</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5827,6 +5831,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -6584,6 +6592,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7347,6 +7359,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -8104,6 +8120,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8879,6 +8899,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -9648,6 +9672,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10423,6 +10451,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -11192,6 +11224,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11991,6 +12027,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12852,6 +12892,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -13620,6 +13664,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14436,6 +14484,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15359,6 +15411,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -16253,6 +16309,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -16808,6 +16868,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17587,6 +17651,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18460,6 +18528,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -19245,6 +19317,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20095,6 +20171,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -20904,6 +20984,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily (China)</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21829,6 +21913,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Daily (China)</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Every 10 days</fullName>
                 <default>false</default>
             </values>
@@ -22071,6 +22159,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ), 
 
 AND( 
@@ -22086,6 +22175,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 ) 
 
 )</errorConditionFormula>
