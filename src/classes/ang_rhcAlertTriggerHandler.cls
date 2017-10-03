@@ -47,7 +47,7 @@ public class ang_rhcAlertTriggerHandler{
 
         //Get emailTemplates ID's Mapping
         map<string,id> templateMap = new map<string,id>();
-        for(emailTemplate et :[Select id,developerName from emailTemplate where developerName in :templateNameSet]){
+        for(emailTemplate et :[Select id,developerName from emailTemplate where developerName in :templateNameSet and isActive=true]){
         	templateMap.put(et.developerName,et.id);
         }
 
