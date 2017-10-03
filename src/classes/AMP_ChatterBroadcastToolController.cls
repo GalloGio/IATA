@@ -22,6 +22,12 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 	public String strRegion {get; set;}
 
+	public String broadCastRegion {get;set;}
+	public Boolean selectWholeRegion {get;set;} 
+
+	public String broadCastRegion {get;set;}
+	public Boolean selectWholeRegion {get;set;} 
+
 	public List<SelectOption> getlstRegions() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','All Regions'));
@@ -74,8 +80,33 @@ public with sharing class AMP_ChatterBroadcastToolController {
 					}
 				}
 
+				List<String> lsBroadcastTopicNames = new List<String>{'broadcastAll Regions',
+				'broadcastAfrica & Middle East',
+				'broadcastAmericas',
+				'broadcastAsia & Pacific',
+				'broadcastChina & North Asia',
+				'broadcastEurope'};
+				// broadcastTopicNames = '';
+				List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
+
+
 				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
 
+				List<TopicAssignment> lsTopicAssignments = new List<TopicAssignment>();
+				for(FeedItem fi : lstItemsToPost) {
+					if(selectWholeRegion) {
+						for(Topic t :lsBroadcastTopics) {
+							if(t.Name.contains(strRegion)) {
+								TopicAssignment ta = new TopicAssignment();
+								ta.TopicId = t.Id;
+								ta.EntityId = fi.Id;
+								lsTopicAssignments.add(ta);
+							}
+						}
+					}
+				}
+
+				if(!lsTopicAssignments.isEmpty()) { insert lsTopicAssignments; }
 	    		Integer success = 0;
 	    		Integer errors = 0;
 	    		for (Database.SaveResult sr : srList) {
@@ -117,7 +148,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 			lstFilteredAccounts.add(aw);
 		}
-
+numberOfAccounts = 0;
 		lstAccounts = lstFilteredAccounts;
     }
     

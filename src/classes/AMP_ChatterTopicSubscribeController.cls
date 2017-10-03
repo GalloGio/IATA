@@ -470,7 +470,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 							'</th>'+
 						'</tr>'+
 						'<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 								'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
 								fi.Body +'</p>'+
 							'</th>'+
@@ -493,7 +493,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		}
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 							'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;'+
 							'margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Accounts: ';
 
