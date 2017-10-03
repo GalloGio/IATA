@@ -128,11 +128,11 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>Threshold_Level__c</fields>
-        <fields>Direction__c</fields>
-        <fields>RME_Last_Update__c</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>ANG_RME_Last_Update__c</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_RHC_Information__c</relatedList>
-        <sortField>RME_Last_Update__c</sortField>
+        <sortField>ANG_RME_Last_Update__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
