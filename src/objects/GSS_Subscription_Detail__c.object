@@ -132,14 +132,6 @@
         <label>Calendar Semi-Monthly First Option</label>
         <picklist>
             <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>3</fullName>
                 <default>false</default>
             </picklistValues>
