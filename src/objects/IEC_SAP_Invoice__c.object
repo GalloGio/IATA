@@ -1110,6 +1110,11 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
             <field>Order__c</field>
             <operation>notEqual</operation>
         </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Zuora Ready</value>
+        </filters>
         <label>TD</label>
         <language>en_US</language>
     </listViews>
