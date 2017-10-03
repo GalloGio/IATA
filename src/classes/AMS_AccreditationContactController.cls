@@ -162,7 +162,7 @@ public with sharing class AMS_AccreditationContactController {
     {
         Id rt = this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.AGENCYCHANGES || this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR ? AcCurrentOwnerRt : AcPersonRt;
 
-        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
+        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt));
         this.acWrapper.add(acWrapper);
     }
     
