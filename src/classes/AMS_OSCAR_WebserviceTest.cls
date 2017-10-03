@@ -166,6 +166,7 @@ public class AMS_OSCAR_WebserviceTest {
     static testMethod void test_createSidraLite4() {
         
         setup();
+        oscar6.STEP12__c = 'Passed';
         oscar6.Validation_Status__c = 'Passed';
         oscar6.RPM_Approval__c='Authorize Disapproval';
         update oscar6;
