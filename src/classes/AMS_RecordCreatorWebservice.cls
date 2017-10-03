@@ -306,8 +306,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
                 oscar.Type_of_change__c = typeOfChange;
-            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
-                oscar.ANG_Type_Of_Change__c = typeOfChange;
             
         }
 
