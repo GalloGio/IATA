@@ -90,10 +90,6 @@
             <div class="slds-col--padded slds-no-flex  slds-size_1-of-5 slds-align-middle">
                 <div class="slds-button-group float-right" role="group">
                     <button class="slds-button slds-button--neutral">
-                        <a href="" onclick="{!c.backToSeach}">Back to Search</a>
-                    </button>
-                    &nbsp;&nbsp;
-                    <button class="slds-button slds-button--neutral">
                         <a href="{!'/' + v.account.Id}">Back to Classic View</a>
                     </button>
                 </div>

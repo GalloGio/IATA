@@ -2,16 +2,27 @@
     margin-left: 0 !important;
 }
 
+.THIS .menu-button {
+    height: 3rem;
+}
+
 @media (max-width: 1200px) {
     .THIS .slds-tabs--default__item{
     }
 
     .THIS .slds-tabs--default__link{
-        height: auto !important;
+        /*height: auto !important;
         white-space: normal !important;
         line-height: 1.4em !important;
         padding: 0 0.3rem !important;
-        text-overflow: clip !important;
+        text-overflow: clip !important;*/
+    }
+
+    .THIS .right-button {
+        /*width: 12% !important;
+        text-align: right !important;*/
+        position: absolute;
+        right: 0;
     }
 }
 

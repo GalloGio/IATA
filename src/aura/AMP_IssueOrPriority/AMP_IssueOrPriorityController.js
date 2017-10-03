@@ -129,22 +129,16 @@ console.log(JSON.stringify(issue));
         var issue = component.get("v.issue");
 
         var index = component.get("v.index");
-        var status = component.find("v.status").get("v.value");
-        // var levelOfImportance = component.find("v.importance").get("v.value");
-        console.log('1 ' + JSON.stringify(issue));
-
-        var levelOfImportanceValues = component.get("v.importanceValues");
-
-        var statusValues = component.get("v.statusValues");
-        // var source = component.get("v.relatedContact");
-        // if(status === undefined) status = statusValues[0];
-        // if(levelOfImportance === undefined) levelOfImportance = levelOfImportanceValues[0];
-        console.log('1 ' + JSON.stringify(issue));
-
-        if(issue.Status__c === undefined) issue.Status__c = status;
-        if(issue.AM_Level_of_importance__c === undefined) issue.AM_Level_of_importance__c = levelOfImportance;
-        // issue.AM_Source__c = source.Id;
-
+        var status = component.find("statusList").get("v.value");
+        console.log(status);
+        var levelOfImportance = component.find("levelOfImportance").get("v.value");
+        
+        if(status !== undefined) issue.Status__c = status;
+        if(levelOfImportance !== undefined) issue.AM_Level_of_importance__c = levelOfImportance;
+        console.log('2 ' + JSON.stringify(issue));
+        // if(issue.AM_Level_of_importance__c === undefined) issue.AM_Level_of_importance__c = levelOfImportance;
+        // // issue.AM_Source__c = source.Id;
+        //
         var updateEvent = component.getEvent("updateIssue");
         updateEvent.setParams({ "issue": issue, "index":index }).fire();
 
