@@ -126,6 +126,25 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>ANG_RME_Last_Update__c</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_RHC_Information__c</relatedList>
+        <sortField>ANG_RME_Last_Update__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>LogCall</excludeButtons>
+        <excludeButtons>MailMerge</excludeButtons>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>TASK.CREATED_DATE</fields>
+        <fields>TASK.STATUS</fields>
+        <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
