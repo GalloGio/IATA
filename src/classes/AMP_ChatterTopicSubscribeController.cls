@@ -460,8 +460,8 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 								'<table id="informacao" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:430px">'+
 									'<tr style="padding:0;text-align:left;vertical-align:top">'+
 										'<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
-											'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;"><a href="https://iata--amp2.cs84.my.salesforce.com/005w0000003Pu27?fromEmail=1&s1oid=00D5E0000008pnX&s1nid=000000000000000&s1uid=005w0000003Pu27&s1ext=0&emkind=chatterUnifiedUserDigest&emtm=1505774399894"'+
-													'style="color:#2f78b5;text-decoration:none;">'+fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName+'</a></p>'+
+											'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">'+
+													+fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName+'</p>'+
 											'<p style="Margin:0;margin-bottom:0px;color:#94a4bd;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">Monday, September 18, 2017 12:37 PM</p>'+
 										'</th>'+
 										'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
@@ -470,7 +470,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 							'</th>'+
 						'</tr>'+
 						'<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 								'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
 								fi.Body +'</p>'+
 							'</th>'+
@@ -493,7 +493,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		}
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
+							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 							'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;'+
 							'margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Accounts: ';
 

@@ -12,7 +12,9 @@
             	<apex:actionSupport event="onchange" action="{!onChangeGroupType}" onsubmit="startLoading();" oncomplete="stopLoading();" rerender="theForm"/>
             </apex:inputField>
 
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
             <apex:inputField value="{!LocalGovernance__c.Country__c}" />
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
 
             <apex:selectList value="{!LocalGovernance__c.Cluster__c}" size="1" rendered="{!allClustersSize>1}">
                 <apex:selectOptions value="{!allClusters}"></apex:selectOptions>

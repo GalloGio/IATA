@@ -501,11 +501,11 @@
         <label>Open to</label>
         <picklist>
             <picklistValues>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
