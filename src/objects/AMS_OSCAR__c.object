@@ -29549,6 +29549,23 @@ TEXT(Process__c) = &apos;ANG.NEW.AE.1.0&apos;
         <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Cannot_Approve_Oscar_If_FS_not_confirmed</fullName>
+        <active>true</active>
+        <description>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</description>
+        <errorConditionFormula>AND(
+ISCHANGED(RPM_Approval__c),
+ISPICKVAL(RPM_Approval__c, &quot;Authorize Approval&quot;),
+ISPICKVAL(STEP34__c, &quot;Passed&quot;),
+NOT(ISPICKVAL(STEP35__c, &quot;Passed&quot;)),
+OR(
+ISPICKVAL(Process__c, &quot;ANG.MAJOR.CHANGES.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)
+)
+)</errorConditionFormula>
+        <errorMessage>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ANG_Remittance_frequency_mandatory</fullName>
         <active>true</active>
         <description>Do not allow approval until the remittance frequency field is populated</description>
