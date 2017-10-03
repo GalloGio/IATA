@@ -214,6 +214,8 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
     }
+
+    public ANG_ProductComparisonHelper helper {get; set;}
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -631,6 +633,8 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
         selectPageName();
+
+        this.helper = new ANG_ProductComparisonHelper('B');
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
