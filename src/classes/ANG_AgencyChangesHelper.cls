@@ -125,6 +125,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
+                if(!validateTypeOfChange(oscar, configs))
+                    return;
+                    
 				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
