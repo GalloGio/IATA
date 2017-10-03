@@ -3025,7 +3025,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Legal Authorized Signatory</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>

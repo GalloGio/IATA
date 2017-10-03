@@ -781,7 +781,7 @@
         <description>IAPP - Notify team leader case has been set as Not eligible</description>
         <protected>false</protected>
         <recipients>
-            <recipient>martinsp@iata.org</recipient>
+            <recipient>montoyac@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -7107,6 +7107,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>Update Previous Case Owner</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case_Update</fullName>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
+        <field>dgAI2__DG_Capture_Analytics__c</field>
+        <literalValue>1</literalValue>
+        <name>DG_Capture_Analytics_Closed_Case_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -15995,7 +16005,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
+        <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -16025,6 +16035,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>notEqual</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>The query is reopened and assigned to Complaint Team</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16129,7 +16144,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND (3 AND 4 AND 5)</booleanFilter>
+        <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -16154,6 +16169,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>equals</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>the query is reopened and assigned to OCIT</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -18551,6 +18571,21 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Europe</value>
         </criteriaItems>
         <description>SIDRA</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case</fullName>
+        <actions>
+            <name>dgAI2__DG_Capture_Analytics_Closed_Case_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
