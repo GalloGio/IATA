@@ -64,7 +64,7 @@ public class ISSP_ANG_ProductComparisonTest {
 		insert new List<Product_Component__c>{pc1, pc2, pc3};
 
 		Pricebook2 prcb1 = new Pricebook2 (
-			name = 'NewGen Accreditation Models'
+			name = 'NewGen Accreditation Models test'
 		);
 
 		insert prcb1;

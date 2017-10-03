@@ -1763,7 +1763,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.IATAN_Agent_Account__c = IATANAgentAccount.id;
         
         //NEWGEN - 604 START
-        if(hqAccount != null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && (!isTerminatedAgent && !isHOAccredited)){
+        // Only validate Agency Address details when user is on STEP C (StepNumber==3)
+        //
+        if(hqAccount != null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && (!isTerminatedAgent && !isHOAccredited) && stepNumber == '3'){
             if (!validateCharactersInAgencyWindow()) {
                 accountUpdated = false;
                 return;

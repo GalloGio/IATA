@@ -46,6 +46,15 @@ global with sharing class ANG_ConversionHelper {
 		-9 => Label.ANG_Conversion_Tool_Error_9
     };
 
+    public static boolean isMigrationTool{
+		get{
+			if(isMigrationTool ==null) isMigrationTool=false;
+			return isMigrationTool;
+		}
+
+		Set;
+	}
+
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
             
         Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
@@ -418,6 +427,8 @@ global with sharing class ANG_ConversionHelper {
 
 		System.debug('Preparing to convert:'+structures);
 
+		ANG_ConversionHelper.isMigrationTool=true;//skip agencyEventGenerator
+
 		Map<Id,Account> allAgenciesFinalMap = null;
 
 		Set<Account> allAgencies = null;
@@ -502,7 +513,7 @@ global with sharing class ANG_ConversionHelper {
 				accountIdsToSearch.add(struct.topParentId);
 		}
 
-		List<Account> accountsSearched = [SELECT Id, Name, Location_Type__c, ParentId from Account where Id in :accountIdsToSearch];
+		List<Account> accountsSearched = [SELECT Id, Name, Location_Type__c, ParentId, Status__c from Account where Id in :accountIdsToSearch];
 
 		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
 
@@ -590,10 +601,15 @@ global with sharing class ANG_ConversionHelper {
 
 		if(struct.isSingleAgencyHierarchy){
 			
+			if(allAgencies.get(struct.topParentId).Location_Type__c == AMS_Utils.AO && allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S4_LISTED)
+				allAgencies.get(struct.topParentId).Status__c = AMS_Utils.ACC_S9_APPROVED;		
+			
 			allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+
 			allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
 			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 			allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
+			allAgencies.get(struct.topParentId).Is_PCI_compliant__c = 'Yes';
 
 			accountsToUpdate.add(allAgencies.get(struct.topParentId));
 
@@ -604,15 +620,20 @@ global with sharing class ANG_ConversionHelper {
 					rel.Is_Newgen_Relation__c = true;
 					rel.Parent_Account__c = struct.topParentId;
 					
+					if(allAgencies.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.AO && allAgencies.get(rel.Parent_Account__c).Status__c == AMS_Utils.ACC_S4_LISTED)
+						allAgencies.get(rel.Parent_Account__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
+
 					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
 					allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
 					allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
+					allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
 
 					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
 					allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
 					allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
+					allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
 
 					if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
 						allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;

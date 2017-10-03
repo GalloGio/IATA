@@ -87,6 +87,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+
     public List<String> accreditationFieldNames {
         get{
             if(accreditationFieldNames == null){
@@ -137,6 +139,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
         if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
         if(fieldName == 'ANG_Accreditation_Type__c') return isNewGenProcess;
+
+        if(hidenFieldsNewgenApplications.contains(fieldName))
+            return  !isNewGenProcess;
 
         return true;
     }

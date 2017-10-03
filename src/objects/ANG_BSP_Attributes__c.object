@@ -193,7 +193,7 @@ J-Joint Vent</inlineHelpText>
       UPPER(&apos;Weekly&apos;) , 52,
       UPPER(&apos;Every 5 days&apos;) , 73,
       UPPER(&apos;Every 3 days&apos;) , 122,
-      UPPER(&apos;Daily&apos;) , 300,
+      UPPER(&apos;Daily&apos;) , 0,
       UPPER(&apos;4 times per month&apos;) , 48,
 0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

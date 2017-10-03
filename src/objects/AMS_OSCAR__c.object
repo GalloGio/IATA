@@ -6083,6 +6083,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <label>OSCAR</label>
     <listViews>
+        <fullName>AGM_GDC_MAD_MIA_migrated_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM GDC MAD - MIA migrated</label>
+        <queue>AGM_GDC_MAD_MIA_migrated</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>AGM Non Compliance - Americas</label>
@@ -29530,9 +29539,22 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>ANG_Is_PCI_compliant_mandatory</fullName>
-        <active>false</active>
-        <errorConditionFormula>TEXT(Process__c) = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
+        <active>true</active>
+        <errorConditionFormula>OR(
+TEXT(Process__c) = &apos;ANG.NEW.HE.STANDARD.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.HE.LITE.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.AE.1.0&apos;
+)
+&amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
         <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Remittance_frequency_mandatory</fullName>
+        <active>true</active>
+        <description>Do not allow approval until the remittance frequency field is populated</description>
+        <errorConditionFormula>(TEXT(Process__c) = &quot;ANG.NEW.HE.LITE.1.0&quot; || TEXT(Process__c) = &quot;ANG.NEW.HE.STANDARD.1.0&quot;) &amp;&amp;  ISCHANGED(RPM_Approval__c) &amp;&amp;
+TEXT(RPM_Approval__c) = &quot;Authorize Approval&quot; &amp;&amp; ISBLANK(AMS_Online_Accreditation__r.Remittance_frequency__c)</errorConditionFormula>
+        <errorMessage>The OSCAR cannot be approved until the remittance frequency is populated.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Effective_date_mandatory_in_VR</fullName>
