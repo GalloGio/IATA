@@ -488,7 +488,7 @@ public with sharing class AMS_AccountRoleCreator
 
             // now for the new Acreditation Contact, we have to create new AMS Account roles based on the accreditationContactsToInsert list !
             System.debug('Accreditation contacts to insert:'+accreditationContactsToInsert);
-            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW' || accreditationAndOscars.get(accreditationId) == 'ANG_Agency_Changes',accountId);
+            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW',accountId);
             
             // for accreditation contacts that only have contact connectd (not owners), let's update the data
             System.debug('Single contacts to insert:'+accreditationContactsToInsertOnlyContacts);
