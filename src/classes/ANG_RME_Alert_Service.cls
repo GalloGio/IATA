@@ -84,7 +84,7 @@ global class ANG_RME_Alert_Service {
 				//validation passed, perform logic
 				else if(eventType == 'RHCAlert') saveAlert(req, rhcInfo);
 				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
-				else setResponse('Invalid Event Type: '+req.eventType, 405);
+				else setResponse('Invalid Event Type: '+eventType, 405);
 			}
 
 		}catch(JSONException e){
@@ -112,7 +112,7 @@ global class ANG_RME_Alert_Service {
 
 	private static void updateRHC(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = req.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = req.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = req.consumedRHCPercentage * 100; //External system range is  0-1, Salesforcerange is  0-100
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = req.eventTime.date();
 
 		update rhcInfo;
