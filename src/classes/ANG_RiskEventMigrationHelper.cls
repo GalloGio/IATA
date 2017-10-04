@@ -9,14 +9,14 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		system.debug('starting migrating change codes');
 		risksToWithdraw = new Set<string>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND CreatedDate = LAST_N_DAYS:730];
+		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
 	public ANG_RiskEventMigrationHelper(Set<Id> accs) {
 		system.debug('starting migrating change codes');
 		risksToWithdraw = new Set<string>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND CreatedDate = LAST_N_DAYS:730];
+		listChangeCodes =   [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c  from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
     public List<ANG_Agency_Risk_Event__c> convertChangeCodesToRiskEvents(){
