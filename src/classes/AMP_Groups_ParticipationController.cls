@@ -1,5 +1,5 @@
 public with sharing class AMP_Groups_ParticipationController {
-
+    public String accountId {get;set;}
     public class ParticipantWrapper {
         public Participant__c participant {get;set;}
         public Integer rowspan {get;set;}
@@ -72,7 +72,12 @@ public with sharing class AMP_Groups_ParticipationController {
 
     public AMP_Groups_ParticipationController(ApexPages.StandardController stdController) {
         acc = (Account)stdController.getRecord();
-        lstParticipants = getParticipantWrappers(acc.Id);
+        if(acc.Id != null) {
+            accountId = acc.Id;
+        } else {
+            accountId =  ApexPages.currentPage().getParameters().get('accountId');
+        }
+        lstParticipants = getParticipantWrappers(accountId);
     }
 
 }

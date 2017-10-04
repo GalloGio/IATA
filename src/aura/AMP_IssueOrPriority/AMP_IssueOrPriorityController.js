@@ -127,18 +127,24 @@ console.log(JSON.stringify(issue));
     clickSaveIssue : function(component, event, helper) {
 
         var issue = component.get("v.issue");
-
         var index = component.get("v.index");
+
         var status = component.find("statusList").get("v.value");
         console.log(status);
         var levelOfImportance = component.find("levelOfImportance").get("v.value");
-        
+
+        // if the picklists are not changed, the previous variables may be empty
+        // so we take the first values of the lists
+        var levelOfImportanceValues = component.get("v.importanceValues");
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
+        if(levelOfImportance === undefined) levelOfImportance = levelOfImportanceValues[0];
+        console.log(status);
+
         if(status !== undefined) issue.Status__c = status;
         if(levelOfImportance !== undefined) issue.AM_Level_of_importance__c = levelOfImportance;
         console.log('2 ' + JSON.stringify(issue));
-        // if(issue.AM_Level_of_importance__c === undefined) issue.AM_Level_of_importance__c = levelOfImportance;
-        // // issue.AM_Source__c = source.Id;
-        //
+        
         var updateEvent = component.getEvent("updateIssue");
         updateEvent.setParams({ "issue": issue, "index":index }).fire();
 
