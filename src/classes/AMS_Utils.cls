@@ -251,6 +251,26 @@ public without sharing class AMS_Utils {
     //Account - Location_Class__c
     public static final String LC_PASSENGER = 'P';
 
+    //officeTypes
+    public static final String TYPE_EACP_HO = buildOfficeType(CASE_REASON_NEW_HO, 'EACP Intermediary');
+    public static final String TYPE_EACP_BRANCH = buildOfficeType(CASE_REASON_BR_IP, 'EACP Intermediary');
+    public static final String TYPE_CGO_HO = buildOfficeType(CASE_REASON_NEW_HO, 'IATA Cargo Agent');
+    public static final String TYPE_CGO_BRANCH = buildOfficeType(CASE_REASON_BR_IP, 'IATA Cargo Agent');
+    public static final String TYPE_COURIER_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_COURIER);
+    public static final String TYPE_COURIER_BRANCH = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_COURIER);
+    public static final String TYPE_IMPORT_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_IMPORT_AGENT);
+    public static final String TYPE_IMPORT_BRANCH = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_IMPORT_AGENT);
+    public static final String TYPE_CASS_ASSOC_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_CASSASSOCIATE);
+    public static final String TYPE_CASS_ASSOC_BRANCH = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_CASSASSOCIATE);
+    public static final String TYPE_PAX_BRANCH_ABROAD_PSA = buildOfficeType(CASE_REASON_BR_ABROAD, CATEGORY_PASSENGER_SALES_AGENT);
+    public static final String TYPE_PAX_BRANCH_ABROAD_L = buildOfficeType(CASE_REASON_BR_ABROAD, ACCREDITATIONMODEL_LEGACY);
+    public static final String TYPE_PAX_BRANCH_L = buildOfficeType(CASE_REASON_BR_IP, ACCREDITATIONMODEL_LEGACY);
+    public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
+    public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
+    public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
+    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
+    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+
 
     static {
         refreshCache();
