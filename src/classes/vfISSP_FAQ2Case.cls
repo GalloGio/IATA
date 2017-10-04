@@ -1,6 +1,7 @@
 //TRANSFORM 02/03/15 ==> includes new functionality algorithm  provided by Elliot ,
 /**
- * Last update by Nurit and Niv 11/16/2014
+ * Update by Nurit and Niv 11/16/2014
+ * Last update by Right IT Services (Francisco Estanqueiro) 09/27/2017
  */
 public without sharing class vfISSP_FAQ2Case
 {
@@ -243,13 +244,52 @@ public without sharing class vfISSP_FAQ2Case
         }
         set;
     }
+    
+    public LiveAgentButtonSettings__c butttonToShow {get; set;}																						//FME 27-09-2017
+    
     public Boolean showButton {
         get{
             //in the future if more chat buttons are required we need a dynamic way to pass the button name - for the moment we don't know the rules
-            return topicsToShowButton.contains(subtopic) && isAllowedCode('AirlineEnglish') && isAllowedSector('AirlineEnglish');
+            butttonToShow = liveAgentBtnEng();																										//FME 27-09-2017	
+             //system.debug('### FME #### topicsToShowButton.contains(subtopic) '+ topicsToShowButton.contains(subtopic));
+             //system.debug('### FME #### isAllowedCode('+ butttonToShow.Name +') ' + isAllowedCode(butttonToShow.Name));
+             //system.debug('### FME #### isAllowedSector('+butttonToShow.Name+') ' + isAllowedSector(butttonToShow.Name));
+             if(isComplain1 == false || isComplain1 == null){																						//FME 27-09-2017
+            	return topicsToShowButton.contains(subtopic) && isAllowedCode(butttonToShow.Name) && isAllowedSector(butttonToShow.Name);		    //FME 27-09-2017																												//FME 11-09-2017
+            	//return topicsToShowButton.contains(subtopic) && isAllowedCode('AirlineEnglish') && isAllowedSector('AirlineEnglish');			    //FME 27-09-2017
+             }else{
+             	return false;
+             }
         }
         set;
     }
+    
+    //
+    //FME 27-09-2017 Start
+    //
+    public LiveAgentButtonSettings__c liveAgentBtnEng () {
+        
+            List<LiveAgentButtonSettings__c> labs = new List<LiveAgentButtonSettings__c>();
+            LiveAgentButtonSettings__c ret = new LiveAgentButtonSettings__c();
+            try{
+                string reg=region.replaceAll('& ','');
+                reg=reg.replaceAll(' ','');
+                
+                labs = LiveAgentButtonSettings__c.getAll().values();
+                
+                for(LiveAgentButtonSettings__c x :  labs){
+                	if(x.name.contains(reg)){
+                		ret = x;
+                	}
+                }
+            }catch(Exception e){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+            }
+            return ret;
+    }
+    
+    //FME End
+    
     private List<IATA_ISO_Country__c> countries{
         get{
             if (countries == null){
@@ -968,14 +1008,13 @@ public without sharing class vfISSP_FAQ2Case
         set;
     }
     */
-
     public List<SelectOption> countryList {
 
         get {
         system.debug('LANGUAGE: ' + UserInfo.getLanguage());
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
-        list<IATA_ISO_Country__c> isoList;
+        list<IATA_ISO_Country__c> isoList;													
         /*list<IATA_ISO_Country__c> isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
                                             IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
                                             IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
@@ -1451,6 +1490,7 @@ public without sharing class vfISSP_FAQ2Case
             }
         }
     }
+    
     public void getGsaCountryList_2() {
         system.debug('IN getGsaCountryList');
         gsaMap = new Map<String,List<Services_Rendered__c>>();//TF GSA
@@ -2099,7 +2139,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference copyCountryISO(){
         this.newCase.IFAP_Country_ISO__c = newCase1.IFAP_Country_ISO__c ;
-
+        
         return null;
     }
 
