@@ -123,6 +123,27 @@ public with sharing class ANG_Risk_Helper{
 		private set;
 	}
 
+	public class changeAgencyRiskEvent implements Queueable{
+        private List<ANG_Agency_Risk_Event__c> riskList;
+        private Map<id,id> riskMap;
+        public boolean isAllHierarchy = false;
+        
+        
+        public changeAgencyRiskEvent (List<ANG_Agency_Risk_Event__c> listAgencyRiskEventToChange){          
+            this.riskList = listAgencyRiskEventToChange;
+            isAllHierarchy = true;           
+        }
+
+        public changeAgencyRiskEvent(Map<Id,Id> mapToWork){
+            this.riskMap = mapToWork;
+        }
+
+        public void execute (QueueableContext context){
+            if(isAllHierarchy) inactivateRisk(riskList);
+            if(!isAllHierarchy) moveRiskHE(riskMap);
+        }
+    }
+
 	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents){
 
 		if(!riskEvents.isEmpty()){
