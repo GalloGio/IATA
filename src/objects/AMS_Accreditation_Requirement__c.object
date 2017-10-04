@@ -216,6 +216,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </picklistValues>
@@ -363,6 +367,46 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Arabic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>German</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indonesian</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Italian</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Japanese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korean</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Portuguese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thai</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vietnamese</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -1264,6 +1308,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </values>
@@ -1374,6 +1422,14 @@
         <picklistValues>
             <picklist>Language__c</picklist>
             <values>
+                <fullName>Arabic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>English</fullName>
                 <default>false</default>
             </values>
@@ -1382,7 +1438,39 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indonesian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Korean</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portuguese</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thai</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vietnamese</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

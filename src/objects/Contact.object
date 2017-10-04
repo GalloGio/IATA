@@ -2815,7 +2815,9 @@ IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,
 &amp;&quot; &quot;&amp;
 IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -3022,8 +3024,8 @@ IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&
         <fullName>Authorized_Signatory__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Authorized Signatory</label>
-        <trackHistory>false</trackHistory>
+        <label>Legal Authorized Signatory</label>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
