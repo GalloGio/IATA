@@ -288,6 +288,10 @@ public without sharing class AMS_Utils {
         }
     }
 
+    private static String buildOfficeType(String reason, String category) {
+        return reason + ' - ' + category;
+    }
+
     public static Map<String, String> categoryCustomerMap = new Map<String, String> {
         'IATA Passenger Sales Agent' => 'IATA Travel Agent',
         'IATA Cargo Agent' =>   'IATA Cargo Agent',
