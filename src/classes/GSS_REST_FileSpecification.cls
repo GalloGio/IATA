@@ -61,6 +61,12 @@ global with sharing class GSS_REST_FileSpecification{
             for(Zuora__Subscription__c su:subscriptionlist) {subscriptionNameToObjectMap.put(su.Name,su); }
             //TODO:Get all the file specification for the sub Product & Charges related to this list Subscription
             
+            //First GSSGoLive
+            boolean IsGSSGolive=false;
+            List<GDP_Area_Definition__c> golive = new List<GDP_Area_Definition__c>();
+            golive = [Select id, name From GDP_Area_Definition__c Where Name='GSSGoLive' Limit 1];
+            if (golive.size()>0) {isGSSGolive=true;}
+
             //Read and build the List of Specification file per Subscription
             /*
             List<Zuora__SubscriptionProductCharge__c> subscriptiondetaillist = new List<Zuora__SubscriptionProductCharge__c>();
@@ -223,15 +229,26 @@ global with sharing class GSS_REST_FileSpecification{
                     fs.Frequency = subscriptiondetail.GDP_File_Description__r.Frequency__c;
                     setCustomizedCoreFileName( fs, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
                     
+                    //Temporary solution for the golive only
+                    //When delta with master 
+                    //do not send delta but send master only
+                    boolean masteronly=false;
+                    if (subscriptiondetail.GDP_File_Description__r.Magnitude__c=='Delta' 
+                        && subscriptiondetail.GDP_File_Description__r.Master_File_Description__c !=null) { masteronly=true;}
+                    if (!IsGSSGolive) masteronly=false;
+
                     // -------------------------------------------------------
                     // Delta and Master Delivery cases for delta file subscription
                     //
                     // check if we need to skip the normal file description delivery.
                     // the delta file will not be part of first time ever delivery for a delta subscription  
                     // check for the case of a new delta subscription: Master_File_Delivery and Next_Master_File_Delivery are null
-                    if ( (subscriptiondetail.GDP_File_Description__r.Master_File_Description__c == null) // without master desc, it is not a delta  
-                         || (subscriptiondetail.Master_File_Delivery__c != null)      // master file has been delivered, 
-                         || (subscriptionDetail.Next_Master_File_Delivery__c != null) // next master has been set 
+                    if ( (
+                          (subscriptiondetail.GDP_File_Description__r.Master_File_Description__c == null) // without master desc, it is not a delta  
+                           || (subscriptiondetail.Master_File_Delivery__c != null)      // master file has been delivered, 
+                           || (subscriptionDetail.Next_Master_File_Delivery__c != null) // next master has been set 
+                        )
+                         && masteronly == false
                         ) 
                     { // normal subscription delivery case will be done here: normal delta file, or master subscription 
                         responseFSlist.FileSpecifications.add(fs); 
@@ -247,7 +264,7 @@ global with sharing class GSS_REST_FileSpecification{
                         if (subscriptiondetail.Next_Master_File_Delivery__c!=null)
                             if (Date.Today()>=subscriptiondetail.Next_Master_File_Delivery__c) delta_state=1;
                         
-                        if (delta_state==0) continue;
+                        if (delta_state==0 && masteronly==false) continue;
                         FileSpecification fs1 = new FileSpecification();
                         fs1.SubscriptionDetailID = fs.SubscriptionDetailID;
                         fs1.SubscriptionID = fs.SubscriptionID;                     
@@ -568,63 +585,63 @@ global with sharing class GSS_REST_FileSpecification{
         Return DynamicFileName;               
     } // end of getFileNameDynamic
     
-	
-	// =======================================================================
-	// isTodayTheDeliveryDay 
-	//   return true if today is the day to do the file delivery on this GSS_Subscription_Detail
-	//   originally, this is only based on Calendar_*_Option, Frequency, and Date.today()
-	//   but to cover the change of Calendar_*_Option values we also use: 
-	//   Calendar_Next_SubmissioN_Date and Calendar_New_Submission_Effective_Date
-	private static Boolean isTodayTheDeliveryDay(GSS_Subscription_Detail__c subscriptionDetail)
-	{
-		Boolean DayIncluded=false;
-		if (subscriptiondetail.GDP_File_Description__r.Frequency__c=='Daily') DayIncluded=true;
-		
-		if (subscriptionDetail.Calendar_Next_Submission_Date__c == Date.today()) 
-		{
-			DayIncluded = true;
-		}
-		
-		if ( (subscriptionDetail.Calendar_New_Submission_Effective_Date__c != null)
-			&& (subscriptionDetail.Calendar_New_Submission_Effective_Date__c > Date.today()) )
-		{ // this is the transition period after changing the Calendar_*_Option__c values
-			// do not use Calendar_*_Option for decided to include or not.
-			return DayIncluded;
-		}
-		
-		// --------------------------------------------------------------------
-		// check the possibility that today is the delivery day based on the normal Calendar_*_Option values.
-		String Delivery_Period_Day='';
-		if (subscriptiondetail.Calendar_Semi_Monthly_First_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Semi_Monthly_First_Option__c;
-		if (subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c;
-		if (subscriptiondetail.Calendar_Monthly_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Monthly_Option__c;
-		if (Delivery_Period_Day!='')
-		{
-			String[] Pday = Delivery_Period_Day.Split(';');
-			//Get the day of  today
-			Integer  Day = System.Today().Day();                       
-			for (String dayofthemonth: Pday) 
-			{
-				if ( dayofthemonth.length()>0 
-					&& Integer.ValueOf(dayofthemonth)==Day) 
-				{
-					DayIncluded=true;
-				}
-			}
-		}
-		Delivery_Period_Day='';
-		if (subscriptiondetail.Calendar_Weekly_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Weekly_Option__c;
-		if (Delivery_Period_Day!='')
-		{
-			//Get the day of the week       
-			String dayOfWeek=System.Now().format('EEEE');
-			String[] Pday = Delivery_Period_Day.Split(';');                                               
-			for (String dayoftheweek: Pday) if (dayoftheweek==DayOfWeek) DayIncluded=true;
-		}
-		//The Period and the day is not matching so there is no file generation
-		//happening
-		
-		
-		return DayIncluded;
-	}
+    
+    // =======================================================================
+    // isTodayTheDeliveryDay 
+    //   return true if today is the day to do the file delivery on this GSS_Subscription_Detail
+    //   originally, this is only based on Calendar_*_Option, Frequency, and Date.today()
+    //   but to cover the change of Calendar_*_Option values we also use: 
+    //   Calendar_Next_SubmissioN_Date and Calendar_New_Submission_Effective_Date
+    private static Boolean isTodayTheDeliveryDay(GSS_Subscription_Detail__c subscriptionDetail)
+    {
+        Boolean DayIncluded=false;
+        if (subscriptiondetail.GDP_File_Description__r.Frequency__c=='Daily') DayIncluded=true;
+        
+        if (subscriptionDetail.Calendar_Next_Submission_Date__c == Date.today()) 
+        {
+            DayIncluded = true;
+        }
+        
+        if ( (subscriptionDetail.Calendar_New_Submission_Effective_Date__c != null)
+            && (subscriptionDetail.Calendar_New_Submission_Effective_Date__c > Date.today()) )
+        { // this is the transition period after changing the Calendar_*_Option__c values
+            // do not use Calendar_*_Option for decided to include or not.
+            return DayIncluded;
+        }
+        
+        // --------------------------------------------------------------------
+        // check the possibility that today is the delivery day based on the normal Calendar_*_Option values.
+        String Delivery_Period_Day='';
+        if (subscriptiondetail.Calendar_Semi_Monthly_First_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Semi_Monthly_First_Option__c;
+        if (subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c;
+        if (subscriptiondetail.Calendar_Monthly_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Monthly_Option__c;
+        if (Delivery_Period_Day!='')
+        {
+            String[] Pday = Delivery_Period_Day.Split(';');
+            //Get the day of  today
+            Integer  Day = System.Today().Day();                       
+            for (String dayofthemonth: Pday) 
+            {
+                if ( dayofthemonth.length()>0 
+                    && Integer.ValueOf(dayofthemonth)==Day) 
+                {
+                    DayIncluded=true;
+                }
+            }
+        }
+        Delivery_Period_Day='';
+        if (subscriptiondetail.Calendar_Weekly_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Weekly_Option__c;
+        if (Delivery_Period_Day!='')
+        {
+            //Get the day of the week       
+            String dayOfWeek=System.Now().format('EEEE');
+            String[] Pday = Delivery_Period_Day.Split(';');                                               
+            for (String dayoftheweek: Pday) if (dayoftheweek==DayOfWeek) DayIncluded=true;
+        }
+        //The Period and the day is not matching so there is no file generation
+        //happening
+        
+        
+        return DayIncluded;
+    }
 }
