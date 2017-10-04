@@ -14,6 +14,7 @@ public class ang_rhcAlertTriggerHandler{
 	}
 	public void onAfterInsert() {
 		sendAlertNotification();
+		handleRedAlerts();
 	}
 
 	public void onBeforeUpdate(){
@@ -86,5 +87,51 @@ public class ang_rhcAlertTriggerHandler{
             ANG_RHCHelper.sendMailUpdateRiskAlert(c.id,riskAlertMap.get(accId).ANG_RHC_Information__c,templateID,riskAlertMap.get(accId).id);
 		}
 
+	}
+
+	public void handleRedAlerts(){
+
+		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
+
+		for(ANG_Risk_Alert__c ra :triggerNew){
+			if(ra.ANG_Severity__c == 'Red'){
+				redAlerts.add(ra);
+			}
+		}
+
+		if(!redAlerts.isEmpty()){
+			//create Sidra Lites
+
+			Id smapCaseRTId = AMS_Utils.RECTYPE_SMAP;
+			Case smapCase;
+			List<Case> sidraLiteCases;
+
+			List<Case> smapCases = new List<Case>();
+
+			for(ANG_Risk_Alert__c ra: triggerNew){
+				smapCase = new Case(
+					Region__c =	ra.ANG_Account__r.Region__c
+					//Subject
+					//Status
+					);
+				smapCases.add(smapCase);
+			} 
+			//if not empty
+				insert smapCases;
+
+				Case sidraLiteCase;
+				sidraLiteCases = new List<Case>();
+
+				for(Case sCase :smapCases){
+
+					//sidraCase = WSSidra.createCase(sCase.id);
+					//fill fields on sidra case - see story NEWGEN-1933
+					sidraLiteCases.add(sidraLiteCase);
+				}
+
+				// ----- 
+
+			//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
+		}
 	}
 }
