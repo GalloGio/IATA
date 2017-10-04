@@ -86,6 +86,7 @@ public without sharing class AMS_Utils {
     public static final String AUTH_APPROVAL = 'Authorize Approval';
     public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
+    public static final String ANG_LOCATION_TYPE_DIFFLEGALENTITY =  'Location type to different legal entity';
     public static final String LOCATION = 'Location';
     public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
@@ -145,6 +146,7 @@ public without sharing class AMS_Utils {
     public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
+    public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES};
 
@@ -4343,5 +4345,24 @@ i++;
 
 
   }
+
+    public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
+
+        return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+    }
+
+    public static List<String> getOSCARStepsApiName() {
+
+        List<String> oscarSteps = new List<String>();
+
+        for (String fieldApiName : getOSCARFieldMap().keySet()) {
+            if (fieldApiName.startsWithIgnoreCase('STEP'))
+                oscarSteps.add(fieldApiName);
+
+        }
+
+        return oscarSteps;
+    }
 
 }
