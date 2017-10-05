@@ -176,7 +176,7 @@ public with sharing class AMP_Groups_ParticipationController {
 
     @AuraEnabled
     public static String  getReportId() {
-        return [SELECT Id FROM Report WHERE DeveloperName='test2' LIMIT 1].Id;
+        return [SELECT Id FROM Report WHERE DeveloperName='AMP_IndustryGroups_Participation' LIMIT 1].Id;
     }
 
 
