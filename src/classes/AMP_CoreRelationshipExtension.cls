@@ -21,7 +21,14 @@ public with sharing class AMP_CoreRelationshipExtension {
     public AMP_CoreRelationshipExtension(ApexPages.StandardController stdController) {
         this.myAccount = (Account)stdController.getRecord();
 		// lsParticipants = getParticipants();
-		lsParticipantWrappers = getParticipantWrappers(this.myAccount.Id);
+		// acc = (Account)stdController.getRecord();
+		Id accountId;
+        if(this.myAccount.Id != null) {
+            accountId = this.myAccount.Id;
+        } else {
+            accountId =  ApexPages.currentPage().getParameters().get('accountId');
+        }
+		lsParticipantWrappers = getParticipantWrappers(accountId);
     }
 
 		@AuraEnabled
@@ -64,7 +71,8 @@ public with sharing class AMP_CoreRelationshipExtension {
 			lsParticipants =
 				[SELECT Id, Local_Governance__c, Local_Governance__r.Name,	Participant_Type__c,
 						Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
-						Contact__r.Title, Representing__c
+						Contact__r.Title, Contact__r.Email, Representing__c,
+						Local_Governance__r.Group_Owner__r.Name, Local_Governance__r.Group_Owner_Text__c
 				FROM Participant__c
 				WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId15)
 				AND Local_Governance__r.Active__c = true

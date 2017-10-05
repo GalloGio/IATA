@@ -29,6 +29,11 @@
   vertical-align: top;
 }
 
+.THIS .close-button {
+    border: 0 !important;
+    background-color: transparent !important;
+}
+
 @media (max-width: 1200px) {
     /*.THIS .uiMenuItem {
         font-size: 200%;
