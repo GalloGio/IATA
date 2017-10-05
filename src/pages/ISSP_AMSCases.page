@@ -34,7 +34,7 @@
                 function checkEligibility(isBankAccountChange){
                     if ('{!isHOAccredited}'=='false') {
                         bootbox.alert("{!if(communityName=='CNS', $Label.ISSP_AMS_NoC_Message_Accredited_Agent_CNS, $Label.ISSP_AMS_NoC_Message_Accredited_Agent)}");
-                    } else if (('{!con.Account.Location_Type__c}' !== 'HO' && '{!con.Account.Location_Type__c}' !== 'HE') && isBankAccountChange === 'false') {
+                    } else if ('{!con.Account.Location_Type__c}' == 'AE' && isBankAccountChange === 'false') {
                         bootbox.alert('{!$Label.ISSP_AMS_Cases_Notify_IATA_Changes_Error}');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
