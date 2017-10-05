@@ -4326,6 +4326,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>IDCard Expedite Delivery</value>
     </labels>
     <labels>
+        <fullName>IDCard_Expedite_Note</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Note</shortDescription>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_ExportCSV</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -16282,7 +16290,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_PortalUrl</shortDescription>
-        <value>https://portal.iata.org/</value>
+        <value>https://support-customer-portal-iata.cs83.force.com/</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_PortalUrl_CNS</fullName>
