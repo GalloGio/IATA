@@ -36,10 +36,10 @@ global  class NewLocalGroupCtrl {
         }
         System.debug(lg2.RecordTypeId + ' ' + lg2.RecordType.Name);
         // 1. if there is already a recordtype set redirect accordingly
-        if(setRegDivRecordTypes.contains(lg2.RecordTypeId)) { redirect = true;}
-        else if(setLocalGroupRecordTypes.contains(lg2.RecordTypeId)) {redirect = false;}
+        if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
+        else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
         // 2. if the user can only see one recordtype it's null and we check which type the user has access to
-        if(!redirect && lg2.RecordTypeId == null) {
+        if(!redirect && lg.RecordTypeId == null) {
             for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
                 if(info.isAvailable()) {
                     if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {

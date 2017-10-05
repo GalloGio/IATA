@@ -7,10 +7,30 @@
         } else {
             component.set("v.isEditMode", false);
         }
+        var statusValues = [];
+		statusValues.push('On Track');
+        statusValues.push('On Hold');
+        statusValues.push('Delayed');
+        statusValues.push('Delivered');
+        statusValues.push('Cancelled');
+
+
+		component.set("v.statusValues", statusValues);
     },
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
+
+        var activity = component.get("v.activity");
+        var status = activity.Status__c;
+
+console.log(JSON.stringify(activity));
+
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
+
+        component.set("v.status", status);
+		console.log(status);
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
@@ -30,7 +50,8 @@
     clickSaveActivity : function(component, event, helper) {
         
         var activity = component.get("v.activity");
-        var status = component.find("status").get("v.value");
+        var status = component.find("statusList").get("v.value");
+        if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
         
         var deadlineField = component.find("deadline");
