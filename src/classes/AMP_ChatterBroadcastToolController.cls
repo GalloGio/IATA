@@ -62,7 +62,6 @@ public with sharing class AMP_ChatterBroadcastToolController {
     		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please type in the message to broadcast.'));
 		} else {
 
-			try {
 
 				list<FeedItem> lstItemsToPost = new list<FeedItem>();
 
@@ -77,7 +76,9 @@ public with sharing class AMP_ChatterBroadcastToolController {
 					}
 				}
 
-				List<String> lsBroadcastTopicNames = new List<String>{'broadcastAll Regions',
+				// make a list of regions, fetch existing and create missing topics
+				List<String> lsBroadcastTopicNames =
+					new List<String>{'broadcastAll Regions',
 				'broadcastAfrica & Middle East',
 				'broadcastAmericas',
 				'broadcastAsia & Pacific',
@@ -86,12 +87,33 @@ public with sharing class AMP_ChatterBroadcastToolController {
 				// broadcastTopicNames = '';
 				List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 
+				// add the missing broadcast topics
+				for(String topicName : lsBroadcastTopicNames) {
+					Boolean found = false;
+					for(Topic t: lsBroadcastTopics) {
+						if(topicName == t.Name) {
+							found = true;
+							break;
+						}
+					}
+					if(!found) {
+						Topic t = new Topic();
+						t.Name = topicName;
+						lsBroadcastTopics.add(t);
+					}
+				}
+				upsert lsBroadcastTopics;
 
+				try {
 				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
 
+				// after inserting the actual feeditems create and insert the broadcast topic assignments
 				List<TopicAssignment> lsTopicAssignments = new List<TopicAssignment>();
 				for(FeedItem fi : lstItemsToPost) {
 					if(selectWholeRegion) {
+						if(strRegion == null || strRegion == '') {
+							strRegion = 'All Regions';
+						}
 						for(Topic t :lsBroadcastTopics) {
 							if(t.Name.contains(strRegion)) {
 								TopicAssignment ta = new TopicAssignment();
