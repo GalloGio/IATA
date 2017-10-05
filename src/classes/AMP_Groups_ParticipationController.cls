@@ -11,6 +11,7 @@ public with sharing class AMP_Groups_ParticipationController {
     public Account acc {get; set;}
     public list<ParticipantWrapper> lstParticipants {get;set;}
     public list<Participant> lstAllParticipants {get;set;}
+    public Boolean representativesFound {get;set;}
 
     @AuraEnabled
     public static List<Participant__c>  getParticipants(Id accountId) {
@@ -96,6 +97,7 @@ public with sharing class AMP_Groups_ParticipationController {
         Boolean found = false;
         // first check the main groups
         for (Participant__c p : lsMainGroupParticipants) {
+
             if(p.Local_Governance__r.Name == groupName) {
                 Participant pw = new Participant();
                 pw.mainGroupName = groupName;
@@ -110,7 +112,7 @@ public with sharing class AMP_Groups_ParticipationController {
                 pw.firstName = p.Contact__r.FirstName;
                 pw.lastName = p.Contact__r.LastName;
                 pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
-                pw.title = p.Contact__r.Salutation;
+                    pw.title = p.Contact__r.Title;
                 pw.email = p.Contact__r.Email;
                 pw.representing = p.Representing__c;
                 retList.add(pw);
@@ -129,6 +131,7 @@ public with sharing class AMP_Groups_ParticipationController {
         // then get the participants for subgroups
         Integer position = 0;
         for(Participant__c p : lsOtherParticipants) {
+
             if(p.Local_Governance__r.AM_Under__r.Name == groupName) {
                 Participant pw = new Participant();
                 pw.mainGroupName = '';
@@ -143,7 +146,7 @@ public with sharing class AMP_Groups_ParticipationController {
                 pw.firstName = p.Contact__r.FirstName;
                 pw.lastName = p.Contact__r.LastName;
                 pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
-                pw.title = p.Contact__r.Salutation;
+                    pw.title = p.Contact__r.Title;
                 pw.email = p.Contact__r.Email;
                 pw.representing = p.Representing__c;
 
@@ -189,6 +192,10 @@ public with sharing class AMP_Groups_ParticipationController {
         }
         lstParticipants = getParticipantWrappers(accountId);
         lstAllParticipants = getAllParticipants(accountId);
+        representativesFound = false;
+        for(Participant p : lstAllParticipants) {
+            if(p.Representing != null && p.Representing != '') representativesFound = true;
+        }
     }
 
 }

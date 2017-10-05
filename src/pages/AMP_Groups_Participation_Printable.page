@@ -55,6 +55,7 @@
 					<td class="dataCell" >{! pWrapper.FirstName }</td>
 					<td class="dataCell" >{! pWrapper.LastName }</td>
 					<td class="dataCell" >
+						{! pWrapper.Title }
 						<apex:outputPanel rendered="{! pWrapper.Representing != null }">
 							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
 						</apex:outputPanel>
@@ -63,7 +64,9 @@
 
 				</tr>
 			</apex:repeat>
-
+			<apex:outputPanel rendered="{!representativesFound}">
+				<tr><td colspan="8"><apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>This participant represents the account on that specific group.</td></tr>
+			</apex:outputPanel>
 		</table>
 	</apex:pageBlock>
 </body>
