@@ -295,5 +295,10 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
             return this.myAccount.Id;
         }
 
+        @AuraEnabled
+        public static String  getReportId() {
+            return [SELECT Id FROM Report WHERE DeveloperName='AMP_IssuesAndPriorities_ForAccount' LIMIT 1].Id;
+        }
+
 
     }
