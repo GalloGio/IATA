@@ -90,11 +90,10 @@ public class ang_rhcAlertTriggerHandler{
 	}
 
 	public void handleRedAlerts(){
-
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 
 		for(ANG_Risk_Alert__c ra :triggerNew){
-			if(ra.ANG_Severity__c == 'Red' &&  ra.recordType.Name == 'Risk_Alert_RTS'){
+			if(ra.ANG_Severity__c == 'Red' &&  ra.recordTypeid == Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId()){
 				redAlerts.add(ra);
 			}
 		}
@@ -114,7 +113,7 @@ public class ang_rhcAlertTriggerHandler{
 				smapCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region__c,
 					Subject = '',
-					Account = ra.ANG_Account__r,
+					AccountId = ra.ANG_Account__c,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
 					Origin = 'Other',
@@ -123,29 +122,28 @@ public class ang_rhcAlertTriggerHandler{
 					Next_Remittance_Date__c =  date.newinstance(2018, 2, 17),
 					Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
 					End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
-					Suspension_Date__c=  date.newinstance(2018, 2, 17)
+					Suspension_Date__c=  date.newinstance(2017, 2, 17)
 
 
 				);
+				System.debug('##SMAP case: ' + smapCase);
 				smapCases.add(smapCase);
 			} 
 			//if not empty
 
-			System.Debug('##RUNNING TRIGGER: STARTING');
 			if(!smapCases.isEmpty()){
 				insert smapCases;
 
-				System.Debug('##smapCases: ' + smapCases);
 
 				Case sidraCase;
 				sidraLiteCases = new List<Case>();
 
-				for(Case sCase :smapCases){
+				for(Case sCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapCases]){
 
 					//fill fields on sidra case - see story NEWGEN-1933
 					sidraCase = WSSidraLite.createCase(sCase.id);
 
-					sidraCase.Subject = 'RTS Alert' + ' - '+ sCase.IATAcode__c + ' - ' + sCase.Account;
+					sidraCase.Subject = 'RTS Alert' + ' - '+ sCase.Account.Site + ' - ' + sCase.Account.Name;
 					sidraCase.Case_Remarks__c = '';
 					sidraCase.Description = '';					
 					sidraCase.Region__c = sCase.Region__c; 
@@ -155,11 +153,11 @@ public class ang_rhcAlertTriggerHandler{
 					sidraCase.Origin = 'Risk Monitoring Engine'; 
 					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraCase.Priority = 'High'; 
-					sidraCase.Account = sCase.Account;
+					//sidraCase.Accountid = sCase.Accountid;
 
 					//confirm if i can use this logic to get the contact or if i show run all hiearchy
 					List<Contact> contacts = new List<Contact>();
-					if(sCase.Parent != null){
+					if(sCase.ParentId != null){
 						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :sCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
 					}
 
@@ -190,9 +188,9 @@ public class ang_rhcAlertTriggerHandler{
 					sidraLiteCases.add(sidraCase);
 				}
 
-				System.Debug('##SidraLiteCases: ' + sidraLiteCases);
-				if(!sidraLiteCases.isEmpty())
+				if(!sidraLiteCases.isEmpty()){
 					insert sidraLiteCases;
+				}
 			}
 
 			//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
