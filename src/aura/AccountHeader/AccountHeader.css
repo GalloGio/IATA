@@ -15,3 +15,8 @@
     /*word-wrap: break-word !important;*/
     white-space: normal !important;
 }
+@media (max-width: 1200px) {
+    .THIS .slds-page-header__detail-row {
+        margin: 0.5rem 0 0.75rem 0rem !important;
+    }
+}

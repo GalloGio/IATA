@@ -49,17 +49,17 @@ public with sharing class AMP_CoreRelationshipExtension {
 
 		@AuraEnabled
 		public static List<LocalGovernance__c> getGroups() {
-			List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();
-			lsCoreGroups.sort();
-			List<String> groupNames = new List<String>();
-			Integer min = 0;
-			while (min <= lsCoreGroups.size()) {
-
-				for(AMPCoreGroups__c a : lsCoreGroups) {
-					if( a.Order__c == min) groupNames.add(a.Name);
-				}
-				min++;
-			}
+			List<String> groupNames = AMP_CoreRelationshipExtension.getGroupNames();//new List<String>();
+			// List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();
+			// lsCoreGroups.sort();
+			// Integer min = 0;
+			// while (min <= lsCoreGroups.size()) {
+			//
+			// 	for(AMPCoreGroups__c a : lsCoreGroups) {
+			// 		if( a.Order__c == min) groupNames.add(a.Name);
+			// 	}
+			// 	min++;
+			// }
 			return [SELECT Id, Name FROM LocalGovernance__c WHERE Name IN :groupNames];
 		}
 
