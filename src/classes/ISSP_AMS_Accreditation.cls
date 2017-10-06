@@ -4894,6 +4894,15 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 system.debug('countryReq size: ' + List_CountryReqments.size());
             }
         }
+
+        // Clean any css style in the Requirement_text__c and also Bold tags
+        for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
+            if (req.Requirement_text__c != null) {
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
+            }
+        }
     }
 
     private void retNoCCargoCountryReqments(boolean isFromValidation) {
