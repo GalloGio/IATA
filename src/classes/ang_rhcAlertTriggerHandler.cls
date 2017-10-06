@@ -101,16 +101,14 @@ public class ang_rhcAlertTriggerHandler{
 		if(!redAlerts.isEmpty()){
 			//create Sidra Lites
 
-			Id smapCaseRTId = AMS_Utils.RECTYPE_SMAP;
-			Case smapCase;
+			Case smapParentCase;
 			List<Case> sidraLiteCases;
-
-			List<Case> smapCases = new List<Case>();
+			List<Case> smapParentCases = new List<Case>();
 
 			for(ANG_Risk_Alert__c ra: triggerNew){
 
-				//confirm all this fileds 
-				smapCase = new Case(
+				//TODO: confirm all this fileds 
+				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region__c,
 					Subject = '',
 					AccountId = ra.ANG_Account__c,
@@ -123,69 +121,50 @@ public class ang_rhcAlertTriggerHandler{
 					Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
 					End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
 					Suspension_Date__c=  date.newinstance(2017, 2, 17)
-
-
 				);
-				System.debug('##SMAP case: ' + smapCase);
-				smapCases.add(smapCase);
+				smapParentCases.add(smapParentCase);
 			} 
-			//if not empty
 
-			if(!smapCases.isEmpty()){
-				insert smapCases;
+			if(!smapParentCases.isEmpty()){
+				insert smapParentCases;
 
 
 				Case sidraCase;
 				sidraLiteCases = new List<Case>();
 
-				for(Case sCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapCases]){
+				for(Case parentCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
-					//fill fields on sidra case - see story NEWGEN-1933
-					sidraCase = WSSidraLite.createCase(sCase.id);
-
-					sidraCase.Subject = 'RTS Alert' + ' - '+ sCase.Account.Site + ' - ' + sCase.Account.Name;
+					//NEWGEN-1933 fill fields on sidra case
+					sidraCase = WSSidraLite.createCase(parentCase.id);
+					//TODO: confirm on "sidraCase.Subject" if account site or account IATA code
+					sidraCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.Site + ' - ' + parentCase.Account.Name;
 					sidraCase.Case_Remarks__c = '';
 					sidraCase.Description = '';					
-					sidraCase.Region__c = sCase.Region__c; 
-					sidraCase.BSPCountry__c = sCase.BSPCountry__c;
-					sidraCase.BSP_CASS__c = 'BSP'; // ?  BSP/CASS: This should be populated with the BSP/CASS of the Agent (Note: this should always be BSP) 
+					sidraCase.Region__c = parentCase.Region__c; 
+					sidraCase.BSPCountry__c = parentCase.BSPCountry__c;
+					sidraCase.BSP_CASS__c = 'BSP';
 					sidraCase.Status = 'Open'; 
 					sidraCase.Origin = 'Risk Monitoring Engine'; 
 					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraCase.Priority = 'High'; 
-					//sidraCase.Accountid = sCase.Accountid;
 
 					//confirm if i can use this logic to get the contact or if i show run all hiearchy
 					List<Contact> contacts = new List<Contact>();
-					if(sCase.ParentId != null){
-						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :sCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
-					}
-
-					else{
-						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :sCase.id AND User_Portal_Status__c = 'Approved Admin'];
+					if (parentCase.ParentId != null) {
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
+					} else {
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.id AND User_Portal_Status__c = 'Approved Admin'];
 					}
 
 					if(!contacts.isEmpty())
 						sidraCase.Contact = contacts[0];
 
-					//sidraCase.IsComplaint__c	: blank ... but is a checkbox..... 
 					//sidraCase.R_S_feedback_pending__c : TBD?
 					//sidraCase.New_interaction__c : TBD ??
-
-
-
-			//------------FORMULAS - PROBABLY NO NEED TO DO ANYTHING --------
-					//sidraCase.Case_Email_Domain_Validation__c = ''; 
-					//sidraCase.Account_Location_Type__c = 'HO'; //  ?:  Note: this is based on the Agent and should always be HO 
-					//sidraCase.Status_SIDRA__c = ''; 
-					//sidraCase.Key_Customer_Case__c 
-					//sidraCase.Account_Type__c.... soooo.... 
-					//sidraCase.CaseNumber: formula field (BUT IT IS A AUTO NUMBER  O.o) 
-					//sidraCase.AIMS_status__c : formula field 
-					//sidraCase.IATA_Code__c : formula field 
-
-
+					
+					//END -NEWGEN-1933
 					sidraLiteCases.add(sidraCase);
+
 				}
 
 				if (!sidraLiteCases.isEmpty()) {
