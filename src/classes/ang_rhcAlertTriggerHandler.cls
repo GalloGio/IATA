@@ -94,7 +94,7 @@ public class ang_rhcAlertTriggerHandler{
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 
 		for(ANG_Risk_Alert__c ra :triggerNew){
-			if(ra.ANG_Severity__c == 'Red'){
+			if(ra.ANG_Severity__c == 'Red' &&  ra.recordType.Name == 'Risk_Alert_RTS'){
 				redAlerts.add(ra);
 			}
 		}
@@ -117,14 +117,25 @@ public class ang_rhcAlertTriggerHandler{
 					Account = ra.ANG_Account__r,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
-					Origin = 'Other'
+					Origin = 'Other',
+					Decision__c = 'Prejudiced Collection of Funds',
+					RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP,
+					Next_Remittance_Date__c =  date.newinstance(2018, 2, 17),
+					Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
+					End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
+					Suspension_Date__c=  date.newinstance(2018, 2, 17)
 
-					);
+
+				);
 				smapCases.add(smapCase);
 			} 
 			//if not empty
+
+			System.Debug('##RUNNING TRIGGER: STARTING');
 			if(!smapCases.isEmpty()){
 				insert smapCases;
+
+				System.Debug('##smapCases: ' + smapCases);
 
 				Case sidraCase;
 				sidraLiteCases = new List<Case>();
@@ -142,7 +153,7 @@ public class ang_rhcAlertTriggerHandler{
 					sidraCase.BSP_CASS__c = 'BSP'; // ?  BSP/CASS: This should be populated with the BSP/CASS of the Agent (Note: this should always be BSP) 
 					sidraCase.Status = 'Open'; 
 					sidraCase.Origin = 'Risk Monitoring Engine'; 
-					sidraCase.SIDRA_Lite_Reason__c = 'Prejudice Collection of Funds'; 
+					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraCase.Priority = 'High'; 
 					sidraCase.Account = sCase.Account;
 
@@ -178,6 +189,10 @@ public class ang_rhcAlertTriggerHandler{
 
 					sidraLiteCases.add(sidraCase);
 				}
+
+				System.Debug('##SidraLiteCases: ' + sidraLiteCases);
+				if(!sidraLiteCases.isEmpty())
+					insert sidraLiteCases;
 			}
 
 			//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
