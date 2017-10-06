@@ -188,12 +188,65 @@ public class ang_rhcAlertTriggerHandler{
 					sidraLiteCases.add(sidraCase);
 				}
 
-				if(!sidraLiteCases.isEmpty()){
+				if (!sidraLiteCases.isEmpty()) {
 					insert sidraLiteCases;
+					List<Id> caseIds = new List<Id>();
+					List<Id> accountIds = new List<Id>();
+					for (Case sidraLiteCase : sidraLiteCases) {
+						caseIds.add(sidraLiteCase.Id);
+						accountIds.add(sidraLiteCase.AccountId);
+					}
+					bspLinkCallout(caseIds, accountIds);
 				}
 			}
 
-			//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
 		}
+	}
+
+	//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
+	@Future(callout=true)
+	public static void bspLinkCallout(List<Id> sidraLiteCaseIds, List<Id> accountIds) {
+		List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
+		ISSP_Web_Service_Log__c log;
+		Boolean hasError = false;
+		Boolean hasSuccess = false;
+		String errorMessage = '';
+		String successMessage = '';
+		Integer size = sidraLiteCaseIds.size();
+		List<AMS_BSPLinkIntegration.Response> responses;
+
+		for (Integer i = 0; i < size; i++) {
+			log = new ISSP_Web_Service_Log__c();
+			log.Case__c = sidraLiteCaseIds[i];
+			log.System__c = 'bsplink';
+			errorMessage = 'Following locations were not deactivated in BSPLink:\n';
+			successMessage = 'Following locations were deactivated successfully in BSPLink:\n';
+			responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('Deactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
+			for (AMS_BSPLinkIntegration.Response r: responses) {
+				if (r.result == 'Ok') {
+					successMessage = successMessage + '\n ' + r.IATACode;
+					hasSuccess = true;
+				} else if (r.result == 'Error') {
+					hasError = true;
+					if (r.IATACode == '-') {
+						errorMessage = errorMessage + '\n' + r.description;
+					} else {
+						errorMessage = errorMessage + '\n ' + r.IATACode + ': ' + r.description;
+					}
+				}
+			}
+			if (!hasError) {
+				log.Error_Message__c = successMessage;
+				log.Success__c = true; 
+			}
+			if (!hasSuccess) {
+				log.Error_Message__c = errorMessage;
+			}
+			if (hasError && hasSuccess) {
+				log.Error_Message__c = successMessage + '\n\n' + errorMessage;
+			}
+			logs.add(log);
+		}// end for loop
+		insert logs;
 	}
 }
