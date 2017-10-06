@@ -25793,4 +25793,25 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFrom</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From</shortDescription>
+        <value>Conversion From</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoStandardTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoStandard Tooltip</shortDescription>
+        <value>Conversion From GoStandard Tooltip</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoLite Tooltip</shortDescription>
+        <value>Conversion From GoLite Tooltip</value>
+    </labels>    
 </CustomLabels>
