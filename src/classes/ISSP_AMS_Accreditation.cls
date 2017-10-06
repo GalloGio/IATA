@@ -3537,6 +3537,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 }
 
             }
+
+            // Clean any css style in the Requirement_text__c and also Bold tags
+            for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
+                if (req.Requirement_text__c != null) {
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
+                }
+            }
+
         } else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange == false) {
             retCargoCountryReqments(false);
         } else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange == true) {
