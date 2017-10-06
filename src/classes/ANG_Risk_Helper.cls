@@ -86,8 +86,26 @@ public with sharing class ANG_Risk_Helper{
 		private set;
 	}
 
-	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents){
+	public static Set<id> accIdSet{
+		get;			
+		set;
+	}
 
+	 // Map that contains rhc account's currencyIsoCode		
+	public static Map<id,String> accCurMap{
+		get{
+			if(accCurMap ==null){
+				accCurMap = new Map<id,String>();
+				for(ANG_RHC_Information__c rhc:[select ANG_AccountId__c,CurrencyIsoCode from ANG_RHC_Information__c where ANG_AccountId__c in :ANG_Risk_Helper.accIdSet]){
+					accCurMap.put(rhc.ANG_AccountId__c,rhc.currencyIsoCode);
+				}
+			}
+			return accCurMap;
+		}
+		private set;
+	}
+
+	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents){
 		if(!riskEvents.isEmpty()){
 			for(ANG_Agency_Risk_Event__c riskEvent : riskEvents){
 				riskEvent.ANG_HE_AccountId__c = null;
@@ -159,12 +177,8 @@ public with sharing class ANG_Risk_Helper{
 	}
 
 	public static void convertFSAmount(list<Financial_Security__c> fsList,Set<id> accIdSet){
+		ANG_Risk_Helper.accIdSet=accIdSet;
 		list<Financial_Security__c> tempList= new list<Financial_Security__c>();
-		Map<id,String> accCurMap= new Map<id,String>(); // Map that contains rhc account's currencyIsoCode
-		for(ANG_RHC_Information__c rhc:[select ANG_AccountId__c,CurrencyIsoCode from ANG_RHC_Information__c where ANG_AccountId__c in :accIdSet]){
-			accCurMap.put(rhc.ANG_AccountId__c,rhc.currencyIsoCode);
-		}
-
 		for(Financial_Security__c fs:fsList){
 			String targetoCurIso =accCurMap.get(fs.account__C);
 			Decimal convertedValue=ANG_Risk_Helper.currencyConverter(fs.CurrencyIsoCode,fs.Amount__c,targetoCurIso==null?fs.CurrencyIsoCode:targetoCurIso);
