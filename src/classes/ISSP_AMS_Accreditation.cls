@@ -1306,6 +1306,9 @@ public without sharing class ISSP_AMS_Accreditation {
             else{
                 newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
             }
+
+            System.debug('1) newCase.Subject-->' + newCase.Subject);
+
             //system.debug('draftHQCaseExists: ' + draftHQCaseExists);  
             //system.debug('isDupeSAAMCase: ' + isDupeSAAMCase);
             try {
@@ -1326,6 +1329,8 @@ public without sharing class ISSP_AMS_Accreditation {
                     }else{
                         newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;        
                     }
+
+                    System.debug('2) newCase.Subject-->' + newCase.Subject);
                     
                     system.debug('after trigger newCase dupe: ' + newCase);
                     system.debug('after trigger newCase.Id dupe: ' + newCase.Id);
@@ -3355,7 +3360,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else if ( r == AMS_Utils.CASE_REASON_HE_LITE){
             return Label.ISSP_AMS_Head_Entity_No_Cash;
         } else if( r == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD){
-            return AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD;
+            return Label.ISSP_ANG_Assoc_Entity;
         }else {
             return Label.ISSP_AMS_Reason_New_HO;
         }
