@@ -265,7 +265,7 @@
                 <field>Dossier_Validation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_validate__c</field>
             </layoutItems>
         </layoutColumns>
@@ -292,7 +292,7 @@
                 <field>RPM_Approval__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_approval__c</field>
             </layoutItems>
         </layoutColumns>
