@@ -114,7 +114,7 @@ public class ang_rhcAlertTriggerHandler{
 				smapCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region__c,
 					Subject = '',
-					Account = ra.ANG_Account__c,
+					Account = ra.ANG_Account__r,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
 					Origin = 'Other'
@@ -126,41 +126,38 @@ public class ang_rhcAlertTriggerHandler{
 			if(!smapCases.isEmpty()){
 				insert smapCases;
 
-				Case sidraLiteCase;
+				Case sidraCase;
 				sidraLiteCases = new List<Case>();
 
 				for(Case sCase :smapCases){
 
 					//fill fields on sidra case - see story NEWGEN-1933
-					sidraCase = WSSidra.createCase(sCase.id);
+					sidraCase = WSSidraLite.createCase(sCase.id);
 
-					sidraCase.Subject: 'RTS Alert' + ' - '+ sCase.IATAcode__c + ' - ' + sCase.Account;
+					sidraCase.Subject = 'RTS Alert' + ' - '+ sCase.IATAcode__c + ' - ' + sCase.Account;
 					sidraCase.Case_Remarks__c = '';
 					sidraCase.Description = '';					
-					sidraCase.Region__c Region = sCase.Region__c; 
+					sidraCase.Region__c = sCase.Region__c; 
 					sidraCase.BSPCountry__c = sCase.BSPCountry__c;
 					sidraCase.BSP_CASS__c = 'BSP'; // ?  BSP/CASS: This should be populated with the BSP/CASS of the Agent (Note: this should always be BSP) 
 					sidraCase.Status = 'Open'; 
 					sidraCase.Origin = 'Risk Monitoring Engine'; 
 					sidraCase.SIDRA_Lite_Reason__c = 'Prejudice Collection of Funds'; 
-					sidraCase.Status_SIDRA__c = ''; 
-					sidraCase.Account_Location_Type__c = 'HO'; //  ?:  Note: this is based on the Agent and should always be HO 
-					sidraCase.Case_Email_Domain_Validation__c = ''; 
 					sidraCase.Priority = 'High'; 
 					sidraCase.Account = sCase.Account;
 
-/*
+					//confirm if i can use this logic to get the contact or if i show run all hiearchy
+					List<Contact> contacts = new List<Contact>();
+					if(sCase.Parent != null){
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :sCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
+					}
 
-				//find portal admin
-				for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
-					if(c.User_Portal_Status__c == 'Approved Admin')
-						comCasecontact = c;
-				}
+					else{
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :sCase.id AND User_Portal_Status__c = 'Approved Admin'];
+					}
 
-*/
-
-					//sidraCase.Contact : The system should go through the whole Account hierarchy (checking all of the Contacts) and pick the first Contact it finds with a role of Admin
-					//pensar bem como fazer este
+					if(!contacts.isEmpty())
+						sidraCase.Contact = contacts[0];
 
 					//sidraCase.IsComplaint__c	: blank ... but is a checkbox..... 
 					//sidraCase.R_S_feedback_pending__c : TBD?
@@ -169,7 +166,9 @@ public class ang_rhcAlertTriggerHandler{
 
 
 			//------------FORMULAS - PROBABLY NO NEED TO DO ANYTHING --------
-
+					//sidraCase.Case_Email_Domain_Validation__c = ''; 
+					//sidraCase.Account_Location_Type__c = 'HO'; //  ?:  Note: this is based on the Agent and should always be HO 
+					//sidraCase.Status_SIDRA__c = ''; 
 					//sidraCase.Key_Customer_Case__c 
 					//sidraCase.Account_Type__c.... soooo.... 
 					//sidraCase.CaseNumber: formula field (BUT IT IS A AUTO NUMBER  O.o) 
@@ -177,7 +176,7 @@ public class ang_rhcAlertTriggerHandler{
 					//sidraCase.IATA_Code__c : formula field 
 
 
-					sidraLiteCases.add(sidraLiteCase);
+					sidraLiteCases.add(sidraCase);
 				}
 			}
 
