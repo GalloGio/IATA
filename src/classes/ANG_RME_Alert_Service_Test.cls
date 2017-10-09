@@ -35,7 +35,7 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void test_noAccount() {
-		ANG_RME_Alert_Service.RequestMessage message = new ANG_RME_Alert_Service.RequestMessage();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = 'nocode';
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
@@ -55,7 +55,7 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void test_valueValidationError() {
-		ANG_RME_Alert_Service.RequestMessage message = new ANG_RME_Alert_Service.RequestMessage();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
 		message.eventType = 'RHCAlert';
@@ -86,7 +86,7 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void test_alert_success() {
-		ANG_RME_Alert_Service.RequestMessage message = new ANG_RME_Alert_Service.RequestMessage();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
 		message.eventType = 'RHCAlert';
@@ -119,7 +119,7 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void test_balance_success() {
-		ANG_RME_Alert_Service.RequestMessage message = new ANG_RME_Alert_Service.RequestMessage();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
 		message.eventType = 'BalanceUpdate';
@@ -149,7 +149,7 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void test_invaldidEvent() {
-		ANG_RME_Alert_Service.RequestMessage message = new ANG_RME_Alert_Service.RequestMessage();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
 		message.eventType = 'TestCall';
@@ -175,4 +175,53 @@ private class ANG_RME_Alert_Service_Test {
 		System.assertEquals('Invalid Event Type: TestCall', result.description);
 	}
 	
+	static testMethod void webservice_sucess() {
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.5;
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+
+		Test.stopTest();
+
+		System.assertEquals(message.iataCode, result.iataCode);
+		System.assert(result.isSuccess);
+	}
+	
+	static testMethod void webservice_error() {
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(400, 'There was an error'));
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+
+		Test.stopTest();
+
+		System.assertEquals(message.iataCode, result.iataCode);
+		System.assertEquals('There was an error', result.description);
+		System.assert(!result.isSuccess);
+	}
+	
+	static testMethod void webservice_exception() {
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, 'There was an error'));
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+
+		Test.stopTest();
+
+		System.assertEquals(message.iataCode, result.iataCode);
+		System.assert(!result.isSuccess);
+	}
 }

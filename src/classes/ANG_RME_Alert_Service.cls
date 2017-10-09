@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/RME_ALERT_BALANCEUPDATE/*')
 global class ANG_RME_Alert_Service {
 
-	public class RequestMessage{
+	public class RHCMessage{
 		//Basic info
 
 		public String iataCode;
@@ -58,7 +58,7 @@ global class ANG_RME_Alert_Service {
 
 		try{
 			//receive request
-			RequestMessage req = (RequestMessage)JSON.deserializeStrict(RestContext.request.requestBody.toString(), RequestMessage.class);
+			RHCMessage req = (RHCMessage)JSON.deserializeStrict(RestContext.request.requestBody.toString(), RHCMessage.class);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] req - ' + req);
 			result.iataCode = req.iataCode;
 
@@ -68,7 +68,7 @@ global class ANG_RME_Alert_Service {
 			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :result.iataCode];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
-			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+result.iataCode, 404);
+			if(accs.isEmpty())								setResponse('No agent found with IATA Code '+result.iataCode, 404);
 			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+result.iataCode+' does not have RHC set', 404);
 			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+result.iataCode+' has more than one RHC record', 409);
 			else{
@@ -97,7 +97,7 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	private static void saveAlert(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
+	private static void saveAlert(RHCMessage req, ANG_RHC_Information__c rhcInfo) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();
 		alert.ANG_Account__c = rhcInfo.ANG_AccountId__c;
 		alert.ANG_RHC_Information__c = rhcInfo.Id;
@@ -110,12 +110,68 @@ global class ANG_RME_Alert_Service {
 		setResponse(null, 202);
 	}
 
-	private static void updateRHC(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
+	private static void updateRHC(RHCMessage req, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = req.consumedRHCAmount;
 		rhcInfo.ANG_ConsumedRHC_Percent__c = req.consumedRHCPercentage;
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = req.eventTime.date();
 
 		update rhcInfo;
 		setResponse(null, 202);
+	}
+
+
+	//webservice called by salesforce (javascript button and portal) to request an update
+	webservice static RequestResult requestBalanceUpdate(String iataCode){
+		result.iataCode = iataCode;
+
+		//do callout
+		HttpRequest req = new HttpRequest();
+        req.setHeader('Content-Type', 'application/json');
+		req.setMethod('POST');
+		req.setTimeout(120000);
+		req.setEndpoint('callout:ANG_Mulesoft_032?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
+
+		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req);
+
+		//parse result
+		HttpResponse res;
+		RHCMessage rhc;
+
+		try {
+			res = new Http().send(req);
+
+			if(res.getStatusCode() >= 200 && res.getStatusCode() < 300){
+				/**
+				TODO: Define response structure
+				*/
+				if(Test.isRunningTest()) rhc = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
+				else{
+					//temporary stuff
+					rhc = new RHCMessage();
+					rhc.iataCode = iataCode;
+					rhc.eventTime = System.now();
+					rhc.consumedRHCAmount = 5000;
+					rhc.consumedRHCPercentage = 0.5;
+					// end temporary stuff
+				}
+				
+				ANG_RHC_Information__c rhcInfo = [SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__r.IATACode__c = :iataCode];
+
+				rhcInfo.ANG_ConsumedRHC__c = rhc.consumedRHCAmount;
+				rhcInfo.ANG_ConsumedRHC_Percent__c = rhc.consumedRHCPercentage * 100;
+				rhcInfo.ANG_ConsumedRHC_Last_Update__c = rhc.eventTime.date();
+				update rhcInfo;
+			}else{
+				result.isSuccess = false;
+				result.description = res.getBody();
+			}
+		} catch(Exception e) {
+			result.isSuccess = false;
+			result.description = e.getMessage();
+		}
+
+
+		//return
+		return result;
 	}
 }
