@@ -4,8 +4,6 @@ public with sharing class AMP_Groups_ParticipationController {
         public Participant__c participant {get;set;}
         public Integer rowspan {get;set;}
         public String gOwner {get;set;}
-
-        public Boolean isMainGroup {get;set;}
     }
 
     public Account acc {get; set;}
@@ -85,100 +83,101 @@ public with sharing class AMP_Groups_ParticipationController {
 
     public static list<Participant> getAllParticipants(Id accountId) {
 
-      list<Participant__c> lsMainGroupParticipants = AMP_CoreRelationshipExtension.getParticipants(accountId);
-      list<Participant__c> lsOtherParticipants = getParticipants(accountId);
+        list<Participant__c> lsMainGroupParticipants = AMP_CoreRelationshipExtension.getParticipants(accountId);
+        list<Participant__c> lsOtherParticipants = getParticipants(accountId);
 
-      list<Participant> retList = new list<Participant>();
-      List<String> lsMainGroupNames = AMP_CoreRelationshipExtension.getGroupNames();
+        list<Participant> retList = new list<Participant>();
+        List<String> lsMainGroupNames = AMP_CoreRelationshipExtension.getGroupNames();
 
-      String prevGroupName = '';
+        String prevGroupName = '';
 
-      for(String groupName : lsMainGroupNames) {
-        Boolean found = false;
-        // first check the main groups
-        for (Participant__c p : lsMainGroupParticipants) {
+        for(String groupName : lsMainGroupNames) {
+            Boolean found = false;
+            // first check the main groups
+            for (Participant__c p : lsMainGroupParticipants) {
 
-            if(p.Local_Governance__r.Name == groupName) {
+                if(p.Local_Governance__r.Name == groupName) {
+                    Participant pw = new Participant();
+                    pw.mainGroupName = groupName;
+                    pw.groupName = '';
+
+                    if(p.Local_Governance__r.Group_Owner__r.Name != null)
+                        pw.gOwner = p.Local_Governance__r.Group_Owner__r.Name;
+                    else
+                        pw.gOwner = p.Local_Governance__r.Group_Owner_Text__c;
+                    pw.rowspan = 1;
+                    pw.salutation = p.Contact__r.Salutation;
+                    pw.firstName = p.Contact__r.FirstName;
+                    pw.lastName = p.Contact__r.LastName;
+                    pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
+                    pw.title = p.Contact__r.Title;
+                    pw.email = p.Contact__r.Email;
+                    pw.representing = p.Representing__c;
+                    retList.add(pw);
+                    found = true;
+                }
+            }
+            // if no participants were found create an empty line for the name
+            if(!found) {
                 Participant pw = new Participant();
                 pw.mainGroupName = groupName;
                 pw.groupName = '';
-
-                if(p.Local_Governance__r.Group_Owner__r.Name != null)
-                    pw.gOwner = p.Local_Governance__r.Group_Owner__r.Name;
-                else
-                    pw.gOwner = p.Local_Governance__r.Group_Owner_Text__c;
+                pw.gOwner = '';
                 pw.rowspan = 1;
-                pw.salutation = p.Contact__r.Salutation;
-                pw.firstName = p.Contact__r.FirstName;
-                pw.lastName = p.Contact__r.LastName;
-                pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
-                    pw.title = p.Contact__r.Title;
-                pw.email = p.Contact__r.Email;
-                pw.representing = p.Representing__c;
                 retList.add(pw);
-                found = true;
             }
-        }
-        // if no participants were found create an empty line for the name
-        if(!found) {
-            Participant pw = new Participant();
-            pw.mainGroupName = groupName;
-            pw.groupName = '';
-            pw.gOwner = '';
-            pw.rowspan = 1;
-            retList.add(pw);
-        }
-        // then get the participants for subgroups
-        Integer position = 0;
-        for(Participant__c p : lsOtherParticipants) {
+            // then get the participants for subgroups
+            Integer position = 0;
+            for(Participant__c p : lsOtherParticipants) {
 
-            if(p.Local_Governance__r.AM_Under__r.Name == groupName) {
-                Participant pw = new Participant();
-                pw.mainGroupName = '';
-                pw.groupName = p.Local_Governance__r.Name;
+                if(p.Local_Governance__r.AM_Under__r.Name == groupName) {
+                    Participant pw = new Participant();
+                    pw.mainGroupName = '';
+                    pw.groupName = p.Local_Governance__r.Name;
 
-                if(p.Local_Governance__r.Group_Owner__r.Name != null)
-                    pw.gOwner = p.Local_Governance__r.Group_Owner__r.Name;
-                else
-                    pw.gOwner = p.Local_Governance__r.Group_Owner_Text__c;
-                pw.rowspan = 0;
-                pw.salutation = p.Contact__r.Salutation;
-                pw.firstName = p.Contact__r.FirstName;
-                pw.lastName = p.Contact__r.LastName;
-                pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
+                    if(p.Local_Governance__r.Group_Owner__r.Name != null)
+                        pw.gOwner = p.Local_Governance__r.Group_Owner__r.Name;
+                    else
+                        pw.gOwner = p.Local_Governance__r.Group_Owner_Text__c;
+                    pw.rowspan = 0;
+                    pw.salutation = p.Contact__r.Salutation;
+                    pw.firstName = p.Contact__r.FirstName;
+                    pw.lastName = p.Contact__r.LastName;
+                    pw.role = p.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type
                     pw.title = p.Contact__r.Title;
-                pw.email = p.Contact__r.Email;
-                pw.representing = p.Representing__c;
+                    pw.email = p.Contact__r.Email;
+                    pw.representing = p.Representing__c;
 
-                // find how many participants are from the same group - to span a single row for group name, owner & mission for them
-                if (p.Local_Governance__r.Name != prevGroupName) {
-                    Integer rowspan = 1;
-                    Integer searchPosition = position+1;
-                    while (searchPosition < lsOtherParticipants.size() &&
-                            p.Local_Governance__r.Name == lsOtherParticipants[searchPosition].Local_Governance__r.Name) {
-                        rowspan++;
-                        searchPosition++;
+                    // find how many participants are from the same group - to span a single row for group name, owner & mission for them
+                    if (p.Local_Governance__r.Name != prevGroupName) {
+                        Integer rowspan = 1;
+                        Integer searchPosition = position+1;
+                        while (searchPosition < lsOtherParticipants.size() &&
+                        p.Local_Governance__r.Name == lsOtherParticipants[searchPosition].Local_Governance__r.Name) {
+                            rowspan++;
+                            searchPosition++;
+                        }
+                        pw.rowspan = rowspan;
                     }
-                    pw.rowspan = rowspan;
-                }
-        retList.add(pw);
+                    retList.add(pw);
 
-        position++;
-        prevGroupName = p.Local_Governance__r.Name;
-      }
+                    position++;
+                    prevGroupName = p.Local_Governance__r.Name;
+                }
+            }
+
+
         }
 
 
-      }
 
-
-
-      return retList;
+        return retList;
 
     }
 
     @AuraEnabled
     public static String  getReportId() {
+        if(Test.isRunningTest()) return '';
         return [SELECT Id FROM Report WHERE DeveloperName='AMP_IndustryGroups_Participation' LIMIT 1].Id;
     }
 
@@ -192,6 +191,7 @@ public with sharing class AMP_Groups_ParticipationController {
         }
         lstParticipants = getParticipantWrappers(accountId);
         lstAllParticipants = getAllParticipants(accountId);
+
         representativesFound = false;
         for(Participant p : lstAllParticipants) {
             if(p.Representing != null && p.Representing != '') representativesFound = true;

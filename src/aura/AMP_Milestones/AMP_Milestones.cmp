@@ -31,22 +31,22 @@
                     <span class="slds-text-heading--small">Milestones for activity: {!v.activityName}</span>
                 </div>
             </div>
-            
+
             <div class="slds-no-flex">
                 <div class="slds-button-group" role="group">
                     <aura:if isTrue="{!v.canEdit}">
                     <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addMilestone}">New</button>
                     </aura:if>
                 </div>
-            </div>                
+            </div>
         </div>
-        
+
         <div class="slds-card__body">
-            
+
             <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                 <thead>
                     <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                        <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">Actions</span></th>
+                        <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
                         <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Milestone</span></th>
                         <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Responsible</span></th>
                         <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Involved</span></th>
