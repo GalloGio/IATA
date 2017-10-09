@@ -53,7 +53,7 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3>{! $Label.ANG_ISSP_ProductComparisonTitle1}</h3>
-          <b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b>
+          <p><b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b></p>
         </div>
 
         <div class="panel-body scrollBar" id="body-results">
