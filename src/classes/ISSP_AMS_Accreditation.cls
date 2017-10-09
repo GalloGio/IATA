@@ -631,6 +631,8 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
         selectPageName();
+
+        this.accredidationType = getAccreditationModelSimple(hqAccount.ANG_Accreditation_Model__c);
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
@@ -1215,6 +1217,8 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('Salesforce newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c);
 
         SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
+
+        this.accredidationType = getAccreditationModelSimple(hqAccount.ANG_Accreditation_Model__c);
 
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
@@ -3360,6 +3364,26 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD;
         }else {
             return Label.ISSP_AMS_Reason_New_HO;
+        }
+    }
+
+    private String getAccreditationModel(String accreditationModel) {
+        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+        } else {
+            return '';
+        }
+    }
+
+    private String getAccreditationModelSimple(String accreditationModel) {
+        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+        } else {
+            return accreditationModel;
         }
     }
 

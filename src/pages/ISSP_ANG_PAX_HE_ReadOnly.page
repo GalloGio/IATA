@@ -56,6 +56,7 @@
     </apex:pageBlockSection>
     
     <apex:pageBlockSection rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}"> <!-- IF ACCOUNT IS NOT TERMINATED AND IS NOT ACCREDITED  -->
+    aaaaa
             <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!hqAccount.Name}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!hqAccount.TradeName__c}"/>
             <apex:outputField label="{!$Label.ISSP_Office_Phone}" value="{!hqAccount.Phone}"/> 
@@ -67,6 +68,7 @@
     </apex:pageBlockSection>
 
     <apex:pageBlockSection rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS IS TERMINATED AND IS ACCREDITED  -->
+    bbbb
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Account_Name__c}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!newForm.Trade_Name__c}"/>
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}" value="{!newForm.Branch_Office_Phone__c}"/> 

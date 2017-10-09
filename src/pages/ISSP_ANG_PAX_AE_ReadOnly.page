@@ -48,6 +48,15 @@
           </apex:outputpanel>
         </apex:facet>
 
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationType}" />
+          <apex:outputtext value="{!accredidationType}" />
+        </apex:pageblocksectionitem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="" />
+          <apex:outputtext value="" />
+        </apex:pageblocksectionitem>        
 
         <apex:pageblocksectionitem >
           <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
@@ -77,6 +86,7 @@
         <apex:outputField value="{!hqAccount.IATACode__c}" />
         <apex:outputtext ></apex:outputtext>
         <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}" />
+
 
       </apex:pageBlockSection>
 
