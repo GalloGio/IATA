@@ -174,10 +174,12 @@ public class ang_rhcAlertTriggerHandler{
 					for (Case sidraLiteCase : sidraLiteCases) {
 						caseIds.add(sidraLiteCase.Id);
 						accountIds.add(sidraLiteCase.AccountId);
+            sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
 					}
 					
           AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
 					bspLinkCallout(caseIds, accountIds);
+          update sidraLiteCases;
 				}
 			}
 
