@@ -32,7 +32,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 			private String EventType;
 			private String changeCode;
-			private String IATACode;
+			public String IATACode{get;private set;}
 
 			public AgencyEvent2Send(string et,string cc,string ic){
 				EventType=et;
@@ -73,7 +73,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 			System.debug('The change codes size is bellow THRESHOLD ('+THRESHOLD+'). Running future method process.');
 
 			for(ANG_calloutHelperWrapper item: records2SendList){
-				invokeChangeCodeImpl(item.calloutMapping,item.rec2Send,item.changeCodeId,item.agencyUpdateId,false);
+				invokeChangeCodeImpl(item.calloutMapping,item.rec2Send,item.changeCodeId,item.agencyUpdateId,item.rec2Send.IATACode,false);
 			}
 
 		}else{
@@ -94,14 +94,14 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	}
 
 
-	public static void invokeChangeCodeImpl(ANG_CalloutMapping__c calloutMapping, Object obj, String changeCodeId,String agencyUpdateId, Boolean isRunningBatch){
+	public static void invokeChangeCodeImpl(ANG_CalloutMapping__c calloutMapping, Object obj, String changeCodeId, String agencyUpdateId, String iataCode, Boolean isRunningBatch){
 
 		// Get the Type corresponding to the class name
 		Type t = Type.forName(calloutMapping.CalloutClass__c);
 
 		ANG_CalloutHelperInt callout = (ANG_CalloutHelperInt)t.newInstance();
 
-		callout.doCallOut(obj, calloutMapping, changeCodeId, agencyUpdateId, isRunningBatch);
+		callout.doCallOut(obj, calloutMapping, changeCodeId, agencyUpdateId, iataCode, isRunningBatch);
 	}
 
 
