@@ -175,6 +175,8 @@ public class ang_rhcAlertTriggerHandler{
 						caseIds.add(sidraLiteCase.Id);
 						accountIds.add(sidraLiteCase.AccountId);
 					}
+					
+          AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
 					bspLinkCallout(caseIds, accountIds);
 				}
 			}
