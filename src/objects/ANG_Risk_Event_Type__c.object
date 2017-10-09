@@ -62,7 +62,7 @@
         <label>Agency Risk Calculation</label>
         <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
         <relationshipLabel>Risk Event Types</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculation</relationshipName>
+        <relationshipName>Risk_Event_Types</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -115,18 +115,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Grouping_Number__c</fullName>
-        <externalId>false</externalId>
-        <label>Grouping Number</label>
-        <precision>5</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>

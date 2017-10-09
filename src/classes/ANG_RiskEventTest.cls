@@ -13,7 +13,7 @@ private class ANG_RiskEventTest {
 
         ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(
             ANG_AccountId__c = a.Id
-            , ANG_Risk_Type__c = [SELECT Id FROM ANG_Risk_Event_Type__c].Id
+            , ANG_Risk_Type__c = riskType.Id
             , ANG_Issued_date__c = System.today().addDays(5)
         );
 

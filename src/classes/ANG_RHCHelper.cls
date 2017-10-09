@@ -9,6 +9,8 @@ public class ANG_RHCHelper {
 
 	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
 
+	//Risk Alert 
+	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 
 	// *********************************************************
 	// *********************** Methods *************************
@@ -74,5 +76,27 @@ public class ANG_RHCHelper {
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}
 		}
+	}
+	@future
+	public static void sendMailUpdateRiskAlert(String contactId,String rhcId,String templateId,String riskAlertId){
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+       	mail.setTargetObjectId(contactId);//contact
+       	mail.setWhatId(rhcId);//account
+        mail.setTemplateId(templateID);
+        mail.setOrgWideEmailAddressId ([select Id from OrgWideEmailAddress where address ='noreply@iata.org'].id);
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>{mail};
+		try{
+			if(!Test.isRunningTest())Messaging.SendEmailResult[] resultList=Messaging.sendEmail(emails); 
+		}catch(Exception  e){
+			system.debug('Failed to send email to users');
+		}
+
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c();
+		ara.id=riskAlertId;
+		ara.ANG_email_sent__c= true;
+
+		upsert ara;
+
 	}
 }

@@ -35,6 +35,15 @@ global with sharing class ANG_ConversionHelper {
 		-9 => 'Different Top Parent in the Hierarchies'
     };   
 
+    public static boolean isMigrationTool{
+		get{
+			if(isMigrationTool ==null) isMigrationTool=false;
+			return isMigrationTool;
+		}
+
+		Set;
+	}
+
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
             
         Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
@@ -379,6 +388,23 @@ global with sharing class ANG_ConversionHelper {
 
 		List<Account> allAccountsSingleHierarchyHO = [SELECT Id  from Account where Location_Type__c in :LOCATIONTYPESNEWGEN and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :countryName and Id not in:accountsMigrated];
 
+		set<Id> accsToCreateRisks = new set<Id>();
+		for(ANG_ConversionHelper.HierarchyStructure i :toReturn.validHierarchies.values()){
+			accsToCreateRisks.addAll(i.allAgencies);
+		}
+
+		Map<String,Integer> nRiskEventTypes = new Map<String,Integer>();
+		Map<Id, ANG_Risk_Event_Type__c> mapTypes = new Map<ID, ANG_Risk_Event_Type__c>([SELECT Name FROM ANG_Risk_Event_Type__c]);
+
+		for(ANG_Agency_Risk_Event__c a :  (new ANG_RiskEventMigrationHelper(accsToCreateRisks)).convertChangeCodesToRiskEvents()){
+			if(nRiskEventTypes.containsKey(mapTypes.get(a.ANG_Risk_Type__c).Name))
+				nRiskEventTypes.put(mapTypes.get(a.ANG_Risk_Type__c).name ,nRiskEventTypes.get(mapTypes.get(a.ANG_Risk_Type__c).Name)+1);
+			else
+				nRiskEventTypes.put(mapTypes.get(a.ANG_Risk_Type__c).Name, 1);
+		}
+
+		toReturn.RisksToAdd = nRiskEventTypes;
+
 		toReturn.totalMigratedHierarchies+=allAccountsSingleHierarchyHO.size();
 		toReturn.totalHierarchies+=allAccountsSingleHierarchyHO.size();
 
@@ -389,6 +415,8 @@ global with sharing class ANG_ConversionHelper {
 	public static List<ANG_ConversionHelper.HierarchyStructure> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
 
 		System.debug('Preparing to convert:'+structures);
+
+		ANG_ConversionHelper.isMigrationTool=true;//skip agencyEventGenerator
 
 		Map<Id,Account> allAgenciesFinalMap = null;
 
@@ -439,8 +467,9 @@ global with sharing class ANG_ConversionHelper {
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-
+		ANG_RiskEventMigrationHelper reHelper = new ANG_RiskEventMigrationHelper(accountsToUpdate);
 		update new List<Account>(accountsToUpdate);
+		insert reHelper.convertChangeCodesToRiskEvents();
 
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
@@ -644,6 +673,8 @@ global with sharing class ANG_ConversionHelper {
 
 	public class StatisticGeneratorStructure{
 
+		public Map<String,Integer> RisksToAdd{get;set;}
+
 		public Integer totalHierarchies{get;set;}
 
 		public Integer totalValidHierarchies{get;set;}
@@ -774,6 +805,8 @@ global with sharing class ANG_ConversionHelper {
 
 	global class ControllerLightStructure{
 
+		public Map<String,Integer> risksToAdd{get;set;}
+
 		public Integer totalHierarchies{get;set;}
 
 		public Integer totalValidHierarchies{get;set;}
@@ -785,6 +818,7 @@ global with sharing class ANG_ConversionHelper {
 		public Map<Integer,List<ANG_ConversionHelper.HierarchyStructure>> inValidHierarchies;
 
 		public ControllerLightStructure(StatisticGeneratorStructure struct){
+			this.risksToAdd = struct.risksToAdd;
 
 			this.totalHierarchies = struct.totalHierarchies;
 

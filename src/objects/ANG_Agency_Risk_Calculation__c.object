@@ -126,6 +126,7 @@
     <fields>
         <fullName>ANG_Limit_Cash_Condition__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Defines if the risk event with this calculations flags the cash condition in the account</description>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
         <trackHistory>false</trackHistory>
@@ -387,25 +388,6 @@
             </values>
             <values>
                 <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

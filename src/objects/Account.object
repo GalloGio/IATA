@@ -2722,8 +2722,9 @@
                 Top_parent__r.ANG_HE_CashCondition__c
               )
             )
-    </formula>
-        <label>Cash Condition</label>
+        </formula>
+        <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
+        <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -34464,7 +34465,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
