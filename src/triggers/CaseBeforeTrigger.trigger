@@ -235,11 +235,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             CurrUser = UserInfo.getUserId();
             //IMPRO GM END
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
-            for(Case c : Trigger.new){
-                if((Trigger.isInsert && c.Status == 'Closed') || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
-                    c.WhoClosedCase__c = UserInfo.getUserId();
-                }if(c.Status != 'Closed')
-                    c.WhoClosedCase__c = null;  
+            for(Case c : Trigger.new){//RN-INC342887 - validation with isClosed -> this field needs to be checked in the after trigger
+                if((Trigger.isInsert && c.isClosed == true) || 
+                        (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true))
+                        c.WhoClosedCase__c = CurrUser;
+                if(c.isClosed==false)    
+                    c.WhoClosedCase__c = null;
             }// END Update L.Faccio --------------
         }    
         /*UserInfoUpdate Trigger*/
