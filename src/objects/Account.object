@@ -15819,9 +15819,14 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>Account.Others</value>
         </filters>
         <filters>
-            <field>Source_System__c</field>
+            <field>Category__c</field>
             <operation>equals</operation>
-            <value>banking</value>
+            <value>Banking Service</value>
+        </filters>
+        <filters>
+            <field>Sector__c</field>
+            <operation>equals</operation>
+            <value>Financial Institution</value>
         </filters>
         <label>Banking Accounts</label>
         <language>en_US</language>
