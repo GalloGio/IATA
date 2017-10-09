@@ -453,6 +453,8 @@ private class CaseBeforeTriggerTest {
         //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+        ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
@@ -552,6 +554,27 @@ private class CaseBeforeTriggerTest {
         system.assertEquals(true,exceptionRaised);
         
         test.stopTest();
+        List <Case> lcs = new List<Case>();
+        Case cs3 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICH', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='General Question');  
+        lcs.add(cs3);
+
+        Case cs4 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='aa');  
+        lcs.add(cs4);
+
+         Case cs5 = new Case(RecordTypeId = PortalsharingRTID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
+        lcs.add(cs5);
+        try{insert lcs;}catch(Exception e){exceptionRaised = true;}
+        system.assertEquals(true,exceptionRaised);
+
+        ID caseRecordType = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+        Case cs6 = new Case(RecordTypeId = caseRecordType, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED);
+        insert cs6;
+
+
     }
     
     @istest static void test1() {
@@ -2443,6 +2466,4 @@ private class CaseBeforeTriggerTest {
 
         Test.stopTest();
     }
-
-
-}
+  }
