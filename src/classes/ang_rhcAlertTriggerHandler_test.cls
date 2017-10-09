@@ -140,7 +140,7 @@ private class ang_rhcAlertTriggerHandler_test {
 
 	private static testmethod void testTicketingAuthorityRemoval(){
 
-		Account a = [Select Id from Account limit 1];
+    	Account a = [Select Id from Account limit 1];
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
 			Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
 			ang_Severity__c='Red',
