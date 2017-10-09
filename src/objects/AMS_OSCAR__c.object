@@ -2610,7 +2610,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <label>Process Start Date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -6082,6 +6082,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <label>OSCAR</label>
+    <listViews>
+        <fullName>AGM_GDC_MAD_MIA_migrated_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM GDC MAD - MIA migrated</label>
+        <queue>AGM_GDC_MAD_MIA_migrated</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <listViews>
         <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>

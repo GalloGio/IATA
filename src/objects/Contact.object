@@ -3025,7 +3025,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Legal Authorized Signatory</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -7851,6 +7851,14 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             </picklistValues>
             <picklistValues>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russian</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -27254,7 +27262,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkish</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
