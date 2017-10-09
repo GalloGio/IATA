@@ -2990,18 +2990,34 @@
     <fields>
         <fullName>Airline_Model_Type__c</fullName>
         <externalId>false</externalId>
-        <label>Airline Model Type</label>
+        <label>Airline Business Model</label>
         <picklist>
             <picklistValues>
-                <fullName>Legacy</fullName>
+                <fullName>Full Service Network Carrier</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Low Cost</fullName>
+                <fullName>Full Service Regional Carrier</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Hybrid</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ultra Low Cost Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
