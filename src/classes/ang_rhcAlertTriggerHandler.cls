@@ -14,6 +14,7 @@ public class ang_rhcAlertTriggerHandler{
 	}
 	public void onAfterInsert() {
 		sendAlertNotification();
+		handleRedAlerts();
 	}
 
 	public void onBeforeUpdate(){
@@ -86,5 +87,147 @@ public class ang_rhcAlertTriggerHandler{
             ANG_RHCHelper.sendMailUpdateRiskAlert(c.id,riskAlertMap.get(accId).ANG_RHC_Information__c,templateID,riskAlertMap.get(accId).id);
 		}
 
+	}
+
+	public void handleRedAlerts(){
+		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
+
+		for(ANG_Risk_Alert__c ra :triggerNew){
+			if(ra.ANG_Severity__c == 'Red' &&  ra.recordTypeid == Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId()){
+				redAlerts.add(ra);
+			}
+		}
+
+		if(!redAlerts.isEmpty()){
+			//create Sidra Lites
+
+			Case smapParentCase;
+			List<Case> sidraLiteCases;
+			List<Case> smapParentCases = new List<Case>();
+
+			for(ANG_Risk_Alert__c ra: triggerNew){
+
+				//TODO: confirm all this fileds 
+				smapParentCase = new Case(
+					Region__c =	ra.ANG_Account__r.Region__c,
+					Subject = '',
+					AccountId = ra.ANG_Account__c,
+					Status = 'Accepted',
+					BSP_CASS__c = 'BSP',
+					Origin = 'Other',
+					Decision__c = 'Prejudiced Collection of Funds',
+					RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP,
+					Next_Remittance_Date__c =  date.newinstance(2018, 2, 17),
+					Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
+					End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
+					Suspension_Date__c=  date.newinstance(2017, 2, 17)
+				);
+				smapParentCases.add(smapParentCase);
+			} 
+
+			if(!smapParentCases.isEmpty()){
+				insert smapParentCases;
+
+
+				Case sidraCase;
+				sidraLiteCases = new List<Case>();
+
+				for(Case parentCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+
+					//NEWGEN-1933 fill fields on sidra case
+					sidraCase = WSSidraLite.createCase(parentCase.id);
+					//TODO: confirm on "sidraCase.Subject" if account site or account IATA code
+					sidraCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.Site + ' - ' + parentCase.Account.Name;
+					sidraCase.Case_Remarks__c = '';
+					sidraCase.Description = '';					
+					sidraCase.Region__c = parentCase.Region__c; 
+					sidraCase.BSPCountry__c = parentCase.BSPCountry__c;
+					sidraCase.BSP_CASS__c = 'BSP';
+					sidraCase.Status = 'Open'; 
+					sidraCase.Origin = 'Risk Monitoring Engine'; 
+					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
+					sidraCase.Priority = 'High'; 
+
+					//confirm if i can use this logic to get the contact or if i show run all hiearchy
+					List<Contact> contacts = new List<Contact>();
+					if (parentCase.ParentId != null) {
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
+					} else {
+						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.id AND User_Portal_Status__c = 'Approved Admin'];
+					}
+
+					if(!contacts.isEmpty())
+						sidraCase.Contact = contacts[0];
+
+					//sidraCase.R_S_feedback_pending__c : TBD?
+					//sidraCase.New_interaction__c : TBD ??
+					
+					//END -NEWGEN-1933
+					sidraLiteCases.add(sidraCase);
+
+				}
+
+				if (!sidraLiteCases.isEmpty()) {
+					insert sidraLiteCases;
+					List<Id> caseIds = new List<Id>();
+					List<Id> accountIds = new List<Id>();
+					for (Case sidraLiteCase : sidraLiteCases) {
+						caseIds.add(sidraLiteCase.Id);
+						accountIds.add(sidraLiteCase.AccountId);
+					}
+					
+          AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
+					bspLinkCallout(caseIds, accountIds);
+				}
+			}
+
+		}
+	}
+
+	//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
+	@Future(callout=true)
+	public static void bspLinkCallout(List<Id> sidraLiteCaseIds, List<Id> accountIds) {
+		List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
+		ISSP_Web_Service_Log__c log;
+		Boolean hasError = false;
+		Boolean hasSuccess = false;
+		String errorMessage = '';
+		String successMessage = '';
+		Integer size = sidraLiteCaseIds.size();
+		List<AMS_BSPLinkIntegration.Response> responses;
+
+		for (Integer i = 0; i < size; i++) {
+			log = new ISSP_Web_Service_Log__c();
+			log.Case__c = sidraLiteCaseIds[i];
+			log.System__c = 'bsplink';
+			errorMessage = 'Following locations were not deactivated in BSPLink:\n';
+			successMessage = 'Following locations were deactivated successfully in BSPLink:\n';
+			responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('Deactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
+			for (AMS_BSPLinkIntegration.Response r: responses) {
+				if (r.result == 'Ok') {
+					successMessage = successMessage + '\n ' + r.IATACode;
+					hasSuccess = true;
+				} else if (r.result == 'Error') {
+					hasError = true;
+					if (r.IATACode == '-') {
+						errorMessage = errorMessage + '\n' + r.description;
+					} else {
+						errorMessage = errorMessage + '\n ' + r.IATACode + ': ' + r.description;
+					}
+				}
+			}
+			if (!hasError) {
+				log.Error_Message__c = successMessage;
+				log.Success__c = true; 
+			}
+			if (!hasSuccess) {
+				log.Error_Message__c = errorMessage;
+			}
+			if (hasError && hasSuccess) {
+				log.Error_Message__c = successMessage + '\n\n' + errorMessage;
+			}
+			logs.add(log);
+		}// end for loop
+		insert logs;
 	}
 }
