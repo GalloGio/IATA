@@ -23,7 +23,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	public String strRegion {get; set;}
 
 	public String broadCastRegion {get;set;}
-	public Boolean selectWholeRegion {get;set;} 
+	public Boolean selectWholeRegion {get;set;}
 
 	public List<SelectOption> getlstRegions() {
         List<SelectOption> options = new List<SelectOption>();
@@ -61,50 +61,50 @@ public with sharing class AMP_ChatterBroadcastToolController {
     	if (message == null || message == '') {
     		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please type in the message to broadcast.'));
 		} else {
+			list<FeedItem> lstItemsToPost = new list<FeedItem>();
 
+			for (AccountWrapper aw : lstAccounts) {
+				if (aw.isSelected) {
+					FeedItem newPost = new FeedItem();
+					newPost.ParentId = aw.acct.Id;
+					newPost.Body = message;
+					newPost.Type = 'TextPost';
 
-				list<FeedItem> lstItemsToPost = new list<FeedItem>();
+					lstItemsToPost.add(newPost);
+				}
+			}
 
-				for (AccountWrapper aw : lstAccounts) {
-					if (aw.isSelected) {
-						FeedItem newPost = new FeedItem();
-						newPost.ParentId = aw.acct.Id;
-						newPost.Body = message;
-						newPost.Type = 'TextPost';
+			// make a list of regions, fetch existing and create missing topics
+			List<String> lsBroadcastTopicNames =
+			new List<String>{'broadcastAll Regions',
+			'broadcastAfrica & Middle East',
+			'broadcastAmericas',
+			'broadcastAsia & Pacific',
+			'broadcastChina & North Asia',
+			'broadcastEurope'};
+			// broadcastTopicNames = '';
+			List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
+			List<Topic> lsNewBroadcastTopics = new List<Topic>();
 
-						lstItemsToPost.add(newPost);
+			// add the missing broadcast topics
+			for(String topicName : lsBroadcastTopicNames) {
+				Boolean found = false;
+				for(Topic t: lsBroadcastTopics) {
+					if(topicName == t.Name) {
+						found = true;
+						break;
 					}
 				}
-
-				// make a list of regions, fetch existing and create missing topics
-				List<String> lsBroadcastTopicNames =
-					new List<String>{'broadcastAll Regions',
-				'broadcastAfrica & Middle East',
-				'broadcastAmericas',
-				'broadcastAsia & Pacific',
-				'broadcastChina & North Asia',
-				'broadcastEurope'};
-				// broadcastTopicNames = '';
-				List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
-
-				// add the missing broadcast topics
-				for(String topicName : lsBroadcastTopicNames) {
-					Boolean found = false;
-					for(Topic t: lsBroadcastTopics) {
-						if(topicName == t.Name) {
-							found = true;
-							break;
-						}
-					}
-					if(!found) {
-						Topic t = new Topic();
-						t.Name = topicName;
-						lsBroadcastTopics.add(t);
-					}
+				if(!found) {
+					Topic t = new Topic();
+					t.Name = topicName;
+					lsNewBroadcastTopics.add(t);
 				}
-				upsert lsBroadcastTopics;
+			}
 
-				try {
+			try {
+				insert lsNewBroadcastTopics;
+				lsBroadcastTopics.addAll(lsNewBroadcastTopics);
 				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
 
 				// after inserting the actual feeditems create and insert the broadcast topic assignments
@@ -126,23 +126,22 @@ public with sharing class AMP_ChatterBroadcastToolController {
 				}
 
 				if(!lsTopicAssignments.isEmpty()) { insert lsTopicAssignments; }
-	    		Integer success = 0;
-	    		Integer errors = 0;
-	    		for (Database.SaveResult sr : srList) {
-	    			if (sr.isSuccess()) {
-	    				success ++;
-	    			} else {
-	    				errors ++;
-	    			}
-	    		}
+				Integer success = 0;
+				Integer errors = 0;
+				for (Database.SaveResult sr : srList) {
+					if (sr.isSuccess()) {
+						success ++;
+					} else {
+						errors ++;
+					}
+				}
 
-	    		if (success > 0) {
+				if (success > 0) {
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcasted.')); // to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
 					step = 3;
 				} else {
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));// with ' + errors + ' error(s) when trying to post.'));
 				}
-
 
 			} catch (Exception e) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
