@@ -1,5 +1,6 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
     <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="showPopup" type="Boolean" default="false" />
     <!-- 'sobjectType': 'Objective__c',-->
