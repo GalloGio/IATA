@@ -701,7 +701,6 @@ public without sharing virtual class IEC_Cart {
 		System.debug('productSwap start');
 
 		Map<Id, Product2> srcProductRatePlaneToProductMap = new Map<Id, Product2>();
-		Map<Id, Swap_Configuration__c> trgSwapConfMap = new Map<Id, Swap_Configuration__c>();
 		//Source product from cartItem
 		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
 			FROM Product2 where SAP_Material_Number__c in :cartItemMap.keySet()]);
@@ -718,19 +717,25 @@ public without sharing virtual class IEC_Cart {
 			from Swap_Configuration__c where Relationship_Type__c = :IECConstants.SwappingType_Swap and 
 			Source_Product_Rate_Plan_Information__c in :srcProductRatePlaneToProductMap.keySet()];
 
+		Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
+
 		for(Swap_Configuration__c swapConf : swapConfigurationList){
 			//Target product
 			List<Product2> trgProduct = new List<Product2>([SELECT Id,SAP_Material_Number__c, ZProduct__c,IEC_Product_Rate_Plan_Information__c 
-			FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c limit 1]);
-			//Source product
-			Product2 srcProduct = srcProductRatePlaneToProductMap.get(swapConf.Source_Product_Rate_Plan_Information__c);
-			//Source CartItem
-			CartItem srcCarItem = cartItemMap.get(srcProduct.SAP_Material_Number__c);
-			//Remove source Item
-			cartItemMap.remove(srcProduct.SAP_Material_Number__c);
-			//Build the target item and add it to the cartItemMap
-			CartItem trgCarItem = new CartItem (srcCarItem.Id, trgProduct[0].SAP_Material_Number__c, srcCarItem.quantity, srcCarItem.coupon);
-			cartItemMap.put(trgProduct[0].SAP_Material_Number__c, trgCarItem);
+				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and 
+				Restricted_Customer_Type__c includes (:oCurrentCustomer.customerType) limit 1]);
+
+			if(trgProduct != null && !trgProduct.isEmpty()){
+				//Source product
+				Product2 srcProduct = srcProductRatePlaneToProductMap.get(swapConf.Source_Product_Rate_Plan_Information__c);
+				//Source CartItem
+				CartItem srcCarItem = cartItemMap.get(srcProduct.SAP_Material_Number__c);
+				//Remove source Item
+				cartItemMap.remove(srcProduct.SAP_Material_Number__c);
+				//Build the target item and add it to the cartItemMap
+				CartItem trgCarItem = new CartItem (srcCarItem.Id, trgProduct[0].SAP_Material_Number__c, srcCarItem.quantity, srcCarItem.coupon);
+				cartItemMap.put(trgProduct[0].SAP_Material_Number__c, trgCarItem);
+			}
 
 		}
 
