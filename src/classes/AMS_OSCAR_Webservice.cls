@@ -227,7 +227,7 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
