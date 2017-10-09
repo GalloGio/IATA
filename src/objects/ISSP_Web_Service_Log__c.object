@@ -70,7 +70,9 @@
     <fields>
         <fullName>Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Link to the case that is related with the log.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Link to the case that is related with the log.</inlineHelpText>
         <label>Case</label>
         <referenceTo>Case</referenceTo>
         <relationshipLabel>ISSP Web Service Logs</relationshipLabel>

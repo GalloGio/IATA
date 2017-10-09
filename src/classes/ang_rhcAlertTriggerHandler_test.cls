@@ -138,4 +138,23 @@ private class ang_rhcAlertTriggerHandler_test {
 
 	}
 
+	private static testmethod void testTicketingAuthorityRemoval(){
+
+    	Account a = [Select Id from Account limit 1];
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			ang_Severity__c='Red',
+			ANG_Account__c = a.Id
+		);
+				
+		test.StartTest();
+			insert ra;
+		test.StopTest();
+		List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+		System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+		List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
+		System.assertEquals(logs.size(), 1, 'Response was not saved');
+
+	}
+
 }
