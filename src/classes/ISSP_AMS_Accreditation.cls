@@ -214,6 +214,8 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
     }
+
+    public ANG_ProductComparisonHelper helper {get; set;}
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -631,6 +633,8 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
         selectPageName();
+
+        this.helper = new ANG_ProductComparisonHelper('B');
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
@@ -1282,7 +1286,7 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Status = 'Draft';
             newForm.Agent_Type__c = agentType;
             
-            newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + '.';
+            newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + getAccreditationModel(hqAccount.ANG_Accreditation_Model__c) + '.';
             newCase.CaseArea__c = 'Accreditation Process';
             newcase.Case_Language__c = applyLanguage;
             newCase.Visible_on_ISS_Portal__c = true;
@@ -1301,11 +1305,14 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Type_of_customer__c = con.Account.Category__c;
             
             if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
-                newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
+                newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
             }
             else{
-                newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
+                newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
             }
+
+            System.debug('1) newCase.Subject-->' + newCase.Subject);
+
             //system.debug('draftHQCaseExists: ' + draftHQCaseExists);  
             //system.debug('isDupeSAAMCase: ' + isDupeSAAMCase);
             try {
@@ -1319,13 +1326,15 @@ public without sharing class ISSP_AMS_Accreditation {
                     newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
                     //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
                     newCase.Country_concerned_by_the_query__c = isocountry.Name;
-                    newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType);
+                    newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + getAccreditationModel(hqAccount.ANG_Accreditation_Model__c) + '.';
 
                     if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
-                        newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
+                        newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
                     }else{
-                        newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;        
+                        newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;        
                     }
+
+                    System.debug('2) newCase.Subject-->' + newCase.Subject);
                     
                     system.debug('after trigger newCase dupe: ' + newCase);
                     system.debug('after trigger newCase.Id dupe: ' + newCase.Id);
@@ -1350,6 +1359,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ) {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
+                        newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
                         SYSTEM.DEBUG('Set BR Abroad Legal Name: ' + hqAccount.Name + ' newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c + ' hqAccount.Name ' + hqAccount.Name);
                         if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newForm.AE_separate_Legal_Entity__c == 'No'){  //Legal name is editable for BR Abroad, so set default value                            
@@ -1927,6 +1937,7 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.BillingStreet = newForm.Branch_Office_Street_name_number__c;
         SFDCAccount.BillingPostalCode = newForm.Branch_Office_Postal_code__c;
         SFDCAccount.BillingCountry = isocountry.Name;
+        SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
     }
     
     private void createHOAccount(Account parentHO) {
@@ -3344,8 +3355,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
     }
 
-
-    private string getCaseReason(string r) {
+    private string getCaseReason(string r, String accreditationModel) {
         if (r == AMS_Utils.CASE_REASON_NEW_HO) {
             return Label.ISSP_AMS_Reason_New_HO;
         } else if (r == AMS_Utils.CASE_REASON_BR_IP) {
@@ -3357,11 +3367,22 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else if ( r == AMS_Utils.CASE_REASON_HE_LITE){
             return Label.ISSP_AMS_Head_Entity_No_Cash;
         } else if( r == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD){
-            return AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD;
+            return Label.ISSP_ANG_Assoc_Entity + getAccreditationModel(accreditationModel);
         }else {
             return Label.ISSP_AMS_Reason_New_HO;
         }
     }
+
+    private String getAccreditationModel(String accreditationModel) {
+        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+        } else {
+            return '';
+        }
+
+    }    
 
     private string getAgentTypeLabel(string agentType) {        
         if (agentType == 'Legacy') {
@@ -3533,6 +3554,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 }
 
             }
+
+            // Clean any css style in the Requirement_text__c and also Bold tags
+            for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
+                if (req.Requirement_text__c != null) {
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                    req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
+                }
+            }
+
         } else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange == false) {
             retCargoCountryReqments(false);
         } else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange == true) {
@@ -4878,6 +4909,15 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                                             ORDER BY Sort_Order__c ASC
                                        ];
                 system.debug('countryReq size: ' + List_CountryReqments.size());
+            }
+        }
+
+        // Clean any css style in the Requirement_text__c and also Bold tags
+        for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
+            if (req.Requirement_text__c != null) {
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
             }
         }
     }
