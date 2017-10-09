@@ -150,7 +150,7 @@ public class AMS_ChangeCodesHelper {
         Map<Id,List<Agency_Authorization__c>> fOPs = null;
 
         //if(AMS_Utils.isNewGenProcess)
-        if(!oscars.isEmpty && oscars[0].Is_NewGen)
+        if(!oscars.isEmpty && oscars[0].Is_NewGen__c)
             fOPs = fetchFormsOfPayment(accountIds);
 
         ObjectChangesStruct objectChangesByChangeCode = null;
@@ -172,7 +172,7 @@ public class AMS_ChangeCodesHelper {
 
             List<Agency_Authorization__c> accFOPs = null;
 
-            if(!oscars.isEmpty && oscars[0].Is_NewGen)
+            if(!oscars.isEmpty && oscars[0].Is_NewGen__c)
                 accFOPs = fOPs.get(oscarAgencies.get(index).Id);
 
             ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive, accFOPs);
@@ -287,7 +287,7 @@ public class AMS_ChangeCodesHelper {
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
             , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-            , Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen)
+            , Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen__c)
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
