@@ -251,6 +251,8 @@ global with sharing class GSS_REST_FileSpecification{
                     fs.FileNaming = subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c;
                     fs.ZIPFileName = subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c;
                     fs.Frequency = subscriptiondetail.GDP_File_Description__r.Frequency__c;
+                    if (fs.ZIPFileName!=null) { fs.ZIPFileName = fs.ZIPFileName.replace('&','');}
+                    if (fs.FileNaming!=null) { fs.FileNaming = fs.FileNaming.replace('&','.');}
                     setCustomizedCoreFileName(TodaySystem, fs, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
                     
                     //Temporary solution for the golive only
@@ -303,7 +305,8 @@ global with sharing class GSS_REST_FileSpecification{
                         // Master File & Zip File should have the master file name, set the original name first
                         fs1.FileNaming = subscriptiondetail.GDP_File_Description__r.Master_File_Description__r.File_Naming_Convention__c; 
                         fs1.ZIPFileName = subscriptiondetail.GDP_File_Description__r.Master_File_Description__r.File_Naming_Convention__c;
-                        
+                        if (fs1.ZIPFileName!=null) { fs1.ZIPFileName = fs1.ZIPFileName.replace('&','');}
+                        if (fs1.FileNaming!=null) { fs1.FileNaming = fs1.FileNaming.replace('&','.');}
                         setCustomizedCoreFileName(TodaySystem, fs1, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
                         
                         responseFSlist.FileSpecifications.add(fs1); 
