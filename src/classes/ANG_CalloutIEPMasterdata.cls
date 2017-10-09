@@ -5,32 +5,32 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		return mappingObj.Credential__c;
 	}
 	
-	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId,String agencyUpdateId , Boolean isRunningBatch){
-		sendCallout(JSON.serialize(obj),mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId,agencyUpdateId, isRunningBatch);
+	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId,String agencyUpdateId , String iataCode, Boolean isRunningBatch){
+		sendCallout(JSON.serialize(obj),mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj), mappingObj.client_id__c, mappingObj.client_secret__c, changeCodeId, agencyUpdateId, iataCode, isRunningBatch);
 	}
 
-	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId,Boolean isRunningBatch){
+	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
 		if(isRunningBatch)
-			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
 		else
-			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
 	}
 
 
 	@future (callout=true)
-	private static void executeCalloutFuture(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId){
-		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId);
+	private static void executeCalloutFuture(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
+		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
 	}
 
 
-	private static void executeCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId){
+	private static void executeCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
 
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
 	 	req.setTimeout(120000);
 		//req.setEndpoint('https://iata-agencies-process.cloudhub.io'+endPointCredential+body+'?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
-		req.setEndpoint('callout:'+namedCredential+endPointCredential+'?client_id='+clientId+'&client_secret='+clientSecret);
+		req.setEndpoint('callout:'+namedCredential+endPointCredential+iataCode+'?client_id='+clientId+'&client_secret='+clientSecret);
 		req.setBody(body);
 
 		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req.getBody());
