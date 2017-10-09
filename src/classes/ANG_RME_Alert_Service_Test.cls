@@ -186,7 +186,7 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
@@ -195,33 +195,27 @@ private class ANG_RME_Alert_Service_Test {
 	}
 	
 	static testMethod void webservice_error() {
-		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
-
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(400, 'There was an error'));
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
-		System.assertEquals(message.iataCode, result.iataCode);
 		System.assertEquals('There was an error', result.description);
 		System.assert(!result.isSuccess);
 	}
 	
 	static testMethod void webservice_exception() {
-		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
-
-		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, 'There was an error'));
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, 'Not a JSON'));
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate(message.iataCode);
+		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
-		System.assertEquals(message.iataCode, result.iataCode);
 		System.assert(!result.isSuccess);
 	}
 }

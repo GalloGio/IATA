@@ -119,10 +119,21 @@ global class ANG_RME_Alert_Service {
 		setResponse(null, 202);
 	}
 
+	global class BalanceResult {
+		webservice Boolean isSuccess;
+		webservice String description;
+		webservice String iataCode;
+	}
 
 	//webservice called by salesforce (javascript button and portal) to request an update
-	webservice static RequestResult requestBalanceUpdate(String iataCode){
-		result.iataCode = iataCode;
+	webservice static BalanceResult requestBalanceUpdate(String accountId){
+
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] acc - ' + acc);
+
+		BalanceResult result = new BalanceResult();
+		result.isSuccess = true;
+		result.iataCode = acc.IATACode__c;
 
 		//do callout
 		HttpRequest req = new HttpRequest();
@@ -131,31 +142,34 @@ global class ANG_RME_Alert_Service {
 		req.setTimeout(120000);
 		req.setEndpoint('callout:ANG_Mulesoft_032?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 
-		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] req - ' + req);
 
 		//parse result
 		HttpResponse res;
 		RHCMessage rhc;
 
 		try {
-			res = new Http().send(req);
+			if(Test.isRunningTest()) res = new Http().send(req);
+			//temporary stuff
+			else{
+				rhc = new RHCMessage();
+				rhc.iataCode = result.iataCode;
+				rhc.eventTime = System.now();
+				rhc.consumedRHCAmount = 5000;
+				rhc.consumedRHCPercentage = 0.5;
+				res = new HttpResponse();
+				res.setBody(JSON.serialize(rhc));
+				res.setStatusCode(200);
+			}
+			// end temporary stuff
 
 			if(res.getStatusCode() >= 200 && res.getStatusCode() < 300){
 				/**
 				TODO: Define response structure
 				*/
-				if(Test.isRunningTest()) rhc = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
-				else{
-					//temporary stuff
-					rhc = new RHCMessage();
-					rhc.iataCode = iataCode;
-					rhc.eventTime = System.now();
-					rhc.consumedRHCAmount = 5000;
-					rhc.consumedRHCPercentage = 0.5;
-					// end temporary stuff
-				}
+				rhc = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
 				
-				ANG_RHC_Information__c rhcInfo = [SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__r.IATACode__c = :iataCode];
+				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 
 				rhcInfo.ANG_ConsumedRHC__c = rhc.consumedRHCAmount;
 				rhcInfo.ANG_ConsumedRHC_Percent__c = rhc.consumedRHCPercentage * 100;
