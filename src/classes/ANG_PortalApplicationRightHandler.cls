@@ -53,25 +53,27 @@ public class ANG_PortalApplicationRightHandler {
 		List<UserProvAccount> ExistingUPA = [Select ExternalUserId, ConnectedAppId From UserProvAccount Where SalesforceUserId in : setUserId];
 		
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
-			string sConnId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c;
-			//It means it's IEP
-			if(sConnId != ''){
-				sConnId = sConnId.left(15); //to be sure is same length
-				boolean UPAToCreate = true;
-				for(UserProvAccount upa: ExistingUPA){
-					if(string.ValueOf(upa.ConnectedAppId).left(15) == sConnId)
-						UPAToCreate = false;
-				}
-				
-				if(UPAToCreate){
-					UserProvAccount upa = new UserProvAccount (
-		            	ExternalUserId = (mapUser.get(access.Contact__c).FederationIdentifier==null?access.Contact__c:mapUser.get(access.Contact__c).FederationIdentifier),
-		                SalesforceUserId = mapUser.get(access.Contact__c).Id,
-		                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
-		                LinkState = 'Linked',
-		                Status = 'Active'
-		            );
-		            upal.add(upa);
+			if(roles.containsKey(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c)){
+				string sConnId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c;
+				//It means it's IEP
+				if(sConnId != '' && sConnId!=null){
+					sConnId = sConnId.left(15); //to be sure is same length
+					boolean UPAToCreate = true;
+					for(UserProvAccount upa: ExistingUPA){
+						if(string.ValueOf(upa.ConnectedAppId).left(15) == sConnId)
+							UPAToCreate = false;
+					}
+					
+					if(UPAToCreate){
+						UserProvAccount upa = new UserProvAccount (
+			            	ExternalUserId = (mapUser.get(access.Contact__c).FederationIdentifier==null?access.Contact__c:mapUser.get(access.Contact__c).FederationIdentifier),
+			                SalesforceUserId = mapUser.get(access.Contact__c).Id,
+			                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
+			                LinkState = 'Linked',
+			                Status = 'Active'
+			            );
+			            upal.add(upa);
+					}
 				}
 			}
 		}

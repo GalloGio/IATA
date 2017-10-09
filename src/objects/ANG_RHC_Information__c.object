@@ -197,6 +197,18 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_Amount_Simulation__c</fullName>
+        <description>Temporary field to be used during simulation of RHC</description>
+        <externalId>false</externalId>
+        <label>RHC Amount (Simulation)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Amount__c</fullName>
         <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>

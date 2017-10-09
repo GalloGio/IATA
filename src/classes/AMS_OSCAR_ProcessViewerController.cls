@@ -24,6 +24,8 @@ public class AMS_OSCAR_ProcessViewerController {
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
 
+    private static Set<String> analystProfiles = new Set<String>{'FDS Hub Analyst ARM'};
+
     public Boolean showRequiredOverlay{
         get{
             if(this.oscar.Account__c == null)
@@ -93,6 +95,17 @@ public class AMS_OSCAR_ProcessViewerController {
             };
         }
     } 
+
+    public Boolean isAnalystProfile{
+        get{
+            List<Profile> analystProfileLst = [select id from profile where Name IN :analystProfiles];
+            Set<Id> analystProfileIds = new Set<Id>();
+            for(Profile p :analystProfileLst)
+                analystProfileIds.add(p.Id);
+                
+            return analystProfileIds.contains(UserInfo.getProfileId());
+        }
+    }
 
     private Boolean isStepBlocked(String stepApiName){
         return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
