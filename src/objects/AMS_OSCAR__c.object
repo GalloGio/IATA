@@ -2173,7 +2173,7 @@ Format: YYYY</inlineHelpText>
         <fullName>Is_NewGen__c</fullName>
         <description>Created to avoid extra queries on the code.</description>
         <externalId>false</externalId>
-        <formula>AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c</formula>
+        <formula>Account__r.ANG_IsNewGenAgency__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is NewGen</label>
         <trackHistory>false</trackHistory>
