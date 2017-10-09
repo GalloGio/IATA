@@ -2,7 +2,7 @@ public without sharing class AMS_Utils {
 
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
-    public static Boolean isNewGenProcess = false;
+    //public static Boolean isNewGenProcess = false;
 
     public static Set<Id> AMSPROFILES {
         get {

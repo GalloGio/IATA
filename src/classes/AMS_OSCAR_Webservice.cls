@@ -231,7 +231,7 @@ global class AMS_OSCAR_Webservice {
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
-            AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
+            //AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
 
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
