@@ -27,8 +27,16 @@ public class ang_rhcAlertTriggerHandler{
 
 
 
-
-
+	public static map<String,String> mapRemittanceFrequency = new map<String,String> {
+       	'Daily' => 'D',
+       	'4 times per month' => 'E',
+		'Fortnightly' => 'F',
+		'Monthly' => 'M',
+		'Every 5 days' => 'R',
+		'Every 3 days' => 'T',
+		'Weekly' => 'W',
+		'Every 10 days' => 'X'
+    };   
 
 	public void sendAlertNotification(){
 		
@@ -91,10 +99,12 @@ public class ang_rhcAlertTriggerHandler{
 
 	public void handleRedAlerts(){
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
+		Map<String,ANG_Risk_Alert__c> mapAccountRiskAlert = new Map<String,ANG_Risk_Alert__c>();
 
 		for(ANG_Risk_Alert__c ra :triggerNew){
 			if(ra.ANG_Severity__c == 'Red' &&  ra.recordTypeid == Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId()){
 				redAlerts.add(ra);
+				mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
 			}
 		}
 
@@ -104,6 +114,7 @@ public class ang_rhcAlertTriggerHandler{
 			Case smapParentCase;
 			List<Case> sidraLiteCases;
 			List<Case> smapParentCases = new List<Case>();
+			Map<String,case> mapCaseRiskAlert = new Map<String,case>();
 
 			for(ANG_Risk_Alert__c ra: triggerNew){
 
@@ -120,14 +131,29 @@ public class ang_rhcAlertTriggerHandler{
 					Next_Remittance_Date__c =  date.newinstance(2018, 2, 17),
 					Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
 					End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
-					Suspension_Date__c=  date.newinstance(2017, 2, 17)
+					Suspension_Date__c=  Date.today()
 				);
 				smapParentCases.add(smapParentCase);
 			} 
 
 			if(!smapParentCases.isEmpty()){
-				insert smapParentCases;
+				//insert smapParentCases;
+				Database.SaveResult[] srList = Database.insert(smapParentCases, false);
 
+			for(Case parentCase :smapParentCases){
+				mapCaseRiskAlert.put(parentCase.Id,parentCase);			
+			}
+
+				List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
+				// Iterate through each returned result
+				for (Database.SaveResult sr : srList) {
+				    if (sr.isSuccess()) {
+				    	//because trigger is running on after inset we need a new instace and DML operation to update 
+				    	riskAlertsToUpdate.add(new ANG_Risk_Alert__c(id = mapAccountRiskAlert.get(mapCaseRiskAlert.get(sr.getId()).AccountId).id, ANG_Is_Case_Created__c = true));
+					}
+				}
+
+				update riskAlertsToUpdate;
 
 				Case sidraCase;
 				sidraLiteCases = new List<Case>();
@@ -181,12 +207,23 @@ public class ang_rhcAlertTriggerHandler{
 					bspLinkCallout(caseIds, accountIds);
                     update sidraLiteCases;
 				}
+
+
 			}
 
 		}
 	}
 
 	//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
+
+	Private operational_Calendar__c fetchCalendar(ANG_Risk_Alert__c ra){
+
+		return [select id from Operational_Calendar__c 
+			where ISS_operation__c =:ra.ANG_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c 
+			AND Frequency_Code__c = :mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c)
+			LIMIT 1];
+	}
+
 	@Future(callout=true)
 	public static void bspLinkCallout(List<Id> sidraLiteCaseIds, List<Id> accountIds) {
 		List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
