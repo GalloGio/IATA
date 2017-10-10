@@ -44,10 +44,9 @@
         <apex:facet name="header">
           <apex:outputpanel >
             {!$Label.ISSP_ANG_STEP_1_Identi_Appro_Req_AE}
-            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" />
+            <!--apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" /-->
           </apex:outputpanel>
         </apex:facet>
-
 
         <apex:pageblocksectionitem >
           <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
