@@ -280,7 +280,7 @@ public without sharing class GenerateLateRemittanceCSVController {
         /* REPORT 3 - Minor error policy (IFAP) */
         tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c 
                         FROM Case
-                        WHERE RecordType.DeveloperName = 'IATA_Financial_Review'
+                        WHERE RecordType.DeveloperName IN ('IATA_Financial_Review','ProcessEuropeSCE')
                         AND SIDRA_Exclude_from_report_exceptions__c = true 
                         
                         AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
