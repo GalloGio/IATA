@@ -116,7 +116,7 @@ public class ang_rhcAlertTriggerHandler{
 			List<Case> smapParentCases = new List<Case>();
 			Map<String,case> mapCaseRiskAlert = new Map<String,case>();
 
-			for(ANG_Risk_Alert__c ra: triggerNew){
+			for(ANG_Risk_Alert__c ra: redAlerts){
 
 				//TODO: confirm all this fileds 
 				smapParentCase = new Case(
