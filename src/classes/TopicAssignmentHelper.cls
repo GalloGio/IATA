@@ -24,12 +24,12 @@ public with sharing class TopicAssignmentHelper {
 				setRelatedTopicsIds.add(ta.TopicId);
 				setParentEntityIds.add(ta.EntityId);
 			}
-			setAccountChatterTopics.add('broadcastAll Regions');
-			setAccountChatterTopics.add('broadcastAfrica & Middle East');
-			setAccountChatterTopics.add('broadcastAmericas');
-			setAccountChatterTopics.add('broadcastAsia & Pacific');
-			setAccountChatterTopics.add('broadcastChina & North Asia');
-			setAccountChatterTopics.add('broadcastEurope');
+			setAccountChatterTopics.add('Broadcast All Regions');
+			setAccountChatterTopics.add('Broadcast Africa & Middle East');
+			setAccountChatterTopics.add('Broadcast Americas');
+			setAccountChatterTopics.add('Broadcast Asia & Pacific');
+			setAccountChatterTopics.add('Broadcast China & North Asia');
+			setAccountChatterTopics.add('Broadcast Europe');
 
 			map<Id,Topic> mapUnacceptableTopicsPerIds = new map<Id,Topic>([SELECT Id, Name FROM Topic WHERE Id IN :setRelatedTopicsIds AND Name NOT IN :setAccountChatterTopics]);
 

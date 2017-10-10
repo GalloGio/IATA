@@ -76,12 +76,12 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 			// make a list of regions, fetch existing and create missing topics
 			List<String> lsBroadcastTopicNames =
-			new List<String>{'broadcastAll Regions',
-			'broadcastAfrica & Middle East',
-			'broadcastAmericas',
-			'broadcastAsia & Pacific',
-			'broadcastChina & North Asia',
-			'broadcastEurope'};
+			new List<String>{'Broadcast All Regions',
+			'Broadcast Africa & Middle East',
+			'Broadcast Americas',
+			'Broadcast Asia & Pacific',
+			'Broadcast China & North Asia',
+			'Broadcast Europe'};
 			// broadcastTopicNames = '';
 			List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 			List<Topic> lsNewBroadcastTopics = new List<Topic>();
