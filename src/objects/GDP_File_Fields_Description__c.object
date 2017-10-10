@@ -348,6 +348,7 @@
         <columns>Size__c</columns>
         <columns>Position__c</columns>
         <columns>Visible__c</columns>
+        <columns>Target__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -357,7 +358,7 @@
         </filters>
         <filters>
             <field>Target__c</field>
-            <operation>notEqual</operation>
+            <operation>equals</operation>
             <value>Airline</value>
         </filters>
         <label>Field Details - GSS Member - TXT</label>

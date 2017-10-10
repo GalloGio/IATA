@@ -132,14 +132,6 @@
         <label>Calendar Semi-Monthly First Option</label>
         <picklist>
             <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>3</fullName>
                 <default>false</default>
             </picklistValues>
@@ -270,9 +262,7 @@
     <fields>
         <fullName>FileRecipent_iiNet_TDF_Recipient__c</fullName>
         <externalId>false</externalId>
-        <formula>/* Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c
-*/
-&quot;a199&quot;</formula>
+        <formula>LEFT(Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c,4)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>File Recipent iiNet TDF Recipient</label>
         <required>false</required>
@@ -498,12 +488,13 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
         <columns>GDP_File_Description__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <columns>Calendar_Semi_Monthly_First_Option__c</columns>
         <columns>Calendar_Monthly_Option__c</columns>
         <columns>Calendar_Weekly_Option__c</columns>
-        <columns>Zuora_Subscription__c</columns>
         <columns>FileRecipientEmail__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>

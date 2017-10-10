@@ -206,6 +206,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
+        <fields>Account.Services_Rendered_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Right__c</fields>

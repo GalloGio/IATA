@@ -239,7 +239,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if((Trigger.isInsert && c.Status == 'Closed') || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
                     c.WhoClosedCase__c = UserInfo.getUserId();
                 }if(c.Status != 'Closed')
-                    c.WhoClosedCase__c = null;
+                    c.WhoClosedCase__c = null;  
             }// END Update L.Faccio --------------
         }    
         /*UserInfoUpdate Trigger*/
