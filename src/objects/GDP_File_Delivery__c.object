@@ -383,6 +383,27 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>In Progress</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Today_s_Deliveries</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Delivery_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today&apos;s Deliveries</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>FD-{000000000}</displayFormat>
         <label>GDP File Delivery Name</label>

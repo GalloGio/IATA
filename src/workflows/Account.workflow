@@ -422,7 +422,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>UpdateIndustryCargoAgent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>
             <operation>equals</operation>
