@@ -293,7 +293,7 @@
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters</value>
+                <value>Airline Headquarters, IATA Country Office, Operator, Agency, General Sales Agent Headquarters, Others, Standard Account</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
