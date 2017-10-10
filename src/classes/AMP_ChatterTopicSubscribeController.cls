@@ -470,11 +470,13 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 							'</th>'+
 						'</tr>'+
 						'<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
-								'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
-								fi.Body +'</p>'+
-							'</th>'+
-							'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+						// font-size:14px;font-weight:900;line-height:1.3;
+							'<td colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;margin:0;padding:0;text-align:left;white-space:normal;">'+
+							fi.Body +
+								// '<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
+								// '</p>'+
+							'</td>'+
+							'<td class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></td>'+
 					'</tr>';
 
 		List<Topic> lsFITopics = new List<Topic>();
@@ -495,7 +497,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 							'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;'+
-							'margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Account(s): ';
+							'margin:0;margin-bottom:0px;padding:0 0 0 0px;text-align:left;width:430px;">Account(s): ';
 
 			for(Id i : lsAccountIds) {
 				emailBody += mpAccountId2Account.get(i).Name + ' ';
@@ -507,7 +509,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(lsFITopics.size()>0) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
-					'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Broadcast:';
+					'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 0px;text-align:left;width:430px;">Broadcast: ';
 
 			for(Topic to : lsFITopics) {
 				emailBody += to.Name + ' ';
