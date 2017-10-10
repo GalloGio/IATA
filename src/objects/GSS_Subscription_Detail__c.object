@@ -132,14 +132,6 @@
         <label>Calendar Semi-Monthly First Option</label>
         <picklist>
             <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>3</fullName>
                 <default>false</default>
             </picklistValues>
@@ -270,9 +262,7 @@
     <fields>
         <fullName>FileRecipent_iiNet_TDF_Recipient__c</fullName>
         <externalId>false</externalId>
-        <formula>/* Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c
-*/
-&quot;a199&quot;</formula>
+        <formula>Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>File Recipent iiNet TDF Recipient</label>
         <required>false</required>

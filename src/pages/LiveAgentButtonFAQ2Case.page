@@ -58,7 +58,7 @@
                         liveagent.addCustomDetail('userContactId', '{!contactId}');
                         liveagent.addCustomDetail('userAccountId', '{!accountId}');
                         liveagent.addCustomDetail('caseRTId', '{!caseRecordTypeId}');
-                        liveagent.addCustomDetail('caseCountryConcerned','{!country.name}');
+                        liveagent.addCustomDetail('caseCountryConcerned',"{!country.name}");
                         liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');
                         //map() parameters: .map(String FieldName, String DetailName, Boolean doFind, Boolean isExactMatch, Boolean doCreate)
                         liveagent.findOrCreate('Case').map('RecordTypeId','caseRTId',false, true, true).map('Origin','Case Origin', false, true, true)
