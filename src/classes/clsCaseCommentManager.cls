@@ -76,7 +76,7 @@ public class clsCaseCommentManager {
                         // if comment created by IATA user and the comment is public
                         if (cm.CreatedBy.Profile.Name != 'ISS Portal DPC' && cm.IsPublished) {
                             if(cm.Parent.ACCA_Owner__r.Email != null) {
-                                ccaddress.add(cm.Parent.ACCA_Owner__r.Email);
+                                //ccaddress.add(cm.Parent.ACCA_Owner__r.Email);
                             }
                         }
                             
