@@ -66,6 +66,10 @@
             </td>
           </tr>
           <tr>
+            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+            <td colspan="2">{!amsLocationTypeLabel}</td>
+          </tr>          
+          <tr>
             <td class="label">{!$Label.ISSP_CompanyName}</td>
             <td colspan="2">{!hqAccount.Name}</td>
           </tr>

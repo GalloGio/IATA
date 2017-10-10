@@ -49,8 +49,8 @@
         </apex:facet>
 
         <apex:pageblocksectionitem >
-          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationType}" />
-          <apex:outputtext value="{!accredidationType}" />
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+          <apex:outputtext value="{!amsLocationTypeLabel}" />
         </apex:pageblocksectionitem>
 
         <apex:pageblocksectionitem >

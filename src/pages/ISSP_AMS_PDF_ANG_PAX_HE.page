@@ -59,13 +59,17 @@
 		    <!-- ****************************************************************************** -->
 		    <apex:outputPanel rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
                 <div style="page-break-after:always;">
-                    <table class="aptable">
+                    <table class="aptable">                        
                         <tr>
                             <td colspan="3" class="bluebg">
                                 <p class="whitetext">
                                     {!$Label.ISSP_AMS_STEP_3_1_Identi_Appro_Req}
                                 </p>
                             </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+                            <td colspan="2">{!amsLocationTypeLabel}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>

@@ -29,6 +29,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public String amsAgentType {get; set;}
     public String agentCaseType {get; set;} //Used to set TIDS, Sales Agent (SA) from links on ISSP_AMSCase
     public String amsLocationType {get; set;}
+    public String amsLocationTypeLabel {get; set;}
     public String amsIsGSA {get; set;}
     public String noCLocationType {get; set;}
     public boolean isGSARequired;
@@ -486,6 +487,8 @@ public without sharing class ISSP_AMS_Accreditation {
                     sectorValue = newForm.Operation_Type__c;
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
+
+                amsLocationTypeLabel = getApplicationTypeLabel(amsLocationType);
                 
                 SYSTEM.DEBUG('sectorValue init: ' + sectorValue);
 
@@ -631,8 +634,6 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
         selectPageName();
-
-        this.accredidationType = getAccreditationModelSimple(hqAccount.ANG_Accreditation_Model__c);
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
@@ -1218,8 +1219,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
 
-        this.accredidationType = getAccreditationModelSimple(hqAccount.ANG_Accreditation_Model__c);
-
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
             return null;
@@ -1234,6 +1233,8 @@ public without sharing class ISSP_AMS_Accreditation {
             else if (con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
+
+            amsLocationTypeLabel = getApplicationTypeLabel(amsLocationType);
 
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
             
@@ -3364,26 +3365,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD;
         }else {
             return Label.ISSP_AMS_Reason_New_HO;
-        }
-    }
-
-    private String getAccreditationModel(String accreditationModel) {
-        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
-            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithCash;
-        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
-            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
-        } else {
-            return '';
-        }
-    }
-
-    private String getAccreditationModelSimple(String accreditationModel) {
-        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
-            return Label.ANG_ISSP_ProductStandardAccreditationWithCash;
-        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
-            return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
-        } else {
-            return accreditationModel;
         }
     }
 
