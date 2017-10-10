@@ -25,7 +25,7 @@
 			<thead class="rich-table-thead">
 				<tr class="headerRow" >
 					<th class="headerRow" scope="col" colspan="3" ><div>Group Information</div></th>
-					<th class="headerRow" scope="col" colspan="5" ><div>Memeber</div></th>
+					<th class="headerRow" scope="col" colspan="5" ><div>Member</div></th>
 
 				</tr>
 				<tr class="headerRow" >
