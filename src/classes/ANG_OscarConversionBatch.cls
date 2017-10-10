@@ -57,9 +57,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		this.countryToSearch = countryToSearch;
 
 		if(countryToSearch != null)
-			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId in :availableOscarRecordTypes';
+			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c, Account__r.Is_PCI_compliant__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId in :availableOscarRecordTypes';
 		else
-			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and Name = :oscarName and recordTypeId in :availableOscarRecordTypes';
+			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c, Account__r.Is_PCI_compliant__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and Name = :oscarName and recordTypeId in :availableOscarRecordTypes';
 
 	}
 	
@@ -158,6 +158,12 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 
 		}
+
+		if(oscarToProcess.Step6__c == AMS_Utils.PASSED)
+			if(oscarToProcess.Process__c == AMS_Utils.NEWHESTANDARD || oscarToProcess.Process__c == AMS_Utils.NEWAE || oscarToProcess.Process__c == AMS_Utils.NEWHELITE)
+				if(oscarToProcess.Is_PCI_compliant__c == null && oscarToProcess.Account__r.Is_PCI_compliant__c != null)
+					oscarToProcess.Is_PCI_compliant__c = oscarToProcess.Account__r.Is_PCI_compliant__c;
+		
         
         return oscarToProcess;
 	}
@@ -176,7 +182,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		String toReturn = 'SELECT ' + fields + ', Type_of_change__c, New_parent__c, AMS_Target_Agency__c, RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+		String toReturn = 'SELECT ' + fields + ', Type_of_change__c, New_parent__c, AMS_Target_Agency__c, RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, AMS_Online_Accreditation__c, Account__r.Remittance_frequency__c, Account__r.Is_PCI_compliant__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
 		
         System.debug('Returning ' + toReturn);
         return toReturn;
