@@ -7,13 +7,13 @@
         <field>Account.IATACode__c</field>
     </columns>
     <columns>
-        <field>Account.Status__c</field>
+        <field>ANG_Risk_Alert__c.ANG_Severity__c</field>
+    </columns>
+    <columns>
+        <field>CUST_CREATED_DATE</field>
     </columns>
     <columns>
         <field>ANG_Risk_Alert__c.ANG_Ticketing_Authority_Removed__c</field>
-    </columns>
-    <columns>
-        <field>Account.Reason__c</field>
     </columns>
     <columns>
         <field>Account.IATA_ISO_Country__c</field>
@@ -21,7 +21,7 @@
     <currency>USD</currency>
     <filter>
         <criteriaItems>
-            <column>ANG_Risk_Alert__c.ANG_Ticketing_Authority_Removed__c</column>
+            <column>CUST_CREATED_DATE</column>
             <operator>equals</operator>
             <value>LAST_N_DAYS:3</value>
         </criteriaItems>
@@ -38,7 +38,7 @@
         <field>Account.Region_formula__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Agents w Ticket Auth removed last 3 days</name>
+    <name>Agents w/ RTS Risk Alert in Last 3 Days</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -46,6 +46,8 @@
     <reportType>AccountCustomEntity$ANG_Risk_Alert__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
+    <sortColumn>ANG_Risk_Alert__c.ANG_Severity__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>DUE_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
