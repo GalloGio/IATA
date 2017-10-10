@@ -12874,7 +12874,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ErrMsg Max FinContacts2</shortDescription>
-        <value>&apos; Financial Assessment Contact(s) is already defined for this agency.&apos;</value>
+        <value>Financial Assessment Contact(s) is already defined for this agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_Prev_Employ</fullName>
