@@ -2492,6 +2492,17 @@ NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
         <errorMessage>Invalid Security Type</errorMessage>
     </validationRules>
     <webLinks>
+        <fullName>Amend_FS</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Amend FS</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/ANG_FS_AddendumFlow?FSToCloneId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.AccountId__c}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Create_PDF_letter</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
