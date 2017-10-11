@@ -212,6 +212,12 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             if (Contacts) {
                 system.debug('Contacts BeforeUpdate');
                 AccountDomainContactHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
+
+                /* NEWGEN ANG_ContactHandler */
+                ANG_ContactHandler angHandler = new ANG_ContactHandler();
+                angHandler.handleBeforeUpdate();
+                /* NEWGEN ANG_ContactHandler */
+                
             }
             /*Contacts Trigger.BeforeUpdate*/
 
