@@ -263,7 +263,8 @@ public class ang_rhcAlertTriggerHandler{
                             notifications.add(new Notification__c(
                                 Contact__c = c.Id,
                                 Subject__c = Label.RTS_TAR_Notification_Title,
-                                Message__c = Label.RTS_TAR_Notification_Message
+                                Message__c = Label.RTS_TAR_Notification_Message,
+                                Alert_Contact_By_Email__c = true
                             ));
                         }
                     }
