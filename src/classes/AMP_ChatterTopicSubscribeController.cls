@@ -327,9 +327,20 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 
 	public static String getEmailFooter() {
 		String emailBody = '';
+		emailBody += getSpacer(10);
 		// emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
 		// emailBody +='</TBODY></table></TBODY></table>\n</body></html>';
+		emailBody += '<table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">'+
+                        '<tbody>'+
+                            '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                '<td style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">'+
+									'To change your email settings, click <a href="'+URL.getSalesforceBaseUrl().toExternalForm() + '/apex/AMP_ChatterTopicSubscribe">here</a>'+ // '+URL.getSalesforceBaseUrl().toExternalForm() + '
+								'</td>'+
+                            '</tr>'+
+                        '</tbody>'+
+                    '</table>';
 
+		emailBody += getSpacer(10);
 		emailBody +='</td>\n </tr></TBODY></table></table>';
 		emailBody +='</center>';
 		emailBody +='</td>\n </tr> </table>';
