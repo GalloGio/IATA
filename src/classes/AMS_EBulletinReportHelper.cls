@@ -25,6 +25,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String IATACODE			= 	'2-Agency Code';
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
+    public static final String ACCREDITATIONTYPE	= 	'6-Accreditation Type';
 	public static final String LOCATIONCLASS	= 	'9-Program';
 	
 	public static final String HIERARCHY	= 	'10-Hierarchy';
@@ -47,6 +48,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String NEWLEGALSTATUS	= 	'52-New Legal Status';
 	public static final String NEWHIERARCHY	= 	'53-New Hierarchy';
+    public static final String NEWACCREDITATIONTYPE	= 	'55-New Accreditation Type';
 
 	public static final String NEWSTATE 	    =	'57-New Country or State';
 	public static final String NEWCOUNTRY 		= 	'58-New Country or State';
@@ -679,6 +681,8 @@ public without sharing class AMS_EBulletinReportHelper {
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
+                
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
 
 				recordsList.add(strVal);
 			}
@@ -703,6 +707,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
                 
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
                 
 				recordsList.add(strVal);
                 if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
@@ -783,6 +788,10 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if (headerVal.Name == NEWLEGALSTATUS)
 			{
 				recordValue = AMS_Utils.transformLegalStatus(objVal.newValue);
+			}
+            else if (headerVal.Name == NEWACCREDITATIONTYPE)
+			{
+				recordValue = AMS_Utils.transformAccreditationType(objVal.newValue);
 			}
 			else
 			{
