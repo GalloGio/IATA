@@ -215,9 +215,16 @@
         margin-left: 20px;
       }
           
-      .emailInput {
-        padding-left: 45px;
-        margin-right: 25px;
+      [id$=section2-editable] .pbSubsection .detailList .labelCol {
+        width:17% !important;  
+      }
+          
+      [id$=legalregaddress] .pbSubsection .detailList .dataCol {
+        padding-left:2px;  
+      }
+          
+      [id$=agencydates] .pbSubsection .detailList .labelCol {
+        width:17% !important;  
       }
           
       input + label {
@@ -873,6 +880,7 @@
                   [id$=section2-when-incorporate] {
                     margin-left: -3px;
                   }
+                  
                   [for$=section2-where-incorporate] {
                     margin-left: -9px;
                   }
@@ -890,18 +898,18 @@
                         </apex:outputpanel>
                       </apex:facet>
                     </apex:pageBlockSection>
-
-                          <apex:pageBlockSection columns="2" id="section2" >
-                            <apex:pageBlockSectionItem rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">
+                          <apex:pageBlockSection columns="2" id="section2-editable" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">       
+                            <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
                                 <apex:inputField value="{!newForm.Account_Name__c}" style="width:178px"/>
                             </apex:pageBlockSectionItem>
-                            <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
-                             <apex:pageBlockSectionItem rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}">
+                            <apex:inputfield value="{!newForm.Trade_Name__c}" style="width:178px"/>
+                             <apex:pageBlockSectionItem >
                               <apex:outputLabel id="LegalStatusLabel" styleClass="LegalStatusLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" />
                               <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');" />
                             </apex:pageBlockSectionItem>
-                              
+                          </apex:pageBlockSection>
+                          <apex:pageBlockSection columns="2" id="section2" >
                             <!-- NEWGEN-1513 -->
                             <apex:pageBlockSectionItem rendered="{!NOT(newForm.AE_separate_Legal_Entity__c == 'Yes')}">
                               <apex:outputPanel >
@@ -1064,18 +1072,19 @@
                             </apex:pageBlockSection>
                           </apex:pageBlockSection>
 
-                          <apex:pageBlockSection columns="2" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}">
+                          <apex:pageBlockSection id="legalregaddress" columns="2" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}">
                             <apex:outputPanel >
                               <apex:outputText ><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
                             </apex:outputPanel>
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
                             </apex:outputtext>
-                            <apex:inputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px" />
+                             
+                            <apex:inputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px;" />
                             <apex:inputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;" />
                           </apex:pageBlockSection>
 
-                          <apex:pageBlockSection columns="2">
+                          <apex:pageBlockSection columns="2" id="agencydates">
                             <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
@@ -2024,9 +2033,9 @@
                   config = { attributes: true, childList: true, characterData: true };
                 observer.observe(target, config);
 
-                var natphonebranch = $j("input[name='{!$Component.AMSForm.AMSBlock.pageblock.companyBlock.branchphonefax.subbranchsection.branchphonefields.natphonebranch}']");
+                var natphonebranch = $j('[id$="natphonebranch"]');
                 var phoneacct = $j(".branch_office_phone__c");
-                var phonebranch = $j("input[name='{!$Component.AMSForm.AMSBlock.pageblock.companyBlock.branchphonefax.subbranchsection.branchphonefields.phonebranch}']");
+                var phonebranch = $j('[id$="phonebranch"]');
 
 
                 natphonebranch.intlTelInput({
