@@ -1702,5 +1702,25 @@ public class WSSidraLiteTest {
         }
         Test.stopTest();
     }
+    
+    @isTest
+    public static void testRecipientAccount() {
+        Case cse = SidraLiteManagerTest.createIFAPPassenger();
+        insert cse;
+
+        //activate account
+        Account acc = [Select Category__c from Account where id = :cse.AccountId];
+        acc.Category__c = 'Recipient';
+        update acc;
+
+        Test.startTest();
+        try {
+            WSSidraLite.sidraLiteAction(cse.Id);
+            System.assert(false,'No exception thrown for SIDRA Lite case for invalid Bank Guarantee Deadline');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
 
 }
