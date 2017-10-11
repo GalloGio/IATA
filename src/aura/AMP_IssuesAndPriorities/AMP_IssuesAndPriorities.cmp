@@ -217,8 +217,6 @@
             <ui:inputCheckbox label="Show Closed Issues" aura:id="showAllCheckBox" change="{!c.refreshIssues}"/>
         </div>
 
-
-            <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
     </div>
 
