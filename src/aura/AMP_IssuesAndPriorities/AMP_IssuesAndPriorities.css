@@ -35,10 +35,6 @@
 }
 
 @media (max-width: 1200px) {
-    /*.THIS .uiMenuItem {
-        font-size: 200%;
-    }*/
-
     .THIS .slds-button {
         display: block !important;
     }
