@@ -77,7 +77,7 @@
         </td>
         <td class="allignTop"><ui:inputTextArea value="{!v.issue.Details__c}" class="slds-textarea" rows="3" /></td>
         <td>
-            <ui:inputSelect aura:id="levelOfImportance" class="slds-select" >
+            <ui:inputSelect aura:id="levelOfImportance" class="slds-select required" >
                 <aura:iteration items="{!v.importanceValues}" var="sv">
                   <aura:if isTrue="{!v.importance == sv}">
                       <ui:inputSelectOption text="{!sv}" value="true" label="{!sv}"/>
@@ -96,7 +96,7 @@
 
         <!-- <td><ui:inputCheckbox value="{!v.issue.AM_Can_IATA_support_the_airline__c}" /></td> -->
         <td>
-            <ui:inputSelect aura:id="statusList" class="slds-select" >
+            <ui:inputSelect aura:id="statusList" class="slds-select required">
 
                 <aura:iteration items="{!v.statusValues}" var="sv">
                   <aura:if isTrue="{!v.status == sv}">
