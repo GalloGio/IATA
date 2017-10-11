@@ -781,7 +781,7 @@
         <description>IAPP - Notify team leader case has been set as Not eligible</description>
         <protected>false</protected>
         <recipients>
-            <recipient>martinsp@iata.org</recipient>
+            <recipient>montoyac@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -7151,10 +7151,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
+        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),CONTAINS( $Profile.Name,&quot;IDFS Americas - Hub Staff&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS($Profile.Name,&quot;Hub MGR AM/ARM&quot;),CONTAINS( $Profile.Name,&quot;Hub Staff AM&quot;)),&quot;Agency Management&quot;,
-(IF(CONTAINS($Profile.Name,&quot;Hub Staff ARM&quot;),&quot;Risk Management&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
+(IF(OR(CONTAINS($Profile.Name,&quot;Agency Management&quot;),CONTAINS($Profile.Name,&quot;Hub Analyst ARM&quot;)),&quot;Agency Management&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
@@ -16005,7 +16005,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
+        <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -16035,6 +16035,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>notEqual</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>The query is reopened and assigned to Complaint Team</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16139,7 +16144,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND (3 AND 4 AND 5)</booleanFilter>
+        <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -16164,6 +16169,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>equals</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>the query is reopened and assigned to OCIT</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

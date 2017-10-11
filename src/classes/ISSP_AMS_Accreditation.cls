@@ -5676,7 +5676,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             } //EO check for Change of Location & Local Agency Details fields
 
             
-            if (newForm.Is_this_Head_Office_becoming_a_Branch__c == null) {
+            if (newForm.Is_this_Head_Office_becoming_a_Branch__c == null && newForm.Scope_of_Change__c != 'Selected Branches Only') {
                 newForm.Is_this_Head_Office_becoming_a_Branch__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
