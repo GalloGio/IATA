@@ -1,0 +1,126 @@
+<apex:page standardcontroller="Account" extensions="AccountHierarchyController" showHeader="{!displayHeaderSidebar}" sidebar="{!displayHeaderSidebar}">
+	<head>
+	<script type="text/javascript">
+		function handleSearchChange(){
+			handleSearchAF();
+		}
+	</script>
+
+	<style>
+	body .bPageBlock .pbHeader {
+		padding: 5px 7px;
+	}
+	.search-input {
+		width: 200px;
+		margin-right: 15px;
+	}
+	.bottomNav {
+		margin: 10px;
+	}
+	</style>
+
+	</head>
+
+	<body>
+		<div class="bPageTitle">
+			<div class="ptBody">
+				<div class="content">
+					<img src="/img/s.gif" alt="Account" class="pageTitleIcon" title="Account"/>
+					<h1 class="pageType">Account Hierarchy<span class="titleSeparatingColon">:</span></h1>
+					<h2 class="pageDescription"> {!currentAccount.Name}</h2>
+					<div class="blank">&nbsp;</div>
+				</div>
+			</div>
+			<div class="ptBreadcrumb"><a href="/{!currentAccount.Id}">&lt; Back to Account</a></div>
+		</div>
+
+		<div class="bDescription">The hierarchy is created by associating accounts with parent accounts.</div>
+
+		<apex:form >
+			<apex:actionFunction name="handleSearchAF" rerender="tablePanel" action="{!refreshHierarchy}"/>
+
+			
+				<div class="bRelatedList">
+					<div class="relatedAccountHierarchy">
+						<div class="bPageBlock brandSecondaryBrd secondaryPalette">
+							<div class="pbHeader">
+								Filter: &nbsp;
+								<apex:inputText id="searchInput" styleClass="search-input" value="{!searchString}" html-placeholder="Search within the hierarchy" onkeyup="handleSearchChange();"/>
+								<label><apex:inputCheckbox value="{!isExcludeTerminated}" onclick="handleSearchChange();" />Exclude terminated accounts</label>
+							</div>
+
+							<apex:outputPanel id="tablePanel">	
+							<div class="pbBody">
+								<table class="list" border="0" cellspacing="0" cellpadding="0">
+									<tbody>
+										<tr class="headerRow">
+											<td scope="col">{!$ObjectType.Account.fields.Name.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.Location_Type__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.IATACode__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.Category__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.Status__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.Reason__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.Expiry_Date__c.Label}</td>
+											<td scope="col">{!$ObjectType.Account.fields.BillingCity.Label}</td>
+										</tr>
+														
+										
+									<apex:repeat value="{!lstDisplayAccounts}" var="accWr">
+										<tr class="dataRow">
+											<td class="dataCell"><apex:outputText value="{!accWr.indentation}" escape="false"/><a href="/{!accWr.acc.Id}">{!accWr.acc.Name}</a></td>
+											<td class="dataCell">{!accWr.acc.Location_Type__c}</td>
+											<td class="dataCell">{!accWr.acc.IATACode__c}</td>
+											<td class="dataCell">{!accWr.acc.Category__c}</td>
+											<td class="dataCell">{!accWr.acc.Status__c}</td>
+											<td class="dataCell">{!accWr.acc.Reason__c}</td>
+											<td class="dataCell">{!accWr.acc.Expiry_Date__c}</td>
+											<td class="dataCell">{!accWr.acc.BillingCity}</td>
+								        </tr>
+									</apex:repeat>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="bottomNav">
+								<div class="paginator">
+									<span class="left">
+										Display&nbsp;
+										<apex:selectList value="{!recordsPerPage}" multiselect="false" size="1" onchange="handleSearchChange();">
+											<apex:selectOptions value="{!selectOptionItems}"/>
+            							</apex:selectList>
+            							&nbsp;records per page
+									</span>
+									<span class="prevNextLinks">
+										<span class="prevNext">
+											<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="firstoff" alt="First Page"/></apex:outputPanel>
+											<apex:commandLink action="{!first}" rendered="{!hasPrevious}"><img src="/s.gif" class="first" title="First Page" alt="First Page"/></apex:commandLink>
+										</span>
+										<span class="prevNext">
+											<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="prevoff" alt="Previous Page"/>Previous</apex:outputPanel>
+											<apex:commandLink action="{!previous}" rendered="{!hasPrevious}"><img src="/s.gif" class="prev" title="Previous" alt="Previous"/>Previous</apex:commandLink>
+										</span>
+										<span class="prevNext">
+											<apex:outputPanel rendered="{!NOT(hasNext)}">Next<img src="/s.gif" class="nextoff" alt="Next"/></apex:outputPanel>
+											<apex:commandLink action="{!next}" rendered="{!hasNext}">Next<img src="/s.gif" class="next" alt="Next"/></apex:commandLink>
+										</span>
+										<span class="prevNext">
+											<apex:outputPanel rendered="{!NOT(hasNext)}"><img src="/s.gif" class="lastoff" alt="Last Page"/></apex:outputPanel>
+											<apex:commandLink action="{!last}" rendered="{!hasNext}"><img src="/s.gif" class="last" alt="Last Page"/></apex:commandLink>
+										</span>
+									</span>
+
+									<span class="right">
+										Page {!pageNumber} of {!totalPages}
+									</span>
+								</div>
+							</div>
+							</apex:outputPanel>
+							
+
+						</div>
+					</div>
+				</div>
+
+		</apex:form>
+	</body>
+</apex:page>

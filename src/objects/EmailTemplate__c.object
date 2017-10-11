@@ -629,7 +629,7 @@
             <operation>equals</operation>
             <value>EmailTemplate__c.ID_Card_Application</value>
         </filters>
-        <label>IDCard Email Templates</label>
+        <label>ID Card Email Templates</label>
         <language>en_US</language>
     </listViews>
     <nameField>

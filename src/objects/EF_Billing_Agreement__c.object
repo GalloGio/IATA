@@ -154,17 +154,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Billing_Agreement_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Billing Agreement Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -605,8 +594,29 @@
     <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Billing_Agreements</fullName>
+        <columns>NAME</columns>
+        <columns>BillingAgreement_Name__c</columns>
+        <columns>Airline__c</columns>
+        <columns>Client__c</columns>
+        <columns>Contract__c</columns>
+        <columns>Contract_Group_Code__c</columns>
+        <columns>EF_Airline_Id__c</columns>
+        <columns>EF_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>E&amp;F Billing Agreements</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
     </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>

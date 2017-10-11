@@ -51,6 +51,7 @@ public with sharing class EComProduct_DTO
     public Boolean ChargeShipping{get;set;}
     public List<EComProduct_DTO> ProductComponent { get; set; }
     public Boolean Is_Electronic_Product{get;set;}
+    public Boolean Sell_Through_eCommerce{get;set;}
     
     //*** constructor
     public EComProduct_DTO() 
@@ -85,13 +86,13 @@ public with sharing class EComProduct_DTO
         Media = mapPickList_Label.get('Media').get(prod.Media__c);
         ImageName = ((prod.Image__c == null) ? ((prod.Media__c == null) ? Utility.getTextSetting('Default Product Image Name') : (prod.Media__c + '.gif')) : (prod.Image__c + '.gif')).toLowerCase().replace(' ', '-');
         
-        Language = mapPickList_Label.get('Language').get(prod.Language__c);
+        Language = mapPickList_Label.get('Language').get(prod.Refinement_Language__c);
         InventoryStatus = mapPickList_Label.get('InvStatus').get(prod.Inventory_Status__c);
         AvailabilityDate = prod.Expected_Availability_Date__c;
         EffectiveFrom = prod.Effective_From__c;
         EffectiveTo = prod.Effective_To__c;
         DisplayEffectiveTo = (prod.Hide_Effective_To_Date_in_eCommerce__c != true);
-       
+        Sell_Through_eCommerce = prod.Sell_through_eCommerce__c;
 
         //-- Product Prices
         OrderQuantity = 1;  //*** default quantity to order
@@ -110,7 +111,8 @@ public with sharing class EComProduct_DTO
             
             Boolean found = false;
             Boolean foundUnitPrice = false;
-            if(PriceInfo.customerPrice != null){
+            //if(PriceInfo.customerPrice != null){
+            if(CustomerPrice != null && CustomerPrice > 0 && PriceInfo.customerPrice != null){
                 for(PriceDetail_DTO setupFeecp : PriceInfo.customerPrice){
                     if(setupFeecp.setupFee != null){
                         setupFee = setupFeecp.setupFee;

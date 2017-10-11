@@ -6,11 +6,15 @@ public class ISSP_Contact{
     public boolean isIATAAgencyAcct {get;set;}
     public boolean isPortalAdminUser {get;set;}
     public boolean isEditMode {get;set;}
-    
+    public String userPortalStatus {get;set;}
     public list<String> errorMessage {get; set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_Contact(){
-     	isEditMode = false;
+        isEditMode = false;
         
         //Only these 2 types of Agency Accounts can have Financial Contacts
         isIATAAgencyAcct = false;
@@ -24,18 +28,24 @@ public class ISSP_Contact{
         
         string action = Apexpages.currentPage().getParameters().get('action');
         if (action == 'edit'){
-        	isEditMode = true;
+            isEditMode = true;
+        }
+
+        User user = [SELECT id, Contact.User_Portal_Status__c from User where id =:UserInfo.getUserId()];
+        if(user != null){
+            userPortalStatus = user.Contact.User_Portal_Status__c;
         }
         
         contactList =new List<Contact>([select id , Name , Email , Phone ,OtherPhone,
-        								User_Portal_Status__c , Fax, MobilePhone, ISO_Country__c,
-        								ISSP_Account_Name__c, Account_HQ_BO__c, IATA_Code__c,
-        								Title, Membership_Function__c  , AccountId , Financial_Assessment_Contact__c,
-        								Account.Name, Account.Category__c, Account.Location_Type__c,
+                                        User_Portal_Status__c , Fax, MobilePhone, ISO_Country__c,
+                                        ISSP_Account_Name__c, Account_HQ_BO__c, IATA_Code__c,
+                                        Title, Membership_Function__c  , AccountId , Financial_Assessment_Contact__c,
+                                        Account.Name, Account.Category__c, Account.Location_Type__c,
                                         Salutation, FirstName, LastName, Account.IATA_ISO_Country__r.Name,
-                                        Invoicing_Contact__c, BSP_CASS_Payment_contact__c, Services__c, Airline_Contact_Type__c
-										From Contact
-										Where Id =: contactId ]);
+                                        Invoicing_Contact__c, BSP_CASS_Payment_contact__c, Services__c, Airline_Contact_Type__c,Authorized_Signatory__c
+                                        
+                                        From Contact
+                                        Where Id =: contactId ]);
                                                    
         if(contactList != null && contactList.size() > 0){
             Contact = contactList [0];
@@ -48,18 +58,18 @@ public class ISSP_Contact{
         isPortalAdminUser = false;
         
         String currentUserProfileId = UserInfo.getProfileId();
-    	List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
+        List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
 
         if (!profileList.isEmpty()){
-	        	String currentUserProfileName = profileList[0].Name;
-	        	system.debug('currentUserProfileName: ' + currentUserProfileName);
-	        	if (currentUserProfileName.contains('dmin'))
-	        		isPortalAdminUser = true;
-	        	else
-	        		isPortalAdminUser = false;
-	        }
+                String currentUserProfileName = profileList[0].Name;
+                system.debug('currentUserProfileName: ' + currentUserProfileName);
+                if (currentUserProfileName.contains('dmin'))
+                    isPortalAdminUser = true;
+                else
+                    isPortalAdminUser = false;
+            }
          
-         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
+         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.ANG_Portal_Service_Role__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
                                                                    From Portal_Application_Right__c p 
                                                                    where p.Contact__c =: ContactId and 
                                                                        
@@ -75,7 +85,7 @@ public class ISSP_Contact{
     public Pagereference save(){
         try {
                 upsert Contact;
-                return new Pagereference('/ISSP_Contact?id='+ Contact.Id + '&mid=M4S1');
+                return new Pagereference('/ISSP_Contact?id='+ Contact.Id + '&mid=M4S1' + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
                 }
@@ -87,12 +97,21 @@ public class ISSP_Contact{
         if (retURL != null && retURL != '')
                 return new Pagereference(retURL);
         else
-            	isEditMode = false;
-        		return null;
+                isEditMode = false;
+                return null;
     }
     
     public Pagereference AssignIFAPContact(){
-        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+contact.AccountId + '&vContactId=' + contact.Id + '&vContactName=' + EncodingUtil.urlEncode(contact.Name, 'UTF-8'));
+        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+contact.AccountId + '&vContactId=' + contact.Id + commParam +'&vContactName=' + EncodingUtil.urlEncode(contact.Name, 'UTF-8'));
+        p.setredirect(true);
+        return p;
+    }
+    
+    /**
+        Send to another page to relocate user (change its parent account)
+    **/
+    public Pagereference RelocateContact(){
+        Pagereference p  = new Pagereference ('/ISSP_RelocateContact?id='+contact.Id + '&mid=M4S1');
       	p.setredirect(true);
         return p;
     }
@@ -100,12 +119,12 @@ public class ISSP_Contact{
     public Pagereference ChangePortalStatus(){
         try {
             errorMessage = new list<string>();
-        	Pagereference p  = new Pagereference ('/ISSP_PortalUserStatusChange?id='+ contact.Id);
-      		p.setredirect(true);
-        	return p;
+            Pagereference p  = new Pagereference ('/ISSP_PortalUserStatusChange?id='+ contact.Id + commParam);
+            p.setredirect(true);
+            return p;
         } catch(Exception exp) {
-    		ISSP_Utilities.exceptionDump(exp);
-    	}
+            ISSP_Utilities.exceptionDump(exp);
+        }
         return null;
     }
 }

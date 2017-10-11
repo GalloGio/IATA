@@ -443,7 +443,7 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
                                    ORDER BY Valid_To_Date__c DESC
                                    LIMIT 1];
       for (ID_Card__c idc : idcs) {
-        idc.MustSyncWithAIMS__c = true;
+        //idc.MustSyncWithAIMS__c = true;
         idc.Card_status__c = CANCELLED;
         idc.Cancellation_date__c = date.today();
       }

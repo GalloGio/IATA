@@ -84,6 +84,7 @@
 			                        	<apex:selectOption itemValue="" itemLabel="-None-"/>
 			                            <apex:selectOption itemValue="Mr." itemLabel="Mr."/>
 			                            <apex:selectOption itemValue="Mrs." itemLabel="Mrs."/>
+			                            <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
 			                        </apex:selectList>
                                 </div>
                                 <!-- <div class="input-aid">

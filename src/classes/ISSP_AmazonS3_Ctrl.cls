@@ -40,6 +40,9 @@ global class ISSP_AmazonS3_Ctrl {
     public string AMAZONURL{get; private set;} 
     
     public static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME);
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
     public ISSP_AmazonS3_Ctrl(){
         AMAZONURL  =
@@ -469,20 +472,20 @@ global class ISSP_AmazonS3_Ctrl {
     
     public class AmazonFileAMS {
 
-		//private AmazonRest.S3File s3File;
-		public AmazonFile__c amazonFile;
+        //private AmazonRest.S3File s3File;
+        public AmazonFile__c amazonFile;
 
-		public AmazonFileAMS(AmazonFile__c aFile ) {
-			this.amazonFile = afile;
-		}
+        public AmazonFileAMS(AmazonFile__c aFile ) {
+            this.amazonFile = afile;
+        }
         
         public String getName() {
-			return this.amazonFile.Name;
-		}
+            return this.amazonFile.Name;
+        }
 
-		public String getFullName() {
-			return this.amazonFile.Full_Name_Unique__c;
-		}
+        public String getFullName() {
+            return this.amazonFile.Full_Name_Unique__c;
+        }
 
         public String getStatus() {
             return this.amazonFile.Review_Status__c;

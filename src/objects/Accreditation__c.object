@@ -68,6 +68,17 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS_GDP_Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Accreditation_ID__c</fullName>
         <externalId>false</externalId>
         <label>Accreditation ID</label>
@@ -102,6 +113,30 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Endorsed_Accredited_By_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Endorsed_Accredited_By__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Endorsed/Accredited By Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Endorsed_Accredited_By_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Endorsed/Accredited By</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Endorsed_Accredited_By__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -128,7 +163,7 @@
         <externalId>false</externalId>
         <label>Last re-inspection date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -150,7 +185,7 @@
         <relationshipLabel>Accreditation</relationshipLabel>
         <relationshipName>Accreditation</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -200,7 +235,21 @@
         <columns>Date__c</columns>
         <columns>Status__c</columns>
         <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>AMS_GDP_Key__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Accreditation__c.Live</value>
+        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>

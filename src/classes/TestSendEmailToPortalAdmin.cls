@@ -22,12 +22,14 @@ private class TestSendEmailToPortalAdmin {
 		con1.User_Portal_Status__c = 'Regional Administrator';
 		con1.Senior_Contact_Email__c = 'senior@dev.com';
 		con1.Email = 'test1@test.test';
+		con1.CNS_Contact__c=false;
 		
 		//Contact con2 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,2);
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.AccountId= child.Id;
 		con2.Email = 'test2@test.test';
-		
+		con2.CNS_Contact__c=false;
+
 		insert new Contact[] {con1, con2};
 		
 		User adminUser = ISSP_ObjectFactory.createPortalUser(con1);
@@ -43,12 +45,11 @@ private class TestSendEmailToPortalAdmin {
 		member1.AccountId = child.Id;
 		insert member1; 
 		
-			
 		ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new set<ID>{adminUser.Id, newUser.Id});
     	
     	list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
-    									TestObjectCreator.buildPortalApplications('Test Method App 001')
-    								   ,TestObjectCreator.buildPortalApplications('Test Method App 002')
+    									TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
+    								   ,TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
     	};
     	Database.insert(appList);
     	ID applicationId1 = appList[0].Id;
@@ -58,17 +59,22 @@ private class TestSendEmailToPortalAdmin {
     				,TestObjectCreator.buildPortalApplicationRight(con1.Id, applicationId2)
     				//,TestObjectCreator.buildPortalApplicationRight(con2.Id, applicationId2, 'Granted')
     	};
-    	
+
 		Test.startTest(); 
 		Boolean stopTrigger = PortalServiceAccessTriggerHandler.privetTrigger;
 		PortalServiceAccessTriggerHandler.privetTrigger = true;
 		Database.insert(lpar);
 		PortalServiceAccessTriggerHandler.privetTrigger = stopTrigger;
 		Test.stopTest();
-		list<ID> appIds = new list<ID>{lpar[0].ID, lpar[1].Id}; 
+		//list<ID> appIds = new list<ID>{lpar[0].ID, lpar[1].Id}; 
 		
-		lpar = getPortalApplicationRight(appIds);
-    	PortalServiceAccessTriggerHandler.SendEmailToPortalAdminToValidateRequest(lpar);
+		//lpar = getPortalApplicationRight(appIds);
+
+		//System.debug(LoggingLevel.ERROR, '--------------->' + lpar);
+
+		//Database.insert(lpar);
+
+    	//PortalServiceAccessTriggerHandler.SendEmailToPortalAdminToValidateRequest(lpar);
     	
     }
     
@@ -142,7 +148,7 @@ private class TestSendEmailToPortalAdmin {
 	    			Name, My_Apps__c, LastModifiedDate, LastModifiedById, 
 	    			IsDeleted, Invoice_Type__c, Id, CurrencyIsoCode, CreatedDate, CreatedById, Contact__c, 
 	    			ConnectionSentId, ConnectionReceivedId, Application_uniqueness_for_contact__c, Application_icon_del__c, 
-	    			Application_Start_URL__c, Application_Start_Icon__c, Account__c, Application_Name__c
+	    			Application_Start_URL__c, Application_Start_Icon__c, Account__c, Application_Name__c, Conctact_is_CNS__c
 			   FROM Portal_Application_Right__c
 			   where Id IN: appIds];
     }

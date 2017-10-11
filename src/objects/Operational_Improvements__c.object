@@ -57,404 +57,31 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Action_10_Closure_Date__c</fullName>
+        <fullName>Action_Plan_Closed_Count__c</fullName>
+        <description>Number of closed Action Plans related to current OI</description>
         <externalId>false</externalId>
-        <label>Action 10 - Closure Date</label>
-        <required>false</required>
+        <label>Total Closed Action Plans</label>
+        <summaryFilterItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </summaryFilterItems>
+        <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Date</type>
+        <type>Summary</type>
     </fields>
     <fields>
-        <fullName>Action_10_Description__c</fullName>
+        <fullName>Action_Plan_Count__c</fullName>
+        <description>Number of Action Plans in current OI</description>
         <externalId>false</externalId>
-        <label>Action 10 - Description</label>
-        <length>32768</length>
+        <label>Total Action Plan</label>
+        <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_10_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 10 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_10_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 10 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings9</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_1_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 1 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_2_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 2 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings1</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_3_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 3 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings2</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_4_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 4 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings3</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_5_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 5 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings4</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_6_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 6 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings5</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_7_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 7 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings6</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_8_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 8 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings7</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_9_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 9 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings8</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>Affected_Process__c</fullName>
@@ -546,14 +173,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Remittance &amp; Settlement Automated (RS-A)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement Manual (RS-M)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Airline &amp; Location Coding and MITA/BIETA</fullName>
                 <default>false</default>
             </picklistValues>
@@ -566,7 +185,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Simplified Interline Settlement (SIS)</fullName>
+                <fullName>Simplified Invoicing and Settlement (SIS)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -582,11 +201,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Simplified Interline Settlement</fullName>
+                <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Other</fullName>
+                <fullName>Remittance &amp; Settlement (RS)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -1089,6 +708,27 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Approval_process_selector__c</fullName>
+        <externalId>false</externalId>
+        <label>Approval process selector</label>
+        <picklist>
+            <picklistValues>
+                <fullName>OI Approval Process</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Asia_Pacific_Countries_Concerned__c</fullName>
         <externalId>false</externalId>
         <label>Asia &amp; Pacific - Countries Concerned</label>
@@ -1313,6 +953,15 @@
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>Conclusion_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Conclusion Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Countries_OI__c</fullName>
         <externalId>false</externalId>
         <label>Countries - OI</label>
@@ -1327,7 +976,7 @@
         <externalId>false</externalId>
         <label>Date/Time Closed</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1365,7 +1014,7 @@
     <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
-        <label>Description</label>
+        <label>Description/sequence of events</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1599,9 +1248,44 @@
         <externalId>false</externalId>
         <label>Extension approved date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Extension_rejected_date__c</fullName>
+        <description>Date when the approval extension process was rejected</description>
+        <externalId>false</externalId>
+        <label>Extension rejected date</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Impact__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Impact</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Frequency_of_occurence__c</fullName>
@@ -1681,6 +1365,31 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Impact_Post_Improvements__c</fullName>
+        <externalId>false</externalId>
+        <label>Impact - Post Improvements</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lower</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Same</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Higher</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Impact__c</fullName>
@@ -1788,6 +1497,81 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Legal_Impact__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Impact</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Likelihood_Post_Improvements__c</fullName>
+        <externalId>false</externalId>
+        <label>Likelihood -Post Improvements</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lower</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Same</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Higher</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Likelihood_of_issue__c</fullName>
+        <externalId>false</externalId>
+        <label>Likelihood of issue</label>
+        <picklist>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Machine_tool__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1846,38 +1630,37 @@
         <externalId>false</externalId>
         <label>OI Approval date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>OI_Status_WF__c</fullName>
+        <description>This status cannot be set by user, its value comes from a Workflow Rule</description>
+        <externalId>false</externalId>
+        <label>OI Status (WF)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OI_Status_auto__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISNULL(Date_Time_Closed__c),
-	IF( ISNULL(Extension_approved_date__c),
-		IF( ISNULL(Submission_for_extension_date__c),
-			IF( ISNULL(OI_Approval_date__c),
-				IF( ISNULL(Submission_for_Approval_Date__c),
-					&quot;Investigation&quot;,
-					&quot;Pending Approval&quot;
-				),
-				IF(Overall_Deadline__c&lt;TODAY(),
-					&quot;Delayed&quot;,
-					&quot;Ongoing Action Plan&quot;
-				)
-			),
-			&quot;Pending Extension Approval&quot;
-		),
-		IF(Overall_Deadline__c&lt;TODAY(),
+        <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, Pending_eff_validation_date__c&lt;=TODAY()),
+	&quot;Pending Effectiveness Validation&quot;,
+	IF(CONTAINS(OI_Status_WF__c,&quot;Delayed&quot;),
+		IF(TODAY()&gt;Overall_Deadline__c,
 			&quot;Delayed&quot;,
-			&quot;Extended&quot;
-		)
-	),
-	&quot;Closed&quot;
+			SUBSTITUTE(OI_Status_WF__c,&quot; Delayed&quot;,&quot;&quot;)
+		),
+		OI_Status_WF__c
+	)
 )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
-        <label>OI Status (auto)</label>
+        <label>OI Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1890,19 +1673,15 @@
         <label>OI Type</label>
         <picklist>
             <picklistValues>
-                <fullName>One-off case</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recurrent Report</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Initiative</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Issue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Improvement/ enhancement</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1919,9 +1698,11 @@
     <fields>
         <fullName>OI_effective_age__c</fullName>
         <externalId>false</externalId>
-        <formula>If (NOT(ISNULL(Date_Time_Closed__c)),
- DATEVALUE(Date_Time_Closed__c)- DATEVALUE(Open_Date__c),
- TODAY()- DATEVALUE(Open_Date__c))</formula>
+        <formula>IF (NOT(ISNULL(Date_Time_Closed__c)), DATEVALUE(Date_Time_Closed__c)- DATEVALUE(Open_Date__c), 
+IF (OI_Status_auto__c =&quot;Pending effectiveness validation&quot;, (Conclusion_Date__c - DATEVALUE(Open_Date__c)) + (TODAY()- Pending_eff_validation_date__c),    
+IF (OI_Status_auto__c =&quot;Concluded&quot;, Conclusion_Date__c - DATEVALUE(Open_Date__c),      
+IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Open_Date__c),      
+     TODAY()- DATEVALUE(Open_Date__c)))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>OI Effective Age</label>
         <precision>18</precision>
@@ -1985,11 +1766,45 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Overall_effectiveness_of_improvements__c</fullName>
+        <externalId>false</externalId>
+        <label>Overall effectiveness of improvements</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Effective</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ineffective</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Needs Improving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Pending_eff_validation_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Pending eff. validation date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Please_indicate_reasoning__c</fullName>
         <externalId>false</externalId>
         <label>Please indicate reasoning</label>
         <length>32768</length>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -2051,6 +1866,31 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reputational_Impact__c</fullName>
+        <externalId>false</externalId>
+        <label>Reputational Impact</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Risk_Portfolio__c</fullName>
@@ -2152,21 +1992,54 @@
         <externalId>false</externalId>
         <label>Sequence of events</label>
         <length>32768</length>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Service_Impact__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Impact</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Status_Image__c</fullName>
         <externalId>false</externalId>
-        <formula>CASE(OI_Status_auto__c, &quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTb2&quot;, &quot;C &quot;,40,420 ),
-&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTdc&quot;, &quot;E &quot;,40,420 ),
-&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTg7&quot;, &quot;OAP&quot;,40,420 ),
-&quot;Delayed&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTcP&quot;, &quot;Delayed &quot;,40,420 ),
-&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTht&quot;, &quot;PEA&quot;,40,420 ),
-&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oThA&quot;, &quot;PA&quot;,40,420 ),
-&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTeV&quot;, &quot;I&quot;,40,420 ),&quot;&quot;)</formula>
+        <formula>IMAGE(&quot;/servlet/servlet.FileDownload?file=&quot; + 
+	CASE(OI_Status_auto__c,
+		&quot;Delayed&quot;,&quot;015w0000003oTcP&quot;,
+		&quot;Closed&quot;,&quot;015w0000003oTb2&quot;,
+		&quot;Extended&quot;,&quot;015w0000003oTdc&quot;,
+		&quot;Ongoing Action Plan&quot;,&quot;015w0000003oTg7&quot;,
+		&quot;Pending Extension Approval&quot;,&quot;015w0000003oTht&quot;,
+		&quot;Pending Approval&quot;,&quot;015w0000003oThA&quot;,
+		&quot;Concluded&quot;,&quot;015w00000060MhP&quot;,
+		&quot;Pending Effectiveness Validation&quot;,&quot;015w00000060Mfj&quot;,
+		&quot;Terminated&quot;,&quot;015w00000060MmA&quot;,
+		&quot;Investigation&quot;,&quot;015w0000003oTeV&quot;,
+		&quot;&quot;
+	)
+,&quot;&quot;,40,620)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status Image</label>
         <required>false</required>
@@ -2176,7 +2049,7 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Status__c</fullName>
+        <fullName>Status_del__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
         <picklist>
@@ -2239,7 +2112,7 @@
         <externalId>false</externalId>
         <label>Submission for Approval Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -2249,6 +2122,15 @@
         <label>Submission for extension date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Terminated_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Terminated Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -2279,7 +2161,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2298,7 +2179,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2317,7 +2197,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2336,7 +2215,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2355,7 +2233,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2374,7 +2251,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2393,7 +2269,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2412,7 +2287,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2431,7 +2305,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2450,7 +2323,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2469,7 +2341,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2501,7 +2372,6 @@
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2552,7 +2422,123 @@
         <picklistValues>
             <picklist>Affected_Process__c</picklist>
             <values>
+                <fullName>Agency Management %28AM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agency Risk Management %28ARM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline %26 Location Coding and MITA%2FBIETA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Participation %28AP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Susp %28AS%29 %26 Funds Mgmt %28FM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suspension %28AS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services %28BS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing %26 Reporting %28BR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Payment Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Code Transfers %26 Mergers %28CTM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service %28CS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management %28FM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governance - Cargo %28GOV CGO%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governance - Passenger %28GOV PAX%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House %28ICH%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Currency Clearance Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Currency Clearance Services %28ICCS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA-IATAN ID Cards %28IDC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Calendar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Fee Management %28IFM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Life Cycle MGMT %28ISSLC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Lifecycle Mgmt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing %26 Collection %28IC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New ISS Deployment %28NID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Termination Recovery %28PTR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Simplified Invoicing and Settlement %28SIS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3027,6 +3013,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Approval_process_selector__c</picklist>
+            <values>
+                <fullName>OI Approval Process</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Asia_Pacific_Countries_Concerned__c</picklist>
             <values>
                 <fullName>All Regional Office - Asia %26 Pacific</fullName>
@@ -3424,6 +3421,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Financial_Impact__c</picklist>
+            <values>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Frequency_of_occurence__c</picklist>
             <values>
                 <fullName>Biannual</fullName>
@@ -3459,6 +3471,21 @@
             </values>
             <values>
                 <fullName>Yearly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Impact_Post_Improvements__c</picklist>
+            <values>
+                <fullName>Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lower</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Same</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3540,7 +3567,56 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Legal_Impact__c</picklist>
+            <values>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Likelihood_Post_Improvements__c</picklist>
+            <values>
+                <fullName>Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lower</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Same</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Likelihood_of_issue__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>OI_Type__c</picklist>
+            <values>
+                <fullName>Improvement%2F enhancement</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Initiative</fullName>
                 <default>false</default>
@@ -3550,15 +3626,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>One-off case</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recurrent Report</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3578,6 +3646,21 @@
             </values>
             <values>
                 <fullName>NON BSP %2F CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Overall_effectiveness_of_improvements__c</picklist>
+            <values>
+                <fullName>Effective</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ineffective</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs Improving</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3605,6 +3688,21 @@
             </values>
             <values>
                 <fullName>GVA HO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reputational_Impact__c</picklist>
+            <values>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moderate</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3639,7 +3737,22 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Status__c</picklist>
+            <picklist>Service_Impact__c</picklist>
+            <values>
+                <fullName>Major</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moderate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status_del__c</picklist>
             <values>
                 <fullName>Action plan ongoing</fullName>
                 <default>false</default>
@@ -3680,6 +3793,7 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
     <validationRules>
         <fullName>Frequency_of_occurence_Other_check</fullName>
         <active>true</active>
@@ -3687,10 +3801,25 @@
         <errorMessage>When ‘Frequency of occurrence’ is selected as ‘Other’, please describe your choice in the ‘Remarks’ field.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>OI_Overall_effectiveness_of_improvement</fullName>
+        <active>true</active>
+        <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</description>
+        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;), Datevalue(Date_Time_Closed__c)&gt;DATE(2017,08,21))</errorConditionFormula>
+        <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
+        <errorMessage>OI  can not be closed. Please fill &quot;Overall effectiveness of improvement&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>OI_type_Other_check</fullName>
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(  OI_Type__c   , &quot;Other&quot;), ISBLANK( If_other_please_explain__c ))</errorConditionFormula>
         <errorMessage>When ‘OI Type’ is selected as ‘Other’, please describe your choice in the ‘If other, please explain’ field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_Conclusion_for_Pending_APs</fullName>
+        <active>true</active>
+        <description>OI Conclusion is not allowed when there are pending action plans</description>
+        <errorConditionFormula>AND(NOT(ISNULL(Conclusion_Date__c)),Action_Plan_Count__c != Action_Plan_Closed_Count__c)</errorConditionFormula>
+        <errorMessage>OI can not be concluded. Please make sure all action plans are closed</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Root_Cause_check_Man_option</fullName>
@@ -3721,12 +3850,138 @@ NOT(INCLUDES( Root_Cause_s__c , &quot;Mother Earth (force majeure)&quot;))
         <protected>false</protected>
         <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
 
-var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
-improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-improvement.Date_Time_Closed__c = new Date(&apos;{!Now()}&apos;);
-sforce.connection.update([improvement ]); 
+function htmlDecode(input){
+  var e = document.createElement(&apos;div&apos;);
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
+}
 
-window.location.reload();</url>
+function getNow(){
+  var time;
+  try {
+    time = &quot;{!NOW()}&quot;.split(&quot; &quot;)[1];
+  } catch (e) {
+    time = &quot;00:00&quot;;
+  }
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())} &quot; + time);
+}
+
+if ({!ISNULL(Operational_Improvements__c.Date_Time_Closed__c)}) {
+  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+  improvement.Date_Time_Closed__c = getNow();
+  var result = sforce.connection.update([improvement ]);
+
+  if(result[0].getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(htmlDecode(result[0].errors.message));
+  }
+
+} else {
+  alert(&quot;OI already closed&quot;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Concluded_OI</fullName>
+        <availability>online</availability>
+        <description>Set the OI in cocluded status, but before ask the user the period between 3 and 12 months</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Conclude</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/37.0/connection.js&apos;)}
+{!REQUIRESCRIPT(&apos;/soap/ajax/37.0/apex.js&apos;)}
+{!REQUIRESCRIPT(&apos;//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&apos;)}
+{!REQUIRESCRIPT(&apos;//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js&apos;)}
+
+
+function getOIObject() {
+  try {
+    var query = &quot;select Id, Conclusion_Date__c, Pending_eff_validation_date__c from Operational_Improvements__c where Id = &apos;{!Operational_Improvements__c.Id}&apos; limit 1&quot;;
+    var result = sforce.connection.query(query);
+    var records = result.getArray(&quot;records&quot;);
+    return records[0];
+  } catch (e) {
+    alert(&apos;Retrieve Error: &apos; + e);
+  }
+}
+
+function getToday(){
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}&quot;);
+}
+
+function updateOIObject(object, months) {
+  try {
+    var todayDate = getToday();
+    var nextDate = getToday();
+    nextDate.setMonth(todayDate.getMonth() + months);
+    object.Conclusion_Date__c = todayDate ;
+    object.Pending_eff_validation_date__c = nextDate;
+    return sforce.connection.update([object])[0];
+  } catch (e) {
+    alert(&apos;Update Error: &apos; + e);
+  }
+}
+
+function processConclusion(dialog, OIobject, months) {
+  var result = updateOIObject(OIobject, months);
+  jQuery(dialog).dialog( &quot;close&quot; );
+  if(result.getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(result.errors.message);
+  }  
+}
+
+try{
+
+  var OIobject = getOIObject();
+
+  jQuery(function() {
+    /*Append the jQuery CSS CDN Link to the Head tag.*/
+    jQuery(&apos;head&apos;).append(&apos;&lt;link rel=&quot;stylesheet&quot; href=&quot;//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css&quot; type=&quot;text/css&quot; /&gt;&apos;);
+   
+    /*Create the HTML(DIV Tag) for the Dialog.*/
+    var html =
+      &apos;&lt;div id=&quot;dialog&quot; title=&quot;Conclude Operational Improvement&quot;&gt;&lt;p&gt;Choose months to conclude?&lt;/p&gt;&lt;/div&gt;&apos;;
+   
+    /*Check if the Dialog(DIV Tag) already exists if not then Append the same to the Body tag.*/
+    if(!jQuery(&apos;[id=dialog]&apos;).size()){
+      jQuery(&apos;body&apos;).append(html);
+    }    
+
+    /*Open the jQuery Dialog.*/
+    jQuery( &quot;#dialog&quot; ).dialog({
+      modal: true,
+      draggable: false,
+      resizable: false,
+      position: [&apos;center&apos;, &apos;center&apos;],
+      width: 400,
+      buttons: {
+        &quot;3 Months&quot;: function() {
+          processConclusion(this,OIobject,3);
+        },
+        &quot;6 Months&quot;: function() {
+          processConclusion(this,OIobject,6);
+        },
+        &quot;9 Months&quot;: function() {
+          processConclusion(this,OIobject,9);
+        },
+        &quot;12 Months&quot;: function() {
+          processConclusion(this,OIobject,12);
+        },
+        &quot;Cancel&quot;: function() {
+          jQuery( this ).dialog( &quot;close&quot; );
+        }
+      }
+    });
+  });
+}
+catch(e){
+  alert(&apos;An Error has Occurred. Error: &apos; + e);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Extension_approved</fullName>
@@ -3746,6 +4001,42 @@ sforce.connection.update([improvement ]);
 window.location.reload();</url>
     </webLinks>
     <webLinks>
+        <fullName>Submit_for_Approval</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for Approval</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Approval_process_selector__c = &quot;OI Approval Process&quot;;
+sforce.connection.update([improvement ]); 
+
+
+window.location.href = &quot;{!URLFOR( $Action.Operational_Improvements__c.Submit,  Operational_Improvements__c.Id  )}&quot;;</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Submit_for_extension</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for extension</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Approval_process_selector__c = &quot;OI Extension Process&quot;;
+sforce.connection.update([improvement ]); 
+
+
+window.location.href = &quot;{!URLFOR( $Action.Operational_Improvements__c.Submit,  Operational_Improvements__c.Id  )}&quot;;</url>
+    </webLinks>
+    <webLinks>
         <fullName>Submitted_for_extension</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -3761,5 +4052,41 @@ improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
 sforce.connection.update([improvement ]); 
 
 window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Terminate_OI</fullName>
+        <availability>online</availability>
+        <description>Terminate Action for an OI</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Terminate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+function htmlDecode(input){
+  var e = document.createElement(&apos;div&apos;);
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
+}
+
+function getToday(){
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}&quot;);
+}
+
+if ({!ISNULL(Operational_Improvements__c.Terminated_Date__c)}) {
+  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+  improvement.Terminated_Date__c = getToday();
+  var result = sforce.connection.update([improvement ]);
+
+  if(result[0].getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(htmlDecode(result[0].errors.message));
+  }
+} else {
+  alert(&quot;OI already terminated&quot;);
+}</url>
     </webLinks>
 </CustomObject>

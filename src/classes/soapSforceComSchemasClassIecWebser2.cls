@@ -120,23 +120,21 @@ public class soapSforceComSchemasClassIecWebser2 {
             soapSforceComSchemasClassIecWebser2.updateContactResponse_element response_x;
             Map<String, soapSforceComSchemasClassIecWebser2.updateContactResponse_element> response_map_x = new Map<String, soapSforceComSchemasClassIecWebser2.updateContactResponse_element>();
             response_map_x.put('response_x', response_x);
-            if (!Test.isRunningTest()) {
-                WebServiceCallout.invoke(
-                  this,
-                  request_x,
-                  response_map_x,
-                  new String[]{endpoint_x,
-                  '',
-                  'http://soap.sforce.com/schemas/class/IEC_WebService',
-                  'updateContact',
-                  'http://soap.sforce.com/schemas/class/IEC_WebService',
-                  'updateContactResponse',
-                  'soapSforceComSchemasClassIecWebser2.updateContactResponse_element'}
-                );
-            }
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              '',
+              'http://soap.sforce.com/schemas/class/IEC_WebService',
+              'updateContact',
+              'http://soap.sforce.com/schemas/class/IEC_WebService',
+              'updateContactResponse',
+              'soapSforceComSchemasClassIecWebser2.updateContactResponse_element'}
+            );
             response_x = response_map_x.get('response_x');
            // return response_x.result;
-            return (!Test.isRunningTest()) ? response_x.result : null;
+            return response_x.result;
         }
         public Boolean assignOpportunityToQuote(String quoteId) {
             soapSforceComSchemasClassIecWebser2.assignOpportunityToQuote_element request_x = new soapSforceComSchemasClassIecWebser2.assignOpportunityToQuote_element();
@@ -144,22 +142,20 @@ public class soapSforceComSchemasClassIecWebser2 {
             soapSforceComSchemasClassIecWebser2.assignOpportunityToQuoteResponse_element response_x;
             Map<String, soapSforceComSchemasClassIecWebser2.assignOpportunityToQuoteResponse_element> response_map_x = new Map<String, soapSforceComSchemasClassIecWebser2.assignOpportunityToQuoteResponse_element>();
             response_map_x.put('response_x', response_x);
-            if (!Test.isRunningTest()) {
-                WebServiceCallout.invoke(
-                  this,
-                  request_x,
-                  response_map_x,
-                  new String[]{endpoint_x,
-                  '',
-                  'http://soap.sforce.com/schemas/class/IEC_WebService',
-                  'assignOpportunityToQuote',
-                  'http://soap.sforce.com/schemas/class/IEC_WebService',
-                  'assignOpportunityToQuoteResponse',
-                  'soapSforceComSchemasClassIecWebser2.assignOpportunityToQuoteResponse_element'}
-                );
-            }   
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              '',
+              'http://soap.sforce.com/schemas/class/IEC_WebService',
+              'assignOpportunityToQuote',
+              'http://soap.sforce.com/schemas/class/IEC_WebService',
+              'assignOpportunityToQuoteResponse',
+              'soapSforceComSchemasClassIecWebser2.assignOpportunityToQuoteResponse_element'}
+            );
             response_x = response_map_x.get('response_x');
-            return (!Test.isRunningTest()) ? response_x.result : null;
+            return response_x.result;
         }
     }
 }

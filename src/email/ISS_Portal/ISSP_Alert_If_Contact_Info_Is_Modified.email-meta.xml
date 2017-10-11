@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP Alert If Contact Info Is Modified</name>
+    <style>none</style>
+    <subject>Alert Contact Info Modification</subject>
+    <textOnly>Dear {!Contact.Name},
+
+Please note that {! IF(contains(User.Profile_Name__c, &apos;ISS Portal&apos;), &apos;your &apos;, &apos;&apos;)} {! IF(AND(contains(User.Profile_Name__c, &apos;ISS Portal&apos;, Contains(Contact.Community__c, &apos;CNS&apos;)) ), &apos;CNS &apos;, &apos;IATA&apos;)} {! IF(contains(User.Profile_Name__c, &apos;ISS Portal&apos;), &apos;Portal Administrator &apos; + User.Name, &apos; IATA&apos;)} has modified your Profile Information on the portal.
+Your classification as a contact has been changed to:
+
+BSP/CASS Payment contact: {! IF(Contact.BSP_CASS_Payment_contact__c,&apos;Yes&apos;, &apos;No&apos;) }
+Invoicing Contact: {! IF(Contact.Invoicing_Contact__c,&apos;Yes&apos;, &apos;No&apos;) }</textOnly>
+    <type>custom</type>
+</EmailTemplate>

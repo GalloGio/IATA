@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,6 +62,7 @@
         <label>Delivery Date Text</label>
         <length>15</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -72,6 +73,7 @@
         <externalId>false</externalId>
         <label>Delivery Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -85,6 +87,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>Delivery Frequency</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -97,6 +100,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>File Name</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -114,6 +118,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -127,6 +132,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -140,6 +146,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -149,6 +156,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <formula>Subscription__r.Zuora__CustomerAccount__r.Contact__r.FirstName</formula>
         <label>First Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -162,6 +170,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -172,6 +181,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>List of files delivered (merged in email nofification)</inlineHelpText>
         <label>List of files delivered</label>
         <length>3276</length>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -183,6 +193,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>Message in case there is a failure to delivery</inlineHelpText>
         <label>Message</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -212,6 +223,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -224,6 +236,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -248,6 +261,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -260,6 +274,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -270,6 +285,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>For email nofitication</inlineHelpText>
         <label>Technical Contact Email</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -282,6 +298,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>Technical Contact Name</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -290,28 +307,107 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Delivery_Date__c</columns>
         <columns>Subscription__c</columns>
-        <columns>GSS_Subscription_Detail__c</columns>
         <columns>File_Specification__c</columns>
-        <columns>Status__c</columns>
-        <columns>Message__c</columns>
+        <columns>File_Name__c</columns>
         <columns>File_Size_KB__c</columns>
-        <columns>Notification__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>Technical_Contact_Email__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Completed</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Completed</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Failed</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Failed</value>
+        </filters>
+        <label>Failed</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>In_Progress</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>In Progress</value>
+        </filters>
+        <label>In Progress</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Today_s_Deliveries</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Delivery_Date__c</field>
             <operation>equals</operation>
-            <value>6/4/2016</value>
+            <value>TODAY</value>
         </filters>
-        <label>All</label>
+        <label>Today&apos;s Deliveries</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>FD-{000000000}</displayFormat>
         <label>GDP File Delivery Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP File Deliveries</pluralLabel>

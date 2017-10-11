@@ -47,7 +47,7 @@
                 </div>
             </aura:if>
         </td>
-        <td><ui:inputText value="{!v.milestone.Subject}" class="slds-input required" /></td>
+        <td><ui:inputTextArea value="{!v.milestone.Subject__c}" class="slds-textarea required" rows="5" /></td>
         <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="slds-textarea" rows="5"/></td>
         <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="slds-textarea" rows="5"/></td>
         <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-textarea" rows="5"/></td>
@@ -80,7 +80,7 @@
                     <c:AMP_EditSaveMenu />
                 </aura:if>
             </td>
-            <td><ui:outputText value="{!v.milestone.Subject}" class="slds-truncate"/></td>
+            <td><c:AMP_LongText text="{!v.milestone.Subject__c}"/></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Responsible__c}" /></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Involved__c}" /></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Support_Required_from_Account__c}" /></td>

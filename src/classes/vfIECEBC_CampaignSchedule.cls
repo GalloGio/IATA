@@ -109,7 +109,7 @@ public class vfIECEBC_CampaignSchedule extends vfIECEBC_Controller {
                 Datetime dtMax = getMaxDatetime();
                 
                 if (!vfIECEBC.billingAccount.eBroadcast_Trusted_Sender__c && this.campaign.Status__c != 'APPROVED' && this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
-                    validationMessage = 'A delay of minimum 2 business days is required. Date must be greater to ' + dt.format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
+                    validationMessage = 'A minimum delay of 2 business days is required for content validation by IATA. Please select a date greater than ' + dt.format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
                 }/* else if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c > dtMax) {
                     validationMessage = 'Scheduled Date must be within 31 days. Date must NOT be greater to ' + dtMax.format('EEEE, MMM d', UserInfo.getTimeZone().getID());
                 }*/

@@ -4,6 +4,9 @@
     <email>iata.recyclebin.europe@gmail.com</email>
     <name>Recycle bin North Asia</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

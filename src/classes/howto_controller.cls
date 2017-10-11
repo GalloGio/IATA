@@ -28,7 +28,8 @@ public without sharing class howto_controller {
 	  public String feedbackSearch        { get { return FEEDBACK_SEARCH; } }
 	  public String feedbackRelated       { get { return FEEDBACK_RELATED; } }
 	  
-	  
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 	  
 	  // this also needs to be public to allow setting during unit tests
   	  public static String DEFAULT_SITE_NAME = Site.getName();

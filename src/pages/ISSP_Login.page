@@ -4,25 +4,25 @@
     standardStylesheets="false"
     language="{!lang}"
     cache="false"
-    action="{!findLocationCaller}"> 
-    
+    action="{!findLocationCaller}">
+
 <head>
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal, '/css/bootstrap-ie7.css')}" type="text/css" />
     <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal, '/css/ie7-reset.css')}" type="text/css" />>
-    
+
     <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
     <style type="text/css">
-            
+
     </style>
-    
+
     <script>
-        
+
     </script>
 <![endif]-->
 
     <script type="text/javascript" src="{!urlfor($Resource.Bowser,'/bowser-master/bowser.min.js')}" ></script>
-    
+
     <script>
     function checkBrowserVersion(label){
         if (bowser.msie && bowser.version < 9)
@@ -42,17 +42,25 @@
 
 </head>
 
-  <apex:includeScript value="{!$Resource.ISS_Portal_GA}"/>  
-  <apex:composition template="ISS_Template">
- 
+  <apex:includeScript value="{!$Resource.ISS_Portal_GA}"/>
+
+  <apex:composition template="{!IF(communityName=='CNS','CNS_Template','ISS_Template')}">
+
     <apex:define name="body">
-     <div class="page_login"> 
-     <div id="header"><a href="/"><img alt="IATA" src="{!urlfor($Resource.IIS_Portal, '/images/logo.jpg')}" border="0" /></a></div>
+     <div class="page_login">
+         <div id="header">
+            <apex:outputPanel rendered="{!communityName!='CNS'}"> <a href="/"><img alt="IATA" src="{!urlfor($Resource.IIS_Portal, '/images/logo.jpg')}" border="0" /></a></apex:outputPanel>
+            <apex:outputPanel rendered="{!communityName=='CNS'}"> <a href="http://www.cnsc.net"><img alt="CNS" src="{!urlfor($Resource.IIS_Portal, '/images/logocns.png')}" border="0" /></a></apex:outputPanel>
+         </div>
+
 <!-- START NEW LOGIN AREA     -->
 <div id="main-container">
   <div id="loginContent">
-    <div id="loginText">{!$Label.ISSP_Airlines_fly_3_billion}<br />
-      <strong>{!$Label.ISSP_Flying_connects}</strong></div>
+      <div id="loginText">
+          <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_CNS_quote, $Label.ISSP_Airlines_fly_3_billion)}" />
+          <br />
+          <strong><apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_CNS_quote2, $Label.ISSP_Flying_connects)}" /></strong>
+      </div>
     <div id="login-form-table">
      <apex:form styleClass=" form-horizontal" id="loginForm" forceSSL="true">
             <apex:pageMessages id="error"/>
@@ -93,14 +101,18 @@
           </tr>
 
           <tr>
-            <td><a href="#"><apex:outputLink value="{!$Page.ISSP_ForgotPassword}" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.forgot_your_password_q}</apex:outputLink></a><br />
+            <td><a href="#">
+                <apex:outputLink value="{!$Page.ISSP_ForgotPassword}" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.forgot_your_password_q}
+                    <apex:param name="communityName" value="{!communityName}"/>
+                </apex:outputLink></a><br />
               <br />
-              <a href="#"><apex:outputLink value="{!$Page.ISSP_Registration}?lang={!lang}&CommunityName=ISS&sRefererCommunity=ISSP_Login" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink></a></td>
+              <a href="#"><apex:outputLink value="{!$Page.ISSP_Registration}?country={!country}&lang={!lang}&communityName={!communityName}&sRefererCommunity=ISSP_Login" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink></a></td>
           </tr>
           <tr>
-            <td style="padding-top:33px"><a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_Troubleshooting}</apex:outputLink></a></td>
+            <td style="padding-top:33px"><a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!AND($Site.RegistrationEnabled,communityName!='CNS')}" target="_blank">{!$Label.ISSP_Troubleshooting}</apex:outputLink></a></td>
           </tr>
           </apex:outputPanel>
+          <apex:outputPanel rendered="{!communityName!='CNS'}">
           <tr>
             <td>
                 <select onchange="changeLanguageLocaleKey();" id="LanguageLocaleKeySelect">
@@ -118,10 +130,13 @@
                 <option value="in">Indonesian</option>
                 <option value="vi">Vietnamese</option>
                 <option value="ar">Arabic</option>
+                <option value="ru">Russian</option>
+                <option value="tr">Turkish</option>
                 </select>
             </td>
           </tr>
-          <!-- 
+        </apex:outputPanel>
+          <!--
           <tr>
           <td>IP Address: {!ipAddress} </td>
           </tr>
@@ -138,9 +153,9 @@
             -->
         </tbody>
       </table>
-         
+
       </apex:form>
-      
+
     </div>
   </div>
   <div id="footer">
@@ -150,13 +165,23 @@
       <li><a target="_new" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Terms_of_Use}</a></li>
   <!--<li>|</li>
       <li><a target="_new" href="/ISSP_Issue_With_Portal">{!$Label.ISSP_Issue_With_Portal}</a></li> -->
-      <li style="float: right">&copy; International Air Transport Association (IATA) {!YEAR(TODAY())}. {!$Label.ISSP_All_rights_reserved}.</li>
+            <li style="float: right">
+                &copy;
+                <apex:outputPanel rendered="{!communityName=='CNS'}" >
+                    {!YEAR(TODAY())} Cargo Network Services Corp., An IATA Company.
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!communityName!='CNS'}" >
+                    International Air Transport Association (IATA) {!YEAR(TODAY())}.
+                </apex:outputPanel>
+                {!$Label.ISSP_All_rights_reserved}.
+            </li>
+
     </ul>
     <p></p>
   </div>
 </div>
 <!-- END NEW LOGIN AREA     -->
-      
+
       </div>
     </apex:define>
   </apex:composition>
@@ -179,8 +204,8 @@
         $('link[title="bs"]')[0].disabled=true;
     });
     </script>
-   
-    <script> 
+
+    <script>
     function changeLanguageLocaleKey() {
         var lang = $("#LanguageLocaleKeySelect option:selected").val();
         window.location.href = "/ISSP_Login?lang="+lang;

@@ -54,7 +54,8 @@ private class ISSP_AccountTriggerHandlerTest
         cont.User_Portal_Status__c = 'Approved Admin';
         cont.AccountId = acc.Id;
         insert cont;
-                
+
+        ISSP_AccountTriggerHandler.preventTrigger = false;
         acc.Accumulated_Irregularities__c = 613;
         update acc;
 

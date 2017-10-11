@@ -50,6 +50,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
     <fields>
         <fullName>ActualCost</fullName>
     </fields>
@@ -257,6 +258,29 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <length>4</length>
         <required>false</required>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CurrencyIsoCode</fullName>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Campaign Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( Name)&lt;5,&quot;Meaningful Campaign Name, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(ISPICKVAL( Type ,&quot;&quot;), &quot;Type, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL( Status ,&quot;&quot;), &quot;Status, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(TEXT(MONTH( StartDate )))=0, &quot;Start Date, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(TEXT(MONTH( EndDate )))=0, &quot;End Date, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(NumberOfContacts  +  NumberOfLeads = 0, &quot;No Associated Members, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(TEXT( ExpectedRevenue ))=0, &quot;Expected Revenue&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LEN(  Name  ) &lt; 5, 0,20) + IF(ISPICKVAL(  Type ,&quot;&quot; ), 0,20) + IF(ISPICKVAL( Status ,&quot;&quot; ), 0,20) + IF(LEN( TEXT(MONTH( StartDate )))= 0, 0,10) + IF( LEN(TEXT(MONTH( EndDate ))) = 0, 0,10) + IF(  NumberOfContacts  +  NumberOfLeads = 0, 0,10)  + IF( LEN( TEXT( ExpectedRevenue ) ) = 0, 0,10)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -668,25 +692,6 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>FullAccess</sharingModel>
-    <webLinks>
-        <fullName>ActOn__Add_to_Act_On_List</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Add to Act On List</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://sf.actonsoftware.com/acton/sforce/embedSforceCampaign.jsp?userid={!User.Id}&amp;campaignid={!Campaign.Id}&amp;server={!API.Partner_Server_URL_190}&amp;session={!API.Session_ID}</url>
-    </webLinks>
     <webLinks>
         <fullName>CompleteCallDownLeadsContacts</fullName>
         <availability>online</availability>

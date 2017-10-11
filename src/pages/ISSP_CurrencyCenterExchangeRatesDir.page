@@ -1,0 +1,219 @@
+<apex:page controller="ISSP_CurrencyCenterCountriesMapCtrl" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+
+<html>
+ 	<c:ISSP_Header ></c:ISSP_Header>
+ 	<head>
+
+
+	
+    <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/exchange_rate_directory.css')}" />
+		
+	<script type="text/javascript">
+		/*** handle popover  ***/
+		$(function () {
+			$('[data-toggle="popover"]').popover(
+			    { container: 'body',
+			      html: 'true', 
+			      placement: 'auto left',
+			      trigger: 'focus' })
+		})
+	</script>
+
+ 	</head>
+
+ 	<body>
+     	<div class="container">
+
+        <c:ISSP_CustomNavigation />
+      
+      	<apex:form >  
+
+
+        <div class="row">
+          <div class="col-xs-12 service-header">
+            
+            <div class="row">
+            	<div class="col-xs-6">
+          			<a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+      			</div>
+            </div>
+
+            <div class="row">
+				<div class="col-xs-6">
+					<div class="page-title">{! $Label.CurrencyCenter_Exchange_Rates_Directory_Title}</div>
+				</div>
+          	</div>
+          	<div class="row">
+				<div class="col-xs-6">
+					<div class="page-subtitle">{! $Label.CurrencyCenter_Exchange_Rates_Directory_Subtitle}</div>
+				</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ">
+        	<div class="col-xs-12 flow-diagram">
+          		<table class="table">
+	          		<thead>
+	          			<tr>
+	          				<th colspan="8">
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Filing_1.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Booking_2.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Pricing_3.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Payment_4.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Ticketing_5.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Revenu_Accounting_6.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Interline_settlement_7.png')}" /></div>
+	          					<div class="flow-arrow"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/blue_arrow.png')}" /></div>
+	          					<div class="flow-step"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Fund_Repatriation_8.png')}" /></div>
+	          				</th>
+	          			</tr>
+	          			<tr>
+	          				<th class="chain-step">Filing</th>
+	          				<th class="chain-step">Booking</th>
+	          				<th class="chain-step">Pricing</th>
+	          				<th class="chain-step">Payment</th>
+	          				<th class="chain-step">Ticketing</th>
+	          				<th class="chain-step">Revenue Accounting</th>
+	          				<th class="chain-step">Interline Settlement</th>
+	          				<th class="chain-step">Fund Repatriation</th>
+	          			</tr>
+	          		</thead>
+	          		<tbody>
+	          			<tr>
+	          				<td><div class="vertical-wrapper"><div class="y-axis-label">Codes</div></div></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td><div class="arrow-wrapper"><div class="css-arrow"></div></div></td>
+	          			</tr>
+	          			<tr class="spacing-row">
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          			</tr>
+	          			<tr>
+	          				<td><div class="vertical-wrapper"><div class="y-axis-label">Rates</div></div></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td><div class="arrow-wrapper"><div class="css-arrow"></div></div></td>
+	          			</tr>
+	          			<tr class="spacing-row">
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          			</tr>
+	          			<tr>
+	          				<td><div class="vertical-wrapper"><div class="y-axis-label">Processes</div></div></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td></td>
+	          				<td><div class="arrow-wrapper"><div class="css-arrow"></div></div></td>
+	          			</tr>
+	          		</tbody>
+          		</table>
+
+          		<div class="diagram-item ACD-CCD">
+          			<a href="javascript://" data-toggle="popover" title="<b>Airline Coding Directory / City Code Directory</b>" data-content="{!$Label.CurrencyCenter_def_ACD_CCD}">
+	          			<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+	          			ACD / CCD
+          			</a>
+      			</div>
+          		<div class="diagram-item TTBS">
+          			<a href="javascript://" data-toggle="popover" title="<b>Ticket Tax Box Service</b>" data-content="{!$Label.CurrencyCenter_def_TTBS}">
+	          			<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+	          			TTBS
+          			</a>
+      			</div>          		
+          		<div class="diagram-item IROE">
+          			<a href="javascript://" data-toggle="popover" title="<b>IATA Rates of Exchange</b>" data-content="{!$Label.CurrencyCenter_def_IROE}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		IROE
+          			</a>
+          		</div>
+          		<div class="diagram-item ICER">
+          			<a href="javascript://" data-toggle="popover" title="<b>IATA Consolidated Exchange Rates</b>" data-content="{!$Label.CurrencyCenter_def_ICER}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		ICER
+          			</a>
+          		</div>
+          		<div class="diagram-item ICH">
+          			<a href="javascript://" data-toggle="popover" title="<b>IATA Clearing House</b>" data-content="{!$Label.CurrencyCenter_def_ICH}{!$Label.CurrencyCenter_def_ICH_2}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		ICH
+          			</a>
+          		</div>
+          		<div class="diagram-item PTC">
+          			<a href="javascript://" data-toggle="popover" title="<b>PTC</b>" data-content="{!$Label.CurrencyCenter_def_PTC}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		PTC
+          			</a>
+          		</div>
+          		<div class="diagram-item ICCS">
+          			<a href="javascript://" data-toggle="popover" title="<b>IATA Clearing Currency Services</b>" data-content="{!$Label.CurrencyCenter_def_ICCS}{!$Label.CurrencyCenter_def_ICCS_2}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		ICCS
+          			</a>
+          		</div>
+          		<div class="diagram-item BSP-CASS-ICH">
+          			<a href="javascript://" data-toggle="popover" title="<b>BSP / CASS / ICH</b>" data-content="{!$Label.CurrencyCenter_def_BSP_CASS_ICH}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		BSP / CASS / ICH
+          			</a>
+          		</div>
+          		<div class="diagram-item PSC">
+          			<a href="javascript://" data-toggle="popover" title="<b>Passenger Services Conference</b>" data-content="{!$Label.CurrencyCenter_def_PSC}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		PSC
+          			</a>
+          		</div>
+          		<div class="diagram-item CTC">
+          			<a href="javascript://" data-toggle="popover" title="<b>CTC</b>" data-content="{!$Label.CurrencyCenter_def_CTC}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		CTC
+          			</a>
+          		</div>
+          		<div class="diagram-item MITA">
+          			<a href="javascript://" data-toggle="popover" title="<b>IATA Multilateral Interline Traffic Agreements</b>" data-content="{!$Label.CurrencyCenter_def_MITA}">
+		          		<img src="{!URLFOR($Resource.CurrencyCenter_Style, '/Information.png')}" class="info-img"/>
+		          		MITA
+          			</a>
+          		</div>
+          	</div>
+        </div>
+
+
+        <c:ISSP_CustomFooter />
+      	
+      	</apex:form>
+     	</div>
+ 	</body>
+</html>
+	
+</apex:page>

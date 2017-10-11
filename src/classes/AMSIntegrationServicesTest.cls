@@ -158,7 +158,7 @@ private class AMSIntegrationServicesTest {
     
     @isTest static void test_updateAccountGDPData2() {
         Test.startTest();
-        String accountId = [select id from Account where Name = 'Test1 Account'].id;
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
         Boolean result = AMSIntegrationServices.updateAccountGDPData2(accountId, 'A', true, 'LOCTYPA','EN','12345','P');
         System.assertEquals(true, result);
         
@@ -167,10 +167,10 @@ private class AMSIntegrationServicesTest {
         result = AMSIntegrationServices.updateAccountShortName(accountId,'ashortname');
         System.assertEquals(true, result);
 
-        Account acc = [select id, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
+        Account acc = [select id, Name, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
         system.assertEquals(true, acc.GDP_Opt_In__c);
        // system.assertEquals(12, acc.Accumulated_Irregularities__c );
-        system.assertEquals('ashortname', acc.Short_Name__c );
+        system.assertEquals('Test1 Account', acc.Short_Name__c );
 
         GDP_Reference_Table__c g = [select id from GDP_Reference_Table__c];
         System.assertEquals(g.id, acc.GDP_Location_Type__c);
@@ -259,5 +259,33 @@ private class AMSIntegrationServicesTest {
         Integer result = AMSIntegrationServices.unSynchronizedAgencies(dtSelectedDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
         System.assertEquals(0, result);
         Test.stopTest();
+    }
+
+    @isTest static void test_failFindAccount() {
+        String invalidAccountId = '001000000000000000';
+        Boolean result;
+
+        Test.startTest();
+
+        result = AMSIntegrationServices.updateAccountIrregularities(invalidAccountId, 1);
+        result = AMSIntegrationServices.updateAccountShortName(invalidAccountId, null);
+        result = AMSIntegrationServices.updateAccountGDPData2(invalidAccountId, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPData3(invalidAccountId, null, null, null, null, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData2(invalidAccountId, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData(invalidAccountId, null, null, null, null, null);
+        result = AMSIntegrationServices.assignAgencyPerDPC(invalidAccountId, null);
+        result = AMSIntegrationServices.assignAgencyPerDPCandLegacyIDs(invalidAccountId, null, null);
+        result = AMSIntegrationServices.assignAgencyPerSettlementandLegacyIDs(invalidAccountId, null, null, null, null);
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_failUpdateAccount() {
+        String longName = '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        Test.startTest();
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
+        Boolean result;
+
+        result = AMSIntegrationServices.updateAccountShortName(accountId,longName);
     }
 }

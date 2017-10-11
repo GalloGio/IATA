@@ -15,4 +15,5 @@
     <tab>EBC_Customer_Filter__c</tab>
     <tab>EBC_Email_Exclusion__c</tab>
     <tab>EBC_Master_Filter__c</tab>
+    <tab>EBC_Sub_Continent__c</tab>
 </CustomApplication>

@@ -89,12 +89,24 @@ public class ObjectiveHandlerTest {
 		Objective__c objective = getAccountObjective();
 
 		Test.startTest();
-		insert objective;
+		insert objective; 
 		Test.stopTest();
 
 		Objective__c result = [Select Name from Objective__c where id = :objective.Id];
 		System.debug(result.Name);
 		System.assert(result.Name == 'FDS-testAccount-testName-2015');
+	}
+
+	public static testMethod void testSetAccountObjectiveName80() {
+		Objective__c objective = getAccountObjective();
+		Account account = [Select Name from Account where id = :objective.Account__c];
+		Test.startTest();        
+		update account;
+		insert objective;		 
+		Test.stopTest();
+
+		Objective__c result = [Select Name, Account__r.name from Objective__c where id = :objective.Id];
+		System.assert(result.name == 'FDS-testAccount-testName-2015');
 	}
 
 	public static testMethod void testSetAccountObjectiveNameWithNoAccount() {

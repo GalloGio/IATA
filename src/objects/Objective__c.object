@@ -227,6 +227,11 @@ Object used to store objectives that can be independent, related to other object
                 <operation>equals</operation>
                 <value>Account Issues and Priorities</value>
             </filterItems>
+            <filterItems>
+                <field>Objective__c.Account__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Objective__c</referenceTo>
@@ -888,6 +893,16 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Decreasing_Target__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Decreasing Target</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <description>Not visible for the end user, but a temp field needed by the Objective naming convention</description>
         <externalId>false</externalId>
@@ -1025,7 +1040,7 @@ Object used to store objectives that can be independent, related to other object
                 <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
                 <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
@@ -1078,6 +1093,71 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>External Affairs</fullName>
                 <default>false</default>
                 <controllingFieldValues>MER</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CPS</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAP</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ITS</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BIS</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SPP</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Events</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FSS</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>T&amp;T</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -1366,30 +1446,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
     </fields>
     <label>Objective</label>
     <listViews>
-        <fullName>AME_regional_objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Current__c</columns>
-        <columns>Target__c</columns>
-        <columns>Target_Progress__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </filters>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Objective__c.Region</value>
-        </filters>
-        <label>AME regional objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Account_Issues_Priorities</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
@@ -1415,104 +1471,172 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <columns>Target_Progress__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Account,Objective__c.Area,Objective__c.Division,Objective__c.Region</value>
+        </filters>
         <label>All objectives</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Incomplete_Objectives</fullName>
+        <fullName>Field_Office_BMAs_20172</fullName>
         <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>is_Incomplete__c</field>
+            <field>Type__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>BMA</value>
         </filters>
-        <label>Incomplete Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Levant_Area_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Target__c</columns>
-        <columns>Current__c</columns>
-        <columns>Deadline__c</columns>
-        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
             <value>Objective__c.Area</value>
         </filters>
-        <filters>
-            <field>Area__c</field>
-            <operation>equals</operation>
-            <value>Levant</value>
-        </filters>
-        <label>Levant Area Objectives</label>
+        <label>AME Field Office BMAs 2017</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Objectives_with_missing_Area_Objectives</fullName>
+        <fullName>Field_Office_OSAs_20172</fullName>
         <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
         <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Areas_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing Area Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Objectives_with_missing_RegionObjectives</fullName>
-        <columns>NAME</columns>
         <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
         <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Regions_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing RegionObjectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>VP_Divisional_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Type__c</columns>
-        <columns>Cascade_To_Region__c</columns>
         <columns>Target__c</columns>
-        <columns>Current__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>OSA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
-            <value>Objective__c.Division</value>
+            <value>Objective__c.Area</value>
+        </filters>
+        <label>AME Field Office OSAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Global_BMAs_2017</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>BMA</value>
         </filters>
         <filters>
-            <field>Division__c</field>
-            <operation>equals</operation>
-            <value>VP</value>
+            <field>Region__c</field>
+            <operation>notEqual</operation>
+            <value>AME,Americas,ASPAC,Nth. Asia,Europe</value>
         </filters>
-        <label>VP Divisional Objectives</label>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <label>Global BMAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Global_BMAs_20171</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>BMA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Region</value>
+        </filters>
+        <label>AME Regional BMAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Regional_OSAs_20171</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>OSA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Region</value>
+        </filters>
+        <label>AME Regional OSAs 2017</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1999,7 +2123,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2007,7 +2147,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2015,7 +2167,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2031,11 +2187,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2774,10 +2950,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -2892,7 +3064,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3530,7 +3702,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3538,7 +3726,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3546,7 +3746,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3562,11 +3766,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4302,10 +4526,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -4408,7 +4628,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4416,7 +4652,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4424,7 +4672,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4440,11 +4692,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5242,10 +5514,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -5360,7 +5628,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6010,7 +6278,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6018,7 +6302,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6026,7 +6322,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6042,11 +6342,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6116,6 +6436,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             <picklist>Sub_region__c</picklist>
             <values>
                 <fullName>AFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

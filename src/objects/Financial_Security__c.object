@@ -57,6 +57,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_ConvertedAmount__c</fullName>
+        <description>Shows the FS amount converted to the Account&apos;s currency (located on the RHC Information object)</description>
+        <externalId>false</externalId>
+        <label>Converted Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Case_BSP_Country__c</fullName>
         <description>Country value that is transmitted to the automatically created renewal case.</description>
         <externalId>false</externalId>
@@ -511,6 +524,10 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <picklistValues>
                 <fullName>Financial Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDI</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2324,7 +2341,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
     <validationRules>
         <fullName>Check_Financial_institution_status</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;)</errorConditionFormula>
+        <errorConditionFormula>AND(OR(ISNEW(),ISCHANGED(Financial_Institution__c)), ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;))</errorConditionFormula>
         <errorDisplayField>Financial_Institution__c</errorDisplayField>
         <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
     </validationRules>
@@ -2395,7 +2412,7 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
         <fullName>SARA_Security_must_be_linked_to_HO</fullName>
         <active>true</active>
         <description>check that the financial security is linked to the HO account of the agent (except for cross border guarantees).</description>
-        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)))</errorConditionFormula>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
         <errorMessage>The financial security must be linked to the HO/AO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
     </validationRules>
@@ -2443,7 +2460,8 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;TAANZ Bonding Scheme&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
-NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
+NOT( ISPICKVAL( Security_Type__c , &quot;Financial Guarantee&quot;) ),
+NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>

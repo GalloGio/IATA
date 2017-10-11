@@ -135,6 +135,26 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_AE_fromOnlineForm__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was created on the portal.</description>
+        <externalId>false</externalId>
+        <label>ANG_AE_fromOnlineForm</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_contactFromAccount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if the contact was not created on the portal (originated on the account).</description>
+        <externalId>false</externalId>
+        <label>ANG_contactFromAccount</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Accredited_employer_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -350,6 +370,10 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -491,7 +515,7 @@
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA code</label>
-        <length>8</length>
+        <length>11</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -521,6 +545,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoicing_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Invoicing Contact</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Job_title__c</fullName>
@@ -929,6 +962,10 @@
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>CATA</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -988,6 +1025,10 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1061,6 +1102,10 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1147,6 +1192,10 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1229,6 +1278,10 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1315,6 +1368,10 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1397,6 +1454,10 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1484,6 +1545,10 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1519,6 +1584,10 @@
             <picklist>Type_Of_Certificate__c</picklist>
             <values>
                 <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CATA</fullName>
                 <default>false</default>
             </values>
             <values>

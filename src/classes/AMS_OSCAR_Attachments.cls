@@ -4,6 +4,8 @@ global class AMS_OSCAR_Attachments {
     private Case cse;
 
     public Boolean isAdminUser {get; set;}
+    public Boolean isReadOnly {get; set;}
+    public Boolean isEmbedded {get; set;}
 
     public Id caseId{
         get{
@@ -66,6 +68,9 @@ global class AMS_OSCAR_Attachments {
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+
+        isReadOnly = ApexPages.currentPage().getParameters().get('readOnly') == 'true' ? true : false;
+        isEmbedded = ApexPages.currentPage().getParameters().get('isEmbedded') == 'true' ? true : false;
     }
 
     /*
@@ -89,6 +94,12 @@ global class AMS_OSCAR_Attachments {
     */
     @RemoteAction
     global static string getExpiringLink(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+
+    webService static string getExpiringLinkWS(string fileName ) {
         Integer secondsValid = 300;
         String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
         return link;
@@ -220,12 +231,19 @@ global class AMS_OSCAR_Attachments {
     @RemoteAction
     global static list<FileDef> getAllExpiringLink(String objectId) {
         list<FileDef> listFileDef = new list<FileDef>();
-        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId, true)) {
             FileDef filedef = new FileDef();
             filedef.name = attach.name;
-            filedef.url = getExpiringLink(attach.fullName);
-            filedef.data = '';
-            listFileDef.add(filedef);
+            if (attach.fileType == 'Amazon') {
+                filedef.url = getExpiringLink(attach.fullName);
+                filedef.data='';
+                listFileDef.add(filedef);
+            }
+            if (attach.fileType == 'Salesforce') {
+                filedef.url='';
+                filedef.data= EncodingUtil.base64Encode(attach.fileAttachment.Body);
+                listFileDef.add(filedef);
+            }
         }
         return listFileDef;
     }

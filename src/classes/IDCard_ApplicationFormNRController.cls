@@ -166,7 +166,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
             idCardTemp = [Select i.Photo__c, i.ID_Card_Application__r.Displayed_Name__c From ID_Card__c i where i.Related_Contact__c = :associatedContact.Id order by i.Valid_To_Date__c desc];
             //System.debug('** idCardTemp'+idCardTemp);
             if (idCardTemp.size() > 0) {
-              PhotoFilename = idCardTemp[0].Photo__c;
+              //PhotoFilename = idCardTemp[0].Photo__c; 14-12-2016
+              PhotoFilename = IDCardUtil.NewGuid();
               hiddenFilename = idCardTemp[0].Photo__c;
               if (!IsCroppingToolDisplayed) { IsViewerDisplayed = true; }
             } else {
@@ -178,7 +179,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
           } else {
             if (IDCardApplicationNR.Photo__c != null) {
-              PhotoFilename = IDCardApplicationNR.Photo__c;
+              //PhotoFilename = IDCardApplicationNR.Photo__c;
+              PhotoFilename = IDCardUtil.NewGuid();
               hiddenFilename = IDCardApplicationNR.Photo__c;
               IsCroppingToolDisplayed = false;
               IsViewerDisplayed = true;

@@ -45,11 +45,13 @@ global class AmsIataCodeGenerator{
         String[] returnedValues =new String[]{'0',''};
         StringBuilder sb = new StringBuilder();
         Set<String> allowedProgramCodes = new Set<String>();
+        allowedProgramCodes.add('A');
         allowedProgramCodes.add('C');
         allowedProgramCodes.add('P');
         allowedProgramCodes.add('R');
         allowedProgramCodes.add('Q');
         allowedProgramCodes.add('I');
+        allowedProgramCodes.add('K');
         allowedProgramCodes.add('T');
         allowedProgramCodes.add('M');
         allowedProgramCodes.add('G');
@@ -63,19 +65,39 @@ global class AmsIataCodeGenerator{
         longCodePrograms.add('C-Cargo Agent');
         longCodePrograms.add('R-Cargo Agent');
         longCodePrograms.add('Q-Cargo Agent');
-        longCodePrograms.add('I-Cargo Agent');
+        //longCodePrograms.add('I-Cargo Agent'); -- This has been removed to be handled differently using importAgentsCodePrograms
         longCodePrograms.add('G-Cargo Agent');
         
+        Set<String> importAgentsCodePrograms = new Set<String>(); // new map to handle import agents
+        importAgentsCodePrograms.add('I-Cargo Agent');
+
         Map<String, String> programCategoryMap = constructProgramCategoryMap();
+        Map<String, String> programSectorMap = constructProgramSectorMap();
         
+        
+        Boolean isImportAgentWithLink = false;
         
         //Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');#AMSFTS
         Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
         try
         {
-            //AMS_Agency__c theAgency = [select Id, RecordTypeId, IATACode__c,Country__c,CASS_Number__c,  Iso_State__c,N_Code__c,A_Code__c,C_Code__c, Account__r.IATACode__c, Account__c from AMS_Agency__c where Id =:agencyId FOR UPDATE];#AMSFTS
-            Account theAccount = [select Id, Sector__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
-            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
+
+            Account theAccount = [select Id, Link_agent_code__c, Sector__c, Category__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
+            
+            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
+            
+            if(theAccreditation.SAAM_Case__r.OSCAR__r.STEP6__c != AMS_Utils.PASSED && !(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.MSO.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.GSA.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.AHA.1.0')){
+                returnedValues[0] = '2';
+                returnedValues[1] = 'IATA Code Generation is only allowed after Sanity Check step be passed.';
+                return returnedValues;
+            }
+
+            isImportAgentWithLink = theAccreditation.Link_agent_name__c != null && importAgentsCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) ? true : false;
+
+            System.debug('DNG: theAccount is ' + theAccount);
+            System.debug('DNG: theAccreditation is ' + theAccreditation);
+            System.debug('DNG: isImportAgentWithLink flag set to ' + isImportAgentWithLink);
+
             if(longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.CASS_Number__c == null)
             {
                 returnedValues[0] = '2';
@@ -91,7 +113,7 @@ global class AmsIataCodeGenerator{
             if(!allowedProgramCodes.contains(theAccreditation.Location_Class__c))
             {
                 returnedValues[0]='2';
-                returnedValues[1]='IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.';
+                returnedValues[1]='IATA Code Generation is only allowed for A, C, D, I, K, P, Q, R, T, M, G, X and P Location Classes.';
                 return returnedValues;
             }
             
@@ -111,6 +133,7 @@ global class AmsIataCodeGenerator{
                 theAccreditation.A_Code__c = theAccreditation.IATACode__c.subString(2, 3);
                 theAccreditation.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 checkDigitCreation(theAccreditation, theAccount, false);
+                theAccount.Site = theAccreditation.IATACode__c;
                 theAccreditation.IATACode__c = theAccreditation.IATACode__c+theAccreditation.Chk_Dgt__c;
                 
                 theAccount.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;
@@ -121,13 +144,27 @@ global class AmsIataCodeGenerator{
                 theAccount.IATACode__c = theAccreditation.IATACode__c;
                 
                 theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
                     //hammer: new requirement has same location class mapping to different account categories...
-                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
                         theAccount.Category__c = 'GSSA Cargo';
-                    else
+                        theAccount.Sector__c = 'Cargo Agent'; // AMS Enhancements AMSU-24
+                    }
+                    else if (theAccount.Location_Class__c == 'G') { // AMS Enhancements AMSU-24                        
+                        if (theAccount.CASS_Number__c != null) {
+                            theAccount.Category__c = 'GSSA Cargo';
+                            theAccount.Sector__c = 'Cargo Agent';
+                        } else {
+                            theAccount.Category__c = 'GSA General Sales Agent';
+                            theAccount.Sector__c = 'Travel Agent';
+                        }
+                    }
+                    else {
                         theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                        theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                        
+                    }
                 }
                 else
                 {
@@ -138,7 +175,12 @@ global class AmsIataCodeGenerator{
                 }
                 
                 if(!isIATACodeGeneratedUnique(theAccreditation.IATACode__c)){
-                    returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
+
+                    if(isImportAgentWithLink)
+                        returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                    else
+                        returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
+
                     returnedValues[0] = '2';
                     return returnedValues;
                 }
@@ -242,86 +284,121 @@ global class AmsIataCodeGenerator{
                         System.debug('**** prefix: '+range.Prefix__c);
                         System.debug('**** area c: '+range.Area_Code__c);
                         System.debug('**** min -1: '+string.valueof(range.Min_Range__c).left(1));
-                        //String infLimit = resizeNumericString(range.Prefix__c+'',2)+''+range.Area_Code__c+''+string.valueof(range.Min_Range__c).left(1);
-                        String infLimit = resizeNumericString(range.Prefix__c+'',2)+''+range.Area_Code__c;
-                        System.debug('**** [IATA CODE GENerator] Create infLimit  '+infLimit+' based on range  '+range.Prefix__c+''+range.Area_Code__c+''+string.valueof(range.Min_Range__c).left(1));
-                        Integer minRange = Integer.valueOf(String.valueOf(range.Min_Range__c).left(1));
-                        Integer maxRange = Integer.valueOf(String.valueOf(range.Max_Range__c).left(1));
-                        
-                        System.debug('****************** min: '+minRange);
-                        System.debug('****************** max: '+maxRange);
-                        
-                        List<String> rangesToSearch = new List<String>();
-                        if(range.Min_Range__c < 1000)
-                        {
-                            rangesToSearch.add(infLimit+'0');
-                        }
-                        
-                        if(range.Max_Range__c >= 1000)
-                        {
-                            for(integer i = (range.Min_Range__c < 1000? 1 : minRange); i<=maxRange; i++)
+
+
+                        Integer rangeValueToUse = -1;
+
+                        if(!isImportAgentWithLink){
+
+                            String infLimit = resizeNumericString(range.Prefix__c+'',2)+''+range.Area_Code__c;
+                            System.debug('**** [IATA CODE GENerator] Create infLimit  '+infLimit+' based on range  '+range.Prefix__c+''+range.Area_Code__c+''+string.valueof(range.Min_Range__c).left(1));
+                            Integer minRange = Integer.valueOf(String.valueOf(range.Min_Range__c).left(1));
+                            Integer maxRange = Integer.valueOf(String.valueOf(range.Max_Range__c).left(1));
+                            
+                            System.debug('****************** min: '+minRange);
+                            System.debug('****************** max: '+maxRange);
+                            
+                            List<String> rangesToSearch = new List<String>();
+                            if(range.Min_Range__c < 1000)
                             {
-                                rangesToSearch.add(infLimit+String.valueOf(i));
-                            }
-                        }
-                        
-                        String accountQuery;
-                        String accreditationFormQuery;
-                        if(rangesToSearch.size() == 1)
-                        {
-                            accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
-                            accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
-                        }
-                        else if(rangesToSearch.size() > 1)
-                        {
-                            String queryPart1 = 'select IATACode__c from ';
-                            String queryPart2 = ' where (';
-                            for(String rangeToSearch : rangesToSearch)
-                            {
-                                queryPart2 = queryPart2 + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                rangesToSearch.add(infLimit+'0');
                             }
                             
-                            queryPart2 = queryPart2.subString(0, queryPart2.length()-4);
-                            queryPart2 = queryPart2 + ') group by IATACode__c order by IATACode__c';
+                            if(range.Max_Range__c >= 1000)
+                            {
+                                for(integer i = (range.Min_Range__c < 1000? 1 : minRange); i<=maxRange; i++)
+                                {
+                                    rangesToSearch.add(infLimit+String.valueOf(i));
+                                }
+                            }
                             
-                            accountQuery = queryPart1 + 'Account' + queryPart2;
-                            accreditationFormQuery = queryPart1 + 'AMS_Pax_Accreditation_Form__c' + queryPart2;
+                            String accountQuery;
+                            String accreditationFormQuery;
+                            if(rangesToSearch.size() == 1)
+                            {
+                                accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' '+
+                                                'and (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') '+
+                                                'group by IATACode__c order by IATACode__c';
+                                accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
+                            }
+                            else if(rangesToSearch.size() > 1)
+                            {
+                                String queryPart1 = 'select IATACode__c from ';
+                                String queryPart2Account = ' where (';
+                                String queryPart2PAX = ' where (';
+                                for(String rangeToSearch : rangesToSearch)
+                                {
+                                    queryPart2Account = queryPart2Account + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                    queryPart2PAX = queryPart2PAX + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                }
+                                
+                                queryPart2Account = queryPart2Account.subString(0, queryPart2Account.length()-4);
+                                queryPart2Account = queryPart2Account + '  )  ' + 
+                                        'and (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') '+
+                                        'group by IATACode__c order by IATACode__c';
+                                
+                                queryPart2PAX = queryPart2PAX.subString(0, queryPart2PAX.length()-4);
+                                queryPart2PAX = queryPart2PAX + '  ) and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
+
+                                accountQuery = queryPart1 + 'Account' + queryPart2Account;
+                                accreditationFormQuery = queryPart1 + 'AMS_Pax_Accreditation_Form__c' + queryPart2PAX;
+                            }
+                            
+                            System.debug('*********************** Account query: '+accountQuery);
+                            System.debug('*********************** Accreditation form query: '+accreditationFormQuery);
+                            
+                            List<AggregateResult> rangeAgenciesBeforeFilterAccount = Database.query(accountQuery);
+                            List<AggregateResult> rangeAgenciesBeforeFilterAccreditationForm = Database.query(accreditationFormQuery);
+                            
+                            Set<Integer> usedValuesInRange = new Set<Integer>();
+
+                            if(rangeAgenciesBeforeFilterAccount != null){
+                                for(AggregateResult ag : rangeAgenciesBeforeFilterAccount){
+                                    String iatacode = (String) ag.get('IATACode__c');
+                                    try{
+                                        usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                    }catch(TypeException te){
+                                        //In case the IATA code found is not numeric I don't need to do anything else because this class will assign only numeric IATA codes
+                                    }catch(Exception e){
+                                        returnedValues[0] = '77';
+                                        returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
+                                        return returnedValues;
+                                    }
+                                }
+                            }
+                            system.debug('Used values in the defined range (accounts): '+ usedValuesInRange.size());
+
+                            if(rangeAgenciesBeforeFilterAccreditationForm != null){
+                                for(AggregateResult ag : rangeAgenciesBeforeFilterAccreditationForm){
+                                    String iatacode = (String) ag.get('IATACode__c');
+                                    try{
+                                        usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                    }catch(TypeException te){
+                                        //In case the IATA code found is not numeric I don't need to do anything else because this class will assign only numeric IATA codes
+                                    }catch(Exception e){
+                                        returnedValues[0] = '77';
+                                        returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
+                                        return returnedValues;
+                                    }
+                                }
+                            }
+                            system.debug('Used values in the defined range (accounts + accreditation forms): '+ usedValuesInRange.size());
+
+                            Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
+                            Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
+
+                            System.debug('Min range ---> ' + minRangeInt);
+                            System.debug('Max range ---> ' + maxRangeInt);
+
+                            List<Integer> orderedSlotsOccupied = new List<Integer>(usedValuesInRange);
+                            orderedSlotsOccupied.sort();
+
+                            rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, orderedSlotsOccupied);
+
                         }
-                        
-                        System.debug('*********************** Account query: '+accountQuery);
-                        System.debug('*********************** Accreditation form query: '+accreditationFormQuery);
-                        
-                        List<AggregateResult> rangeAgenciesBeforeFilterAccount = Database.query(accountQuery);
-                        List<AggregateResult> rangeAgenciesBeforeFilterAccreditationForm = Database.query(accreditationFormQuery);
-                        
-                        Set<Integer> usedValuesInRange = new Set<Integer>();
-
-                        if(rangeAgenciesBeforeFilterAccount != null){
-	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccount){
-	                            String iatacode = (String) ag.get('IATACode__c');
-	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
-	                        }
+                        else{
+                            rangeValueToUse = 1; // dummy value just to skipp next validations
                         }
-                        system.debug('Used values in the defined range (accounts): '+ usedValuesInRange.size());
-
-                        if(rangeAgenciesBeforeFilterAccreditationForm != null){
-	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccreditationForm){
-	                            String iatacode = (String) ag.get('IATACode__c');
-	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
-	                        }
-                        }
-                        system.debug('Used values in the defined range (accounts + accreditation forms): '+ usedValuesInRange.size());
-
-                        Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
-                        Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
-
-                        System.debug('Min range ---> ' + minRangeInt);
-                        System.debug('Max range ---> ' + maxRangeInt);
-
-						List<Integer> orderedSlotsOccupied = new List<Integer>(usedValuesInRange);
-						orderedSlotsOccupied.sort();
-
-                        Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, orderedSlotsOccupied);
 
                         if(rangeValueToUse == -1){
                             // No availability within the code ranges: IATA Code can't be created for the current Agency configuration.
@@ -333,30 +410,50 @@ global class AmsIataCodeGenerator{
 
                             theAccreditation.C_Code__c = resizeNumericString(String.valueOf(range.Prefix__c), 2);
                             theAccreditation.A_Code__c = String.valueOf(range.Area_Code__c);
-                            theAccreditation.N_Code__c = resizeNumericString(String.valueOf(rangeValueToUse), 4);
+                            theAccreditation.N_Code__c = isImportAgentWithLink ? theAccreditation.Link_agent_name__r.IATACode__c.subString(3, 7) : resizeNumericString(String.valueOf(rangeValueToUse), 4);
 
                             String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
 
                             if(iatacodeToValidate == null){
-                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
+                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class "' + theAccreditation.Location_Class__c + '", sector "' + theAccount.Sector__c + '" and category "' + theAccount.Category__c + '" are correct';
                                 returnedValues[0] = '4';
                                 return returnedValues;
                             }
 
                             if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
-                                returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
+                                
+                                if(isImportAgentWithLink)
+                                    returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                                else
+                                    returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
+                                
+
                                 returnedValues[0] = '2';
                                 return returnedValues;
                             }
 
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
+                            if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                             theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {
-                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
                                     theAccount.Category__c = 'GSSA Cargo';
-                                else
+                                    theAccount.Sector__c = 'Cargo Agent'; // AMS Enhancements AMSU-24
+                                }
+                                else if (theAccount.Location_Class__c == 'G') { // AMS Enhancements AMSU-24                        
+                                    if (theAccount.CASS_Number__c != null) {
+                                        theAccount.Category__c = 'GSSA Cargo';
+                                        theAccount.Sector__c = 'Cargo Agent';
+                                    } else {
+                                        theAccount.Category__c = 'GSA General Sales Agent';
+                                        theAccount.Sector__c = 'Travel Agent';
+                                    }
+                                }
+                                else {
                                     theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                                    theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                                    
+                                }
                             }
                             else
                             {
@@ -419,7 +516,8 @@ global class AmsIataCodeGenerator{
         }
         catch(Exception e)
         {
-            sb.add('*************************** Failure while processing the code '+e);
+            sb.add('*************************** Failure while processing the code '+e.getStackTraceString());
+
             sendLogsToUser(sb.getStringValue(),accountId );
         }
         return returnedValues ;
@@ -457,7 +555,7 @@ global class AmsIataCodeGenerator{
     Compare 2 codes. 
     @Return return the numeric value of code1 - code 2
     */
-    private static integer compare2Codes(String code1, String code2){
+    @TestVisible private static integer compare2Codes(String code1, String code2){
         String c1 = code1.replaceAll('[^0-9]', '');
         String c2 = code2.replaceAll('[^0-9]', '');
         return integer.valueof(c1)-integer.valueof(c2);
@@ -607,8 +705,14 @@ global class AmsIataCodeGenerator{
         Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
         return pcMap;
     }
+    
+    private static Map<String, String> constructProgramSectorMap()
+    {
+        Map<String,String> psMap = new Map<String,String>{'A' => 'Travel Agent', 'C' => 'Cargo Agent', 'D' => 'Travel Agent', 'I'=> 'Cargo Agent', 'K' => 'Travel Agent', 'M' => 'Travel Agent', 'P' => 'Travel Agent', 'Q' => 'Cargo Agent', 'R' => 'Cargo Agent', 'T' => 'Travel Agent', 'X' => 'Travel Agent'};
+        return psMap;
+    }
 
     private static boolean isIATACodeGeneratedUnique(String iataCode){
-        return [SELECT ID from Account where IATACode__c =:iataCode LIMIT 1].isEmpty() && [SELECT ID from AMS_Pax_Accreditation_Form__c where IATACode__c =:iataCode LIMIT 1].isEmpty();
+        return [SELECT ID from Account where IATACode__c =:iataCode LIMIT 1].isEmpty() && [SELECT ID from AMS_Pax_Accreditation_Form__c where IATACode__c =:iataCode and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c like 'P%') LIMIT 1].isEmpty();
     }
 }

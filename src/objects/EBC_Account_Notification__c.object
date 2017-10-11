@@ -390,18 +390,10 @@ It is the version of the username seen by the end user.</description>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>Username__c</columns>
         <columns>Email__c</columns>
         <columns>Primary_Contact_Name__c</columns>
-        <columns>EBC_Rate_Plan_Name__c</columns>
-        <columns>Subscription_End_Date__c</columns>
         <columns>Email_Balance__c</columns>
-        <columns>Number_of_Campaigns_Last_Month__c</columns>
-        <columns>Number_of_Email_Recipients_Last_Month__c</columns>
         <columns>Notification_Date__c</columns>
-        <columns>Create_New_Campaign_URL__c</columns>
-        <columns>Manage_My_Account_URL__c</columns>
         <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
@@ -410,19 +402,15 @@ It is the version of the username seen by the end user.</description>
     <listViews>
         <fullName>Monthly_Status</fullName>
         <columns>NAME</columns>
-        <columns>Billing_Account__c</columns>
         <columns>Username__c</columns>
-        <columns>Email__c</columns>
         <columns>Primary_Contact_Name__c</columns>
-        <columns>EBC_Rate_Plan_Name__c</columns>
-        <columns>Subscription_End_Date__c</columns>
-        <columns>Email_Balance__c</columns>
-        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>EBC_Account_Status__c</columns>
         <columns>Number_of_Email_Recipients_Last_Month__c</columns>
+        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>Email_Balance__c</columns>
+        <columns>EBC_Subscription_Type__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
         <columns>Notification_Date__c</columns>
-        <columns>Create_New_Campaign_URL__c</columns>
-        <columns>Manage_My_Account_URL__c</columns>
-        <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Notification_Type__c</field>

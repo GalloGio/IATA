@@ -1,5 +1,5 @@
 <apex:page controller="vfIECEBC_ResourceList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
-	<apex:composition template="IECEBC_Layout">
+    <apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
             <title>eBroadcast Manage Resources</title>
@@ -75,9 +75,9 @@
                                 </li>
                             </ul>
                         </footer>
-            		</section>
+                    </section>
                    </apex:form>
-            	</div>
+                </div>
             </div>
             <apex:form rendered="{!MessageFlag}">
                 <div class="modal-container" id="js-modal">
@@ -111,7 +111,7 @@
             <!-- Start of Page Content -->
             <main class="main-content manage-resources">
                 <div class="inner-wrapper">
-           	      <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">resources</span></h1>
+                  <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">resources</span></h1>
                   <div class="tab-container">
                      <ul class="nav tabs"> 
                        <li><a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates</a></li>
@@ -170,6 +170,29 @@
                             jQuery('body').css('cursor', 'auto');
                         }
                         
+                        $ = jQuery;
+                        var body = $('body'),
+                            pageFooter = $('.page-footer');
+                        
+                        var bodyHeight,
+                            footerHeight,
+                            appHeight;
+                        
+                        var stickyFooter = function() {
+                            pageFooter.attr('data-is-sticky', 'false');
+                            bodyHeight = body.height();
+                            footerHeight = pageFooter.outerHeight();
+                            appHeight = $('.app-container').outerHeight();
+                            // if ((bodyHeight - footerHeight) > appHeight) {
+                            if (bodyHeight > appHeight) {
+                                pageFooter.attr('data-is-sticky', 'true');
+                            } else {
+                                pageFooter.attr('data-is-sticky', 'false');
+                            }
+                        };
+                        
+                        stickyFooter();
+                        
                         </script>
                         <div class="gage-container">
                             <div class="clearfix">
@@ -198,13 +221,13 @@
                                         <apex:outputText rendered="{!NOT(loadmoreimage)}" >
                                             <script type="text/javascript">
                                                 $ = jQuery;
-                                        		$('#actionupload').hide();
+                                                $('#actionupload').hide();
                                             </script>
                                         </apex:outputText>
                                         <apex:outputText rendered="{!loadmoreimage}" >
                                             <script type="text/javascript">
                                                 $ = jQuery;
-                                        		$('#actionupload').show();
+                                                $('#actionupload').show();
                                                 $('#actionupload').off("click");
                                                 $('.js-open-modal').on('click', function(event) {
                                                 if (!$(this).hasClass('select')) {
@@ -235,14 +258,14 @@
                                             <a href="{!i.Image_URL__c}" onclick="window.open(this.href); return false;">{!i.Name}</a>
                                             <!--
                                             <apex:outputText rendered="{!i.eBroadcast_Campaigns__r.size > 0}">
-	                                            <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                                <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
                                             </apex:outputText>
                                             <apex:outputPanel layout="block" rendered="{!i.eBroadcast_Campaigns__r.size > 0}" styleClass="tooltip-container">
                                                 <div class="tooltip-description">
                                                     <p>You cannot edit this list as it is used in a campaign.</p>
                                                 </div>
                                             </apex:outputPanel>
-											-->
+                                            -->
                                         </td>
                                         <td class="type">
                                             {!i.Image_Type__c}
@@ -257,7 +280,7 @@
                                         </td>
                                         
                                         <td class="actions">                                     
-                                    		<a href="#" data-target-item-id="{!i.Id}" name="item-action"><i class="fa fa-trash fa-4" aria-hidden="true"></i></a>
+                                            <a href="#" data-target-item-id="{!i.Id}" name="item-action"><i class="fa fa-trash fa-4" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                 </apex:repeat>

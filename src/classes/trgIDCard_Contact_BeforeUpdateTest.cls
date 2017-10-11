@@ -31,11 +31,17 @@ public class trgIDCard_Contact_BeforeUpdateTest{
     
     public static TestMethod void trgIDCard_Contact_BeforeUpdate() {    
         
-        List<User> thisUser = [select UserName, Profile.Name from User where Profile.Name != 'System administrator' And IsActive = true  limit 1];
-        System.runAs ( thisUser[0] ) {
+        //List<User> thisUser = [select UserName, Profile.Name from User where Profile.Name != 'System administrator' And IsActive = true  limit 1];
+        User testUser = IECTestUtil.createSampleStandardUser();
+
+        System.runAs ( testUser ) {
              testData = new IDCardTestData();
         
             List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
+
+            ID idcaRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c').get('Standard') ;
+            testData.IDCards_IDCardApplications[1].RecordTypeId = idcaRT;
+            testData.IDCards_IDCardApplications[3].RecordTypeId = idcaRT;
             
             idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);        
             idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);

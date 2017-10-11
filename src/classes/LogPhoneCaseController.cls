@@ -8,18 +8,6 @@ public with sharing class LogPhoneCaseController {
 	public Task newtask {get; set;}
 	public Boolean isNewTaskRequested {get; set;}
 	public String strSelectedRType {get; set;}
-	public List<SelectOption> lstRecordTypes {
-		public get {
-            List<SelectOption> options = new List<SelectOption>();
-            options.add(new SelectOption('','--None--'));
-            
-            for( String s : mapCaseRTNamePerUserRole.values()) {
-                options.add(new SelectOption(s, s));
-            }
-            
-            return options;
-        } private set;
-	}
 	
 	private map<String, String> mapCaseRTNamePerUserRole = new map<String, String>{
 				'MAD Hub' => 'Cases - Europe',
@@ -140,4 +128,22 @@ public with sharing class LogPhoneCaseController {
         	return null;        	
         }
     }
+    
+    public List<SelectOption> getCaseLanguageOptions(){
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Case_Language__c.getDescribe().getPicklistValues()) {
+            options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+        }
+        return options;
+     }
+     
+     public List<SelectOption> getlstRecordTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for( String s : mapCaseRTNamePerUserRole.values()) {
+            options.add(new SelectOption(s, s));
+        }
+        return options;
+	}
 }

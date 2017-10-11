@@ -2,7 +2,7 @@
 
     <html>
  
-    <c:ISSP_Header ></c:ISSP_Header> 
+    <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header> 
     
     <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/dt/jq-2.2.3,dt-1.10.12,r-2.1.0/datatables.min.css"/>-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
@@ -227,7 +227,7 @@
     </script>
     <body>
         <div class="container">
-            <c:ISSP_CustomNavigation />
+            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
              
 
 
@@ -258,7 +258,7 @@
                         <div class="panel-body" id="body-results">
                             
 
-                                 <apex:outputpanel id="opp_results">
+                                 <apex:outputpanel id="opp_results" rendered="{!communityName!='CNS'}">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
@@ -350,13 +350,21 @@
                                         <div class="panel-body" id="body-filter">
 
                                             <apex:pageblock mode="edit" id="Filter">
+                                            <div>
+                                            <apex:outputPanel rendered="{!communityName=='CNS'}">
+                                                <apex:outputLabel value="{!$Label.ISSP_CNS_Documents}" escape="false"/>
+                                                <br /><br />
+                                            </apex:outputPanel>
+                                            </div>
                                                  <div id="contactUs">
-                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
+                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                                         Contact Us
                                                     </a>
+                                                    <apex:outputPanel rendered="{!communityName!='CNS'}">
                                                     <br /><br />
                                                     Located in the United States?<br />
                                                     Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                                                    </apex:outputPanel>
                                                     <p />
 
                                                 </div>
@@ -371,7 +379,7 @@
                 </div><!-- end row-->
 
             </apex:form>
-            <c:ISSP_CustomFooter />
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
        
         </div><!-- end container-->
     </body>

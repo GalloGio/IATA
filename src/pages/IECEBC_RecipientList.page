@@ -266,21 +266,23 @@
             </main>
             
             
-            <apex:form >
-                <Center>
-                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
-                    Page
-                    <div class="custom-user-input select">
-                        <i class="icon angle-down"></i>
-                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
-                            <apex:selectOptions value="{!pageOptions}"/>
-                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
-                        </apex:selectList> 
-                    </div>
-                    of {!maxPage}
-                </apex:outputPanel>
-                </Center>
-            </apex:form>
+            <div class="pagination">
+                <div class="page-number">
+                    <apex:form >
+                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                            Page
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!pageOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                                </apex:selectList> 
+                            </div>
+                            of {!maxPage}
+                        </apex:outputPanel>
+                    </apex:form>
+                </div>
+            </div>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>

@@ -8,6 +8,6 @@
         <iframe name="iframeImageViewer" src="{!$Label.IDCard_CroppingTool}DisplayImage.aspx?filename={!ID_Card__c.Photo__c}&sid={!$API.Session_ID}" frameborder="0" width="100%" height="280px">iFrames not supported</iframe>
         -->
 
-        <img src="{!authorizationLink}" style="height: 150px;" />
+        <img src="{!authorizationLink}&rnd={!NOW()}" style="height: 150px;" />
     </apex:outputPanel>
 </apex:page>

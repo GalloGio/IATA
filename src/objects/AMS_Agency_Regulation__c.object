@@ -51,7 +51,7 @@
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -117,7 +117,7 @@
     <fields>
         <fullName>Handling_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(TEXT(Account__r.Is_your_firm_handling_Dangerous_Goods__c) = &apos;Yes&apos;, TRUE, FALSE)</formula>
+        <formula>IF(TEXT(Account__r.Is_your_firm_handling_Dangerous_Goods__c) = &apos;No&apos;, FALSE, TRUE)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Handling Account</label>
         <trackTrending>false</trackTrending>
@@ -131,6 +131,18 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
+        <defaultValue>&quot;No&quot;</defaultValue>
+        <description>Used by AMS 90 days DGR Expiration Reminder</description>
+        <externalId>false</externalId>
+        <label>Is your firm handling Dangerous Goods</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Issued_on__c</fullName>
@@ -155,7 +167,7 @@
         <externalId>false</externalId>
         <label>Last Name</label>
         <length>80</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -239,6 +251,10 @@
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>CATA</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -257,6 +273,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>2 years</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3 years</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>

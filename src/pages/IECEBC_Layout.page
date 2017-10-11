@@ -22,9 +22,6 @@
                 jQuery(document).ready(function(){resetForms()});
             </script>
             <apex:insert name="pageHeadAdditions" />
-            <style type="text/css">
-                main { margin-bottom: 140px; }
-            </style>
         </head>
         <body data-is-modal-open="false" id="page-top">
             <div class="app-container">
@@ -51,15 +48,15 @@
                                         <!-- In Progress -->
                                         <div class="sub-nav tab-container js-tabs">
                                             <ul class="nav tabs">
-                                                <li class="active" data-target="#sub-nav-pane-1">
-                                                    <a href="#">Service Details</a>
-                                                </li>
-                                                <li data-target="#sub-nav-pane-2">
+                                                <li class="active" data-target="#sub-nav-pane-2">
                                                     <a href="#">Manage Services</a>
+                                                </li>
+                                                <li data-target="#sub-nav-pane-1">
+                                                    <a href="#">Service Details</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane is-open" id="sub-nav-pane-1">
+                                                <div class="tab-pane" id="sub-nav-pane-1">
                                                     <div class="title">Service Details</div>
                                                     <table class="table-service-details">
                                                         <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
@@ -98,7 +95,7 @@
                                                     </table>
                                                     <a href="mailto:globaldata@iata.org?subject=eBroadcast upgrade" class="button block dark">Contact Support</a>
                                                 </div>
-                                                <div class="tab-pane" id="sub-nav-pane-2">
+                                                <div class="tab-pane is-open" id="sub-nav-pane-2">
                                                     <div class="title">View</div>
                                                     <ul class="list angle-double-right">
                                                         <li>

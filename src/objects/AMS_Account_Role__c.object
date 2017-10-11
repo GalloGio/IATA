@@ -129,6 +129,32 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot; &quot;</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;)),OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;))),
+
+IF(Percentage__c = 1 ,100,20),2)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Duty__c</fullName>
         <externalId>false</externalId>
         <label>Duty</label>
@@ -624,11 +650,15 @@
         <columns>Termination_Date__c</columns>
         <columns>Active__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Owner_Sequence__c</columns>
+        <columns>Percentage__c</columns>
+        <columns>Legacy_System__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Account__c</field>
             <operation>equals</operation>
-            <value>SENZER INTERNATIONAL TRAVEL</value>
+            <value>FIRST REISEBUERO GUETTLER GMBH &amp; CO. KG</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>
@@ -1078,7 +1108,7 @@
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
         <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;,
-
+Account__r.CNS_Agency__c == false,
 OR(ISBLANK(Account__c), (
 
 AND (

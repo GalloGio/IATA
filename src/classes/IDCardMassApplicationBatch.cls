@@ -160,7 +160,7 @@ global class IDCardMassApplicationBatch implements Schedulable {
                 app.Payment_Currency__c = massApp.Payment_Currency__c;
                 app.Payment_Transaction_Number__c = massApp.Payment_Transaction_Number__c;
                 app.Payment_Date__c = massApp.Payment_Date__c;
-                app.Application_Status__c = massApp.Application_Status__c;
+                app.Application_Status__c = 'Paid';
         }                   
         update singlesApps;
     }

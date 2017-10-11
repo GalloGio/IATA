@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_AMM</fullName>
+        <description>OI Action Plan Reminder- 15 days before due date AMM</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_AMM</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_BJS</fullName>
+        <description>OI Action Plan Reminder- 15 days before due date BJS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_BJS</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_MAD</fullName>
+        <description>OI Action Plan Reminder- 15 days before due date MAD</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_MAD</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_MIA</fullName>
+        <description>OI Action Plan Reminder- 15 days before due date MIA</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_MIA</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_SIN</fullName>
+        <description>OI Action Plan Reminder- 15 days before due date SIN</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_SIN</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
+    </alerts>
+    <alerts>
         <fullName>OI_Action_Plan_Remnder_15_days_before_due_date</fullName>
         <description>OI Action Plan Reminder- 15 days before due date</description>
         <protected>false</protected>
@@ -19,6 +114,101 @@
         <fullName>OI_Action_Plan_Remnder_5_days_before_due_date</fullName>
         <description>OI Action Plan Reminder- 5 days before due date</description>
         <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_AMM</fullName>
+        <description>OI Action Plan Reminder- 5 days before due date AMM</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_AMM</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_BJS</fullName>
+        <description>OI Action Plan Reminder- 5 days before due date BJS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_BJS</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_MAD</fullName>
+        <description>OI Action Plan Reminder- 5 days before due date MAD</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_MAD</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_MIA</fullName>
+        <description>OI Action Plan Reminder- 5 days before due date MIA</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_MIA</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Action_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_SIN</fullName>
+        <description>OI Action Plan Reminder- 5 days before due date SIN</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Quality_Team_SIN</recipient>
+            <type>group</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -59,7 +249,7 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>OI Action Plan Reminder</fullName>
+        <fullName>OI Action Plan Reminder AMM</fullName>
         <active>true</active>
         <criteriaItems>
             <field>OI_Action_Plan__c.Closure_Date__c</field>
@@ -74,14 +264,19 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Closed effective,Closed error,Closed effectiveness pending,Closed not effective</value>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>OI_Action_Plan_Remnder_15_days_before_due_date</name>
+                <name>OI_Action_Plan_Reminder_15_days_before_due_date_AMM</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
@@ -90,7 +285,187 @@
         </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
-                <name>OI_Action_Plan_Remnder_5_days_before_due_date</name>
+                <name>OI_Action_Plan_Remnder_5_days_before_due_date_AMM</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>OI Action Plan Reminder BJS</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Due_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Action_Owner__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Reminder_15_days_before_due_date_BJS</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Remnder_5_days_before_due_date_BJS</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>OI Action Plan Reminder MAD</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Due_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Action_Owner__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Reminder_15_days_before_due_date_MAD</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Remnder_5_days_before_due_date_MAD</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>OI Action Plan Reminder MIA</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Due_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Action_Owner__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Remnder_5_days_before_due_date_MIA</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Reminder_15_days_before_due_date_MIA</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>OI Action Plan Reminder SIN</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Due_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>OI_Action_Plan__c.Action_Owner__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Reminder_15_days_before_due_date_SIN</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_Remnder_5_days_before_due_date_SIN</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>

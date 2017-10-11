@@ -55,6 +55,13 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Bridge__c</fullName>
+        <externalId>false</externalId>
+        <label>Bridge</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Call_TIme__c</fullName>
         <externalId>false</externalId>
         <label>Call Time (Min)</label>
@@ -119,6 +126,33 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100, &quot;Key Event/Task Details Captured&quot;,&quot;Missing: &quot;&amp;IF( LEN( Subject ) &lt; 3,&quot;Quality Subject Description, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(WhoId)=0,&quot;Contact/Lead Reference, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(WhatId)=0,&quot;Account/Opportunity Reference&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN(  Subject  ) &lt; 3, 0,30) + IF( LEN(  WhoId ) = 0, 0,40) + IF( LEN(  WhatId ) = 0, 0,30)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Identifying_Members__c</fullName>
+        <externalId>false</externalId>
+        <label>Identifying Members</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Involved__c</fullName>
         <externalId>false</externalId>
         <label>Involved</label>
@@ -126,9 +160,72 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Issuer__c</fullName>
+        <externalId>false</externalId>
+        <label>Issuer</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Members__c</fullName>
+        <externalId>false</externalId>
+        <label>Members</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Objectives__c</fullName>
+        <externalId>false</externalId>
+        <label>Objectives</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Participants__c</fullName>
+        <externalId>false</externalId>
+        <label>Participants</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Recipient__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipient</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Responses__c</fullName>
+        <externalId>false</externalId>
+        <label>Responses</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Responsible__c</fullName>
         <externalId>false</externalId>
         <label>Responsible</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Result_Summary__c</fullName>
+        <externalId>false</externalId>
+        <label>Result Summary</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sender__c</fullName>
+        <externalId>false</externalId>
+        <label>Sender</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
@@ -150,6 +247,13 @@
         <scale>2</scale>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Title</label>
+        <required>false</required>
+        <type>TextArea</type>
     </fields>
     <listViews>
         <fullName>AllActivities</fullName>
@@ -236,7 +340,6 @@
         <label>Today&apos;s Tasks</label>
     </listViews>
     <searchLayouts>
-        <listViewButtons>Close_Task</listViewButtons>
         <searchResultsAdditionalFields>TASK.SUBJECT</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TASK.CREATED_DATE</searchResultsAdditionalFields>

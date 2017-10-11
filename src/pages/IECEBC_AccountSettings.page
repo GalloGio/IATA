@@ -40,7 +40,7 @@
                                                             <div class="field-group text">
                                                                 <label>
                                                                     <span class="input-label">Default "From Name"</span>
-                                                                    <apex:inputField value="{!preferences.Default_From_Name__c}" styleClass="user-input text" />
+                                                                    <apex:inputField value="{!preferences.Default_From_Name__c}" styleClass="disabled-user-input text" style="width:895px"/>
                                                                 </label>
                                                                 <p class="input-description">When creating campaigns, this name will be displayed by default</p>
                                                             </div>

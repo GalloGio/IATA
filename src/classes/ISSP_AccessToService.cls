@@ -10,6 +10,8 @@ public with sharing class ISSP_AccessToService{
     
     public Boolean isAdmin {get;set;} 
     
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
     
     public list<String> AlphaList {get; set;}

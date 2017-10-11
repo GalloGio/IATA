@@ -10,12 +10,12 @@
         <criteriaItems>
             <field>DPC_Software__c</field>
             <operation>equals</operation>
-            <value>Maestro</value>
+            <value>Maestro,Maestro-D</value>
         </criteriaItems>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Application Change Request (DPC Systems - locked),DPC Service Request</value>
+            <value>DPC Service Request,Application Change Request (DPC Systems - locked)</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -254,6 +254,18 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
+        <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share cases between IFG Team</description>
+        <label>Case Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>CentralBilling</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Central Billing</label>
@@ -372,6 +384,28 @@
         </sharedTo>
         <sharedFrom>
             <group>IDFSACCAADMTeam</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IDFS_ACCA_ADM_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IDFS ACCA ADM Team</label>
+        <sharedTo>
+            <group>IDFSACCAADMTeam</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IDFS_All_users_including_ACCA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IDFS All users including ACCA</label>
+        <sharedTo>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IDFSACCACSTeam</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

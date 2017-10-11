@@ -17,6 +17,11 @@ public with sharing class ISSP_CaseList {
     public boolean apUser {get;set;}
     
     public string soqlOrder {get;set;}
+    //basto1p
+    public Map<String,String> mapFieldsValue {get;set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
     public String sortExpression {
      get { return sortExp; }
@@ -196,10 +201,23 @@ public with sharing class ISSP_CaseList {
                 for(Schema.FieldSetMember f : this.getFields()) {
                     fieldPathSet.add(f.getFieldPath());
                 }
-
+                //basto1p
                 String query = '  Account.Name , Contact.Name   ';
+                Boolean hasStatus = false;
+                
                 for(String fieldPath  : fieldPathSet) {
+
+                    if(fieldPath.trim() == 'Status')
+                    {
+                        hasStatus = true;
+                    }
+
                     query +=  ',' + fieldPath;
+                }
+
+                if(!hasStatus)
+                {
+                    query += ', Status';
                 }
                 
                 string queryString ;
@@ -229,7 +247,25 @@ public with sharing class ISSP_CaseList {
     }
      
     Public List<Case> getCases(){
-        return (List<Case>)setCon.getRecords();
+        system.debug('basto1p - getCases BEGIN');
+        //basto1p
+        List<Case> casesList=new List<Case>();
+        casesList=setCon.getRecords();
+
+        system.debug('basto1p - getCases.casesList='+casesList);
+
+        mapFieldsValue=new Map<String, String>();
+        String statusFieldValMapKey='';
+        for (Case Item : casesList) {
+
+            //Add mapping for Status field
+            statusFieldValMapKey=ISSP_Case.STATUS_FLD_NAME+Item.Status;
+            mapFieldsValue.put(statusFieldValMapKey,ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,Item.Status));
+        }
+        system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
+
+        return casesList;
+        //return (List<Case>)setCon.getRecords();
     }
     
 }

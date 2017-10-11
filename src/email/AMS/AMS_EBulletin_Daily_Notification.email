@@ -1,0 +1,39 @@
+<table width="650" >
+<tr>
+    <th>
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<i>##ISSPLABEL##</i><p />
+</th>
+</tr>
+<tr>
+<td>
+<p>Dear ##USERNAME##, </p>
+
+<p>This is to inform you that occurrences were found based on your selected criteria.</p>
+
+<p>In order to generate a Daily Report containing these events, please click <a href="##URL##">here</a>.</p>
+
+<p>In case you already downloaded a report today, please note that you can select the option “Since last download today” to retrieve only the new events not yet downloaded. You can always generate the full Daily Bulletin by selecting “Full day”. </p>
+
+<p>Please, note that the User Guide can be downloaded from the <strong>AIRS/CAIRS Online Bulletin</strong> service on the on the Portal. </p>
+
+<p>For any further information or to request assistance, please do not hesitate to contact our Customer Service teams <link>www.iata.org/cs</link></p>
+
+<p>IATA Customer Service</p>
+
+<p>
+
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+</a>
+</p>
+
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+</a>
+</p>
+
+
+</tr>
+</td>
+</table>

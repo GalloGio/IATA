@@ -70,14 +70,17 @@ private class Ifap_ReminderBatchTestClass {
             
             List<Contact> conts = new List<Contact>();
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[0].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[1].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[2].id,
                                      Financial_Assessment_Contact__c = true));
@@ -141,6 +144,11 @@ private class Ifap_ReminderBatchTestClass {
               ));
            
             insert cases;
+
+            Case c = [SELECT id, Financial_Review_Type__c FROM Case WHERE Subject = 'Test case Italia' LIMIT 1];
+            c.Financial_Review_Type__c = 'Annual';
+        
+            update c;
             
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 			TransformationHelper.CalculateBusinessHoursAges = false;

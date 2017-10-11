@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_Contact" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
  
      <style>
@@ -10,7 +10,18 @@
      </style>
      
   <div class="container">
-      <c:ISSP_CustomNavigation />
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+      
+          <h4>
+            {!$Label.ISSP_Company_Administration}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contacts}
+            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+            {!$Label.ISSP_Contact_Information}
+            <br/>
+            <small></small>
+          </h4>
+
           <div class="panel panel-primary">
               <div class="panel-heading head_panel_green">
                   <h3 class="panel-title">{!$Label.ISSP_Contact_Information}</h3>
@@ -23,9 +34,9 @@
                         <div class="row">
                             
                             <div class="col-md-12">
-                                <div class="col-lg-2">&nbsp;</div>
+                                <div class="col-lg-3"><apex:commandButton action="{!RelocateContact}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_Relocate_Contact}" id="relocateContact"/></div>
                                 <div class="col-lg-4"><apex:commandButton action="{!AssignIFAPContact}" styleclass="btn_iata_primary btn btn-block" rendered="{!AND(isIATAAgencyAcct, isPortalAdminUser)}" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/></div>
-                                <div class="col-lg-4"><apex:commandButton action="{!ChangePortalStatus}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_ChangeUserPortalStatus}" id="changePortalStatus"/></div>
+                                <div class="col-lg-3"><apex:commandButton action="{!ChangePortalStatus}" styleclass="btn_iata_primary btn btn-block" rendered="{!isPortalAdminUser}" value="{!$Label.ISSP_ChangeUserPortalStatus}" id="changePortalStatus"/></div>
                                 <div class="col-lg-2"><apex:commandButton action="{!edit}" styleclass="btn_iata_primary btn btn-block" rendered="{!AND(isPortalAdminUser, NOT(isEditMode))}" value="{!$Label.ISSP_Edit}" id="edit"/></div>
                             </div>
                         </div>
@@ -49,7 +60,6 @@
                                     <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Contact.fields.Membership_Function__c.Label}" />
                                     <div class="col-lg-7"><apex:outPutField value="{!Contact.Membership_Function__c }"/></div>
                                 </div>
-                                
                                  <div class="row">
                                     <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Contact.fields.Email.Label}" />
                                     <div class="col-lg-7"><apex:outPutField styleclass="col-lg-4" value="{!Contact.Email}"/></div>
@@ -73,12 +83,18 @@
                                 <div class="row">
                                     <apex:outputLabel styleClass="lbl col-md-5" value="{!$ObjectType.Contact.fields.BSP_CASS_Payment_contact__c.Label}" />
                                     <div class="col-md-5"> <apex:outPutField value="{!Contact.BSP_CASS_Payment_contact__c}"/> </div>
-                                 </div>
-                                 
+                                 </div>                                 
                                 <div class="row">
                                     <apex:outputLabel styleClass="lbl col-md-5" value="{!$ObjectType.Contact.fields.Invoicing_Contact__c.Label}" />
                                     <div class="col-md-5"> <apex:outPutField value="{!Contact.Invoicing_Contact__c}"/> </div>
                                  </div>
+
+                               <div class="row">
+                                  <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Contact.fields.Authorized_Signatory__c.Label}"/>
+                                  <div class="col-lg-7">                                    
+                                      <apex:outputField value="{!Contact.Authorized_Signatory__c}"/>
+                                  </div>
+                                </div> 
                                  
                                 <div class="row">
                                     <apex:outputLabel styleClass="lbl col-md-5" value="{!$ObjectType.Contact.fields.Airline_Contact_Type__c.Label}" />
@@ -95,7 +111,7 @@
                             <div class="col-md-5">  <!-- START COL 2 -->
                                 <div class="row">
                                     <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Name.Label}" />
-                                    <div class="col-lg-7"><apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}">{!Contact.Account.Name}</apex:outputLink></div>
+                                    <div class="col-lg-7"><apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!Contact.Account.Name}</apex:outputLink></div>
                                 </div>
                                 
                                  <apex:outputText rendered="{!NOT(isIATAAgencyAcct)}">
@@ -150,16 +166,17 @@
                     <div style="margin-top:10px"/>
                    <apex:pageBlockTable value="{!appsGrantedList}" var="o" styleClass="table table-hover">
                         <apex:column style="text-align: center;" headerClass="ct" >
-                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_Contact?Id={!o.Contact__c}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_Contact?Id={!o.Contact__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Portal_Application__r.Application_icon__c}" style="text-align: center;" headerClass="ct" />
                         <apex:column style="text-align: center;" headerClass="ct" >
                             <apex:facet name="header">
                                 {!$ObjectType.Portal_Applications__c.fields.Name.label}                          
                             </apex:facet>
-                            <apex:outputLink value="/apex/ISSP_PortalService?id={!o.Portal_Application__r.Id}">{!o.Portal_Application__r.ServiceName__c}</apex:outputLink>
+                            <apex:outputLink value="/apex/ISSP_PortalService?id={!o.Portal_Application__r.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!o.Portal_Application__r.ServiceName__c}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Right__c}" style="text-align: center;" headerClass="ct" />
+                        <apex:column value="{!o.ANG_Portal_Service_Role__c}" style="text-align: center;" headerClass="ct" />                      
                       
                    </apex:pageBlockTable>
                   
@@ -186,7 +203,7 @@
                         <thead>
                                 <div class="form-group">
                                     <apex:outputLabel styleClass="lbl col-md-2" value="{!$ObjectType.Account.fields.Name.Label}" />
-                                    <div class="col-md-4"> <apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}">{!Contact.Account.Name}</apex:outputLink> </div>
+                                    <div class="col-md-4"> <apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!Contact.Account.Name}</apex:outputLink> </div>
                                 </div>
                      
                                  <div class="form-group">
@@ -233,6 +250,14 @@
                                   <apex:outputLabel styleClass="lbl col-lg-2" value="{!$ObjectType.Contact.fields.Invoicing_Contact__c.Label}" />
                                   <div class="col-lg-4"> <apex:inPutField value="{!Contact.Invoicing_Contact__c }"/> </div>
                                 </div>
+
+                               <div class="form-group">
+                                  <apex:outputLabel styleClass="lbl col-lg-2" value="{!$ObjectType.Contact.fields.Authorized_Signatory__c.Label}" />
+                                  <div class="col-lg-4">                                                                    
+                                    <apex:inputField value="{!Contact.Authorized_Signatory__c}" rendered="{!IF(userPortalStatus == 'Approved Admin',true,false)}"/>
+                                    <apex:outputField value="{!Contact.Authorized_Signatory__c}" rendered="{!IF(userPortalStatus != 'Approved Admin',true,false)}"/>
+                                  </div>
+                                </div>
                                       
                                 <div class="form-group">
                                   <apex:outputLabel styleClass="lbl col-lg-2" value="{!$ObjectType.Contact.fields.Membership_Function__c.Label}" />
@@ -249,7 +274,7 @@
        <!-- ********** End of Edit Mode ******** -->    
      
           </div><!-- end  div class="panel panel-primary"-->
-      <c:ISSP_CustomFooter />
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
   </div><!-- end container-->  
         </body>
     </html>

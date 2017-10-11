@@ -1,0 +1,72 @@
+<apex:page standardController="Country_Profile__c" extensions="CountryProfileInlineAttachmentsCtrl" showHeader="true" sidebar="true">
+
+<apex:pageBlock id="mainPb">
+	<apex:form >
+	<!-- START UPLOAD FILE SECTION -->
+	<apex:commandButton action="{!showUpload}" value="Upload New File" reRender="mainPb" rendered="{!NOT(showUpload)}"/>
+	<apex:pageBlockSection columns="1" rendered="{!showUpload}" id="uploadPbs">
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="Section:" for="sectionInput"/>
+			<apex:selectList value="{!fileSection}" multiselect="false" size="1" id="sectionInput">
+				<apex:selectOptions value="{!sections}"/>
+			</apex:selectList>
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="Description:" for="descInput"/>
+			<apex:inputText value="{!fileDescription}" id="descInput"/>
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="File:" for="fileInput"/>
+			<apex:inputFile value="{!file}" fileName="{!fileName}" id="fileInput"/>
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem >
+			&nbsp;
+			<apex:commandButton action="{!uploadFile}" value="Upload"/>
+		</apex:pageBlockSectionItem>
+	</apex:pageBlockSection>
+	
+	<!-- END UPLOAD FILE SECTION -->
+
+	<!-- START FILE TABLE SECTION -->
+	<apex:pageBlockTable value="{!attWrapperList}" var="att" id="fileTable" >
+
+		<apex:column style="width:15%">
+			<apex:facet name="header">Actions</apex:facet>
+			<apex:outputLink value="/{!att.recordId}" target="_blank">Open</apex:outputLink>
+			&nbsp;|&nbsp;
+			<apex:outputLink value="/servlet/servlet.FileDownload?file={!att.recordId}" target="_blank">View / Download</apex:outputLink>
+			&nbsp;|&nbsp;
+			<apex:commandLink value="Hide" rendered="{!AND(att.Visible,att.namingConventionFulfilled)}" action="{!disableAtt}">
+				<apex:param name="toggleAttId" value="{!att.recordId}" assignTo="{!toggleAttId}"/>
+			</apex:commandLink>
+			<apex:commandLink value="Show" rendered="{!AND(NOT(att.Visible),att.namingConventionFulfilled)}" action="{!enableAtt}">
+				<apex:param name="toggleAttId" value="{!att.recordId}" assignTo="{!toggleAttId}"/>
+			</apex:commandLink>
+		</apex:column>
+
+		<apex:column style="width:5%">
+			<apex:facet name="header">Visible</apex:facet>
+			<apex:outputText value="{!att.Visible}"/>
+		</apex:column>
+
+		<apex:column style="width:10%">
+			<apex:facet name="header">Section</apex:facet>
+			<apex:outputText value="{!att.Section}"/>
+		</apex:column>
+
+		<apex:column style="width:20%">
+			<apex:facet name="header">Name</apex:facet>
+			<apex:outputText value="{!att.Name}"/>
+		</apex:column>
+                
+		<apex:column style="width:50%">
+			<apex:facet name="header">Description</apex:facet>
+			<apex:outputText value="{!att.Description}"/>
+		</apex:column>
+                
+	</apex:pageBlockTable>
+	<!-- END FILE TABLE SECTION -->
+	</apex:form>
+</apex:pageBlock>
+
+</apex:page>

@@ -331,9 +331,34 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <filters>
             <field>IATA_ISO_Country__c</field>
             <operation>equals</operation>
-            <value>Japan</value>
+            <value>Denmark</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Code_Range__c.IATA_Code</value>
         </filters>
         <label>JG view</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>United_Arab_Emirates</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Area_Code__c</columns>
+        <columns>Min_Range__c</columns>
+        <columns>Max_Range__c</columns>
+        <columns>Area__c</columns>
+        <columns>Country_Code__c</columns>
+        <columns>ProgramCode__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>equals</operation>
+            <value>United Arab Emirates</value>
+        </filters>
+        <label>United Arab Emirates</label>
         <language>en_US</language>
     </listViews>
     <nameField>

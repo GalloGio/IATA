@@ -45,7 +45,7 @@ public class AmazonFile {
             //EM: Need to take into account the user locale: compute offset from GMT
             DateTime now = DateTime.now();
             Long offset = (DateTime.newInstance(now.date(), now.time()).getTime() - DateTime.newInstance(now.dateGmt(), now.timeGmt()).getTime())/(3600*1000);
-            return amazonFile == null? null: this.amazonFile.CreatedDate.addHours(Integer.valueOf(offset));
+            return amazonFile == null? null: this.amazonFile.CreatedDate;
         } catch (Exception e) {
             return null;
         }

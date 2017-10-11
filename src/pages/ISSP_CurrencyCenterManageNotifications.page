@@ -1,0 +1,135 @@
+<apex:page controller="ISSP_CurrencyCenterManageNotifCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<head>
+<script>
+function toggleAllCheckboxes(elem,divid){
+	if(elem.checked){
+		$('#' + divid + ' :checkbox:enabled').prop('checked', true);
+	} else if (!elem.checked){
+		$('#' + divid + ' :checkbox:enabled').prop('checked', false);
+	}
+}
+</script>
+
+<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/manage_notifications.css')}" />
+
+</head>
+
+<body>
+	<div class="container">
+
+		<c:ISSP_CustomNavigation />
+
+		<apex:form >
+			<!-- Header -->
+	        <div class="row">
+				<div class="col-xs-12 service-header">
+					<div class="row">
+						<div class="col-xs-6">
+								<a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+							</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="page-title">{! $Label.CurrencyCenter_Manage_Notifications}</div>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-6">
+							<div class="page-subtitle">{! $Label.CurrencyCenter_Manage_Notifications_Info}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">				
+				<div class="col-xs-12"  id="SubscriptionsList">
+
+					<apex:outputPanel rendered="{!isSaved}">
+						<p class="bg-success" style="padding: 10px;">{!$Label.CurrencyCenter_Preferences_Updated}</p>
+					</apex:outputPanel>
+
+					<apex:outputPanel rendered="{!isError}">
+						<p class="bg-danger" style="padding: 10px;">{!$Label.CurrencyCenter_Preferences_Save_Error}</p>
+					</apex:outputPanel>
+
+					<div class="form-group">
+						<apex:commandButton action="{!SaveSubscriptions}" styleClass="btn btn-save" value="{!$Label.CurrencyCenter_Save_Preferences}" />
+					</div>							
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">{!$Label.CurrencyCenter_Blocked_Funds}</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+							<apex:variable value="{!0}" var="iBF"/>
+							<apex:repeat value="{!regionList}" var="region">
+								<apex:variable var="iBF" value="{!iBF+1}"/>
+								<div class="col-lg-2 col-md-2 col-xs-2" id="colBF{!iBF}">
+								<h4 class="region">
+								{!region}
+								<input type="checkbox" id="toggleAll" value="1" onclick="toggleAllCheckboxes(this,'colBF{!iBF}');"/>
+								</h4>	
+									<apex:repeat value="{!lstCountryProfilesBF}" var="country">
+										<apex:outputPanel rendered="{!IF(country.Region = region,true,false)}">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 country-name">
+											<apex:inputCheckbox value="{!country.isChecked}" />{!country.CountryName}
+										</div>
+										</apex:outputPanel>
+									</apex:repeat>
+								</div>										
+							</apex:repeat>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">{!$Label.CurrencyCenter_Watch_List}</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+							<apex:variable value="{!0}" var="iWL"/>
+							<apex:repeat value="{!regionList}" var="region">
+								<apex:variable var="iWL" value="{!iWL+1}"/>
+								<div class="col-lg-2 col-md-2 col-xs-2" id="colWL{!iWL}">
+								<h4 class="region">
+								{!region}
+								<input type="checkbox" id="toggleAll" value="1" onclick="toggleAllCheckboxes(this,'colWL{!iWL}');"/>
+								</h4>	
+									<apex:repeat value="{!lstCountryProfilesWL}" var="country">
+										<apex:outputPanel rendered="{!IF(country.Region = region,true,false)}">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 country-name">
+											<apex:inputCheckbox value="{!country.isChecked}" />{!country.CountryName}
+										</div>
+										</apex:outputPanel>
+									</apex:repeat>
+								</div>										
+							</apex:repeat>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<apex:commandButton action="{!SaveSubscriptions}" styleClass="btn btn-save" value="{!$Label.CurrencyCenter_Save_Preferences}" />
+					</div>
+				    
+				</div>
+			</div>
+			
+		</apex:form>
+
+		<c:ISSP_CustomFooter />
+
+	</div>
+</body>
+
+</html>
+
+</apex:page>

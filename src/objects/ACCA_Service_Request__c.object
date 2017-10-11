@@ -46829,4 +46829,16 @@
         <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Custom_New</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New ACCA service Request</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/setup/ui/recordtypeselect.jsp?ent=01I20000000TWko&amp;retURL=%2F{!Case.Id}%3FsrPos%3D0%26srKp%3D500&amp;save_new_url=%2Fa1P%2Fe%3FCF00N200000029Qa9%3D{!Case.CaseNumber}%26CF00N200000029Qa9_lkid%3D{!Case.Id}%26retURL%3D%252F{!Case.Id}%253FsrPos%253D0%2526srKp%253D500&amp;00N200000029mF9={!Account.IATACode__c}&amp;00N200000029mF4={!Account.Name}</url>
+    </webLinks>
 </CustomObject>

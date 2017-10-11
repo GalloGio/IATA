@@ -126,7 +126,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 //printerr('idCardTemp.size() = '+idCardTemp.size());
                 // I take the photo from Id Card
                 if(idCardTemp.size() > 0 && idCardTemp[0].Photo__c!=null){
-                    PhotoFilename = idCardTemp[0].Photo__c;
+                    //PhotoFilename = idCardTemp[0].Photo__c; 14-12-2016
+                    PhotoFilename = IDCardUtil.NewGuid();
                     hiddenFilename = idCardTemp[0].Photo__c;
                     IsCroppingToolDisplayed = false;
                     IsViewerDisplayed = true;
@@ -139,7 +140,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 }
             
             }else{
-                PhotoFilename = IDCardApplicationNR.Photo__c;
+                //PhotoFilename = IDCardApplicationNR.Photo__c; 14-12-2016
+                PhotoFilename = IDCardUtil.NewGuid();
                 hiddenFilename = IDCardApplicationNR.Photo__c;
                 IsCroppingToolDisplayed = false;
                 IsViewerDisplayed = true;
@@ -501,9 +503,10 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 //save image name
                 IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
                 upsert IDCardApplicationNR;
-				system.debug('---------------------------- TEST IDCardApplicationNR-> Id = '+IDCardApplicationNR.id+' -  photo = '+IDCardApplicationNR.photo__c);
+        system.debug('---------------------------- TEST IDCardApplicationNR-> Id = '+IDCardApplicationNR.id+' -  photo = '+IDCardApplicationNR.photo__c);
 
-				IDCardUtil.renameIDCardPhotoOfContact(IDCardApplicationNR.ID, IDCardApplicationNR.UIR__c,Userinfo.getSessionId());   // rename photo to its old name
+        // Constantin - 12.12.2016 - removed, no longer needed; the new cropping tool keeps the existing filename (UIR.jpg)
+        //IDCardUtil.renameIDCardPhotoOfContact(IDCardApplicationNR.ID, IDCardApplicationNR.UIR__c,Userinfo.getSessionId());   // rename photo to its old name
 
                 if(isLoggedUser!=true){
                     operationCompleted = true;
@@ -511,7 +514,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                     return null;
                 }
                 if(fromAgencyChange)
-                	return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserManagmentAgencyChange?ImagedSaved='+IDCardApplicationNR.id);
+                  return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserManagmentAgencyChange?ImagedSaved='+IDCardApplicationNR.id);
                 return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserForm?ver='+IDCardApplicationNR.VER_Number__c);
             
         }
@@ -544,7 +547,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
     }
 
   private Promotion__c validatePromotion () {
-  	boolean isError = true;
+    boolean isError = true;
     //////////////////////////
     // validate the promotion               
     // Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
@@ -558,18 +561,18 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
         
          String[] typeOfAppInPromoCode =  listPromotion[0].Type_of_Application__c.split(';');
 
-	      for(String typeOfApp : typeOfAppInPromoCode){
-	      	if(typeOfApp == IDCardApplicationNR.Type_of_Application__c) {
-	      		isError = false;
-	        	break;
-	      	}
-	      }
+        for(String typeOfApp : typeOfAppInPromoCode){
+          if(typeOfApp == IDCardApplicationNR.Type_of_Application__c) {
+            isError = false;
+            break;
+          }
+        }
 
        
-	  if (isError) {
-	     IDCardApplicationNR.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] {IDCardApplicationNR.Promotion_Code__c}));
-	     return null;
-	  }  
+    if (isError) {
+       IDCardApplicationNR.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] {IDCardApplicationNR.Promotion_Code__c}));
+       return null;
+    }  
         
         if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
                 IDCardApplicationNR.Promotion_Code__c.addError(Label.ID_Card_Promotion_Code_No_Longer_Valid);

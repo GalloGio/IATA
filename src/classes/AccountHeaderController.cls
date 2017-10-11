@@ -1,10 +1,10 @@
 public with sharing class AccountHeaderController {
 
-
+    
     public AccountHeaderController(ApexPages.StandardController stdController) {
 
     }
-
+    
    	public static List<String> getSanctionFields() {
 			List<String> sanctionFields = new String [] {
 				'SanctionNotice__c'
@@ -12,7 +12,7 @@ public with sharing class AccountHeaderController {
 			return sanctionFields;
 
 			}
-
+    
     	@AuraEnabled
 	    public static List<Boolean> getCanEdit() {
             List<Boolean> listCanEdit = new List<Boolean>();
@@ -20,7 +20,7 @@ public with sharing class AccountHeaderController {
           //  system.debug('isUpdateable aqui: ' + sanction);
             system.debug('FIELDS: ' + Schema.sObjectType.Account.fields);
             //system.debug('fieldToCheck1: ' + Schema.sObjectType.Account.fields.sanction.isUpdateable());
-
+         
 	        // Obtain the field name/token map for the Comment__c object
 	        Map<String,Schema.SObjectField> m = Schema.SObjectType.Account.fields.getMap();
 
@@ -36,14 +36,14 @@ public with sharing class AccountHeaderController {
 	        }
             system.debug('listCanEdit: ' + listCanEdit);
 	        return listCanEdit;
-
+            
 	    }
-
+    
     @AuraEnabled
     public static Account saveRecord(Account recordDetail){
         system.debug('saveRecord: ' + recordDetail);
         upsert recordDetail;
         return recordDetail;
     }
-
+    
 }

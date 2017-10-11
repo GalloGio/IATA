@@ -2169,6 +2169,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
         <errorConditionFormula>AND( RecordType.Name = &apos;PASSENGER&apos; ,  LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
         <errorDisplayField>Abbreviated_name__c</errorDisplayField>
-        <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
+        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
     </validationRules>
 </CustomObject>

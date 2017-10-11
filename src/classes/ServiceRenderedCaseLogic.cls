@@ -77,7 +77,6 @@ public class ServiceRenderedCaseLogic {
     
    
    public static void saveTheServices(list<Case> caseWithServicesOK, map<String,Case_Reason_Service__c> ServicesPerReason){
-    
                              list<Case> joiningCases = new list<Case>();
                              list<Case> leavingCases = new list<Case>();
                              list<Id> ConsumerIdsFromNewCases = new list<Id>();
@@ -112,7 +111,6 @@ public class ServiceRenderedCaseLogic {
    
    public static void massInsertDuplicateCheck(list<Case> Cases, map<String,Case_Reason_Service__c> ServicesPerReason){
    
-              
                     map<String,list<Case>> KeyPerCase = new map<String,list<Case>>();
                                     
                     string key ;    
@@ -156,7 +154,6 @@ public class ServiceRenderedCaseLogic {
    }
  
    public static list<Case> ServicesValidation(list<Case> casesOkConsumer, map<String,Case_Reason_Service__c> ServicesPerReason){
-                
                 list<Id> accountIds = new list<Id>();
                 list<Case> caseWithServicesOK  = new list<Case>();
                 
@@ -303,7 +300,6 @@ public class ServiceRenderedCaseLogic {
 
 
      public static list<Case> airlineConsumerValidation(list<Case> cases){
-           
             list<case> casesOkConsumer = new list<Case>();
             map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
             
@@ -390,7 +386,7 @@ public class ServiceRenderedCaseLogic {
                 a.Airline_CASS_Participations__c = 0;
             }
             
-            set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA'};
+            set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA', 'CASS Export Direct Participation', 'CASS Import Direct Participation', 'CASS Export via GSSA', 'CASS Import via GHA'};
             set<String> setBSPParticipationNames = new set<String>{'BSP Participation', 'BSP via IBCS'};
             
             // count the participations by type

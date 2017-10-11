@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name}  – DGR renewal</subject>
+    <textOnly>Dear Sir/Madam,
+Under the provisions of the IATA Resolutions, all Approved Cargo Agents/Intermediaries should continue to meet at all times the requirements and criteria set forth in Program Handbook to ensure retention as an IATA Cargo Agent/Intermediary.
+In accordance with IATA Resolutions, your Company is required to have at least two full-time employees holding a valid Dangerous Goods Acceptance certificate issued within the previous two years to provide the services and handling functions described in the Handbook.
+According to our records, Dangerous Goods certificates provided by your Company will expire on {!AMS_OSCAR__c.Change_effective_as_of__c}.  Therefore, please send evidence/copies of new and/or updated Dangerous Goods Acceptance certificates, together with any other information you feel may have a bearing on your qualifications, to indicate that your Company is in compliance with such requirement.
+The above requested certificates should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!AMS_OSCAR__c.Change_effective_as_of__c}. Please attach a scanned copy to case {!AMS_OSCAR__c.Name} visible on your portal home page under ‘My recent cases’ section.
+The Agency Administrator will carry out a review, and make a decision based upon the evidence available. Therefore, in your own interest, please give this matter your immediate attention.
+We would appreciate your acknowledgement of this letter and confirmation that you will give this matter your immediate attention.
+Yours faithfully,
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

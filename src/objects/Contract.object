@@ -207,16 +207,6 @@ E&amp;F CRM Project</description>
         <type>AutoNumber</type>
     </fields>
     <fields>
-        <fullName>Contract_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Contract Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Contract_Notes__c</fullName>
         <description>This field is a text area where the contract owner can add contract-related information.</description>
         <externalId>false</externalId>
@@ -263,7 +253,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_End_Date__c</fullName>
-        <description>This field represents the end date of the contract’s current cycle.</description>
+        <description>This field represents the end date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
@@ -272,7 +262,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_Start_Date__c</fullName>
-        <description>This field represents the starting date of the contract’s current cycle.</description>
+        <description>This field represents the starting date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
@@ -306,6 +296,28 @@ E&amp;F CRM Project</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Contract Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( TEXT(MONTH( StartDate ))) = 0, &quot;Contract Start Date, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(  TEXT(ContractTerm)) = 0, &quot;Contract Term, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( BillingCity ) = 0, &quot;Complete Contract Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( CustomerSignedId ) = 0, &quot;Customer Signature, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL(  OwnerExpirationNotice ,&quot;&quot;), &quot;Owner Expiration Notice&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN(TEXT(MONTH(StartDate)))=0, 0,20) + IF( LEN(TEXT( ContractTerm ))=0, 0,20) + IF( LEN( BillingCity ) = 0, 0,20) + IF( LEN( CustomerSignedId) = 0, 0,20) + IF( ISPICKVAL(  OwnerExpirationNotice ,&quot;&quot;), 0,20)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -327,8 +339,13 @@ E&amp;F CRM Project</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>0005</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>005</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -440,8 +457,19 @@ E&amp;F CRM Project</description>
     <fields>
         <fullName>EF_Client_SIS_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Account.EF_SIS_Designator__c+ &apos; &apos; + Account.EF_SIS_Code__c</formula>
-        <label>E&amp;F Client SIS Code</label>
+        <formula>Account.EF_SIS_Code__c</formula>
+        <label>E&amp;F Client SIS Accounting Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Client_SIS_Designator__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_SIS_Designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client SIS Designator</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -996,7 +1024,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -1212,6 +1240,27 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <language>en_US</language>
         <sharedTo>
             <role>CorporateServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Contracts</fullName>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>CONTRACT.NAME</columns>
+        <columns>EF_Status__c</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>EF_Client_SIS_Designator__c</columns>
+        <columns>EF_Client_SIS_Code__c</columns>
+        <columns>EF_Group_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Contract.EF_Client_Agreement</value>
+        </filters>
+        <label>E&amp;F Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>
     <listViews>
@@ -1483,7 +1532,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <picklistValues>
             <picklist>Dunning_Procedure__c</picklist>
             <values>
-                <fullName>005</fullName>
+                <fullName>0005</fullName>
                 <default>false</default>
             </values>
             <values>

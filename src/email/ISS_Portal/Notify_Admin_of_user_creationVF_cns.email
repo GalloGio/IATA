@@ -1,0 +1,36 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Contact">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF"/>
+<BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+<BR/>
+
+
+{!$Label.ISSP_Email_DearAdmin}<BR/>
+<BR/>
+{!$Label.ISSP_Email_NewUser_BeInformed} {!relatedTo.Salutation} {!relatedTo.FirstName} {!relatedTo.LastName} ( {!relatedTo.Email} ) {!$Label.ISSP_Email_NewUser_BeInformed2}<BR/><br/>
+{!$Label.ISSP_MyProfile_AccountName} : {!relatedTo.Account.Name}<br/>
+{!$Label.ISSP_MyProfile_IATACODE} : {!relatedTo.Account.IATACode__c}<br/>
+{!$Label.ISSP_Country} : {!relatedTo.Account.IATA_ISO_Country__r.Name}<br/><br/>
+
+{!$Label.ISSP_Email_NewUser_PleaseConfirm} {!relatedTo.Salutation} {!relatedTo.FirstName} {!relatedTo.LastName} {!$Label.ISSP_Email_NewUser_PleaseConfirm2}.<BR/>
+<BR/>
+{!$Label.ISSP_Email_AppReq_AccessRequest} <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Contact?id={!relatedTo.id}&CommunityName=CNS}">{!$Label.ISSP_Email_Here}</a>.<BR/>
+<BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service}<BR/>
+
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF"/>
+
+<BR/>
+
+</span>
+</div>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

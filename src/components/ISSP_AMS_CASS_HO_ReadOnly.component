@@ -2,7 +2,7 @@
     <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
     			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+                        <apex:outputText value="{!IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent)}"/>
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
                     	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
                     	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 

@@ -220,7 +220,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>System Generated Lists</label>
+        <label>Global Lists</label>
         <language>en_US</language>
     </listViews>
     <nameField>

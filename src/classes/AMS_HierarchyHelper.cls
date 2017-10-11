@@ -510,7 +510,7 @@ global class AMS_HierarchyHelper {
 	// This will create a process detail for this Oscar for each account in the hierarhcy (except for the main account related to the oscar)
 	// This method won't create any duplicate if there is already a process detail with the same OSCAR-Account
 	webservice static void createProcessDetailForFullHierarchy(ID theOscarId, ID theMainAccountId) {
-
+		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = getAccountsHierarchies(new Set<Id> {theMainAccountId});
 
 		Set<Id> accountIdToBeAdded = new Set<Id>();
@@ -520,20 +520,39 @@ global class AMS_HierarchyHelper {
 			accountIdToBeAdded.add(rel.Child_Account__c);
 		}
 
-		// remove the accounts terminated from the list of process detail to be created
-		for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND Status__c = :AMS_Utils.ACC_S0_TERMINATED])
-			accountIdToBeAdded.remove(a.Id);
+		AMS_OSCAR__c oscar = [SELECT Process__c FROM AMS_OSCAR__c WHERE Id = :theOscarId LIMIT 1];
+
+		if(oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+
+			// remove the accounts terminated and not accreditated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c =: AMS_Utils.ACC_S1_NOTACCREDITED)]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		} else {
+
+			// remove the accounts terminated from the list of process detail to be created
+			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND Status__c = :AMS_Utils.ACC_S0_TERMINATED]){
+
+				accountIdToBeAdded.remove(a.Id);
+			}
+
+		}
 
 
 		Set<Id> alreadyThere = new Set<Id>();
-		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		//DTULLO: Added check on the record type
+		//for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId and recordtype.developername='Agency_Involved']) {
 			alreadyThere.add(det.Account__c);
 		}
 
 		List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
 		for (Id accountId : accountIdToBeAdded) {
 			if (accountId != theMainAccountId && !alreadyThere.contains(accountId))
-				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId));
+				//DTULLO: Added Record Type
+				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId, recordtypeid = rtAgencyInvolved));
 		}
 
 		insert pds;
@@ -550,7 +569,9 @@ global class AMS_HierarchyHelper {
 
 		//gets selected accounts for each oscar
 		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>{ oscar.Id => new Set<Id>{oscar.Account__c} };
-		for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset()]){
+		//DTULLO: Added check on record-type
+		//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset()]){
+		for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset() and recordtype.developername='Agency_Involved']){
 			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
 		}
 
@@ -577,7 +598,7 @@ global class AMS_HierarchyHelper {
 				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
 				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
 
-				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && r.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
 			}
 		}
 
@@ -815,6 +836,17 @@ global class AMS_HierarchyHelper {
 
 		return output;
 
+	}
+
+	public class AccountStruct{
+		
+	    public String parentIATACode;
+	    public String locationType;
+
+	    public AccountStruct(String parentIATACode, String locationType) {
+	        this.parentIATACode = parentIATACode;
+	        this.locationType = locationType;
+	    }
 	}
 
 }

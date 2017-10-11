@@ -1,0 +1,27 @@
+<apex:page >
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+    <apex:includeScript value="/support/console/29.0/integration.js"/>
+
+    <script type="text/javascript">
+
+        var lockAlert;
+        var lastStatus;
+        var eventHandler = function (result) {
+            if (lockAlert == false && result.state != lastStatus){
+                alert("Your status has changed to: " + result.state);
+                lastStatus = result.state;
+            }else{
+                lockAlert = false;
+            }
+            
+        };
+        sforce.console.chat.onAgentStateChanged(eventHandler);
+
+        $( window ).load(function(){
+            lockAlert = true;
+            lastStatus = null;          
+        });
+
+</script>
+</apex:page>

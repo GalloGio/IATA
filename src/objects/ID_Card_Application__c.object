@@ -986,7 +986,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Start_Date_Agency_Month__c</fullName>
         <description>Start date of employment with above agency</description>
         <externalId>false</externalId>
-        <label>Start Date Agency Month</label>
+        <label>Start Month in the Agency</label>
         <picklist>
             <picklistValues>
                 <fullName>January</fullName>
@@ -1048,7 +1048,7 @@ Completed: Process is complete</inlineHelpText>
         <description>Start date (year) of employment for above agency</description>
         <externalId>false</externalId>
         <inlineHelpText>Numeric value. (YYYY format)</inlineHelpText>
-        <label>Start Date Agency Year</label>
+        <label>Start Year in the Agency</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1061,7 +1061,7 @@ Completed: Process is complete</inlineHelpText>
         <description>Start date of employment in the industry</description>
         <externalId>false</externalId>
         <inlineHelpText>YYYY</inlineHelpText>
-        <label>Start Date Industry Year</label>
+        <label>Start Year in the Industry</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1198,7 +1198,7 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <fields>
         <fullName>VER_Number__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>VER#</label>
         <length>18</length>
         <required>false</required>
@@ -1208,27 +1208,6 @@ Completed: Process is complete</inlineHelpText>
         <unique>false</unique>
     </fields>
     <label>ID Card Application</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Start_Date_Agency_Month__c</columns>
-        <columns>Start_Date_Agency_Year__c</columns>
-        <columns>Start_Date_Industry__c</columns>
-        <columns>Applicable_Fee__c</columns>
-        <columns>Approving_Manager_s_Email__c</columns>
-        <columns>Displayed_Name__c</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Type_of_application__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UIR__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
     <listViews>
         <fullName>Completed_Paid_ID_Card_Applications</fullName>
         <booleanFilter>1 OR 2 OR 3</booleanFilter>
@@ -1243,18 +1222,17 @@ Completed: Process is complete</inlineHelpText>
         <columns>UIR__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Payment_Date__c</field>
-            <operation>notEqual</operation>
+            <field>VER_Number__c</field>
+            <operation>equals</operation>
+            <value>5990038761</value>
         </filters>
         <filters>
             <field>Payment_Type__c</field>
             <operation>equals</operation>
-            <value>FOC / Key Account</value>
         </filters>
         <filters>
             <field>Payment_Type__c</field>
             <operation>equals</operation>
-            <value>Invoice</value>
         </filters>
         <label>Completed/Paid ID Card Applications</label>
         <language>en_US</language>
@@ -1296,7 +1274,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990038761</value>
+            <value>5484010057</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>
@@ -1328,7 +1306,7 @@ Completed: Process is complete</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Uncomplete_IDCard_Application</fullName>
+        <fullName>Incomplete_Unpaid_ID_Card_Applications</fullName>
         <booleanFilter>1</booleanFilter>
         <columns>NAME</columns>
         <columns>Application_Status__c</columns>
@@ -1340,7 +1318,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990029464</value>
+            <value>5990038761</value>
         </filters>
         <label>Incomplete/Unpaid ID Card Applications</label>
         <language>en_US</language>
@@ -2316,133 +2294,147 @@ Completed: Process is complete</inlineHelpText>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/26.0/apex.js&quot;)} 
-sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
-try{ 	
+sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;; 
+try{ 
 
-    var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
-    var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
-	var paymentType = &apos;{!ID_Card_Application__c.Payment_Type__c}&apos;;
-	var typeOfApplication = &apos;{!ID_Card_Application__c.Type_of_application__c}&apos;;
-	
-	var query = &apos;Select c.ID_Card_Status__c, c.OwnerId, c.ContactId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;;
-		
-	var queryresult = sforce.connection.query(query); 
-	var records = queryresult.getArray(&apos;records&apos;);
-	if (records.length &gt; 0) {
-		var record = records[0];
-		var currentUser = &apos;{!User.Id}&apos;;
-		var valid = true;		
-		
-		//Validation to check if contact is not IFAP contact with &apos;Financial Assessment Contact&apos; checked
-		// for Replacement
-		if(typeOfApplication== &apos;Replacement&apos; &amp;&amp; record.ContactId != null)
-		{
-			var getContactQuery = &apos;Select c.Financial_Assessment_Contact__c From Contact c where c.Id = \&apos;&apos;+record.ContactId+&apos;\&apos;&apos;; 
-			var queryGetContact = sforce.connection.query(getContactQuery); 
-			var ContactRecords = queryGetContact.getArray(&apos;records&apos;);
-			if(ContactRecords.length&gt;0)
-			{
-				var con = ContactRecords[0];
-				if(con.Financial_Assessment_Contact__c == &apos;true&apos;)
-				{					
-					alert(&quot;The current Contact is a Financial Assessment Contact. It cannot be moved to another Agency. Please check with IFAP admin to make changes regarding this Contact &quot;+record.ContactId);
-					valid = false;
-				}
-				
-			}
-		}
-		
-		if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Approved&apos;)
-		{
-			alert(&quot;This application is already approved&quot;);
-			valid = false;
-		}
-		if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;)
-		{
-			alert(&quot;This application is already submitted for Manager Approval&quot;);
-			valid = false;
-		}
-		// If Current user is not the owner of the case
-		if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
-		{
-			alert(&quot;Please, you have to accept the case before approve.&quot;); 
-			valid = false;			
-		}
-		if(valid == true)
-		{
-			if(paymentType == &apos;&apos; || paymentType == null)
-				alert(&apos;Please select a payment type&apos;);
-				
-			if (paymentType == &apos;Credit Card&apos; || paymentType == &apos;FOC&apos; || paymentType == &apos;Key Account&apos;)
-			{
-				var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 			
-				if(st == &apos;true&apos;) 
-				{ 
-					alert(&quot;The Case has been approved.&quot;); 
-					window.location.reload(); 
-				} 
-				else{ 
-					alert(&quot;Error! Unable to approve this Application/Case. Issue with Util. \n&quot;+ st); 
-				}
-			}
+var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
+var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
+var paymentType = &apos;{!ID_Card_Application__c.Payment_Type__c}&apos;; 
+var typeOfApplication = &apos;{!ID_Card_Application__c.Type_of_application__c}&apos;; 
 
-			if (paymentType == &apos;Invoice&apos;)
-			{
-				var getGroupsQuery = &apos;SELECT Id FROM GroupMember where group.name = \&apos;IDCardManager\&apos; and UserOrGroupId = \&apos;&apos;+currentUser+&apos;\&apos;&apos;; 
-				var queryGetGroups = sforce.connection.query(getGroupsQuery); 
-				var GroupsRecords = queryGetGroups.getArray(&apos;records&apos;);
+var query = &apos;Select c.ID_Card_Status__c, c.OwnerId, c.ContactId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
 
-				// is part of manager group =&gt; allow to approve right away
-				if(GroupsRecords.length&gt;0)
-				{
-					var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 			
-					if(st == &apos;true&apos;) 
-					{ 
-						alert(&quot;The Case has been approved.&quot;); 
-						window.location.reload(); 
-					} 
-					else{ 
-						alert(&quot;Error! Unable to approve this Application/Case. No Access to groups.\n&quot;+ st); 
-					}					
-				}
-				else
-				{
-					var currentUserManager = &apos;{!User.ManagerId}&apos;;
+var queryresult = sforce.connection.query(query); 
+var records = queryresult.getArray(&apos;records&apos;); 
+var valid = true; 
 
-					if (currentUserManager != null &amp;&amp; currentUserManager != &apos;&apos;)
-					{
+if(&apos;{!ID_Card_Application__c.Type_of_application__c}&apos; == &apos;Replacement&apos; ){ 
 
-						var st = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;ConfirmChequePayment&quot;, {cNum:caseNumber}); 
-							
-						if(st == &apos;true&apos;) 
-						{ 
-							alert(&quot;This Case is submitted to the manager for approval.&quot;); 
-							window.location.reload(); 
-						} 
-						else { 
-							alert(&quot;Error! Unable to approve this Application/Case. ConfirmChequePayment. \n&quot;+st); 
-						}
-						
-					}
-					
-					else
-					{		
-					
-						alert(&quot;A manager is required to approve this application. Please update your profile with your manager information.&quot;);
-					} 
-				}
-				
-			}
-		}
-	}
-	else{	
-		alert(&quot;No Case is available for this ID Card Application&quot;);
-	}
-	
+var queryPAR = &apos;Select Contact__c from Portal_Application_Right__c where contact__r.VER_Number_2__c = \&apos;&apos;+ {!ID_Card_Application__c.VER_Number__c}+&apos;\&apos; and ((( PortalServiceTranslatedName__c=\&apos;bsplink\&apos; or PortalServiceTranslatedName__c=\&apos;casslink\&apos; or PortalServiceTranslatedName__c=\&apos;ifap\&apos;) and Right__c = \&apos;access granted\&apos;) or contact__r.User_Portal_Status__c = \&apos;Approved Admin\&apos; or contact__r.Invoicing_Contact__c = true)&apos;; 
+var queryPARresult = sforce.connection.query(queryPAR); 
+var recordsPAR = queryPARresult.getArray(&apos;records&apos;); 
+
+
+if(recordsPAR.length &gt; 0){ 
+alert(&apos;Please report to CS team that the contact is applying for change of agency&apos;); 
+valid = false;
+}
+}
+
+if (records.length &gt; 0) { 
+var record = records[0]; 
+var currentUser = &apos;{!User.Id}&apos;; 
+
+//Validation to check if contact is not IFAP contact with &apos;Financial Assessment Contact&apos; checked 
+// for Replacement 
+if(typeOfApplication== &apos;Replacement&apos; &amp;&amp; record.ContactId != null) 
+{ 
+var getContactQuery = &apos;Select c.Financial_Assessment_Contact__c From Contact c where c.Id = \&apos;&apos;+record.ContactId+&apos;\&apos;&apos;; 
+var queryGetContact = sforce.connection.query(getContactQuery); 
+var ContactRecords = queryGetContact.getArray(&apos;records&apos;); 
+if(ContactRecords.length&gt;0) 
+{ 
+var con = ContactRecords[0]; 
+if(con.Financial_Assessment_Contact__c == &apos;true&apos;) 
+{	
+alert(&quot;The current Contact is a Financial Assessment Contact. It cannot be moved to another Agency. Please check with IFAP admin to make changes regarding this Contact &quot;+record.ContactId); 
+valid = false; 
+} 
+
+} 
+} 
+
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Approved&apos;) 
+{ 
+alert(&quot;This application is already approved&quot;); 
+valid = false; 
+} 
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;) 
+{ 
+alert(&quot;This application is already submitted for Manager Approval&quot;); 
+valid = false; 
+} 
+// If Current user is not the owner of the case 
+if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
+{ 
+alert(&quot;Please, you have to accept the case before approve.&quot;); 
+valid = false;	
+} 
+if(valid == true) 
+{ 
+if(paymentType == &apos;&apos; || paymentType == null) 
+alert(&apos;Please select a payment type&apos;); 
+
+if (paymentType == &apos;Credit Card&apos; || paymentType == &apos;FOC&apos; || paymentType == &apos;Key Account&apos;) 
+{ 
+var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;The Case has been approved.&quot;); 
+window.location.reload(); 
+} 
+else{ 
+alert(&quot;Error! Unable to approve this Application/Case. Issue with Util. \n&quot;+ st); 
+} 
+} 
+
+if (paymentType == &apos;Invoice&apos;) 
+{ 
+var getGroupsQuery = &apos;SELECT Id FROM GroupMember where group.name = \&apos;IDCardManager\&apos; and UserOrGroupId = \&apos;&apos;+currentUser+&apos;\&apos;&apos;; 
+var queryGetGroups = sforce.connection.query(getGroupsQuery); 
+var GroupsRecords = queryGetGroups.getArray(&apos;records&apos;); 
+
+// is part of manager group =&gt; allow to approve right away 
+if(GroupsRecords.length&gt;0) 
+{ 
+var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;The Case has been approved.&quot;); 
+window.location.reload(); 
+} 
+else{ 
+alert(&quot;Error! Unable to approve this Application/Case. No Access to groups.\n&quot;+ st); 
+}	
+} 
+else 
+{ 
+var currentUserManager = &apos;{!User.ManagerId}&apos;; 
+
+if (currentUserManager != null &amp;&amp; currentUserManager != &apos;&apos;) 
+{ 
+
+var st = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;ConfirmChequePayment&quot;, {cNum:caseNumber}); 
+
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;This Case is submitted to the manager for approval.&quot;); 
+window.location.reload(); 
+} 
+else { 
+alert(&quot;Error! Unable to approve this Application/Case. ConfirmChequePayment. \n&quot;+st); 
+} 
+
+} 
+
+else 
+{	
+
+alert(&quot;A manager is required to approve this application. Please update your profile with your manager information.&quot;); 
+} 
+} 
+
+} 
+} 
+} 
+else{	
+alert(&quot;No Case is available for this ID Card Application&quot;); 
+} 
+
 } 
 catch(err) 
 { 
-	alert(err); 
+alert(err); 
 }</url>
     </webLinks>
     <webLinks>
@@ -2514,10 +2506,11 @@ if (records.length &gt; 0) {
 				var cid = caseId.substring(0,15);
 				
 				if (records[0].ContactId != null)				
-					contactId = (records[0].ContactId).substring(0,15);	
-					
-				parent.location.href = &quot;/_ui/core/email/author/EmailAuthor?retURL=%2F&quot;+cid+&quot;&amp;p3_lkid=&quot; + cid + &quot;&amp;rtype=003&amp;p2_lkid=&quot; + contactId; 
+					contactId = (records[0].ContactId).substring(0,15);
+                 			
+				
 			}
+                     
 		}
 	}
 }

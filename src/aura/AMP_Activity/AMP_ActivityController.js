@@ -63,7 +63,10 @@ console.log(JSON.stringify(activity));
             component.set("v.errorMessage", 'Error : Activity, Description, Overall Status and Deadline are mandatory fields.<br /> One of these two options is mandatory: “Account Issue or Priority” or “Benefits to the Account”. ');
         } else if(deadlineField.get("v.value") === '') {
             deadlineField.set("v.errors", [{message:"Please enter a date" }]);
-            
+        
+        }else if (activity.Benefits_to_Account__c == "" && activity.Account_Issue_or_Priority__c == ""){ //Benefits_to_Account__c  
+            benefitsField.set("v.errors",  [{message:"Please enter either Account Issue or Benefits. "}]);
+  
         } else {
             console.log(JSON.stringify(activity));
             var index = component.get("v.index");

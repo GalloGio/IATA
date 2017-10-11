@@ -128,6 +128,21 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>Valid_Code_For_GDP_Replication__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LEN(Air_Code__c) &gt; 3
+	, False
+	, IF(AND(LEN(Air_Code__c) = 3, RIGHT(Air_Code__c,1)!=&apos;*&apos;)
+		,	False
+		,	True
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Valid Code For GDP Replication</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>AMS Accreditation Organization</label>
     <nameField>
         <label>Accreditation Organization Name</label>

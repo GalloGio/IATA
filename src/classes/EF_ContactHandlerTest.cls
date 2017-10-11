@@ -26,6 +26,7 @@ private class EF_ContactHandlerTest {
         Contact cont = new Contact();
         cont.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
         cont.LastName='UnitTestContactSomething';
+        cont.FirstName='Name';
             cont.Phone='555-fakephone';
         cont.AccountId = client.Id;
         cont.EF_Status__c='Active';

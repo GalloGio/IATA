@@ -1,5 +1,19 @@
 <apex:page standardController="Case">
 
 	<apex:detail subject="{!Case.OSCAR__c}" relatedList="false" relatedListHover="false" title="false"/>
-	
+
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <script>
+    // Hide the "Manage Attachments" and "Manage owners / contacts / trained staff" buttons
+        $vfjq = jQuery.noConflict();
+
+        $vfjq(document).ready(function() {
+        	$vfjq("input[name='manage_attachments']").hide();
+        	$vfjq("input[name='set_ownership']").hide();
+        });
+
+    </script>
+
+	<apex:iframe src="/apex/AMS_OSCAR_Attachment_List?Id={!Case.OSCAR__c}&readOnly=true&isEmbedded=true" height="200px;" scrolling="true"/>
+
 </apex:page>

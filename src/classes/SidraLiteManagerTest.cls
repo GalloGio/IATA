@@ -40,6 +40,18 @@ public class SidraLiteManagerTest {
     public static Case createSAAMAgent() {
         return createParentCase(SidraLiteManager.RECORDTYPE_SAAM, AGENT);
     }
+    
+    public static Case createInvoicingPassenger() {
+        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, PASSENGER);
+    }
+
+    public static Case createInvoicingAgent() {
+        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, AGENT);
+    }
+
+    public static Case createInvoicingCargo() {
+        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
+    }
 
     private static Case createParentCase(Id recordtypeID, String type) {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
@@ -92,7 +104,8 @@ public class SidraLiteManagerTest {
             Description = 'Test Case 1',
             Start_Date_of_Sales_Period__c = Date.today(),
             End_Date_of_Sales_Period__c = Date.today(),
-            Next_Remittance_Date__c = Date.today()
+            Next_Remittance_Date__c = Date.today(),
+            Has_the_agent_paid_invoice__c = 'Not paid'
         );
 
         if (type==AGENT) {
@@ -142,15 +155,154 @@ public class SidraLiteManagerTest {
         insert sidraCase;
         Test.stopTest();
     }
+    
+    @isTest
+    public static void testInsertSAAM_CertificateDGRDefaultPrev() {
+        Case saamCase = createSAAMPassenger();
+        saamCase.Reason1__c = 'Certificate DGR';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        //set account as inactive
+        Account acc = [Select Status__c from Account where id = :saamCase.accountId];
+        acc.Status__c = 'Cash basis/no commission';
+        update acc;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
 
     @isTest
-    public static void testInsertSAAM_AnnualFees() {
+    public static void testInsertSAAM_AnnualFeesPassenger() {
         Case saamCase = createSAAMPassenger();
         saamCase.Reason1__c = 'Annual Fees';
         saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert saamCase;
         SidraLiteManager.BLOCK_EXECUTION = false;
 
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_AnnualFeesCargo() {
+        Case saamCase = createSAAMCargo();
+        saamCase.Reason1__c = 'Annual Fees';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_AnnualFeesAgent() {
+        Case saamCase = createSAAMAgent();
+        saamCase.Reason1__c = 'Annual Fees';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_AnnualFessAccountInactive() {
+        Case saamCase = createSAAMAgent();
+        saamCase.Reason1__c = 'Annual Fees';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        //set account as inactive
+        Account acc = [Select Status__c from Account where id = :saamCase.accountId];
+        acc.Status__c = 'Cash basis/no commission';
+        update acc;
+        
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_FSPassenger() {
+        Case saamCase = createSAAMPassenger();
+        saamCase.Reason1__c = 'Financial Security Renewal';
+        saamCase.Bank_Guarantee_deadline__c = Date.today().addDays(-1);
+        saamCase.Bank_Guarantee_received__c = null;
+        saamCase.Bank_Guarantee_amount__c = '1';
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_FSCargo() {
+        Case saamCase = createSAAMCargo();
+        saamCase.Reason1__c = 'Financial Security Renewal';
+        saamCase.Bank_Guarantee_deadline__c = Date.today().addDays(-1);
+        saamCase.Bank_Guarantee_received__c = null;
+        saamCase.Bank_Guarantee_amount__c = '1';
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = saamCase.Id;
+        sidraCase.accountId = saamCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertSAAM_FSAccountInactive() {
+        Case saamCase = createSAAMCargo();
+        saamCase.Reason1__c = 'Financial Security Renewal';
+        saamCase.Bank_Guarantee_deadline__c = Date.today().addDays(-1);
+        saamCase.Bank_Guarantee_received__c = null;
+        saamCase.Bank_Guarantee_amount__c = '1';
+        insert saamCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        //set account as inactive
+        Account acc = [Select Status__c from Account where id = :saamCase.accountId];
+        acc.Status__c = 'Cash basis/no commission';
+        update acc;
+        
         Case sidraCase = createSIDRALite();
         sidraCase.ParentId = saamCase.Id;
         sidraCase.accountId = saamCase.accountId;
@@ -181,6 +333,74 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
+    public static void testInsertInvoicing_Passenger() {
+        Case invoicingCase = createInvoicingPassenger();
+        insert invoicingCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = invoicingCase.Id;
+        sidraCase.accountId = invoicingCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertInvoicing_CargoAgent() {
+        Case invoicingCase = createInvoicingCargo();
+        insert invoicingCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        Account account = [Select Category__c from Account where id = :invoicingCase.accountId];
+        account.Category__c = 'IATA Cargo Agent';
+        update account;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = invoicingCase.Id;
+        sidraCase.accountId = invoicingCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertInvoicing_CargoCASS() {
+        Case invoicingCase = createInvoicingCargo();
+        insert invoicingCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+        
+        Account account = [Select Category__c from Account where id = :invoicingCase.accountId];
+        account.Category__c = 'CASS Associate';
+        update account;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = invoicingCase.Id;
+        sidraCase.accountId = invoicingCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testInsertInvoicing_Agent() {
+        Case invoicingCase = createInvoicingAgent();
+        insert invoicingCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = invoicingCase.Id;
+        sidraCase.accountId = invoicingCase.accountId;
+
+        Test.startTest();
+        insert sidraCase;
+        Test.stopTest();
+    }
+
+    @isTest
     public static void testInsertOSCAR() {
         Case oscarCase = createOSCARPassenger();
         insert oscarCase;
@@ -196,7 +416,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testInsertWithFALetterSent() {
+    public static void testInsertIFAPWithFALetterSent() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = false;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -219,7 +439,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testInsertWithFSLetterSent() {
+    public static void testInsertIFAPWithFSLetterSent() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = false;
         ifapCase.Status = 'Financial Security Requested';
@@ -243,7 +463,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testInsertCheckParentStatus() {
+    public static void testInsertIFAPCheckParentStatus() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Action Needed';
@@ -265,7 +485,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFirstFSDeadlineOnly() {
+    public static void testIFAPFirstFSDeadlineOnly() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -288,7 +508,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSDeadlineIsEmpty() {
+    public static void testIFAPFSDeadlineIsEmpty() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -311,7 +531,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSDeadlineIsFutureDate() {
+    public static void testIFAPFSDeadlineIsFutureDate() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -334,7 +554,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFirstFADeadlineOnly() {
+    public static void testIFAPFirstFADeadlineOnly() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -358,7 +578,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFADeadlineIsEmpty() {
+    public static void testIFAPFADeadlineIsEmpty() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -379,9 +599,55 @@ public class SidraLiteManagerTest {
         }
         Test.stopTest();
     }
+    
+    @isTest
+    public static void testIFAPFASanityCheck() {
+        Case ifapCase = createIFAPPassenger();
+        ifapCase.FA_Letter_Sent__c = true;
+        ifapCase.Status = 'Sanity Check Failure';
+        ifapCase.Deadline_Date__c = null;
+        insert ifapCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = ifapCase.Id;
+        sidraCase.accountId = ifapCase.accountId;
+
+        Test.startTest();
+        try {
+            insert sidraCase;
+            System.assert(false,'Exception required');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testIFAPFAFinancialReview() {
+        Case ifapCase = createIFAPPassenger();
+        ifapCase.FA_Letter_Sent__c = true;
+        ifapCase.Status = 'Change Deficiency';
+        ifapCase.Deadline_Date__c = null;
+        insert ifapCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = ifapCase.Id;
+        sidraCase.accountId = ifapCase.accountId;
+
+        Test.startTest();
+        try {
+            insert sidraCase;
+            System.assert(false,'Exception required');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
 
     @isTest
-    public static void testFADeadlineIsFutureDate() {
+    public static void testIFAPFADeadlineIsFutureDate() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -404,7 +670,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSWrongBSPValue() {
+    public static void testIFAPFSWrongBSPValue() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -428,7 +694,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSWrongCASSValue() {
+    public static void testIFAPFSWrongCASSValue() {
         Case ifapCase = createIFAPCargo();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -452,7 +718,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSWrongReasonValue() {
+    public static void testIFAPFSWrongReasonValue() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -476,7 +742,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSPassengerOK() {
+    public static void testIFAPFSPassengerOK() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -494,8 +760,8 @@ public class SidraLiteManagerTest {
         insert sidraCase;
         Test.stopTest();
 
-        sidraCase = [Select Propose_Irregularity__c from Case Where id = :sidraCase.Id];
-        System.assertEquals(Date.today(),sidraCase.Propose_Irregularity__c);
+        //sidraCase = [Select Propose_Irregularity__c from Case Where id = :sidraCase.Id];
+        //System.assertEquals(Date.today(),sidraCase.Propose_Irregularity__c);
 
         ifapCase = [Select FirstFSnonComplianceDate__c, FS_Second_Deadline_Date__c from Case Where id = :ifapCase.Id];
         System.assertEquals(Date.today(),ifapCase.FirstFSnonComplianceDate__c);
@@ -503,7 +769,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFSCargoOK() {
+    public static void testIFAPFSCargoOK() {
         Case ifapCase = createIFAPCargo();
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
@@ -528,7 +794,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFAPassengerOK() {
+    public static void testIFAPFAPassengerOK() {
         Case ifapCase = createIFAPPassenger();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -552,7 +818,7 @@ public class SidraLiteManagerTest {
     }
 
     @isTest
-    public static void testFACargoOK() {
+    public static void testIFAPFACargoOK() {
         Case ifapCase = createIFAPCargo();
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
@@ -573,6 +839,89 @@ public class SidraLiteManagerTest {
         ifapCase = [Select FirstFAnonComplianceDate__c, FA_Second_Deadline_Date__c from Case Where id = :ifapCase.Id];
         System.assertEquals(Date.today(),ifapCase.FirstFAnonComplianceDate__c);
         System.assertEquals(Date.today().addDays(30),ifapCase.FA_Second_Deadline_Date__c);
+    }
+    
+    @isTest
+    public static void testgetRelatedCaseSAAM() {
+        Case parentCase = createSAAMPassenger();
+        parentCase.Reason1__c = 'Certificate DGR';
+        parentCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert parentCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = parentCase.Id;
+        sidraCase.accountId = parentCase.accountId;
+        insert sidraCase;
+
+        Test.startTest();
+        SidraLiteManager.getRelatedCase(parentCase);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testgetRelatedCaseInvoicing() {
+        Case parentCase = createInvoicingPassenger();
+        insert parentCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = parentCase.Id;
+        sidraCase.accountId = parentCase.accountId;
+        insert sidraCase;
+
+        Test.startTest();
+        SidraLiteManager.getRelatedCase(parentCase);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testgetRelatedCaseSMAP() {
+        Case parentCase = createSMAPPassenger();
+        insert parentCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = parentCase.Id;
+        sidraCase.accountId = parentCase.accountId;
+        sidraCase.SIDRA_lite_Reason__c = 'Financial Security Non-compliance';
+        insert sidraCase;
+
+        Test.startTest();
+        SidraLiteManager.getRelatedCase(parentCase);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testgetRelatedCaseOSCAR() {
+        Case parentCase = createOSCARPassenger();
+        insert parentCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = parentCase.Id;
+        sidraCase.accountId = parentCase.accountId;
+        insert sidraCase;
+
+        Test.startTest();
+        SidraLiteManager.getRelatedCase(parentCase);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testgetRelatedCaseERROR() {
+        Case parentCase = new Case();
+        insert parentCase;
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Test.startTest();
+        SidraLiteManager.getRelatedCase(parentCase);
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = parentCase.Id;
+        sidraCase.accountId = parentCase.accountId;
+        insert sidraCase;
+        SidraLiteManager.getRelatedCase(parentCase);
+        Test.stopTest();
     }
 
 }

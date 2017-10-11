@@ -979,18 +979,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EF_AttachmentListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EF_MassUpdateMatLiController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-     <classAccesses>
-        <apexClass>EF_MaterialWrapper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Address_DTO</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1683,19 +1671,35 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-		<apexClass>EF_BaContractApprovalHelper</apexClass>
+        <apexClass>EF_AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AccountTriggerHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_BaContractApprovalHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BaContractApprovalHelperTest</apexClass>
         <enabled>true</enabled>
-	</classAccesses>
-	 <classAccesses>
-		<apexClass>EF_AccountTriggerHandler</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
-	 <classAccesses>
-		<apexClass>EF_AccountTriggerHandlerTest</apexClass>
+    <classAccesses>
+        <apexClass>EF_BaHistoryController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1711,7 +1715,35 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_ContactHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_ContractHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_ContractHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_ContractHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_DocumentLogHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_HistoryControllersTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_LocationCodeHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_LocationCodeHandlerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1723,6 +1755,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_MassUpdateMatLiController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_MassUpdateMatLiControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_MaterialLineItemHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1731,23 +1771,27 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_MaterialLineItemTriggerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_MaterialWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_RelatedRecordsHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_RelatedRecordsHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_TestDataFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EF_AttachmentListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EF_AttachmentListControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EF_ContactHandlerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EF_MaterialLineItemTriggerTest</apexClass>
+        <apexClass>EF_Utilities</apexClass>
         <enabled>true</enabled>
     </classAccesses>
 	<classAccesses>
@@ -13600,24 +13644,54 @@
         <field>AmazonFile__c.Additional_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AmazonFile__c.Base_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.Document_Date__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.Document_Date__c</field>
+        <field>AmazonFile__c.EF_Created_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Created_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Enterprise_Keywords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Modified_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Modified_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13650,20 +13724,24 @@
         <field>AmazonFile__c.Internal_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.Owner_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.Review_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>AmazonFile__c.isPublic__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AmazonFile__c.Review_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.SAP_Number__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13675,15 +13753,15 @@
         <field>AmazonFile__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.sObject_Id__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AmazonFile__c.Source__c</field>
-        <readable>false</readable>
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
@@ -22511,8 +22589,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Billing_Agreement_Name__c</field>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.BillingAgreement_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22676,6 +22754,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Contact_EF_Contract__c.Contract_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Contact_EF_Contract__c.EF_Contact__c</field>
         <readable>true</readable>
@@ -22695,6 +22778,11 @@
         <field>EF_Contact_EF_Contract__c.EF_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Contact_Relationship__c.Billing_Agreement_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Contact_Relationship__c.Contact_Account__c</field>
@@ -22718,6 +22806,106 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Contact_Relationship__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Additional_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Contract_BA_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.AttachmentId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Created_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Created_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.EF_Private__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Enterprise_Keywords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Expired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Expiry_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.FileName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.FilePath__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Log__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Modified_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Modified_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.ParentId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.SAP_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Send_to_Amazon__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Document_Log__c.SubCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23478,6 +23666,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Financial_Security__c.Validity_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FIR_Code__c.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37878,7 +38071,7 @@
         <layout>AWS_S3_Object__c-AWS S3 Document Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Airline Hqs</layout>
+        <layout>Account-Airline Hqs Read-Only</layout>
         <recordType>Account.IATA_Airline</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -37890,7 +38083,7 @@
         <recordType>Account.IATA_Agency</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-IATA Airline - Branch</layout>
+        <layout>Account-IATA Airline - Branch Read-Only</layout>
         <recordType>Account.IATA_Airline_BR</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -38811,12 +39004,12 @@
     <layoutAssignments>
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>
     </layoutAssignments>
+	<layoutAssignments>
+        <layout>EF_Document_Log__c-E%26F Document Log Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Location_Code__c-E%26F Location Code BA Layout</layout>
         <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
@@ -40000,6 +40193,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>EF_Contact_Relationship__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+	<objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EF_Document_Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
