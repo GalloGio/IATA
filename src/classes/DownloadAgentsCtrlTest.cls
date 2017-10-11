@@ -21,7 +21,7 @@ private class DownloadAgentsCtrlTest {
         insert Hqrter;
         
         
-        Contact con = new Contact(lastname ='bingo',email='bingo@asdf.it', accountID = Hqrter.id, Financial_Assessment_Contact__c = true);
+        Contact con = new Contact(firstName='Name',lastname ='bingo',email='bingo@asdf.it', accountID = Hqrter.id, Financial_Assessment_Contact__c = true);
         
         
                 insert con;

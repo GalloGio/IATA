@@ -14,7 +14,8 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         describeResult.Name = 'SCIM: Update User';
 
         describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{ 
-            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true)
+            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true),
+            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
         };
 
         return describeResult;
@@ -46,6 +47,13 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
             UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
             if (upa != null && !String.isBlank(upa.externalUserId)) {
+
+                String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
+                if(params != null) SCIMUsersUtility.updateParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
+
+                System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
+                System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] updateParams - ' + SCIMUsersUtility.updateParams);
+
                 Map<String, Object> callResult = SCIMUsersUtility.updateUser(upa.externalUserId, userPayload);
                 userProvUtils.debug('HTTP call result was ' + callResult);
 

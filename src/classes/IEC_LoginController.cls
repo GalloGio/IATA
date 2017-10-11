@@ -7,6 +7,8 @@ public without sharing class IEC_LoginController extends IEC_PageController {
 
     String paramReturnURL;
 
+    public String redirectUrl { get; set; }
+
     public IEC_LoginController(){}
 
     public Pagereference onLoadAction()
@@ -36,20 +38,35 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 if(retUrl == 'null') {retUrl = 'iec_Home';}
                 if(retUrl != null && retUrl.contains('?')) tt = '&tt=';
 
-                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl + tt + DateTime.now().getTime());                
-                return pr ;
+                // Ecommerce Enhancements - redirect using Javascript so that Cookies take effect
+                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl + tt + DateTime.now().getTime()); 
+
+                if (pr != null)
+                    redirectUrl = pr.getUrl();
+
+                // Ecommerce Enhancements - do not redirect via redirect, use JavaScript to allow cookies to store
+
+                return null;
+                //return pr ;
             }else{
                 //Customer need to login in
                 String resetPasswordEmail = ApexPages.currentPage().getParameters().get('resetPasswordEmail');
                 if(resetPasswordEmail != null && resetPasswordEmail != ''){
                     addConfirmMessage('A new password has been sent to ' + resetPasswordEmail);
                 }
-
             }
 
             return null;
         }
-        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+        catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+
+            if (IEC_Trace.isDebugActive == true) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, ex.getStackTraceString()));
+            }
+
+            return null;
+        }
     }
 
 
@@ -83,19 +100,36 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                             hasError = true;
                             //show90days = true;
                             //ApexPages.getMessages().clear();
+
                             return null;
                         }
                     }
 
                     hasError = true;
                 }
+
                 if(( ApexPages.currentPage().getUrl().contains('iecWebDownload'))){ //start RN-INC309648
                     String numb = System.currentPageReference().getParameters().get('itemNumber');
                     retUrl = '/iecWebDownload?itemNumber=' + numb;
                     pr  = IECUserManager.login(username, password, retURL);
+
                     return pr;
                 }//end
-                return pr ;
+
+                if(( ApexPages.currentPage().getUrl().contains('IEC_ViewQuotes'))){ //start SA-INC324413
+                    retUrl = '/IEC_ViewQuotes';
+                    pr  = IECUserManager.login(username, password, retURL);
+
+                    return pr;
+                }//end
+
+                // Ecommerce Enhancements - do not redirect via redirect, use JavaScript to allow cookies to store
+                if (pr != null) {
+                    redirectUrl = pr.getUrl();
+                }
+
+                return null;
+                //return pr ;
             }
                 
             return null;
@@ -106,6 +140,7 @@ public without sharing class IEC_LoginController extends IEC_PageController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             hasConfirm = false;
             hasError = true;
+
             return null;
         }
     }
@@ -134,10 +169,13 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Frozen_User_Alert_Message)); 
                 IECUserManager.reactivateUser(users[0].UserName);
                 hasError = true;
+
                 return null;
             }     
                  
-              if (users[0].contactid == null  ) { throw new IECApplicationException('Your password could not be reseted. Please contact support. No contact Found'); }       
+            if (users[0].contactid == null  ) {
+                throw new IECApplicationException('Your password could not be reseted. Please contact support. No contact Found');
+            }       
             
             // reset password
           //SALVATORE if (IECUserManager.resetPassword(resetPasswordEmail)) {
@@ -148,16 +186,19 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 //Redirect the Customer to the login page
                 Pagereference pageRef = new Pagereference('/iec_Login?resetPasswordEmail=' + resetPasswordEmail);
                 pageRef.setRedirect(true);
+
                 return pageRef;
             }
-            else
+            else {
                 throw new IECApplicationException('Your password could not be reseted. Please contact support.');
+            }
             
             return null;
         }
         catch (Exception ex) {
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             addErrorMessage(ex.getMessage());
+
             return null;
         }
     }
@@ -186,8 +227,13 @@ public without sharing class IEC_LoginController extends IEC_PageController {
             }
             
             pr.setRedirect(true);
+
             return pr;
         }
-        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+        catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+
+            return null;
+        }
     }
 }

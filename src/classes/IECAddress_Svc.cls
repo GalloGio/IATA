@@ -160,8 +160,9 @@ public class IECAddress_Svc
 					request.SoldTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
 					request.SoldTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
 					request.SoldTo.SearchTerm1   = Utility.truncate(loc.Account__c, 15);
-					request.SoldTo.Street2       = Utility.truncate(loc.Address__r.Street__c, 40);
-					request.SoldTo.Street3       = Utility.truncate(loc.Address__r.Street__c, 40, 60);
+					List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+					request.SoldTo.Street2       = addressLines[0];
+					request.SoldTo.Street3       = addressLines[1];
 					request.SoldTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
 					request.SoldTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
 					request.SoldTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c,3);
@@ -195,8 +196,9 @@ public class IECAddress_Svc
 						request.BillTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
 						request.BillTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
 						request.BillTo.SearchTerm1   = Utility.truncate(loc.Contact__c, 15);
-						request.BillTo.Street2       = Utility.truncate(loc.Address__r.Street__c, 40);
-						request.BillTo.Street3       = Utility.truncate(loc.Address__r.Street__c, 40, 60);
+						List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+						request.BillTo.Street2       = addressLines[0];
+						request.BillTo.Street3       = addressLines[1];	
 						request.BillTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
 						request.BillTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
 						request.BillTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c, 3);
@@ -212,8 +214,10 @@ public class IECAddress_Svc
 						request.ShipTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
 						request.ShipTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
 						request.ShipTo.SearchTerm1   = Utility.truncate(loc.Contact__c, 15);
-						request.ShipTo.Street2       = Utility.truncate(loc.Address__r.Street__c, 40);
-						request.ShipTo.Street3       = Utility.truncate(loc.Address__r.Street__c, 40, 60);
+						//TC: Enhancement
+                		List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+						request.ShipTo.Street2       = addressLines[0];
+						request.ShipTo.Street3       = addressLines[1];
 						request.ShipTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
 						request.ShipTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
 						request.ShipTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c, 3);

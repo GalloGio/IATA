@@ -85,7 +85,7 @@ public without sharing class Order_Svc
             request.DistChannel         = (mapEntry!=null) ? mapEntry.SAP_Distribition_Channel__c : '';
             request.Division            = (mapEntry!=null) ? mapEntry.SAP_Division__c : '';
             //request.PaymentMethod       = getSAPPaymentType(ord.Payment_Type__c);
-            request.PaymentMethod       = ((ord.Payment_Type__c == 'Credit Card') ? 'CRC' : ((ord.Payment_Type__c == 'Bill me later') ? null : ord.Payment_Type__c));
+            request.PaymentMethod       = ((ord.Payment_Type__c == 'Credit Card' || ord.Payment_Type__c == 'Credit Card Deferred') ? 'CRC' : ((ord.Payment_Type__c == 'Bill me later') ? null : ord.Payment_Type__c));
 
             //-- new fields added on 06/09/2016
             request.Email               = ord.ShipToContact_Email__c; 
@@ -146,8 +146,10 @@ public without sharing class Order_Svc
                 //shipTo.Company              = Utility.truncate(ord.ShipToAccount_Name__c,35);
                 shipTo.Name                 = Utility.truncate(shipToLocation.Account_Name__c,35);
                 //shipTo.Name                 = Utility.truncate(ord.ShipToContact_Name__c,35);
-                shipTo.AddressLine1         = Utility.truncate(shipToLocation.Street__c,35);
-                shipTo.AddressLine2         = Utility.truncate(shipToLocation.Street__c,35,35);
+                //TC: Enhancement
+                List<String> addressLines 	= Utility.splitAddress(shipToLocation.Street__c, 35);
+                shipTo.AddressLine1         = addressLines[0];
+                shipTo.AddressLine2         = addressLines[1];
                 shipTo.City                 = Utility.truncate(shipToLocation.City__c,35);
                 shipTo.PostalCode           = Utility.truncate(shipToLocation.ZipCode__c,9);
                 //shipTo.Province             = Utility.truncate(shipToLocation.ISO_State_Code_SAP__c,3);
@@ -1965,14 +1967,15 @@ public without sharing class Order_Svc
 
 /**
 
-    Ecommerce Enhancements R1, do not delete Zuora Subscription.
+    Ecommerce Enhancements R1, do not delete Zuora Subscription. --- reverted comment on 2017-06-19.
 
+*/
                 //Delete all of the Subscription on Zuora
                 if (system.isBatch() || system.isFuture())
                     deleteZuoraSubscriptionNow(orderIdsForFailedSub.keySet());
                 else
                     deleteZuoraSubscription(orderIdsForFailedSub.keySet());
-*/
+
 
                 //*** should not throw exception because no update nor rollback is performed
                 //throw Exception
@@ -2086,15 +2089,13 @@ public without sharing class Order_Svc
                     
 /**
 
-    Ecommerce Enhancements R1, do not delete Zuora Subscription.
+    Ecommerce Enhancements R1, do not delete Zuora Subscription. --- reverted comment on 2017-06-19.
 
-
+*/
                     if (system.isBatch() || system.isFuture())
                         deleteZuoraSubscriptionNow(orderIdsForFailedSub.keySet());
                     else
                         deleteZuoraSubscription(orderIdsForFailedSub.keySet());
-
-*/
 
                     //*** should not throw exception because no update nor rollback is performed
                     //throw Exception
@@ -3833,7 +3834,7 @@ public without sharing class Order_Svc
                 else {
                     // Operation failed, so get all errors                
                     for(Database.Error err : sr.getErrors()) {
-                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', '', false));
+                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', null, false));
                     }
                 }
             }
@@ -4065,6 +4066,129 @@ public without sharing class Order_Svc
     } //*** end of "setOrderItemToPaid"
 
 
+    /** Ecommerce Enhancements R2 **/
+    public static void setOrderAcceptedPaymentMethods(List<Order> newList, Map<Id,Order> oldList) {
+        Map<Id,Order> orderMap = new Map<Id,Order>();
+        Set<Id> orderIdSet = new Set<Id>();
+        Map<Id,Set<String>> orderAcceptedPaymentMethodsMap = new Map<Id,Set<String>>();
+        Map<Id,List<OrderItem>> orderItemMap = new Map<Id,List<OrderItem>>();
 
+        for (Order order : newList) {
+            orderIdSet.add(order.Id);
+            orderMap.put(order.Id, order);
+        }
+
+        for (OrderItem orderItem : [SELECT Id, OrderId, Accepted_Payment_Methods__c FROM OrderItem WHERE OrderId IN :orderIdset]) {
+            List<OrderItem> orderItemList;
+
+            if (orderItemMap.containsKey(orderItem.OrderId) == false) {
+                orderItemMap.put(orderItem.OrderId, new List<OrderItem>());
+            }
+
+            orderItemList = orderItemMap.get(orderItem.OrderId);
+
+            orderItemList.add(orderItem);
+        }
+
+        for (Id orderId : orderIdSet) {
+            Order order = orderMap.get(orderId);
+            Set<String> orderPaymentMethodSet = new Set<String>();
+            List<OrderItem> orderItemList = orderItemMap.get(orderId);
+
+            if (orderItemList != null) {
+                Integer counter = 0;
+
+                for (OrderItem orderItem : orderItemList) {
+                    Set<String> orderItemPaymentMethodSet;
+
+                    if (orderItem.Accepted_Payment_Methods__c != null && orderItem.Accepted_Payment_Methods__c.trim().equals('') == false) {
+                        orderItemPaymentMethodSet = new Set<String>(orderItem.Accepted_Payment_Methods__c.split(';'));
+                    } else {
+                        orderItemPaymentMethodSet = new Set<String>();
+                    }
+
+                    if (counter == 0) {
+                        orderPaymentMethodSet.addAll(orderItemPaymentMethodSet);
+                    } else {
+                        orderPaymentMethodSet.retainAll(orderItemPaymentMethodSet);
+                    }
+
+                    counter++;
+                }
+            }
+
+            if (orderPaymentMethodSet.isEmpty() == false) {
+                List<String> orderPaymentMethodsList = new List<String>();
+
+                orderPaymentMethodsList.addAll(orderPaymentMethodSet);
+
+                order.Accepted_Payment_Methods__c = String.join(orderPaymentMethodsList, ';');
+            } else {
+                order.Accepted_Payment_Methods__c = null;
+            }
+        }
+    }
+
+     /*******************************************************************
+        Updating IEC SAP INVOICE when ORDER Status is Payment Confirmed
+        
+        INC295559
+         checking if all the orders related to the Invoice are with status Payment Confirmed.
+         IF Yes :
+            - we will change the IEC SAP Invoice status to Zuora Ready
+         IF No:
+            - nothing happens with the IEC SAP Invoice Status
+        
+      *******************************************************************/
+    public static void sapInvoiceStatusUpdate(Map<Id, Order> newMap, Map<Id, Order> oldMap){
+        system.debug('sap invoice status update starting...');
+     
+        Set<Id> orderId = new Set<Id>();
+        List<IEC_SAP_Invoice__c> sapInvoice = new List<IEC_SAP_Invoice__c>();
+        List<IEC_SAP_Invoice__c> sapInvoiceToUpdate = new List<IEC_SAP_Invoice__c>();
+
+        Set<Id> sapInvoiceId = new Set<Id>();
+        List<Order> orderList = new List<Order>();
+        Boolean stopSapInvoiceUpdate = false;
+
+        for (Order order : newMap.values()) {
+                Order oldOrder = oldMap.get(order.Id);
+
+                if(order.Status == IECConstants.ORDER_PAYMENT_CONFIRMED && oldOrder != null && oldOrder.Status != order.Status && (Order.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer || Order.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)){
+                    if(order.SAP_Invoice__c != null)
+                        sapInvoiceId.add(order.SAP_Invoice__c);
+                }
+        }
+
+        
+        if(sapInvoiceId.size() > 0){
+            orderList = [SELECT id, SAP_Invoice__c, Status FROM Order where SAP_Invoice__c IN :sapInvoiceId];
+
+            if(!orderList.isEmpty()){
+                for(Order o : orderList){
+                    if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED){
+                        stopSapInvoiceUpdate = true;
+                    }
+                }
+            }
+        system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
+            
+            if(!stopSapInvoiceUpdate){ // all the related orders have the status Payment Confirmed
+                sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Id IN :sapInvoiceId];
+
+                if(!sapInvoice.isEmpty()){
+                    for(IEC_SAP_Invoice__c sapInv : sapInvoice){
+                        sapInv.Status__c = IECConstants.IECSAPInvoice_Status_ZuoraReady;
+                        sapInv.Payment_Date__c = Date.today();
+                        sapInv.Zuora_Billing_Account_ID__c = sapInv.Billing_Account__r.Zuora__External_Id__c;
+                        sapInvoiceToUpdate.add(sapInv);
+                    }
+                }
+                if(!sapInvoiceToUpdate.isEmpty())
+                    update sapInvoiceToUpdate;
+            }
+        }
+
+    }
 
 }

@@ -1,5 +1,5 @@
 <apex:page controller="IEC_ProductDetailsController" action="{!onLoadAction}" language="{!language}" 
-    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
     
     <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
@@ -26,6 +26,14 @@
            color: '#fff'
            } }); 
      }
+
+    function redirectToCart() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_ShoppingCart';
+    }
    </script>
 
     <html lang="{!language}">
@@ -69,14 +77,14 @@
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
                                 <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-								<li>
-									<a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
-									<apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
-								</li>
-								<li>
-									<a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
-									<apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
-								</li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+                                </li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+                                </li>
                                 <li>{!product.ProductName}</li>
                             </ol>
 
@@ -97,7 +105,7 @@
                                         <div class="table-container">
                                             <table class="data-table table-product-data">                                           
                                                 <!-- Regular Price if exist -->
-                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0) }">
+                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
                                                     <tr>
                                                         <th scope="row">{!$Label.regular_price}</th>
                                                         <td>
@@ -264,16 +272,8 @@
                                             <!-- <input type="number" class="user-input quantity js-input-quantity" /> -->
                                         </label>
 
-                                        <!-- <apex:actionFunction name="addToCart" action="{!addToCart}" status="add2CartStatus" reRender="frmAddToCart" />
-
-                                        <button class="button {!IF(bIsPreOrder,'pre-order', 'wide')}" onclick="addToCart()">
-                                            {!IF(bIsOutOfStock,$Label.PreOrderAddToCart, $Label.AddToCart)}
-                                            <apex:actionStatus id="add2CartStatus">
-                                                <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_ImageLoaderLight}" align="middle" alt="x" /></apex:facet>
-                                            </apex:actionStatus>
-                                        </button> -->
-                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="blockme()" oncomplete="j$.unblockUI();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.AddToCart)}" />
-                                        
+                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.AddToCart)}" />
+                                  
                                     </apex:outputPanel>
                                 </apex:form>
 

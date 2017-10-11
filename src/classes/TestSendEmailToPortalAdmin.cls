@@ -45,12 +45,11 @@ private class TestSendEmailToPortalAdmin {
 		member1.AccountId = child.Id;
 		insert member1; 
 		
-			
 		ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new set<ID>{adminUser.Id, newUser.Id});
     	
     	list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
-    									TestObjectCreator.buildPortalApplications('Test Method App 001')
-    								   ,TestObjectCreator.buildPortalApplications('Test Method App 002')
+    									TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
+    								   ,TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
     	};
     	Database.insert(appList);
     	ID applicationId1 = appList[0].Id;
@@ -67,10 +66,15 @@ private class TestSendEmailToPortalAdmin {
 		Database.insert(lpar);
 		PortalServiceAccessTriggerHandler.privetTrigger = stopTrigger;
 		Test.stopTest();
-		list<ID> appIds = new list<ID>{lpar[0].ID, lpar[1].Id}; 
+		//list<ID> appIds = new list<ID>{lpar[0].ID, lpar[1].Id}; 
 		
-		lpar = getPortalApplicationRight(appIds);
-    	PortalServiceAccessTriggerHandler.SendEmailToPortalAdminToValidateRequest(lpar);
+		//lpar = getPortalApplicationRight(appIds);
+
+		//System.debug(LoggingLevel.ERROR, '--------------->' + lpar);
+
+		//Database.insert(lpar);
+
+    	//PortalServiceAccessTriggerHandler.SendEmailToPortalAdminToValidateRequest(lpar);
     	
     }
     

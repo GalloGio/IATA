@@ -321,6 +321,14 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CONTACT.FULL_NAME</fields>
+        <fields>OCR.ROLE</fields>
+        <fields>CM.RESPONDED</fields>
+        <fields>PRIMARY</fields>
+        <relatedList>RelatedCampaignInfluenceList</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

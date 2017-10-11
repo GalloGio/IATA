@@ -42,16 +42,16 @@ private class IEC_ProductDetailsControllerTest {
 			ctrl = new IEC_ProductDetailsController();
 			ctrl.onLoadAction();
 			ctrl.discounts = null;
-			ctrl.addToCart();
+			//ctrl.addToCart();
 		}
 
 		//*** cover case of GDP product
-		products = Product_Sel.getEComProduct(null, true, 'IEC_Product_Information__c != null', null, false);
+		//products = Product_Sel.getEComProduct(null, true, 'IEC_Product_Information__c != null', null, false);
 		if (products.size() > 0)
 		{
-			ApexPages.currentPage().getParameters().put('id', products[0].ProductNumber);
-			ctrl = new IEC_ProductDetailsController();
-			ctrl.onLoadAction();
+			//ApexPages.currentPage().getParameters().put('id', products[0].ProductNumber);
+			//ctrl = new IEC_ProductDetailsController();
+			//ctrl.onLoadAction();
 		}
 	}
 	

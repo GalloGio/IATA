@@ -14,7 +14,7 @@
             <apex:inputField value="{!LocalGovernance__c.Region__c}" />
             <apex:inputField value="{!LocalGovernance__c.Reporting_to__c}" required="true" />
             <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
-            <apex:inputField value="{!LocalGovernance__c.Group_Owner_Text__c}" required="true" />
+            <apex:inputField value="{!LocalGovernance__c.Group_Owner__c}" styleClass="hidePicklist" required="true"/>
 
         </apex:pageBlockSection>
 

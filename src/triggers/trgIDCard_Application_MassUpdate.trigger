@@ -27,8 +27,11 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 	//determine all account
 	List<String> iataCodes = new List<String>();
 	for (ID_Card_Application__c app : trigger.new) {
-		iataCodes.add(app.IATA_Code__c);
+		if (app.RecordTypeId.equals(massAppRT))
+			iataCodes.add(app.IATA_Code__c);
 	}
+
+	if(iataCodes.size()>0)
 	for (Account a : [select Id, IATACode__c, ID_Card_KeyAccount_features__c , IDCard_Key_Account__c, BillingCountry from Account where IATACode__c in :iataCodes]) {
 		accountPerIATACode.put(a.IATACode__c, a);
 	}
@@ -95,5 +98,5 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 		system.debug('[trgIDCard_Application_MassUpdate] Mass Apps which should be starteed : ' + app.Id + ' and session id = ' + UserInfo.getSessionid());
 
 		IDCardMassApplicationBatch.startJob(app.Id, 'IDCA_MASS_PROCESS_' + app.Name, UserInfo.getSessionid());
-	}
+	}	
 }

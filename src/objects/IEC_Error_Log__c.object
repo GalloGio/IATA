@@ -171,7 +171,7 @@
         <columns>Displayed_Message__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>Errors</label>
+        <label>All Errors</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -188,6 +188,25 @@
             <value>DataLoader</value>
         </filters>
         <label>DataLoader - All Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>DataLoader_GDS_Errors</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>IATACODE__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Stack_Trace__c</columns>
+        <columns>Extra_Information__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>startsWith</operation>
+            <value>DataLoader_WEBSTAR_GDS</value>
+        </filters>
+        <label>DataLoader - Webstar GDS Errors</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -220,16 +239,18 @@
         <columns>Source__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Data__c</columns>
+        <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
             <operation>equals</operation>
-            <value>Error</value>
+            <value>Error,Warning,Info</value>
         </filters>
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>6/9/2017 12:00 AM</value>
+            <value>6/14/2017 12:00 AM</value>
         </filters>
         <label>Errors by Date</label>
         <language>en_US</language>
@@ -332,6 +353,28 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Today_No_SAP</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>notContain</operation>
+            <value>SAP</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today No SAP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Webstar_Accreditation_Errors</fullName>
         <columns>NAME</columns>
         <columns>Errror_Message__c</columns>
@@ -345,32 +388,6 @@
             <value>DataLoader_AIMS_Accreditations</value>
         </filters>
         <label>Webstar Accreditation Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X1_My_View1</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader</value>
-        </filters>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>Accreditations</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>6/10/2016 12:00 AM</value>
-        </filters>
-        <label>DataLoader - Accreditation errors</label>
         <language>en_US</language>
     </listViews>
     <nameField>

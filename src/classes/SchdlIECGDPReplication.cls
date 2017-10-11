@@ -59,7 +59,7 @@ global class SchdlIECGDPReplication implements Schedulable {
 			+ '		AND Account.ID IN ('
 			+ '			SELECT Related_Account__c'
 			+ '			FROM Accreditation__c'
-			+ '			WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+			+ '			WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
 			+ '				AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\')'
 			+ '				AND Related_Account__r.Id != null'
 			+ '			)'

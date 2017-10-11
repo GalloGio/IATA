@@ -63,10 +63,14 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			}
 		}
 
+		System.debug('products.size(): ' + products.size());
+
 		if(products.size() >0)
 		{
 			product = products[0];
 			Date dt = Date.today();
+
+			System.debug('product: ' + product);
 
 			if(product.ProductInfoId != null)
 		    {
@@ -163,6 +167,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		}
 
 
+		System.debug('selected_mega_menu = publications');
+
 		selected_mega_menu = 'publications';
 		return null;
 	}
@@ -173,19 +179,38 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
      **************************************************************************************************************/
 	public PageReference addToCart()
 	{
+		System.debug('addToCart()');
+
 		try
 		{
 			if (!bIsProductCompliant)
 	        {
+				System.debug('Product Is Not Compliant');
+
 	        	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 				return null;
 	        }
 	        else 
 	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
+				System.debug('Product Is Compliant - invoking addCartToCookie');
+
+				
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				if (newShoppingCart == false) {
+	        		PageReference resultPageRef = IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');
+				} else {
+					storeCart.addItem(product.ProductNumber, product.OrderQuantity, null);
+				}
+
+				return null;
 	        }
 		}	
-		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
+		catch(Exception e) {
+			System.debug(e.getStackTraceString());
+
+			addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());
+			return null;
+		}
 	}
 
 	/**************************************************************************************************************

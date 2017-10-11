@@ -15,6 +15,9 @@ public class ISSP_CaseListTest {
         cttr.setSortDirection('DESC');
         system.assertEquals('DESC', cttr.getSortDirection());
         cttr.sortExpression = 'ASC';
+        cttr.isPWCProfile = false;
+        cttr.isDPCUser = false;
+        String communityName = cttr.communityName;        
     }
     
     public static testMethod void testISSP_CaseList_2() {

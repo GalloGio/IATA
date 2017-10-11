@@ -1,6 +1,17 @@
 @isTest
 public class SidraLiteSendEmailControllerTest {
 
+    @TestSetup
+    public static void loadData() {
+        RecordTypeEmail__c rt = new RecordTypeEmail__c();
+        rt.Name = 'Name';
+        rt.Record_Type_Developer_Name__c = 'SIDRA_Lite';
+        rt.Country_Name__c = 'Default';
+        rt.Case_Group__c = 'Default';
+        rt.Email__c = 'noreply@iata.org';
+        insert rt;
+    }
+
     public static Case getSidraCase() {
         APXTConga4__Conga_Merge_Query__c cm1 = new APXTConga4__Conga_Merge_Query__c();
         cm1.APXTConga4__Name__c = 'Parent Case';

@@ -127,6 +127,8 @@
     //test DGR for R specific country
     @isTest static void testCargoAgencyRegulationsHOClassR() {
 
+        Test.startTest();
+        
         AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP6__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         List<AMS_Agency_Regulation__c> aregs;
 
@@ -148,7 +150,6 @@
         dgrStaff.Type_Of_Certificate__c = 'DGA';
         update dgrStaff;
 
-        Test.startTest();
 
         try {
             oscar.STEP6__c = AMS_Utils.PASSED;
