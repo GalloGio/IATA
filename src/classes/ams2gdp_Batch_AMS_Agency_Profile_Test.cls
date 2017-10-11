@@ -44,14 +44,14 @@ private class ams2gdp_Batch_AMS_Agency_Profile_Test {
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false));
+ 			Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false, true));
 		Test.stopTest();
 	}
 	
 	
 	@isTest static void negativeTestBatchAMSAgencyProfile() 
 	{
-		ams2gdp_Batch_AMS_Agency_Profile batch = new ams2gdp_Batch_AMS_Agency_Profile(false);
+		ams2gdp_Batch_AMS_Agency_Profile batch = new ams2gdp_Batch_AMS_Agency_Profile(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 
