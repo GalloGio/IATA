@@ -116,7 +116,7 @@ public class ang_rhcAlertTriggerHandler{
 			List<Case> smapParentCases = new List<Case>();
 			Map<String,case> mapCaseRiskAlert = new Map<String,case>();
 
-			for(ANG_Risk_Alert__c ra: triggerNew){
+			for(ANG_Risk_Alert__c ra: redAlerts){
 
 				//TODO: confirm all this fileds 
 				smapParentCase = new Case(
@@ -156,42 +156,39 @@ public class ang_rhcAlertTriggerHandler{
 				if(!riskAlertsToUpdate.isEmpty())
 					update riskAlertsToUpdate;
 
-				Case sidraCase;
+				Case sidraLiteCase;
 				sidraLiteCases = new List<Case>();
 
 				for(Case parentCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
 					//NEWGEN-1933 fill fields on sidra case
-					sidraCase = WSSidraLite.createCase(parentCase.id);
+					sidraLiteCase = WSSidraLite.createCase(parentCase.id);
 					//TODO: confirm on "sidraCase.Subject" if account site or account IATA code
-					sidraCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.Site + ' - ' + parentCase.Account.Name;
-					sidraCase.Case_Remarks__c = '';
-					sidraCase.Description = '';					
-					sidraCase.Region__c = parentCase.Region__c; 
-					sidraCase.BSPCountry__c = parentCase.BSPCountry__c;
-					sidraCase.BSP_CASS__c = 'BSP';
-					sidraCase.Status = 'Open'; 
-					sidraCase.Origin = 'Risk Monitoring Engine'; 
-					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
-					sidraCase.Priority = 'High'; 
-					sidraCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
+					sidraLiteCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.Site + ' - ' + parentCase.Account.Name;
+					sidraLiteCase.Case_Remarks__c = '';
+					sidraLiteCase.Description = '';					
+					sidraLiteCase.Region__c = parentCase.Region__c; 
+					sidraLiteCase.BSPCountry__c = parentCase.BSPCountry__c;
+					sidraLiteCase.BSP_CASS__c = 'BSP';
+					sidraLiteCase.Status = 'Open'; 
+					sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
+					sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
+					sidraLiteCase.Priority = 'High'; 
+					sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
 
-					//confirm if i can use this logic to get the contact or if i show run all hiearchy
+					//TODO: confirm if I can use this logic to get the contact or if i should run all hiearchy
 					List<Contact> contacts = new List<Contact>();
 					if (parentCase.ParentId != null) {
-						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.Parent.Id AND User_Portal_Status__c = 'Approved Admin'];
+						contacts = [SELECT Id FROM Contact WHERE AccountId = :parentCase.Account.Top_Parent__c AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
 					} else {
-						contacts = [SELECT id FROM CONTACT WHERE ACCOUNTID = :parentCase.id AND User_Portal_Status__c = 'Approved Admin'];
+						contacts = [SELECT Id FROM Contact WHERE AccountId = :parentCase.AccountID AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
 					}
 
 					if(!contacts.isEmpty())
-						sidraCase.Contact = contacts[0];
-
-					//sidraCase.R_S_feedback_pending__c : TBD?
-					//sidraCase.New_interaction__c : TBD ??
+						sidraLiteCase.Contact = contacts[0];
 					
 					//END -NEWGEN-1933
-					sidraLiteCases.add(sidraCase);
+					sidraLiteCases.add(sidraLiteCase);
 
 				}
 
@@ -199,9 +196,9 @@ public class ang_rhcAlertTriggerHandler{
 					insert sidraLiteCases;
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
-					for (Case sidraLiteCase : sidraLiteCases) {
-						caseIds.add(sidraLiteCase.Id);
-						accountIds.add(sidraLiteCase.AccountId);
+					for (Case sLiteCase : sidraLiteCases) {
+						caseIds.add(sLiteCase.Id);
+						accountIds.add(sLiteCase.AccountId);
 					}
 					
                     AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
