@@ -17,12 +17,12 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 oscar.Sanity_check_received__c = Date.today();
                 
-                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA || oscar.Process__c == AMS_Utils.VOLRELINQUISH){
 
                     oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
                 
                 }
-                else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH){
+                else {
 
                     oscar.Process_Start_Date__c = Date.today();
                 

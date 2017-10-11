@@ -15073,6 +15073,36 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Airlines_with_AOC_expiring_soon</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Airline_Prefix__c</columns>
+        <columns>Airline_designator__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>AOC_Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>AOC_Expiry_Date__c</field>
+            <operation>equals</operation>
+            <value>NEXT_90_DAYS</value>
+        </filters>
+        <filters>
+            <field>ACLI_Status__c</field>
+            <operation>equals</operation>
+            <value>Active Company</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Airline</value>
+        </filters>
+        <label>Airlines AOC expiring in 90 days or less</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>DistributionAirlineManagementHO</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Americas_Airline_HQ</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>Quality__c</columns>

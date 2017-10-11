@@ -720,12 +720,6 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-    
-    @isTest static void testCaseChildHelperFake(){
-
-        CaseChildHelper.newgenfakemethod();
-
-     }
 
      @isTest static void CustomChangeIntegrations(){
         AMS_ChangeCodes_Integration__c aci = new AMS_ChangeCodes_Integration__c(name = 'test', RecId_A__c= 'A', RecId_B__c='B', RecId_Res__c='C');
