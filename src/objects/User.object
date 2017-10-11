@@ -92,6 +92,41 @@
         <visibleLines>2</visibleLines>
     </fields>
     <fields>
+        <fullName>ANG_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Customer_Country_ISO__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Country ISO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Is_Accredited_Agent__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND( 
+Contact.Account.RecordType.Name=&apos;Agency&apos;,
+OR(
+ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;) 
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Accredited Agent</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Air_Transport_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Air Transport Expertise</label>
