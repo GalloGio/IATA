@@ -126,9 +126,9 @@ global with sharing class GSS_REST_FilePayload {
             DeltaPeriodSOQL += ' FROM GDP_Delta__c  WHERE GDP_File_Description__c = \''+SearchBySpecificationId +'\'' ;
             String STARTDAY='';
             String ENDDAY='';
-            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='YESTERDAY'; ENDDAY='TODAY';}
-            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='LAST_WEEK'; ENDDAY='THIS_WEEK';}
-            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='LAST_MONTH'; ENDDAY='THIS_MONTH';}
+            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='=YESTERDAY';}
+            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='=LAST_WEEK';}
+            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='=LAST_MONTH';}
             
             
             Date theEndOfMonth;
@@ -138,17 +138,17 @@ global with sharing class GSS_REST_FilePayload {
                 //Intervals for Semi-Monthly PERIOD 2 are from the16thOfLastMonth  to theEndOfLastMonth
                 if(Date.Today().Day() >= 16){ //From the 16th to the last day of Month, generate semi-monthly files for the PERIOD 2 
                     theFirstOfMonth  = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
-                    theEndOfMonth     = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),15);
+                    theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),16);
                 
                 }
                 else { //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
                     
-                    theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(15);
-                    theEndOfMonth   = Date.TODAY().toStartOfMonth().addDays(-1);
+                    theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(16);
+                    theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
                           
                 }
-                STARTDAY=String.valueOf(theFirstOfMonth);
-                ENDDAY=String.valueOf(theEndOfMonth);
+                STARTDAY='>='+String.valueOf(theFirstOfMonth);
+                ENDDAY='<'+String.valueOf(theEndOfMonth);
             }
             
             // Ordering for Delta always based on record Id, ignoring the value of Product_Type, Order_By, GSS_MDP_Sort_Key_Formula.
@@ -156,8 +156,8 @@ global with sharing class GSS_REST_FilePayload {
             String Delta_Order_Clause = ' ORDER BY Related_GDP_Product_Account_View__c, CreatedDate ASC';
             String Delta_Where_Last_Retrieved_Id = ' AND Related_GDP_Product_Account_View__c > \'';
             
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c >= '+STARTDAY;
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c < '+ENDDAY;
+            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+STARTDAY;
+            if (ENDDAY!='') DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+ENDDAY;
             //DeltaPeriodSOQL += ' AND Related_GDP_Product_Account_View__c > \'' + lastRetrievedRecordId + '\'';
             DeltaPeriodSOQL += Delta_Where_Last_Retrieved_Id + lastRetrievedRecordId + '\'';
             DeltaPeriodSOQL += Delta_Order_Clause;
