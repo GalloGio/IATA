@@ -232,6 +232,21 @@ public class ang_rhcAlertTriggerHandler{
 		Integer size = sidraLiteCaseIds.size();
 		List<AMS_BSPLinkIntegration.Response> responses;
 
+        //NEWGEN-2006
+        List<Notification__c> notifications = new List<Notification__c>();
+        List<Contact> agents = [
+            SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
+                SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
+            ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
+        Map<Id, List<Contact>> mapAccContacts = new Map<Id, List<Contact>>();
+        for (Contact c: agents) {
+            Id heId =  c.Account.Top_Parent__c != null ? c.Account.Top_Parent__c : c.AccountId;
+            if (!mapAccContacts.containsKey(heId))
+                mapAccContacts.put(heId, new List<Contact>());
+            mapAccContacts.get(heId).add(c);
+        }
+        //END - NEWGEN-2006
+
 		for (Integer i = 0; i < size; i++) {
 			log = new ISSP_Web_Service_Log__c();
 			log.Case__c = sidraLiteCaseIds[i];
@@ -242,6 +257,17 @@ public class ang_rhcAlertTriggerHandler{
 			for (AMS_BSPLinkIntegration.Response r: responses) {
 				if (r.result == 'Ok') {
 					successMessage = successMessage + '\n ' + r.IATACode;
+                    //NEWGEN-2006
+                    if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
+                        for (Contact c: mapAccContacts.get(accountIds[i])) {
+                            notifications.add(new Notification__c(
+                                Contact__c = c.Id,
+                                Subject__c = Label.RTS_TAR_Notification_Title,
+                                Message__c = Label.RTS_TAR_Notification_Message
+                            ));
+                        }
+                    }
+                    //END - NEWGEN-2006
 					hasSuccess = true;
 				} else if (r.result == 'Error') {
 					hasError = true;
@@ -264,6 +290,9 @@ public class ang_rhcAlertTriggerHandler{
 			}
 			logs.add(log);
 		}// end for loop
+        if (!notifications.isEmpty()) {
+            insert notifications;
+        }
 		insert logs;
 	}
 }
