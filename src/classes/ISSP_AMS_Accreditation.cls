@@ -1302,7 +1302,14 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
-            newCase.Type_of_customer__c = con.Account.Category__c;
+
+            if(newForm.Operation_Type__c == 'Travel_Agent') {
+                newCase.Type_of_customer__c = 'IATA Travel Agent';
+            } else if (newForm.Operation_Type__c == 'Cargo_Agent') {
+                newCase.Type_of_customer__c = 'IATA Cargo Agent';
+            } else {
+                newCase.Type_of_customer__c = con.Account.Category__c;    
+            }
             
             if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
