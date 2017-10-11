@@ -127,6 +127,16 @@ ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Sector__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Sector__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sector</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Air_Transport_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Air Transport Expertise</label>
