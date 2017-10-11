@@ -25,23 +25,48 @@ private class CaseBeforeTriggerTest {
 
         BusinessHours bHourObj = new BusinessHours();
         bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-
+        List<Account> accounts = new List<Account>();
         Account a = new Account( name ='IFAP ACCT',
-                                 industry = 'pluto',
+                                 industry = 'Travel Agent',
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
-                                 IATACode__c ='1234567',
-                                 Site_Index__c = '1234567',
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
                                  Type = 'IATA Cargo Agent',
                                  billingCountry = 'ss',Location_Type__c = 'AO',
                                  category__c = 'IATA Cargo Agent',
                                  sector__c = 'Cargo Agent');
-        insert a;
+        accounts.add(a);
+        //lstMatchedAccounts
+        Account b = new Account( name ='IFAP ACCT1',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='0123456',
+                                 Site_Index__c = '1234',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(b);
+
+        Account c = new Account( name ='test',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(c);
+        insert accounts;
          
         Contact con =new contact(lastname = 'pluto' ,
                                  firstname = 'test',
                                  phone = '123',
-                                 accountid = a.id,
+                                 accountid = accounts[0].id,
                                  Financial_Assessment_Contact__c = true);
         insert con;
                                 
@@ -102,27 +127,43 @@ private class CaseBeforeTriggerTest {
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '1234567',
+                          IATAcode__c = '12345 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
         insert cas3; 
+        cas3.IATAcode__c = '1234567';
+        update cas3;
 
         Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
                           Status = 'Assessment Performed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '0123456789',
+                          IATAcode__c = '01234567 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
-        insert cas4; 
+        insert cas4;
+        cas4.IATAcode__c = '0123456789';
+        update cas4;
 
+        Case cas5 = new Case(recordtypeID = AmericacaseRecordTypeID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          IATAcode__c = '1234 SS',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas5; 
     }
     
     @isTest static void testISSP_Case_3() {
