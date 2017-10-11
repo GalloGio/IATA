@@ -2228,7 +2228,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - TIDS finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   },
@@ -2419,7 +2419,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - MSO finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   }
@@ -2462,7 +2462,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - GSA finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   }
@@ -2580,7 +2580,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - GSA finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   },
@@ -2844,7 +2844,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - GSSA finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   },
@@ -3035,7 +3035,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - AHA finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   }
@@ -3153,7 +3153,7 @@
                       "Name": "FIN",
                       "ReasonCode": "91",
                       "MemoText": "New application - AHA finalized",
-                      "ReasonDesc": "ACCREDITEDâ€“MEETSâ€“STANDARDS",
+                      "ReasonDesc": "ACCREDITED-MEETS-STANDARDS",
                       "Status": "9"
                     }
                   },
