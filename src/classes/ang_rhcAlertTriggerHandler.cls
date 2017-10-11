@@ -153,7 +153,8 @@ public class ang_rhcAlertTriggerHandler{
 					}
 				}
 
-				update riskAlertsToUpdate;
+				if(!riskAlertsToUpdate.isEmpty())
+					update riskAlertsToUpdate;
 
 				Case sidraCase;
 				sidraLiteCases = new List<Case>();
@@ -173,6 +174,7 @@ public class ang_rhcAlertTriggerHandler{
 					sidraCase.Origin = 'Risk Monitoring Engine'; 
 					sidraCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraCase.Priority = 'High'; 
+					sidraCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
 
 					//confirm if i can use this logic to get the contact or if i show run all hiearchy
 					List<Contact> contacts = new List<Contact>();
@@ -200,13 +202,11 @@ public class ang_rhcAlertTriggerHandler{
 					for (Case sidraLiteCase : sidraLiteCases) {
 						caseIds.add(sidraLiteCase.Id);
 						accountIds.add(sidraLiteCase.AccountId);
-                        sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
 					}
 					
                     AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
 					bspLinkCallout(caseIds, accountIds);
-                    update sidraLiteCases;
-				}
+                }
 
 
 			}
