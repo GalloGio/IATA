@@ -1174,11 +1174,11 @@ Object used to store objectives that can be independent, related to other object
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
