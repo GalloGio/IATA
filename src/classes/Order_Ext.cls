@@ -827,9 +827,10 @@ public void getContactLocations(){
 
     refreshBillingInfo(billToLocation);
 
-    User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
-    if(vfOrder.BillToContactId != null && user != null)
-        vfOrder.OwnerId = user.Id;
+    //INC331542
+    //User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+    //if(vfOrder.BillToContactId != null && user != null)
+    //    vfOrder.OwnerId = user.Id;
 
 }
 
@@ -1969,6 +1970,13 @@ public PageReference saveOrder() {
                 insert shippingLocation;
             }
             vfOrder.ShipTo_Location__c = shippingLocation.Id;
+        }
+        
+        //INC331542
+        //Set the user associated to the assigned contact as the ownerId
+        User user = [select id, contactId from User where contactId=:vfOrder.BillToContactId];
+        if(vfOrder.BillToContactId != null && user != null){
+            vfOrder.OwnerId = user.Id;
         }
         
         //*** save order

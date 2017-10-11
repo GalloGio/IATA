@@ -213,6 +213,19 @@ public class  AmsIataCodeGeneratorTest
 
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = null, Branch_Office_Country__c = ctries[6].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id,accre.id);
          System.debug('******************** result: '+s[0]+' - '+s[1]);
          Test.stopTest();
@@ -249,6 +262,19 @@ public class  AmsIataCodeGeneratorTest
 
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = stateCA.Id, Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id,accre.id);
          
          Test.stopTest();
@@ -299,12 +325,36 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id,accre.id);
          
          Case cse2 = new Case();
          insert cse2;
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '124', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+        
+         AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
+         insert theOscar2;
+
+         theOscar2.STEP6__c = 'Passed';
+         update theOscar2;
+
+         cse2.Oscar__c = theOscar2.Id;
+
+         update cse2;
+
          String[] s2 = AmsIataCodeGenerator.generatedAgencyIATACode(ag2.Id,accre2.id);
          Test.stopTest();
          
@@ -358,6 +408,19 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
          Test.stopTest();
          Account agf  = [select id, IATACode__c from Account where Id = :ag.Id ];
@@ -402,6 +465,20 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
          Test.stopTest();
          Account agf  = [select id, IATACode__c from Account where Id = :ag.Id ];
@@ -423,6 +500,18 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+        
+         AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
+         insert theOscar2;
+
+         theOscar2.STEP6__c = 'Passed';
+         update theOscar2;
+
+         cse2.Oscar__c = theOscar2.Id;
+
+         update cse2;
+
+
          String[] s2 = AmsIataCodeGenerator.generatedAgencyIATACode(ag2.Id, accre2.id);
          Account agf2  = [select id, IATACode__c from Account where Id = :ag2.Id ];
          System.debug('[UNITTEST][testIterative]generated  IATA Code:'+agf2.IATACode__c);
@@ -468,6 +557,20 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
          Test.stopTest();
          Account agf  = [select id, IATACode__c, Site from Account where Id = :ag.Id ];
@@ -517,6 +620,19 @@ public class  AmsIataCodeGeneratorTest
          System.debug('****************** fr: '+stateFR);
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
          Test.stopTest();
          Account agf  = [select id, IATACode__c, Site from Account where Id = :ag.Id ];
@@ -570,6 +686,20 @@ public class  AmsIataCodeGeneratorTest
         
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
+
+        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
+
         String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
         Test.stopTest();
         Account agf  = [select id, IATACode__c, Site from Account where Id = :ag.Id ];
@@ -622,6 +752,20 @@ public class  AmsIataCodeGeneratorTest
         
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
+
+        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
+
         String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
         Test.stopTest();
         Account agf  = [select id, IATACode__c, Site from Account where Id = :ag.Id ];
@@ -674,6 +818,19 @@ public class  AmsIataCodeGeneratorTest
         
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
+
+        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
         String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
         Test.stopTest();
         Account agf  = [select id, IATACode__c, Site from Account where Id = :ag.Id ];
@@ -712,6 +869,19 @@ public class  AmsIataCodeGeneratorTest
          //AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id);
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id,accre.id);
          Test.stopTest();
          System.debug('********************** s[0]: '+s[0]+' - s1 '+s[1]);
@@ -851,9 +1021,22 @@ public class  AmsIataCodeGeneratorTest
          insert aas;
          Test.startTest();
          Case cse = new Case();
+         cse.QuantityProduct__c = '1';
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
          
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id,accre.id);
          List<Account> accList = [select Location_Class__c, Check_Digit__c from account where id = :ag.id];
@@ -876,6 +1059,8 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);
          insert oscar;
+         oscar.STEP6__c = 'Passed';
+         update oscar;
          AMS_Agency_Segment__c aas2 = new AMS_Agency_Segment__c(account__c=ag2.Id, Segment__c = p1.Id);
          insert aas2;
          Case cse2 = new Case(accountId=ag2.id, Oscar__c = oscar.Id);
@@ -931,6 +1116,18 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          List<Account> accList = [select Location_Class__c from account];
          for(Account acc : accList)
          {
@@ -967,6 +1164,16 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '123', IATA_ISO_State__c=stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
          Account agf2  = [select id, IATACode__c, Top_Parent__c, Check_Digit__c, Site from Account where Id = :ag2.Id ];
+
+         AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = agf2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id);
+         insert theOscar2;
+
+         theOscar2.STEP6__c = 'Passed';
+         update theOscar2;
+
+         cse2.Oscar__c = theOscar2.Id;
+
+         update cse2;
          
          String[] s2 = AmsIataCodeGenerator.generatedAgencyIATACode(ag2.Id,accre2.id);
          
@@ -1001,6 +1208,17 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[0].id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
 
          Test.startTest();
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id, accre.id);
@@ -1044,6 +1262,18 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id);
          insert accre;
+
+         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
+         insert theOscar;
+
+         theOscar.STEP6__c = 'Passed';
+         update theOscar;
+
+         cse.Oscar__c = theOscar.Id;
+
+         update cse;
+
          String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(accre.id,ag.Id);
          Test.stopTest();
     }
@@ -1113,7 +1343,15 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_OSCAR__c oscar1 = createCaseAndOSCAR(account1,contact1,null);
         AMS_OSCAR__c oscar2 = createCaseAndOSCAR(account1Br,contact1,null);
+        AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        insert ac;
+        oscar2.STEP6__c = 'Passed';
+        update oscar2;
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,account1Br.Cass_Number__c);
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        insert ac2;
+        oscar3.STEP6__c = 'Passed';
+        update oscar3;
 
         String[] result2 = AmsIataCodeGenerator.generatedAgencyIATACode(account1Br.Id,oscar2.AMS_Online_Accreditation__c);
 
@@ -1186,21 +1424,21 @@ public class  AmsIataCodeGeneratorTest
                          Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
                          Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
-                        ,CASS_Number__c ='002', Top_Parent__c = account1.Id);
+                        ,CASS_Number__c ='003', Top_Parent__c = account1.Id);
 
         //BR
         Account account4Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
                          Sector__c = 'Travel Agent', Category__c = 'Non-IATA Travel Agent', 
                          Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
-                        ,CASS_Number__c = null, Top_Parent__c = account1.Id);
+                        ,CASS_Number__c = '004', Top_Parent__c = account1.Id);
 
         //BR
         Account account5Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
                          Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
                          Location_Class__c = 'G', Location_Type__c = 'BR', Status__c = 'New application pending',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
-                        ,CASS_Number__c ='002', Top_Parent__c = account1.Id);
+                        ,CASS_Number__c ='005', Top_Parent__c = account1.Id);
        
         
         List<Account> accounts = new List<Account>{account1Br, account2Br, account3Br, account4Br, account5Br};
@@ -1228,14 +1466,28 @@ public class  AmsIataCodeGeneratorTest
         
         Test.startTest();
 
-        AMS_OSCAR__c oscar1 = createCaseAndOSCARNoCass(account1,contact1,null);
-        AMS_OSCAR__c oscar2 = createCaseAndOSCARNoCass(account1Br,contact1,null);
-        AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,null);
-        AMS_OSCAR__c oscar4 = createCaseAndOSCAR(account3Br,contact1,null);
-        AMS_OSCAR__c oscar5 = createCaseAndOSCARNoCass(account4Br,contact1,null);
-        AMS_OSCAR__c oscar6 = createCaseAndOSCARNoCass(account5Br,contact1,null);
+        AMS_OSCAR__c oscar1 = createCaseAndOSCAR(account1,contact1,'000');
+
+        AMS_OSCAR__c oscar2 = createCaseAndOSCAR(account1Br,contact1,'001');
+
+        AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,'002');
+
+        /*AMS_OSCAR__c oscar4 = createCaseAndOSCAR(account3Br,contact1,'003');
+
+        AMS_OSCAR__c oscar5 = createCaseAndOSCAR(account4Br,contact1,'004');
+
+        AMS_OSCAR__c oscar6 = createCaseAndOSCAR(account5Br,contact1,'005');*/
 
         AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , CASS_Number__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
+
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        insert ac2;
+
+        oscar2.STEP6__c = 'Passed';
+        update oscar2;
+
+        account1Br.CASS_Number__c = null;
+        update account1Br;
         accreditationObj.CASS_Number__c = null;
         update accreditationObj;
 
@@ -1245,6 +1497,12 @@ public class  AmsIataCodeGeneratorTest
         accreditationObj = [SELECT ID , IATACode__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar3.Id)];
         accreditationObj.IATACode__c = '123456789';
         update accreditationObj;
+
+        AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        insert ac3;
+
+        oscar3.STEP6__c = 'Passed';
+        update oscar3;
 
         String[] result3 = AmsIataCodeGenerator.generatedAgencyIATACode(account2Br.Id,oscar3.AMS_Online_Accreditation__c);       
 
@@ -1276,7 +1534,7 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals(result4[1], 'IATA Code Generation is only allowed for A, C, D, I, K, P, Q, R, T, M, G, X and P Location Classes.');
 
 
-        String[] result5 = AmsIataCodeGenerator.generatedAgencyIATACode(account3Br.Id,oscar4.AMS_Online_Accreditation__c);       
+        /*String[] result5 = AmsIataCodeGenerator.generatedAgencyIATACode(account3Br.Id,oscar4.AMS_Online_Accreditation__c);       
 
         String[] result6 = AmsIataCodeGenerator.generatedAgencyIATACode(account4Br.Id,oscar5.AMS_Online_Accreditation__c);
 
@@ -1285,7 +1543,7 @@ public class  AmsIataCodeGeneratorTest
         accreditationObj.Branch_Office_Country__c = c2.id;
         update accreditationObj;
 
-        String[] result7 = AmsIataCodeGenerator.generatedAgencyIATACode(account5Br.Id,oscar6.AMS_Online_Accreditation__c);
+        String[] result7 = AmsIataCodeGenerator.generatedAgencyIATACode(account5Br.Id,oscar6.AMS_Online_Accreditation__c);*/
 
         Test.stopTest();
 
@@ -1366,6 +1624,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
@@ -1400,6 +1659,7 @@ public class  AmsIataCodeGeneratorTest
         //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
+        cse.QuantityProduct__c = '1';
         insert cse;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();

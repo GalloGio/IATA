@@ -23,12 +23,20 @@ public  class ISSP_TC_Accept {
     
     public List<SelectOption> languages {
     get {
-      List<SelectOption> options = new List<selectOption>();
+        List<SelectOption> options = new List<selectOption>();
 
-      for (Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
-        options.add(new SelectOption(l.languageLocalKey__c, l.Language__c));
-      return options;
+        Map<String,String> langMap = new Map<String,String>();
 
+        for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
+            langMap.put(l.Language__c,l.languageLocalKey__c);
+
+        List<String> auxList = new List<String>(langMap.keySet());
+        auxList.sort();
+
+        for(String key :auxList)
+            options.add(new SelectOption(langMap.get(key), key));
+
+        return options; 
     }
     set;
     }

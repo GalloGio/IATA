@@ -19,7 +19,7 @@ public class ANG_UserTriggerHandler {
     // ************************************************************
 
     public void onBeforeInsert(){
-    	assignContactFederationId();
+            assignContactFederationId();
     }
 
     public void onBeforeUpdate(){ }
@@ -33,10 +33,16 @@ public class ANG_UserTriggerHandler {
     // ************************************************************
 	
 	private void assignContactFederationId(){
-		for(User u : triggerNew){
-			u.FederationIdentifier = u.contactId;
-		}
-	}
+         for(User u : triggerNew){
+            if(u.contactId != null) {
+            String fedID = String.valueOf(u.contactId).left(15);
+            u.FederationIdentifier = fedID;
+                system.debug('contact ID' + u.contactId);
+                system.debug('fedID' + fedID);
+            }
+         }
+     }
+
 
 	private void assignUserFederationId() {
 
@@ -56,6 +62,5 @@ public class ANG_UserTriggerHandler {
         doNotRun = true; //prevent recursion of triggers
         update users;
         doNotRun = false;
-    }
-	
+    }		
 }

@@ -107,21 +107,25 @@ public class ISSP_AvailableServices_Test {
 
         Contact c = new Contact (
                 LastName = 'ContactTest',
+                FirstName = 'Name',
                 accountID = a.id
             );
 
         Contact c2 = new Contact (
                 LastName = 'ContactTest2',
+                FirstName = 'Name',
                 accountId = a2.id
             );
 
         Contact c3 = new Contact (
                 LastName = 'ContactTest3',
+                FirstName = 'Name',
                 accountId = a3.id
             );
 
         Contact c4 = new Contact (
                 LastName = 'ContactTest4',
+                FirstName = 'Name',
                 accountId = a4.id
             );
 
@@ -604,7 +608,7 @@ public class ISSP_AvailableServices_Test {
 
             ISSP_AvailableServices cttr = new ISSP_AvailableServices();
 
-            ISSP_AvailableServices.ServiceWrapper sr = new ISSP_AvailableServices.ServiceWrapper(easyPayServ, 'Open', true);
+            ISSP_AvailableServices.ServiceWrapper sr = new ISSP_AvailableServices.ServiceWrapper(easyPayServ, 'Open', true, true);
 
             cttr.Serv = sr;
 

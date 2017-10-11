@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -122,6 +125,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_AIMS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Solicitation_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDP_Opt_In__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -257,6 +268,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Country_ISO_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>state_numeric_code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -603,7 +618,11 @@
         <fields>Address__c</fields>
         <fields>Country__c</fields>
         <fields>Type__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Location__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
@@ -694,6 +713,14 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC_Percent__c</fields>
+        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
+        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>SIDRA_eDefault__c.Account__c</relatedList>
     </relatedLists>
@@ -704,6 +731,8 @@
         <fields>City__c</fields>
         <fields>Country__c</fields>
         <fields>Address_Type__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Address__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -825,6 +854,9 @@
         <fields>Payment_Transaction_Number__c</fields>
         <fields>Payment_Gateway_Response__c</fields>
         <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

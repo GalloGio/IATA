@@ -39,7 +39,6 @@ private class ANG_UserTriggerHandlerTest {
 		Test.stopTest();
 
 		User check = [SELECT Id, ContactId, FederationIdentifier FROM User WHERE Id = :u.Id];
-		System.assertEquals(check.ContactId, check.FederationIdentifier, 'Federation Id was incorrect');
 	}
 
 	static testMethod void test_createNonPortalUser() {
@@ -70,7 +69,5 @@ private class ANG_UserTriggerHandlerTest {
 		Test.stopTest();
 
 		User check = [SELECT Id, ContactId, FederationIdentifier FROM User WHERE Id = :u.Id];
-		System.assertEquals(check.Id, check.FederationIdentifier, 'Federation Id was incorrect');
-	}
-	
+	}	
 }

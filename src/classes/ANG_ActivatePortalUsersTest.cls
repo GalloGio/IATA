@@ -12,7 +12,7 @@ private class ANG_ActivatePortalUsersTest {
    		Account acc1 = new Account(Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
         insert acc1;
 
-        Contact c1 = new Contact(AccountId = acc1.id, Lastname='LastName', Email = 'unique@email.com', Community__c = 'ISS Customer Portal', Phone = '3424322343');
+        Contact c1 = new Contact(AccountId = acc1.id, FirstName='Name', Lastname='LastName', Email = 'unique@email.com', Community__c = 'ISS Customer Portal', Phone = '3424322343');
         insert c1;
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);

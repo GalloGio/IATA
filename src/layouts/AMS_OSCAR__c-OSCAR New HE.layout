@@ -301,6 +301,10 @@
                 <behavior>Edit</behavior>
                 <field>Approval_disapproval_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Disapproval_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -358,10 +362,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Country_Specifics_Approval_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Change_effective_as_of__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -619,7 +619,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6E000000IwEj</masterLabel>
+        <masterLabel>00hw000000iAroV</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -125,6 +125,16 @@
         <columns>start_date__c</columns>
         <columns>End_Date__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>start_date__c</field>
+            <operation>equals</operation>
+            <value>9/12/2017 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Record__c</field>
+            <operation>contains</operation>
+            <value>001w00000192Qc8</value>
+        </filters>
         <label>AMS</label>
         <language>en_US</language>
     </listViews>
@@ -246,7 +256,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>7/14/2017 12:00 AM</value>
+            <value>8/17/2017 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

@@ -77,12 +77,12 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Sanity_check_received__c = Date.today();
                 
-                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA || oscar.Process__c == AMS_Utils.VOLRELINQUISH){
 
                     oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
                 
                 }
-                else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH){
+                else {
 
                     oscar.Process_Start_Date__c = Date.today();
                 
@@ -120,7 +120,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
@@ -580,7 +580,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
                 
-                if(oscar.Process__c == AMS_Utils.NEWHELITE)
+                if(oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE)
                     oscar.Status__c = 'Pending Approval';
                 else
                     oscar.Status__c = 'On Hold_Internal';
@@ -686,7 +686,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Approval_disapproval_date__c = Date.today();
+                oscar.Disapproval_date__c = Date.today();
                 oscar.Status__c = 'On Hold_Internal';
                 res = True;
 

@@ -1,0 +1,102 @@
+<apex:page standardController="Quality__c" extensions="QualityApprovalController"
+    docType="html-5.0" showHeader="false" standardStylesheets="false">
+
+<apex:includeScript value="{!URLFOR($Resource.bootstrap,'bootstrap-3.3.4-dist/js/bootstrap.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.bootstrap,'bootstrap-3.3.4-dist/css/bootstrap.min.css')}"/>
+
+<script>
+    function goBack() {
+        sforce.one.navigateToSObject("{!Quality__c.Id}");
+    }
+</script>
+
+    <apex:form id="mainform">
+
+        <apex:actionFunction name="searchUsers" action="{!searchUsers}" rerender="searchlist"/>
+        <apex:actionFunction name="goToStep1" action="{!goToStep1}" rerender="mainform"/>
+        <apex:actionFunction name="goToStep2" action="{!goToStep2}" rerender="mainform"/>
+        <apex:actionFunction name="goToStep3" action="{!goToStep3}" rerender="mainform">
+            <apex:param name="firstParam" assignTo="{!userId}" value=""/>
+        </apex:actionFunction>
+        <apex:actionFunction name="goToStep4" action="{!goToStep4}" rerender="mainform"/>
+
+        <!-- STEP 1 -->
+        <apex:outputPanel id="step1" layout="block" styleclass="container-fluid" rendered="{!showstep==1}">
+            <div class="row">
+                <div class="alert alert-{!step1Message.type}">
+                  <strong>{!step1Message.text}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-xs-6">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="goBack();">Back</button>
+                </div>
+                <div class="col col-xs-6">
+                    <button type="button" class="btn btn-primary btn-lg {!IF(step1Message.type=='info','','hidden')}" onclick="goToStep2();">Continue</button>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+        <!-- STEP 2 -->
+        <apex:outputPanel id="step2" layout="block" styleclass="container-fluid" rendered="{!showstep==2}">
+            <div class="row">
+                <div class="alert alert-info">
+                  <strong>Choose next approver:</strong>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="input-group">
+                  <apex:input value="{!searchString}" html-placeholder="Search" styleclass="form-control input-lg"/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary btn-lg" type="button" onclick="searchUsers();">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <apex:outputPanel id="searchlist" layout="block" styleclass="row">
+                <div class="list-group">
+                    <apex:repeat value="{!listUser}" var="usr">
+                        <a href="#" class="list-group-item list-group-item-action" onclick="goToStep3('{!usr.Id}');">{!usr.Name}</a>
+                    </apex:repeat>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        
+        <!-- STEP 3 -->
+        <apex:outputPanel id="step3" layout="block" styleclass="container-fluid" rendered="{!showstep==3}">
+            <div class="row">
+                <div class="alert alert-info">
+                  <strong>Confirm approver {!user.Name}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-xs-4">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="goToStep2();">Back</button>
+                </div>
+                <div class="col col-xs-8">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="goToStep4();">Submit for Approval</button>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+        <!-- STEP 4 -->
+        <apex:outputPanel id="step4" layout="block" styleclass="container-fluid" rendered="{!showstep==4}">
+            <div class="row">
+                <div class="alert alert-{!messageResult.type}">
+                  <strong>{!messageResult.text}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-xs-12">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="goBack();">Back to Exception</button>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+    </apex:form>
+
+</apex:page>

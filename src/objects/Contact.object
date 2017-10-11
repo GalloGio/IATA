@@ -2815,7 +2815,9 @@ IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,
 &amp;&quot; &quot;&amp;
 IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -3022,8 +3024,8 @@ IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&
         <fullName>Authorized_Signatory__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Authorized Signatory</label>
-        <trackHistory>false</trackHistory>
+        <label>Legal Authorized Signatory</label>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -5519,6 +5521,28 @@ IF(Account.IATACode__c != &apos;&apos;
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Contact Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( Phone ) = 0, &quot;Phone, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( Email) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( MailingStreet ) = 0, &quot;Complete Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(Title) = 0, &quot;Job Title, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL( Salutation,&quot;&quot;), &quot;Salutation&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN( Phone) = 0, 0,20) + IF( LEN( Email) = 0, 0,20) + IF( LEN(MailingStreet) = 0, 0,20) + IF( LEN(Title) = 0, 0,20) + IF( ISPICKVAL(Salutation,&quot;&quot;), 0,20)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -6512,7 +6536,7 @@ TotalRows-Successes-Errors</description>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
             <operation>equals</operation>
-            <value>IFG Pre-Production</value>
+            <value>IFG Sandbox</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Right__c</field>
@@ -7827,6 +7851,14 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             </picklistValues>
             <picklistValues>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russian</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -27230,7 +27262,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkish</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27720,6 +27760,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_First_name_mandatory</fullName>
+        <active>false</active>
+        <description>Forcing the standard field (first name) mandatory</description>
+        <errorConditionFormula>AND(TRIM (FirstName) == &apos;&apos; &amp;&amp;  $Profile.Name  &lt;&gt; &apos;IATA Portal Integration Profile&apos;)</errorConditionFormula>
+        <errorMessage>Please insert the first name</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
@@ -27809,7 +27856,8 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
         <fullName>Required_Community</fullName>
         <active>true</active>
         <description>Contact first Community</description>
-        <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c),ISBLANK(Community__c))</errorConditionFormula>
+        <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c), 
+ISBLANK(Community__c), NOT(isPickval(User_Portal_Status__c,&apos;Deactivated&apos;)) )</errorConditionFormula>
         <errorMessage>Please select a value for Community</errorMessage>
     </validationRules>
     <validationRules>

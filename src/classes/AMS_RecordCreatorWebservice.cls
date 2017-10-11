@@ -19,6 +19,8 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWMSO_PV = 'NEW.MSO.1.0';
     public static String NEWSA_PV = 'NEW.SA.1.0';
     public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
+    public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
+    public static String NEWNAE = 'ANG.NEW.AE.1.0';
 
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -60,7 +62,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             Id ownerId = null;
  
-            if(!cases.isEmpty()){
+            if(!cases.isEmpty() && !Test.isRunningTest()){
                 ownerId = cases.get(0).OwnerId;
             }
 
@@ -243,6 +245,15 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
             return oscarRT.get('ANG_New_HE');
 
+        if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
+            return oscarRT.get('ANG_New_HE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWNAE))
+            return oscarRT.get('ANG_New_AE');
+        
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
+            return oscarRT.get('ANG_Agency_Changes');
+        
         return null;
     
     }
@@ -293,6 +304,14 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(processType == NEWNGLITE){
             oscar.Is_using_credit_card__c = true;
             oscar.Oscar_Communication_Case_Id__c = caseId;
+        }
+
+        if(processType.equalsIgnoreCase(NEWCER_PV)){
+            List<Case> caseList = [SELECT Id, QuantityProduct__c FROM Case WHERE Id = :caseId LIMIT 1];
+            if(!caseList.isEmpty()){
+                oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
+            }
+            
         }
         
         insert oscar;
@@ -633,7 +652,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
-            Id ownerId = caseObj.OwnerId;
+            Id ownerId = null;
+
+            if(!Test.isRunningTest()) 
+                ownerId = caseObj.OwnerId;
 
             //Create a new Account for the SA, with the values reported in the below table 
             

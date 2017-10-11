@@ -170,7 +170,9 @@ public without sharing class IECUserManager {
 
                 System.debug('login user event');
 
-                storeCart.loginUserEvent();
+                //susana alves INC332088
+                if(storeCart.getCartOrderContent() != null)
+                  storeCart.loginUserEvent();
 
                 System.debug('get cart');
 
@@ -489,8 +491,8 @@ public without sharing class IECUserManager {
                                    and Type__c in (:IECConstants.IECAddress_AddressType_Billing, :IECConstants.IECAddress_AddressType_Shipping))];
                     //where contact__c =: contactId];
         }
-        else {
-            return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
+        else {system.debug('### address.....');
+           return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
                          , ISO_Country__c, ISO_Country_Code__c, ISO_Country_Name__c, ISO_State__c, ISO_State_Code__c, ISO_State_Name__c, ISO_State_Code_SAP__c
                     from IECAddress__c 
                     where Id in (select Address__c
@@ -663,4 +665,6 @@ public without sharing class IECUserManager {
             
         return users.get(0).ContactId;
     }
+
+      
 }
