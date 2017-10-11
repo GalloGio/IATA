@@ -15594,6 +15594,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Download Now!</value>
     </labels>
     <labels>
+        <fullName>ISSP_Download_in_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in CSV</shortDescription>
+        <value>Download in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_PDF</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in PDF</shortDescription>
+        <value>Download in PDF</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Draft</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
