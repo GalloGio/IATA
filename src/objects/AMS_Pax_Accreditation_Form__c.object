@@ -1302,11 +1302,11 @@
         <label>Accreditation Type</label>
         <picklist>
             <picklistValues>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -5235,11 +5235,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5999,11 +5999,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6763,11 +6763,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7527,11 +7527,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8292,11 +8292,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9068,11 +9068,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9844,11 +9844,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10620,11 +10620,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11395,11 +11395,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12285,11 +12285,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13060,11 +13060,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13836,11 +13836,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14765,11 +14765,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15672,6 +15672,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Other Changes</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GoStandard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -16550,11 +16561,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17461,6 +17472,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GoStandard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Enable_Credit_Card_FOP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -17886,11 +17908,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18834,11 +18856,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19598,11 +19620,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20477,11 +20499,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>Standard Accreditation with Cash</fullName>
+                <fullName>GoLite</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21235,6 +21257,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22161,6 +22194,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GoStandard</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
