@@ -50,9 +50,10 @@ private class ams2gdp_TriggerHelper_Test
 		System.assertEquals(0, [SELECT count() FROM GSA_Territory__c]);
 
 		//Delete Appointments 
-		Integer countAccreditation =[SELECT count() FROM Accreditation__c];
+		//LF: accreditations are no longer created ore deleted following Appointments: they're now following accounts directly.
+		/*Integer countAccreditation =[SELECT count() FROM Accreditation__c];
 		delete inspections; 
-		System.assertEquals(countAccreditation-4, [SELECT count() FROM Accreditation__c]);
+		System.assertEquals(countAccreditation-4, [SELECT count() FROM Accreditation__c]);*/
 
 	}
 	

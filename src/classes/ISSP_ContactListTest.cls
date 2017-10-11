@@ -15,6 +15,7 @@ private class ISSP_ContactListTest {
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         String newContactId = con.Id;
 
@@ -133,6 +134,7 @@ private class ISSP_ContactListTest {
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         String newContactId = con.Id;
 
@@ -184,6 +186,7 @@ private class ISSP_ContactListTest {
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         String newContactId = con.Id;
 
@@ -218,12 +221,15 @@ private class ISSP_ContactListTest {
         acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
         insert acc;
 
+        List<Contact> cl = new List<Contact>();
+
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.Email = 'test1@iata.org';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
-        insert con;
+        cl.add(con);
+
         String newContactId = con.Id;
 
         Contact con2 = ISSP_ObjectFactory.createNewContact();
@@ -231,19 +237,33 @@ private class ISSP_ContactListTest {
         con2.Email = 'test2@iata.org';
         con2.AccountId= acc.Id;
         con2.User_Portal_Status__c = 'Active';
-        insert con2;
+        cl.add(con2);
+
+        insert cl;
+
         String newContactId2 = con2.Id;
 
+        List<Portal_Applications__c> pal = new List<Portal_Applications__c>();
+
         Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
-        insert app1;
-        Portal_Application_Right__c appRight11 = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
-        insert appRight11;
-        Portal_Application_Right__c appRight12 = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
-        insert appRight12;
+        pal.add(app1);
         Portal_Applications__c app2 = new Portal_Applications__c(Name = 'MyTest2');
-        insert app2;
+        pal.add(app2);
+
+        insert pal;
+
+        List<Portal_Application_Right__c> parl = new List<Portal_Application_Right__c>();
+
+        Portal_Application_Right__c appRight11 = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
+        parl.add(appRight11);
+
+        Portal_Application_Right__c appRight12 = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
+        parl.add(appRight12);
+
         Portal_Application_Right__c appRight21 = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app2.Id, Right__c = 'Access Granted');
-        insert appRight21;
+        parl.add(appRight21);
+
+        insert parl;
 
         ISSP_ContactList ctrl = new ISSP_ContactList();
         ISSPContactListView__c cs = new ISSPContactListView__c();
@@ -260,7 +280,7 @@ private class ISSP_ContactListTest {
         ctrl.contactList[0].selected = true;
         ctrl.contactList[1].selected = true;
         ctrl.contactStatus = 'Retired';
-        ctrl.inactivate();
+        //ctrl.inactivate();
     }
 
     static testMethod void myUnitTest_7() {

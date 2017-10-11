@@ -513,6 +513,10 @@
                 <fullName>OTHERS</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -773,27 +777,6 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
-    <listViews>
-        <fullName>X06905087</fullName>
-        <columns>NAME</columns>
-        <columns>Full_Name_Unique__c</columns>
-        <columns>File_Identifier__c</columns>
-        <columns>Review_Status__c</columns>
-        <columns>RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Case__c</field>
-            <operation>equals</operation>
-            <value>08034468</value>
-        </filters>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>AmazonFile__c.AMS_File</value>
-        </filters>
-        <label>. by case#</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <label>AmazonFile Name</label>
         <trackHistory>false</trackHistory>
@@ -996,6 +979,10 @@
             </values>
             <values>
                 <fullName>OTHERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>

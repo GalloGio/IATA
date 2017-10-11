@@ -268,7 +268,18 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			} 
 
 			String productNumber2Add = p.SAP_Material_Number__c;
-			Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			//Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			Map<String, Decimal> cookieContent;
+
+			if (newShoppingCart == false) {
+				cookieContent = IECOrder_Svc.getItemsInCookie();
+			} else {
+				List<IEC_Cart.CartItem> cartItemList = storeCart.getCartContent();
+
+				for (IEC_Cart.CartItem cartItem : cartItemList) {
+					cookieContent.put(cartItem.productNumber, cartItem.quantity);
+				}
+			}
 
 			//-- Validate another sub-product does not exist in the cart 
 			Boolean sibblingInCart = false; 
@@ -298,13 +309,22 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			if(!sibblingInCart && !existSubscriptionProd)
 			{
-				return IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);	
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				
+				if (newShoppingCart == false) {
+					PageReference pageRef = IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);
+				} else {
+					storeCart.addItem(p.SAP_Material_Number__c, 1, null);
+				}
+
+				return null;
 			}
 			else
 			{
 				
 				String urlParamMsg = (sibblingInCart) ? 'siblingInCart' : 'subscriptionAlreadyExist';
 
+				
 				PageReference pageRef = new Pagereference('/IEC_ShoppingCart?msg=' + urlParamMsg);
 				pageRef.setRedirect(true);
 				return pageRef;

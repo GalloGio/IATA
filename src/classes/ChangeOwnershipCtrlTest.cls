@@ -7,6 +7,7 @@ private class ChangeOwnershipCtrlTest {
 				        
 				        
 				        Contact c = new Contact(lastname = 'baba' ,
+                                                firstName = 'Name',
 				        						email = 'baba@com.com');
 				        insert c;
         						

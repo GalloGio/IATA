@@ -138,8 +138,8 @@ global class BtchGDPReplicatePhone implements Database.Batchable<sObject>, Datab
 					+ '		AND LastModifiedDate < ' + btchRepAcc.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 					+ '		AND (AIMS_ID__c != null OR Webstar_ID__c != null)'
 					+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GDS__c', 'Live') + '\''
-					+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null)';
-				
+					+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))';                   
+
 				System.debug('SSS: SOQL Query: ' + btchProc.query);
 	
 				Database.executeBatch(btchProc);

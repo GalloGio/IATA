@@ -33,9 +33,37 @@ private class OneIdProvisioningDaemonTest {
         anUserApp.Identity_User__c = UserInfo.getUserId();
         anUserApp.Provisioning_Status__c = 'Started';
         //anUserApp.User_Provisioning_Request__c = uprov.id;
+        anUserApp.action__c = 'Add';
         anUserApp.App_Key__c = LightningConnectedAppHelper.OneIdBuildUserAppKey(anUserApp);
         insert anUserApp;
 
+        One_Id_Service_Provider_Config__c oi1 = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
+                License_Upgrade_Required__c= true,
+                Profile_Id__c='a1',
+                Description__c='qualquer',
+                Is_Active__c = true, Portal_Visible__c = true,
+                RecordTypeid = recTypeId, App_Picture_Url__c='oi');
+        insert oi1;
+
+        One_Id_Service_Provider_Config__c rr1 = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'App 1', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c=oi1.id);
+        insert rr1;
+
+        One_Id_App_Config_Detail__c r1 = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c=rr1.id, PermissionSet_SSO__c = psIds[0].name, PermissionSet_Provisioning__c = psIds[1].name );
+        insert r1;
+
+        One_Id_App_Role_Config__c role1 = new One_Id_App_Role_Config__c (Role_Name__c = 'Admin', One_Id_App_Config_Detail__c = r1.id, Role_Description__c = 'desc');
+        insert role1;
+
+        One_Id_User_Applications__c anUserApp1 = new One_Id_User_Applications__c();
+        anUserApp1.Application__c = r1.id;
+        anUserApp1.One_Id_Service_Provider_Config__c = rr1.id;
+        anUserApp1.One_Id_App_Bundle__c = oi1.id;
+        anUserApp1.Identity_User__c = UserInfo.getUserId();
+        anUserApp1.Provisioning_Status__c = 'Started';
+        anUserApp1.action__c = 'Remove';
+        //anUserApp.User_Provisioning_Request__c = uprov.id;
+        anUserApp1.App_Key__c = LightningConnectedAppHelper.OneIdBuildUserAppKey(anUserApp1);
+        insert anUserApp1;
 
         // create a new email and envelope object
         Messaging.InboundEmail email = new Messaging.InboundEmail() ;

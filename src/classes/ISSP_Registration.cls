@@ -479,7 +479,7 @@ public without sharing class ISSP_Registration {
                 	errorMessage.add(Label.ISSP_IATA_Code_Agency);
                 	return null;
         		}
-        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountry, 'Agency');    
+        		accList = searchCompany(searchIATACode, companyName, searchCountry, 'Agency');    
         		handleSearchResults();
         	} catch(Exception e) {
         		log(e);
@@ -1005,7 +1005,11 @@ public without sharing class ISSP_Registration {
                 acc.IATA_ISO_Country__c = searchCountry;
                 acc.IATA_ISO_Shipping_Country__c = searchCountry;
                 acc.BillingCountry = searchCountryName;
-                acc.ShippingCountry = searchCountryName;
+                if(sRefererCommunity == constIEC) {
+                	acc.ShippingCountry = String.isBlank(acc.ShippingCountry) ? searchCountryName : acc.ShippingCountry;
+                } else {
+                	acc.ShippingCountry = searchCountryName;
+                }
             }
             //acc.TIESS_Code__c = searchTiess;
             system.debug('selectedCustomerType: ' + selectedCustomerType);
@@ -1135,9 +1139,9 @@ public without sharing class ISSP_Registration {
                     if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null
                         && serviceIdInstance.AgencyAccreditationCNS__c != ''
                         && acc.Sector__c == 'Cargo Agent') {
-                        // system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
-                        // String appId = serviceIdInstance.AgencyAccreditationCNS__c;
-                        // appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
+                        system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
+                        String appId = serviceIdInstance.AgencyAccreditationCNS__c;
+                        appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
                     }
                     else if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
                         system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditation__c);
@@ -1434,7 +1438,7 @@ public without sharing class ISSP_Registration {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
         	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
-        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        //	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
         } else {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(GSA,Label.ISSP_GSSA));
@@ -1722,6 +1726,31 @@ public without sharing class ISSP_Registration {
     			infoMessage.add(Label.IEC_NoRecordsFoundCreateAccount);
     		}
     	}
+    }
+    
+    public static String isoStates {
+    	get{
+    		if(isoStates == null) {
+	    		List<IATA_ISO_State__c> lstStates = [SELECT IATA_ISO_Country__r.Name,Informatica_Value__c, IATA_ISO_Country__r.ISO_Code__c 
+	    											 FROM IATA_ISO_State__c 
+	    											 WHERE IATA_ISO_Country__r.Name IN ('Canada', 'United States', 'Brazil', 'Australia', 'Venezuela') AND Informatica_Value__c  != null
+	    											 ORDER BY IATA_ISO_Country__r.Name, Informatica_Value__c  ASC];
+	    		
+	    		Map<String,List<String>> mapStates = new Map<String,List<String>>();
+	    		for(IATA_ISO_State__c state : lstStates) {
+	    			List<String> states = mapStates.get(state.IATA_ISO_Country__r.ISO_Code__c);
+	    			if(states == null) {
+	    				states = new List<String>();
+	    				mapStates.put(state.IATA_ISO_Country__r.ISO_Code__c, states);
+	    			}
+	    			states.add(state.Informatica_Value__c);
+	    		}
+	    		isoStates = JSON.serialize(mapStates);
+    		}
+    		
+    		return isoStates;
+    	}
+    	set;
     }
     
     /* end */

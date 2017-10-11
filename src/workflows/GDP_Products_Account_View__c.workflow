@@ -81,13 +81,9 @@
             <name>Remove_pipes_from_Legal_Name3</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <description>Remove all pipes from Legal Name 1/2/3 and Trading Name 1/2</description>
-        <formula>CONTAINS(Legal_Name_1__c , &apos;|&apos;) || 
-CONTAINS(Legal_Name_2__c , &apos;|&apos;) || 
-CONTAINS(Legal_Name_3__c , &apos;|&apos;) || 
-CONTAINS(Trading_Name_1__c, &apos;|&apos;) || 
-CONTAINS(Trading_Name_2__c, &apos;|&apos;)</formula>
+        <formula>CONTAINS(Legal_Name_1__c , &apos;|&apos;) ||  CONTAINS(Legal_Name_2__c , &apos;|&apos;) ||  CONTAINS(Legal_Name_3__c , &apos;|&apos;) ||  CONTAINS(Trading_Name_1__c, &apos;|&apos;) ||  CONTAINS(Trading_Name_2__c, &apos;|&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

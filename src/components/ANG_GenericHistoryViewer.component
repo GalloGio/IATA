@@ -1,0 +1,58 @@
+<apex:component controller="ANG_GenericHistoryViewerController">
+    <apex:includeScript value="/support/console/33.0/integration.js"/>
+    <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
+    <script>
+        //globale JS variables
+        var recordid;
+        var recordname;
+        
+        function openTab(recid, recname) {
+             recordid = recid;
+             recordname = recname;
+          if(!sforce.console.isInConsole())
+             window.parent.location.replace('/'+recid);
+          else
+             sforce.console.getEnclosingPrimaryTabId(callBackopenTab);
+          }
+        function callBackopenTab(result) {
+             sforce.console.openSubtab(result.id, '/'+recordid , true,recordname,null);
+         }; 
+    </script>
+
+    <apex:attribute name="trackedObject" type="SObject" assignTo="{!trackedObj}" required="true" description="The record that is being tracked" />
+    <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked" />
+    <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking" />
+
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!historyRecords}" var="row" >
+            <apex:column >
+                <apex:facet name="header">Date</apex:facet>
+                <apex:outputText value="{!row.createdDate}" />
+            </apex:column>
+                        
+            <apex:column >
+                <apex:facet name="header">User</apex:facet>
+                <a href="#" onClick="openTab('{!row.createdById}', '{!row.createdByName}'); return false">{!row.createdByName}</a>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">Action</apex:facet>
+                    <!-- <apex:outputPanel rendered="{!AND(row.fieldName <> 'created',row.fieldName <> 'Parent')}"> -->
+                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created')}">
+
+                        <b>{!row.fieldName}</b> changed from&nbsp;
+                         <b>
+                             <apex:outputField rendered="{!row.isLookUpValueOld}" value="{!row.oldObj[row.fieldAPIName]} "/>
+                             <apex:outputText rendered="{!!row.isLookUpValueOld}" value="{!row.oldValue}"/>
+                        </b> 
+                         to&nbsp;
+                        <b>
+                            <apex:outputField rendered="{!row.isLookUpValueNew}"  value="{!row.newObj[row.fieldAPIName]}"/>
+                            <apex:outputText rendered="{!!row.isLookUpValueNew}" value="{!row.newValue}"/>
+                        </b>
+                        
+                    </apex:outputPanel>
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:component>

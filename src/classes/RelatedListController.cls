@@ -86,6 +86,7 @@ public with sharing class RelatedListController {
                 /*If field CSV was defined use this and also add fields to the fieldNames
                 List so they can be used with Visualforce dynamic binding to define coloumns*/
                 if(csvFields != null){
+                    csvFields = csvFields.removeStart('[').removeEnd(']').replaceAll(' ', ''); //accepts json lists
                     queryString += csvFields;
                     fieldNames = csvFields.split(',');
                 }else{
@@ -144,6 +145,8 @@ public with sharing class RelatedListController {
 
                 //Add limit clause to end of the query
                 queryString += ' limit ' + (Limits.getLimitQueryRows() - Limits.getQueryRows());
+
+                system.debug('query string: ' + queryString);
 
                 //Query records and setup standard set controller for pagination
                 ssc = new ApexPages.StandardSetController(Database.query(queryString));
@@ -237,8 +240,7 @@ public with sharing class RelatedListController {
         //Delete the selected object
         for(sObject obj : ssc.getRecords()){
             if(obj.get('Id') == deleteRecordId){
-                delete obj;
-                break;
+                delete obj; break;
             }
         }
 

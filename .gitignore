@@ -40,6 +40,8 @@ src/staticresources/IEC_windows.resource
 src/staticresources/IEC_carrousel01.resource
 src/staticresources/eBroadcastAssets.resource
 src/applications/standard__Platform.app
+src/applications/standard__LightningSalesConsole.app
+src/layouts/Macro-Macro Layout.layout
 
 src/profilesApex/Marketing\ User.profile
 src/profilesApex/Standard\ User.profile

@@ -21,6 +21,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);  
   }
 
+
   //AMS triggers
   if(Trigger.isBefore && Trigger.isInsert){
     AMS_AccountTriggerHandler.handleBeforeInsert(Trigger.new);
@@ -33,8 +34,21 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+    //Custom history tracking
+    ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Account', 'ANG_Account_Tracking_History__c');
     
   }
+
+
+  //ANG triggers
+  ANG_AccountTriggerHandler angHandler = new ANG_AccountTriggerHandler();
+  if(Trigger.isBefore && Trigger.isInsert) angHandler.onBeforeInsert();
+  else if (Trigger.isAfter && Trigger.isInsert) angHandler.onAfterInsert();
+  else if(Trigger.isBefore && Trigger.isUpdate) angHandler.onBeforeUpdate();
+  else if(Trigger.isAfter && Trigger.isUpdate) angHandler.onAfterUpdate();
+  else if(Trigger.isBefore && Trigger.isDelete) angHandler.onBeforeDelete();
+  else if(Trigger.isAfter && Trigger.isDelete) angHandler.onAfterDelete();
+
 
   if(Trigger.isAfter && Trigger.isUpdate){
     //E&F Account After Update - Handles account inactivation

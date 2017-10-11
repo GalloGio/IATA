@@ -55,20 +55,22 @@
                             </ul>
                         </td>
                         <td class="recipients">
+                             <apex:outputText styleClass="value" style="font-weight: 600;" value="{0, number, ###,###,##0}" rendered="{!c.Status__c == 'SENT'}">
+                                <apex:param value="{!c.NumberSent__c}"/>
+                            </apex:outputText>
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!c.NumberSent__c}</strong> 
                                 <span class="label">Recipients</span>
                             </apex:outputText>
                         </td>
                         <td class="opens">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.Delivered7Days__c > 0, TEXT(ROUND(c.Number_of_Unique_Opens__c * 100 / c.Delivered7Days__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!c.OpenRate7Days__c}%</strong> 
                                 <span class="label">Opens</span>
                             </apex:outputText>
                         </td>
                         <td class="clicks">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.Delivered7Days__c > 0, TEXT(ROUND(c.Number_of_Unique_Clicks__c * 100 / c.Delivered7Days__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!c.ClickRate7Days__c}%</strong> 
                                 <span class="label">Clicks</span>
                             </apex:outputText>
                         </td>

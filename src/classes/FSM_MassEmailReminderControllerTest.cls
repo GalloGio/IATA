@@ -28,7 +28,7 @@ private class FSM_MassEmailReminderControllerTest {
 	private static list<Contact> CreateContacts(list<Account> lsAccnt) {
 		list<Contact> listcontact = new list<Contact>();
 		for(integer i=0; i<lsAccnt.size(); i++)
-			listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
+			listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
 		return listcontact;
 	}
 

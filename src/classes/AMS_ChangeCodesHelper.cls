@@ -198,7 +198,7 @@ public class AMS_ChangeCodesHelper {
         return accountsToUpdateList;
     }
 
-
+   
 /** 
      Create Change Codes History
     */
@@ -252,7 +252,7 @@ public class AMS_ChangeCodesHelper {
      Add Change Code to be Created NeW method with Change Code History
     */
 
-    private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
 
 
         Id oscarId = null;
@@ -337,7 +337,7 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
@@ -418,7 +418,7 @@ public class AMS_ChangeCodesHelper {
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
                 if (accToUpdateStatus != null
-					&& !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
+                    && !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
                     (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
                     ) {
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
@@ -528,4 +528,93 @@ public class AMS_ChangeCodesHelper {
         list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
         return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
     }
+
+    // Generate a 'technical' change code to be used by integration
+    public static Agency_Applied_Change_code__c generateIntegrationChangeCode(Account acc, AMS_ChangeCodes__c changeCodeConfig){
+
+        Agency_Applied_Change_code__c codeToCreate = new Agency_Applied_Change_code__c();
+        codeToCreate.Change_Code__c = changeCodeConfig.Change_Code__c;
+        codeToCreate.Bulletin_Information__c = changeCodeConfig.Bulletin_Memo_Text__c;
+        codeToCreate.To_Publish_in_e_Bulletin__c = changeCodeConfig.Published_in_bulletin__c;
+        codeToCreate.Account__c = acc.Id;
+        System.debug('## codeToCreate: '+codeToCreate);
+
+        return codeToCreate;
+    }
+
+    public static Map<Account,AMS_ChangeCodes__c> fetchChangeCodeConfiguration(List<Account> accsNew, Map<Id,Account> mapTrgOld){
+
+        Boolean CCToBeGenerated;
+        Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = new Map<Account,AMS_ChangeCodes__c>();
+
+        List<AMS_ChangeCodes__c> codesConfs = [SELECT Name, Change_Code__c, Published_in_bulletin__c, Bulletin_Memo_Text__c,
+                                    Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Integration_RecId__c, Field1__c, Field1Values__c, Field2__c,
+                                    Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c,
+                                    Field6__c, Field6Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];
+
+        for (Account acc:accsNew){
+            for (AMS_ChangeCodes__c conf:codesConfs){
+
+                CCToBeGenerated = false;
+
+                if(conf.Field1__c!=null)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                if(conf.Field2__c!=null && CCToBeGenerated)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field2__c, conf.Field2Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                if(conf.Field3__c!=null && CCToBeGenerated)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field3__c, conf.Field3Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                if(conf.Field4__c!=null && CCToBeGenerated)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field4__c, conf.Field4Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                if(conf.Field5__c!=null && CCToBeGenerated)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                if(conf.Field6__c!=null && CCToBeGenerated)
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+
+                if(CCToBeGenerated)
+                    mapAccCodeConf.put(acc, conf);
+            }
+        }
+
+        return mapAccCodeConf;
+    }
+
+    private static boolean bCheckCondition(Account NewAccountValues, string sFieldToCheck, string condition, Account OldAccountValues){
+        Set<string> setValues = new Set<string>();
+
+        if(condition.startsWithIgnoreCase('VALUES:')){
+            string sValue = null;
+                sValue = (string)NewAccountValues.get(sFieldToCheck);
+
+            if(sValue==null)     return false;
+            setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
+            if(setValues.contains(sValue.toUpperCase()))
+                return true;
+            else return false;
+        }
+
+        if(condition.equals('NOT BLANK')){
+            if(string.ValueOf(NewAccountValues.get(sFieldToCheck))!=null)
+                return true;
+            else return false;
+        }
+
+        if(condition.equals('BLANK')){
+            if(string.ValueOf(NewAccountValues.get(sFieldToCheck))==null)
+                return true;
+            else return false;
+        }
+
+        if(condition.equals('CHANGED')){
+            if (string.ValueOf(NewAccountValues.get(sFieldToCHeck)) == null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) == null)
+                return false;
+            if ((string.ValueOf(NewAccountValues.get(sFieldToCHeck)) == null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) != null) ||
+                (string.ValueOf(NewAccountValues.get(sFieldToCHeck)) != null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) == null))
+                return true;
+            if(string.ValueOf(NewAccountValues.get(sFieldToCHeck)).toUpperCase() != string.ValueOf(OldAccountValues.get(sFieldToCHeck)).toUpperCase())
+                return true;
+            else return false;
+        }
+        return false;
+    }
+
 }

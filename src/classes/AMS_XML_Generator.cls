@@ -147,14 +147,25 @@ public with sharing class AMS_XML_Generator {
         Date dToday = Date.today();
         Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
 
+        //Get 1st and last day of month - AMSU-97
+        Date dFirstDayOfMonth = Date.today().toStartOfMonth();
+        Date dLastDayOfMonth = dfirstDayOfMonth.addDays(Date.daysInMonth(dfirstDayOfMonth.year(), dfirstDayOfMonth.month()) - 1);
+        Datetime dtFirstDayOfMonth = datetime.newInstance(dFirstDayOfMonth.year(), dFirstDayOfMonth.month(),dFirstDayOfMonth.day());
+        Datetime dtLastDayOfMonth = datetime.newInstance(dLastDayOfMonth.year(), dLastDayOfMonth.month(),dLastDayOfMonth.day());
+
         //for(Account ag : agencies){
         for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
           
             getElementNode(liNode, 'agency_id', ag.Account__r.IATACode__c );
             getElementNode(liNode, 'hub', ag.Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c);
-            getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
-            getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+            
+            //Changed on AMSU-97
+            //getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
+            //getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+            getElementNode(liNode, 'period_from', dtFirstDayOfMonth.format('yyyyMMdd'));
+            getElementNode(liNode, 'period_to', dtLastDayOfMonth.format('yyyyMMdd'));
+
             getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
             getElementNode(liNode, 'quantity', '1');
         }
@@ -494,7 +505,7 @@ public with sharing class AMS_XML_Generator {
 
         
         //MAIN
-        lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Accreditation_Endorsement_organisation__r.Air_Code__c,
+        lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Account__r.Main_Accreditation_Organization__c,
                         Date_Organisation_Status_attained__c,Id,Name,
                         Account__c,
                         Account__r.Organization_Last_Change_Date__c, 
@@ -1983,7 +1994,7 @@ public with sharing class AMS_XML_Generator {
 
                                     Dom.Xmlnode auxInspectionNode = auxParentNode.addChildElement(displayFieldName, null, null);
                                     AMS_Inspection__c x = (AMS_Inspection__c)obj;
-                                    String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
+                                    String sAuxValue = (String)x.Account__r.Main_Accreditation_Organization__c;
                                     auxInspectionNode.addTextNode(sAuxValue);
 
                                 }else if(f.equalsIgnoreCase('Parent_Account__c')){ //Special threatment for the Parent agencies on the Hierarchy data
@@ -2046,7 +2057,7 @@ public with sharing class AMS_XML_Generator {
             //Sprint 12 - workaround while fields are not created on SFDC
             if(sObjectName.equalsIgnoreCase('AMS_Inspection__c') ){
                 AMS_Inspection__c x = (AMS_Inspection__c)obj;
-                String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
+                String sAuxValue = (String)x.Account__r.Main_Accreditation_Organization__c;
                 
                 Account ag = (Account)msObject.get(x.Account__c);
 

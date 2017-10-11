@@ -569,6 +569,19 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Now_Date__c</fullName>
+        <description>Date Auto-Populated Formula used to validate EBC Daily Master Sync</description>
+        <externalId>false</externalId>
+        <formula>Now()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date  Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
+        <label>Now Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Opt_in__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -909,6 +922,39 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>MustSyncWithAIMS__c</columns>
         <columns>NAME</columns>
         <columns>Related_Contact__c</columns>
+        <columns>Photo__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>Is_Expedite__c</columns>
+        <columns>Missing_Information__c</columns>
+        <columns>CIN__c</columns>
+        <columns>Sent_to_AIMS_on__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled</value>
+        </filters>
+        <filters>
+            <field>MustSyncWithAIMS__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Sent_to_AIMS_on__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Must Sync</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Rejected_by_G_D</fullName>
+        <columns>MustSyncWithAIMS__c</columns>
+        <columns>NAME</columns>
+        <columns>Related_Contact__c</columns>
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Photo__c</columns>
@@ -921,20 +967,29 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>MustSyncWithAIMS__c</field>
+            <field>Card_Status__c</field>
+            <operation>equals</operation>
+            <value>ERROR Rejected by G&amp;D</value>
+        </filters>
+        <label>Rejected by G&amp;D</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>VALID_ID_Cards</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Type_of_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Active_Card__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </filters>
-        <filters>
-            <field>Sent_to_AIMS_on__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>Must Sync</label>
+        <label>VALID ID Cards</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1210,6 +1265,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <lookupDialogsAdditionalFields>Nature_of_ID_Card__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Card_Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Valid_To_Date__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>Is_Active_Card__c</searchFilterFields>
         <searchResultsAdditionalFields>Name_on_ID_Card__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Nature_of_ID_Card__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>VER_Number__c</searchResultsAdditionalFields>

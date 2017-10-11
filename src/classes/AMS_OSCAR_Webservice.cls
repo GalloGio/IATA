@@ -444,11 +444,15 @@ global class AMS_OSCAR_Webservice {
             //creates change code
             Account acct = new Account(Id = agencyId);
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
+
+            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];
+
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            //changeCode.status  = null;
             changeCode.name = 'CER';
-            changeCode.reasonCode = '91';
-            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
-            changeCode.status  = '9';
+            changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+            changeCode.reasonDesc  = accountActiveChangeCode[0].Reason_Description__c;
+            changeCode.status  = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
 
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
 
@@ -458,6 +462,33 @@ global class AMS_OSCAR_Webservice {
             return result;
 
         } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+    }
+
+    WebService static String createRiskEvent(String oscarId){
+
+        try{
+
+            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c from AMS_OSCAR__c where Id =: oscarId];
+            if(oscar!=null && oscar.size()>0){
+
+                oscar[0].Risk_event_creation_date__c = System.today();
+                oscar[0].STEP36__c = 'Passed';
+                update oscar;
+
+                List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
+                
+                if(rskEventLst.isEmpty())
+                    return 'No risk event is needed for this OSCAR.';
+                else
+                    return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
+
+            }
+
+            return 'ERROR: OSCAR not found.';
+
+        }catch(Exception ex){
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
     }

@@ -1,6 +1,12 @@
 public class AMS_OSCAR_ProcessViewerController {
     
-    public AMS_OSCAR__c oscar {get;set;}
+    public AMS_OSCAR__c oscar { 
+        get{ 
+            if(this.oscar == null)
+                return new AMS_OSCAR__c();
+            else return this.oscar;
+        }
+        set;}
 
     public Case oscarCase{get;set;}
 
@@ -20,12 +26,35 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean showRequiredOverlay{
         get{
+            if(this.oscar.Account__c == null)
+                return false;
+            // NG Processes specific conditions
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                return (
+                    oscar != null
+                    && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
+
+                    || !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c)
+                );
+            }
             return (
                 oscar != null
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
+
+                && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
+    public Boolean isNotNewGenProcess{
+        get{
+            return (
+                oscar != null
+                && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
+                //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -65,6 +94,22 @@ public class AMS_OSCAR_ProcessViewerController {
     }
     public boolean getIsAgencyChange(){
         return oscar.RecordType.DeveloperName == 'CHANGE';
+    }
+
+    public Boolean isValidationCompleted {
+        get{
+            return (
+                oscar != null
+                && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED
+                ||oscar.STEP25__c == AMS_Utils.PASSED || oscar.STEP25__c == AMS_Utils.FAILED)
+            );
+        }
+    }
+
+    public boolean isNewgenRT{
+        get{
+            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
+        }
     }
 
     public AMS_OSCAR_ProcessViewerController() {
@@ -186,7 +231,10 @@ public class AMS_OSCAR_ProcessViewerController {
         
         String currentPickValue = String.valueOf(oscar.get(fieldName));
         System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
-        
+
+        if(currentPickValue == null && AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c))
+            picklistValues.add(new SelectOption('', '--None--'));
+
         if(currentPickValue != null)
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
         
@@ -263,7 +311,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){

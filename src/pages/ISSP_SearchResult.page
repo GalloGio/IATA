@@ -106,12 +106,29 @@
                                                             <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
                                                         </td>
                                                         <apex:repeat value="{!viewItem.fieldNameList}" var="fieldName"  >
+
+                                                            <!-- basto1p -->
+                                                            <apex:outputpanel rendered="{!IF(fieldName.fieldPath=='Portal_Case_Status__c',true,false)}">
+                                                                <td>
+                                                                    <apex:outputfield value="{!objectItem[fieldName]}"
+                                                                                      rendered="{!IF(mapFieldsValue!=null && mapFieldsValue['Status'+objectItem['Status']]=='NO_FIELD_MAP',true,false)}"/>
+                                                                    <apex:outputpanel rendered="{!IF(mapFieldsValue!=null && mapFieldsValue['Status'+objectItem['Status']]!='NO_FIELD_MAP',true,false)}">
+                                                                        {!mapFieldsValue['Status'+objectItem['Status']]}
+                                                                    </apex:outputpanel>
+                                                                </td>
+                                                            </apex:outputpanel>
+
                                                         	<apex:outputPanel rendered="{!fieldName.fieldPath = 'ContactId'}" layout="none" >
                                                                 <td>
                                                                 	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!objectItem['Contact.Name']}</apex:outputLink>
                                                                 </td>
                                                             </apex:outputPanel>
-                                                            <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId', fieldName.fieldPath != 'Id', UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName), UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
+                                                            <!-- basto1p -->
+                                                            <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId',
+                                                                                            fieldName.fieldPath != 'Portal_Case_Status__c',
+                                                                                            fieldName.fieldPath != 'Id',
+                                                                                            UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName),
+                                                                                            UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
                                                                 <td>
                                                                     <apex:outputField value="{!objectItem[fieldName]}" />
                                                                 </td>

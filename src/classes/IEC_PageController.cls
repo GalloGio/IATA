@@ -1,5 +1,24 @@
 public virtual class IEC_PageController 
 {
+	// Ecommerce Enhancements
+	public IEC_Cart storeCart {
+		get {
+			IEC_Cart cartInstance = IEC_Cart.getInstance();
+
+			return cartInstance;
+		}
+	}
+
+	public Boolean newShoppingCart {
+		get {
+			return functionality.isActive('New Shopping Cart');
+		}
+	}
+
+	private static IEC_Functionality functionality = IEC_Functionality.getInstance();
+
+	// Ecommerce Enhancements end
+
 	public class CartWrapper
 	{
 		public String productCode{get;set;}
@@ -40,8 +59,16 @@ public virtual class IEC_PageController
 
 	private void cleanupCookies()
     {
+		System.debug('cleanupCookies');
+
         //-- If products in cookie Sync with SFDC & ensure that they can be paid by current user 
         Map<String, Decimal> cookieContent =  IECOrder_Svc.getItemsInCookie();
+
+		System.debug('cookieContent:');
+		for (String key : cookieContent.keySet()) {
+			System.debug('###    ' + key + ': ' + cookieContent.get(key));
+		}
+
         if(!cookieContent.isEmpty())
         {
             //-- Available products
@@ -64,8 +91,12 @@ public virtual class IEC_PageController
 
             for(String productCode : cookieContent.keySet())
             {
+				System.debug('checking productCode: ' + productCode);
+
                 if(!availableProducts.containsKey(productCode))
                 {
+					System.debug('availableProducts doesnt contains productCode: ' + productCode + ', removing from cookie');
+
                     //-- remove product from cookie 
                     IECOrder_Svc.deleteProductToCookie(productCode);
                 }
@@ -89,6 +120,9 @@ public virtual class IEC_PageController
 		
 		//-- If customer is logged-in sync cookie with pendding order if not syncked yet
 		String cookie_Sync = IECOrder_Svc.readCookie('Cookie_Sync');
+
+		System.debug('cookie_Sync: ' + cookie_Sync);
+
 		if(loggedCustomer !=null /*&& cookie_Sync != 'true'*/)
 		{
 			cleanupCookies();
@@ -102,10 +136,16 @@ public virtual class IEC_PageController
 			for(OrderItem oi : pendingOrderItems)
 			{
 				//-- Product already in cookie (Cookie win)
-				if(cookieContent.containsKey(oi.Product_Number__c)) IECOrder_Svc.modifiedProductToCookie(oi.Product_Number__c, cookieContent.get(oi.Product_Number__c));
-				
+				if(cookieContent.containsKey(oi.Product_Number__c)) {
+					System.debug('Product ' + oi.Product_Number__c + ' already in cookie: modify');
+
+					IECOrder_Svc.modifiedProductToCookie(oi.Product_Number__c, cookieContent.get(oi.Product_Number__c));
 				//-- New product 
-				else IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true); 
+				} else {
+					System.debug('Product: ' + oi.Product_Number__c + ' is new: add');
+
+					IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true); 
+				}
 			}
 
 			cookieContent = Order_Svc.getItemsInCookie();
@@ -117,8 +157,11 @@ public virtual class IEC_PageController
 			ApexPages.currentPage().setCookies(new Cookie[]{c});
 		}
 		
-		for(Product2 p : [SELECT Name, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c != null AND Display_to_ECommerce__c = true AND SAP_Material_Number__c IN :cookieContent.keySet()])
+		for(Product2 p : [SELECT Name, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c != null AND Display_to_ECommerce__c = true AND SAP_Material_Number__c IN :cookieContent.keySet()]) {
+			System.debug('Adding Product ' + p.SAP_Material_Number__c + ' to Cart Content');
+
 			cartContent.add(new CartWrapper(p.SAP_Material_Number__c, p.Name, cookieContent.get(p.SAP_Material_Number__c)));
+		}
 		
 		System.debug('cartContent: ' + cartContent);
 
@@ -277,6 +320,10 @@ public virtual class IEC_PageController
             ApexPages.currentPage().setCookies(new Cookie[]{Cookie_Sync});
             cartContent = new List<CartWrapper>();
 
+			if (newShoppingCart) {
+				storeCart.clearCart();
+			}
+
             //pr = Page.IECLogout; 
             pr = Page.IEC_Logout;
             pr.setRedirect(true);
@@ -285,7 +332,11 @@ public virtual class IEC_PageController
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 		}
 
-        return pr;
+		// Ecommerce Enhancements - do not redirect too fast, do it by Javascript so that
+		// cookies get erased.
+
+		return null;
+        //return pr;
     }
 
     /** 
@@ -322,5 +373,4 @@ public virtual class IEC_PageController
 			return null;
 		}
     }
-
 }

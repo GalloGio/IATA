@@ -1,6 +1,4 @@
 public with sharing class IECOrder_Svc {
-
-
     /****************************************************************************************************
         Created by CGI, Kevin 2015-10-23
             Add product to Cookie
@@ -17,14 +15,19 @@ public with sharing class IECOrder_Svc {
             Integer nbCookies = nbreOfCookies();
             Boolean alreadyExist = addProductToCookie(productNumber, qty);
 
+            System.debug('productNumber: ' + productNumber + ', qty=' + qty + ', alreadyExists: ' + alreadyExist);
 
             if(alreadyExist){
                 returnParam += '?productNumber=' + productNumber;
             }
 
         }else{
+            System.debug('Creating Order Cookie');
+
             Cookie orderCookie = createOrderCookie(productNumber, qty ,1);
             ApexPages.currentPage().setCookies(new Cookie[]{orderCookie});
+
+            System.debug('Cookie set to: ' + orderCookie);
         }
         //return to view cart
         PageReference pageRef = new PageReference(returnParam);
@@ -42,7 +45,12 @@ public with sharing class IECOrder_Svc {
             Get the current Cookie
     ****************************************************************************************************/
     public static Cookie getOrderCookie(Integer nb){
-        return ApexPages.currentPage().getCookies().get('IECOrders_' + nb);
+        String cookieName = 'IECOrders_' + nb;
+        Cookie cookieValue = ApexPages.currentPage().getCookies().get(cookieName);
+
+        System.debug('getOrderCookie(' + nb + '), cookieName: ' + cookieName + ', cookieValue: ' + cookieValue);
+
+        return cookieValue;
     }
     
     /****************************************************************************************************
@@ -182,6 +190,7 @@ public with sharing class IECOrder_Svc {
     }
 
     public static Boolean addProductToCookie(String productNumber, Decimal qty, Boolean overrideQty){
+        System.debug('addProductToCookie productNumber: ' + productNumber + ', qty: ' + qty + ', overrideQty: ' + overrideQty);
 
         //Check if the product is a phase 1 and 2 products
         map<String,Product2> productMap = Product_Sel.getProductsByCode(new set<String>{productNumber});
@@ -197,12 +206,18 @@ public with sharing class IECOrder_Svc {
             if(orderCookie != null){
                 String allCookiesValues = '';
                 String cookieName = orderCookie.getName();
+
+                System.debug('cookieName: ' + cookieName);
+
                 try{
                     nbs = Integer.valueOf(cookieName.split('_')[1]);
                     Boolean done = false;
 
                     While(!done){
                         String respVal = cookieValue(nbs);
+
+                        System.debug('nbs: ' + nbs + ', respVal: ' + respVal);
+
                         if(respVal != null){
                             nbs++;
                         }else{
@@ -211,7 +226,7 @@ public with sharing class IECOrder_Svc {
                     }
                     nbs = nbs - 1;
                 }catch(Exception ex){
-
+                    System.debug('OrderCookie parse exception: ' + ex.getStackTraceString());
                 }
             }
             else{
@@ -219,6 +234,8 @@ public with sharing class IECOrder_Svc {
                 orderCookie = createOrderCookie(productNumber,qty, 1);
                 ApexPages.currentPage().setCookies(new Cookie[]{orderCookie});
                 nbs = 1;
+
+                System.debug('Store orderCookie: ' + orderCookie);
             }
 
             Cookie cookieToModified = IECOrder_Svc.getOrderCookie(nbs);
@@ -226,6 +243,8 @@ public with sharing class IECOrder_Svc {
 
             //2700 char ==> 3k
             if(value.length() < 2700){
+                System.debug('checking for productNumber: ' + productNumber);
+
                 //Add the product to the cookie
                 //if(!value.contains(productNumber))
                 //{
@@ -244,8 +263,13 @@ public with sharing class IECOrder_Svc {
                                         qty = qty + oldQty;
                                     }
                                         
-                                }catch(Exception ex){}
+                                } catch(Exception ex) {
+                                    System.debug('decimal parse of ' + lstProd_qty[1] + ' exception: ' + ex.getMessage());
+                                }
+
                                 value = value.replace(row, productNumber + '_' + qty);
+
+                                System.debug('value: ' + value);
                             }
                         }
                         alreadyExist = true;
@@ -256,15 +280,21 @@ public with sharing class IECOrder_Svc {
                     }
                 
                     ApexPages.currentPage().setCookies(new Cookie[]{IECOrder_Svc.modifiedOrderCookie(value, nbs)});
+
+                    System.debug('Modify orderCookie');
                 //}
             }else{
                 //Create a new Cookie and add the product
                 ApexPages.currentPage().setCookies(new Cookie[]{IECOrder_Svc.createOrderCookie(productNumber, qty, nbs + 1)});
+                
+                System.debug('Create new orderCookie nbs=' + (nbs-1));
             }
 
             
 
-        }catch(Exception ex){}
+        }catch(Exception ex){
+            System.debug('addProductToCookie exception caught: ' + ex.getStackTraceString());
+        }
 
         return alreadyExist;
 
@@ -541,11 +571,18 @@ public with sharing class IECOrder_Svc {
         List<OrderItem_DTO> orderItems = new List<OrderItem_DTO>(); 
 
         Map<String, Decimal> items = Order_Svc.getItemsInCookie(); // PRODUCT_Rate => QTY
-        
+     
+        System.debug('getOrderITemsInCookie');
+        System.debug('#items: ' + items.size());
+        System.debug('items --> ' + items);
+   
         if(!items.isEmpty())
         {
             Map<String,Product2> productByCode = Product_Sel.getProductsByCode(items.keySet());
             List<Id> listProductId = new List<Id>();
+
+            System.debug('productByCode.keySet: ' + (productByCode.keySet()));
+           
             for(String pCode : productByCode.keySet())
             {
                 Product2 p = productByCode.get(pCode);
@@ -559,6 +596,8 @@ public with sharing class IECOrder_Svc {
             List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false);
             Map<String, EComProduct_DTO> ecomProductById = new Map<String, EComProduct_DTO>();
 
+            System.debug('#ecomProducts: ' + ecomProducts.size());
+
             for(EComProduct_DTO ep : ecomProducts)
             {
                 ecomProductById.put(ep.ProductId, ep);
@@ -566,8 +605,12 @@ public with sharing class IECOrder_Svc {
 
             String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
 
+            System.debug('customerType: ' + customerType);
+
             for(EComProduct_DTO ecomProduct : ecomProducts)
             {
+                System.debug('ecomProduct.PriceInfo: ' + (ecomProduct.PriceInfo == null ? 'NULL' : 'defined'));
+
                 if(ecomProduct.PriceInfo == null)
                 {
                     deleteProductToCookie(ecomProduct.ProductNumber);
@@ -581,11 +624,13 @@ public with sharing class IECOrder_Svc {
 
                 OrderItem_DTO oi_dto = new OrderItem_DTO();
 
+                System.debug('ecomProduct quantity: ' + quantity + ', setupFee: ' + setupFee);
+
                 oi_dto.IECStaticCartQuantity = ecomProduct.IECStaticCartQuantity;
                     if(oi_dto.IECStaticCartQuantity != null && oi_dto.IECStaticCartQuantity > 0)
                     quantity = oi_dto.IECStaticCartQuantity; //Default quantity for phase 1 and 2 products
 
-                	oi_dto.productId = ecomProduct.ProductId;
+                    oi_dto.productId = ecomProduct.ProductId;
                     oi_dto.productName  = ecomProduct.ProductName;
                     oi_dto.productCode  = ecomProduct.ProductNumber; 
                     oi_dto.description  = ecomProduct.ProductDesc;
@@ -600,6 +645,8 @@ public with sharing class IECOrder_Svc {
             }
         }  
 
+        System.debug('#orderItems: ' + orderItems.size());
+
         if(orderItems.size() > 0)
             orderItems.sort();
 
@@ -608,6 +655,10 @@ public with sharing class IECOrder_Svc {
 
     public static void changePenddingOrder(Order newPendding)
     {
+        IEC_Cart cartInstance = IEC_Cart.getInstance();
+        IEC_Functionality functionality = IEC_Functionality.getInstance();
+        Boolean newShoppingCart = functionality.isActive('New Shopping Cart');
+
         Order o = getPenddingOrder(true);
         if(String.isBlank(o.IEC_Order_Previous_Type__c))
         {
@@ -619,19 +670,26 @@ public with sharing class IECOrder_Svc {
             try{update o;}catch(Exception ex){}   
         }
         
-        IECOrder_Svc.deleteAllCookies();
+        if (newShoppingCart == false) {
+            IECOrder_Svc.deleteAllCookies();
+        } else {
+            
+        }
 
         newPendding.IEC_Order_Previous_Type__c = newPendding.Type;
         newPendding.Type = 'Cart';
         newPendding.Status = 'New';
         try{update newPendding;}catch(Exception ex){}  
 
-        List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPendding.Id);
-        for(OrderItem oi : pendingOrderItems)
-        {
-            IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true);
-        }   
-
+        if (newShoppingCart == false) {
+            List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrderItems(newPendding.Id);
+            for(OrderItem oi : pendingOrderItems)
+            {
+                IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true);
+            }   
+        } else {
+            cartInstance.reloadOrder();
+        }
     }
 
     public static Order getPenddingOrder(String orderId)
@@ -657,6 +715,8 @@ public with sharing class IECOrder_Svc {
         //-- Validate Order Locations are valid
         if(pendingOrder != null)
         {
+            System.debug('Pending order: ' + pendingOrder);
+
             Boolean updatePendding= false;
             if(pendingOrder.BillTo_Location__c != oCurrentCustomer.sfContact.BillTo_Location__c)
             {
@@ -682,6 +742,8 @@ public with sharing class IECOrder_Svc {
         }
         else 
         {
+            System.debug('No pending order, create a new order ?' + (createOrder ? 'Yes' : 'No'));
+
             if (createOrder)
                 return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
             else
@@ -831,7 +893,7 @@ public with sharing class IECOrder_Svc {
         @Id productId, Id of the product
         @return, list of priceEntry by ProductId
         
-        Author: Ângela Lázaro 
+        Author: Angela Lazaro 
     ****************************************************************************************************/
     private static void doProductSwap(Map<String, Decimal> items, List<Id> listProductId){
 
@@ -863,5 +925,18 @@ public with sharing class IECOrder_Svc {
         
     }
 
+/****************************************************************************************************
+    Created by blue-infinity, Susana 2017-08-18
+        Delete an order
+****************************************************************************************************/
+public static void deleteOrder(Order order) {
+    Savepoint sp = Database.setSavepoint();
+    try {
+        delete [select Id from Order where Id = :order.id];
+    } catch (Exception e) {
+        ApexPages.addMessages(e);
+        Database.rollback(sp);
+    }
+} //*** end of "deleteOrderById"
 
 }

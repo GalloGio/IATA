@@ -49,9 +49,11 @@
                         <apex:column headerValue="Account Name" style="text-align: center;" >
                             <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
                         </apex:column>
+                      
                         <apex:column value="{!o.Contact__r.FirstName}" style="text-align: center;" />
                         <apex:column value="{!o.Contact__r.LastName}" style="text-align: center;" />
                         <apex:column value="{!o.Right__c}" style="text-align: center;" />
+                        <apex:column value="{!o.ANG_Portal_Service_Role__c}" style="text-align: center;" />                      
                       
                    </apex:pageBlockTable>
                   

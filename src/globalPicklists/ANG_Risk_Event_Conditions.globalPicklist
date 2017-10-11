@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalPicklist xmlns="http://soap.sforce.com/2006/04/metadata">
+    <globalPicklistValues>
+        <fullName>Equal to</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Not equal to</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Includes</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Does not Include</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Blank</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Not blank</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Equal to today</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Greater than today</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Less than today</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>&gt;</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>&lt;</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>&gt;=</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>&lt;=</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <masterLabel>Risk Event Conditions</masterLabel>
+    <sorted>false</sorted>
+</GlobalPicklist>
