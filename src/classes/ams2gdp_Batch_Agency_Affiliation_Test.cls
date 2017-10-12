@@ -42,13 +42,13 @@ private class ams2gdp_Batch_Agency_Affiliation_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(false, true));
 		Test.stopTest();
 	}
 	
 	@isTest static void negativeTestBatchAgencyAffiliation()
 	{
-		ams2gdp_Batch_Agency_Affiliation batch = new ams2gdp_Batch_Agency_Affiliation(false);
+		ams2gdp_Batch_Agency_Affiliation batch = new ams2gdp_Batch_Agency_Affiliation(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 
