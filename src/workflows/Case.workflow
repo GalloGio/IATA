@@ -1263,131 +1263,131 @@
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
+            <recipient>abbadid@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
+            <recipient>al-maanis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>armientoe@iata.org</recipient>
+            <recipient>armientoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>batagliaf@iata.org</recipient>
+            <recipient>batagliaf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>bokom@iata.org</recipient>
+            <recipient>bokom@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>chiavonf@iata.org</recipient>
+            <recipient>chiavonf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dovgano@iata.org</recipient>
+            <recipient>dovgano@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>farisd@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>girondoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>haddada@iata.org</recipient>
+            <recipient>haddada@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
+            <recipient>ibrahimf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>isicheic@iata.org</recipient>
+            <recipient>isicheic@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jaradata@iata.org</recipient>
+            <recipient>jaradata@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>katkhudan@iata.org</recipient>
+            <recipient>katkhudan@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>khalailehk@iata.org</recipient>
+            <recipient>khalailehk@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
+            <recipient>lopezbaism@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinyuks@iata.org</recipient>
+            <recipient>martinyuks@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>moutany@iata.org</recipient>
+            <recipient>moutany@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>nabulsis@iata.org</recipient>
+            <recipient>nabulsis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ogandoi@iata.org</recipient>
+            <recipient>ogandoi@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>paredesc@iata.org</recipient>
+            <recipient>paredesc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
+            <recipient>pommiers@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rabahh@iata.org</recipient>
+            <recipient>rabahh@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
+            <recipient>rajputf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
+            <recipient>sadiqs@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sanchezc@iata.org</recipient>
+            <recipient>sanchezc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>saremyt@iata.org</recipient>
+            <recipient>saremyt@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>schuchardm@iata.org</recipient>
+            <recipient>schuchardm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sughayerm@iata.org</recipient>
+            <recipient>sughayerm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>suwal@iata.org</recipient>
+            <recipient>suwal@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>yeboahm@iata.org</recipient>
+            <recipient>yeboahm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zidans@iata.org</recipient>
+            <recipient>zidans@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2768,139 +2768,139 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
+            <recipient>abbadid@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
+            <recipient>al-maanis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>armientoe@iata.org</recipient>
+            <recipient>armientoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>bokom@iata.org</recipient>
+            <recipient>bokom@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>chiavonf@iata.org</recipient>
+            <recipient>chiavonf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dovgano@iata.org</recipient>
+            <recipient>dovgano@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>farisd@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciam@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
+            <recipient>gilj@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>girondoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>haddada@iata.org</recipient>
+            <recipient>haddada@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
+            <recipient>ibrahimf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>isicheic@iata.org</recipient>
+            <recipient>isicheic@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jaradata@iata.org</recipient>
+            <recipient>jaradata@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>katkhudan@iata.org</recipient>
+            <recipient>katkhudan@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>khalailehk@iata.org</recipient>
+            <recipient>khalailehk@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
+            <recipient>lopezbaism@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinyuks@iata.org</recipient>
+            <recipient>martinyuks@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>moutany@iata.org</recipient>
+            <recipient>moutany@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>mulai@iata.org</recipient>
+            <recipient>mulai@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>nabulsis@iata.org</recipient>
+            <recipient>nabulsis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ogandoi@iata.org</recipient>
+            <recipient>ogandoi@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>paredesc@iata.org</recipient>
+            <recipient>paredesc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
+            <recipient>pommiers@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rabahh@iata.org</recipient>
+            <recipient>rabahh@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
+            <recipient>rajputf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
+            <recipient>sadiqs@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sanchezc@iata.org</recipient>
+            <recipient>sanchezc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>saremyt@iata.org</recipient>
+            <recipient>saremyt@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>schuchardm@iata.org</recipient>
+            <recipient>schuchardm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sughayerm@iata.org</recipient>
+            <recipient>sughayerm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>suwal@iata.org</recipient>
+            <recipient>suwal@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>yeboahm@iata.org</recipient>
+            <recipient>yeboahm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zidans@iata.org</recipient>
+            <recipient>zidans@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2912,139 +2912,139 @@
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
+            <recipient>abbadid@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
+            <recipient>al-maanis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>armientoe@iata.org</recipient>
+            <recipient>armientoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>bokom@iata.org</recipient>
+            <recipient>bokom@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>chiavonf@iata.org</recipient>
+            <recipient>chiavonf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dovgano@iata.org</recipient>
+            <recipient>dovgano@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>farisd@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciam@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
+            <recipient>gilj@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>girondoe@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>haddada@iata.org</recipient>
+            <recipient>haddada@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
+            <recipient>ibrahimf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>isicheic@iata.org</recipient>
+            <recipient>isicheic@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jaradata@iata.org</recipient>
+            <recipient>jaradata@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>katkhudan@iata.org</recipient>
+            <recipient>katkhudan@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>khalailehk@iata.org</recipient>
+            <recipient>khalailehk@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
+            <recipient>lopezbaism@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinyuks@iata.org</recipient>
+            <recipient>martinyuks@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>moutany@iata.org</recipient>
+            <recipient>moutany@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>mulai@iata.org</recipient>
+            <recipient>mulai@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>nabulsis@iata.org</recipient>
+            <recipient>nabulsis@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ogandoi@iata.org</recipient>
+            <recipient>ogandoi@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>paredesc@iata.org</recipient>
+            <recipient>paredesc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
+            <recipient>pommiers@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rabahh@iata.org</recipient>
+            <recipient>rabahh@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
+            <recipient>rajputf@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
+            <recipient>sadiqs@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sanchezc@iata.org</recipient>
+            <recipient>sanchezc@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>saremyt@iata.org</recipient>
+            <recipient>saremyt@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>schuchardm@iata.org</recipient>
+            <recipient>schuchardm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sughayerm@iata.org</recipient>
+            <recipient>sughayerm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>suwal@iata.org</recipient>
+            <recipient>suwal@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>yeboahm@iata.org</recipient>
+            <recipient>yeboahm@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zidans@iata.org</recipient>
+            <recipient>zidans@iata.org.preprod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
