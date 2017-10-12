@@ -339,7 +339,7 @@ public class AMS_AgencyHelper {
         if(locationClass.equalsIgnoreCase('M'))
           return 'MSO Member Sales Office';
         if(locationClass.equalsIgnoreCase('I'))
-          return 'Import Agent';
+          return 'Recipient';
 
           return null;
 
@@ -354,7 +354,7 @@ public class AMS_AgencyHelper {
         if( type.equalsIgnoreCase('IATA Cargo Agent') || 
             type.equalsIgnoreCase('Courier') ||
             type.equalsIgnoreCase('CASS Associate') ||
-            type.equalsIgnoreCase('Import Agent')
+            type.equalsIgnoreCase('Recipient')
           )
           return 'Cargo Agent';
 

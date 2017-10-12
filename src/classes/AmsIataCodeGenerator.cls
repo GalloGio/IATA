@@ -177,7 +177,7 @@ global class AmsIataCodeGenerator{
                 if(!isIATACodeGeneratedUnique(theAccreditation.IATACode__c)){
 
                     if(isImportAgentWithLink)
-                        returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                        returnedValues[1] = 'The IATA code generated is not unique. Since this is a Recipient, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
                     else
                         returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
 
@@ -423,7 +423,7 @@ global class AmsIataCodeGenerator{
                             if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
                                 
                                 if(isImportAgentWithLink)
-                                    returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                                    returnedValues[1] = 'The IATA code generated is not unique. Since this is a Recipient, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
                                 else
                                     returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
                                 
@@ -702,7 +702,7 @@ global class AmsIataCodeGenerator{
     
     private static Map<String, String> constructProgramCategoryMap()
     {
-        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
+        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Recipient', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
         return pcMap;
     }
     
