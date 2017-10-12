@@ -54,6 +54,7 @@ public class AMS_OSCAR_ProcessViewerController {
             return (
                 oscar != null
                 && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
+		&& !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
                 //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );

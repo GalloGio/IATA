@@ -44,13 +44,13 @@ private class ams2gdp_Batch_AMS_Account_Role_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(false));
+ 			Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestBatchAMSAccountRole()
 	{
-		ams2gdp_Batch_AMS_Account_Role batch = new ams2gdp_Batch_AMS_Account_Role(false);
+		ams2gdp_Batch_AMS_Account_Role batch = new ams2gdp_Batch_AMS_Account_Role(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 

@@ -28,6 +28,8 @@ private class AMP_ChatterBroadcastToolControllerTest {
         	ctrl.lstAccounts[0].isSelected = true;
         	ctrl.GoToStep2();
         	ctrl.GoBackToStep1();
+        	ctrl.selectWholeRegion = true;
+        	ctrl.strRegion = 'Europe';
 
         	ctrl.message = '#Cargo test broadcast';
 
