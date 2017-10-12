@@ -282,7 +282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             
                             <apex:pageBlockButtons location="bottom">
                                 <apex:commandLink action="{!verifyAlternative}" id="btnVerify2" 
-                                    rerender="Msgs2,reloadCaptcha" styleClass="btn-BlueButtonWAR" onclick="blockme();"  >
+                                    rerender="Msgs2,reloadCaptcha" styleClass="btn-BlueButtonWAR" onclick="blockme();" oncomplete="j$.unblockUI();" >
                                     <span>{!$Label.IDCard_Verify}</span>
                                 </apex:commandLink>
                                 <!--<apex:commandButton action="{!verifyAlternative}"
