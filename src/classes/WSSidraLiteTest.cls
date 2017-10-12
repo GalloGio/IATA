@@ -830,9 +830,27 @@ public class WSSidraLiteTest {
         WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
-
+    
     @isTest
     public static void testCreateCaseOSCAR_OK6() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step26__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK7() {
         AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
