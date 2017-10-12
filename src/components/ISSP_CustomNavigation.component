@@ -726,6 +726,13 @@ background-color:#428bca;
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
+        <!-- * FM 31-07-2017 - AMSU-26 -->
+        <li>
+    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" >
+                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
+                Trained Staff Certification 
+                </a>
+        </li>
 
     <!-- INC262760
     <li>
