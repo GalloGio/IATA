@@ -195,7 +195,7 @@ AND(NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c)),
          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;TIDS Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;TIDS Agent&apos;, true,
          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;IATA Cargo Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;IATA Cargo Agent&apos;, true,
           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;CASS Associate&apos;) &amp;&amp; $User.ANG_Category__c = &apos;CASS Associate&apos;, true,
-           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Import Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Import Agent&apos;, true, false)
+           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Recipient&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Recipient&apos;, true, false)
           )
          )
         )
@@ -258,8 +258,13 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Recipient</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -891,11 +896,11 @@ OR(
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>MSO Member Sales Office</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MSO Member Sales Office</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>

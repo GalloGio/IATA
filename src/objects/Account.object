@@ -5327,10 +5327,17 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Recipient</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
+                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>Individual Government</fullName>
@@ -14207,7 +14214,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -27816,7 +27823,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29262,7 +29269,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30796,7 +30803,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33454,7 +33461,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35690,7 +35697,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -38030,7 +38037,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46136,7 +46143,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -56579,7 +56586,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57653,7 +57660,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60065,7 +60072,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62476,7 +62483,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63977,7 +63984,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67082,7 +67089,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -72654,7 +72661,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74702,7 +74709,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -78982,7 +78989,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -81770,7 +81777,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
