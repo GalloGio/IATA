@@ -29,6 +29,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String amsAgentType {get; set;}
     public String agentCaseType {get; set;} //Used to set TIDS, Sales Agent (SA) from links on ISSP_AMSCase
     public String amsLocationType {get; set;}
+    public String amsLocationTypeLabelHq {get; set;}
+    public String amsLocationTypeLabel {get; set;}
     public String amsIsGSA {get; set;}
     public String noCLocationType {get; set;}
     public boolean isGSARequired;
@@ -626,6 +628,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     newForm.ISSP_AMS_VAT_number_input__c = con.Account.VAT_Number__c;
                 }
         }
+
+        amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+        amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
 
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
@@ -1235,6 +1240,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
 
+            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
             
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
@@ -1302,7 +1310,14 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
-            newCase.Type_of_customer__c = con.Account.Category__c;
+
+            if(newForm.Operation_Type__c == 'Travel_Agent') {
+                newCase.Type_of_customer__c = 'IATA Travel Agent';
+            } else if (newForm.Operation_Type__c == 'Cargo_Agent') {
+                newCase.Type_of_customer__c = 'IATA Cargo Agent';
+            } else {
+                newCase.Type_of_customer__c = con.Account.Category__c;    
+            }
             
             if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
@@ -7781,5 +7796,15 @@ system.debug('aqui sectorValue ' + sectorValue);
         getAmscontactsEmails(new List <AMS_Accreditation_Contact__c>() );
         validateNewAccModelHO(true);
         validateNewAccModelHO(false);
+    }
+
+    private String translateAccreditationModel(String accreditationModel) {
+        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+        } else {
+            return accreditationModel;
+        }
     }
 }
