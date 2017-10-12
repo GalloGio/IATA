@@ -49,16 +49,6 @@
         </apex:facet>
 
         <apex:pageblocksectionitem >
-          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
-          <apex:outputtext value="{!amsLocationTypeLabel}" />
-        </apex:pageblocksectionitem>
-
-        <apex:pageblocksectionitem >
-          <apex:outputlabel value="" />
-          <apex:outputtext value="" />
-        </apex:pageblocksectionitem>        
-
-        <apex:pageblocksectionitem >
           <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
           <apex:outputfield value="{!hqAccount.Name}" />
         </apex:pageblocksectionitem>
@@ -66,6 +56,16 @@
           <apex:outputLabel value="{!$ObjectType.Account.fields.TradeName__c.Label}" />
           <apex:outputField value="{!hqAccount.TradeName__c}" />
         </apex:pageBlockSectionItem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+          <apex:outputtext value="{!amsLocationTypeLabelHq}" />
+        </apex:pageblocksectionitem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="" />
+          <apex:outputtext value="" />
+        </apex:pageblocksectionitem>        
 
         <apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AN_Step1_AE_Full_Address}">
           <apex:param value="{!hqAccount.BillingStreet}" />
@@ -101,8 +101,19 @@
             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" />
           </apex:outputpanel>
         </apex:facet>
+
         <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!newForm.Account_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+          <apex:outputtext value="{!amsLocationTypeLabel}" />
+        </apex:pageblocksectionitem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="" />
+          <apex:outputtext value="" />
+        </apex:pageblocksectionitem>        
 
         <apex:outputField styleClass="LegalStatusLabel" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputtext ></apex:outputtext>

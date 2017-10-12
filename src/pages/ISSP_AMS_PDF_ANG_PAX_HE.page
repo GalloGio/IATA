@@ -68,10 +68,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
-                            <td colspan="2">{!amsLocationTypeLabel}</td>
-                        </tr>
-                        <tr>
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
                             <td colspan="2">{!newForm.Account_Name__c}</td>
                         </tr>
@@ -79,6 +75,10 @@
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
                             <td colspan="2">{!newForm.Trade_Name__c}</td>
                         </tr>
+                        <tr>
+                            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+                            <td colspan="2">{!amsLocationTypeLabelHq}</td>
+                        </tr>                        
                         <tr>
                             <td class="label">{!$Label.ISSP_Office_Phone}</td>
                             <td colspan="2">{!newForm.Branch_Office_Phone__c}</td>
