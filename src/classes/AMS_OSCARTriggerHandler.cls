@@ -1250,8 +1250,9 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars
-						AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars])
+						//AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]) --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
+						{
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
