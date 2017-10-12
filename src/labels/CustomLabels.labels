@@ -52,6 +52,13 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_New_Change_Code_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
+        <value>A new change code has been generated:</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
