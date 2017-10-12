@@ -1383,10 +1383,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tadrosc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>yeboahm@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2772,11 +2768,31 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
+            <recipient>abbadid@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>al-maanis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>armientoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bokom@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chiavonf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>farisd@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2792,11 +2808,99 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>haddada@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ibrahimf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>isicheic@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jaradata@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>katkhudan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>khalailehk@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lopezbaism@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>moutany@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nabulsis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajputf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sadiqs@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schuchardm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sughayerm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>yeboahm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zidans@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2808,11 +2912,31 @@
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
+            <recipient>abbadid@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>al-maanis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>armientoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bokom@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chiavonf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>farisd@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2828,11 +2952,99 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>haddada@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ibrahimf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>isicheic@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jaradata@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>katkhudan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>khalailehk@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lopezbaism@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>moutany@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nabulsis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajputf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sadiqs@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schuchardm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sughayerm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>yeboahm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zidans@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -7570,7 +7782,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Workflow to inform IATA Owner that ACCA has changed the Escalated Status DPC for an ACR.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -7596,7 +7808,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Record_Type_ACR_DPC_ACCA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7685,7 +7897,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Used to inform ACCA that a new ACR has been escalated to them.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11210,7 +11422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
-            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed</value>
+            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed,3.1 PQ received - pending DPCM feedback,8.0 Doc review - completed</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Visible_on_ISS_Portal__c</field>
@@ -13057,7 +13269,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Region__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13097,7 +13309,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Region__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13451,9 +13663,9 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>SIDRA</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Account.Region_formula__c</field>
+            <field>Case.Region__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CCG_Participant__c</field>

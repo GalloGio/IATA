@@ -526,6 +526,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference save()
     {
+        newCase.Case_Language__c = CaseLanguageDetector.detectCaseLanguage(newCase);
         if (areaOfConcern!=null) {
             areaOfConcern = areaOfConcern.trim();
             if (areaOfConcern.contains('-- None --') || areaOfConcern.contains('-- Select --')) {
@@ -632,6 +633,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference saveAttach()
     {system.debug('wwewwe IFAP_Country_ISO__c: ' + newCase.IFAP_Country_ISO__c );
+         newCase.Case_Language__c = CaseLanguageDetector.detectCaseLanguage(newCase);
          this.errorMessage = new list<String>();
          if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic)||
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||

@@ -254,7 +254,7 @@
                 var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]'); 
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
-                var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
+                var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Recipient"];
                 console.log('no empty voffice '+vOfficeType);
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
@@ -834,7 +834,7 @@
                         IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
                             IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle, 
                                 IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle, 
-                                    IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle, 
+                                    IF(newForm.Agent_Type__c == 'Recipient', lblImporAgentTitle, 
                                         IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
 
                 </h3>

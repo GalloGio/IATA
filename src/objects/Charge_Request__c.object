@@ -1021,6 +1021,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>CASFEE_JOINS</fullName>
+                <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>CASFEE_SEMNR</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASS</controllingFieldValues>
@@ -1508,6 +1513,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1500.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
+                <controllingFieldValues>CASFEE_JOINS</controllingFieldValues>
                 <controllingFieldValues>PDP / PTA Assignment Fee - 701924</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -1544,6 +1550,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>7400.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>Code Voluntary Change Request Fee - 701929</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>250.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>AISTLM_FILE</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
