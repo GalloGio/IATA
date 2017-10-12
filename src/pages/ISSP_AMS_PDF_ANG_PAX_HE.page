@@ -394,11 +394,11 @@
                             <apex:outputPanel rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
                                 <tr>
                                     <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
-                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
+                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                                 </tr>
                                 <tr>
                                     <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
-                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
+                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                                 </tr>
                             </apex:outputPanel>
 	                    	<tr>
