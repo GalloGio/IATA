@@ -24253,6 +24253,23 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>RE</value>
     </labels>
     <labels>
+        <fullName>RTS_TAR_Notification_Message</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Message</shortDescription>
+        <value>Dear Sir/Madam, 
+This notification is to inform you that your ticketing authority has been removed. IATA will be in contact shortly.</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Title</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Title</shortDescription>
+        <value>Ticketing authority removal</value>
+    </labels>
+    <labels>
         <fullName>Reader_Main_Content</fullName>
         <categories>Content</categories>
         <language>en_US</language>
