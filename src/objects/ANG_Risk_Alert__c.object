@@ -117,6 +117,15 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>ANG_Is_Case_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to record if the SMAP and SIDRA cases were created on the Alert</description>
+        <externalId>false</externalId>
+        <label>Case Created</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Information__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The RHC infomation record this alert is related to.</description>
