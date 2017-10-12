@@ -27,7 +27,7 @@ global class ANG_AmendFS implements Process.Plugin {
         fsCloned.Reasonforrequest__c = 'Previous Security Update';
         fsCloned.Amount__c = NewFSAmount;
         fsCloned.CurrencyIsoCode = SelectedCurrency;
-        fsCloned.Expiry_Date__c = date.newinstance(ExpiryDate.year(), ExpiryDate.month(), ExpiryDate.day());
+        fsCloned.Expiry_Date__c = ExpiryDate==null?null:date.newinstance(ExpiryDate.year(), ExpiryDate.month(), ExpiryDate.day());
         fsCloned.Unlimited_Security__c = UnlimitedValidity;
       insert fsCloned;
       
