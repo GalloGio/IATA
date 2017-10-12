@@ -2078,6 +2078,13 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Category</picklist>
+            <values>
+                <fullName>Recipient</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Division__c</picklist>
             <values>
                 <fullName>APCS</fullName>
@@ -2894,10 +2901,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -2975,6 +2978,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3653,6 +3660,13 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category</picklist>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4470,10 +4484,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -4551,6 +4561,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5458,10 +5472,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -5539,6 +5549,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6229,6 +6243,13 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category</picklist>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

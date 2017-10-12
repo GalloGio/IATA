@@ -11168,14 +11168,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT BRANCH</shortDescription>
-        <value>Import Agent - Branch Office</value>
+        <value>Recipient - Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_IMPORT_HO</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT HO</shortDescription>
-        <value>Import Agent - New Head Office</value>
+        <value>Recipient - New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_BRANCH</fullName>
@@ -13026,7 +13026,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_StepsAll_Import_Agent_Title</shortDescription>
-        <value>Application for Approval as an Import Agent</value>
+        <value>Application for Approval as an Recipient</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Passenger_Title</fullName>
@@ -15594,6 +15594,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Download Now!</value>
     </labels>
     <labels>
+        <fullName>ISSP_Download_in_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in CSV</shortDescription>
+        <value>Download in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_PDF</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in PDF</shortDescription>
+        <value>Download in PDF</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Draft</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -17728,6 +17744,62 @@ this is the tiess topic help</value>
         <value>Loading Travel Agent Details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Local_Groups_Contact_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Contact Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Country</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Country</shortDescription>
+        <value>Country/Cluster</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Export_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Export CSV</shortDescription>
+        <value>Export in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry</shortDescription>
+        <value>Local Industry Groups</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Description</shortDescription>
+        <value>description</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Title</shortDescription>
+        <value>My Local Groups</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Location</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -18668,6 +18740,102 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_Pagedescription_ISSP_ContentPage</shortDescription>
         <value>Search, view and download required IATA documents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_ALWG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description ALWG</shortDescription>
+        <value>ALWG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_APJC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description APJC</shortDescription>
+        <value>APJC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_APJC_FAG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description APJC / FAG</shortDescription>
+        <value>APJC / FAG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CAPJC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CAPJC</shortDescription>
+        <value>CAPJC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CEC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CEC</shortDescription>
+        <value>CEC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CGA</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CGA</shortDescription>
+        <value>CGA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_EACP_JC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description EACP JC</shortDescription>
+        <value>EACP JC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_ICAP</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description ICAP</shortDescription>
+        <value>ICAP</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_JALWG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description JALWG</shortDescription>
+        <value>JALWG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_C</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-C</shortDescription>
+        <value>LCAG-C</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_P</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-P</shortDescription>
+        <value>LCAG-P</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_P_Credit_Card_WG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-P / Credit Card WG</shortDescription>
+        <value>LCAG-P / Credit Card WG</value>
     </labels>
     <labels>
         <fullName>ISSP_Password</fullName>
