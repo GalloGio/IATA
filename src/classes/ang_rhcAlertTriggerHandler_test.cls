@@ -16,16 +16,16 @@ private class ang_rhcAlertTriggerHandler_test {
         
 
   // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', BSP_Country_free_text__c = 'FR');
         insert country;
         
-        // Create an Airline HQ account
         Account a = new Account(
         	name='acc1',
 			Location_Type__c='HE',
 			Location_Class__c='P',
 			Remittance_frequency__c='Monthly',
 			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country.id,
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );
         insert a;        
@@ -140,12 +140,22 @@ private class ang_rhcAlertTriggerHandler_test {
 
 	private static testmethod void testTicketingAuthorityRemoval(){
 
-    	Account a = [Select Id from Account limit 1];
+    	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
+    	System.debug('##Account: '+ a.Remittance_frequency__c);
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
 			Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
 			ang_Severity__c='Red',
 			ANG_Account__c = a.Id
 		);
+
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
+		insert iss;
+		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+		insert op;
+		
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+		insert con;
 				
 		test.StartTest();
 			insert ra;

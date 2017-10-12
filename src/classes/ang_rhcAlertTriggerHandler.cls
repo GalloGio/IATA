@@ -1,4 +1,4 @@
-	public class ang_rhcAlertTriggerHandler{
+public class ang_rhcAlertTriggerHandler{
 
 		public List<ANG_Risk_Alert__c> triggerNew = (List<ANG_Risk_Alert__c>) Trigger.new;
 		public List<ANG_Risk_Alert__c> triggerOld = (List<ANG_Risk_Alert__c>) Trigger.old;
@@ -101,11 +101,22 @@
 			List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 			Map<String,ANG_Risk_Alert__c> mapAccountRiskAlert = new Map<String,ANG_Risk_Alert__c>();
 
-			for(ANG_Risk_Alert__c ra :triggerNew){
-				if(ra.ANG_Severity__c == 'Red' &&  ra.recordTypeid == Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId()){
+
+			//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
+			for(ANG_Risk_Alert__c ra :[
+				SELECT ID,Name,ANG_Account__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
+						ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
+						ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
+						ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,
+						ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region__c  
+					FROM ANG_Risk_Alert__c 
+					WHERE ID IN :triggerNew
+					AND ANG_Severity__c = 'Red' 
+					AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() ]){
+
 					redAlerts.add(ra);
 					mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
-				}
+				//}
 			}
 
 			if(!redAlerts.isEmpty()){
@@ -116,7 +127,7 @@
 				List<Case> smapParentCases = new List<Case>();
 				Map<String,case> mapCaseRiskAlert = new Map<String,case>();
 				Set<Id> accountsIds = new Set<Id>();
-
+				Map<Id,Operational_Calendar__c> mapAccountOpCalendar = fetchCalendar(redAlerts);
 				for(ANG_Risk_Alert__c ra: redAlerts){
 
 					//TODO: confirm all this fileds 
@@ -129,9 +140,9 @@
 						Origin = 'Other',
 						Decision__c = 'Prejudiced Collection of Funds',
 						RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP,
-						Next_Remittance_Date__c =  date.newinstance(2018, 2, 17),
-						Start_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
-						End_Date_of_Sales_Period__c=  date.newinstance(2018, 2, 17),
+						Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
+						Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
+						End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c, 
 						Suspension_Date__c=  Date.today()
 					);
 					smapParentCases.add(smapParentCase);
@@ -171,11 +182,8 @@
 						contactsPerAccount.put(con.AccountId,new List<Contact>{con});
 				}
 
-				//contacts = [SELECT Id FROM Contact WHERE AccountId = :parentCase.AccountID AND Status__c = 'Active' AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
-
 				Case sidraLiteCase;
 				sidraLiteCases = new List<Case>();
-
 
 				for(Case parentCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
@@ -231,16 +239,51 @@
 		}
 		}
 
-		//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
 
-		Private operational_Calendar__c fetchCalendar(ANG_Risk_Alert__c ra){
+		Private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
 
-			return [select id from Operational_Calendar__c 
-				where ISS_operation__c =:ra.ANG_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c 
-				AND Frequency_Code__c = :mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c)
-				LIMIT 1];
+			Set<String> isoCodes = new Set<String>();
+			Set<String> rfs = new Set<String>();
+			Map<Id,operational_Calendar__c> ocMap = new Map<Id,operational_Calendar__c>();
+			for(ANG_Risk_Alert__c ra : ras){
+
+				isoCodes.add('BSP-' +(ra.ANG_Account__r.IATA_ISO_Country__r.BSP__c == 'Yes' ? 
+								ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
+								ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c));
+
+				rfs.add(mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c));
+
+			}
+
+			List<Operational_Calendar__c> ops = [SELECT id,ISS_Operation__r.Name,Frequency_Code__c,First_Day__c, Last_Day__c, Remittance_Day__c   
+				FROM Operational_Calendar__c 
+				WHERE Frequency_Code__c IN :rfs
+					AND First_Day__c <= :Date.today() 
+					AND Last_Day__c >= :Date.today() 
+					AND ISS_Operation__r.Name IN :isoCodes
+				];
+				system.debug('##OPS' + isoCodes);
+				system.debug('##OPS' + ops);
+				system.debug('##rfs' + rfs);
+			for(ANG_Risk_Alert__c ra : ras){
+				for(Operational_Calendar__c op: ops){
+					
+					String isoCode = 'BSP-' + (ra.ANG_Account__r.IATA_ISO_Country__r.BSP__c == 'Yes' ? 
+								ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
+								ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c);
+					
+					if(op.ISS_Operation__r.Name == isoCode &&
+						op.Frequency_Code__c == mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c)
+					){
+						ocMap.put(ra.ANG_Account__c,op);
+						break;
+					}
+				}
+			}
+			return ocMap;
 		}
 
+		//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925
 		@Future(callout=true)
 		public static void bspLinkCallout(List<Id> sidraLiteCaseIds, List<Id> accountIds) {
 			List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
