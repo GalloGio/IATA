@@ -4,7 +4,7 @@ public class trgAccreditation_test {
     @isTest  
     static void test1()
     {
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Business Administrator'];
         User testUser = New User(
           Alias = 'standt', Email='standarduser@testorg.com',
           EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
