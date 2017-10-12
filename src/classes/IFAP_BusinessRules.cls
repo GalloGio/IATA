@@ -370,7 +370,7 @@ public with sharing class IFAP_BusinessRules {
             }
 
             if (caseStatus == QI_REQUEST_PENDING_APPROVAL)
-                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF)
+                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF || oldCaseStatus == QI_REJECTED)
                     return true;
 
             if (caseStatus == SCF)

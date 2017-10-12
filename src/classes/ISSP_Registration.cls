@@ -479,7 +479,7 @@ public without sharing class ISSP_Registration {
                 	errorMessage.add(Label.ISSP_IATA_Code_Agency);
                 	return null;
         		}
-        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountry, 'Agency');    
+        		accList = searchCompany(searchIATACode, companyName, searchCountry, 'Agency');    
         		handleSearchResults();
         	} catch(Exception e) {
         		log(e);
@@ -1438,7 +1438,7 @@ public without sharing class ISSP_Registration {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
         	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
-        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        //	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
         } else {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(GSA,Label.ISSP_GSSA));

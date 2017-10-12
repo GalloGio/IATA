@@ -718,6 +718,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SAP_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SAP Invoice</label>
+        <referenceTo>IEC_SAP_Invoice__c</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>SAP_Order_Number__c</fullName>
         <externalId>false</externalId>
         <label>SAP Order Number</label>

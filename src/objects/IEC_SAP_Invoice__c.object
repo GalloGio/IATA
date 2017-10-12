@@ -69,6 +69,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Bill_To_Contact_SAP_Partner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order__r.BillToContact_Partner_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bill To Contact SAP Partner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Bill_To__c</fullName>
         <externalId>false</externalId>
         <label>Bill To</label>
@@ -371,6 +383,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>IEC SAP Invoices</relationshipLabel>
+        <relationshipName>IEC_SAP_Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>PO_Date__c</fullName>
         <externalId>false</externalId>
         <label>PO Date</label>
@@ -462,6 +487,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Related_Orders__c</fullName>
+        <externalId>false</externalId>
+        <label>Related Orders</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>SAP_Bill_To_Number__c</fullName>
@@ -1058,6 +1092,7 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <fullName>Td</fullName>
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Order__c</columns>
         <columns>Error_Message__c</columns>
         <columns>Bill_To__c</columns>
         <columns>SAP_Bill_To_Number__c</columns>
@@ -1069,13 +1104,16 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <columns>SAP_Invoice_Number__c</columns>
         <columns>Payment_Date__c</columns>
         <columns>SAP_Invoice_Clearance_Date__c</columns>
-        <columns>Ready_for_SAP__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CREATED_DATE</field>
+            <field>Order__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Status__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>Zuora Ready</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

@@ -295,6 +295,11 @@ body.loading .modal {
     color: white;
 }
 
+.warningRed{
+    font-weight: bold;
+    color: red;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -341,7 +346,7 @@ function buildFunctionCall(func, argList){
         argList = argList.replace(']','');
     }
     if(argList.indexOf('accountNameFromOscar') > -1){
-        accountName = '{!oscar.Account__r.Name}';
+        accountName = "{!oscar.Account__r.Name}";
         argList = argList.replace('accountNameFromOscar', accountName);
         argList = argList.replace('[','');
         argList = argList.replace(']','');
@@ -364,7 +369,7 @@ function buildFunctionCall(func, argList){
     });
 </script>
 
-<apex:pageBlock rendered="{!oscar == null}">
+<apex:pageBlock rendered="{!oscar.Account__c == null}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">UNAVAILABLE</p>
@@ -386,10 +391,14 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>* Specify Legal Status</li>
                 </apex:outputText>
-                <li>Location Class</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Class</li>
+                </apex:outputText>
                 <li>Country</li>
                 <li>Street name and number</li>
-                <li>Location Type</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Type</li>
+                </apex:outputText>
                 <li>City</li>
                 <apex:outputText rendered="{!isNotNewGenProcess}">
                     <li>Office Email (except for MSO process)</li>
@@ -398,6 +407,7 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>Office Email</li>
                     <li>Office Phone</li>
+                    <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
         </p>
@@ -465,6 +475,10 @@ function buildFunctionCall(func, argList){
         <apex:repeat value="{!flow.steps}" var="step">
             <div id="inline{!step.name}" style="display:none;">
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
+
+                <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
+                <br />
+
                 <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
                     
                 <apex:repeat value="{!step.actions}" var="action">

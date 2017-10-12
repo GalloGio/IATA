@@ -781,7 +781,7 @@
         <description>IAPP - Notify team leader case has been set as Not eligible</description>
         <protected>false</protected>
         <recipients>
-            <recipient>martinsp@iata.org</recipient>
+            <recipient>montoyac@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -1263,11 +1263,23 @@
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
+            <recipient>abbadid@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>al-maanis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1279,7 +1291,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>farisd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>haddada@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ibrahimf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>isicheic@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jaradata@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>katkhudan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>khalailehk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1331,35 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>moutany@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nabulsis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajputf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1308,6 +1372,26 @@
         </recipients>
         <recipients>
             <recipient>schuchardm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sughayerm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>tadrosc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>yeboahm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zidans@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -1992,6 +2076,40 @@
         <template>IFAP_Email_Templates/IFAP</template>
     </alerts>
     <alerts>
+        <fullName>IFG_Case_closed_by_Support_Team</fullName>
+        <description>IFG - Case closed by Support Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>ifgcare@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E2CP_CS_Portal/IFG_Case_Closed</template>
+    </alerts>
+    <alerts>
+        <fullName>IFG_Case_solution_provided_to_Customer_by_Support_Team</fullName>
+        <description>IFG - Case solution provided to Customer by Support Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>ifgcare@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E2CP_CS_Portal/IFG_Case_Awaiting_Customer_Feedback</template>
+    </alerts>
+    <alerts>
+        <fullName>IFG_Internal_Case_Closed</fullName>
+        <description>IFG - Internal Case Closed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Send_DPC_HP_ACR_email_notification</fullName>
         <description>ISSP Send DPC HP ACR email notification</description>
         <protected>false</protected>
@@ -2166,10 +2284,6 @@
         <protected>false</protected>
         <recipients>
             <recipient>boceke@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garcias@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2518,10 +2632,6 @@
         <protected>false</protected>
         <recipients>
             <recipient>boceke@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garcias@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -3661,18 +3771,6 @@
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
     </alerts>
     <alerts>
-        <fullName>ZMG__ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed</fullName>
-        <ccEmails>oueidatg@iata.org</ccEmails>
-        <description>ZMG_Send Survey Email to Case Contact after Case Closed</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>ZMG__Zoomerang_Templates/ZMG__ZMG_Case_Closed_Survey_Template</template>
-    </alerts>
-    <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
         <description>sMAP - Deadline reached pending inputs inform CM &amp; Case Owner</description>
         <protected>false</protected>
@@ -4801,7 +4899,7 @@
     <fieldUpdates>
         <fullName>DPCtoRBest</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>bestr@iata.org</lookupValue>
+        <lookupValue>chaziran@iata.org.prod</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>DPCtoRBest</name>
         <notifyAssignee>false</notifyAssignee>
@@ -5507,6 +5605,17 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IFG_Case_reopened_change_owner_to_SL1</fullName>
+        <field>OwnerId</field>
+        <lookupValue>Queue_IFG_Support_Level_1</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>IFG - Case reopened change owner to SL1</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IRR_Withdrawal_ApprovalDate_Reset</fullName>
@@ -6347,15 +6456,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_TER_MANUAL_ENTRY_TOTAL_OUTS_AMO</fullName>
-        <description>Total outs. amount field is cleared once the TER manual entry is filled</description>
-        <field>Total_Outstanding_Amounts_Default__c</field>
-        <name>SIDRA TER MANUAL ENTRY - TOTAL OUTS. AMO</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_TER_MANUAL_ENTRY_calc_all_outs</fullName>
         <description>When the TER manual entry date is updated, the field Calc ALL Outstanding amount (ter. date) field is cleared</description>
         <field>Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -7010,13 +7110,13 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_to_IDFS_Confidential_Record_Type</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IDFS_Confidential</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Update to IDFS Confidential Record Type</name>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case_Update</fullName>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
+        <field>dgAI2__DG_Capture_Analytics__c</field>
+        <literalValue>1</literalValue>
+        <name>DG_Capture_Analytics_Closed_Case_Update</name>
         <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7051,10 +7151,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
+        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),CONTAINS( $Profile.Name,&quot;IDFS Americas - Hub Staff&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS($Profile.Name,&quot;Hub MGR AM/ARM&quot;),CONTAINS( $Profile.Name,&quot;Hub Staff AM&quot;)),&quot;Agency Management&quot;,
-(IF(CONTAINS($Profile.Name,&quot;Hub Staff ARM&quot;),&quot;Risk Management&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
+(IF(OR(CONTAINS($Profile.Name,&quot;Agency Management&quot;),CONTAINS($Profile.Name,&quot;Hub Analyst ARM&quot;)),&quot;Agency Management&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
@@ -7106,8 +7206,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fields>Kale_Status__c</fields>
         <fields>L2_Support_Priority__c</fields>
         <fields>LastModifiedDate</fields>
-        <fields>LastReferencedDate</fields>
-        <fields>LastViewedDate</fields>
         <fields>Last_Action_Closure_Date__c</fields>
         <fields>Last_CS_action_request__c</fields>
         <fields>Last_Default_Action_Date__c</fields>
@@ -7472,7 +7570,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Workflow to inform IATA Owner that ACCA has changed the Escalated Status DPC for an ACR.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -7498,7 +7596,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Record_Type_ACR_DPC_ACCA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7587,7 +7685,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Used to inform ACCA that a new ACR has been escalated to them.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11112,7 +11210,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
-            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed</value>
+            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed,3.1 PQ received - pending DPCM feedback,8.0 Doc review - completed</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Visible_on_ISS_Portal__c</field>
@@ -11234,7 +11332,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>CASSlink</value>
         </criteriaItems>
-        <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Rod Best</description>
+        <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Nektarios Chazirakis</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12843,7 +12941,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(   SIDRA_exchange_rate_updated__c,   RecordType.DeveloperName = &apos;SIDRA&apos;,   ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),    NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),     Short_Payment_Amount_USD__c &gt; 50,     Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),     Short_Payment_Amount_USD__c &lt;= 150000  )</formula>
+        <formula>AND(  SIDRA_exchange_rate_updated__c,  RecordType.DeveloperName = &apos;SIDRA&apos;,  Short_Payment_Amount_USD__c &gt; 50,  NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   OR(AND(  ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),   AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14481,6 +14579,85 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>IFG - Assign reopen case to queue Support Level 1</fullName>
+        <actions>
+            <name>IFG_Case_reopened_change_owner_to_SL1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Reopen</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Internal Case Closed</fullName>
+        <actions>
+            <name>IFG_Internal_Case_Closed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>FG - Send email notification for IFG team when internal case is closed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Send email notification for Customer when a solution is provided</fullName>
+        <actions>
+            <name>IFG_Case_solution_provided_to_Customer_by_Support_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Solution Provided</value>
+        </criteriaItems>
+        <description>IFG - Send email notification for Customer when a solution is provided</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Send email notification for Customer when case is closed</fullName>
+        <actions>
+            <name>IFG_Case_closed_by_Support_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>IFG - Send email notification for Customer when case is closed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
             <name>Assign_to_Agency_Management_Europe_queue</name>
@@ -14620,7 +14797,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 16))) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -14679,12 +14856,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
+            <value>,CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite,New AE,New SA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -14697,9 +14874,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Customer Charge Request</value>
         </criteriaItems>
         <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New TIDS HO,New TIDS BR</value>
+            <value>Request of PSSA / Agreement,New TIDS HO,New TIDS BR</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -14711,7 +14893,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12))) AND (5 AND 6)) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14)</booleanFilter>
+        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12))) AND (5 AND 6)) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -14770,7 +14952,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard,New AE</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -14781,6 +14963,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.DPC_Software__c</field>
             <operation>notEqual</operation>
             <value>Maestro</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15067,14 +15254,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -15087,6 +15266,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -15818,7 +16005,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
+        <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15848,6 +16035,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>notEqual</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>The query is reopened and assigned to Complaint Team</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15952,7 +16144,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND (3 AND 4 AND 5)</booleanFilter>
+        <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15977,6 +16169,11 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <field>Case.Subtopic__c</field>
             <operation>notContain</operation>
             <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>equals</operation>
+            <value>Bermuda,Canada</value>
         </criteriaItems>
         <description>the query is reopened and assigned to OCIT</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -17755,20 +17952,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Set a case to Confidential mode</fullName>
-        <actions>
-            <name>Update_to_IDFS_Confidential_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.Set_CONFIDENTIAL__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Status to Scheduled</fullName>
         <actions>
             <name>Status_Scheduled</name>
@@ -18241,44 +18424,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ZMG__ZMG_Case Closed Survey Completed</fullName>
-        <actions>
-            <name>ZMG__ZMG_Survey_Completed_by_Case_Contact</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ZMG__ZMG_Survey_Completed__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Task created when Zoomerang Survey is completed related to a closed Case.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZMG__ZMG_Case Closed Survey Sent</fullName>
-        <actions>
-            <name>ZMG__ZMG_Survey_Sent_to_Case_Contact</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Email sent to Case Contact with Zoomerang Survey when Case is Closed.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default Americas - email to R%26S</fullName>
         <actions>
             <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
@@ -18426,6 +18571,21 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Europe</value>
         </criteriaItems>
         <description>SIDRA</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>dgAI2__DG_Capture_Analytics_Closed_Case</fullName>
+        <actions>
+            <name>dgAI2__DG_Capture_Analytics_Closed_Case_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -18592,28 +18752,5 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <protected>false</protected>
         <status>Not Started</status>
         <subject>Update Authorized Signatories Package</subject>
-    </tasks>
-    <tasks>
-        <fullName>ZMG__ZMG_Survey_Completed_by_Case_Contact</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>Copy and paste this link to view the Survey:
-[Insert public survey URL here for reference]</description>
-        <dueDateOffset>0</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Completed</status>
-        <subject>Survey Completed : &apos;Customer Satisfaction with Customer Service&apos;</subject>
-    </tasks>
-    <tasks>
-        <fullName>ZMG__ZMG_Survey_Sent_to_Case_Contact</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>http://www.zoomerang.com/Survey/WEB22DWFGEZJME</description>
-        <dueDateOffset>0</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Completed</status>
-        <subject>Survey Sent : &apos;Customer Satisfaction with Customer Service&apos;</subject>
     </tasks>
 </Workflow>

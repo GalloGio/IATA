@@ -1,5 +1,5 @@
 global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugin {
-   
+
     global override Process.PluginDescribeResult buildDescribeCall() { 
         Process.PluginDescribeResult describeResult = new Process.PluginDescribeResult();
         // A Group for the Plugins
@@ -16,7 +16,7 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
     }
     
     global override Process.PluginResult invoke(Process.PluginRequest request) {
-     
+
         Map<String,Object> result = new Map<String,Object>();
         result.put(UserProvisioningUtils.PARAM_STATUS, 'Failed'); // set default
         
@@ -42,8 +42,8 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
             String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
             if(params != null) SCIMUsersUtility.createParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
 
-            System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
-            System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] createParams - ' + SCIMUsersUtility.createParams);
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] params - ' + params);
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] createParams - ' + SCIMUsersUtility.createParams);
             
             Map<String, Object> callResult = SCIMUsersUtility.createUser(userPayload);
             userProvUtils.debug('HTTP call result was ' + callResult);
