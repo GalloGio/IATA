@@ -7151,10 +7151,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
+        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),CONTAINS( $Profile.Name,&quot;IDFS Americas - Hub Staff&quot;)),&quot;Customer Service&quot;,
-(IF(OR(CONTAINS($Profile.Name,&quot;Hub MGR AM/ARM&quot;),CONTAINS( $Profile.Name,&quot;Hub Staff AM&quot;)),&quot;Agency Management&quot;,
-(IF(CONTAINS($Profile.Name,&quot;Hub Staff ARM&quot;),&quot;Risk Management&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
+(IF(OR(CONTAINS($Profile.Name,&quot;Agency Management&quot;),CONTAINS($Profile.Name,&quot;Hub Analyst ARM&quot;)),&quot;Agency Management&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
@@ -7570,7 +7570,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Workflow to inform IATA Owner that ACCA has changed the Escalated Status DPC for an ACR.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -7596,7 +7596,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Record_Type_ACR_DPC_ACCA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7685,7 +7685,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>IBSP1</value>
+            <value>IBSP1,IBSPs,IBSPs-D</value>
         </criteriaItems>
         <description>Used to inform ACCA that a new ACR has been escalated to them.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11210,7 +11210,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
-            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed</value>
+            <value>6.0 UAT Approval - DD - s/holder comm,7.1 Doc review - pending DPC feedback,9.0 Closed,3.1 PQ received - pending DPCM feedback,8.0 Doc review - completed</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Visible_on_ISS_Portal__c</field>

@@ -249,6 +249,8 @@ private class ISSP_WS_Test {
         con.status__c = 'Inactive';
         update con;
         ISSP_WS_NewUser.createUser(myInput);
+        myInput.accountIATAcode = '1001';
+        ISSP_WS_NewUser.createUser(myInput);
 		Test.stopTest();
     }
     

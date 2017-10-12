@@ -42,13 +42,13 @@ private class ams2gdp_Batch_Territory_Test {
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Territory(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Territory(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestBatchTerritory()
 	{
-		ams2gdp_Batch_Territory batch = new ams2gdp_Batch_Territory(false);
+		ams2gdp_Batch_Territory batch = new ams2gdp_Batch_Territory(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 
