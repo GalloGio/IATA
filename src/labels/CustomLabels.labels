@@ -52,6 +52,13 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_New_Change_Code_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
+        <value>A new change code has been generated:</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -219,7 +226,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action7</shortDescription>
-        <value>Create SIDRA Lite</value>
+        <value>SIDRA Lite Action</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action8</fullName>
@@ -1266,7 +1273,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>Standard Accreditation with Cash</value>
+        <value>GOStandard</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
@@ -1274,7 +1281,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>Standard Accreditation with no Cash</value>
+        <value>GOLite</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
@@ -1365,6 +1372,170 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ANY</shortDescription>
         <value>ANY</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
+        </value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessageNoAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>
+            Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type
+        </value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_RiskDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH RiskDescription</shortDescription>
+        <value>Risk Description</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_DateIssued</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_AccessEasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH AccessEasyPay</shortDescription>
+        <value>Access your IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Request_ICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Request ICE</shortDescription>
+        <value>In order to view your upcoming payments &amp; remittance dates&lt;br/a&gt;
+            &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;Request access to the ICE - IATA Customer E-Statement&lt;/a&gt;</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Cash_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Cash Conditions</shortDescription>
+        <value>Cash Conditions</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Financial_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Financial Review</shortDescription>
+        <value>Financial Review</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RP_Risk_History</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Risk History</shortDescription>
+        <value>Risk History</value>
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_RHC_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information</shortDescription>
+        <value>RHC Information</value>
+    </labels>       
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode1</shortDescription>
+        <value>ProgressBarNode1</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode2</shortDescription>
+        <value>ProgressBarNode2</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode3</shortDescription>
+        <value>ProgressBarNode3</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode4</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode4</shortDescription>
+        <value>ProgressBarNode4</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode5</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode5</shortDescription>
+        <value>ProgressBarNode5</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode6</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode6</shortDescription>
+        <value>ProgressBarNode6</value>
+    </labels>        
+    <labels>
+        <fullName>ISSP_RHC_HUB_RH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Risk History</shortDescription>
+        <value>Risk Events History</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_AmountTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_HUB_Current_UsageTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC HUB Current Usage Tooltip</shortDescription>
+        <value>RHC HUB Current Usage Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Accreditation Model Tooltip</shortDescription>
+        <value>RHC Accreditation Model Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_RiskStatusTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
+        <value>RHC Risk Status Tooltip</value>
+    </labels>    
     <labels>
         <fullName>API_URL</fullName>
         <language>en_US</language>
@@ -2418,7 +2589,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Download_Pdf</shortDescription>
-        <value>Download as PDF.</value>
+        <value>Download as PDF</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Due_Date</fullName>
@@ -7418,7 +7589,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
-        <value>New Associate Entity - Cash</value>
+        <value>New Associate Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
@@ -7426,7 +7597,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
-        <value>New Associate Entity - Cashless</value>
+        <value>New Associate Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
@@ -9163,14 +9334,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with Cash</value>
+        <value>New Head Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with no Cash</value>
+        <value>New Head Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
@@ -9448,7 +9619,14 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
         <value>1. Identification of Agency for which Approval Requested</value>
-    </labels>
+    </labels>    
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>2. Identification of Agency for which Approval Requested</value>
+    </labels>        
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section2</fullName>
         <categories>ISSP, AMS</categories>
@@ -9808,11 +9986,271 @@ IFG Customer Services</value>
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+    	<fullName>ISSP_AMS_MSO_Application_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
+        <value>Please review your application details before accepting the Terms &amp;amp; Conditions below and submitting to IATA.</value>
+    </labels>
+    <labels>
+    	<fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+    	<fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Billing_State_ErrMsg</shortDescription>
+        <value>Billing State: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Country_ErrMsg</shortDescription>
+        <value>Country concerned: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Legal_Status</shortDescription>
+        <value>Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Office_Email</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Office_Email</shortDescription>
+        <value>Office Email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
+        <value>A new MSO account has been successfully generated with the following IATA Code: </value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_StepFinal_Thanks</shortDescription>
+        <value>Thank you for submitting your request for a new MSO.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_GSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_GSA</shortDescription>
+        <value>GSA Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_MSO</shortDescription>
+        <value>MSO Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Status</shortDescription>
+        <value>Account Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Status</shortDescription>
+        <value>Agent Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Terminated</shortDescription>
+        <value>Terminated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</shortDescription>
+        <value>Agent Termination Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_of_Appointment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_of_Appointment</shortDescription>
+        <value>Agent Accreditation Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Download_CSV</shortDescription>
+        <value>Download as CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Edit_MSO_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Edit_MSO_Details</shortDescription>
+        <value>Edit Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</shortDescription>
+        <value>Exclude Terminated Agents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</shortDescription>
+        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Description</shortDescription>
+        <value>GSA Appointments service description here TO BE ADDED</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
         <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Title</shortDescription>
+        <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_IATA_Code</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</shortDescription>
+        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
+        <value>MSO Appointments service description TO BE ADDED</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</shortDescription>
+        <value>Terminate MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Title</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Next</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Previous</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Request_New_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Request_New_MSO</shortDescription>
+        <value>Request New MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Search_Placeholder</shortDescription>
+        <value>Search by Office name, Country or IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Street_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Street_Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Territories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Territories</shortDescription>
+        <value>Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -9919,6 +10357,62 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Month_September</shortDescription>
         <value>September</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
+        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
+        <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
+        <value>Thank you for submitting your request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
+        <value>Request to Update the MSO Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
@@ -10050,6 +10544,13 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
         <value>1. Accreditation type</value>
+    </labels>
+    <labels>
+    	<fullName>ISSP_AMS_New_MSO_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
+        <value>Application for a new MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -11168,14 +11669,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT BRANCH</shortDescription>
-        <value>Import Agent - Branch Office</value>
+        <value>Recipient - Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_IMPORT_HO</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION IMPORT HO</shortDescription>
-        <value>Import Agent - New Head Office</value>
+        <value>Recipient - New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_BRANCH</fullName>
@@ -11200,6 +11701,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX HO</shortDescription>
         <value>IATA Passenger Sales - New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_OPTION_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION TIDS BR</shortDescription>
+        <value>Travel Industry Designator Service (TIDS) - New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_OPTION_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION TIDS HO</shortDescription>
+        <value>Travel Industry Designator Service (TIDS) - New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
@@ -11408,6 +11925,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Reason New HO</shortDescription>
         <value>New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS BR</shortDescription>
+        <value>New TIDS Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS HO</shortDescription>
+        <value>New TIDS Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Registration_Number</fullName>
@@ -12657,14 +13190,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoStandard&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoLite&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_FIN_Interest</fullName>
@@ -12703,7 +13236,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ErrMsg Max FinContacts2</shortDescription>
-        <value>&apos; Financial Assessment Contact(s) is already defined for this agency.&apos;</value>
+        <value>Financial Assessment Contact(s) is already defined for this agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_Prev_Employ</fullName>
@@ -12759,6 +13292,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
         <value>* Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Not_Mandatory</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 Indicate GDSs Not Mandatory</shortDescription>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Office_FullAddress</fullName>
@@ -12950,6 +13491,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Thank you for submitting your Accreditation application for your Travel Agency Branch Office.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS BR Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Branch Office.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS HO Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Head Office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_Thanks</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13026,7 +13583,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_StepsAll_Import_Agent_Title</shortDescription>
-        <value>Application for Approval as an Import Agent</value>
+        <value>Application for Approval as an Recipient</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Passenger_Title</fullName>
@@ -13071,6 +13628,57 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Submit IATA</shortDescription>
         <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Member</shortDescription>
+        <value>If you are a member of the National Travel Agent Association in your country, please indicate the association name(s) and your membership number(s) (please provide proof of membership such as confirmation letter from the association)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Names</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Names</shortDescription>
+        <value>Indicate the association name(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Not_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Not_Member</shortDescription>
+        <value>If you are not a member of your national travel agents&apos; association, please provide two (2) letters of recommendation from a TIDS sponsor (hotel, car rental company) or one (1) letter from an IATA Member Airline or a Global Distribution System.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step2_Type_of_Business</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step2_Type_of_Business</shortDescription>
+        <value>Type of business (e.g. Travel Agency, Tour Operator, Conference or Event Organiser etc.)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_4_People_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
+Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step3_5_Other_Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</shortDescription>
+        <value>Travel Industry Designator Service (TIDS)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
@@ -13251,6 +13859,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <shortDescription>ISSP AMS Validation Percent Ownership2</shortDescription>
         <value>SECTIONS 4.1 PEOPLE &amp; 4.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership for AE</shortDescription>
+        <value>SECTION 3.1 PEOPLE - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership2_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership2 for AE</shortDescription>
+        <value>SECTIONS 3.1 PEOPLE &amp; 3.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>    
     <labels>
         <fullName>ISSP_AMS_Validation_Portal_Admin</fullName>
         <categories>ISSP, AMS</categories>
@@ -13888,14 +14512,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
-        <value>IATA Passenger Sales - Standard with no Cash</value>
+        <value>IATA Passenger Sales - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
-        <value>IATA Passenger Sales - Standard with Cash</value>
+        <value>IATA Passenger Sales - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
@@ -14938,6 +15562,30 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Certifications</fullName>
+        <categories>S11, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications</shortDescription>
+        <value>All Certifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certifications_Active</fullName>
+        <categories>Trained staff</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications_Active</shortDescription>
+        <value>Active Certifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certifications_Expired</fullName>
+        <categories>Trained staff</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications_Expired</shortDescription>
+        <value>Expired Certifications</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ChangeDDS</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -15592,6 +16240,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Download Now</shortDescription>
         <value>Download Now!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in CSV</shortDescription>
+        <value>Download in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_PDF</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in PDF</shortDescription>
+        <value>Download in PDF</value>
     </labels>
     <labels>
         <fullName>ISSP_Draft</fullName>
@@ -17728,6 +18392,62 @@ this is the tiess topic help</value>
         <value>Loading Travel Agent Details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Local_Groups_Contact_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Contact Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Country</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Country</shortDescription>
+        <value>Country/Cluster</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Export_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Export CSV</shortDescription>
+        <value>Export in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry</shortDescription>
+        <value>Local Industry Groups</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Description</shortDescription>
+        <value>description</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Title</shortDescription>
+        <value>My Local Groups</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Location</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -18670,6 +19390,102 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Search, view and download required IATA documents</value>
     </labels>
     <labels>
+        <fullName>ISSP_Participant_Description_ALWG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description ALWG</shortDescription>
+        <value>ALWG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_APJC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description APJC</shortDescription>
+        <value>APJC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_APJC_FAG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description APJC / FAG</shortDescription>
+        <value>APJC / FAG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CAPJC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CAPJC</shortDescription>
+        <value>CAPJC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CEC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CEC</shortDescription>
+        <value>CEC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_CGA</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description CGA</shortDescription>
+        <value>CGA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_EACP_JC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description EACP JC</shortDescription>
+        <value>EACP JC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_ICAP</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description ICAP</shortDescription>
+        <value>ICAP</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_JALWG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description JALWG</shortDescription>
+        <value>JALWG</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_C</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-C</shortDescription>
+        <value>LCAG-C</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_P</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-P</shortDescription>
+        <value>LCAG-P</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Participant_Description_LCAG_P_Credit_Card_WG</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Participant Description LCAG-P / Credit Card WG</shortDescription>
+        <value>LCAG-P / Credit Card WG</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Password</fullName>
         <categories>ISSP, login</categories>
         <language>en_US</language>
@@ -18924,6 +19740,78 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP</shortDescription>
+        <value>Available Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Cash</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
+        <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Credit Card</shortDescription>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Curr_Financial_Security</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Curr Financial Security</shortDescription>
+        <value>Current Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Current_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Current Usage</shortDescription>
+        <value>Current usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Last_Updated</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Last Updated</shortDescription>
+        <value>Last Updated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Percentage_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Percentage Usage</shortDescription>
+        <value>Percentage usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_RP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB RP</shortDescription>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
@@ -25534,4 +26422,25 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFrom</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From</shortDescription>
+        <value>Conversion From</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoStandardTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoStandard Tooltip</shortDescription>
+        <value>Conversion From GoStandard Tooltip</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoLite Tooltip</shortDescription>
+        <value>Conversion From GoLite Tooltip</value>
+    </labels>    
 </CustomLabels>
