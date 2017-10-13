@@ -4326,6 +4326,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>IDCard Expedite Delivery</value>
     </labels>
     <labels>
+        <fullName>IDCard_Expedite_Note</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Note</shortDescription>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_ExportCSV</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4678,6 +4686,14 @@ In order to verify that you need to upload a proof of last name change.</value>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
         <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Loading_Message</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Loading_Message</shortDescription>
+        <value>Please wait…</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
