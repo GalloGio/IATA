@@ -82,29 +82,9 @@ public with sharing class AMP_ChatterBroadcastToolController {
 			'Broadcast Asia & Pacific',
 			'Broadcast China & North Asia',
 			'Broadcast Europe'};
-			// broadcastTopicNames = '';
 			List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
-			List<Topic> lsNewBroadcastTopics = new List<Topic>();
-
-			// add the missing broadcast topics
-			for(String topicName : lsBroadcastTopicNames) {
-				Boolean found = false;
-				for(Topic t: lsBroadcastTopics) {
-					if(topicName == t.Name) {
-						found = true;
-						break;
-					}
-				}
-				if(!found) {
-					Topic t = new Topic();
-					t.Name = topicName;
-					lsNewBroadcastTopics.add(t);
-				}
-			}
 
 			try {
-				insert lsNewBroadcastTopics;
-				lsBroadcastTopics.addAll(lsNewBroadcastTopics);
 				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
 
 				// after inserting the actual feeditems create and insert the broadcast topic assignments
@@ -166,7 +146,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 			lstFilteredAccounts.add(aw);
 		}
-numberOfAccounts = 0;
+		numberOfAccounts = 0;
 		lstAccounts = lstFilteredAccounts;
     }
 
