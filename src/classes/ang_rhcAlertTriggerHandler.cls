@@ -26,7 +26,6 @@ public class ang_rhcAlertTriggerHandler{
 	public void onAfterDelete() {}
 
 
-
 	public static map<String,String> mapRemittanceFrequency = new map<String,String> {
        	'Daily' => 'D',
        	'4 times per month' => 'E',
@@ -104,7 +103,7 @@ public class ang_rhcAlertTriggerHandler{
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
 		for(ANG_Risk_Alert__c ra :[
-			SELECT ID,Name,ANG_Account__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
+			SELECT ID,Name,ANG_Account__r.Name, ANG_Account__r.Site, ANG_Account__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
 					ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
 					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,
@@ -133,7 +132,7 @@ public class ang_rhcAlertTriggerHandler{
 				//TODO: confirm all this fileds 
 				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region__c,
-					Subject = '',
+					Subject = 'RTS Alert' + ' - ' + ra.ANG_Account__r.Site + ' - ' +  ra.ANG_Account__r.Name,
 					AccountId = ra.ANG_Account__c,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
@@ -363,4 +362,3 @@ public class ang_rhcAlertTriggerHandler{
 		insert logs;
 	}
 }
-
