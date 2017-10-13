@@ -22,13 +22,30 @@ global class ANG_RME_Alert_Service {
 	}
 
 	global class RequestResult {
-		global Boolean isSuccess;
+		global String api;
+		global String code;
+		global String trace;
+		global String title;
 		global String description;
-		global String iataCode;
+		global String transactionId;
+
+		global List<AgencyResult> summary;
 
 		global RequestResult(){
-			isSuccess = true;
+			api =  'INT_032';
+			trace = '';
+			title = '';
+			description =  '';
+			transactionId =  '';
+
+			summary = new List<AgencyResult>{new AgencyResult()};
 		}
+	}
+
+	global class AgencyResult{
+		global String status;
+		global String description;
+		global String agencyId;
 	}
 
 	private static RequestResult result{
@@ -40,16 +57,24 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static void setResponse(String message, Integer statusCode){
+		setResponse(message, null, statusCode);
+	}
+
+	private static void setResponse(String message, String stackTrace, Integer statusCode){
 		if(RestContext.response == null) RestContext.response = new RestResponse(); //this line is for testing purposes
         RestContext.response.addHeader('Content-Type', 'application/json');
 		RestContext.response.statusCode = statusCode;
 
+		result.code = String.valueOf(statusCode);
 		if(String.isNotBlank(message)) result.description = message;
-		result.isSuccess = statusCode >= 200 && statusCode < 300; 
+		if(String.isNotBlank(stackTrace)) result.trace = stackTrace;
+
+		result.summary[0].status = String.valueOf(statusCode); 
+		if(String.isNotBlank(message)) result.summary[0].description = message;
 	}
 
 	@HttpPut
-	global static RequestResult doPut() {
+	global static Map<String, RequestResult> doPut() {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] requestBody - ' + RestContext.request.requestBody.toString());
 
@@ -60,17 +85,17 @@ global class ANG_RME_Alert_Service {
 			//receive request
 			RequestMessage req = (RequestMessage)JSON.deserializeStrict(RestContext.request.requestBody.toString(), RequestMessage.class);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] req - ' + req);
-			result.iataCode = req.iataCode;
+			result.summary[0].agencyId = req.iataCode;
 
 			String eventType = RestContext.request.params.get('eventType');
 
 			//fetch current information
-			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :result.iataCode];
+			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
-			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+result.iataCode, 404);
-			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+result.iataCode+' does not have RHC set', 404);
-			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+result.iataCode+' has more than one RHC record', 409);
+			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
+			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
 			else{
 
 				//information found, validate values
@@ -82,7 +107,10 @@ global class ANG_RME_Alert_Service {
 
 				if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
 				//validation passed, perform logic
-				else if(eventType == 'RHCAlert') saveAlert(req, rhcInfo);
+				else if(eventType == 'RHCAlert'){
+					saveAlert(req, rhcInfo);
+					updateRHC(req, rhcInfo);
+				}
 				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
 				else setResponse('Invalid Event Type: '+eventType, 405);
 			}
@@ -91,10 +119,11 @@ global class ANG_RME_Alert_Service {
 			setResponse('Malformed request: '+e.getMessage(), 400);
 		}
 		catch(Exception e){
-			setResponse(e.getMessage(), 500);
+			setResponse(e.getMessage(), e.getStackTraceString(), 500);
 		}
 
-		return result;
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] result - ' + result);
+		return new Map<String, RequestResult>{'apiStatus' => result};
 	}
 
 	private static void saveAlert(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
