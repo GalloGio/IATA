@@ -27810,8 +27810,8 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
          NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;)) &amp;&amp;
          NOT(ISPICKVAL(Account.Location_Type__c , &apos;HE&apos;)) &amp;&amp;
          NOT(ISPICKVAL(Account.Location_Type__c , &apos;AE&apos;)) &amp;&amp; 
-         NOT(ISPICKVAL(Account.Type , &apos;Import Agent&apos;)) &amp;&amp;
-         NOT(ISPICKVAL(Account.Category__c , &apos;Import Agent&apos;))), true ,false)</errorConditionFormula>
+         NOT(ISPICKVAL(Account.Type , &apos;Recipient&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Category__c , &apos;Recipient&apos;))), true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
     </validationRules>
     <validationRules>

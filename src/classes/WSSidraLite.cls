@@ -67,6 +67,9 @@ global class WSSidraLite {
             if ( parentCase.account.Status__c == 'Terminated' ) {
                 throw new SidraLiteException('Account is Terminated, you cannot proceed with a Non-Compliance action');
             }
+            if ( parentCase.account.Category__c == 'Recipient' ) {
+                throw new SidraLiteException('SIDRA Lite actions are not allowed for Recipients');
+            }
 
             // check default bussiness rules, for insert and update
             SidraLiteManager.checkBussinessRules(parentCase);
