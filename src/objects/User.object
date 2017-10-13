@@ -89,7 +89,8 @@
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
 OR(
   ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;)
+  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+  ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)  
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1609,6 +1610,15 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>dgai__active_user_settings__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>active user settings</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>isSISUser__c</fullName>
         <externalId>false</externalId>
         <formula>if(  
@@ -2767,12 +2777,13 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </filters>
         <filters>
             <field>CORE.PROFILE.NAME</field>
-            <operation>notContain</operation>
-            <value>Portal</value>
+            <operation>contains</operation>
+            <value>ISS Portal Airline User (Partner)</value>
         </filters>
         <filters>
-            <field>CORE.USERS.LAST_LOGIN</field>
+            <field>LANGUAGE</field>
             <operation>notEqual</operation>
+            <value>1</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

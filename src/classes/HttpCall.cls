@@ -31,8 +31,12 @@ public class HttpCall {
         req.setEndpoint(endPoint + path);
 
         if (method == HTTP_METHOD_PATCH) {
-            req.setHeader('X-HTTP-Method-Override', HTTP_METHOD_PATCH);
-            method = HTTP_METHOD_POST;
+            if(req.getEndpoint().contains('EasyPay')) {
+                method = HTTP_METHOD_PUT;
+            } else {
+				req.setHeader('X-HTTP-Method-Override', HTTP_METHOD_PATCH);
+                method = HTTP_METHOD_POST;                
+            }
         }
         req.setMethod(method);
         req.setTimeout(120000);

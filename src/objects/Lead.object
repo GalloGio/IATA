@@ -5245,6 +5245,52 @@ albam@iata.org</description>
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>dgAI2__DG_Capture_Analytics__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>DG Capture Analytics denotes when we log feedback to send DigitalGenius after a prediction attempt.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DG Capture Analytics denotes when we log feedback to send DigitalGenius after a prediction attempt.</inlineHelpText>
+        <label>DG Capture Analytics</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>dgAI2__DG_Fill_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DG Fill Status denotes the status for DigitalGenius prediction.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DG Fill Status denotes the status for DigitalGenius prediction.</inlineHelpText>
+        <label>DG Fill Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Filled - Completely</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Filled - Partially</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Filled - No Model Found</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Filled - Confidence Too Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>industryfield__c</fullName>
         <externalId>false</externalId>
         <label>industryfield</label>

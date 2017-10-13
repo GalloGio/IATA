@@ -521,8 +521,10 @@
         <fields>NAME</fields>
         <fields>Class__c</fields>
         <fields>Status__c</fields>
+        <fields>Original_approval_date__c</fields>
         <fields>Date__c</fields>
-        <fields>Endorsed_Accredited_By__c</fields>
+        <fields>Last_change_date__c</fields>
+        <fields>AMS_GDP_Key__c</fields>
         <relatedList>Accreditation__c.Related_GDP_Products_Account_View__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -531,6 +533,7 @@
         <fields>Address_City__c</fields>
         <fields>Address_State_Name__c</fields>
         <fields>Address_Country_Name__c</fields>
+        <fields>IATA_Numeric_Country_Code__c</fields>
         <relatedList>GDP_Address__c.Related_GDP_Products_Account_View__c</relatedList>
         <sortField>Address_Type__c</sortField>
         <sortOrder>Asc</sortOrder>
