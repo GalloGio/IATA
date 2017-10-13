@@ -748,6 +748,7 @@ global class GSS_REST_Test {
         
         //req.addParameter('FileSpecificationId', [Select Id From GDP_File_Description__c limit 1][0].Id);
         req.addParameter('FileSpecificationId', myFileDescription.id);
+        req.addParameter('IsTestMode', '1');
 
         
         system.debug('TestGetPayloadDeltaAfter_Add_Change FileSpecificationId: '+myFileDescription.id);
@@ -1226,6 +1227,7 @@ global class GSS_REST_Test {
         req.httpMethod = 'GET';
         
         req.addParameter('FileSpecificationId', [Select Id From GDP_File_Description__c limit 1][0].Id);
+        req.addParameter('IsTestMode', '1');
         system.debug('testGetFilePayload FileSpecificationId: '+[Select Id From GDP_File_Description__c limit 1][0].Id);
         
         RestContext.request = req;
