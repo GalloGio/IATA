@@ -61,6 +61,37 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+	<fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
+        <description>option to receive the Chatter topic digest either daily or weekly</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Daily or Weekly</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Daily</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMP_Digest_Topics__c</fullName>
+        <description>A csv list of the topics the user wants an email digest on, for AMP</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Topics</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
         <fullName>ANG_Category__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.Category__c)</formula>

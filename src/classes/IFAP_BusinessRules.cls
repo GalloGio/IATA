@@ -63,7 +63,7 @@ public with sharing class IFAP_BusinessRules {
             /*isValid = (contactMap.get(theCase.id).Agent_Type__c != null
                         && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associate' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
             isValid = (theCase.IFAP_Agent_Type__c != null
-                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
+                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Recipient'));
 
 
 

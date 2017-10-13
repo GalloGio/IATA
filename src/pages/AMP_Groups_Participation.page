@@ -7,7 +7,7 @@
 				<tr class="headerRow" >
 					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>IATA Group Name</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>IATA Group Owner</div></th>
-					<th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group (Reg/Div Groups Only)</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role Within Group</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 5%;"><div>Salutation</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
@@ -20,7 +20,7 @@
 			<apex:variable value="{!''}" var="previousUnderGroup" />
 
 			<apex:repeat value="{!lstParticipants}" var="pWrapper">
-				
+
 				<apex:outputPanel rendered="{! pWrapper.participant.Local_Governance__r.AM_Under__r.Name <> previousUnderGroup}">
 					<tr class="headerRow">
 						<td class="headerRow" colspan="8"><div>Under {! pWrapper.participant.Local_Governance__r.AM_Under__r.Name}</div></td>
@@ -42,7 +42,12 @@
 					<td class="dataCell" >{! pWrapper.participant.Contact__r.Salutation }</td>
 					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c , pWrapper.participant.Contact__r.FirstName) }</td>
 					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c , pWrapper.participant.Contact__r.LastName) }</td>
-					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }</td>
+					<td class="dataCell" >
+						{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }
+						<apex:outputPanel rendered="{! pWrapper.participant.Representing__c != null }">
+							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
+						</apex:outputPanel>
+					</td>
 
 				</tr>
 
