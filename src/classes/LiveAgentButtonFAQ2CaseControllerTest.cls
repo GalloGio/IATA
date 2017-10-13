@@ -1,20 +1,32 @@
 @isTest
 private class LiveAgentButtonFAQ2CaseControllerTest {
 
-	static void generateTestData() {
+	@testSetup static void generateTestData() {
 
 		LiveAgentButtonSettings__c cs = new LiveAgentButtonSettings__c();
-		cs.Name = 'english';
-		cs.ButtonId__c = 'someid';
-		cs.DeploymentId__c = 'someid';
+		cs.Name = 'AirlineEnglishEurope';
+		cs.ButtonId__c = 'AirlineEnglishEurope_BId';
+		cs.DeploymentId__c = 'AirlineEnglishEurope_DId';
 		cs.Language__c = 'en';
+		cs.Region__c = 'Europe';
+		cs.Sectors__c = 'Travel Agent';
 		insert cs;
+
+		LiveAgentButtonSettings__c cs2 = new LiveAgentButtonSettings__c();
+		cs2.Name = 'AirlinePortugeseEurope';
+		cs2.ButtonId__c = 'AirlinePortugeseEurope_BId';
+		cs2.DeploymentId__c = 'AirlinePortugeseEurope_DId';
+		cs2.Language__c = 'pt';
+		cs2.Region__c = 'Europe';
+		cs2.Sectors__c = 'Travel Agent, Airline';
+		insert cs2;
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c();
 		country.Name = 'United Kingdom';
 		country.ISO_Code_Numeric__c = 123;
 		country.ISO_Code__c = 'GB';
 		country.Region__c = 'Europe';
+		country.LVA_CountryLanguage__c = 'en, pt, it, fr';
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
 
@@ -26,21 +38,22 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		acc.Airline_designator__c='AA';
 		acc.IATA_ISO_Country__c=country.id;
 		acc.recordtypeID = AirlineId;
+		acc.sector__c = 'Airline';
 		insert acc;
 
 		Contact con = new Contact();
-		con.FirstName = 'test';
+		con.FirstName = 'testFirstContact';
 		con.LastName = 'test';
 		con.Email = '123test@123.test';
 		con.Phone = '123456789';
 		con.AccountId = acc.Id;
 		insert con;
 
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User'].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'].Id;
 
 		User testUser = new User();
 		testuser.ContactId = con.Id;
-		testUser.FirstName = 'test';
+		testUser.FirstName = 'testFirstUser';
 		testUser.LastName = 'test';
 		testUser.Alias = 'test';
 		testUser.Email = 'user@test.com';
@@ -50,12 +63,11 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		testUser.TimeZoneSidKey = 'America/Mexico_City';
 		testUser.LocaleSidKey = 'en_US';
 		testUser.EmailEncodingKey = 'ISO-8859-1';
-		testUser.LanguageLocaleKey = 'en_US';
+		testUser.LanguageLocaleKey = 'pt_BR';
 		insert testUser;
 	}
 
 	@isTest static void testChatButtonController() {
-		generateTestData();
 
 		User testUser = [SELECT FirstName, LastName, ContactId, Email FROM User Where Email = 'user@test.com'][0];
 		System.runAs(testUser){
@@ -64,9 +76,10 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			pg.getParameters().put('selTopics','testselTopics');
 			pg.getParameters().put('topiclbl','testtopiclbl');
 			pg.getParameters().put('subtopiclbl','testsubtopiclbl');
-			pg.getParameters().put('csButton','english');
+			pg.getParameters().put('csButton','AirlineEnglishEurope');
 			pg.getParameters().put('concernedCountry','GB');
-            pg.getParameters().put('csButtonsList','BUT_CAT_EMERGENCY, BUT_CAT_SLB');
+            pg.getParameters().put('csButtonsList','AirlineEnglishEurope, AirlinePortugeseEurope');
+			pg.getParameters().put('csButtonCategory',vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
 			Test.setCurrentPage(pg);
 
 			LiveAgentButtonFAQ2CaseController ctrl = new LiveAgentButtonFAQ2CaseController();
@@ -79,7 +92,16 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			System.assertEquals(ctrl.selectedTopics, 'testselTopics');
 			System.assertEquals(ctrl.topicLabel, 'testtopiclbl');
 			System.assertEquals(ctrl.subTopicLabel, 'testsubtopiclbl');
+
+			//basto1p - Live Agent v2
             System.assertEquals(ctrl.buttonLanguage, 'en');
+			System.assertEquals(ctrl.isEmergency, false);
+			System.assertEquals(ctrl.NumberOfButtons, 2);
+			System.assertEquals(ctrl.liveAgentBtnEng.Name, null);
+			System.assertEquals(ctrl.liveAgentBtnCountry.Name, 'AirlineEnglishEurope');
+			System.assertEquals(ctrl.liveAgentBtnPortal.Name, null);
+			System.assertEquals(ctrl.getContactFirstName(), 'testFirstContact');
+
 			System.assertEquals(ctrl.getContactFirstName(),'Guest');
 			ctrl.getContactId();
 			ctrl.getAccountId();
