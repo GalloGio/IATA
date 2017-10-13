@@ -40,9 +40,9 @@
             <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
             <apex:inputField value="{!LocalGovernance__c.Frequency_of_Face_to_Face_Meetings__c}" />
             <apex:inputField value="{!LocalGovernance__c.Mission__c}" required="true" />
-            <apex:inputTextArea value="{!LocalGovernance__c.Frequency_of_Meetings__c}" rows="5"/>
-            <apex:inputTextArea value="{!LocalGovernance__c.Latest_Successes__c}" rows="5"/>
-            <apex:inputTextArea value="{!LocalGovernance__c.What_is_Group_Working_on_Now__c}" rows="5"/>
+            <apex:inputField value="{!LocalGovernance__c.Frequency_of_Meetings__c}" />
+            <apex:inputField value="{!LocalGovernance__c.Latest_Successes__c}" />
+            <apex:inputField value="{!LocalGovernance__c.What_is_Group_Working_on_Now__c}" />
         </apex:pageBlockSection>
         </apex:outputPanel>
         <style>
