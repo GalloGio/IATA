@@ -66,6 +66,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			pg.getParameters().put('subtopiclbl','testsubtopiclbl');
 			pg.getParameters().put('csButton','english');
 			pg.getParameters().put('concernedCountry','GB');
+            pg.getParameters().put('csButtonsList','BUT_CAT_EMERGENCY, BUT_CAT_SLB');
 			Test.setCurrentPage(pg);
 
 			LiveAgentButtonFAQ2CaseController ctrl = new LiveAgentButtonFAQ2CaseController();
