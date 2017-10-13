@@ -25,11 +25,10 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
-		System.assert(!result.isSuccess);
 		System.assertEquals(400, RestContext.response.StatusCode);
 		System.assert(result.description.startsWith('Malformed request:'));
 	}
@@ -43,13 +42,10 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
-		List<ANG_Risk_Alert__c> alerts = [SELECT Id, ANG_Threshold_Level__c, ANG_Direction__c FROM ANG_Risk_Alert__c];
-
-		System.assert(!result.isSuccess);
 		System.assertEquals(404, RestContext.response.StatusCode);
 		System.assertEquals('No agent found with IATA Code nocode', result.description);
 	}
@@ -72,13 +68,12 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
 		List<ANG_Risk_Alert__c> alerts = [SELECT Id, ANG_Threshold_Level__c, ANG_Direction__c FROM ANG_Risk_Alert__c];
 
-		System.assert(!result.isSuccess);
 		System.assert(result.description.startsWith('Conflicting informations'));
 		//System.assert(result.description.contains('RHC Amount mismatch'));
 		System.assert(result.description.contains('Currency mismatch'));
@@ -102,11 +97,12 @@ private class ANG_RME_Alert_Service_Test {
 		message.direction = 'UP';
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'RHCAlert');
 		RestContext.request = req;
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
@@ -132,11 +128,12 @@ private class ANG_RME_Alert_Service_Test {
 		message.consumedRHCPercentage = 0.5;
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'BalanceUpdate');
 		RestContext.request = req;
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
@@ -145,7 +142,7 @@ private class ANG_RME_Alert_Service_Test {
 		System.assertEquals(202, RestContext.response.StatusCode);
 		System.assertEquals(1, rhcinfos.size());
 		System.assertEquals(200, rhcinfos[0].ANG_ConsumedRHC__c);
-		System.assertEquals(0.5, rhcinfos[0].ANG_ConsumedRHC_Percent__c);
+		System.assertEquals(50, rhcinfos[0].ANG_ConsumedRHC_Percent__c);
 	}
 	
 	static testMethod void test_invaldidEvent() {
@@ -162,15 +159,15 @@ private class ANG_RME_Alert_Service_Test {
 		message.consumedRHCPercentage = 0.5;
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'TestCall');
 		RestContext.request = req;
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut();
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
 
 		Test.stopTest();
 
-		System.assert(!result.isSuccess);
 		System.assertEquals(405, RestContext.response.StatusCode);
 		System.assertEquals('Invalid Event Type: TestCall', result.description);
 	}
