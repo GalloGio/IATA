@@ -285,14 +285,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 	public static boolean containsChange(List<String> changesAllowed, String changesSelected){
+		
+		if(changesSelected != null){
+			List<String> splitChangesList= new List<String>(changesSelected.split(';'));
 
-		List<String> splitChangesList= new List<String>(changesSelected.split(';'));
+			Set<String> changesAllowedSet = new Set<String>(changesAllowed);
 
-		Set<String> changesAllowedSet = new Set<String>(changesAllowed);
-
-		For(String change: splitChangesList){
-			if(changesAllowedSet.contains(change))
-				return true;
+			For(String change: splitChangesList){
+				if(changesAllowedSet.contains(change))
+					return true;
+			}
 		}
 
 		return false;
