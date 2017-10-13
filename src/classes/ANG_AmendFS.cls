@@ -15,7 +15,7 @@ global class ANG_AmendFS implements Process.Plugin {
         try{
           //Get FS to Clone
           Financial_Security__c fs = [select 
-                          id, Financial_Institution__c, Region__c, Account__c, Reception_Case__c, Expiry_Date__c, Security_Type__c 
+                          id,name, Financial_Institution__c, Region__c, Account__c, Reception_Case__c, Expiry_Date__c, Security_Type__c 
                           from Financial_Security__c where id = :FSToCloneId];
           
           //Create new FS by cloning the old one.
@@ -27,8 +27,9 @@ global class ANG_AmendFS implements Process.Plugin {
         fsCloned.Reasonforrequest__c = 'Previous Security Update';
         fsCloned.Amount__c = NewFSAmount;
         fsCloned.CurrencyIsoCode = SelectedCurrency;
-        fsCloned.Expiry_Date__c = date.newinstance(ExpiryDate.year(), ExpiryDate.month(), ExpiryDate.day());
+        fsCloned.Expiry_Date__c = ExpiryDate==null?null:date.newinstance(ExpiryDate.year(), ExpiryDate.month(), ExpiryDate.day());
         fsCloned.Unlimited_Security__c = UnlimitedValidity;
+        fsCloned.Remarks__c = fs.name;
       insert fsCloned;
       
       CreatedFSId = fsCloned.Id;
