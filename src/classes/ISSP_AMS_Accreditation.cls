@@ -1552,6 +1552,7 @@ public without sharing class ISSP_AMS_Accreditation {
             if (isNewCase || changeOfAccountConcerned) {
                 accountStagingFieldMapping(accountConcerned, AMS_Utils.CASE_REASON_NEW_HO, false);
                 newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
+                newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;
               
                 SYSTEM.DEBUG('IsNew NoC VATNumber: ' + accountConcerned.VAT_Number__c);
                 
