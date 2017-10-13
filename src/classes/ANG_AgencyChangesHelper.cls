@@ -890,7 +890,8 @@ public with sharing class ANG_AgencyChangesHelper {
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
-        	ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
+        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
 
         if(!toUpsert.isEmpty())
