@@ -1256,7 +1256,7 @@ public without sharing class AMS_Utils {
         
     }
 
-    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+    public static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
 
         if(oscarProcess == NEWHELITE){
 
