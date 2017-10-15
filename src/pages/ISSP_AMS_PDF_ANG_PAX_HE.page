@@ -59,7 +59,7 @@
 		    <!-- ****************************************************************************** -->
 		    <apex:outputPanel rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
                 <div style="page-break-after:always;">
-                    <table class="aptable">
+                    <table class="aptable">                        
                         <tr>
                             <td colspan="3" class="bluebg">
                                 <p class="whitetext">
@@ -75,6 +75,10 @@
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
                             <td colspan="2">{!newForm.Trade_Name__c}</td>
                         </tr>
+                        <tr>
+                            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+                            <td colspan="2">{!amsLocationTypeLabelHq}</td>
+                        </tr>                        
                         <tr>
                             <td class="label">{!$Label.ISSP_Office_Phone}</td>
                             <td colspan="2">{!newForm.Branch_Office_Phone__c}</td>

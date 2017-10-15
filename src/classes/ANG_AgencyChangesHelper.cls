@@ -285,14 +285,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 	public static boolean containsChange(List<String> changesAllowed, String changesSelected){
+		
+		if(changesSelected != null){
+			List<String> splitChangesList= new List<String>(changesSelected.split(';'));
 
-		List<String> splitChangesList= new List<String>(changesSelected.split(';'));
+			Set<String> changesAllowedSet = new Set<String>(changesAllowed);
 
-		Set<String> changesAllowedSet = new Set<String>(changesAllowed);
-
-		For(String change: splitChangesList){
-			if(changesAllowedSet.contains(change))
-				return true;
+			For(String change: splitChangesList){
+				if(changesAllowedSet.contains(change))
+					return true;
+			}
 		}
 
 		return false;
@@ -888,7 +890,8 @@ public with sharing class ANG_AgencyChangesHelper {
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
-        	ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
+        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
 
         if(!toUpsert.isEmpty())

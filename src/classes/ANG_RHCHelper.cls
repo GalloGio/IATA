@@ -87,10 +87,10 @@ public class ANG_RHCHelper {
        	mail.setTargetObjectId(contactId);//contact
        	mail.setWhatId(rhcId);//account
         mail.setTemplateId(templateID);
+        mail.setOrgWideEmailAddressId ([select Id from OrgWideEmailAddress where address ='noreply@iata.org'].id);
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>{mail};
 		try{
-			Messaging.SendEmailResult[] resultList=Messaging.sendEmail(emails); 
-			system.debug('PF sendMailUpdateRiskAlert resultList'+resultList);
+			if(!Test.isRunningTest())Messaging.SendEmailResult[] resultList=Messaging.sendEmail(emails); 
 		}catch(Exception  e){
 			system.debug('Failed to send email to users');
 		}

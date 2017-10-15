@@ -74,6 +74,10 @@
             <td colspan="2">{!hqAccount.TradeName__c}</td>
           </tr>
           <tr>
+            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+            <td colspan="2">{!amsLocationTypeLabelHq}</td>
+          </tr>          
+          <tr>
             <td class="label">{!$Label.ISSP_AN_Step1_AE_Full_Address}</td>
             <td colspan="2">
               {!hqAccount.BillingStreet}
@@ -127,7 +131,6 @@
                                 </p>
                             </td>
                         </tr>
-                        
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
                             <td colspan="2">{!newForm.Account_Name__c}</td>
@@ -136,6 +139,10 @@
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
                             <td colspan="2">{!newForm.Trade_Name__c}</td>
                         </tr>
+                        <tr>
+                          <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+                          <td colspan="2">{!amsLocationTypeLabel}</td>
+                        </tr>                        
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_Legal_Status__c}</td>
