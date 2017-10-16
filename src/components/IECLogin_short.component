@@ -1,46 +1,50 @@
 <apex:component controller="VfIECLoginComponent" access="global"  allowDML="true" rendered="true" layout="none">
- 
- 
+
   <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'iec.css')}" />
   <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'updates.css')}" />
-   
+
      <apex:form forceSSL="true" id="IECLoginShortForm">
          	<script>
-    	
-			function submitLoginShortEnter(e)
-			{
-   				if(e && e.keyCode == 13)
-   				{
-   					submitLoginShort();
-   					return false;
-   				}
-   				else {
-   					return true;
-   				}
-			}    	
-    	
-    	</script>
-        
-    <apex:actionFunction name="submitLoginShort" action="{!login}"/>
-        
+			       function submitLoginShortEnter(e){
+   				        if(e && e.keyCode == 13){
+   					            submitLoginShort();
+                        return false;
+   				        }
+                  else {
+   					            return true;
+   				        }
+			       }
+          </script>
+
      <h3>Please log in</h3>
-    
+
       <apex:inputText value="{!username}" id="username" styleClass="dropdown__input" html-placeholder="Enter your email address" onKeyPress="return submitLoginShortEnter(event)"/>
       <apex:inputSecret value="{!password}" id="txtHiddenPassword" styleClass="dropdown__input" html-placeholder="Enter your password" onKeyPress="return submitLoginShortEnter(event)"/>
-      
-      <!--  -<apex:commandButton action="{!login}" value="Log in" styleClass="customButton signin" style="height: 50px;"/> -->
-      
-       <a href="#" class="customButton signin" onClick="submitLoginShort();">Log in</a>
-        
-       
-        <apex:actionFunction name="forgotPasswordAction" action="{!forgotPasswordRedirect}"/>   
-         <apex:actionFunction name="signUpAction" action="{!register}"/>  
-            
-        <p> Forgot your password? <a href="#" onClick="forgotPasswordAction();">Click here</a> </p>
-        
-        
-        <a href="#" class="customButton signup" onClick="signUpAction();">No account yet? Sign up!</a>
-        </apex:form>
-   
-      
+
+      <!-- START OF CHANGE MINESH CHAUHAN 24/08/17: ADDED FOR SECURITY ENHANCEMENT -->
+      <!--: added CAPTCHA script -->
+      <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true">
+      </script>
+
+      <!--: added button to trigger CAPTCHA challenge -->
+      <p>
+        <button class="g-recaptcha signin customButton"
+                data-sitekey="{!publicKey}"
+                data-callback="captchaPassed"
+                data-type="image">
+                {!$Label.site.login_button}
+        </button>
+      </p>
+
+      <!--: added callback function for when CAPTCHA is passed -->
+      <apex:actionFunction name="captchaPassed" action="{!login}"></apex:actionFunction>
+      <!-- END OF CHANGE -->
+
+      <apex:actionFunction name="forgotPasswordAction" action="{!forgotPasswordRedirect}"/>
+      <apex:actionFunction name="signUpAction" action="{!register}"/>
+
+      <p> Forgot your password? <a href="#" onClick="forgotPasswordAction();">Click here</a> </p>
+
+      <a href="#" class="customButton signup" onClick="signUpAction();">No account yet? Sign up!</a>
+    </apex:form>  
 </apex:component>

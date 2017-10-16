@@ -3,6 +3,14 @@
  */
 public with sharing class VfIECLoginComponent {
 
+    // START OF CHANGE MINESH CHAUHAN 24/08/17: ADDED FOR SECURITY ENHANCEMENT
+    //: added var for google recaptcha private key
+    private static String privateKey = '6LcjAS0UAAAAAIxqdCZyHovHIaUfOxeyqrFhDl6K';
+    //: added var + methods for google recaptcha public key
+    public String publicKey {
+        get { return '6LcjAS0UAAAAAPJPJK1aUFYVk9jZqvAPihA4jVNp'; }
+    }
+    // END OF CHANGE
     public String username                  { get; set; }
     public String sPrefillUsername          { get; set; }
     public String password                  { get; set; }
@@ -11,7 +19,7 @@ public with sharing class VfIECLoginComponent {
     public String componentIdToRerender     { get; set; }
     public Boolean resetPassword            { get; private set; }
     public String resetPasswordEmail        { get; set; }
-    public boolean bDisplayPopUp            {get; set;}  
+    public boolean bDisplayPopUp            {get; set;}
     public Boolean isUserLoggedIn {
         get {
             return IECUserManager.isUserLoggedIn();
@@ -24,58 +32,55 @@ public with sharing class VfIECLoginComponent {
      */
     public VfIECLoginComponent() {
         try {
-            
             bHideRegisterLink = false;
-           
+
             String paramReturnURL = System.currentPageReference().getParameters().get(IECConstants.PARAM_RETURN_URL);
-          //  w new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '   '   + paramReturnURL );
             String paramResetPassword = System.currentPageReference().getParameters().get(IECConstants.PARAM_RESETPASSWORD);
-            
+
             if (paramReturnURL == null || paramReturnURL == '') {
                 retURL = null;
             }
             else {
-                //retURL = IECUtil.DecodeDecryptParameter(paramReturnURL);
                 retURL = paramReturnURL;
             }
 
-            
-            if (paramResetPassword != null && paramResetPassword != '') { 
+            if (paramResetPassword != null && paramResetPassword != '') {
                 resetPassword = Boolean.valueOf(paramResetPassword);
             }
-            
         }
         catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
         }
     }
-    
+
     /**
      * Handles the login
      */
     public Pagereference login() {
         try {
-           // throw new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '     retUrl  ' +  retURL + '     IECUserManager.login(username, password, retURL'+ IECUserManager.login(username, password, retURL)  );
+            // throw new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '     retUrl  ' +  retURL + '     IECUserManager.login(username, password, retURL'+ IECUserManager.login(username, password, retURL)  );
             if ((username == null || username == '') && (sPrefillUsername == null || sPrefillUsername==''))
-               throw new IECApplicationException('The Username field is required.');
+            // START CHANGE MINESH CHAUHAN 25/08/17: ADDED FOR SECURITY ENHANCEMENT
+            //: modified exception throw to re-use custom label for null email
+            {
+                throw new IECApplicationException(Label.ISSP_Null_Email_Error);
+            //: add email format validation
+            } else if(!Comm_User_Helper.validateEmail(username)){
+                throw new IECApplicationException(Label.ISSP_Email_Format_Error);
+            }
+            // END CHANGE
+
             if (password == null || password == '')
                 throw new IECApplicationException('The Password field is required.');
-            
+
             if (sPrefillUsername != null && sPrefillUsername != '') {
                 username = sPrefillUsername;
                 sPrefillUsername = '';
             }
-              
 
-             
             if (username != null && username != '') {
-               
                Pagereference pr  = IECUserManager.login(username, password, retURL);
-                
-                //throw new transformationException(''+pr   );
                 return pr ;}
-        
-                
             return null;
         }
         catch (Exception ex) {
@@ -83,17 +88,15 @@ public with sharing class VfIECLoginComponent {
             return null;
         }
     }
-    
-    /** 
+
+    /**
      * Redirects to the Registration page
      */
     public Pagereference register() {
         try {
-            //Pagereference pr = Page.IECUserRegistration;
             //MM: I have changed the target registration page to the ISS registration page and added a parameter to identify from which portal customer is coming from: "IEC".
             Pagereference pr = Page.ISSP_Registration;
-	     	pr.getParameters().put('sRefererCommunity','iec'); 
-	     	
+	     	    pr.getParameters().put('sRefererCommunity','iec');
 
             // add return URL as parameter if one was provided
             if (retURL != null && retURL != '') {
@@ -108,7 +111,7 @@ public with sharing class VfIECLoginComponent {
             return null;
         }
     }
-    
+
     /**
      * Refresh the component to display the reset password fields
      */
@@ -122,17 +125,17 @@ public with sharing class VfIECLoginComponent {
             return null;
         }
     }
-    
+
     /**
      * Refresh the component to display the reset password fields
      */
     public Pagereference forgotPasswordRedirect() {
         try {
             Pagereference pr = Page.IECLogin;
-            
+
             // add return URL as parameter if one was provided
                 pr.getParameters().put(IECConstants.PARAM_RESETPASSWORD, 'true');
-            
+
             pr.setRedirect(true);
             return pr;
         }
@@ -141,7 +144,7 @@ public with sharing class VfIECLoginComponent {
             return null;
         }
     }
-    
+
 
     /**
      * Resets the password for a given username
@@ -151,28 +154,26 @@ public with sharing class VfIECLoginComponent {
             bDisplayPopUp = false;
 
             if (resetPasswordEmail == null || resetPasswordEmail == '') {
-                throw new IECApplicationException('The Username field is required.');   
-            }       
-            
-            list<User> users =  Comm_User_Helper.getUserListByNameOrEmail(resetPasswordEmail );
-            if(users  == null || users.size() == 0 )
-                 throw new IECApplicationException('No eligible user found. Please check you typed the username correctly.');
-                 
-              if (users[0].contactid == null  ) {
-                throw new IECApplicationException('Your password could not be reseted. Please contact support. No contact Found');   
-            }       
-            
- 
-            
-            // reset password
-          //SALVATORE if (IECUserManager.resetPassword(resetPasswordEmail)) {
-            if (Comm_User_Helper.resetPassword(resetPasswordEmail, 'iec', false) ){
-                resetPassword = false;
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
+                // START CHANGE MINESH CHAUHAN 25/08/17: ADDED FOR SECURITY ENHANCEMENT
+                //: use custom label instead of hard coded error message text
+                throw new IECApplicationException(Label.ISSP_Null_Email_Error);
+                // END CHANGE
             }
-            else
-                throw new IECApplicationException('Your password could not be reseted. Please contact support.');
-            
+
+            // reset password
+            // START CHANGE MINESH CHAUHAN 25/08/17: ADDED FOR SECURITY ENHANCEMENT
+            //: added an email pattern match check showing custom label error if invalid
+            if (!Comm_User_Helper.validateEmail(resetPasswordEmail)) {
+                throw new IECApplicationException(Label.ISSP_Email_Format_Error);
+            }
+            //: added call to email new password to user without checking if user exists or not
+            Comm_User_Helper.resetPassword(resetPasswordEmail, 'iec', false);
+            //: set resetPassword = false to prevent email input box from rendering
+            resetPassword = false;
+            //: added generic message using custom label and injecting provided username
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, String.format(Label.ISSP_Forgot_Password_Message, new List<String>{resetPasswordEmail})));
+            // END OF CHANGE
+
             return null;
         }
         catch (Exception ex) {
@@ -180,19 +181,17 @@ public with sharing class VfIECLoginComponent {
             return null;
         }
     }
-    
-    
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Close the confirmation frame used to confirm the autorenew value
-    public void closePopup() {        
-        bDisplayPopUp = false;    
-    }     
-    
+    public void closePopup() {
+        bDisplayPopUp = false;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shows the confirmation frame before updating the autoRenew value
-    public void showPopup() {        
-        bDisplayPopUp = true;    
-    }   
-    
+    public void showPopup() {
+        bDisplayPopUp = true;
+    }
+
 }

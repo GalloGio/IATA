@@ -14,7 +14,7 @@ global without sharing class Comm_User_Helper {
         Blob encryptedData = Crypto.encryptWithManagedIV('AES128', EncodingUtil.base64Decode(KEYTODECODE), dataToEncrypt);
         return EncodingUtil.base64Encode(encryptedData);
     }
-    
+
     /**
      * Decrypts a string
      * @param key The key to use to decrypt
@@ -22,49 +22,49 @@ global without sharing class Comm_User_Helper {
      * @return The decrypted string
      */
     public static String DecryptString( String str) {
-      try{ 
+      try{
            // throw new transformationException('key  '  +key + ' str  '  + str );
 
         Blob encryptedData = Encodingutil.base64Decode(str);
         Blob decryptedData = Crypto.decryptWithManagedIV('AES128', EncodingUtil.base64Decode(KEYTODECODE), encryptedData);
         return decryptedData.toString();
-        
+
         }catch(Exception e){
-        
+
             throw new transformationException(''+  e.getMessage() +   '  ' + e.getStackTraceString());
         }
     }
-    
+
 
     //public static void sendSFDevsAlertMessage(String title, String message, List<String> receivers){
     public static String generateRandomString(Integer len) {
-    
+
             final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
             String randStr = '';
             while (randStr.length() < len) {
                Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), 62);
                randStr += chars.substring(idx, idx+1);
             }
-            return randStr; 
+            return randStr;
     }
-    
+
 
 
         /*
      * Create new User
      */
-    
+
     public static Id createNewUser(Contact con, string selectedCustomerType, string community){
         return createNewUser(con, selectedCustomerType, community, null);
     }
-    
+
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang){
         return createNewUser(con, selectedCustomerType, community, lang, false, false);
     }
-     
+
     public static Id createNewUser(Contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline){
-      try { 
-        
+      try {
+
           map<string, string> custmPortalPerIec = new map<string, string>{
                                                                       'Airline' =>'Airline',
                                                                       'Non Airline Supplier' =>'OtherCompany',
@@ -111,9 +111,9 @@ global without sharing class Comm_User_Helper {
         u.CommunityNickname = thisNickname;
         system.debug('selectedCustomerType: ' + selectedCustomerType);
         string profileName = '';
-          
-        /*string profileName = community == ISSP ? ISSP_Constant.profilNameByUserTypeMap.get('User').get(selectedCustomerType) : 
-                              custmPortalPerIec.get(selectedCustomerType) <> null ?  ISSP_Constant.profilNameByUserTypeMap.get('User').get(custmPortalPerIec.get(selectedCustomerType)) : 
+
+        /*string profileName = community == ISSP ? ISSP_Constant.profilNameByUserTypeMap.get('User').get(selectedCustomerType) :
+                              custmPortalPerIec.get(selectedCustomerType) <> null ?  ISSP_Constant.profilNameByUserTypeMap.get('User').get(custmPortalPerIec.get(selectedCustomerType)) :
                               ISSP_Constant.profilNameByUserTypeMap.get('User').get('OtherCompany');
         */
         if (!con.ID_Cards__r.isEmpty()){
@@ -127,7 +127,7 @@ global without sharing class Comm_User_Helper {
         else{
             profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('OtherCompany');
         }
-        
+
         //TF-SP08 - for first agency user, give standard Agency profile
         if (newAgency){
             profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Agency');
@@ -135,28 +135,28 @@ global without sharing class Comm_User_Helper {
         else if (newAirline){
           profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
-        
+
         system.debug('profileName: ' + profileName);
         u.ProfileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
         system.debug('u.ProfileId: ' + u.ProfileId);
-        
+
         //throw new transformationException('u.ProfileId: ' + u.ProfileId);
 
         string password;
-        
- 
+
+
         if(con.accountId!=null)
             accountId = con.accountId;
         password = generateRandomString(6) + '1a';
-       
+
         system.debug('u: ' + u);
         system.debug('password: ' + password);
         system.debug('accountId: ' + accountId);
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
-        
+
         if(community == ISSP || community == CNS){
-            
+
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
                 if (!ISSP_Constant.languageMap.containsKey(lang)){
@@ -165,29 +165,29 @@ global without sharing class Comm_User_Helper {
                 }
                 u.languagelocalekey = lang;
             }
-    
+
             userId = Site.createPortalUser(u, accountId, password, false);
             system.debug('USERID: ' + userId);
             if (userId != null) {
-            
+
                 string encodedPart = EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
                 if(community== ISSP){
                   link = Site.getBaseUrl()+ '/ISSP_First_Login?c='+encodedPart;
                     template = 'ISSP_New_Member_Welcome_Email_2';
-                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP'); 
+                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
                   }else if(community == 'CNS'){
                     link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&c='+encodedPart;
-                    template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
-                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
+                    template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');
                   }
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
                 permissionASS(new list<Id>{userId});
             }
-        
+
         }else if(community == IEC){
-        
+
             system.debug('userId: ' + userId);
             userId = Site.createPortalUser(u, accountId,password, false);
 
@@ -196,7 +196,7 @@ global without sharing class Comm_User_Helper {
                                         u.emailencodingkey = 'UTF-8';
                                         u.localesidkey = 'en_US';
                                         u.timezonesidkey = 'America/Los_Angeles';
-                                        u.languagelocalekey = 'en_US'; 
+                                        u.languagelocalekey = 'en_US';
                                         u.alias = 'cspu';
                                         insert u;
                                         userID =  u.id;}
@@ -205,34 +205,34 @@ global without sharing class Comm_User_Helper {
             string encodedPart =EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
 
              link = Site.getBaseUrl()+ '/IECFirstLogin?c='+encodedPart;
-            
-            //TO ask Tiago why not for the ISSP? 
+
+            //TO ask Tiago why not for the ISSP?
             if (userId != null) {
                 permissionASS(new list<Id>{userId});
                 Comm_User_Helper.sendEmail( 'IEC_Portal_New_User_Login_Information_English_Text' , Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link),  con, community);
             }
 
-    
-      
+
+
 
 
         }
-        
+
 
         return userId;
-        
-        
+
+
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
 
             return null;
         }
-    
-    
+
+
     }
-    
+
 
 
 
@@ -250,8 +250,8 @@ global without sharing class Comm_User_Helper {
         };
 
         return mapBodyParamsIssp;
-  
-                
+
+
 
     }
 
@@ -268,25 +268,25 @@ global without sharing class Comm_User_Helper {
             '{!Receiving_User.LastName}' => con.LastName,
             '{!Receiving_User.Email}' => con.Email,
             '{!Community_Name}' => portalName + ' Customer Portal',
-            '{!Community_Url}' => link, 
+            '{!Community_Url}' => link,
             '{!$Label.ISSP_Email_Here}' => 'here',
             '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
             '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
         };
 
         return mapBodyParamsIssp;
-  
-                
+
+
 
     }
-    
+
     public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, String commName){
-       try{ 
+       try{
         sendEmail( emailTemplateDeveloperName , mapBodyParamsIssp, con, false, commName);
-        
-        
+
+
                } catch (exception ex) {
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
 
         }
@@ -314,7 +314,7 @@ global without sharing class Comm_User_Helper {
                                             );
         }
         else{
-            
+
             ew = new EmailMessageWrapper( noreplyemail,
                                             con.Email,
                                             null,
@@ -325,7 +325,7 @@ global without sharing class Comm_User_Helper {
                                             mapBodyParamsIssp
                                             );
         }
-        
+
         List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
         if (!userList.isEmpty()){
           system.debug('SENDING MAIL TO USER');
@@ -335,31 +335,31 @@ global without sharing class Comm_User_Helper {
           system.debug('SENDING MAIL TO ADDRESS');
           EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, commName);
         }
-        
+
     } catch (exception ex) {
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
 
         }
-            
+
     }
-    
+
     //ISS_Portal
     //ISS_Portal_Airline_User
-    @Future 
+    @Future
     public static void permissionASS(list<Id> USersID){
-    
+
       permissionASSNotFuture(USersID);
     }
 
 
    //ISS_Portal
     //ISS_Portal_Airline_User
-   
+
     public static void permissionASSNotFuture(list<Id> USersID){
-    
-    try { 
-    
+
+    try {
+
      for(Id userID :USersID)
      if (userId != null) {
                 // assign Permission Set to provide access to objects
@@ -371,59 +371,59 @@ global without sharing class Comm_User_Helper {
                     insert oPermissionSetAssignment;
                 }
         }
-        
+
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
-       
+
            //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
         }
-    
+
     }
 
 
 
 
-    
-    
+
+
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
        try{ return
             [SELECT Id, Username ,Email,IsActive, contactid, contact.email, userType
-               FROM User 
-              WHERE (Username=: nameOrEmail 
+               FROM User
+              WHERE (Username=: nameOrEmail
                  OR email =: nameOrEmail)
                  AND IsActive = true and usertype = 'PowerPartner'
                  limit 1];
-                 
+
          } catch (exception ex) {
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
         throw new transformationException(ex );
-        }         
-                 
+        }
+
     }
-    
+
    public static list<User> getUserListByNameOrEmail2(String nameOrEmail) {
        try{ return
         [SELECT Id, Username ,Email,IsActive, contactid, contact.email, userType, Portal_User_Frozen_Checkbox__c
-           FROM User 
-          WHERE (Username=: nameOrEmail 
+           FROM User
+          WHERE (Username=: nameOrEmail
            OR email =: nameOrEmail)
            AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true) and usertype = 'PowerPartner'
            limit 1];
-           
+
        } catch (exception ex) {
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
       throw new transformationException(ex );
-      }         
-           
+      }
+
     }
 
 
 
 
    webService static boolean resetPasswordComm(Id contactId, string Community, Boolean bccCS) {
-          
+
         try {
             system.debug('resetPasswordComm bccCS: ' + bccCS);
             string email = [SELECT ID,EMAIL FROM User WHERE contactid =: contactId][0].email;
@@ -432,15 +432,15 @@ global without sharing class Comm_User_Helper {
 
         }
         catch (Exception ex) {
-                
+
             system.debug(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
              transformationHelper.sendSFDevsAlertMessage('error', '   contactId  ' +  contactID    +ex.getmessage() + '   ' + ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
             return false;
-        } 
+        }
     }
-   
+
    webService static boolean resetPasswordISSPContact(Id contactId) {
-          
+
         try {
                   string email = [SELECT ID,EMAIL FROM User WHERE contactid =: contactId][0].email;
                  // throw new TransformationException(' ' + email);
@@ -448,12 +448,12 @@ global without sharing class Comm_User_Helper {
 
            }catch (Exception ex) {
                 system.debug(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
-                      
+
               transformationHelper.sendSFDevsAlertMessage('error', '  contactId ' +   contactId   +'   '   +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
               return false;
-                    
-                
-            } 
+
+
+            }
     }
    /**
      * Reset a user's password by its email
@@ -462,36 +462,36 @@ global without sharing class Comm_User_Helper {
        try {  return resetPassword(email, Community, false);
           }catch (Exception ex) {
       //throw new TransformationException(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
-              
+
        transformationHelper.sendSFDevsAlertMessage('error', '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
       return false;
-            
+
         }
     }
-     
+
     public static boolean resetPassword(String email, string Community, Boolean bccCS) {
         //site.
-        try {   
+        try {
             String template;
             String link;
             Map<String,String> emailWrap = new Map<String,String>();
             // first check if the provided email is valid (associated to a User)
             system.debug('resetPassword email: ' + email);
             List<User> users = [Select u.Username,u.firstName, u.Id, u.Email, u.IsActive , u.ContactID, U.UID__c
-                                    From User u 
+                                    From User u
                                     where (u.Email = :email )
                                     and (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
                                     and ContactID != ''];
       system.debug('resetPassword users: ' + users);
             if (users == null || users.size() == 0)
                 throw new IECApplicationException(email + ' is not a valid email for existing users');
-                
+
             // reset the password by the username found from the email
             User u = users.get(0);
             string UID = NewGuid();
             u.uid__c = UID;
             string password = generateRandomString(6)+'1a';
-            system.setPassword(u.ID, password); 
+            system.setPassword(u.ID, password);
 
             update u;
            // updateUsersGUID (u.id);
@@ -500,16 +500,16 @@ global without sharing class Comm_User_Helper {
             //string separator = '@#@#@#';
             String cleanUsername = u.userName.replace('+', plusReplacer);
             string encodedPart ='c='+EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
-      
+
 
             if(Community == IEC){
 
                  template = 'IEC_Portal_Reset_Password_in_Customer_Portal_English_Text' ;
-           
-                
+
+
                   string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? 'https://' + String.ValueOF(ISSP_CS__c.getValues('HostIEC').value__c)+'/iec' : Site.getBaseUrl();
                   link = prefix + '/IECFirstLogin?'+encodedPart;
-                            
+
 
                  emailWrap = Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link);
 
@@ -537,27 +537,27 @@ global without sharing class Comm_User_Helper {
               system.debug('template used in email: '+template);
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS, Community);
 
-           
+
             return true;
         }catch (Exception ex) {
       //throw new TransformationException(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
-              
+
        transformationHelper.sendSFDevsAlertMessage('error', '   String email, string Community, Boolean bccCS ' + '   '+ email+ '   '+ Community+ '   '+ bccCS +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
       return false;
-            
+
         }
-    } 
+    }
 
 
       @future
       public static void updateUsersGUID(id UsersID){
-         try{  
-            user us = [Select Id, Username, LastLoginDate,UID__c from user where id =:UsersID  ];     
+         try{
+            user us = [Select Id, Username, LastLoginDate,UID__c from user where id =:UsersID  ];
             us.uid__c ='';
-            update us;  
-            
+            update us;
+
                            } catch (exception ex) {
-       
+
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   UsersID ' +    UsersID   +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'guerreirom@iata.org'});
 
         }
@@ -575,7 +575,7 @@ global without sharing class Comm_User_Helper {
 
         for (Integer i=0; i<16; i++) {
 
-            if (i==4 || i==6 || i==8 || i==10) 
+            if (i==4 || i==6 || i==8 || i==10)
                 returnValue += '-';
 
             nextByte = (Math.round(Math.random() * 255)-128) & 255;
@@ -599,15 +599,29 @@ global without sharing class Comm_User_Helper {
 
 
   private static String getCharAtIndex(String str, Integer index){
-        if (str == null) 
+        if (str == null)
             return null;
 
-        if (str.length() <= 0) 
-            return str;    
+        if (str.length() <= 0)
+            return str;
 
-        if (index == str.length()) 
-            return null;    
+        if (index == str.length())
+            return null;
 
         return str.substring(index, index+1);
-    }    
+    }
+
+  // CHANGE MINESH CHAUHAN 24/08/17: ADDED FOR SECURITY ENHANCEMENTS
+  //: added pattern matching for email validation
+  public static Boolean validateEmail(String email) {
+    Boolean res = true;
+    String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'; // source: <a href="http://www.regular-expressions.info/email.html" target="_blank" rel="nofollow">http://www.regular-expressions.info/email.html</a>
+    Pattern MyPattern = Pattern.compile(emailRegex);
+    Matcher MyMatcher = MyPattern.matcher(email);
+
+    if (!MyMatcher.matches())
+        res = false;
+    return res;
+  }
+  // END OF CHANGE      
 }

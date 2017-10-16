@@ -1,5 +1,13 @@
 public without sharing class ISSP_Login {
 
+	// START OF CHANGE MINESH CHAUHAN 24/08/17: ADDED FOR SECURITY ENHANCEMENT
+  //: added var for google recaptcha private key
+  private static String privateKey = '6LcjAS0UAAAAAIxqdCZyHovHIaUfOxeyqrFhDl6K';
+  //: added var + methods for google recaptcha public key
+  public String publicKey {
+      get { return '6LcjAS0UAAAAAPJPJK1aUFYVk9jZqvAPihA4jVNp'; }
+  }
+  // END OF CHANGE
 	public Boolean show90Days {get; set;}
 	public Boolean sanctionCountry {get; set;}
 	public String country {get; set;}
@@ -10,7 +18,7 @@ public without sharing class ISSP_Login {
 		return ApexPages.currentPage().getParameters().get('CommunityName');
 	  }set;}
      public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
-	  
+
  //detect browser for ISSP_Newlogin not working in frame in IE
   public string isIE {get
     {
@@ -80,7 +88,7 @@ public without sharing class ISSP_Login {
 
         User oneUser;
         String pageLink = '/ISSP_IframeHome'+ commParam;
-    
+
         String retURL = ApexPages.currentPage().getParameters().get('retUrl');
 
         list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
@@ -113,14 +121,14 @@ public without sharing class ISSP_Login {
 
         if (relayState!=null)
             pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
-		
+
 		//NEWGEN-660 and other
 		//SSO SP Initiated: we need to send back the SAML Response to the ACS URL.
-		//browser is redirected to ISSP_Login page if user not authenticated and the 
+		//browser is redirected to ISSP_Login page if user not authenticated and the
 		//ACS endpoint (with all details) is URLEncoded and put into querystring parameter startURL
 		//Thus, we need to check if startURL is existing and is populated. If so, we need redirect the browser
 		//to the URL after login is done (third parameter of site.login method)
-		
+
 		string startURL = ApexPages.currentPage().getParameters().get('startURL');
 		if (startURL!=null)
             pageLink = startURL;
@@ -142,7 +150,7 @@ public without sharing class ISSP_Login {
         }else{
             success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.ISSP, false);
         }
-        
+
 
     	/*
     	//show90Days = false;
