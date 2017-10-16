@@ -166,6 +166,27 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
            };
            sforce.console.getEnclosingPrimaryTabId(openSubtab);
         }
+
+        function doRun(action,args) {
+
+
+            if(action = 'generateIataCode'){
+
+                var r = confirm("This process will do the following: \n\r IATA Code Generation \n\r Data migration to the Agency \n\r Generation of Change Code (NEW) \n\r Due Diligence Case (if conditions apply) \n\r\n\r Do you wish to proceed ?");
+
+                if (r != true){
+                    return 'false';
+                }
+
+                document.getElementById('loaderPageBlockSTEP10').style.display = 'block';
+
+            }   
+
+            setTimeout(function(){       
+                 buildFunctionCall(action,args);
+            },10);
+        }
+
     </script>
 
 <style>
@@ -298,6 +319,28 @@ body.loading .modal {
 .warningRed{
     font-weight: bold;
     color: red;
+}
+
+.loaderCircle {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 </style>
@@ -477,6 +520,18 @@ function buildFunctionCall(func, argList){
     <apex:repeat value="{!p.flows}" var="flow">
         <apex:repeat value="{!flow.steps}" var="step">
             <div id="inline{!step.name}" style="display:none;">
+           
+
+            <div Id="loaderPageBlock{!step.name}" style="display:none;">
+                <div class="overlay">
+                     <div class="overlay-content">
+                        <p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+                    </div>
+                  <div class="loaderCircle"></div>
+                </div>
+            </div>
+
+
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
 
                <!-- <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
@@ -486,7 +541,7 @@ function buildFunctionCall(func, argList){
                     
                 <apex:repeat value="{!step.actions}" var="action">
                     <br/>
-                    <apex:commandButton onclick="buildFunctionCall('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
+                    <apex:commandButton onclick="doRun('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
                     <br/>
                 </apex:repeat>
                 
