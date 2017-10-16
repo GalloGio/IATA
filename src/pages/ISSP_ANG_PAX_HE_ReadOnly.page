@@ -303,8 +303,20 @@
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
             </apex:outputText>         
             <apex:pageBlockSection columns="1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
-                <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+                <apex:outputPanel >
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}"/>
+                    <apex:outputPanel>
+                        <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
+                        <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                    </apex:outputPanel>                    
+                </apex:outputPanel>                                
+                <apex:outputPanel>
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}"/>            
+                    <apex:outputPanel>
+                        <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+                        <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
             </apex:pageBlockSection>                    
 
             <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>
