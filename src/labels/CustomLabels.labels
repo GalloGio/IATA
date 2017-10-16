@@ -10188,6 +10188,62 @@ IFG Customer Services</value>
         <value>September</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
+        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
+        <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
+        <value>Thank you for submitting your request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
+        <value>Request to Update the MSO Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
