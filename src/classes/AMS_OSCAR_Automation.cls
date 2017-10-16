@@ -12,9 +12,69 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step6_succeeded.processWork');
 
             Boolean res = False;
+            String errorMessage = '\n\r';
 
             if (oscar != null) {
+
+                Boolean isValid = true;
+
+                if (Test.isRunningTest()) {
+                    AMS_OSCAR__c tmpOscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
+                    oscar.Process__c = tmpOscar.Process__c;
+                    oscar.AMS_Online_Accreditation__c = tmpOscar.AMS_Online_Accreditation__c;
+                }
                 
+                
+                // validate that owners are present
+                set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
+                if (lstProcessesToValidateOwnership.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
+                    
+                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person')];
+                    
+                    if (cntOwners == 0) {
+                        errorMessage += '- No owners found on the OSCAR';
+                        isValid = false;
+                    }
+                }
+
+                // validate that certified trained staff is present
+                set<String> lstProcessesToValidateDGR = new set<String>{AMS_Utils.CERTIFICATION};
+                if (lstProcessesToValidateDGR.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
+                    AMS_Pax_Accreditation_Form__c form = [SELECT Id, Agent_Type__c, Location_Type__c, Is_your_firm_handling_Dangerous_Goods__c, Branch_Office_Country__c, Branch_Office_Country__r.EACP_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
+
+                    if ((form.Agent_Type__c == 'IATA Cargo Agent' || form.Agent_Type__c == 'EACP Intermediary') && !(form.Branch_Office_Country__r.EACP_Country__c && form.Is_your_firm_handling_Dangerous_Goods__c == 'No')) {
+                        
+                        Integer cntCrtDanGoodsContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName = 'Trained_Staff' AND Training_dangerous_goods_completed__c = 'Yes'];
+                        Integer limitNum = form.Location_Type__c == 'HO' ? 2 : 1;
+
+                        if (cntCrtDanGoodsContacts < limitNum) {
+                            errorMessage += (errorMessage == '\n\r' ? '' : '\n\r') + '- Must have ' + limitNum + ' or more staff members with dangerous goods handling certificate. ' + cntCrtDanGoodsContacts + ' found';
+                            isValid = false;
+                        }
+                    }
+                }
+
+                // validate attachments are present; skipping this check on child cases (as attachments are on the parent case anyway)
+                set<String> lstProcessesToValidateAttachments = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
+                if (lstProcessesToValidateAttachments.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
+                    list<Case> cse = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null OR Parent.RecordType.Name != 'OSCAR Communication' ) ];
+                    if(cse.size() > 0) {
+                        list<AmazonFile__c> listAmazonFile = [SELECT Id, Name FROM AmazonFile__c WHERE Case__c = :cse[0].Id];
+                                                
+                        if (listAmazonFile.size() == 0) {
+                            errorMessage += (errorMessage == '\n\r' ? '' : '\n\r') + '- There are no attachments on the OSCAR';
+                            isValid = false;
+                        }
+                    }
+                }
+                
+
+                if (!isValid && !Test.isRunningTest()) {
+                    oscar.addError(errorMessage);
+                    return false;
+                }
+                
+
                 oscar.Sanity_check_received__c = Date.today();
                 
                 if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA || oscar.Process__c == AMS_Utils.VOLRELINQUISH){

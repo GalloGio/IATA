@@ -261,4 +261,15 @@ public class AMS_OSCAR_WebserviceTest {
         Test.stopTest();
     }
 
+    static testMethod void test_createIfapPortalServiceRight() {
+        
+        setup();
+        
+        Test.startTest();
+
+        String result_createIfapPortalServiceRight = AMS_OSCAR_Webservice.createIfapPortalServiceRight(oscar5.Id);
+
+        Test.stopTest();
+    }
+
 }

@@ -516,4 +516,34 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
+    WebService static String createIfapPortalServiceRight(String oscarId) {
+
+        try {
+            List<AMS_OSCAR__c> oscar = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = : oscarId];
+
+            List<Contact> lstIfapContacts = [SELECT Id FROM Contact WHERE AccountId = :oscar[0].Account__c AND Financial_Assessment_Contact__c = true LIMIT 1];
+
+            if (lstIfapContacts.isEmpty()) {
+                return 'ERROR: No Financial Assessment contact found!';
+            }
+
+            list<Portal_Applications__c> lstApp = [SELECT Id FROM Portal_Applications__c WHERE Application_URL__c = '/ISSP_IFAPCases' LIMIT 1];
+
+            if (lstIfapContacts.isEmpty()) {
+                return 'ERROR: Unable to find the IFAP portal service!';
+            }
+
+            Portal_Application_Right__c par = new Portal_Application_Right__c();
+            par.Contact__c = lstIfapContacts[0].Id;
+            par.Portal_Application__c = lstApp[0].Id;
+            par.Right__c = 'Access Granted';
+
+            insert par;
+
+            return 'OK';
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
+
 }

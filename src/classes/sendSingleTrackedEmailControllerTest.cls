@@ -62,6 +62,8 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         
         controller.initPage();
         
+        controller.selectedFrom = 'agencymanagement@iata.org';
+        
         EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='custom' and IsActive = true][0];
 
         controller.setTemplate(template.Id);
@@ -118,7 +120,9 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         sendSingleTrackedEmailController controller = new sendSingleTrackedEmailController(stdController);
         
         controller.initPage();
-        
+
+        controller.selectedFrom = 'agencymanagement@iata.org';
+                
         EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='html' and IsActive = true][0];
 
         controller.setTemplate(template.Id);
@@ -144,7 +148,9 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         sendSingleTrackedEmailController controller = new sendSingleTrackedEmailController(stdController);
         
         controller.initPage();
-        
+
+        controller.selectedFrom = 'agencymanagement@iata.org';
+                
         EmailTemplate template = [select Id, Name from EmailTemplate where TemplateType='visualforce' and IsActive = true][0];
 
         controller.setTemplate(template.Id);
@@ -395,6 +401,8 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         
         controller.setTemplate(staticTemplate.Id);
         controller.setTemplate(staticTemplate.DeveloperName);
+
+        controller.selectedFrom = 'agencymanagement@iata.org';
     
         Attachment attachment = [select Id, Name, BodyLength from Attachment limit 1];
         controller.DocumentMap.put(attachment.Id, new SelectTrackedEmailAttachmentsController.DocumentSkeleton(attachment.Name, attachment.BodyLength, 'original attachment'));

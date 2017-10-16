@@ -221,6 +221,7 @@
         </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
+    <tab>standard-home</tab>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
     <tab>standard-Case</tab>
@@ -270,6 +271,9 @@
         </mapping>
         <mapping>
             <tab>standard-LiveChatVisitor</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-home</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>
