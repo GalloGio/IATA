@@ -1325,7 +1325,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1385,7 +1385,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1448,7 +1448,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1511,7 +1511,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1574,7 +1574,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1637,7 +1637,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1700,7 +1700,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1763,7 +1763,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1826,7 +1826,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1889,7 +1889,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
