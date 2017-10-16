@@ -4436,8 +4436,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 mapCountriesList.put('Travel_Agent-New HE standard', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New HE lite', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New AE', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c); //NEWGEN - 552
-		mapCountriesList.put('Travel_Agent-New TIDS HO', iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS HO'));//iso.Travel_TIDS_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New TIDS BR', iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS BR'));//iso.Travel_TIDS_BR_Country__c);
+	            mapCountriesList.put('Travel_Agent-New TIDS HO', iso.ISO_Code__c + ':' + (iso.AMS_Country_Configuration__c == null ? false : iso.AMS_Country_Configuration__c.contains('TIDS HO')));//iso.Travel_TIDS_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS BR', iso.ISO_Code__c + ':' + (iso.AMS_Country_Configuration__c == null ? false : iso.AMS_Country_Configuration__c.contains('TIDS BR')));//iso.Travel_TIDS_BR_Country__c);
             } else {
                 mapCountriesList.put('Cargo_Agent-New BR / IP', mapCountriesList.get('Cargo_Agent-New BR / IP') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_Branch_Country__c);
                 mapCountriesList.put('Cargo_Agent-New HO', mapCountriesList.get('Cargo_Agent-New HO') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_HO_Country__c);
@@ -4447,8 +4447,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 mapCountriesList.put('Travel_Agent-New HE standard', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New HE lite', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New AE', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);//NEWGEN - 552
-                mapCountriesList.put('Travel_Agent-New TIDS HO', mapCountriesList.get('Travel_Agent-New TIDS HO') + ',' + iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS HO'));//iso.Travel_TIDS_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New TIDS BR', mapCountriesList.get('Travel_Agent-New TIDS BR') + ',' + iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS BR'));//iso.Travel_TIDS_BR_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS HO', mapCountriesList.get('Travel_Agent-New TIDS HO') + ',' + iso.ISO_Code__c + ':' + (iso.AMS_Country_Configuration__c == null ? false : iso.AMS_Country_Configuration__c.contains('TIDS HO')));//iso.Travel_TIDS_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS BR', mapCountriesList.get('Travel_Agent-New TIDS BR') + ',' + iso.ISO_Code__c + ':' + (iso.AMS_Country_Configuration__c == null ? false : iso.AMS_Country_Configuration__c.contains('TIDS BR')));//iso.Travel_TIDS_BR_Country__c);
             }
             ++idx;
             if (iso.Branches_abroad_not_allowed__c)
