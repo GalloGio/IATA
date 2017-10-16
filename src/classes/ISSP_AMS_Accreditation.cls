@@ -1767,7 +1767,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (isEUcountry) { ///Add 2-letter ISO Code to VAT Number of EU countries
-            newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            if(newForm.ISSP_AMS_VAT_number_input__c != null) {
+                newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            }
         } else {
             newForm.ISSP_AMS_VAT_number__c = newForm.ISSP_AMS_VAT_number_input__c;
         }
