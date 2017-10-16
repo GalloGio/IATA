@@ -142,17 +142,25 @@ global class ANG_RME_Alert_Service {
 		req.setTimeout(120000);
 		req.setEndpoint('callout:ANG_Mulesoft_032?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 
+		Map<String, Object> payload = new Map<String, Object>();
+		payload.put('eventId', acc.IATACode__c+String.valueOf(System.now().getTime()));
+		payload.put('eventType', 'requestBalanceUpdate');
+		payload.put('eventTime', System.now());
+		payload.put('schemaVersion', 1);
+		payload.put('iataCode', acc.IATACode__c);
+
+		req.setBody(JSON.serialize(payload));
+
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] req - ' + req);
 
 		//parse result
 		HttpResponse res;
-		RHCMessage rhc;
 
 		try {
 			if(Test.isRunningTest()) res = new Http().send(req);
 			//temporary stuff
 			else{
-				rhc = new RHCMessage();
+				RHCMessage rhc = new RHCMessage();
 				rhc.iataCode = result.iataCode;
 				rhc.eventTime = System.now();
 				rhc.consumedRHCAmount = 5000;
@@ -167,14 +175,8 @@ global class ANG_RME_Alert_Service {
 				/**
 				TODO: Define response structure
 				*/
-				rhc = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
-				
-				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 
-				rhcInfo.ANG_ConsumedRHC__c = rhc.consumedRHCAmount;
-				rhcInfo.ANG_ConsumedRHC_Percent__c = rhc.consumedRHCPercentage * 100;
-				rhcInfo.ANG_ConsumedRHC_Last_Update__c = rhc.eventTime.date();
-				update rhcInfo;
+				updateRHC((RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class), acc.RHC_Informations__r[0]);
 			}else{
 				result.isSuccess = false;
 				result.description = res.getBody();
