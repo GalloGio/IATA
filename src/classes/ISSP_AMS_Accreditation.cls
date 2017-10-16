@@ -1551,8 +1551,7 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.debug('IsNew Case NoC:' + isNewCase);
             if (isNewCase || changeOfAccountConcerned) {
                 accountStagingFieldMapping(accountConcerned, AMS_Utils.CASE_REASON_NEW_HO, false);
-                newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
-                newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;
+                newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);                
               
                 SYSTEM.DEBUG('IsNew NoC VATNumber: ' + accountConcerned.VAT_Number__c);
                 
@@ -2901,6 +2900,12 @@ public without sharing class ISSP_AMS_Accreditation {
                     upsert hqAccount;
               
                     accountStagingFieldMapping(hqAccount, newCase.Reason1__c, false);    
+                }
+            } else {
+                if(!newForm.Notify_Change_Accreditation_Type__c) {
+                    newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;                    
+                } else {                    
+                    newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
                 }
             }
            
