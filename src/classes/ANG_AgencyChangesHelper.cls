@@ -957,6 +957,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
                 if (accToUpdateStatus != null) {
                     changeCodeDef = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
+                    
+                    if(changeCodeDef == null)
+                    	continue;
+
                     changeCode = createChangeCode(changeCodeDef, oscar, acc);
 
                     changesContainer.addChangeCode(changeCode);
