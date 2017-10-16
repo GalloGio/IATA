@@ -305,7 +305,7 @@ public with sharing class sendSingleTrackedEmailController {
 
 
 			// Search for the tEditID in the tracked email body
-			Integer int4 = trackedEmail.Html_Body__c.indexOf(tEditID);
+			Integer int4 = trackedEmail.Html_Body__c.lastIndexOf(tEditID);
 			Integer int5 = trackedEmail.Html_Body__c.indexOf('>', int4) + 1;
 			
 			// Header of the tracked email ends with the <td> tag containing the tEditID parameter
@@ -318,10 +318,16 @@ public with sharing class sendSingleTrackedEmailController {
             Integer closingTabIndex1;
             Integer startIndex1 = 0;
 
+			System.debug('Working copy : ' + workingCopy);
+
             while(openedTDTags >= 0){
                 Integer nextOpeningTDTagIndex = workingCopy.indexOf('<td', startIndex1);
                 Integer nextClosingTDTagIndex = workingCopy.indexOf('</td>', startIndex1);
 
+                if(nextOpeningTDTagIndex == nextClosingTDTagIndex){
+					// We might have a mlaformed template here, but at least we leave the loop
+					break;
+				}
                 if(nextOpeningTDTagIndex < nextClosingTDTagIndex && nextOpeningTDTagIndex != -1){
                     openedTDTags++;
                     startIndex1 = nextOpeningTDTagIndex;
