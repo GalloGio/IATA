@@ -16290,7 +16290,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_PortalUrl</shortDescription>
-        <value>https://support-customer-portal-iata.cs83.force.com/</value>
+        <value>https://portal.iata.org/</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_PortalUrl_CNS</fullName>
