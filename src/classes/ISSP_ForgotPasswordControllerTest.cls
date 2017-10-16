@@ -1,22 +1,5 @@
 @isTest
 public class ISSP_ForgotPasswordControllerTest {
-    //Set language with cookies and CNS Community
-    public static testMethod void testISSP_ForgotPasswordControllerTest_ISSComm_Cookies(){
-         Test.startTest();
-             ISSP_ForgotPasswordController controller = new ISSP_ForgotPasswordController();
-             Test.setCurrentPage(new PageReference('ISSP_ForgotPassword'));
-
-             List<Cookie> cookies = new List<Cookie>();
-             cookies.add(new Cookie('lang','fr',null,-1,false));
-             ApexPages.currentPage().setCookies(cookies);
-             ApexPages.currentPage().getParameters().put('CommunityName','CNS');
-    		 controller = new ISSP_ForgotPasswordController();
-
-            String lang = controller.lang;
-            System.assertEquals('en_US', lang);
-        Test.stopTest();
-    }
-
     public static testMethod void testISSP_ForgotPasswordControllerTest_ISSCommExistingUser(){
         String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
         Account acc = ISSP_ObjectFactory.createNewAccount();
