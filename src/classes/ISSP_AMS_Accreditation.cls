@@ -620,7 +620,8 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         //Set default VAT Number of Branch to that of the HO and 
         // It's not a separate legal entity
-        if (amsOfficeType == 'Branch' && (newForm.AE_separate_Legal_Entity__c != null && newForm.AE_separate_Legal_Entity__c == 'No')) { 
+        // It's null when it's a branch.
+        if (amsOfficeType == 'Branch' && (newForm.AE_separate_Legal_Entity__c == null || newForm.AE_separate_Legal_Entity__c == 'No')) { 
             if (newForm.ISSP_AMS_VAT_number_input__c == null)
                 if (isEUcountry) { //Need to remove first 2 chars (ISO County code) for VAT input field for EU countries since not required by validation WS
                     if (con.Account.VAT_Number__c != null)
@@ -1775,7 +1776,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (isEUcountry) { ///Add 2-letter ISO Code to VAT Number of EU countries
-            newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            if(newForm.ISSP_AMS_VAT_number_input__c != null) {
+                newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            }
         } else {
             newForm.ISSP_AMS_VAT_number__c = newForm.ISSP_AMS_VAT_number_input__c;
         }
