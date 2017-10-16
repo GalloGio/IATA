@@ -226,7 +226,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action7</shortDescription>
-        <value>Create SIDRA Lite</value>
+        <value>SIDRA Lite Action</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action8</fullName>
