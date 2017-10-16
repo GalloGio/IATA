@@ -25,7 +25,12 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		lsTopicWrappers = getTopicWrappers();
 		dailyOrWeekly = 'Daily';
 		if(currentUser.AMP_Digest_Daily_or_Weekly__c != null && currentUser.AMP_Digest_Daily_or_Weekly__c == 'Weekly') {dailyOrWeekly = 'Weekly';}
-		preview = getEmailBody(currentUser, lsAllFeedItems);
+
+		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
+		for(Account a: lsHQAccounts) {
+			mpAccountId2Account.put(a.Id,a);
+		}
+		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account);
 	}
 
 	public PageReference savePreferences() {
@@ -86,7 +91,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			dayOrWeek = 'week';
 			// lsAllFeedItems = getAllFeedItems(lsHQAccounts);
 		}
-		preview = getEmailBody(currentUser, lsAllFeedItems, favouriteTopics, dayOrWeek);
+		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account, favouriteTopics, dayOrWeek);
 
 		return null;
 	}
@@ -164,7 +169,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	}
 
 
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems) {
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, Map<Id, Account> mpAccountId2Account) {
 
 		String emailBody = '';
 		// set the greeting to be either day or week
@@ -175,11 +180,11 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(currentUser.AMP_Digest_Topics__c != null) {
 			lsFavouriteTopics = currentUser.AMP_Digest_Topics__c.split(',');
 		}
-		emailBody += getEmailBody( currentUser,  lsAllFeedItems, lsFavouriteTopics,  dayOrWeek);
+		emailBody += getEmailBody( currentUser,  lsAllFeedItems, mpAccountId2Account, lsFavouriteTopics,  dayOrWeek);
 		return emailBody;
 	}
 
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<String> lsFavouriteTopics, String dayOrWeek) {
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, Map<Id,Account> mpAccountId2Account, List<String> lsFavouriteTopics, String dayOrWeek) {
 
 		String emailBody = '';
 		emailBody += getEmailHeader(currentUser, dayOrWeek);
@@ -188,7 +193,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
 		String topicBody = '';
 		for(String t : lsFavouriteTopics) {
-			topicBody += getTopicBody(currentUser, t, lsAllFeedItems,lsTopicAssignments, dayOrWeek);
+			topicBody += getTopicBody(currentUser, t, lsAllFeedItems, mpAccountId2Account, lsTopicAssignments, dayOrWeek);
 		}
 		emailBody += topicBody;
 		emailBody += getEmailFooter();
@@ -367,7 +372,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return emailBody;
 	}
 
-	public static String getTopicBody(User currentUser, String topicName,  List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
+	public static String getTopicBody(User currentUser, String topicName, List<FeedItem> lsAllFeedItems, Map<Id,Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
 
 		List<Id> lsAccountIds = new List<Id>();
 		// List<TopicFeedItems> lsTopicAssignments = getTopicFeedItems();
@@ -435,7 +440,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 								}
 							}
 
-							emailBody += getFeedItemBody(fi,  lsAccountIds,  lsFITopics, lsTopicAssignments);
+							emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsFITopics, lsTopicAssignments);
 
 							if(topicFeedItemCounter < amountOfFeedItems) {
 								emailBody += feeditemSeparator();
@@ -451,7 +456,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return emailBody;
 	}
 
-	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, List<Topic> lsTopics, List<TopicAssignment> lsTopicAssignments) {
+	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<Topic> lsTopics, List<TopicAssignment> lsTopicAssignments) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
@@ -499,11 +504,11 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 				}
 			}
 		}
-		List<Account> lsHQAccounts = getHQAccounts();
-		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
-		for(Account a: lsHQAccounts) {
-			mpAccountId2Account.put(a.Id,a);
-		}
+		// List<Account> lsHQAccounts = getHQAccounts();
+		// Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
+		// for(Account a: lsHQAccounts) {
+		// 	mpAccountId2Account.put(a.Id,a);
+		// }
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
