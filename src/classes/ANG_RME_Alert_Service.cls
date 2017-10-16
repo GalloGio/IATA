@@ -118,4 +118,76 @@ global class ANG_RME_Alert_Service {
 		update rhcInfo;
 		setResponse(null, 202);
 	}
+
+	global class BalanceResult {
+		webservice Boolean isSuccess;
+		webservice String description;
+		webservice String iataCode;
+	}
+
+	//webservice called by salesforce (javascript button and portal) to request an update
+	webservice static BalanceResult requestBalanceUpdate(String accountId){
+
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] acc - ' + acc);
+
+		BalanceResult result = new BalanceResult();
+		result.isSuccess = true;
+		result.iataCode = acc.IATACode__c;
+
+		//do callout
+		HttpRequest req = new HttpRequest();
+        req.setHeader('Content-Type', 'application/json');
+		req.setMethod('POST');
+		req.setTimeout(120000);
+		req.setEndpoint('callout:ANG_Mulesoft_032?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
+
+		Map<String, Object> payload = new Map<String, Object>();
+		payload.put('eventId', acc.IATACode__c+String.valueOf(System.now().getTime()));
+		payload.put('eventType', 'requestBalanceUpdate');
+		payload.put('eventTime', System.now());
+		payload.put('schemaVersion', 1);
+		payload.put('iataCode', acc.IATACode__c);
+
+		req.setBody(JSON.serialize(payload));
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] req - ' + req);
+
+		//parse result
+		HttpResponse res;
+
+		try {
+			if(Test.isRunningTest()) res = new Http().send(req);
+			//temporary stuff
+			else{
+				RHCMessage rhc = new RHCMessage();
+				rhc.iataCode = result.iataCode;
+				rhc.eventTime = System.now();
+				rhc.consumedRHCAmount = 5000;
+				rhc.consumedRHCPercentage = 0.5;
+				res = new HttpResponse();
+				res.setBody(JSON.serialize(rhc));
+				res.setStatusCode(200);
+			}
+			// end temporary stuff
+
+			if(res.getStatusCode() >= 200 && res.getStatusCode() < 300){
+				/**
+				TODO: Define response structure
+				*/
+
+				updateRHC((RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class), acc.RHC_Informations__r[0]);
+			}else{
+				result.isSuccess = false;
+				result.description = res.getBody();
+			}
+		} catch(Exception e) {
+			result.isSuccess = false;
+			result.description = e.getMessage();
+		}
+
+
+		//return
+		return result;
+	}
 }
