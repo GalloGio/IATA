@@ -4506,6 +4506,10 @@ The product will only appear on the Online Store when the date entered in this f
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>StockKeepingUnit</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Use_Contract_when_ordered__c</fullName>
         <description>IEC - indicator to send to SAP as contract instead of sales order</description>
         <externalId>false</externalId>

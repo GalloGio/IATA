@@ -193,7 +193,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -216,7 +216,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

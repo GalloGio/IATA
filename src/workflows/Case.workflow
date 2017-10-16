@@ -10,7 +10,7 @@
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ACCA_Notification_on_new_Application_Change_Request</template>
+        <template>ISS_Portal/ISSP_DPC_Notification</template>
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D</fullName>
@@ -14821,7 +14821,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked)</value>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -14831,7 +14831,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked)</value>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
