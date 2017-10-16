@@ -828,17 +828,18 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             //INC239697
             for (Case cse : Trigger.new) {
                 CS_Email2CasePremium__c code;
+                cse.Groups__c = 'Default';
+
                 if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
                     code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
                 if (code != null) {
                     system.debug('##ROW##');
                     cse.Groups__c = code.Group__c;
-                }else {
-                    system.debug('##ROW##');
-                    cse.Groups__c = 'Default';
                 }
-                if(cse.RecordTypeId == ifgCaseRecordTypeID) {
-                    cse.Groups__c = IFG_TEAM_CASE_GROUP_NAME;
+
+                code = CS_Email2CasePremium__c.getInstance(cse.RecordTypeId);
+                if (code != null) {
+                    cse.Groups__c = code.Group__c;
                 }				
             }   
         }
