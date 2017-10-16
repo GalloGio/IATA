@@ -748,6 +748,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>SIDRA_eDefault__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -847,6 +857,7 @@
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Integration_System__c</fields>
         <fields>NAME</fields>
         <fields>Change_Code__c</fields>
         <fields>CREATED_DATE</fields>
