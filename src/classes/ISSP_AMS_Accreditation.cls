@@ -616,8 +616,9 @@ public without sharing class ISSP_AMS_Accreditation {
             // no case Id
 
         }
-
-        if (amsOfficeType == 'Branch') { //Set default VAT Number of Branch to that of the HO
+        //Set default VAT Number of Branch to that of the HO and 
+        // It's not a separate legal entity
+        if (amsOfficeType == 'Branch' && (newForm.AE_separate_Legal_Entity__c != null && newForm.AE_separate_Legal_Entity__c == 'No')) { 
             if (newForm.ISSP_AMS_VAT_number_input__c == null)
                 if (isEUcountry) { //Need to remove first 2 chars (ISO County code) for VAT input field for EU countries since not required by validation WS
                     if (con.Account.VAT_Number__c != null)
