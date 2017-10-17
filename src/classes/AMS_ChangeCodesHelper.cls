@@ -252,7 +252,7 @@ public class AMS_ChangeCodesHelper {
      Add Change Code to be Created NeW method with Change Code History
     */
 
-    private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
 
 
         Id oscarId = null;
@@ -337,7 +337,7 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
@@ -417,20 +417,24 @@ public class AMS_ChangeCodesHelper {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null
-					&& !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
-                    (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
-                    ) {
+                if (accToUpdateStatus != null) {
+
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
-                    changeCodes.add(changeCode);
+                    
+                    if(changeCode != null) {
 
-                    /*if (changeCode.status != null) {
-                        system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
-                        accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
-                    }*/
+                        changeCodes.add(changeCode);
 
-                    accts.add(accToUpdateStatus);
-                    oscars.add(oscar);
+                        /*if (changeCode.status != null) {
+                            system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
+                            accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
+                        }*/
+
+                        accts.add(accToUpdateStatus);
+                        oscars.add(oscar);
+
+                    }
+
                 }
             }
 

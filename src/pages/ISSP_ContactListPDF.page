@@ -1,0 +1,53 @@
+<apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false" renderAs="PDF" applyBodyTag="false" applyHtmlTag="false">
+<html>
+<head>
+<style>
+    @page {
+        size: letter;
+        margin: 30pt;
+        size: landscape;
+        @top-center {
+            content: "{!$Label[contactListViewMap[selectedList].Label_API_name__c]}";
+        }
+    }
+    .page-break {
+        display:block;
+        page-break-after:always;
+    }
+    body {
+        font-family: Arial Unicode MS;
+        font-size: 70%;
+    }
+    table{
+        width: 100%;
+    }
+    table thead {
+        font-family: bold;
+        border-bottom: 1px solid black
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+</head>
+<body>
+  <apex:pageBlock>
+    <apex:pageBlockTable value="{!FilteredContactList}" var="item">
+
+        <apex:repeat value="{!fields}" var="f">
+          <apex:column value="{!item.recordContact[f.fieldPath]}" rendered="{!AND(f.FieldPath!='Airline_Contact_Type__c', f.FieldPath!='Services__c')}"/>
+        </apex:repeat>
+
+        <apex:column rendered="{!isAdmin}">
+            <apex:facet name="header" >
+                {!$ObjectType.User.fields.LastLoginDate.label}
+            </apex:facet>
+            <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+        </apex:column>
+
+    </apex:pageBlockTable>
+  </apex:pageBlock>
+</body>
+</html>
+</apex:page>

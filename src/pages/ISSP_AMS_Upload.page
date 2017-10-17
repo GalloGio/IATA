@@ -28,7 +28,7 @@
                         IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
                             IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle, 
                                 IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle, 
-                                    IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle, 
+                                    IF(newForm.Agent_Type__c == 'Recipient', lblImporAgentTitle, 
                                         IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
     </h3>
             </div>

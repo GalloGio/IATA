@@ -2,11 +2,14 @@
 public class ISSP_PortalService_Test {
 
 	@testSetup static void createData() {
+
+        List<Account> al = new List<Account>();
+
 		Account acc = ISSP_ObjectFactory.createNewAccount();  
 		acc.Location_Type__c = 'HO';
 		acc.Location_Class__c = 'P';				
 
-		insert acc;
+		al.add(acc);
 
 		Account acc2 = ISSP_ObjectFactory.createNewAccount();
 		acc2.Location_Type__c = 'BR';
@@ -14,9 +17,13 @@ public class ISSP_PortalService_Test {
 		acc2.ParentId = acc.id;
 		acc2.Top_Parent__c = acc.id;
 		acc2.Name = 'Test1';
-		insert acc2;
+
+		al.add(acc2);	
+
+		insert al;
 
 		Contact contact = ISSP_ObjectFactory.createNewContact();
+		Contact.LastName = 'test123';
 		contact.AccountId = acc2.Id;	
 		insert contact;
 
@@ -67,9 +74,11 @@ public class ISSP_PortalService_Test {
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
 		
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId = acc.Id;
-		insert con;
+		Contact con = [Select id from Contact where LastName = 'test123'];		
+
+		//Contact con = ISSP_ObjectFactory.createNewContact();
+		//con.AccountId = acc.Id;
+		//insert con;
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
@@ -247,10 +256,10 @@ public class ISSP_PortalService_Test {
         profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
         insert profileCS2;
         
-               IECTestUtil.trgPortalUserAfterInserUpdate = true;
-		
 		Test.startTest();
-
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+			
 		List<Contact> cl = new List<Contact>();
 
 		Contact con1 = ISSP_ObjectFactory.createNewContact();
@@ -277,14 +286,16 @@ public class ISSP_PortalService_Test {
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
-        test.stopTest();
+        
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'test');
         ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
         ctrl3.getContacts();
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
-        ctrl3.CreateNewPortalAccess();
+
+        //ctrl3.CreateNewPortalAccess();
+        test.stopTest();
 	}
 
 	/*public static testMethod void unitTest5() {

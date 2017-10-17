@@ -125,7 +125,7 @@ window.onload = function HighlightBar() {
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
         var subvar = getUrlParameter('subNav');
-        var menuid=mid.substr(0,2)
+        var menuid = mid && mid.substr(0,2);
 
      $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
 
@@ -140,7 +140,6 @@ window.onload = function HighlightBar() {
      $("#casebreadcrumbs").text("{!$Label.ISSP_Company_Administration}");
      $("#casebreadcrumbs2").text("{!$Label.ISSP_Company_Cases}");
      $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");
-
     }
         };
 
@@ -726,7 +725,11 @@ background-color:#428bca;
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
-
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
+                </a>
+        </li>
     <!-- INC262760
     <li>
     <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">

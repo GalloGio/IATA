@@ -436,7 +436,7 @@
                 IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                     IF(newForm.Agent_Type__c == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                         IF(newForm.Agent_Type__c == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
-                            IF(newForm.Agent_Type__c == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
+                            IF(newForm.Agent_Type__c == 'Recipient', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
                                 IF(newForm.Agent_Type__c == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title))))))}
         </div>
     <div class="panel-body" id="body-enquiries">

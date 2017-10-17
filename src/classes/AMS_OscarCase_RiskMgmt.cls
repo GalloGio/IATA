@@ -194,7 +194,7 @@ public class AMS_OscarCase_RiskMgmt {
 			for(Agency_Applied_Change_code__c irr:[select id, Account__c, Change_Code__c, Effective_Date__c, Irregularities_Expired__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c
 												   from Agency_Applied_Change_code__c
 												   where Account__c in:setAllAccntsHiearchy and Change_Code__c in:setIRRCC and Irregularities_Expired__c=false
-												   order by Effective_Date__c desc]){
+												   order by Effective_Date__c, Operation__c desc]){
 				list<Agency_Applied_Change_code__c> lsIRRS;
 				if(mapIRRS.keyset().contains(irr.Account__c))
 					lsIRRS = mapIRRS.get(irr.Account__c);

@@ -82,10 +82,16 @@ global class AmsIataCodeGenerator{
         try
         {
 
-            Account theAccount = [select Id, Link_agent_code__c, Sector__c, Category__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
+            Account theAccount = [select Id, Link_agent_code__c, Sector__c, Category__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c, CNS_Agency__c from Account where Id = :accountId FOR UPDATE];
             
-            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
+            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
             
+            if(theAccount.CNS_Agency__c == false && theAccreditation.SAAM_Case__r.OSCAR__r.STEP6__c != AMS_Utils.PASSED && !(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.MSO.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.GSA.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.AHA.1.0')){
+                returnedValues[0] = '2';
+                returnedValues[1] = 'IATA Code Generation is only allowed after Sanity Check step be passed.';
+                return returnedValues;
+            }
+
             isImportAgentWithLink = theAccreditation.Link_agent_name__c != null && importAgentsCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) ? true : false;
 
             System.debug('DNG: theAccount is ' + theAccount);
@@ -171,7 +177,7 @@ global class AmsIataCodeGenerator{
                 if(!isIATACodeGeneratedUnique(theAccreditation.IATACode__c)){
 
                     if(isImportAgentWithLink)
-                        returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                        returnedValues[1] = 'The IATA code generated is not unique. Since this is a Recipient, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
                     else
                         returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
 
@@ -417,7 +423,7 @@ global class AmsIataCodeGenerator{
                             if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
                                 
                                 if(isImportAgentWithLink)
-                                    returnedValues[1] = 'The IATA code generated is not unique. Since this is an Import Agent, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
+                                    returnedValues[1] = 'The IATA code generated is not unique. Since this is a Recipient, the code is based on the Link agent\' Iata code. Please search the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool or contact the System Administrator.';
                                 else
                                     returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
                                 
@@ -696,7 +702,7 @@ global class AmsIataCodeGenerator{
     
     private static Map<String, String> constructProgramCategoryMap()
     {
-        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
+        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Recipient', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
         return pcMap;
     }
     

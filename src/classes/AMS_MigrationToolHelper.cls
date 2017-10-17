@@ -19,6 +19,8 @@ public without sharing class AMS_MigrationToolHelper {
             'New SA / CHV – New Code' => 'NEW.SA.1.0',
             'VMFR Setup/Update' => 'MAJOR.CHANGES',
 			'TIDS' => 'NEW.TIDS.1.0',
+			'New TIDS HO' => 'NEW.TIDS.1.0',
+			'New TIDS BR' => 'NEW.TIDS.1.0',
 			'ERSP' => 'CORRECTION.1.0',
 			'Certificate DGR' => 'CERTIFICATION.1.0',
 			'CLO - Closure' => 'VR.1.0',

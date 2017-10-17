@@ -1,5 +1,7 @@
 global class AMS_OSCAR_Webservice {
 
+    public class OSCARException extends Exception{}
+
     WebService static String updateFormFields(String[] fieldsToUpdateKey, String[] fieldsToUpdateValue, String recordId) {
 
         Map<String, Schema.DisplayType> fTypes;
@@ -247,77 +249,102 @@ global class AMS_OSCAR_Webservice {
             return ex.getMessage();
         }
     }
+    
+    /**
+        Find the parent case related to an Oscar Id
+    **/
+    private static Case findOscarParentCase(Id oscarId) {
+        List<Case> cases = [
+            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+            SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
+            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.RPM_Approval__c
+            FROM Case
+            WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
+            LIMIT 1];
+        if (cases.isEmpty()) {
+            throw new OSCARException('Could not find a the Oscar Communication case related to this OSCAR');
+        }
+        return cases[0];
+    }
+    
+    private static void checkOscarStep(AMS_OSCAR__c oscar, String step) {
+        String reason = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+        String message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Failed" in this step.';
+        if (step=='6') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='9') {
+            if (oscar.Step9__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='11') {
+            if (oscar.Step11__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='12') {
+            if (oscar.Step12__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='14') {
+            if (oscar.Step14__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='26') {
+            if (oscar.Step26__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        if (step=='RPM') {
+            if (oscar.RPM_Approval__c == 'Authorize Disapproval') return;
+            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Authorize Disapproval" in this step.';
+            throw new OSCARException(message);
+        }
+        if (step=='DGR') {
+            if (oscar.Step6__c == 'Failed') return;
+            throw new OSCARException(message);
+        }
+        throw new OSCARException('Step ' + step + ' is invalid');
+    }
 
-    WebService static String createSIDRALite(String oscarId) {
-
-        String result = '';
-
+    WebService static String createSIDRALite(String oscarId, String step, Boolean createCase) {
         try {
-
-            ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id = : oscarId];
-            if (oscar != null && oscar.size() > 0) {
-
-                List<Case> cases = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-
-                if (cases == null || cases.isEmpty()) {
-                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
-                    return 'ERROR: ' + result;
-                }
-
-                Case oscarCommCase = cases[0];
-
-                Case sidraCase = new Case();
-                sidraCase.RecordTypeId = sidraLiteRecType;
-                //sidraCase.OSCAR__c = oscar[0].Id;
-                sidraCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + oscarCommCase.Reason1__c + '"';
-                sidraCase.ParentId = oscarCommCase.Id;
-                sidraCase.AccountId = oscar[0].Account__c;
-                sidraCase.ContactId = oscarCommCase.ContactId;
-                sidraCase.Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c;
-                sidraCase.BSPCountry__c = oscarCommCase.BSPCountry__c;
-                sidraCase.Reason1__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Default_Date__c = Date.Today();
-                sidraCase.Reason_for_Default__c = 'Disapproval of Change';
-                sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
-
-                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
-                sidraCase.Termination_date_manual_entry__c = BusinessHours.nextStartDate(oscar[0].BusinessHours__c, nextMonthEnd).date();
-
-                if ( oscarCommCase.account.Type == 'IATA Passenger Sales Agent' || oscarCommCase.account.Type == 'Domestic Agent' ) {
-                    sidraCase.BSP_CASS__c = 'BSP';
+            Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
+            SidraLiteHelperForOSCAR.CHECK_STEP = step;
+            Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
+            
+            if (createCase) {
+                // change the reason and NOT date based on the selected step
+                sidraCase.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
+                if (step == 'RPM') {
+                    sidraCase.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,oscarCase.BusinessHoursId).date();
                 } else {
-                    sidraCase.BSP_CASS__c = 'CASS';
+                    sidraCase.NOT_Date__c = Date.today();
                 }
-
                 insert sidraCase;
-
-                /*AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                changeCode.name = 'SRM';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = 'to be defined';
-                changeCode.reasonDesc  = 'SIDRA LITE CREATED';
-                changeCode.status  = '7';
-
-                Account acct = new Account(Id = oscar[0].Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
-
-                oscar[0].STEP26__c = 'In Progress';
-                update oscar;
-
-                return sidraCase.Id;
-
             }
+            return sidraCase.Id;
 
-            return 'ERROR: OSCAR not found.';
+        } catch (WSSidraLite.ShowConfirmationException confirmation) {
+            // this exception is not an actual error, it contains a message to ask the
+            // user if continue the process (using a javascript 'confirm' method)
+            throw(confirmation);
 
         } catch (Exception ex) {
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
+    }
+    
+    WebService static String updateSIDRALite(String oscarId, String step) {
+        try {
+            Case oscarCase = findOscarParentCase(oscarId);
+            checkOscarStep(oscarCase.oscar__r, step);
+            WSSidraLite.updateSecondAndThirdDeadline(oscarCase.Id);
+            return '';
 
+        } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
     }
 
     WebService static String createCommissionerCase(String oscarId) {
@@ -444,15 +471,11 @@ global class AMS_OSCAR_Webservice {
             //creates change code
             Account acct = new Account(Id = agencyId);
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
-
-            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];
-
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-            //changeCode.status  = null;
             changeCode.name = 'CER';
-            changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-            changeCode.reasonDesc  = accountActiveChangeCode[0].Reason_Description__c;
-            changeCode.status  = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
+            changeCode.reasonCode = '91';
+            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
+            changeCode.status  = '9';
 
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
 
@@ -477,7 +500,12 @@ global class AMS_OSCAR_Webservice {
                 oscar[0].STEP36__c = 'Passed';
                 update oscar;
 
-                return 'Risk Event generated successfully';
+                List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
+                
+                if(rskEventLst.isEmpty())
+                    return 'No risk event is needed for this OSCAR.';
+                else
+                    return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
 
             }
 
@@ -485,6 +513,36 @@ global class AMS_OSCAR_Webservice {
 
         }catch(Exception ex){
             return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+    }
+
+    WebService static String createIfapPortalServiceRight(String oscarId) {
+
+        try {
+            List<AMS_OSCAR__c> oscar = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = : oscarId];
+
+            List<Contact> lstIfapContacts = [SELECT Id FROM Contact WHERE AccountId = :oscar[0].Account__c AND Financial_Assessment_Contact__c = true LIMIT 1];
+
+            if (lstIfapContacts.isEmpty()) {
+                return 'ERROR: No Financial Assessment contact found!';
+            }
+
+            list<Portal_Applications__c> lstApp = [SELECT Id FROM Portal_Applications__c WHERE Application_URL__c = '/ISSP_IFAPCases' LIMIT 1];
+
+            if (lstIfapContacts.isEmpty()) {
+                return 'ERROR: Unable to find the IFAP portal service!';
+            }
+
+            Portal_Application_Right__c par = new Portal_Application_Right__c();
+            par.Contact__c = lstIfapContacts[0].Id;
+            par.Portal_Application__c = lstApp[0].Id;
+            par.Right__c = 'Access Granted';
+
+            insert par;
+
+            return 'OK';
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
     }
 

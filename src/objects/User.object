@@ -61,6 +61,37 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+	<fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
+        <description>option to receive the Chatter topic digest either daily or weekly</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Daily or Weekly</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Daily</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMP_Digest_Topics__c</fullName>
+        <description>A csv list of the topics the user wants an email digest on, for AMP</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Topics</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
         <fullName>ANG_Category__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.Category__c)</formula>
@@ -89,7 +120,8 @@
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
 OR(
   ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;)
+  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+  ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)  
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -412,6 +444,15 @@ OR(
         <formula>Contact.Account.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Account Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.RecordType.DeveloperName</formula>
+        <label>Contact Account Record Type</label>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -1600,6 +1641,15 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>dgai__active_user_settings__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>active user settings</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>isSISUser__c</fullName>
         <externalId>false</externalId>
         <formula>if(  
@@ -2758,12 +2808,13 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </filters>
         <filters>
             <field>CORE.PROFILE.NAME</field>
-            <operation>notContain</operation>
-            <value>Portal</value>
+            <operation>contains</operation>
+            <value>ISS Portal Airline User (Partner)</value>
         </filters>
         <filters>
-            <field>CORE.USERS.LAST_LOGIN</field>
+            <field>LANGUAGE</field>
             <operation>notEqual</operation>
+            <value>1</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

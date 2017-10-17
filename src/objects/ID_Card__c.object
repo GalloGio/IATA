@@ -1265,6 +1265,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <lookupDialogsAdditionalFields>Nature_of_ID_Card__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Card_Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Valid_To_Date__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>Is_Active_Card__c</searchFilterFields>
         <searchResultsAdditionalFields>Name_on_ID_Card__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Nature_of_ID_Card__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>VER_Number__c</searchResultsAdditionalFields>

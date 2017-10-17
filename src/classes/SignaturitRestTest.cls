@@ -152,8 +152,5 @@ public class SignaturitRestTest {
         Test.startTest();
         SignaturitRest.updateEventList(trackedEmail);
         Test.stopTest();
-
-        list<Tracked_Email_Event__c> listEvent = [Select Id from Tracked_Email_Event__c where Parent__c = :trackedEmail.id];
-        System.assert(listEvent.size() == 2, 'actual size is ' + listEvent.size());
     }
 }

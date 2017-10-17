@@ -47,7 +47,7 @@ trigger trgIFAPContact_BeforeInsertUpdate on Contact (before insert, before upda
 
             Account theAccount = [Select a.Name, a.Location_Type__c, a.Type From Account a where a.Id = :theContact.AccountId];
             // check the Agent Type of the Account
-            if (theAccount.Type != 'IATA Passenger Sales Agent' && theAccount.Type != 'IATA Cargo Agent' && theAccount.Type != 'CASS Associate' && theAccount.Type != 'Import Agent') {
+            if (theAccount.Type != 'IATA Passenger Sales Agent' && theAccount.Type != 'IATA Cargo Agent' && theAccount.Type != 'CASS Associate' && theAccount.Type != 'Recipient') {
               theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + theAccount.Type);
             }
 
