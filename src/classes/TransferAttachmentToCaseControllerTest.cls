@@ -53,7 +53,7 @@ private class TransferAttachmentToCaseControllerTest {
                           Contactid = con.Id,
                           AccountId = a.Id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'Satisfactory' ,
+                          Financial_Review_Result__c = 'Satisfactory - No Action' ,
                           Subject = 'c1');
         insert c1;
         
@@ -75,7 +75,7 @@ private class TransferAttachmentToCaseControllerTest {
                           Contactid = con.Id,
                           AccountId = a.Id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'Satisfactory' ,
+                          Financial_Review_Result__c = 'Satisfactory - No Action' ,
                           Subject = 'c2');
         
         Case c3 = new Case(recordtypeID = europeRTId,
@@ -95,7 +95,7 @@ private class TransferAttachmentToCaseControllerTest {
                             Contactid = con.Id,
                             AccountId = a.Id,
                             Assessment_Performed_Date__c = date.today(),
-                            Financial_Review_Result__c = 'Satisfactory' ,
+                            Financial_Review_Result__c = 'Satisfactory - No Action' ,
                             Subject = 'c3');
 
         //insert cases
