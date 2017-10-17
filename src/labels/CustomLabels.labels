@@ -22005,6 +22005,150 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>30</value>
     </labels>
     <labels>
+        <fullName>LVA_AgentOffline</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AgentOffline</shortDescription>
+        <value>Agent offline</value>
+    </labels>
+    <labels>
+        <fullName>LVA_AgentOnline</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AgentOnline</shortDescription>
+        <value>Agent online</value>
+    </labels>
+    <labels>
+        <fullName>LVA_AskQuestion</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AskQuestion</shortDescription>
+        <value>Ask a Question</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUs</shortDescription>
+        <value>Call Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsAvailableHours</shortDescription>
+        <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsNoConfigAvailable</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsNoConfigAvailable</shortDescription>
+        <value>No Phone Available for selected Country.</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsThruPhoneNum</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
+        <value>Contact Us thru Phone Number:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ChatWithUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ChatWithUs</shortDescription>
+        <value>Chat with Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_FAQsHeader</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_FAQsHeader</shortDescription>
+        <value>Based on your criteria, other users found following answers helpful:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroVidCloseDontShowNext</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroVidCloseDontShowNext</shortDescription>
+        <value>Close, already seen</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroVidCloseShowNext</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroVidCloseShowNext</shortDescription>
+        <value>Close, remind next time</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroductionVideo</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroductionVideo</shortDescription>
+        <value>Introduction Video</value>
+    </labels>
+    <labels>
+        <fullName>LVA_NoAvailableButtons</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_NoAvailableButtons</shortDescription>
+        <value>Chat Buttons not available for selected topic/subtopic</value>
+    </labels>
+    <labels>
+        <fullName>LVA_NoAvailableButtonsForCNS</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_NoAvailableButtonsForCNS</shortDescription>
+        <value>Chat not allowed for CNS</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ReachOutUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ReachOutUs</shortDescription>
+        <value>Reach out to us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_SelectPreferredChannel</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_SelectPreferredChannel</shortDescription>
+        <value>Select your preferred channel:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ShareACompliment</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ShareACompliment</shortDescription>
+        <value>Share a compliment</value>
+    </labels>
+    <labels>
+        <fullName>LVA_VoiceAConcern</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_VoiceAConcern</shortDescription>
+        <value>Voice a concern</value>
+    </labels>
+    <labels>
         <fullName>Label_For_Missing_Product_Category</fullName>
         <language>en_US</language>
         <protected>false</protected>
