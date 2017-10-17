@@ -61,7 +61,7 @@
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!hqAccount.TradeName__c}"/>
 
             <apex:pageblocksectionitem >
-              <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+              <apex:outputlabel style="text-align: right; float: right;" value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
               <apex:outputtext value="{!amsLocationTypeLabelHq}" />
             </apex:pageblocksectionitem>
 
@@ -83,7 +83,7 @@
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!newForm.Trade_Name__c}"/>
 
             <apex:pageblocksectionitem >
-              <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationType}" />
+              <apex:outputlabel style="text-align: right; float: right;" value="{!$Label.ANG_ISSP_AccreditationType}" />
               <apex:outputtext value="{!amsLocationTypeLabelHq}" />
             </apex:pageblocksectionitem>
 
