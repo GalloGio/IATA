@@ -1371,6 +1371,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>tadrosc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>yeboahm@iata.org</recipient>
             <type>user</type>
         </recipients>
