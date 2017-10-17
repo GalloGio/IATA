@@ -630,9 +630,14 @@ public without sharing class ISSP_AMS_Accreditation {
                     newForm.ISSP_AMS_VAT_number_input__c = con.Account.VAT_Number__c;
                 }
         }
-
-        amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
-        amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+        
+        if(isHOAccredited) {
+            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+        } else {
+            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            amsLocationTypeLabelHq = amsLocationTypeLabel;
+        }
 
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
@@ -1242,8 +1247,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
 
-            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
-            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            if(isHOAccredited) {
+                amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            } else {
+                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+                amsLocationTypeLabelHq = amsLocationTypeLabel;
+            }
 
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
             
