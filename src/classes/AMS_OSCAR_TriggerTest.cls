@@ -190,8 +190,6 @@
         insert aFile;
         
         System.debug('CheckPoint 0');
-        ANG_OscarProcessHelper.checkSFDCLimits();
-
 
         ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
 
