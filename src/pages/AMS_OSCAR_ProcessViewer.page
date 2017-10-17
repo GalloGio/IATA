@@ -170,7 +170,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
         function doRun(action,args) {
 
 
-            if(action = 'generateIataCode'){
+            if(action == 'generateIataCode'){
 
                 var r = confirm("This process will do the following: \n\r IATA Code Generation \n\r Data migration to the Agency \n\r Generation of Change Code (NEW) \n\r Due Diligence Case (if conditions apply) \n\r\n\r Do you wish to proceed ?");
 
