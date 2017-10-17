@@ -255,6 +255,7 @@
         <apex:facet name="header">
           <apex:outputpanel >
             {!$Label.ISSP_Secu_of_Elect_Tickets}
+            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;"/>
           </apex:outputpanel>
         </apex:facet>
         <apex:outputText value="{!$Label.ISSP_AMS_Step3_5_Event_of_inspection}" escape="false" />
