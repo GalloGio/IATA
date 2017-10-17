@@ -104,7 +104,7 @@ public class ang_rhcAlertTriggerHandler{
 
 			//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
 			for(ANG_Risk_Alert__c ra :[
-				SELECT ID,Name,ANG_Account__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
+				SELECT ID,Name,ANG_Account__c,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Direction__c,ANG_email_sent__c,
 						ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
 						ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 						ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
@@ -116,11 +116,6 @@ public class ang_rhcAlertTriggerHandler{
 
 					redAlerts.add(ra);
 					mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
-					
-					/*if(ra.ANG_Account__r.Top_Parent__c != null)
-						listIDAccsToRetriveCons(ra.ANG_Account__r.Top_Parent__c);
-					else
-						listIDAccsToRetriveCons(ra.ANG_Account__c);*/
 
 					listIDAccsToRetriveCons.add( (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c : ra.ANG_Account__c ) );
 
@@ -145,6 +140,7 @@ public class ang_rhcAlertTriggerHandler{
 					}
 				}
 
+				//create Parent Case
 				Case smapParentCase;
 				List<Case> sidraLiteCases;
 				List<Case> smapParentCases = new List<Case>();
@@ -192,25 +188,16 @@ public class ang_rhcAlertTriggerHandler{
 				} 
 				if(!smapParentCases.isEmpty()){
 					//insert smapParentCases --> all or none = false;
-					Database.SaveResult[] srList = Database.insert(smapParentCases, false);
+					//need to store result to later interate the correct ones and then atribute the sidra case to the Alert  
+					Database.SaveResult[] resultInsSMAPcases = Database.insert(smapParentCases, false);
 
 				for(Case parentCase :smapParentCases){
 					mapCaseRiskAlert.put(parentCase.Id,parentCase);			
 				}
 
-				List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
-				// Iterate through each returned result
-				for (Database.SaveResult sr : srList) {
-					if (sr.isSuccess()) {
-						//because trigger is running on after inset we need a new instace and DML operation to update 
-						riskAlertsToUpdate.add(new ANG_Risk_Alert__c(id = mapAccountRiskAlert.get(mapCaseRiskAlert.get(sr.getId()).AccountId).id, ANG_Is_Case_Created__c = true));
-					}
-				}
-
-				if(!riskAlertsToUpdate.isEmpty())
-					update riskAlertsToUpdate;					
-
+				//Create SIDRA CASE NOW
 				Case sidraLiteCase;
+				Map<Id,Case> mapSMAPtoSIDRA = new Map<Id,Case>(); 
 				sidraLiteCases = new List<Case>();
 
 				for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
@@ -229,18 +216,38 @@ public class ang_rhcAlertTriggerHandler{
 					sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraLiteCase.Priority = 'High'; 
 					//sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); already done on callout
-
 					sidraLiteCase.ContactId = smapParentCase.ContactId;
-
 					
 					//END -NEWGEN-1933
 					sidraLiteCases.add(sidraLiteCase);
+					mapSMAPtoSIDRA.put(parentCase.id,sidraLiteCase);
 
 				}
 
 
 				if (!sidraLiteCases.isEmpty()) {
 					insert sidraLiteCases;
+
+					for(ANG_risk_Alert__c ra : redAlerts){
+						ra.ANG_Sidra_Lite__c = sidraLiteCases[0].id;
+						system.debug('## writhing this: ' + ra.ANG_Sidra_Lite__c);
+					}
+					update redAlerts;
+
+					List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
+					// Iterate through each returned result
+					for (Database.SaveResult sr : resultInsSMAPcases) {
+						if (sr.isSuccess()) {
+							//because trigger is running on after inset we need a new instace and DML operation to update 
+							riskAlertsToUpdate.add(new ANG_Risk_Alert__c(id = mapAccountRiskAlert.get(mapCaseRiskAlert.get(sr.getId()).AccountId).id, 
+								ANG_Sidra_Lite__c = mapSMAPtoSIDRA.get(sr.getId()).id));
+						}
+					}
+
+					if(!riskAlertsToUpdate.isEmpty())
+						update riskAlertsToUpdate;					
+
+
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
