@@ -823,24 +823,27 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgAccelyaRequestSetCountry Trigger*/
                 
         /*trgBeforeInsertUpdate Trigger*/ /*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
-        if(trgBeforeInsertUpdate){//FLAG
+        if (trgBeforeInsertUpdate) { //FLAG
             system.debug('trgBeforeInsertUpdate');
             //INC239697
             for (Case cse : Trigger.new) {
                 CS_Email2CasePremium__c code;
-                if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
-                    code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
-                if (code != null) {
-                    system.debug('##ROW##');
-                    cse.Groups__c = code.Group__c;
-                }else {
-                    system.debug('##ROW##');
+                if (cse.Groups__c != 'CNS Team') {
                     cse.Groups__c = 'Default';
+
+                    if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
+                        code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
+                    if (code != null) {
+                        system.debug('##ROW##');
+                        cse.Groups__c = code.Group__c;
+                    }
+
+                    code = CS_Email2CasePremium__c.getInstance(cse.RecordTypeId);
+                    if (code != null) {
+                        cse.Groups__c = code.Group__c;
+                    }
                 }
-                if(cse.RecordTypeId == ifgCaseRecordTypeID) {
-                    cse.Groups__c = IFG_TEAM_CASE_GROUP_NAME;
-                }				
-            }   
+            }
         }
         /*trgBeforeInsertUpdate Trigger*/
         
@@ -1453,8 +1456,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /****************************************************************************************************************************************************/    
     
     else if (Trigger.isUpdate) {
-        
-        /*trgCase Trigger.isUpdate*/
+        /*trgCase Trigger.isUpdate*/ 
         if(trgCase){//FLAG
             system.debug('trgCase Trigger.isUpdate');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
@@ -2105,5 +2107,5 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
     }
-    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
+    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/    
 }
