@@ -107,7 +107,8 @@ public class ang_rhcAlertTriggerHandler{
 					ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
 					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
-					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c  
+					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c,
+                    ANG_Account__r.Name, ANG_Account__r.IATACode__c
 				FROM ANG_Risk_Alert__c 
 				WHERE ID IN :triggerNew
 				AND ANG_Severity__c = 'Red' 
@@ -118,6 +119,9 @@ public class ang_rhcAlertTriggerHandler{
 		}
 
 		if(!redAlerts.isEmpty()){
+            // NEWGEN-2005
+            sendNotificationToSeniors(redAlerts);
+            // END - NEWGEN-2005
 
 			Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
 
@@ -276,6 +280,37 @@ public class ang_rhcAlertTriggerHandler{
 		}
 		return ocMap;		
 	}
+
+    // NEWGEN-2005
+    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts) {
+        List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
+        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
+        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+        if (sManagers.isEmpty() || eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
+            System.debug('Warning: Senior Management or email template or org wide email not found');
+            return;
+        }
+        List<String> toAddresses = new List<String>(); 
+        for (RTS_Senior_Manager__c sManager: sManagers) {
+            toAddresses.add(sManager.Email__c);
+        }
+        EmailTemplate template = eTemplates.get(0);
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setToAddresses(toAddresses);
+        mail.setSubject(template.Subject); 
+        mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+        for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
+            String tBody = template.Body;
+            String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
+            tBody = tBody.replace('{{agentName}}', riskAlert.ANG_Account__r.Name);
+            tBody = tBody.replace('{{iataCode}}', iataCode);
+            tBody = tBody.replace('{{iataCountry}}', riskAlert.ANG_Account__r.IATA_ISO_Country__r.Name);
+            
+            mail.setPlainTextBody(tBody);
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        }
+    }
+    // END - NEWGEN-2005
 		
 
 	//Remove Ticketing Authority (Deactivate in BSPLink) - NEWGEN-1925

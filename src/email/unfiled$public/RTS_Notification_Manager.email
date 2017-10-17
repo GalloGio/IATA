@@ -1,0 +1,5 @@
+The following agent has received a Real Time Sales Monitoring – RED Alert 
+
+- Agent Name: {{agentName}}
+- IATA Code: {{iataCode}}
+- IATA Country: {{iataCountry}}
