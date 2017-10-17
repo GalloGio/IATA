@@ -823,25 +823,27 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgAccelyaRequestSetCountry Trigger*/
                 
         /*trgBeforeInsertUpdate Trigger*/ /*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
-        if(trgBeforeInsertUpdate){//FLAG
+        if (trgBeforeInsertUpdate) { //FLAG
             system.debug('trgBeforeInsertUpdate');
             //INC239697
             for (Case cse : Trigger.new) {
                 CS_Email2CasePremium__c code;
-                cse.Groups__c = 'Default';
+                if (cse.Groups__c != 'CNS Team') {
+                    cse.Groups__c = 'Default';
 
-                if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
-                    code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
-                if (code != null) {
-                    system.debug('##ROW##');
-                    cse.Groups__c = code.Group__c;
+                    if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
+                        code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
+                    if (code != null) {
+                        system.debug('##ROW##');
+                        cse.Groups__c = code.Group__c;
+                    }
+
+                    code = CS_Email2CasePremium__c.getInstance(cse.RecordTypeId);
+                    if (code != null) {
+                        cse.Groups__c = code.Group__c;
+                    }
                 }
-
-                code = CS_Email2CasePremium__c.getInstance(cse.RecordTypeId);
-                if (code != null) {
-                    cse.Groups__c = code.Group__c;
-                }				
-            }   
+            }
         }
         /*trgBeforeInsertUpdate Trigger*/
         
