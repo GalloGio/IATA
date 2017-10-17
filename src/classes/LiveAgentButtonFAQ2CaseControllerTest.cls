@@ -78,7 +78,22 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			pg.getParameters().put('subtopiclbl','testsubtopiclbl');
 			pg.getParameters().put('csButton','AirlineEnglishEurope');
 			pg.getParameters().put('concernedCountry','GB');
-            pg.getParameters().put('csButtonsList','AirlineEnglishEurope, AirlinePortugeseEurope');
+
+			List<vfISSP_FAQ2Case.buttonsInfoType> csButtonsList=new List<vfISSP_FAQ2Case.buttonsInfoType>();
+
+			vfISSP_FAQ2Case.buttonsInfoType buttonAux1=new vfISSP_FAQ2Case.buttonsInfoType();
+			buttonAux1.Name='AirlineEnglishEurope';
+			buttonAux1.Id='AirlineEnglishEurope_BId';
+			buttonAux1.Category=vfISSP_FAQ2Case.BUT_CAT_COUNTRY;
+			csButtonsList.add(buttonAux1);
+
+			vfISSP_FAQ2Case.buttonsInfoType buttonAux2=new vfISSP_FAQ2Case.buttonsInfoType();
+			buttonAux2.Name='AirlinePortugeseEurope';
+			buttonAux2.Id='AirlineEnglishEurope_BId';
+			buttonAux2.Category=vfISSP_FAQ2Case.BUT_CAT_PORTAL;
+			csButtonsList.add(buttonAux2);
+
+            pg.getParameters().put('csButtonsList',JSON.serialize(csButtonsList));
 			pg.getParameters().put('csButtonCategory',vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
 			Test.setCurrentPage(pg);
 
@@ -99,10 +114,11 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			System.assertEquals(ctrl.NumberOfButtons, 2);
 			System.assertEquals(ctrl.liveAgentBtnEng.Name, null);
 			System.assertEquals(ctrl.liveAgentBtnCountry.Name, 'AirlineEnglishEurope');
-			System.assertEquals(ctrl.liveAgentBtnPortal.Name, null);
-			System.assertEquals(ctrl.getContactFirstName(), 'testFirstContact');
+			System.assertEquals(ctrl.liveAgentBtnPortal.Name, 'AirlinePortugeseEurope');
+			System.assertEquals(ctrl.csButtonAbreviation,'EN');
 
-			System.assertEquals(ctrl.getContactFirstName(),'Guest');
+			System.assertEquals(ctrl.getContactFirstName(), 'Guest');
+
 			ctrl.getContactId();
 			ctrl.getAccountId();
 			ctrl.country.region__c='Americas';

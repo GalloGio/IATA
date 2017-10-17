@@ -34,6 +34,7 @@
     </fields>
     <fields>
         <fullName>Region__c</fullName>
+        <description>Contains the region where chat button is allowed (Europe, Africa &amp; Middle East, Americas, China &amp; North Asia, Asia &amp; Pacific)</description>
         <externalId>false</externalId>
         <label>Region</label>
         <length>150</length>
@@ -44,6 +45,7 @@
     </fields>
     <fields>
         <fullName>Sector__c</fullName>
+        <description>Account Sector allowed to show the chat button</description>
         <externalId>false</externalId>
         <label>Sector</label>
         <length>150</length>

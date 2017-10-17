@@ -35,6 +35,7 @@
     </fields>
     <fields>
         <fullName>Region__c</fullName>
+        <description>Contains the region the chat button refers to (Europe, Africa &amp; Middle East, Americas, China &amp; North Asia, Asia &amp; Pacific)</description>
         <externalId>false</externalId>
         <label>Region</label>
         <length>150</length>

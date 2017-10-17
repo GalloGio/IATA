@@ -4,6 +4,15 @@
  */
 public without sharing class vfISSP_FAQ2Case
 {
+    public class ButtonsInfoType{
+        public Integer Order { get; set; }
+        public String Category { get; set; }
+        public String Name { get; set; }
+        public String ButtonId { get; set; }
+        public String DeploymentId { get; set; }
+        public String Language { get; set; }
+    }
+
     /* Buttons State */
     public static final String OnlyCancel   = 'OnlyCancel';
     public static final String CancelAndCreateACase   = 'CancelAndCreateACase';
@@ -125,8 +134,21 @@ public without sharing class vfISSP_FAQ2Case
     private static Map<String,LVA_Configs__mdt> LVAConfigs;
     private Map <String,LiveAgentButtonSettings__c> livAgConfButtonsMapBySectAndIsoC;
     private Map <String,String> livAgentCsButtonNameVsCategoryMap;
-    public Map <String,String> livAgentCsButtonsToDisplayMap {get; set;}
-    public Set<String> csButtonsList {get; set;}
+    public Map<String,buttonsInfoType> csButtonsList {
+        get{
+            //order by order number
+            //csButtonsList.sort();
+
+            return csButtonsList;
+        }
+
+        set;}
+    public String csButtonsListJson {
+        get{
+
+            return JSON.serialize(csButtonsList);
+        }
+        set;}
     public String callUsFinalString {get; set;}
 
     public Boolean isToShowFAQs {
@@ -572,12 +594,12 @@ public without sharing class vfISSP_FAQ2Case
             //////////////////////////////////////////////////////////////////////
 
         }
-        System.debug('basto1p - Final buttons - setLiveAgentButtonsNames - this.livAgentCsButtonsToDisplayMap='+this.livAgentCsButtonsToDisplayMap);
+        System.debug('basto1p - Final buttons - setLiveAgentButtonsNames - this.csButtonsList='+this.csButtonsList);
     }
 
     /*******************************************************************************************************
     * @description Gets button name from configured buttons map (this.livAgConfButtonsMapBySectAndIsoC)
-    *              and add it to buttons list to be displayed in visualsource page (this.livAgentCsButtonsToDisplayMap)
+    *              and add it to buttons list to be displayed in visualsource page (this.csButtonsList)
     *              It uses map this.livAgentCsButtonNameVsCategoryMap check for duplicate buttons (avoid duplicated buttons)
     *              It also checks if given button is allowed to be displayed by calling this.isLiveAgentButtonAllowed func.
     *
@@ -599,10 +621,13 @@ public without sharing class vfISSP_FAQ2Case
     ********************************************************************************************************/
     public void getButtonNameFromConfigAndAddToList(String butMapConfigKey,String buttonCategory){
         String csButtonNameAux;
+        LiveAgentButtonSettings__c csButtonSettObj;
 
         System.debug('basto1p - BEGIN getButtonNameFromConfigAndAddToList - butMapConfigKey='+butMapConfigKey+'; buttonCategory='+buttonCategory );
         if (this.livAgConfButtonsMapBySectAndIsoC.containsKey(butMapConfigKey)){
-            csButtonNameAux=this.livAgConfButtonsMapBySectAndIsoC.get(butMapConfigKey).Name;
+
+            csButtonSettObj=this.livAgConfButtonsMapBySectAndIsoC.get(butMapConfigKey);
+            csButtonNameAux=csButtonSettObj.Name;
 
             //check if already added to List
             if (this.livAgentCsButtonNameVsCategoryMap.containsKey(csButtonNameAux)){
@@ -626,9 +651,29 @@ public without sharing class vfISSP_FAQ2Case
                 if ( this.isLiveAgentButtonAllowed(this.livAgConfButtonsMapBySectAndIsoC.get(butMapConfigKey)
                                                     ,butCategoryToCheckTopics) ){
                     System.debug('basto1p - button allowed isLiveAgentButtonAllowed = TRUE, ADDED TO LISTS');
-                    this.livAgentCsButtonsToDisplayMap.put(buttonCategory,csButtonNameAux);
                     this.livAgentCsButtonNameVsCategoryMap.put(csButtonNameAux,buttonCategory);
-                    this.csButtonsList.add(csButtonNameAux);
+
+                    ButtonsInfoType butInfoAux=new ButtonsInfoType();
+                    butInfoAux.Name=csButtonNameAux;
+                    butInfoAux.Category=buttonCategory;
+                    butInfoAux.ButtonId=csButtonSettObj.ButtonId__c;
+                    butInfoAux.DeploymentId=csButtonSettObj.DeploymentId__c;
+                    butInfoAux.Language=csButtonSettObj.Language__c;
+
+                    if (buttonCategory==BUT_CAT_PORTAL){
+                        butInfoAux.Order=1;
+                    }
+                    else if(buttonCategory==BUT_CAT_COUNTRY){
+                        butInfoAux.Order=2;
+                    }
+                    else if(buttonCategory==BUT_CAT_ENGLISH){
+                        butInfoAux.Order=3;
+                    }
+                    else if(buttonCategory==BUT_CAT_EMERGENCY){
+                        butInfoAux.Order=4;
+                    }
+
+                    this.csButtonsList.put(buttonCategory,butInfoAux);
                 }
                 else{
                     //log not found button
@@ -851,7 +896,7 @@ public without sharing class vfISSP_FAQ2Case
             Boolean resVal=false;
 
             //basto1p live agente v2
-            if  (this.livAgentCsButtonsToDisplayMap.size()>0){
+            if  (this.csButtonsList.size()>0){
                 resVal=true;
             }
             return resVal;
@@ -958,9 +1003,8 @@ for (string topicver:listofAllowedTopics){
 ********************************************************************************************************/
     private void resetLiveAgentVars(){
         //basto1p - live agent v2
-        this.livAgentCsButtonsToDisplayMap=new Map <String, String>();
+        this.csButtonsList=new Map <String,buttonsInfoType>();
         this.livAgentCsButtonNameVsCategoryMap=new Map <String, String>();
-        this.csButtonsList=new Set<String>();
     }
 
 

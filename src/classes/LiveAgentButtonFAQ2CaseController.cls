@@ -60,7 +60,7 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
             try{
                 labs = LiveAgentButtonSettings__c.getAll().get(csButton);
-                System.debug('basto1p - csButtonAbreviation='+labs);
+                System.debug('basto1p - csButtonAbreviation csButton='+csButton+'; labs='+labs);
                 retVal=labs.Language__c.trim().left(2).toUpperCase();
             }catch(Exception e){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
@@ -204,22 +204,20 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
     ********************************************************************************************************/
     public LiveAgentButtonFAQ2CaseController() {
     	
-    	String allButtonsAux = ApexPages.currentPage().getParameters().get('csButtonsList');			//FME
-    	System.debug('#### FME #### all button '+allButtonsAux);										//FME
-    	AllButtons = allButtonsAux.split(',');															//FME
-		for(Integer i = 0; i < AllButtons.size(); i++){
-			AllButtons[i]=AllButtons[i].replaceAll('\\[','');
-            AllButtons[i]=AllButtons[i].replaceAll('\\]','');
-            AllButtons[i]=AllButtons[i].replaceAll(' ','');		
-		}
-		
+    	String allButtonsAux = ApexPages.currentPage().getParameters().get('csButtonsListJson');			//FME
+    	System.debug('#### FME #### all button '+allButtonsAux);									//FME
+
+        AllButtons =(Map<String,vfISSP_FAQ2Case.ButtonsInfoType>)JSON.deserialize(
+                                    allButtonsAux,
+                                    Map<String, vfISSP_FAQ2Case.ButtonsInfoType>.class);
+        System.debug('basto1p -  LiveAgentButtonFAQ2CaseController.AllButtons='+AllButtons);
     }
     
     
     //
     // AllBiuttons - to keep the buttons
     //
-    List<String> AllButtons = new List<String>();
+    Map<String,vfISSP_FAQ2Case.ButtonsInfoType> AllButtons = new Map<String,vfISSP_FAQ2Case.ButtonsInfoType>();
     
     Public Integer NumberOfButtons {
     	get{
@@ -245,44 +243,38 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
     
     public LiveAgentButtonSettings__c liveAgentBtnEng {
         get{
-            LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
-            try{
-            	System.debug('### FME # button1 # '+LiveAgentButtonSettings__c.getAll().get(AllButtons[0]));
-                labs = LiveAgentButtonSettings__c.getAll().get(AllButtons[0]);
-
-            }catch(Exception e){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
-            }
-            return labs ;
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_ENGLISH);
         }
     }
 
     public LiveAgentButtonSettings__c liveAgentBtnCountry {
         get{
-            LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
-            try{
-				System.debug('### FME # button2 # '+LiveAgentButtonSettings__c.getAll().get(AllButtons[1]));
-                labs = LiveAgentButtonSettings__c.getAll().get(AllButtons[1]);
-
-            }catch(Exception e){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
-            }
-            return labs ;
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
         }
     }
 
     public LiveAgentButtonSettings__c liveAgentBtnPortal {
         get{
-            LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
-            try{
-            	System.debug('### FME # button3 # '+LiveAgentButtonSettings__c.getAll().get(AllButtons[2]));
-                labs = LiveAgentButtonSettings__c.getAll().get(AllButtons[2]);
-
-            }catch(Exception e){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
-            }
-            return labs ;
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_PORTAL);
         }
+    }
+
+    public LiveAgentButtonSettings__c getButSettingsFromButCategory(String butCategory){
+        LiveAgentButtonSettings__c buttonSettings = new LiveAgentButtonSettings__c();
+
+        try{
+            System.debug('basto1p - getButSettingsFromButCategory GET butCategory='+butCategory);
+            if (allButtons.containsKey(butCategory)){
+                buttonSettings = LiveAgentButtonSettings__c.getAll().get(allButtons.get(butCategory).Name);
+            }
+            System.debug('basto1p - getButSettingsFromButCategory.buttonSettings='+buttonSettings);
+
+        }catch(Exception e){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+        }
+
+        return buttonSettings;
+
     }
     
 }
