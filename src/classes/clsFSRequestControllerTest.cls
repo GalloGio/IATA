@@ -152,6 +152,7 @@ private class clsFSRequestControllerTest{
         cse.ContactId = contact1.Id;
         cse.BatchNumber__c = batch.Id;
         cse.Status = 'Assessment Performed';
+        cse.RecordTypeId = IFAPcaseRecordType;
         cse.Financial_Review_Result__c = 'Satisfactory - New Financial Security';
         insert cse;
         
