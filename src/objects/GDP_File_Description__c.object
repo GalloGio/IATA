@@ -827,6 +827,47 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>GSS_File_Naming_Convention</fullName>
+        <columns>NAME</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <label>GSS_File_Naming_Convention</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>GSS_File_Naming_Convention1</fullName>
+        <columns>NAME</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>File_Naming_Convention__c</field>
+            <operation>contains</operation>
+            <value>Suffix]&amp;</value>
+        </filters>
+        <label>GSS_File_Naming_Convention_&amp;</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>GSS_Non_Reference_File_Descriptions</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>

@@ -33,11 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Restrict_by_Agency_Category__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Restrict_internal_selection__c</field>
+                <field>ANG_Cannot_move_contact_between_Agencies__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -75,6 +71,7 @@
         <customButtons>Add_User_to_this_service</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
+        <fields>Account.Services_Rendered_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Right__c</fields>

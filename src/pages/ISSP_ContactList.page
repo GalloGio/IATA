@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" >
  <html>
  <c:ISSP_Header  communityName="{!communityName}" ></c:ISSP_Header>
  <body>
@@ -187,6 +187,19 @@
             <apex:commandButton action="{!changeUserPortalStatus}" value="{!$Label.ISSP_ChangeUserPortalStatus}" rendered="{!AND(isAdmin, buttonChange)}" rerender="Contacts, theRepeat" StyleClass="btn_iata_primary btn btn-block"/>
           </div>
       </div>
+      <!-- buttons to export data -->
+      <div class="row text-right">
+        <span style="margin: 15px">
+            <apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="/ISSP_ContactListPDF?selectedList={!selectedList}" target="_blank">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                {!$Label.ISSP_Download_in_PDF}
+            </apex:outputlink>
+            <apex:outputLink styleclass="btn btn_iata_primary btn-xs" value="/ISSP_ContactListCSV?selectedList={!selectedList}">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                {!$Label.ISSP_Download_in_CSV}
+            </apex:outputlink>
+        </span>
+      </div>
       <!--  </apex:pageBlockButtons> -->
       <span style="float: right; margin: 5px 5px 5px 5px;">
         <apex:repeat value="{!AlphaList}" var="a">
@@ -333,7 +346,10 @@
 			</apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" rerender="theSecondModal, theRepeat,Contacts" StyleClass="btn btn-default"/>
+          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" 
+              rerender="theSecondModal, theRepeat,Contacts, loadStatusSpinner" 
+              status="loadStatusSpinner"
+              StyleClass="btn btn-default"/>
           	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
@@ -362,6 +378,48 @@
 
  </apex:form>
   <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+  <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+  <div class="loadingBox overlay"> </div>
+
+  <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+
+  <style>
+      .overlay {
+          display: none;
+          height: 100%;
+          left: 0;
+          position: fixed;
+          top: 0;
+          opacity: 0.3;
+          -moz-opacity: 0.3;
+          width: 100%;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+          filter: alpha(opacity=30);
+          background: #000;
+          -khtml-opacity: 0.3;
+          z-index: 1000;
+      }
+      .loader {
+          background: url('/img/loading32.gif') scroll no-repeat 0 0;
+          width: 32px;
+          height: 32px;
+          position: absolute;
+          left: 50%;
+      }
+  </style>
+
+  <script type="text/javascript">
+      function startLoading(){
+          $('#load_scrl').css('top', $(document).scrollTop() + 200);
+          $('.loadingBox').show();
+      }
+      function endLoading(){
+           $('.loadingBox').hide();
+      }
+  </script> 
+
+
 </div><!-- end container -->
      </body>
     </html>

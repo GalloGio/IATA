@@ -52,9 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -713,6 +710,14 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC_Percent__c</fields>
+        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
+        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>SIDRA_eDefault__c.Account__c</relatedList>
     </relatedLists>
@@ -780,7 +785,10 @@
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>OSCAR__c</fields>
         <fields>CREATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

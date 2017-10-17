@@ -6,15 +6,18 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	public Integer totalRecords;
 	public List<String> failed_records;
 	public Datetime syncStartedDate;
+	public Datetime previousSyncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
 	Set<String> locationsSet;
 	Set<String> statusSet;
+    public Boolean isManual;
 
 
-	public void init(Boolean runNext, List<String> ids)
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
+		isManual = manual==null ? false : manual;
 		batchName = 'Job 1: GDP Products - Account View';
 		processNextBatch = runNext;
 		extraIds = ids;
@@ -76,9 +79,17 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 
 			if(batchInfo != null)
 			{
+				String deltaConditions;
+				//Keeps a copy of the Last_Sync_Start_Date__c to be used on the Job_1_Original_Start_Date__c
+				previousSyncStartedDate = batchInfo.Last_Sync_Start_Date__c == null ? Datetime.now() : batchInfo.Last_Sync_Start_Date__c;
 				//Run only on the deltas
-				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				if(runNext){
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+						,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}else{
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+						,new List<String>{batchInfo.Job_1_Original_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
@@ -107,17 +118,17 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 
 	global ams2gdp_Batch_Account()
 	{
-		init(false,null);
+		init(false,null, false);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext)
+	global ams2gdp_Batch_Account(Boolean runNext, Boolean manual)
 	{
-		init(runNext, null);
+		init(runNext,null, manual);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra)
+	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext, extra);
+		init(runNext, extra, manual);
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC)
@@ -125,7 +136,7 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		errorsCount = 0;
 		totalRecords = 0;
 		failed_records = new List<String>();
-		syncStartedDate =Datetime.now();
+		syncStartedDate = Datetime.now();
 
 		return Database.getQueryLocator(query);
 	}
@@ -180,19 +191,8 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 
 	global void finish(Database.BatchableContext BC)
 	{
-		//-- Start next batch
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Inspection(true));
-		//if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Account2(true));
-
-		//-- Update Last Sync Info
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName,
-			Last_Sync_Start_Date__c=syncStartedDate,
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c;
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Inspection(true, isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 
 		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);

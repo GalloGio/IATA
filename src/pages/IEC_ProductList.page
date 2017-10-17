@@ -66,9 +66,9 @@
 									<h2 class="group-title">Category</h2>
 									<div class="show-more-less-container">
 					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
-					                        <!-- INC340004 - Cannot view all publications on the store - susana alves
+					                        
 					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
-					                        -->
+					                        
 					                        <apex:variable value="{!0}" var="counter" />
 					                        <apex:repeat var="cat" value="{!subCategories[selected_category]}">
 					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
@@ -155,11 +155,11 @@
 							</div>
 
 							<apex:outputPanel styleClass="main-container" id="main_container">
-								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
+								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!ProductRecordsList.size == 0}">
 									NO PRODUCT FOUND
 								</apex:outputPanel>
 
-								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!products.size > 0}">
+								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!ProductRecordsList.size > 0}">
 					                <label for="sort_by" class="input-label">{!$Label.SortBy}</label>
 					                <div class="custom-user-input select">
 					                    <i class="icon chevron-down"></i>
@@ -179,10 +179,14 @@
 					                </div>
 					            </apex:outputPanel>
 
-								<apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
-									<ul class="list product-list">
-										<apex:repeat value="{!products}" var="prod">
-											<li class="list-item">
+
+					            <apex:outputPanel layout="block" id="productList" rendered="{!ProductRecordsList.size > 0}">
+									
+								<apex:pageBlock title="Products List">
+								  <apex:form id="theForm">
+								    <ul class="list product-list">
+								      <apex:repeat var="prod" value="{!ProductRecordsList}">
+								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
 														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
@@ -198,7 +202,7 @@
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
-													
+
 													<!-- Scenario 1: In Stock -->
                                                     <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
@@ -214,7 +218,7 @@
 		                                            </apex:outputPanel>
 
 		                                            <!-- Regular Price if exist -->
-                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
+                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null && prod.Sell_Through_eCommerce}">
 														<apex:outputText styleClass="price-value" value="{0, number, currency}">
 		                                                    <apex:param value="{!prod.RegularPrice}" />
 		                                                </apex:outputText>
@@ -237,8 +241,27 @@
 													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
 												</div>
 											</li>
-										</apex:repeat>
-									</ul>
+								      </apex:repeat>
+								      </ul>
+								      </apex:form>
+								      <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    <!--
+								    <apex:form id="thePages" >
+								    <apex:panelGrid columns="5" style="margin: 0 auto;">
+								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
+								          <apex:commandButton styleClass="button secondary" value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
+								          <apex:commandButton styleClass="button secondary" value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
+								          <apex:commandButton styleClass="button secondary" value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
+								    </apex:panelGrid> 
+								    </apex:form>
+									-->
+								    <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    
+								  
+								</apex:pageBlock>
+									
 								</apex:outputPanel>
 
 								<!-- Pagination AJAX functions -->
@@ -247,9 +270,9 @@
 				                        <apex:param name="pageNum" value="" />
 				                    </apex:actionFunction>
 
-				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-
-				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!Next}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+ 
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!Previous}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
 								</apex:form>
 								
 								<!-- Pagination -->
@@ -257,7 +280,7 @@
 					                <div class="page-number">
 					                    <ol class="list page-number">
 					                        <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
-					                        	<li class="prev"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+					                        	<li class="prev(currentPageNumber,' selected')"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
 											</apex:variable>
 											<apex:variable var="max" value="{!7}" />
 											<apex:variable var="firstDot" value="{!0}" />
@@ -274,13 +297,13 @@
 												</apex:variable>
 					                        </apex:repeat>
 					                        <apex:variable var="btnNext" value="1" rendered="{!showNext}">
-					                        	<li class="next"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+					                        	<li class="next(currentPageNumber,' selected')"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
 				                        	</apex:variable>
 					                    </ol>
 					                </div>
 					            </div>
-
-					            <div class="pagination mobile">
+								
+								<div class="pagination mobile">
 					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
 						                <div class="control prev">
 						                    <a href="javascript:gotoPrevious();">
@@ -317,12 +340,16 @@
 					                </apex:variable> 
 					            </div>
 
-							</apex:outputPanel>
 
+
+
+
+
+							</apex:outputPanel>
+							
 							<apex:form >
 								<apex:inputHidden id="pageNumber" value="{!pageNumber}" />
 							</apex:form>
-
 						</div>
 					</main>
 
@@ -353,17 +380,18 @@
 		                $(this).height(h);
 		            });
 				}
-
-				//Reload page with selected filters
-				var jsBackButonRefine = function(){
-					backButonRefine();
-				}
+				
 
 				//Go to the giving page number
-				var jsGotoPage = function(page){
-					$('input[id$=pageNumber]').val(page);
-					gotoPage(page);
-				}
+                var jsGotoPage = function(page){
+                    $('input[id$=pageNumber]').val(page);
+                    gotoPage(page);
+                }
+ 
+                //Reload page with selected filters
+                var jsBackButonRefine = function(){
+                    backButonRefine();
+                }
 
 				$(document).ready(function(){
 
@@ -374,10 +402,10 @@
 				    }
 
 				    //If the page number is not empty go the the page number
-				    var pageNumber = $('input[id$=pageNumber]').val();
-				    if(pageNumber != ''){
-				    	gotoPage(pageNumber);
-				    }
+				    // var pageNumber = $('input[id$=pageNumber]').val();
+                    //if(pageNumber != ''){
+                    //    gotoPage(pageNumber);
+                    //}
 				    
 				    $('body').bind('change', function(eventObject){
 				    	//console.log(eventObject);
