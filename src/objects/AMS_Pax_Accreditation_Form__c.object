@@ -1329,6 +1329,18 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>ANG_Current_Accreditation_type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(HO_Account__r.ANG_Accreditation_Model__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current Accreditation type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
