@@ -77,7 +77,7 @@ private class AMP_SmallTests {
 		// another feeditem for the same topic to get the separator
 		FeedItem f2 = new FeedItem();
 		f2.ParentId = a.Id;
-		f2.Body = 'testBody #test';
+		f2.Body = 'testBody2 #test';
 		insert f2;
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
@@ -107,7 +107,7 @@ Test.stopTest();
 			AMP_ChatterTopicSubscribeController con = new AMP_ChatterTopicSubscribeController();
 			PageReference pr = con.savePreferences();
 			pr = con.unsubscribe();
-			pr = con.filterTopicFeedItems();
+			// pr = con.filterTopicFeedItems();
 
 			List<SelectOption> so = con.getDailyOrWeeklyOptions();
 

@@ -4,6 +4,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 
 	// variables
 	public List<Account> lsHQAccounts;
+	public Map<Id, Account> mpAccountId2Account;
 	private String dailyOrWeekly;
 	public List<FeedItem> lsAllFeedItems;
 	public List<Topic> lsBroadcastTopics;
@@ -35,6 +36,13 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
    	global void execute(Database.BatchableContext BC, List<User> lsUsers) {
 		System.debug('execute');
 		System.debug(dailyOrWeekly);
+		System.debug(lsUsers);
+		System.debug(lsHQAccounts);
+		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
+		for(Account a: lsHQAccounts) {
+			mpAccountId2Account.put(a.Id,a);
+		}
+		System.debug(mpAccountId2Account);
 		List<FeedItem> lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
 
 		// Send an email
@@ -45,7 +53,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 			String[] toAddresses = new String[] {u.Email};
 			mail.setToAddresses(toAddresses);
 			mail.setSubject('Your Daily Digest by Topic(s)');
-			String emailBody = AMP_ChatterTopicSubscribeController.getEmailBody(u, lsAllFeedItems);
+			String emailBody = AMP_ChatterTopicSubscribeController.getEmailBody(u, lsAllFeedItems, mpAccountId2Account);
 			mail.setHtmlBody(emailBody);
 			// System.debug(getEmailBody(u));
 			if (emailBody != '') lsEmails.add(mail);
