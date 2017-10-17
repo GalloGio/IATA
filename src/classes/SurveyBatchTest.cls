@@ -1069,7 +1069,7 @@ public class SurveyBatchTest {
             AccountId = listAccount[i].id,
             // Region__c = 'Europe',
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
 
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
@@ -1202,7 +1202,7 @@ System.runAS(u) {
             AccountId = a.id,
             Region__c = region,
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
             Status = 'Financial Security Requested',
@@ -1237,7 +1237,7 @@ System.runAS(u) {
             AccountId = a.id,
             // Region__c = region,
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
 
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
