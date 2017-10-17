@@ -65756,11 +65756,31 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
+                <fullName>Cargo Only Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Holiday Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

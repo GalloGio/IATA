@@ -11532,6 +11532,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION TIDS BR</shortDescription>
+        <value>Travel Industry Designator Service (TIDS) - New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_OPTION_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION TIDS HO</shortDescription>
+        <value>Travel Industry Designator Service (TIDS) - New Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -11738,6 +11754,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Reason New HO</shortDescription>
         <value>New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS BR</shortDescription>
+        <value>New TIDS Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS HO</shortDescription>
+        <value>New TIDS Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Registration_Number</fullName>
@@ -13091,6 +13123,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Please indicate the GDS(s) with which you have signed a contract</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Not_Mandatory</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 Indicate GDSs Not Mandatory</shortDescription>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_Office_FullAddress</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13280,6 +13320,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Thank you for submitting your Accreditation application for your Travel Agency Branch Office.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS BR Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Branch Office.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS HO Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Head Office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_Thanks</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13401,6 +13457,57 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Submit IATA</shortDescription>
         <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Member</shortDescription>
+        <value>If you are a member of the National Travel Agent Association in your country, please indicate the association name(s) and your membership number(s) (please provide proof of membership such as confirmation letter from the association)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Names</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Names</shortDescription>
+        <value>Indicate the association name(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Not_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Not_Member</shortDescription>
+        <value>If you are not a member of your national travel agents&apos; association, please provide two (2) letters of recommendation from a TIDS sponsor (hotel, car rental company) or one (1) letter from an IATA Member Airline or a Global Distribution System.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step2_Type_of_Business</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step2_Type_of_Business</shortDescription>
+        <value>Type of business (e.g. Travel Agency, Tour Operator, Conference or Event Organiser etc.)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_4_People_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
+Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step3_5_Other_Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</shortDescription>
+        <value>Travel Industry Designator Service (TIDS)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
