@@ -522,7 +522,7 @@ public with sharing class SIDRAliteMassActionController {
         String query1 = getBaseQuery(RECORDTYPE_INVOICING_ID);
         query1 += ' AND SAAM_Deadline_Date__c < TODAY';
         query1 += ' AND (account.type IN :TYPE_ACCOUNT_PAX OR account.type IN :TYPE_ACCOUNT_CARGO OR account.type IN :TYPE_ACCOUNT_AGENT)';
-        query1 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
+        query1 += ' AND Has_the_agent_paid_invoice__c IN :SidraLiteHelperForInvoicing.VALID_AGENT_PAID';
         if (!isEmpty(this.filter.dateFilter)) {
             query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
         }
@@ -544,13 +544,13 @@ public with sharing class SIDRAliteMassActionController {
             query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
         }
         query2 += ' )';
-        query2 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
+        query2 += ' AND Has_the_agent_paid_invoice__c IN :SidraLiteHelperForInvoicing.VALID_AGENT_PAID';
         listCase2 = executeQuery(query2);
 
         String query3 = getBaseQuery(RECORDTYPE_INVOICING_ID);
         query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
         query3 += ' AND Termination_date__c < TODAY';
-        query3 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
+        query3 += ' AND Has_the_agent_paid_invoice__c IN :SidraLiteHelperForInvoicing.VALID_AGENT_PAID';
         if (!isEmpty(this.filter.dateFilter)) {
             query3 += ' AND Termination_date__c = ' + this.filter.dateFilter;
         }
