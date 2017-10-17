@@ -102,7 +102,7 @@ private class ANG_RME_Alert_Service_Test {
 		message.direction = 'UP';
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
-+		req.params.put('eventType', 'RHCAlert');
+		req.params.put('eventType', 'RHCAlert');
 		RestContext.request = req;
 
 		Test.startTest();
@@ -133,7 +133,7 @@ private class ANG_RME_Alert_Service_Test {
 		message.consumedRHCPercentage = 0.5;
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
-+		req.params.put('eventType', 'BalanceUpdate');
+		req.params.put('eventType', 'BalanceUpdate');
 		RestContext.request = req;
 
 		Test.startTest();
