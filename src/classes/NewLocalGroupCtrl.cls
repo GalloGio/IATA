@@ -31,7 +31,7 @@ global  class NewLocalGroupCtrl {
         String recordId =  ApexPages.currentPage().getParameters().get('id');
         LocalGovernance__c lg2 = new LocalGovernance__c();
         if(recordId != null) {
-            lg = [SELECT Id, Name, RecordTypeId, RecordType.Name FROM LocalGovernance__c WHERE Id = :recordId];
+            lg2 = [SELECT Id, Name, RecordTypeId, RecordType.Name FROM LocalGovernance__c WHERE Id = :recordId];
         }
         System.debug(lg2.RecordTypeId + ' ' + lg2.RecordType.Name);
         // 1. if there is already a recordtype set redirect accordingly
