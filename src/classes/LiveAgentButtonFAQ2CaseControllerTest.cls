@@ -79,25 +79,34 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			pg.getParameters().put('csButton','AirlineEnglishEurope');
 			pg.getParameters().put('concernedCountry','GB');
 
-			List<vfISSP_FAQ2Case.buttonsInfoType> csButtonsList=new List<vfISSP_FAQ2Case.buttonsInfoType>();
+			Map<String,vfISSP_FAQ2Case.buttonsInfoType> csButtonsList=new Map<String, vfISSP_FAQ2Case.buttonsInfoType>();
 
 			vfISSP_FAQ2Case.buttonsInfoType buttonAux1=new vfISSP_FAQ2Case.buttonsInfoType();
 			buttonAux1.Name='AirlineEnglishEurope';
-			buttonAux1.Id='AirlineEnglishEurope_BId';
+			buttonAux1.ButtonId='AirlineEnglishEurope_BId';
 			buttonAux1.Category=vfISSP_FAQ2Case.BUT_CAT_COUNTRY;
-			csButtonsList.add(buttonAux1);
+			buttonAux1.Language='en';
+			buttonAux1.DeploymentId='AirlineEnglishEurope_DId';
+			buttonAux1.Order=1;
+			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_COUNTRY,buttonAux1);
 
 			vfISSP_FAQ2Case.buttonsInfoType buttonAux2=new vfISSP_FAQ2Case.buttonsInfoType();
 			buttonAux2.Name='AirlinePortugeseEurope';
-			buttonAux2.Id='AirlineEnglishEurope_BId';
+			buttonAux2.ButtonId='AirlinePortugeseEurope_BId';
 			buttonAux2.Category=vfISSP_FAQ2Case.BUT_CAT_PORTAL;
-			csButtonsList.add(buttonAux2);
+			buttonAux2.Language='pt';
+			buttonAux2.DeploymentId='AirlinePortugeseEurope_DId';
+			buttonAux2.Order=2;
+			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_PORTAL,buttonAux2);
 
-            pg.getParameters().put('csButtonsList',JSON.serialize(csButtonsList));
+                        pg.getParameters().put('csButtonsListJson',JSON.serialize(csButtonsList));
 			pg.getParameters().put('csButtonCategory',vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
 			Test.setCurrentPage(pg);
 
+		system.debug('basto1p - JSON.serialize(csButtonsList)='+JSON.serialize(csButtonsList));
 			LiveAgentButtonFAQ2CaseController ctrl = new LiveAgentButtonFAQ2CaseController();
+		system.debug('basto1p - AFTER CREATE OBJ LiveAgentButtonFAQ2CaseController');
+
 			System.assert(ctrl.getCaseRecordTypeId() != null);
 			System.assert(ctrl.getContactFirstName() != null);
 			System.assertEquals(ApexPages.currentPage().getParameters().get('selTopics'), 'testselTopics');
@@ -109,6 +118,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			System.assertEquals(ctrl.subTopicLabel, 'testsubtopiclbl');
 
 			//basto1p - Live Agent v2
+		system.debug('basto1p - Live Agent V2 Checks START...');
             System.assertEquals(ctrl.buttonLanguage, 'en');
 			System.assertEquals(ctrl.isEmergency, false);
 			System.assertEquals(ctrl.NumberOfButtons, 2);
