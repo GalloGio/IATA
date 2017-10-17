@@ -299,7 +299,8 @@ public class ang_rhcAlertTriggerHandler{
         }
         List<String> toAddresses = new List<String>(); 
         for (RTS_Senior_Manager__c sManager: sManagers) {
-            toAddresses.add(sManager.Email__c);
+						if (sManager.Active__c)
+            	toAddresses.add(sManager.Email__c);
         }
         EmailTemplate template = eTemplates.get(0);
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
