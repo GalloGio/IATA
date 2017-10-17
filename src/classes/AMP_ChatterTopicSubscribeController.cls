@@ -26,11 +26,16 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		dailyOrWeekly = 'Daily';
 		if(currentUser.AMP_Digest_Daily_or_Weekly__c != null && currentUser.AMP_Digest_Daily_or_Weekly__c == 'Weekly') {dailyOrWeekly = 'Weekly';}
 
+		Map<Id, Account> mpAccountId2Account = getAccountId2Account( lsHQAccounts);
+		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account);
+	}
+
+	public Map<Id, Account> getAccountId2Account(List<Account> lsHQAccounts) {
 		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
 		for(Account a: lsHQAccounts) {
 			mpAccountId2Account.put(a.Id,a);
 		}
-		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account);
+		return mpAccountId2Account;
 	}
 
 	public PageReference savePreferences() {
@@ -91,6 +96,8 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			dayOrWeek = 'week';
 			// lsAllFeedItems = getAllFeedItems(lsHQAccounts);
 		}
+		Map<Id, Account> mpAccountId2Account = getAccountId2Account( lsHQAccounts);
+
 		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account, favouriteTopics, dayOrWeek);
 
 		return null;
