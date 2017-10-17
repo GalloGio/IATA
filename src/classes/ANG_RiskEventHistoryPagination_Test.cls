@@ -1,4 +1,3 @@
-
 @isTest
 public class ANG_RiskEventHistoryPagination_Test {
 
@@ -21,14 +20,16 @@ public class ANG_RiskEventHistoryPagination_Test {
 		);
 		insert acc1;
 
+		list<ANG_Agency_Risk_Event__c> areList= new list<ANG_Agency_Risk_Event__c>();
 		for(integer i=0; i<5;i++){
-			generateRiskEvent(acc1.id,ret1.id, system.today());
+			areList.add(generateRiskEvent(acc1.id,ret1.id, system.today()));
 		}
 		
+		insert areList;
 
 	}
 
-	private static void generateRiskEvent(id accId, id riskEventTypeId, Date reDate){
+	private static ANG_Agency_Risk_Event__c generateRiskEvent(id accId, id riskEventTypeId, Date reDate){
 		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
 		ANG_AccountId__c=accId,
 		ANG_HE_AccountId__c=accId,
@@ -36,7 +37,7 @@ public class ANG_RiskEventHistoryPagination_Test {
 		ANG_Issued_Date__c = reDate
 		);
 
-		insert are;
+		return are;
 	}
 
 	static testmethod void pageMethodsCoverage(){
