@@ -99,6 +99,7 @@ public class ang_rhcAlertTriggerHandler{
 	public void handleRedAlerts(){
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 		Map<String,ANG_Risk_Alert__c> mapAccountRiskAlert = new Map<String,ANG_Risk_Alert__c>();
+		List<Id> listIDAccsToRetriveCons = new List<Id>();
 
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
@@ -107,39 +108,42 @@ public class ang_rhcAlertTriggerHandler{
 					ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
 					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
-					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c  
+					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c, ANG_Account__r.Top_Parent__c    
 				FROM ANG_Risk_Alert__c 
 				WHERE ID IN :triggerNew
 				AND ANG_Severity__c = 'Red' 
 				AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() ]){
 
-				redAlerts.add(ra);
-				mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
-		}
+			redAlerts.add(ra);
+			mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
 
+			listIDAccsToRetriveCons.add( (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c : ra.ANG_Account__c ) );
+		}
 		if(!redAlerts.isEmpty()){
 
 			Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
 
 			List<Contact> contacts = new List<Contact>();
 			contacts = [SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c 
-						FROM Contact WHERE (AccountId IN :mapAccountRiskAlert.keyset() OR Account.Top_Parent__c IN :mapAccountRiskAlert.keyset()) AND Status__c = 'Active'];
+						FROM Contact WHERE AccountId IN :listIDAccsToRetriveCons  AND Status__c = 'Active'];
 
 			for (Contact con :contacts){
-				if(contactsPerAccount.keyset().contains(con.AccountId))
+				if(contactsPerAccount.keyset().contains(con.AccountId)){
 					contactsPerAccount.get(con.AccountId).add(con);
-				else
+				}
+				else{
 					contactsPerAccount.put(con.AccountId,new List<Contact>{con});
+				}
 			}
 
 			Case smapParentCase;
 			List<Case> sidraLiteCases;
 			List<Case> smapParentCases = new List<Case>();
 			Map<String,case> mapCaseRiskAlert = new Map<String,case>();
-			Set<Id> accountsIds = new Set<Id>();
 			Map<Id,Operational_Calendar__c> mapAccountOpCalendar = fetchCalendar(redAlerts);
 			for(ANG_Risk_Alert__c ra: redAlerts){
 
+				//TODO: confirm all this fileds 
 				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region_formula__c,
 					Subject = '',
@@ -157,7 +161,10 @@ public class ang_rhcAlertTriggerHandler{
 				);
 
 				//we'll get the portal approved admin or if none the ifap contact 
-				for(Contact con :contactsPerAccount.get(ra.ANG_Account__c)){						
+				//if has parent, use parent contacts. else, use theirs
+				Id accId = (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c: ra.ANG_Account__c);
+
+				for(Contact con :contactsPerAccount.get(accId)){						
 					if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
 						smapParentCase.ContactId = con.Id;
 						break;
@@ -165,15 +172,14 @@ public class ang_rhcAlertTriggerHandler{
 						smapParentCase.ContactId = con.Id;							
 					}
 				}
-
+			
 				//fallback to have one contact for the sidra lite case
 				if(smapParentCase.ContactId == null){
-					smapParentCase.ContactId = contactsPerAccount.get(ra.ANG_Account__c)[0].Id;
+					smapParentCase.ContactId = contactsPerAccount.get(accId)[0].Id;
 				}
 
 				smapParentCases.add(smapParentCase);
-				accountsIds.add(ra.ANG_Account__c);
-			} 
+			}
 			if(!smapParentCases.isEmpty()){
 				//insert smapParentCases --> all or none = false;
 				Database.SaveResult[] srList = Database.insert(smapParentCases, false);
@@ -197,12 +203,12 @@ public class ang_rhcAlertTriggerHandler{
 				Case sidraLiteCase;
 				sidraLiteCases = new List<Case>();
 
-				for(Case parentCase :[Select Id, IATAcode__c, Account.Name, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+				for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
 					//NEWGEN-1933 fill fields on sidra case
 					sidraLiteCase = WSSidraLite.createCase(parentCase.id);
 					//TODO: confirm on "sidraCase.Subject" if account site or account IATA code
-					sidraLiteCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.Site + ' - ' + parentCase.Account.Name;
+					sidraLiteCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.IATACode__c + ' - ' + parentCase.Account.Name;
 					sidraLiteCase.Case_Remarks__c = '';
 					sidraLiteCase.Description = '';					
 					sidraLiteCase.Region__c = parentCase.Region__c; 
