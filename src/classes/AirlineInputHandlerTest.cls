@@ -69,7 +69,7 @@ private class AirlineInputHandlerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'Satisfactory' ,
+                          Financial_Review_Result__c = 'Satisfactory - No Action' ,
                           Subject = 'c1');
         insert c1;
         

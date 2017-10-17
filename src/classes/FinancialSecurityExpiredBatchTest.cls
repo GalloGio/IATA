@@ -22,7 +22,7 @@ public class FinancialSecurityExpiredBatchTest {
 
         Case c = new Case(recordtypeID = IFAPcaseRecordTypeID, Status = 'Assessment Performed', Origin = 'asd', IFAP_Area__c = 'asda', Financial_Review_Type__c = 'bla',
                           IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                          Deadline_Date__c = dead, contactid = con.id, AccountId = a.id, Assessment_Performed_Date__c = date.today(), Financial_Review_Result__c = 'Satisfactory');
+                          Deadline_Date__c = dead, contactid = con.id, AccountId = a.id, Assessment_Performed_Date__c = date.today(), Financial_Review_Result__c = 'Satisfactory - No Action');
 
         insert c;
 

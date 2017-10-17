@@ -832,7 +832,7 @@ public class SurveyBatchTest {
                               AccountId = a.id,
                               Region__c = 'China & North Asia',
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
+                              Financial_Review_Result__c = 'Satisfactory',
                               Reason1__c = 'CHC – Change of Shareholding'
                               ));
 
