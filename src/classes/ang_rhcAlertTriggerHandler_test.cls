@@ -23,6 +23,7 @@ private class ang_rhcAlertTriggerHandler_test {
         	name='acc1',
 			Location_Type__c='HE',
 			Location_Class__c='P',
+			IATAcode__c = '0000',
 			Remittance_frequency__c='Monthly',
 			ANG_Accreditation_Model__c ='Cash',
 			IATA_ISO_Country__c = country.id,
@@ -137,7 +138,7 @@ private class ang_rhcAlertTriggerHandler_test {
 		system.assertEquals([select id,ANG_email_sent__c from ANG_Risk_Alert__c limit 1].get(0).ANG_email_sent__c,false,'Email was not sent');
 
 	}
-
+	
 	private static testmethod void testTicketingAuthorityRemoval(){
 
     	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
@@ -156,7 +157,10 @@ private class ang_rhcAlertTriggerHandler_test {
 		
 		Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
 		insert con;
-				
+
+		//NEWGEN-2005
+		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+
 		test.StartTest();
 			insert ra;
 		test.StopTest();
