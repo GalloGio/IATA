@@ -27,8 +27,18 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(currentUser.AMP_Digest_Daily_or_Weekly__c != null && currentUser.AMP_Digest_Daily_or_Weekly__c == 'Weekly') {dailyOrWeekly = 'Weekly';}
 
 		Map<Id, Account> mpAccountId2Account = getAccountId2Account(lsHQAccounts);
+		lsTopicAssignments = getTopicAssignments(lsAllFeedItems);
+		preview = getEmailBody(currentUser, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account);
+	}
 
-		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account);
+	public static List<TopicAssignment> getTopicAssignments(List<FeedItem> lsAllFeedItems) {
+		List<Topic> lsBroadcastTopics = getBroadCastTopics();
+		return
+			[SELECT Id, TopicId, EntityId, Topic.Name
+			FROM TopicAssignment
+			WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics
+			LIMIT 10000];
+
 	}
 
 	public Map<Id, Account> getAccountId2Account(List<Account> lsHQAccounts) {
@@ -98,7 +108,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			// lsAllFeedItems = getAllFeedItems(lsHQAccounts);
 		}
 		Map<Id, Account> mpAccountId2Account = getAccountId2Account(lsHQAccounts);
-		preview = getEmailBody(currentUser, lsAllFeedItems, mpAccountId2Account, favouriteTopics, dayOrWeek);
+		preview = getEmailBody(currentUser, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account, favouriteTopics, dayOrWeek);
 
 		return null;
 	}
@@ -175,8 +185,14 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 	}
 
-
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, Map<Id, Account> mpAccountId2Account) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	mpAccountId2Account: a map to get the Account with the Id
+	**/
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, Map<Id, Account> mpAccountId2Account) {
 
 		String emailBody = '';
 		// set the greeting to be either day or week
@@ -187,20 +203,29 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(currentUser.AMP_Digest_Topics__c != null) {
 			lsFavouriteTopics = currentUser.AMP_Digest_Topics__c.split(',');
 		}
-		emailBody += getEmailBody( currentUser,  lsAllFeedItems, mpAccountId2Account, lsFavouriteTopics,  dayOrWeek);
+		emailBody += getEmailBody( currentUser,  lsAllFeedItems, lsTopicAssignments, mpAccountId2Account, lsFavouriteTopics,  dayOrWeek);
 		return emailBody;
 	}
 
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, Map<Id,Account> mpAccountId2Account, List<String> lsFavouriteTopics, String dayOrWeek) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	mpAccountId2Account: a map to get the Account with the Id
+	lsFavouriteTopics: the selected topics for this user
+	dayOrWeek: literally 'day' or 'week'
+	**/
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, Map<Id,Account> mpAccountId2Account, List<String> lsFavouriteTopics, String dayOrWeek) {
 
 		String emailBody = '';
 		emailBody += getEmailHeader(currentUser, dayOrWeek);
 
-		List<Topic> lsBroadcastTopics = getBroadCastTopics();
-		List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId, Topic.Name FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
+		// List<Topic> lsBroadcastTopics = getBroadCastTopics();
+		// List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId, Topic.Name FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
 		String topicBody = '';
-		for(String t : lsFavouriteTopics) {
-			topicBody += getTopicBody(currentUser, t, lsAllFeedItems, lsBroadcastTopics, mpAccountId2Account, lsTopicAssignments, dayOrWeek);
+		for(String topicName : lsFavouriteTopics) {
+			topicBody += getTopicBody(currentUser, topicName, lsAllFeedItems, mpAccountId2Account, lsTopicAssignments, dayOrWeek);
 		}
 		emailBody += topicBody;
 		emailBody += getEmailFooter();
@@ -377,7 +402,16 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return emailBody;
 	}
 
-	public static String getTopicBody(User currentUser, String topicName, List<FeedItem> lsAllFeedItems, List<Topic> lsBroadcastTopics, Map<Id,Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	topicName: the name for the Topic we're building a table for
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	mpAccountId2Account: a map to get the Account with the Id
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	dayOrWeek: literally 'day' or 'week'
+	**/
+	public static String getTopicBody(User currentUser, String topicName, List<FeedItem> lsAllFeedItems, Map<Id,Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
 
 		List<Id> lsAccountIds = new List<Id>();
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
@@ -448,6 +482,13 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return emailBody;
 	}
 
+	/**
+	Parameters:
+	fi: the FeedItem we're building the line for
+	lsAccountIds: the list of Accounts' Ids who received the same FeedItem
+	mpAccountId2Account: a map to get the Account with the Id
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	**/
 	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
