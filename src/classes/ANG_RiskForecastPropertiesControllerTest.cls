@@ -1,7 +1,7 @@
 @isTest
 private class ANG_RiskForecastPropertiesControllerTest {
     
-    private static void setup(){
+    @testSetup static void testSetup(){
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -63,22 +63,22 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         List<ANG_Agency_Risk_Event__c> listAREs = new list<ANG_Agency_Risk_Event__c>();
 
-        ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
-            ANG_AccountId__c=a1.id,
-            ANG_Risk_Type__c=ret.id,
-            ANG_Issued_Date__c =System.today(),
-            ANG_Event_Status__c='Inactive'
-        );
-
-        listAREs.add(are1);
-
-        insert listAREs;
+       
 
     }
 
     static testMethod void test_CASE() {
-        setup();
 
+       
+
+        Test.startTest();
+          ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
+            ANG_AccountId__c=[select id from account limit 1].get(0).id,
+            ANG_Risk_Type__c=[select id from ANG_Risk_Event_Type__c limit 1].get(0).id,
+            ANG_Issued_Date__c =System.today(),
+            ANG_Event_Status__c='Inactive'
+        );
+        insert are1;
         PageReference pageRef = Page.ANG_RiskForecastPropertiesPage;
 
         Test.setCurrentPageReference(pageRef);
@@ -86,27 +86,29 @@ private class ANG_RiskForecastPropertiesControllerTest {
         Case sidraLiteCase = [Select Id from Case where RecordType.developerName='SIDRA_Lite'];
 
         ApexPages.StandardController sc = new ApexPages.StandardController(sidraLiteCase);
+       
+            ANG_RiskForecastPropertiesController pgController = new ANG_RiskForecastPropertiesController(sc);
 
-        ANG_RiskForecastPropertiesController pgController = new ANG_RiskForecastPropertiesController(sc);
+            pgController.riskOpt = 'testRiskId';
 
-        pgController.riskOpt = 'testRiskId';
+            pgController.getriskOption();
 
-        pgController.getriskOption();
+            pgController.closePopup();
 
-        pgController.closePopup();
+            pgController.redirectPopup();
 
-        pgController.redirectPopup();
+            pgController.getcanExecuteForecast();
 
-        pgController.getcanExecuteForecast();
+            pgController.showPopup();
 
-        pgController.showPopup();
-
-        System.assertEquals('C',pgController.newRiskStatus);
-        System.assertEquals(true,pgController.newCashCondition);
-
+            System.assertEquals('C',pgController.newRiskStatus);
+            System.assertEquals(true,pgController.newCashCondition);
+        Test.stopTest();
     }
 
     static testMethod void test_OSCAR() {
+        
+        Test.startTest();
         List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Ownership__c = true,
                             TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
@@ -121,11 +123,9 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         insert customsettings;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-        insert ctry ;
+     
 
-        Account a1 = new Account(Remittance_frequency__c = 'Every 5 days' , ANG_Accreditation_Model__c = 'Cash', Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.SECTOR_PASSENGER, Location_Class__c = AMS_Utils.LC_PASSENGER, Status__c = AMS_Utils.ACC_S9_APPROVED);
-        insert a1;
+        Account a1 = [select id,IATACode__c,Location_Class__c,IATA_ISO_Country__c,Location_Type__c from account].get(0);
                 
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
         insert co1;
@@ -170,12 +170,13 @@ private class ANG_RiskForecastPropertiesControllerTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        Test.startTest();
+        
 
         ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
         pgNewHE.getriskOption();
 
         System.assertEquals('1', pgNewHE.riskOpt);
+        
 
         oscar.Process__c = AMS_Utils.NGCHANGES;
         oscar.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
@@ -185,7 +186,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
         ANG_RiskForecastPropertiesController pgChangesAccType = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
         pgChangesAccType.getriskOption();
         System.assertEquals('1', pgChangesAccType.riskOpt);
-
+     
 
         oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_OWNERSHIP;
         update oscar;
@@ -195,7 +196,6 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         System.assertEquals('6', pgChangesOwnership.riskOpt);
 
-        Test.stopTest();
     }
     
 }

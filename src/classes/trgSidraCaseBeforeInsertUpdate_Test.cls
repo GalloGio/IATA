@@ -336,6 +336,8 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
         
         insert cases;
         
+        Test.StartTest();
+        
         Case rei = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
@@ -351,8 +353,6 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             REI_ApprovalRejectin__c = 'Approved',
                             DEF_Withdrawal_Approval_Rejection__c = '');
         insert rei;
-        
-        Test.StartTest();
         
         // The fourth case with SMALL AMOUNT
         // Check that, because of the reinstatement case, Action_needed_Small_Amount__c is not set to true
@@ -371,6 +371,8 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
         insert testcase;
         
         update testCase;        
+        
+        Test.stopTest();
         
         cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c FROM Case WHERE ID = :testcase.Id];
         system.assertEquals(false, cases[0].Action_needed_Small_Amount__c);
