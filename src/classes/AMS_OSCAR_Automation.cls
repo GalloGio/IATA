@@ -29,7 +29,7 @@ public with sharing class AMS_OSCAR_Automation {
                 set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateOwnership.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     
-                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person')];
+                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person', 'Company') AND Agency_owner__c = true];
                     
                     if (cntOwners == 0) {
                         errorMessage += '- No owners found on the OSCAR';
@@ -664,14 +664,19 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step2_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null && (oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed')) {
-
-                oscar.Approval_disapproval_date__c = Date.today();
-                oscar.Status__c = 'On Hold_Internal';
-                res = True;
-
+            if (oscar.STEP6__c != 'Passed' && oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                oscar.addError('Manager Approval cannot be granted if Sanity check step does not equals PASSED');
             } else {
-                oscar.addError('Approval can only be set after the validation Qualification Criteria is passed');
+
+                if (oscar != null && (oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed')) {
+
+                    oscar.Approval_disapproval_date__c = Date.today();
+                    oscar.Status__c = 'On Hold_Internal';
+                    res = True;
+
+                } else {
+                    oscar.addError('Approval can only be set after the validation Qualification Criteria is passed');
+                }
             }
 
             return res;

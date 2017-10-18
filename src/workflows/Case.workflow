@@ -13041,7 +13041,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Region__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13081,7 +13081,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Region__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13437,7 +13437,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Account.Region_formula__c</field>
             <operation>equals</operation>
-            <value>Europe</value>
+            <value>Europe,Africa &amp; Middle East</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CCG_Participant__c</field>

@@ -28,10 +28,10 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>AMS_DGR_Notification_Sent</fullName>
+        <fullName>X60_days</fullName>
         <field>Notification_Sent__c</field>
         <literalValue>1</literalValue>
-        <name>AMS DGR Notification Sent</name>
+        <name>60 days</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

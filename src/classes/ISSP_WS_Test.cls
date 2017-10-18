@@ -312,6 +312,7 @@ private class ISSP_WS_Test {
     }
     
     static testMethod void NewUser_7() {
+	/*
         Map<Id, String> sisFedIdMap = new Map<Id, String>();
         Map<Id, String> sisEmailMap = new Map<Id, String>();
         Map<Id, String> sisFirstNameMap = new Map<Id, String>();
@@ -386,6 +387,7 @@ private class ISSP_WS_Test {
             }
         }
         Test.stopTest();
+		*/
     }
     
     static testMethod void NewUser_8() {

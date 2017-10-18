@@ -3,172 +3,80 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <!-- <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
-      <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
+      <!-- <title>Account Plan</title> -->
+      <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
+      <style>
+    	@page {
+    		size: A4 landscape; /* A4 landscape (297mm×210mm) */
+    		margin: 3%;
+    	}
 
+    	.maingroup {background-color: yellow;}
+    	th { text-align: left;}
+    	th.narrowColumn {width: 10%;}
+    	th.headerRow {background-color: rgb(160, 195, 248) !important;}
+    	td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
+    	/*tr.odd { background: #eee;}*/
+    	table.milestones {width: 98%; margin-left: auto; margin-right: auto; border: 1px solid #aaa; margin-bottom: 2em;}
+      </style>
     </head>
-    <body class="container" ng-controller="DemoCtrl">
+
+    <body onload="window.print()" >
     <apex:form >
         <apex:pageBlock >
         <apex:outputPanel id="issueTable">
     <apex:pageMessages />
-            <apex:pageBlockTable value="{!lsIssuesAndPriorities}" var="i" >
+    <table class="list"  border="0" cellpadding="0" cellspacing="0">
+        <thead class="rich-table-thead">
+            <tr class="headerRow" >
+                <th class="headerRow" scope="col" colspan="10" ><div>Account Issues and Priorities</div></th>
+            </tr>
+            <tr class="headerRow" >
+                <th class="headerRow" scope="col" colspan="10" ><div>Account: {!accountName}</div></th><!-- -->
+            </tr>
+            <!-- <tr class="headerRow" >
+                <th class="headerRow" scope="col" colspan="3" ><div>Group Information</div></th>
+                <th class="headerRow" scope="col" colspan="5" ><div>Member</div></th>
 
-                <apex:column >
-                            <apex:facet name="header">
-                    <apex:commandLink action="{! sortByName }"
-                        reRender="issueTable">Item
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
+            </tr> -->
+            <tr class="headerRow" >
+                <th class="headerRow" ><div>Name</div></th>
+                <th class="headerRow" ><div>Source</div></th>
+                <th class="headerRow" ><div>Description</div></th>
+                <th class="headerRow" ><div>Importance</div></th>
+                <th class="headerRow" ><div>Status</div></th>
+                <th class="headerRow" ><div>Global</div></th>
+                <th class="headerRow" ><div>Regional</div></th>
+                <th class="headerRow" ><div>Local</div></th>
+                <th class="headerRow" ><div>Issue with IATA</div></th>
+                <th class="headerRow" ><div>Visible to all IATA</div></th>
 
-                <apex:column >
-                  <apex:facet name="header">
-                      <apex:commandLink action="{! sortBySource }"
-                          reRender="issueTable">Source
-                                      <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Source_Text__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                      <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Source_Text__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                      </apex:commandLink>
-                  </apex:facet>
-                  <apex:outputField value="{!i.AM_Source_Text__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <!-- <apex:column >
-                            <apex:facet name="header">
-                    <apex:commandLink action="{! sortByDescription }"
-                        reRender="issueTable">Issue Description
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Description__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Description__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.Description__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column> -->
-                <apex:column headerValue="Description">
+            </tr>
+        </thead>
 
-          <apex:outputPanel styleClass="long-text-area " rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-            <apex:outputText value="{!i.Details__c}"   />
-            <!-- <a href="#" class="show-less">[show less]</a> -->
-          </apex:outputPanel>
-          <!-- <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-            <apex:outputText value="{!LEFT(i.Details__c,100)}" />
-            <apex:outputPanel rendered="{!LEN(i.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
-          </apex:outputPanel> -->
-                    <!-- <apex:inputTextArea value="{!i.Details__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" rows="4" html-maxlength="2048" styleClass="wide-input"/> -->
-                </apex:column>
-                <apex:column >
+        <apex:repeat value="{!lsIssuesAndPriorities}" var="i">
+            <tr class="dataRow" >
 
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByLevelOfImportance }"
-                        reRender="issueTable">Importance
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Level_of_importance__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Level_of_importance__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Level_of_importance__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
+                <td class="dataCell " >{!i.Name}</td>
+                <td class="dataCell " >{!i.AM_Source_Text__c}</td>
+                <td class="dataCell " >{!i.Details__c}</td>
+                <td class="dataCell " >{!i.AM_Level_of_importance__c}</td>
+                <td class="dataCell " >{!i.Status__c}</td>
+                <td class="dataCell " ><apex:outputField value="{!i.AM_Global__c}"/></td>
+                <td class="dataCell " ><apex:outputField value="{!i.AM_Regional__c}"/></td>
+                <td class="dataCell " ><apex:outputField value="{!i.AM_Local__c}"/></td>
+                <td class="dataCell " ><apex:outputField value="{!i.AM_Issue_with_IATA__c}"/></td>
+                <td class="dataCell " ><apex:outputField value="{!i.AM_Public__c}"/></td>
 
-                <apex:column >
+            </tr>
+        </apex:repeat>
 
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByStatus }"
-                        reRender="issueTable">Status
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Status__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Status__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.Status__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByGlobal }" styleClass="narrow-table-column"
-                        reRender="issueTable">Global
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Global__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Global__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Global__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                            <apex:commandLink action="{! sortByRegional }" styleClass="narrow-table-column"
-                                    reRender="issueTable">Regional
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Regional__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Regional__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                        </apex:commandLink>
-                    </apex:facet>
-                    <apex:outputField value="{!i.AM_Regional__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByLocal }" styleClass="narrow-table-column"
-                        reRender="issueTable">Local
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Local__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Local__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Local__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByIssueWithIATA }" styleClass="narrow-table-column"
-                        reRender="issueTable">Issue with IATA
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Issue_with_IATA__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByPublic }" styleClass="narrow-table-column"
-                        reRender="issueTable">Visible to all IATA
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Public__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Public__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Public__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                </apex:column>
-
-            </apex:pageBlockTable>
+    </table>
 
         </apex:outputPanel>
         </apex:pageBlock>
-        <!-- <apex:outputLabel for="showAllItems" value="Show closed Issues" />
-                <apex:actionSupport event="onchange" rerender="issueTable" action="{!filterIssuesAndPriorities}"/>
-        </apex:inputcheckbox>
-        <apex:commandButton value="New" action="{!newLine}" reRender="issueTable" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true)}"/> -->
 
     </apex:form>
-
-
-  <!-- JAVASCRIPT -->
-  <apex:includeScript value="{!$Resource.jQuery172}" />
-  <script>
-    $(document).ready(function(){
-
-      enableShowMoreOrLess();
-    });
-    function enableShowMoreOrLess() {
-      $('.show-more').click(function() {
-        event.preventDefault();
-        $(this).parents('.short-text-area').hide().siblings('.long-text-area').show();
-        // $(this).parent().siblings('.long-text-area').show();
-      });
-      $('.show-less').click(function() {
-        event.preventDefault();
-        $(this).parents('.long-text-area').hide();
-        $(this).parent().siblings('.short-text-area').show();
-      });
-
-    }
-  </script>
     </body>
     </html>
 </apex:page>
