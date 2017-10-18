@@ -128,12 +128,12 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>8/10/2017 12:00 AM</value>
+            <value>9/12/2017 12:00 AM</value>
         </filters>
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>001w000001VXj6h</value>
+            <value>001w00000192Qc8</value>
         </filters>
         <label>AMS</label>
         <language>en_US</language>
@@ -256,7 +256,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>8/30/2017 12:00 AM</value>
+            <value>10/5/2017 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

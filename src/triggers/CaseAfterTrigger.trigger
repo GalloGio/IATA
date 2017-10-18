@@ -29,6 +29,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean AMS_OSCARCaseTrigger = true;
 	boolean trgAccelyaRequestSetCountry = true;
 	boolean trgCase = true;
+	//RN-INC342887
+	boolean UserInfoUpdate = true;
 
 	if(!Test.isRunningTest()){
 		trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
@@ -44,6 +46,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;                                     //55555555555555
 		trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
 		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
+		//RN-INC342887
+		UserInfoUpdate = GlobalCaseTrigger__c.getValues('AT UserInfoUpdate').ON_OFF__c;                                             //22222222222222
 	}
     /**********************************************************************************************************************************/
     
@@ -75,6 +79,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 	boolean hasEmail = false;
 	Boolean isAccelya = false;
+	String CurrUser;
 	/*Variables*/
      
     /*Maps, Sets, Lists*/
@@ -88,6 +93,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	list<Case> ICHcases = new list<Case>();
     list<Case> IFAPcases = new list<Case>(); 
 	list<Case> casesToConsider = new list<Case>();
+	list<Case> casesWhoClosedCase = new list<Case>();
     list<IFAP_Quality_Issue__c> issues = new list<IFAP_Quality_Issue__c>();
     list<Account> lstAccountsToUpdate = new List<Account>();
     list<String> bspCountryList = new List<String>();
@@ -375,6 +381,29 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			// Send the custom email notifications if the case is (re)assigned to a queue which has custom notifications configured
 			CustomQueueNotifications.SendEmailNotifications (trigger.new, trigger.OldMap, trigger.isInsert, trigger.isUpdate);
 		}
+
+		/*UserInfoUpdate Trigger*/ //RN-INC342887
+        if(UserInfoUpdate){//FLAG 
+            system.debug('UserInfoUpdate');
+            //IMPRO GM START
+            //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
+            CurrUser = UserInfo.getUserId();
+            //IMPRO GM END
+            // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
+            for(Case c : Trigger.new){
+                if((Trigger.isInsert && c.isClosed == true) || 
+                        (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true)){
+                	Case c1 = new Case(id = c.id, WhoClosedCase__c = CurrUser);
+                	casesWhoClosedCase.add(c);
+                    }
+                if(c.isClosed==false){     
+                   	Case c1 = new Case(id = c.id, WhoClosedCase__c = null);
+                	casesWhoClosedCase.add(c);
+                }
+    		}// END Update L.Faccio --------------
+        }    
+        /*UserInfoUpdate Trigger*/
+
 		/*trgICCSManageProductAssignment Trigger*/
 		
 		/*trgICCS_ASP_CaseClosed Trigger*/

@@ -17,9 +17,11 @@
 	public List<String> extraIds;
     Set<String> locationsSet;
     Set<String> statusSet;
+    public Boolean isManual;
 
-	public void init(Boolean runNext, List<String> ids)
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
+		isManual = manual==null ? false : manual;
 		batchName = 'Job 9: Agency Profile and Specialization'; 
 		processNextBatch = runNext;
 		extraIds = ids;
@@ -99,17 +101,17 @@
 	
 	global ams2gdp_Batch_AMS_Agency_Profile() 
 	{
-		init(false,null);		
+		init(false, null, null);		
 	}
 
-	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext) 
+	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, Boolean manual) 
 	{
-		init(runNext,null);		
+		init(runNext,null, manual);	
 	}
 
-	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, List<String> extra) 
+	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext,extra);		
+		init(runNext,extra,manual);	
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) 
@@ -178,20 +180,8 @@
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-
-		//-- Start next batch 
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Account(false)); //Re-run first batch
-
-		//-- Update Last Sync Info 
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName, 
-			Last_Sync_Start_Date__c=syncStartedDate, 
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c; 
-
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);		
 		//--Send completion notification 
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}	
