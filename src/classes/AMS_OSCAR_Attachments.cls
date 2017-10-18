@@ -63,8 +63,15 @@ global class AMS_OSCAR_Attachments {
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
-        
+        // CB - 6 APR 2017 - AMS Enhancements AMSU-2
+        cse = [Select Id, Status, ParentId, Parent.RecordType.Name from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+
+        AMS_OSCAR__c oscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id = :sObjId];
+        // for child cases in banck account details changes OSCARs show the attachments on the parent case (the HO case)
+        if (cse.ParentId != null && cse.Parent.RecordType.Name == 'OSCAR Communication' && oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null) {
+            cse = [SELECT Id, Status FROM Case WHERE Id = :cse.ParentId];
+        }
+
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');

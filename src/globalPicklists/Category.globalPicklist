@@ -153,10 +153,6 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Import Agent</fullName>
-        <default>false</default>
-    </globalPicklistValues>
-    <globalPicklistValues>
         <fullName>Individual Government</fullName>
         <default>false</default>
     </globalPicklistValues>
@@ -263,6 +259,15 @@
     <globalPicklistValues>
         <fullName>Travel Agency Association</fullName>
         <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Recipient</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Import Agent</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
     </globalPicklistValues>
     <globalPicklistValues>
         <fullName>Passenger &amp; Cargo</fullName>

@@ -28,6 +28,9 @@ public without sharing class GenerateLateRemittanceCSVController {
     
     public String CSVcontent;
     
+    private list<String> listExcludedCountries;
+
+    
     public GenerateLateRemittanceCSVController() {
         // initialize the report dates to the first day and last day of the current month
         strStartDate = Date.today().toStartOfMonth().format();
@@ -41,6 +44,11 @@ public without sharing class GenerateLateRemittanceCSVController {
         strFileName = 'Late_Payment_Fee_Report.csv';
         
         system.debug('### Start date: ' + strStartDate + '; End date: ' + strEndDate);
+        
+        this.listExcludedCountries = new list<String>();
+        for (Late_Payment_Fees_CASS_ISO_Countries_Exc__c country: Late_Payment_Fees_CASS_ISO_Countries_Exc__c.getall().values()) {
+            this.listExcludedCountries.add(country.Name);
+        }
     }
     
     
@@ -72,7 +80,18 @@ public without sharing class GenerateLateRemittanceCSVController {
                                         OR IRR_Withdrawal_Reason__c = 'Bank Error'
                                     )
                                     AND Update_AIMS_DEF__c = null 
-                                    AND BSP_CASS__c = 'BSP' 
+                                    AND (
+                                        BSP_CASS__c = 'BSP' 
+                                        OR (
+                                            BSP_CASS__c = 'CASS'
+                                            AND Account.Category__c = 'CASS Associate'
+                                        )
+                                        OR (
+                                            BSP_CASS__c = 'CASS'
+                                            AND Account.Category__c = 'IATA Cargo Agent'
+                                            AND Account.IATA_ISO_Country__r.Name NOT IN :listExcludedCountries
+                                        )
+                                    )
                                     AND BSPCountry__c NOT IN ('Israel', 'Russia & CIS')
                                     
                                     AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
@@ -150,7 +169,18 @@ public without sharing class GenerateLateRemittanceCSVController {
                             DEF_Withdrawal_Reason__c = null 
                             OR DEF_Withdrawal_Reason__c IN ('Bank error', 'Agent error')
                         )
-                        AND BSP_CASS__c = 'BSP' 
+                        AND (
+                            BSP_CASS__c = 'BSP' 
+                            OR (
+                                BSP_CASS__c = 'CASS'
+                                AND Account.Category__c = 'CASS Associate'
+                            )
+                            OR (
+                                BSP_CASS__c = 'CASS'
+                                AND Account.Category__c = 'IATA Cargo Agent'
+                                AND Account.IATA_ISO_Country__r.Name NOT IN :listExcludedCountries
+                            )
+                        )
                         AND BSPCountry__c NOT IN ('Israel', 'Russia & CIS') 
                         AND Update_AIMS_DEF__c <> null 
                         
@@ -250,7 +280,7 @@ public without sharing class GenerateLateRemittanceCSVController {
         /* REPORT 3 - Minor error policy (IFAP) */
         tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c 
                         FROM Case
-                        WHERE RecordType.DeveloperName = 'IATA_Financial_Review'
+                        WHERE RecordType.DeveloperName IN ('IATA_Financial_Review','ProcessEuropeSCE')
                         AND SIDRA_Exclude_from_report_exceptions__c = true 
                         
                         AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null

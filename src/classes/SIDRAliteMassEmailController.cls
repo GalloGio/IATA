@@ -181,7 +181,7 @@ public with sharing class SIDRAliteMassEmailController{
             if (this.account.Sector__c == 'Cargo Agent') {
                 listOption.add(new SelectOption('IATA Cargo Agent', 'IATA Cargo Agent'));
                 listOption.add(new SelectOption('CASS Associate', 'CASS Associate'));
-                listOption.add(new SelectOption('Import Agent', 'Import Agent'));
+                listOption.add(new SelectOption('Recipient', 'Recipient'));
                 listOption.add(new SelectOption('GSSA Cargo', 'GSSA Cargo'));
                 listOption.add(new SelectOption('Handling Agent', 'Handling Agent'));
             }

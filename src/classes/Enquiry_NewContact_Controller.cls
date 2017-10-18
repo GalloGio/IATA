@@ -109,7 +109,7 @@ public class Enquiry_NewContact_Controller {
                 'Agency_ Handling Agent' =>'Handling Agent',
                 'Agency_ IATA Cargo Agent' =>'IATA Cargo Agent',
                 'Agency_ IATA Passenger Sales Agent' =>'IATA Passenger Sales Agent',
-                'Agency_ Import Agent' =>'Import Agent',
+                'Agency_ Recipient' =>'Recipient',
                 'Agency_ MSO Member Sales Office' =>'MSO Member Sales Office',
                 'Agency_ NISI' =>'NISI',
                 'Agency_ SSI' =>'SSI',
