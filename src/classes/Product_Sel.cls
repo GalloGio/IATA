@@ -771,7 +771,8 @@ public class Product_Sel extends Selector
 
     public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent, String customerType) {
         System.debug('listProductId::'+listProductId);
-
+		fakeMethod();
+		
         Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
         Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
         Product_Sel exe = new Product_Sel();
