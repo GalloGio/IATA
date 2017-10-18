@@ -604,7 +604,7 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step2_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar.STEP6__c != 'Passed') {
+            if (oscar.STEP6__c != 'Passed' && oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
                 oscar.addError('Manager Approval cannot be granted if Sanity check step does not equals PASSED');
             } else {
 
