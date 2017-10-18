@@ -39,15 +39,15 @@
 
 				</tr>
 				<tr class="headerRow" >
-					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Main Group Name</div></th>
-					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>IATA Group Name</div></th>
-					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>IATA Group Owner</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Main Group</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Group Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>Group Owner</div></th>
 					<!-- <th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group</div></th> -->
-					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role Within Group</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role</div></th>
 					<!-- <th class="headerRow" scope="col" colspan="1" style="width: 5%;"><div>Salutation</div></th> -->
 					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>Last Name</div></th>
-					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Title</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Job Title</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Email</div></th>
 
 				</tr>
