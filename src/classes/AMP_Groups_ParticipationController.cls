@@ -1,5 +1,6 @@
 public with sharing class AMP_Groups_ParticipationController {
     public String accountId {get;set;}
+    public String accountName {get;set;}
     public class ParticipantWrapper {
         public Participant__c participant {get;set;}
         public Integer rowspan {get;set;}
@@ -85,7 +86,6 @@ public with sharing class AMP_Groups_ParticipationController {
 
         list<Participant__c> lsMainGroupParticipants = AMP_CoreRelationshipExtension.getParticipants(accountId);
         list<Participant__c> lsOtherParticipants = getParticipants(accountId);
-
         list<Participant> retList = new list<Participant>();
         List<String> lsMainGroupNames = AMP_CoreRelationshipExtension.getGroupNames();
 
@@ -94,6 +94,7 @@ public with sharing class AMP_Groups_ParticipationController {
         for(String groupName : lsMainGroupNames) {
             Boolean found = false;
             // first check the main groups
+            Integer position = 0;
             for (Participant__c p : lsMainGroupParticipants) {
 
                 if(p.Local_Governance__r.Name == groupName) {
@@ -105,7 +106,7 @@ public with sharing class AMP_Groups_ParticipationController {
                         pw.gOwner = p.Local_Governance__r.Group_Owner__r.Name;
                     else
                         pw.gOwner = p.Local_Governance__r.Group_Owner_Text__c;
-                    pw.rowspan = 1;
+                    pw.rowspan = 0;
                     pw.salutation = p.Contact__r.Salutation;
                     pw.firstName = p.Contact__r.FirstName;
                     pw.lastName = p.Contact__r.LastName;
@@ -113,9 +114,26 @@ public with sharing class AMP_Groups_ParticipationController {
                     pw.title = p.Contact__r.Title;
                     pw.email = p.Contact__r.Email;
                     pw.representing = p.Representing__c;
+                    // retList.add(pw);
+
+                    // find how many participants are from the same group - to span a single row for group name, owner & mission for them
+                    if (p.Local_Governance__r.Name != prevGroupName) {
+                        Integer rowspan = 1;
+                        Integer searchPosition = position+1;
+                        while (searchPosition < lsMainGroupParticipants.size() &&
+                        p.Local_Governance__r.Name == lsMainGroupParticipants[searchPosition].Local_Governance__r.Name) {
+                            rowspan++;
+                            searchPosition++;
+                        }
+                        pw.rowspan = rowspan;
+                    }
                     retList.add(pw);
+
+                    prevGroupName = p.Local_Governance__r.Name;
+
                     found = true;
                 }
+                position++;
             }
             // if no participants were found create an empty line for the name
             if(!found) {
@@ -127,7 +145,7 @@ public with sharing class AMP_Groups_ParticipationController {
                 retList.add(pw);
             }
             // then get the participants for subgroups
-            Integer position = 0;
+            position = 0;
             for(Participant__c p : lsOtherParticipants) {
 
                 if(p.Local_Governance__r.AM_Under__r.Name == groupName) {
@@ -186,12 +204,13 @@ public with sharing class AMP_Groups_ParticipationController {
         acc = (Account)stdController.getRecord();
         if(acc.Id != null) {
             accountId = acc.Id;
+            accountName = acc.Name;
         } else {
             accountId =  ApexPages.currentPage().getParameters().get('accountId');
+            accountName = [SELECT Id, Name FROM Account WHERE Id = :accountId LIMIT 1].Name;
         }
         lstParticipants = getParticipantWrappers(accountId);
         lstAllParticipants = getAllParticipants(accountId);
-
         representativesFound = false;
         for(Participant p : lstAllParticipants) {
             if(p.Representing != null && p.Representing != '') representativesFound = true;
