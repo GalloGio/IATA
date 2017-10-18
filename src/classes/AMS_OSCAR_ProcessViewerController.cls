@@ -21,7 +21,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public AMS_OSCAR_JSON accreditationProcesses {get;set;}
     public Map<String, AMS_OSCAR_JSON.Process> process {get;set;}
-    
+ 
     public Map<String,String> flowColors {get;set;}
     public Map<String,Boolean> collapsibleMap {get;set;}
     public Map<String,String> statusIcons {get;set;}
@@ -227,7 +227,7 @@ public class AMS_OSCAR_ProcessViewerController {
                     flowColors.put(process.name + flow.name, CLASS_BLACK);
                 }
 
-                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS) ) {
+                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started')) {
                     collapsibleMap.put(process.name + flow.name, false);
                     firstExpanded = true;
                 }
