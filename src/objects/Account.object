@@ -82029,7 +82029,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
   NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
   Has_a_Financial_Assessment_Contact__c
 )</errorConditionFormula>
-        <errorMessage>  The Location Type of this account cannot be changed from 'HO' or 'HE' because it has a Financial Assessment Contact linked to it.</errorMessage>
+        <errorMessage>The Location Type of this account cannot be changed from 'HO' or 'HE' because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>
