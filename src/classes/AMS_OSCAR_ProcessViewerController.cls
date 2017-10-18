@@ -227,7 +227,7 @@ public class AMS_OSCAR_ProcessViewerController {
                     flowColors.put(process.name + flow.name, CLASS_BLACK);
                 }
 
-                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS))) {
+                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS)) {
                     collapsibleMap.put(process.name + flow.name, false);
                     firstExpanded = true;
                 }
