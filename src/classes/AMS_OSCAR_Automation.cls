@@ -29,7 +29,7 @@ public with sharing class AMS_OSCAR_Automation {
                 set<String> lstProcessesToValidateOwnership = new set<String>{AMS_Utils.new_HO, AMS_Utils.new_TIDS, AMS_Utils.AGENCYCHANGES, AMS_Utils.CERTIFICATION};
                 if (lstProcessesToValidateOwnership.contains(oscar.Process__c) && oscar.AMS_Online_Accreditation__c != null) { 
                     
-                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person')];
+                    Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :oscar.AMS_Online_Accreditation__c AND RecordType.DeveloperName IN ('Current_Owner', 'Current_Company_Owner', 'Person', 'Company') AND Agency_owner__c = true];
                     
                     if (cntOwners == 0) {
                         errorMessage += '- No owners found on the OSCAR';

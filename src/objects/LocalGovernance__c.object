@@ -515,6 +515,26 @@
                 <fullName>Industry Stakeholders</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agency Associations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency Associations</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -1018,7 +1038,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1026,7 +1046,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1309,19 +1329,31 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>Cargo Agency Associations</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Industry Stakeholders</fullName>
+                <fullName>Cargo Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>General Sales Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Strategic Partners</fullName>
+                <fullName>IATA Member Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1609,7 +1641,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1617,7 +1649,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
