@@ -306,6 +306,9 @@ body .bPageBlock .pbBody .red .pbSubheader{
 body .bPageBlock .pbBody .green .pbSubheader{
     background-color:#008000;
 }
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
+}
 
 </style>
 <script>
@@ -438,8 +441,8 @@ function buildFunctionCall(func, argList){
             <apex:repeat value="{!p.flows}" var="flow">
                 <apex:pageBlockSection><!-- Fake section to force SF to inject the twistSection() JS code, which is not injected anymore because of the new outputpanel below, used for colors --></apex:pageBlockSection>
 
-                <apex:outputPanel styleClass="{!flowColors[flow.name]}">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                     <apex:outputPanel layout="block" styleClass="sectionWrapper">
                         <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
                             <p>{!$Label.AMS_Due_Diligence_Lock}</p>
