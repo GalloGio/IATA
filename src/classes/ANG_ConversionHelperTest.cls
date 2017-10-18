@@ -25,9 +25,6 @@ private class ANG_ConversionHelperTest {
 
         insert new List<Account>{a4, a5, a6};
 
-		System.debug('Checkpoint 01');
-		ANG_OscarProcessHelper.checkSFDCLimits();
-
         //Create the hierarchy
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1 OK');
 		insert hierarchy;
@@ -51,9 +48,6 @@ private class ANG_ConversionHelperTest {
  
         Account aw4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test4 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'C');
         
-		System.debug('Checkpoint 02');
-		ANG_OscarProcessHelper.checkSFDCLimits();
-
         insert new List<Account>{aw4};
 
 		//Create the hierarchy
@@ -66,9 +60,6 @@ private class ANG_ConversionHelperTest {
 
         insert new List<AMS_Agencies_relationhip__c>{relw1, relw2, relw3};
 
-		System.debug('Checkpoint 03');
-		ANG_OscarProcessHelper.checkSFDCLimits();
-
 		Account aw5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test5 Agency NOK',Short_Name__c='Test5 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 		
 		insert aw5;
@@ -76,9 +67,6 @@ private class ANG_ConversionHelperTest {
 		Account aw6 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw5.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test6 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent', Location_Class__c = 'P');
 
 		insert aw6;
-
-		System.debug('Checkpoint 04');
-		ANG_OscarProcessHelper.checkSFDCLimits();
 
 		//Create the hierarchy
 		AMS_Agencies_Hierarchy__c hierarchy3 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 3 NOK');
@@ -94,18 +82,10 @@ private class ANG_ConversionHelperTest {
 		Test.startTest();
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
-		System.debug('Checkpoint 1');
-		ANG_OscarProcessHelper.checkSFDCLimits();
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		System.debug('Checkpoint 2');
-		ANG_OscarProcessHelper.checkSFDCLimits();
-
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
-
-		System.debug('Checkpoint 3');
-		ANG_OscarProcessHelper.checkSFDCLimits();
 
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
