@@ -4330,7 +4330,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Delivery</shortDescription>
-        <value>IDCard Expedite Delivery</value>
+        <value>Certified/Expedite</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Note</fullName>
