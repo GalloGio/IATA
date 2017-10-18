@@ -109,7 +109,8 @@ public class ang_rhcAlertTriggerHandler{
 					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
 					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c,
-                    ANG_Account__r.Name, ANG_Account__r.IATACode__c, ANG_Account__r.Top_Parent__c
+                    ANG_Account__r.Name, ANG_Account__r.IATACode__c, ANG_Account__r.Top_Parent__c,
+                    CurrencyIsoCode
 
 				FROM ANG_Risk_Alert__c 
 				WHERE ID IN :triggerNew
@@ -299,7 +300,7 @@ public class ang_rhcAlertTriggerHandler{
         }
         List<String> toAddresses = new List<String>(); 
         for (RTS_Senior_Manager__c sManager: sManagers) {
-						if (sManager.Active__c)
+            if (sManager.Active__c)
             	toAddresses.add(sManager.Email__c);
         }
         EmailTemplate template = eTemplates.get(0);
@@ -309,10 +310,13 @@ public class ang_rhcAlertTriggerHandler{
         mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
             String tBody = template.Body;
+            String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
             tBody = tBody.replace('{{agentName}}', riskAlert.ANG_Account__r.Name);
             tBody = tBody.replace('{{iataCode}}', iataCode);
             tBody = tBody.replace('{{iataCountry}}', riskAlert.ANG_Account__r.IATA_ISO_Country__r.Name);
+            tBody = tBody.replace('{{agentSales}}', agentSales);
+            tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
             
             mail.setPlainTextBody(tBody);
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
@@ -337,7 +341,7 @@ public class ang_rhcAlertTriggerHandler{
         //NEWGEN-2006
         List<Notification__c> notifications = new List<Notification__c>();
         List<Contact> agents = [
-            SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
+            SELECT Id, Name, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
                 SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
             ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
         Map<Id, List<Contact>> mapAccContacts = new Map<Id, List<Contact>>();
@@ -366,7 +370,7 @@ public class ang_rhcAlertTriggerHandler{
                             notifications.add(new Notification__c(
                                 Contact__c = c.Id,
                                 Subject__c = Label.RTS_TAR_Notification_Title,
-                                Message__c = Label.RTS_TAR_Notification_Message,
+                                Message__c = Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name),
                                 Alert_Contact_By_Email__c = true
                             ));
                         }

@@ -24258,7 +24258,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>RTS TAR Notification Message</shortDescription>
-        <value>Dear Sir/Madam, 
+        <value>Dear {{name}}, 
 This notification is to inform you that your ticketing authority has been removed. IATA will be in contact shortly.</value>
     </labels>
     <labels>
