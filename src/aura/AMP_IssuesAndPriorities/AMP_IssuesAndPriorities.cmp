@@ -234,7 +234,7 @@
                     </div>
 
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <p>Do you want to print also the closed ones?</p>
+                        <p>Do you also want to print closed issues &amp; priorities?</p>
                     </div>
                     <footer class="slds-modal__footer">
                         <lightning:button class="slds-button slds-button--neutral" title="No" >
