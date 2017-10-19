@@ -310,7 +310,7 @@ public class ANG_AccountTriggerHandler {
 			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
 		}
 
-		if(involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+		if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
 	}
 
 	private void updateRHCInformation() {
