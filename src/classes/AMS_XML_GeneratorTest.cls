@@ -438,6 +438,8 @@ private class AMS_XML_GeneratorTest {
         
         r[5] = ag1.Id;
 
+/*  NEWGEN-801
+
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
@@ -458,6 +460,8 @@ private class AMS_XML_GeneratorTest {
         );
         
         insert rhcInfo;
+
+*/
         
         system.debug(Logginglevel.ERROR, 'ALEX 29 --> Query issued: ' + Limits.getQueries());        
 
