@@ -536,7 +536,10 @@ public without sharing class ISSP_Case {
         objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
         objectsIds.put('CASE', newCase.id); 
 
+        //ALEX
         progressBarHelper = new ANG_ProgressBarHelper(newCase.Oscar__r.Process__c, objectsIds);
+
+        //progressBarHelper = new ANG_ProgressBarHelper('ANG.NEW.HE.STANDARD.1.0', objectsIds);        
 
         for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
             if (node.titleTranslatable != null && node.titleTranslatable != '') {

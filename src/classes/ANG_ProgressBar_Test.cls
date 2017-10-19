@@ -13,9 +13,9 @@ public class ANG_ProgressBar_Test {
 
         ANG_ProgressBarSettings__c s1 = new ANG_ProgressBarSettings__c (
         	name = 'bla1',
-			Field__c = 'Name',
+			//Field__c = 'Name',
 			Label__c = 'node1',
-			Object__c = 'Portal_Applications__c',
+			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
 			ValueError__c = 'bla',
@@ -24,9 +24,9 @@ public class ANG_ProgressBar_Test {
 
         ANG_ProgressBarSettings__c s2 = new ANG_ProgressBarSettings__c (
         	name = 'bla2',
-			Field__c = 'ANG_Restrict_by_Agency_Sector__c',
+			//Field__c = 'ANG_Restrict_by_Agency_Sector__c',
 			Label__c = 'node1',
-			Object__c = 'Portal_Applications__c',
+			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
 			ValueError__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
@@ -35,9 +35,9 @@ public class ANG_ProgressBar_Test {
 
         ANG_ProgressBarSettings__c s3 = new ANG_ProgressBarSettings__c (
         	name = 'bla3',
-			Field__c = 'ANG_Restrict_by_Agency_Sector__c',
+			//Field__c = 'ANG_Restrict_by_Agency_Sector__c',
 			Label__c = 'node1',
-			Object__c = 'Portal_Applications__c',
+			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
 			ValueError__c = 'bla',
