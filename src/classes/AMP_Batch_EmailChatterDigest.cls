@@ -48,9 +48,11 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		// Send an email
 		List<Messaging.SingleEmailMessage> lsEmails = new List<Messaging.SingleEmailMessage>();
 		List<TopicAssignment> lsTopicAssignments = AMP_ChatterTopicSubscribeController.getTopicAssignments(lsAllFeedItems);
-		// User u = [SELECT Id, FirstName, LastName, Name, Email, AMP_Digest_Topics__c, AMP_Digest_Daily_or_Weekly__c FROM User WHERE Id='005w0000003Pu27'];
+		// Use Organization Wide Address
+		OrgWideEmailAddress owa = [select id, Address from OrgWideEmailAddress WHERE Address='noreply@iata.org'];
 		for(User u : lsUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(owa.id);
 			String[] toAddresses = new String[] {u.Email};
 			mail.setToAddresses(toAddresses);
 			mail.setSubject('Your Daily Digest by Topic(s)');
