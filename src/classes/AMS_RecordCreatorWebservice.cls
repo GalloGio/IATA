@@ -21,6 +21,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
+    public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
 
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -127,7 +128,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
 
-        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV)))
+        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(IEP_BANK_ACCOUNT_SETUP)))
             return accountId;
 
         List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
@@ -227,7 +228,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
             return oscarRT.get('NEW');
 
-        if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
+        if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV) || typeOfProcess.equalsIgnoreCase(IEP_BANK_ACCOUNT_SETUP))
             return oscarRT.get('CHANGE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))

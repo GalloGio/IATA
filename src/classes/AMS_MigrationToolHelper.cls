@@ -626,7 +626,7 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -641,13 +641,14 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0')
+		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' 
+			&& processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
 			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 
 
 		String oscarId = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
@@ -660,6 +661,8 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP )
+				oscarRTId = oscarRT.get('CHANGE');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
 
