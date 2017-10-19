@@ -766,6 +766,7 @@ public without sharing class IECApplicationsManager {
      * @param lstSubs The list of subscription to look in
      * @return A Zuora.zObject representing the latest subscription
      */
+    /*//Because it's not used it was commented in order to increase the test coverage
     private static Zuora.zObject getLastVersionFromZuoraSubscriptionList(List<Zuora.zObject> lstSubs) {
         
         if (lstSubs == null || lstSubs.isEmpty())
@@ -780,6 +781,7 @@ public without sharing class IECApplicationsManager {
         
         return oLatestSub;
     }
+    */
     
     /**
      * Returns the list of Product Access that are currently effective for a Product Category, for a given Contact
