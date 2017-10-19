@@ -2288,7 +2288,7 @@ public class AMS_OSCARTriggerHandler {
 							isToValidate = false; // we can skipp this validation
 					}
 
-					/*if(isToValidate){
+					if(isToValidate){
 
 						List<Case> cList = [SELECT Id from CASE WHERE Oscar__c != null AND CaseNumber = :oscar.Name AND RecordType.Name = 'OSCAR Communication' AND Oscar__c = :oscar.Id AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))];
 
@@ -2311,7 +2311,7 @@ public class AMS_OSCARTriggerHandler {
 							if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty())
 								oscar.addError('Error - There are no attachments associated with this case/oscar.');
 						}
-					}*/
+					}
 				}
 			}
 		}
