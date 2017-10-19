@@ -25014,7 +25014,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
-        <value>https://iata.my.salesforce.com</value>
+        <value>https://iata--preprod.cs82.my.salesforce.com</value>
     </labels>
     <labels>
         <fullName>SIDRA_Automated_Case_Message</fullName>
