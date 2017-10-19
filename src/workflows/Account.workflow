@@ -417,6 +417,30 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>AIMS%3A Update Industry - cargo agents</fullName>
+        <actions>
+            <name>UpdateIndustryCargoAgent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.Is_AIMS_Account__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>IATA Cargo Agent,Import Agent,CASS Associate,Couriers</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Is_AIMS_Account__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>Updates the field Industry in the cargo agent accounts that are uploaded from AIMS</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>AIMS%3A Update Industry - travel agents</fullName>
         <actions>
             <name>UpdateIndustrywithTravelAgency</name>
