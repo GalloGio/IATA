@@ -133,6 +133,10 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the agenda</description>
         <protected>false</protected>
         <recipients>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>petterssonl@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -147,6 +151,10 @@
         <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</fullName>
         <description>APJC - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>petterssonl@iata.org</recipient>
             <type>user</type>
@@ -189,6 +197,10 @@
             <type>group</type>
         </recipients>
         <recipients>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>petterssonl@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -210,6 +222,10 @@
         <recipients>
             <recipient>LG_meeting_alerts</recipient>
             <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <recipients>
             <recipient>petterssonl@iata.org</recipient>
