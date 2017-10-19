@@ -8905,6 +8905,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
+        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Application_Review</fullName>
         <language>en_US</language>
         <protected>false</protected>
