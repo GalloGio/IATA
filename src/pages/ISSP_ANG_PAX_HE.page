@@ -21,6 +21,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
         
     <style>
         .datePicker{
@@ -224,6 +225,7 @@
     
     <script type="text/javascript">
     var $j = jQuery.noConflict();
+                   
     var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
     var isEUcountry = {!isEUcountry};
 
@@ -849,7 +851,7 @@
                     	<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                         <apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" styleClass="labelCol" style="padding-left:21px" html-for="VATInput"/>
                         <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'40px', '57px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                            <span style="margin-left:{!If(isEUcountry,'40px', '59px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                             <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
@@ -878,7 +880,6 @@
                                 <apex:inputHidden value="{!hqAccount.Phone}" id="companyphone"/>
                                 <apex:inputHidden value="{!hqAccount.Mobile__c}" id="companymobile"/>
                                 <apex:inputHidden value="{!hqAccount.Fax}" id="companyfax"/>
-                            
                             </apex:pageBlockSection>
                               
                    <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Office_FullAddress}</strong></apex:outputText>
@@ -897,8 +898,7 @@
                                 FormControlStyle="apcontainer">
                             </DSE:DS_DataQuality>
                         </apex:pageBlockSection>    
-                    
-                       <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>  
+                   
                        <script type="text/javascript">
                             var $j = jQuery.noConflict();
 
@@ -920,7 +920,10 @@
                                 $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
                                 }),
                             config = { attributes: true, childList: true, characterData: true };
-                            observer.observe(target, config);
+                            
+                            if(target !== undefined) {
+                            	observer.observe(target, config);
+                            }
 
                             var natphoneacct = $j("[id$=companyphoneinput]"),
                                 phoneacct = $j("[id$=companyphone]"),
@@ -957,7 +960,7 @@
                             function setInternationalAccountPhoneNo(p) {
                                 if (p == 'phone') {
                                     phoneacct.val(natphoneacct.intlTelInput("getNumber"));
-                                    phoneacctfield.val(natphoneacct.intlTelInput("getNumber"));
+                                    //phoneacctfield.val(natphoneacct.intlTelInput("getNumber"));
                                 } else if (p == 'mobile') {
                                     mobileacct.val(natmobileacct.intlTelInput("getNumber"));
                                 } else {
@@ -996,9 +999,9 @@
                                     </div>
                                     <apex:outputPanel layout="none">
                                         <div style="float:left;" class="input-width">
-                                            <apex:inputfield style="width: 174.4px;" value="{!newForm.Branch_Office_Phone_National__c}" onblur="setInternationalAccountPhoneNo('phone');$j('.branch_office_phone__c').change();" id="companyphoneinputTerminated"/>
+                                            <apex:inputfield style="width: 174.4px;" value="{!newForm.Branch_Office_Phone_National__c}" onblur="setInternationalAccountPhoneNoTerminated('phone');$j('.branch_office_phone__c').change();" id="companyphoneinputTerminated"/>
                                         </div>
-                                        <div id="div-verify-office-phone" style="float:left; width: 16px; margin-left: 6px;"></div>
+                                        <div id="div-verify-office-phone-term" style="float:left; width: 16px; margin-left: 6px;"></div>
                                     </apex:outputPanel>
                                 </apex:outputPanel>
                             </apex:pageBlockSectionItem>
@@ -1019,7 +1022,7 @@
                             
                             <apex:pageBlockSectionItem id="companyItemMobile2">
                                 <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Mobile__c.Label}"/> 
-                                <apex:inputField style="width: 174.4px;" value="{!newForm.Mobile__c}" id="companymobileinputTerminated" onblur="setInternationalAccountPhoneNo('mobile');"/>
+                                <apex:inputField style="width: 174.4px;" value="{!newForm.Mobile__c}" id="companymobileinputTerminated" onblur="setInternationalAccountPhoneNoTerminated('mobile');"/>
                             </apex:pageBlockSectionItem>
                             
                             <apex:pageBlockSectionItem >
@@ -1029,7 +1032,7 @@
                             
                             <apex:pageBlockSectionItem id="companyItemFax2">
                                 <apex:outputlabel value=" {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Fax_National__c.Label}"/>
-                                <apex:inputField style="width: 174.4px;" value="{!newForm.Branch_Office_Fax_National__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinputTerminated"/>
+                                <apex:inputField style="width: 174.4px;" value="{!newForm.Branch_Office_Fax_National__c}" onblur="setInternationalAccountPhoneNoTerminated('fax');" id="companyfaxinputTerminated"/>
                             </apex:pageBlockSectionItem>
                              
                             <apex:outputPanel id="VatNumberInput">
@@ -1087,21 +1090,21 @@
                     </DSE:DS_DataQuality>
                     </apex:pageBlockSection>
                 </apex:pageblock>
-                 </apex:outputpanel>
-        </apex:pageblock>
-
-
-                <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>  
-                <script type="text/javascript">
+             </apex:outputpanel>
+             <script type="text/javascript">
                     var $j = jQuery.noConflict();
-
+                    
                     var target = $j('.hophonestatusBox2 #recordstatuscontainer')[0],
                         observer = new MutationObserver(function (mutations) {
-                            $j('#div-verify-office-phone').html($j('.hophonestatusBox2 input')[0]);
+                            $j('#div-verify-office-phone-term').html($j('.hophonestatusBox2 input')[0]);
                         }),
-                        config = { attributes: true, childList: true, characterData: true };
-                    observer.observe(target, config);
-
+                        
+                	config = { attributes: true, childList: true, characterData: true };
+                    
+                    if(target !== undefined) {
+                  		observer.observe(target, config);
+                    }
+                      
                     function mandatoryLabels() {
                         var labelBillStreet = $j('.address-label')[0].childNodes[0],
                             labelBillCity = $j('.address-label')[1].childNodes[0];
@@ -1113,52 +1116,50 @@
 
                     document.onload = mandatoryLabels();
 
-                    var natphoneacct = $j("[id$=companyphoneinputTerminated]"),
-                        phoneacct = $j(".phone"),
-                        phoneacctfield = $j("[id$=companyphone2]"),
-                        natfaxacct = $j("[id$=companyfaxinputTerminated]"),
-                        faxacct = $j("[id$=companyfax2]"),
-                        natmobileacct = $j("[id$=companymobileinputTerminated]"),
-                        mobileacct = $j("[id$=companymobile2]");
+                    var natphoneacctTerm = $j("[id$=companyphoneinputTerminated]"),
+                        phoneacctTerm = $j("[id$=companyphone2]"),
+                        natfaxacctTerm = $j("[id$=companyfaxinputTerminated]"),
+                        faxacctTerm = $j("[id$=companyfax2]"),
+                        natmobileacctTerm = $j("[id$=companymobileinputTerminated]"),
+                        mobileacctTerm = $j("[id$=companymobile2]");
 
-
-                    natphoneacct.intlTelInput({
+                    natphoneacctTerm.intlTelInput({
                         nationalMode: true,
                         defaultCountry: defaultHQCountry,
                         numberType: "FIXED_LINE",
                         utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
                     });
 
-                    natmobileacct.intlTelInput({
+                    natmobileacctTerm.intlTelInput({
                         nationalMode: true,
                         defaultCountry: defaultHQCountry,
                         numberType: "MOBILE",
                         utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
                     });
 
-                    natfaxacct.intlTelInput({
+                    natfaxacctTerm.intlTelInput({
                         nationalMode: true,
                         defaultCountry: defaultHQCountry,
                         numberType: "FIXED_LINE",
                         utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
                     });
 
-                    natphoneacct.intlTelInput("setNumber", phoneacctfield.val());
-                    natmobileacct.intlTelInput("setNumber", mobileacct.val());
-                    natfaxacct.intlTelInput("setNumber", faxacct.val());
+                    natphoneacctTerm.intlTelInput("setNumber", phoneacctTerm.val());
+                    natmobileacctTerm.intlTelInput("setNumber", mobileacctTerm.val());
+                    natfaxacctTerm.intlTelInput("setNumber", faxacctTerm.val());
 
-                    function setInternationalAccountPhoneNo(p) {
+                    function setInternationalAccountPhoneNoTerminated(p) {
                         if (p == 'phone') {
-                            phoneacct.val(natphoneacct.intlTelInput("getNumber"));
-                            phoneacctfield.val(natphoneacct.intlTelInput("getNumber"));
+                            phoneacctTerm.val(natphoneacctTerm.intlTelInput("getNumber"));
                         } else if (p == 'mobile') {
-                            mobileacct.val(natmobileacct.intlTelInput("getNumber"));
+                            mobileacctTerm.val(natmobileacctTerm.intlTelInput("getNumber"));
                         } else {
-                            faxacct.val(natfaxacct.intlTelInput("getNumber"));
+                            faxacctTerm.val(natfaxacctTerm.intlTelInput("getNumber"));
                         }
                     }
-                </script>
-           
+                </script>           
+        </apex:pageblock>
+
         <script>
             $( document ).ready(function() {
                 var vatNumber = $j('[id$=section1-vat-number]')[0];
@@ -1202,10 +1203,8 @@
                                 </apex:selectRadio>
                             </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>
-                       
                     </div>
                    
-                    
                      <apex:pageBlockSection columns="2">
                          <apex:outputPanel >
                         <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
