@@ -179,9 +179,9 @@ public with sharing class AMP_Groups_ParticipationController {
                     }
                     retList.add(pw);
 
-                    position++;
                     prevGroupName = p.Local_Governance__r.Name;
                 }
+                position++;
             }
 
 
