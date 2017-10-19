@@ -28,6 +28,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>AMS_DGR_Notification_Sent</fullName>
+        <field>Notification_Sent__c</field>
+        <literalValue>1</literalValue>
+        <name>AMS DGR Notification Sent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>X60_days</fullName>
         <field>Notification_Sent__c</field>
         <literalValue>1</literalValue>
@@ -38,7 +47,7 @@
     </fieldUpdates>
     <rules>
         <fullName>AMS 90 days DGR Expiration Reminder</fullName>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
         <criteriaItems>
             <field>AMS_Agency_Regulation__c.Type_Of_Certificate__c</field>
@@ -63,15 +72,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>AMS_DGR_15days_after_Notification_Sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
-            <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>AMS_DGR_60days_Notification_Sent</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -81,20 +81,29 @@
         </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
+                <name>AMS_DGR_30days_Notification_Sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>AMS_DGR_15days_after_Notification_Sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
+            <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>AMS_DGR_Notification_Sent</name>
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
             <timeLength>-90</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>AMS_DGR_30days_Notification_Sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
-            <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
