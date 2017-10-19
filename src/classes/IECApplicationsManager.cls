@@ -239,10 +239,21 @@ public without sharing class IECApplicationsManager {
             // if GAD, filter out the Cargo agencies
             if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
                 || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
-                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
-            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB){
+                
+                String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+                List<String> CACCodesList = CACCodesStr.split(';');
+
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN :CACCodesList');
+            
+            }else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD){
+                
+                String GADCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_GAD_Location_Classes__c;
+                List<String> GADCodesList = GADCodesStr.split(';');
+
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN :GADCodesList');
+           
+            }
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\', \'V\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
