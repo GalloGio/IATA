@@ -152,7 +152,7 @@ private class clsFSRequestControllerTest{
         cse.ContactId = contact1.Id;
         cse.BatchNumber__c = batch.Id;
         cse.Status = 'Assessment Performed';
-        cse.Financial_Review_Result__c = 'Satisfactory - New Financial Security';
+        cse.Financial_Review_Result__c = 'Satisfactory';
         insert cse;
         
         Signaturit_Events_WS__c ws = new Signaturit_Events_WS__c(name = 'test', events_url__c = 'http://test.com', oauth_url__c = '');

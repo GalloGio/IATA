@@ -138,6 +138,10 @@
                 <field>Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Site</field>
             </layoutItems>
@@ -611,6 +615,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>WebStar_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAP_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
