@@ -514,6 +514,10 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 <fullName>Encashment in progress</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Inactive_Addendum</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -657,7 +661,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30), 
 
-IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;) ),
+IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;),ISPICKVAL( Security_Status__c , &quot;Inactive_Addendum&quot;) ),
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Released&quot;,30,30),
 
 IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
@@ -2497,7 +2501,7 @@ NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Amend FS</masterLabel>
+        <masterLabel>Addendum</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/flow/ANG_FS_AddendumFlow?FSToCloneId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.AccountId__c}</url>

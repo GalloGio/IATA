@@ -613,10 +613,8 @@
       }
 
       function toggleCurrencyCode(c) {
-        document.getElementById("{!$Component.AMSForm.AMSBlock.sectionSix.y1.y1CurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.AMSForm.AMSBlock.sectionSix.y2.y2CurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.newSales.salesBlock.salesSection.salesSectionItem.salesCurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.newSales.salesBlock.newSalesCurrency}").value = c;
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.a.y1CurrencyCode}").innerHTML = ' ' + c;
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.b.y2CurrencyCode}").innerHTML = ' ' + c;
       }
 
       function cleanInputsInDiv(s) {
@@ -1404,7 +1402,7 @@
                   <!-- ******************* SECTION 5 – Other Information **************************** -->
                   <!-- ****************************************************************************** -->
                   <span id="nav_six"></span>
-                  <apex:pageBlock >
+                  <apex:pageBlock id="blockSix">
                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                     <apex:facet name="header">
                       <apex:outputpanel >
@@ -1416,11 +1414,33 @@
                       <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
                       <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </apex:outputText>
+
+                    <apex:pageBlockSectionItem rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+                      <apex:outputlabel value="{!$Label.ISSP_Currency}" />
+                      <apex:outputpanel >                        
+                          <apex:inputfield value="{!newForm.CurrencyIsoCode}" style="float:left" onchange="toggleCurrencyCode(this.value);" />
+                          <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpCurrency}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                      </apex:outputpanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem id="a" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+                        <apex:outputPanel>
+                          <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                          <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>  
+
+                    <apex:pageBlockSectionItem id="b" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+                        <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+                        <apex:outputPanel>
+                          <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                          <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
                   </apex:pageBlockSection>
-                  <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-                    <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
-                    <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
-                  </apex:pageBlockSection>
+
                   <apex:pageBlockSection >
                     <apex:pageblocksectionitem >
                       <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />

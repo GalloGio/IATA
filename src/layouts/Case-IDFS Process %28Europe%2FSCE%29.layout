@@ -313,6 +313,26 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Financial_Security_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Security_Currency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_deadline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bank_Guarantee_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Financial_Assessment_requested__c</field>
             </layoutItems>
             <layoutItems>
@@ -326,14 +346,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Local_Inspection_received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_requested__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_received__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -356,10 +368,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Local_Inspection_compliant__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_deadline__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
