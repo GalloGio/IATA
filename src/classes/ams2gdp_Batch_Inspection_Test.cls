@@ -43,13 +43,13 @@ private class ams2gdp_Batch_Inspection_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Inspection(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Inspection(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestInspectionBatch()
 	{
-		ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false);
+		ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 
