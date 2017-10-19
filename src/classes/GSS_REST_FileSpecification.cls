@@ -529,8 +529,9 @@ global with sharing class GSS_REST_FileSpecification{
     //global static String getZipFFileName(String FileName)
     static String getZipFileName(String FileName)
     {
-      //return FileName.replace('.', '')+'.zip'; 
-      return FileName+'.zip'; 
+      //return FileName.replace('.', '')+'.zip';
+      //Per Luc request mainframe client system requires zip in uppercase
+      return FileName+'.ZIP'; 
     }
     
     

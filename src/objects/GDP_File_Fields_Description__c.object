@@ -433,7 +433,26 @@
             <operation>equals</operation>
             <value>0</value>
         </filters>
-        <label>Reference - MDP WITH Address</label>
+        <label>Field Details - MDP WITH Address</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Member_Enhanced</fullName>
+        <columns>GDP_File_Description__c</columns>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member Enhanced</value>
+        </filters>
+        <label>Field Tracking - GSS Member Enhanced</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -452,6 +471,25 @@
             <value>Reference - GSS Member</value>
         </filters>
         <label>Field Tracking - GSS Member - TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Non_Member_Enhanced</fullName>
+        <columns>GDP_File_Description__c</columns>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member Enhanced</value>
+        </filters>
+        <label>Field Tracking - GSS Non Member Enhanced</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -488,6 +526,24 @@
             <value>Reference - MDP NO Address</value>
         </filters>
         <label>Field Tracking - MDP NO Address</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_MDP_WITH_Address</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - MDP WITH Address</value>
+        </filters>
+        <label>Field Tracking - MDP WITH Address</label>
         <language>en_US</language>
     </listViews>
     <nameField>

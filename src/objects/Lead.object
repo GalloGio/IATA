@@ -4012,6 +4012,9 @@ albam@iata.org</description>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
+        <fullName>IqScore</fullName>
+    </fields>
+    <fields>
         <fullName>Jigsaw</fullName>
         <trackHistory>false</trackHistory>
     </fields>

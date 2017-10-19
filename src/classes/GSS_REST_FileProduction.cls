@@ -150,6 +150,20 @@ global with sharing class GSS_REST_FileProduction{
           //What is the Calendar based on Weekly or Semi-Monthly
           //Semi-Monthly
           Date NextDateProduction = System.Today();
+
+          Integer NextDay  =NextDateProduction.Day();
+          Integer NextMonth=NextDateProduction.Month();
+          Integer NextYear =NextDateProduction.Year();
+          
+          Integer LastDay  =LastDateFileProduction.Day();
+          Integer LastMonth=LastDateFileProduction.Month(); 
+          Integer LastYear =LastDateFileProduction.Year();
+
+          Date LastFirstDate = Date.newInstance(LastYear, LastMonth, 1);
+          Date LastSemiDate = Date.newInstance(LastYear, LastMonth, 16);
+          
+          Date NextFirstDate = Date.newInstance(NextYear, NextMonth, 1);
+          Date NextSemiDate = Date.newInstance(NextYear, NextMonth, 16);
          
           //Weekly
           Datetime NextDateTimeProduction = DateTime.newInstance(NextDateProduction, Time.newInstance(0, 0, 0, 0));
@@ -157,8 +171,13 @@ global with sharing class GSS_REST_FileProduction{
               
           if (fs.Frequency__c=='Daily' && LastDateFileProduction<NextDateProduction) ProduceFile=true;
           if (fs.Frequency__c=='Weekly' && (LastDateFileProduction<NextDateProduction && dayOfWeek=='sunday' )) ProduceFile=true;
-          if (fs.Frequency__c=='Semi-Monthly' && LastDateFileProduction<NextDateProduction && (NextDateProduction.Day()==16 || NextDateProduction.Day()==1) )  ProduceFile=true;
-          if (fs.Frequency__c=='Monthly' && (LastDateFileProduction.Month()<NextDateProduction.Month())) ProduceFile=true;
+         
+          //Lpd>=1 && <16 of the month and today>=16 of the same month ==> production
+          //Lpd>=16 of the last month && <1 of current month and today<16 of the current month ==> production
+          //if (fs.Frequency__c=='Semi-Monthly' && LastDateFileProduction<NextDateProduction && (NextDateProduction.Day()==16 || NextDateProduction.Day()==1) )  ProduceFile=true;
+          if (fs.Frequency__c=='Semi-Monthly' && (LastDateFileProduction>=LastFirstDate && LastDateFileProduction< LastSemiDate && NextDateProduction>=NextSemiDate )) ProduceFile=true;
+          if (fs.Frequency__c=='Semi-Monthly' && (LastDateFileProduction>=LastSemiDate && LastDateFileProduction<NextFirstDate  && LastFirstDate<NextFirstDate ))  ProduceFile=true;
+          if (fs.Frequency__c=='Monthly' && (LastFirstDate<NextFirstDate)) ProduceFile=true;
           
           if (ProduceFile)
           {

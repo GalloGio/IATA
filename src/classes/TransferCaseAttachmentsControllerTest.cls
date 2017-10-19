@@ -72,7 +72,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c1');
         insert c1;
         
@@ -116,7 +116,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c3');
         //insert c3;
         
@@ -137,7 +137,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c4');
         //insert c4;
         
@@ -158,7 +158,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c4');
         //insert c5;
         list<Case> lstCasesToInsert = new list<Case>{c3, c4, c5};

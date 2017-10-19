@@ -336,7 +336,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>9/29/2017 12:00 AM</value>
+            <value>7/21/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>

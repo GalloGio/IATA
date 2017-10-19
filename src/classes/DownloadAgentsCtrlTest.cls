@@ -39,7 +39,7 @@ private class DownloadAgentsCtrlTest {
                               contactid = con.id,
                               AccountId = Hqrter.id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'                                                    
+                              Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
                               );
             
             insert c;
