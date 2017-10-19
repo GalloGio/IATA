@@ -26,7 +26,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         isNewLine = false;
         if(this.myAccount.Id != null) {
             accountId = this.myAccount.Id;
-            accountName = this.myAccount.Name;
+            // accountName = this.myAccount.Name;
         } else {
             accountId =  ApexPages.currentPage().getParameters().get('accountId');
             accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
