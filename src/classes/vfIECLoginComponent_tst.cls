@@ -25,7 +25,7 @@ private class vfIECLoginComponent_tst {
         
         //002: Register
         pgCont.register();
-        
+    
         //003: Forgot Password
         pgCont.forgotPassword();
         
@@ -43,5 +43,86 @@ private class vfIECLoginComponent_tst {
         pgCont.closePopup();
         pgCont.showPopup();
     	Test.stopTest();
+    }
+
+    @isTest static void testLogin(){
+        //setup test data
+        VfIECLoginComponent page = new VfIECLoginComponent();
+    
+        //if username == null
+        try{
+            page.username = null;
+            page.password = 'password';
+            page.login();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //if username invalid email format
+        try{
+            page.username = 'a';
+            page.password = 'password';
+            page.login();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //if password = null
+        try{
+            page.password = null;
+            page.username = 'a@b.com';
+            page.login();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //if sPrefillUsername != null
+        page.username = 'a@b.com';
+        page.password = 'password';
+        page.sPrefillUsername = 'a@b.com';
+        page.login();
+        
+        System.assertEquals('a@b.com', page.username);
+        System.assertEquals('', page.sPrefillUsername);
+
+        //if all ok
+        page.username = 'a@b.com';
+        page.password = 'password';
+        page.sPrefillUsername = 'a@b.com';
+        System.assertEquals(null, page.login());
+    }
+
+    @isTest static void testResetPassword(){
+        VfIECLoginComponent loginPage = new VfIECLoginComponent();
+
+        //test if username = null
+        loginPage.resetPasswordEmail = null;
+        try{
+            loginPage.resetPassword();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //test if username is of invalid email format
+        loginPage.resetPasswordEmail = 'a';
+        try{
+            loginPage.resetPassword();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //test if username is of invalid email format
+        loginPage.resetPasswordEmail = 'a.com';
+        try{
+            loginPage.resetPassword();
+        } catch(IECApplicationException e){
+            System.assert(true);
+        }
+
+        //test if username is in valid email format
+        loginPage.resetPasswordEmail = 'a@b.com';
+        System.assertEquals(null, loginPage.resetPassword());
+        Test.setCurrentPage(loginPage);
+        System.assertEquals(false, ApexPages.hasMessages());
     }
 }
