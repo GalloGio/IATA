@@ -48,6 +48,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
 			log.Agency_Applied_Change_code__c = changeCodeId;
 			log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+			log.Input_Description__c= 'body:'+body;
 			log.Method__c = action;
 			log.Web_Service__c = String.valueOf(req);
 			log.Error_Code__c = 'Exception sending request';
@@ -66,6 +67,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 		log.Agency_Applied_Change_code__c = changeCodeId;
 		log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+		log.Input_Description__c= 'body:'+body;
 		log.Method__c = action;
 		log.Web_Service__c = String.valueOf(req);
 
