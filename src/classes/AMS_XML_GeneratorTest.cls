@@ -426,6 +426,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         
         r[5] = ag1.Id;
 
+/*  NEWGEN-801
+
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
@@ -444,6 +446,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         );
         
         insert rhcInfo;
+
+*/
 
         Test.startTest();
 
