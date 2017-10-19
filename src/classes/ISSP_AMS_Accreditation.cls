@@ -29,6 +29,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String amsAgentType {get; set;}
     public String agentCaseType {get; set;} //Used to set TIDS, Sales Agent (SA) from links on ISSP_AMSCase
     public String amsLocationType {get; set;}
+    public String amsLocationTypeLabelHq {get; set;}
+    public String amsLocationTypeLabel {get; set;}
     public String amsIsGSA {get; set;}
     public String noCLocationType {get; set;}
     public boolean isGSARequired;
@@ -616,8 +618,10 @@ public without sharing class ISSP_AMS_Accreditation {
             // no case Id
 
         }
-
-        if (amsOfficeType == 'Branch') { //Set default VAT Number of Branch to that of the HO
+        //Set default VAT Number of Branch to that of the HO and 
+        // It's not a separate legal entity
+        // It's null when it's a branch.
+        if (amsOfficeType == 'Branch' && (newForm.AE_separate_Legal_Entity__c == null || newForm.AE_separate_Legal_Entity__c == 'No')) { 
             if (newForm.ISSP_AMS_VAT_number_input__c == null)
                 if (isEUcountry) { //Need to remove first 2 chars (ISO County code) for VAT input field for EU countries since not required by validation WS
                     if (con.Account.VAT_Number__c != null)
@@ -625,6 +629,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else { //Simply take BR VAT default of HO for non-EU countries
                     newForm.ISSP_AMS_VAT_number_input__c = con.Account.VAT_Number__c;
                 }
+        }
+        
+        if(isHOAccredited) {
+            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+        } else {
+            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            amsLocationTypeLabelHq = amsLocationTypeLabel;
         }
 
         // NewGen is only valid for Travel Agents
@@ -1235,6 +1247,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
 
+            if(isHOAccredited) {
+                amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            } else {
+                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+                amsLocationTypeLabelHq = amsLocationTypeLabel;
+            }
+
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
             
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
@@ -1302,7 +1322,14 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
-            newCase.Type_of_customer__c = con.Account.Category__c;
+
+            if(newForm.Operation_Type__c == 'Travel_Agent') {
+                newCase.Type_of_customer__c = 'IATA Travel Agent';
+            } else if (newForm.Operation_Type__c == 'Cargo_Agent') {
+                newCase.Type_of_customer__c = 'IATA Cargo Agent';
+            } else {
+                newCase.Type_of_customer__c = con.Account.Category__c;    
+            }
             
             if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
@@ -1536,7 +1563,7 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.debug('IsNew Case NoC:' + isNewCase);
             if (isNewCase || changeOfAccountConcerned) {
                 accountStagingFieldMapping(accountConcerned, AMS_Utils.CASE_REASON_NEW_HO, false);
-                newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
+                newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);                
               
                 SYSTEM.DEBUG('IsNew NoC VATNumber: ' + accountConcerned.VAT_Number__c);
                 
@@ -1759,7 +1786,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (isEUcountry) { ///Add 2-letter ISO Code to VAT Number of EU countries
-            newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            if(newForm.ISSP_AMS_VAT_number_input__c != null) {
+                newForm.ISSP_AMS_VAT_number__c = newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_number_input__c;
+            }
         } else {
             newForm.ISSP_AMS_VAT_number__c = newForm.ISSP_AMS_VAT_number_input__c;
         }
@@ -2886,6 +2915,12 @@ public without sharing class ISSP_AMS_Accreditation {
               
                     accountStagingFieldMapping(hqAccount, newCase.Reason1__c, false);    
                 }
+            } else {
+                if(!newForm.Notify_Change_Accreditation_Type__c) {
+                    newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;                    
+                } else {                    
+                    newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
+                }
             }
            
             newForm.Submitted_to_IATA__c = TRUE;
@@ -3631,7 +3666,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -7781,5 +7816,15 @@ system.debug('aqui sectorValue ' + sectorValue);
         getAmscontactsEmails(new List <AMS_Accreditation_Contact__c>() );
         validateNewAccModelHO(true);
         validateNewAccModelHO(false);
+    }
+
+    private String translateAccreditationModel(String accreditationModel) {
+        if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithCash;
+        } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+            return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
+        } else {
+            return accreditationModel;
+        }
     }
 }

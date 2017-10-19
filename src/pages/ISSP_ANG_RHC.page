@@ -138,85 +138,91 @@
                 <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB}</strong>
               </div>
             </header>
-            <section id="remittance-holding-table" class="col-md-8 col-sm-12">
-              <table class="table">
-                <tr style="display: {!IF(( isCashless == false),"block","none")}">
-                  <td>
-                    {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="RHC_AmountTooltip" />
-                  </td>
-                  <td>
-                    {!remittanceFrequency.CurrencyIsoCode} 
-                    <apex:outputText value="{0, number, ###,##0.##}">
-                      <apex:param value="{!remittanceFrequency.ANG_RHC_Amount__c}"/>
+            <apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row">
+              <section id="remittance-holding-table" class="col-md-8 col-sm-12">
+                <table class="table">
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.inlineHelpText}" />
+                    </td>
+                    <td>
+                      {!rhcInfo.CurrencyIsoCode} 
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_RHC_Amount__c}"/>
+                      </apex:outputText>
+                    </td>
+                  </tr>
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$Label.ISSP_RHC_HUB_Current_Usage}
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
+                    </td>
+                    <td>
+                      {!rhcInfo.CurrencyIsoCode}
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_ConsumedRHC__c}"/>
+                      </apex:outputText>
+                    </td>
+                  </tr>
+                  <tr style="display: table-row;">
+                    <td>
+                      {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
+                    </td>
+                    <td style="text-align: left !important;">
+                      {!rhcInfo.CurrencyIsoCode}
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_Financial_Security__c}"/>
+                      </apex:outputText>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$ObjectType.Account.fields.Remittance_frequency__c.label}
+                    </td>
+                    <td>{!contact.Account.Remittance_frequency__c}</td>
+                  </tr>
+                </table>
+              </section>
+              <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
+                <canvas id="percentageUsageGauge"></canvas>
+                <br/>
+                <span>
+                  <strong>
+                    <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
+                      <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
                     </apex:outputText>
-                  </td>
-                </tr>
-                <tr style="display: {!IF(( isCashless == false),"block","none")}">
-                  <td>
-                    {!$Label.ISSP_RHC_HUB_Current_Usage}
-                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
-                  </td>
-                  <td>
-                    {!remittanceFrequency.CurrencyIsoCode}
-                    <apex:outputText value="{0, number, ###,##0.##}">
-                      <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC__c}"/>
-                    </apex:outputText>
-                  </td>
-                </tr>
-                <tr style="display: block;">
-                  <td>
-                    {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
-                  </td>
-                  <td style="text-align: left !important;">
-                    {!remittanceFrequency.CurrencyIsoCode}
-                    <apex:outputText value="{0, number, ###,##0.##}">
-                      <apex:param value="{!remittanceFrequency.ANG_Financial_Security__c}"/>
-                    </apex:outputText>
-                  </td>
-                  <td></td>
-                </tr>
-                <tr style="display: {!IF(( isCashless == false),"block","none")}">
-                  <td>
-                    {!$ObjectType.Account.fields.Remittance_frequency__c.label}
-                  </td>
-                  <td>{!contact.Account.Remittance_frequency__c}</td>
-                </tr>
-              </table>
-            </section>
-            <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
-              <canvas id="percentageUsageGauge"></canvas>
-              <br/>
-              <span>
-                <strong>
-                  <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
-                    <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}"/>
+                  </strong>
+                </span>
+                <span class="last-updated">
+                  <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
+                  <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                    <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Last_Update__c}" />
                   </apex:outputText>
-                </strong>
-              </span>
-              <span class="last-updated">
-                <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
-                <apex:outputText value="{0, date, EEE, d MMM yyyy}">
-                  <apex:param value="{!remittanceFrequency.ANG_ConsumedRHC_Last_Update__c}" />
-                </apex:outputText>
-              </span>
-            </section>
+                </span>
+              </section>
+            </apex:outputPanel>
           </section>
-          <div class="row" style="display: {!IF(( isCashless == false),"block","none")}">
+
+          <div class="row" style="display: {!IF(isCashless,'none','block')}">
+            <div class="col-col-xs-12 col-md-8 col-md-offset-2">
+              <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+            </div>
+          </div>
+
+          <div class="row" style="display: {!IF(isCashless,'none','block')}">
             <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
               <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
               <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
               <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
             </div>            
           </div>
-          <div class="row">
-            <br/>
-          </div>
 
 
           <!-- Available forms of payment-->
 
-          <c:AFP_Component wrapperClass='{!afpWrapper}'/>
+          <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           
         </section>
 
@@ -242,7 +248,7 @@
                 </div>
               </td>
             </tr>
-            <tr style="display: {!IF(( isCashless == false),"block","none")}">
+            <tr style="display: {!IF(isCashless,'none','table-row')}">
               <td>
                 <div class="customTable">
 
@@ -282,7 +288,7 @@
 
         <!-- Risk Event History -->
 
-        <section name="right-side" class="col-md-6 col-sm-12" style="display: {!IF(( isCashless == false),"block","none")}">
+        <section name="right-side" class="col-md-6 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
           <table class="table">
             <tr>
               <th class="section-header">
@@ -366,12 +372,38 @@
 
       <c:ISSP_CustomFooter />
     </main>
+
+    <script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
+    <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
+
     <script src="{!URLFOR($Resource.gaugeJS)}"></script>
     <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
     <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>  
     <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
     <script>
-      (function gaugeScript() {
+    sforce.connection.sessionId='{!GETSESSIONID()}';
+
+    var accountId = '{!accountId}';
+
+    function requestBalanceUpdate() {
+      var $button = $("#requestRME");
+      var requestText = $button.text();
+      $button.text('...').attr("disabled", "disabled");
+      
+      var result = sforce.apex.execute("ANG_RME_Alert_Service","requestBalanceUpdate",{accountId: accountId}); 
+
+      console.info(result[0]);
+
+      if(result[0].isSuccess == "true"){
+        window.location.reload();
+      }else{
+        alert(result[0].description);
+      }
+
+      $button.text(requestText).removeAttr('disabled');
+    }
+
+    function gaugeScript() {
         "use strict";
         var opts = {
           angle: 0, // The span of the gauge arc
@@ -440,11 +472,12 @@
           gauge.maxValue = 100;
           gauge.setMinValue(0);
           gauge.animationSpeed = 32;
-          gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c});
+          gauge.set({!rhcInfo.ANG_ConsumedRHC_Percent__c});
         }
 
-      })();
+      }
       
+      gaugeScript();
     </script>
   </body>
   </html>

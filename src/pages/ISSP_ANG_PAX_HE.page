@@ -595,10 +595,8 @@
     }
 
     function toggleCurrencyCode(c) {
-        document.getElementById("{!$Component.AMSForm.AMSBlock.sectionSix.y1.y1CurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.AMSForm.AMSBlock.sectionSix.y2.y2CurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.newSales.salesBlock.salesSection.salesSectionItem.salesCurrencyCode}").innerHTML = ' ' + c;
-        document.getElementById("{!$Component.newSales.salesBlock.newSalesCurrency}").value = c;
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.y1.y1CurrencyCode}").innerHTML = ' ' + c;
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.y2.y2CurrencyCode}").innerHTML = ' ' + c;
     }
 
     function cleanInputsInDiv(s){
@@ -851,7 +849,7 @@
                     	<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                         <apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" styleClass="labelCol" style="padding-left:21px" html-for="VATInput"/>
                         <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'40px', '57px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                            <span style="margin-left:{!If(isEUcountry,'40px', '59px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                             <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
@@ -1555,7 +1553,7 @@
 
 
             <span id="nav_six"></span>
-                <apex:pageBlock >
+                <apex:pageBlock id="blockSix">
                 <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                         <apex:facet name="header">
                             <apex:outputpanel >
@@ -1566,15 +1564,29 @@
                         <apex:outputText rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
                             <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
-                        </apex:outputText>         
-                        
-                     	<apex:pageBlockSectionItem rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
+                        </apex:outputText>
+
+                        <apex:pageBlockSectionItem rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
+                            <apex:outputlabel value="{!$Label.ISSP_Currency}" />
+                            <apex:outputpanel >
+                                <apex:inputfield value="{!newForm.CurrencyIsoCode}" style="float:left" onchange="toggleCurrencyCode(this.value);" />
+                                <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpCurrency}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            </apex:outputpanel>
+                        </apex:pageblocksectionitem>
+
+                     	<apex:pageBlockSectionItem id="y1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
                      		<apex:outputLabel id="section5-first-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
-                       		<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                            <apex:outputPanel >
+                           		<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                                <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>
                    		</apex:pageBlockSectionItem>       
-                       	<apex:pageBlockSectionItem rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
+                       	<apex:pageBlockSectionItem id="y2" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
                        		<apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
-                        	<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                            <apex:outputPanel >                            
+                            	<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                                <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                            </apex:outputPanel>                            
                    		</apex:pageBlockSectionItem>
                                
                        <apex:pageblocksectionitem labelStyle="width:20%">

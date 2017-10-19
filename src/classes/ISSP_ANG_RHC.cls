@@ -15,7 +15,7 @@ public with sharing class ISSP_ANG_RHC {
 	public Id accountId {get; set;}
 	public Boolean isCashless {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
-	public ANG_RHC_Information__c remittanceFrequency {get;set;}
+	public ANG_RHC_Information__c rhcInfo {get;set;}
 	public Boolean hasRightAccessIceService { get {
 		if (hasRightAccessIceService != null) {
 			return hasRightAccessIceService;
@@ -29,7 +29,7 @@ public with sharing class ISSP_ANG_RHC {
 		this.riskStatusFilter = 'Active';
 		init();
 		initFormsOfPayment();
-		initializeRemittanceFrequency();
+		initializeRHCInfo();
 		initRiskProfile();
 	}
 
@@ -105,8 +105,8 @@ public with sharing class ISSP_ANG_RHC {
 		this.afpWrapper = new ANG_ISSP_AfpWrapper(this.contact, authorizations, services);
 	}
 
-	private void initializeRemittanceFrequency() {
-		List<ANG_RHC_Information__c> remittanceFrequencyList = [
+	public void initializeRHCInfo() {
+		List<ANG_RHC_Information__c> rhcInfoList = [
 			SELECT Id, 
 				   ANG_RHC_Amount__c, 
 				   ANG_ConsumedRHC__c, 
@@ -116,7 +116,7 @@ public with sharing class ISSP_ANG_RHC {
 			  FROM ANG_RHC_Information__c
 			 WHERE ANG_AccountId__c = :accountId
 		];
-		this.remittanceFrequency = remittanceFrequencyList.isEmpty() ? null : remittanceFrequencyList[0];
+		this.rhcInfo = rhcInfoList.isEmpty() ? null : rhcInfoList[0];
 	}
 
 	private void initRiskProfile() {

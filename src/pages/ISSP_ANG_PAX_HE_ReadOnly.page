@@ -56,8 +56,20 @@
     </apex:pageBlockSection>
     
     <apex:pageBlockSection rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}"> <!-- IF ACCOUNT IS NOT TERMINATED AND IS NOT ACCREDITED  -->
+
             <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!hqAccount.Name}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!hqAccount.TradeName__c}"/>
+
+            <apex:pageblocksectionitem >
+              <apex:outputlabel style="text-align: right; float: right;" value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+              <apex:outputtext value="{!amsLocationTypeLabelHq}" />
+            </apex:pageblocksectionitem>
+
+            <apex:pageblocksectionitem >
+              <apex:outputlabel value="" />
+              <apex:outputtext value="" />
+            </apex:pageblocksectionitem>
+
             <apex:outputField label="{!$Label.ISSP_Office_Phone}" value="{!hqAccount.Phone}"/> 
             <apex:outputField label="{!$Label.Email}" value="{!hqAccount.Email__c}"/>                       
             <apex:outputField label="{!$ObjectType.Account.fields.Mobile__c.Label}" value="{!hqAccount.Mobile__c}"/>
@@ -69,6 +81,17 @@
     <apex:pageBlockSection rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS IS TERMINATED AND IS ACCREDITED  -->
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Account_Name__c}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!newForm.Trade_Name__c}"/>
+
+            <apex:pageblocksectionitem >
+              <apex:outputlabel style="text-align: right; float: right;" value="{!$Label.ANG_ISSP_AccreditationType}" />
+              <apex:outputtext value="{!amsLocationTypeLabelHq}" />
+            </apex:pageblocksectionitem>
+
+            <apex:pageblocksectionitem >
+              <apex:outputlabel value="" />
+              <apex:outputtext value="" />
+            </apex:pageblocksectionitem>                 
+
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}" value="{!newForm.Branch_Office_Phone__c}"/> 
             <apex:outputField label="{!$Label.Email}" value="{!newForm.Branch_Office_Email__c}"/>                       
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Mobile__c.Label}" value="{!newForm.Mobile__c}"/>
@@ -280,8 +303,20 @@
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
             </apex:outputText>         
             <apex:pageBlockSection columns="1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
-                <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+                <apex:outputPanel >
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}"/>
+                    <apex:outputPanel>
+                        <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
+                        <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                    </apex:outputPanel>                    
+                </apex:outputPanel>                                
+                <apex:outputPanel>
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}"/>            
+                    <apex:outputPanel>
+                        <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+                        <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
             </apex:pageBlockSection>                    
 
             <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>

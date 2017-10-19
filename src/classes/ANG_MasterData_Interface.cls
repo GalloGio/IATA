@@ -39,7 +39,7 @@ global class ANG_MasterData_Interface{
             }
             
             //All is good. Proceeding in generating payload
-            GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F')), 200);
+            GenerateResponse(json.serialize(replaceNullForblank(new MasterDataPayload(lsAccnt[0], sMode=='F'))), 200);
         }
         catch(exception e){
             GenerateResponse(json.serialize(new ErrorPayload('500', e.getMessage()) ), 500);
@@ -207,8 +207,23 @@ global class ANG_MasterData_Interface{
         }
     }
     
+
+
     private static string FormatDateMS(date theDate){
         if(theDate==null) return null;
         else return theDate.Year() + '-' + string.valueOf(theDate.Month()).leftPad(2).replace(' ', '0') + '-' + string.valueOf(theDate.Day()).leftPad(2).replace(' ', '0');
+    }
+
+
+    private static object replaceNullForblank(object ob){
+        String jsonContent = JSON.serialize(ob);
+        Map<String,Object> obj = (Map<String,Object>) JSON.deserializeUntyped(jsonContent);
+        for(string at:obj.keyset()){
+            if(obj.get(at) ==null){
+                obj.put(at,'');
+            }                   
+        }
+
+        return obj;
     }
 }
