@@ -137,12 +137,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		system.debug('isPaymentDefault');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR  
 			&& (aacc.Account__r.Location_Type__c == AMS_Utils.HE || aacc.Account__r.Location_Type__c == AMS_Utils.HO  || aacc.Account__r.Location_Type__c == AMS_Utils.AO)
-			&& (aacc.PreviousReason__c == null 
-				|| aacc.PreviousReason__c == ''
-				||( !aacc.PreviousReason__c.contains('50') 
-					&& !aacc.PreviousReason__c.contains('53')
-				   )
-				)
+			&& (String.isBlank(aacc.PreviousReason__c) || (!aacc.PreviousReason__c.contains('50') && !aacc.PreviousReason__c.contains('53')))
 			)
 				return true;
 
@@ -171,7 +166,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
 		system.debug('isMajorchange1');
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF  
+			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CSF)
@@ -183,6 +179,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	public boolean isMajorchange2(Agency_Applied_Change_code__c aacc){
 		system.debug('isMajorchange2');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF 
+			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& (aacc.Bulletin_Information__c.toUpperCase().contains('MAJOR')
 				|| aacc.Bulletin_Information__c.toUpperCase().contains('OWNERSHIP')
 				|| aacc.Bulletin_Information__c.toUpperCase().contains('LEGAL')
@@ -221,6 +218,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			&& aacc.Reason_Code__c == 'Review' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_FINANCIAL_REVIEW
 			&& (aacc.Account__r.Location_Type__c == AMS_Utils.HE || aacc.Account__r.Location_Type__c == AMS_Utils.HO  || aacc.Account__r.Location_Type__c == AMS_Utils.AO)
+			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& aacc.Bulletin_Information__c.contains('bank')
 			)
 				return true;
@@ -232,8 +230,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		system.debug('isCommonOwnershipDefault');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR 
 			&& (aacc.Account__r.Location_Type__c == AMS_Utils.HE || aacc.Account__r.Location_Type__c == AMS_Utils.HO  || aacc.Account__r.Location_Type__c == AMS_Utils.AO)
-			&& (aacc.PreviousReason__c != null
-				&& aacc.PreviousReason__c.contains('54'))
+			&& String.isNotBlank(aacc.PreviousReason__c)
+			&& aacc.PreviousReason__c.contains('54')
 			)
 				return true;
 
