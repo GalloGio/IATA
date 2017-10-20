@@ -76,7 +76,7 @@
             </apex:pageBlock>
        </apex:outputPanel>
         <script type="text/javascript">
-            $('[id$=advancedReport').dataTable();                      
+            $('[id$=advancedReport').dataTable({ "iDisplayLength": 50 });                    
         </script>
     </apex:outputPanel>
     </apex:form>
