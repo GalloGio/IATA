@@ -11,10 +11,10 @@
     		margin: 3%;
     	}
 
-    	.maingroup {background-color: yellow;}
+    	.maingroup {background-color:  #f0f0f0;}
     	th { text-align: left;}
     	th.narrowColumn {width: 10%;}
-    	th.headerRow {background-color: rgb(160, 195, 248) !important;}
+    	th.headerRow {background-color: #bdbdbd !important;}
     	td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
     	/*tr.odd { background: #eee;}*/
     	table.milestones {width: 98%; margin-left: auto; margin-right: auto; border: 1px solid #aaa; margin-bottom: 2em;}
