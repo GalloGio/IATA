@@ -54,7 +54,12 @@ global class ANG_MasterData_Interface{
         res.responseBody = Blob.valueOf(sBody);
         //return res;
     }
-    
+
+
+
+
+   
+
     /* ERROR Payload */
     private class ErrorPayload{
         public string sError;
@@ -72,9 +77,9 @@ global class ANG_MasterData_Interface{
         public Decimal RHCAmount; //Number + currency
         public string RHCCurrency;
         public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency){
-            this.RiskStatus = RiskStatus;
+            this.RiskStatus = RiskStatus==null?'':RiskStatus;
             this.RHCAmount = RHCAmount;
-            this.RHCCurrency= RHCCurrency;
+            this.RHCCurrency= RHCCurrency==null?'':RHCCurrency;
         }
     }
     
@@ -83,18 +88,22 @@ global class ANG_MasterData_Interface{
         public string Type;     //CA, CE, EP
         public string Status;
         public FOP(string Type, string Status){
-            this.Type = Type;
-            this.Status = Status;
+            this.Type = Type==null?'':Type;
+            this.Status = Status==null?'':Status;
         }
     }
-        
+       
+
+    private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
+    private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren'};
+
     private class MasterDataPayload{
         /* Agency Information */
         public string isBranchAbroad;
         public boolean PurgeCode;
         public string AccreditationDate;
         public string DefaultDate;
-        public date LastStatusChangeDate;
+        public string LastStatusChangeDate;
         public string AccelyaEmail;     //From Agency Authorization
         public string AccreditationType;
         public string agencyType;
@@ -129,7 +138,10 @@ global class ANG_MasterData_Interface{
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
-         
+        
+        
+
+
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren){
             try{
@@ -137,7 +149,7 @@ global class ANG_MasterData_Interface{
                 this.PurgeCode = acc.Purge_Flag__c;
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
                 this.DefaultDate = FormatDateMS(acc.Default_date__c);
-                this.LastStatusChangeDate = acc.Date_Organisation_Status_attained__c ;
+                this.LastStatusChangeDate = String.ValueOf(acc.Date_Organisation_Status_attained__c) ;
                 
                 this.AccreditationType = acc.ANG_Accreditation_Model__c;
                 this.agencyType = '';
@@ -178,12 +190,11 @@ global class ANG_MasterData_Interface{
                 //List  of children IATACode
                 //Returned only if specifically requested
                 if(getChildren){
+                    this.lsChildren= new list<string>();
                     if(!acc.ChildAccounts.isEmpty()){
-                        list<string> ls = new list<string>();
+                       
                         for(Account a:acc.ChildAccounts)
-                            ls.add(a.IATACode__c);
-                        
-                        this.lsChildren = ls;
+                            this.lsChildren.add(a.IATACode__c);
                     }
                 }
                 
@@ -219,11 +230,11 @@ global class ANG_MasterData_Interface{
         String jsonContent = JSON.serialize(ob);
         Map<String,Object> obj = (Map<String,Object>) JSON.deserializeUntyped(jsonContent);
         for(string at:obj.keyset()){
-            if(obj.get(at) ==null){
-                obj.put(at,'');
-            }                   
+            if(!IGNORE_FIELDS_SET.contains(at) && obj.get(at) ==null){
+                if(REMOVE_FIELDS_SET.contains(at))obj.remove(at);
+                else obj.put(at,'');
+            }                
         }
-
         return obj;
     }
 }

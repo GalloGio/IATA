@@ -4495,7 +4495,15 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Delivery</shortDescription>
-        <value>IDCard Expedite Delivery</value>
+        <value>Certified/Expedite</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Expedite_Note</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Note</shortDescription>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
     </labels>
     <labels>
         <fullName>IDCard_ExportCSV</fullName>
@@ -4850,6 +4858,14 @@ In order to verify that you need to upload a proof of last name change.</value>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
         <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Loading_Message</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Loading_Message</shortDescription>
+        <value>Please wait…</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -14331,7 +14347,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
-        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement billing (BSP sales) to your DD account.</value>
+        <value>NOTE:  For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement notice (BSP sales) to DD account in compliance with the notification downloaded from ASD.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -15789,6 +15805,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Download Now!</value>
     </labels>
     <labels>
+        <fullName>ISSP_Download_in_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in CSV</shortDescription>
+        <value>Download in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_PDF</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in PDF</shortDescription>
+        <value>Download in PDF</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Draft</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -17232,7 +17264,14 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Homepage</shortDescription>
-        <value>My Company open cases</value>
+        <value>My Company open cases (assigned)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Homepage_My_Company_open_cases_un</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Homepage_My_Company_open_cases_un</shortDescription>
+        <value>My Company open cases (unassigned)</value>
     </labels>
     <labels>
         <fullName>ISSP_Homepage_My_Dashboard</fullName>
