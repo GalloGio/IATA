@@ -605,7 +605,7 @@
                                         <apex:outputfield value="{!newCase.ContactId}" rendered="{!OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR')}" />
                                         
                                         <apex:outputtext label="{!$ObjectType.Account.fields.Name.Label}" rendered="{!NOT(OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR', caseType=='IFAP'))}">
-                                            <apex:outputlink value="/ISSP_CompanyInformation?id={!newCase.AccountId}&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!newCase.Account.Name + IF(AND(newCase.IATA_Code__c!=null,newCase.Account.Status__c!='New application pending'), ' (' + newCase.IATA_Code__c + ')', '')}</apex:outputlink>
+                                            <apex:outputlink value="/ISSP_CompanyInformation?id={!newCase.AccountId}&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!newCase.Account.Name + IF(AND(newCase.IATA_Code__c!=null,newCase.Account.Status__c!='New application pending'), ' (' + newCase.IATA_Code__c + ')', '')} ({!newCase.Account.Location_Type__c})</apex:outputlink>
                                         </apex:outputtext>
                                         <apex:outputtext label="{!$Label.Contact_Name}" rendered="{!NOT(OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR', caseType=='IFAP'))}">
                                             <apex:outputlink value="/ISSP_Contact?id={!newCase.ContactId}&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!newCase.Contact.Name}</apex:outputlink>
@@ -614,6 +614,8 @@
 
                                         <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
                                         <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
+                                        
+                                        <apex:outputfield rendered="{!newCase.RecordType.Name=='Invoicing Collection Cases'}" value="{!newCase.Has_the_agent_paid_invoice__c}" />
                                         
                                         <!-- SIDRA Fields - Display even when empty -->
                                         <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$ObjectType.Case.fields.Remittance_Date__c.Label}" rendered="{!caseType =='SIDRA'}">
@@ -668,7 +670,7 @@
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
 
-                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation))}">
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c <> 'New MSO')}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">

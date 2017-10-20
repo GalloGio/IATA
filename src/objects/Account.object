@@ -3401,18 +3401,38 @@
     <fields>
         <fullName>Airline_Model_Type__c</fullName>
         <externalId>false</externalId>
-        <label>Airline Model Type</label>
+        <label>Airline Business Model</label>
         <picklist>
             <picklistValues>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Full Service Holiday Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ultra Low Cost Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Only Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Legacy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low Cost</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hybrid</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -5327,12 +5347,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo Agent</controllingFieldValues>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
                 <controllingFieldValues>Governmental Institution</controllingFieldValues>
@@ -5458,6 +5472,12 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <fullName>Railway Line</fullName>
                 <default>false</default>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recipient</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Resort</fullName>
@@ -27816,10 +27836,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -27901,6 +27917,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30796,10 +30816,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -30877,6 +30893,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32224,15 +32244,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33454,10 +33470,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>MSO Member Sales Office</fullName>
                 <default>false</default>
             </values>
@@ -33475,6 +33487,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -38498,15 +38514,31 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legacy</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46608,15 +46640,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -51047,15 +51075,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56579,10 +56603,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -56660,6 +56680,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63977,10 +64001,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -64058,6 +64078,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65732,15 +65756,31 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legacy</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67082,10 +67122,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -67167,6 +67203,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -73352,15 +73392,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74702,10 +74738,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -74787,6 +74819,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77644,15 +77680,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -78982,10 +79014,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -79067,6 +79095,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82140,6 +82172,23 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>The CASS Number must have 3 digits</description>
         <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
         <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cannot_change_HO_location_type</fullName>
+        <active>true</active>
+        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+  ISCHANGED(Location_Type__c),
+  OR (
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
+  ),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+  Has_a_Financial_Assessment_Contact__c
+)</errorConditionFormula>
+        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>

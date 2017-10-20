@@ -401,7 +401,7 @@
                                         IF(amsAgentType == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                                             IF(amsAgentType == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                                                 IF(amsAgentType == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
-                                                    IF(amsAgentType == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
+                                                    IF(amsAgentType == 'Recipient', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
                                                         IF(amsAgentType == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title))))))}
             </h3>
         </div>
@@ -860,14 +860,25 @@
                             <tr><td class="modalrow">
                                 <apex:outputText value="{!$Label.ISSP_MyProfile_FIRSTNAME}" /><br/>
                                 <apex:inputField value="{!trainedStaffContact.First_name__c}" />
-                                </td></tr>
-                            <tr><td class="modalrow">
+                                </td><td class="modalrow">
                                 <apex:outputText value="{!$Label.ISSP_MyProfile_LASTNAME}" /><br/>
                                 <apex:inputField value="{!trainedStaffContact.Last_name__c}" />
                                 </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputText value="{!$Label.ISSP_AMS_Position}" /><br/>
+                            <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                                <apex:outputText value="Training Type" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Type_Of_Certificate__c}" />
+                                </td>
+                                <td class="modalrow">
+                                <apex:outputText value="{!$Label.ISSP_AMS_Position}" />
                                 <apex:inputField required="true" value="{!trainedStaffContact.Position_trained_staff__c}" />
+                                </td></tr>
+                            <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                                <apex:outputText value="Organization" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Certificate_Issuer__c}" />
+                                </td>
+                                <td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                                <apex:outputText value="Reference" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Registration_number__c}" />
                                 </td></tr>
                             <tr><td class="modalrow">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT2}"/><br/>
