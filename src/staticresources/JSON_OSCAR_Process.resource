@@ -4115,6 +4115,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -4292,37 +4293,6 @@
                 "IsDependent": true
               },
               {
-                "Name": "STEP13",
-                "Required": [
-                  "STEP8",
-                  "STEP9"
-                ],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
-                  },
-                  {
-                    "Status": "In Progress",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
-                  },
-                  {
-                    "Status": "Not Applicable",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
-                  }
-                ],
-                "DisplayFields": [
-                  "Send_inspection_request__c",
-                  "STEP13__c"
-                ],
-                "IsDependent": false
-              },
-              {
                 "Name": "STEP14",
                 "Required": [
                   "STEP8",
@@ -4443,7 +4413,6 @@
                   "Off_site_storage__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -4476,7 +4445,6 @@
                   "Issue_credit_note_if_applicable__c",
                   "Release_FS_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "Close_IFAP_Disapproval__c",
                   "Cancel_Inspection_Requests_Disapproval__c",
                   "STEP3__c"
@@ -4509,7 +4477,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
                   "STEP18__c"
@@ -4614,7 +4581,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP6__c"
+                  "STEP6__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }
@@ -4813,37 +4781,6 @@
                 "IsDependent": true
               },
               {
-                "Name": "STEP13",
-                "Required": [
-                  "STEP8",
-                  "STEP9"
-                ],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
-                  },
-                  {
-                    "Status": "In Progress",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
-                  },
-                  {
-                    "Status": "Not Applicable",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
-                  }
-                ],
-                "DisplayFields": [
-                  "Send_inspection_request__c",
-                  "STEP13__c"
-                ],
-                "IsDependent": false
-              },
-              {
                 "Name": "STEP14",
                 "Required": [
                   "STEP8",
@@ -4903,7 +4840,14 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4925,6 +4869,24 @@
           {
             "Name": "AMS_OSCAR_APP_FINALIZATION",
             "Steps": [
+              {
+                "Name": "STEP36",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "createRiskEvent",
+                    "ActionLabel": "AMS_OSCAR_Action15",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "STEP36__c"
+                ],
+                "IsDependent": false
+              },
               {
                 "Name": "STEP37",
                 "Required": [],
@@ -4964,7 +4926,6 @@
                   "Off_site_storage__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -4997,7 +4958,6 @@
                   "Issue_credit_note_if_applicable__c",
                   "Release_FS_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "Close_IFAP_Disapproval__c",
                   "Cancel_Inspection_Requests_Disapproval__c",
                   "STEP3__c"
@@ -5030,7 +4990,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "Close_IFAP_Rejection__c",
                   "Cancel_Inspection_Requests_Rejection__c",
                   "STEP18__c"
@@ -5135,6 +5094,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -5351,7 +5311,6 @@
                   "Welcome_pack__c",
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
-                  "Update_AIMS_Approval__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -5383,7 +5342,6 @@
                   "Issue_disapproval_pack__c",
                   "Issue_credit_note_if_applicable__c",
                   "Country_Specifics_Disapproval__c",
-                  "Update_AIMS_Disapproval__c",
                   "STEP3__c"
                 ],
                 "IsDependent": false
@@ -5414,7 +5372,6 @@
                 "DisplayFields": [
                   "Issue_rejection_notification_pack__c",
                   "Country_Specifics_Rejection__c",
-                  "Update_AIMS_Rejection__c",
                   "STEP18__c"
                 ],
                 "IsDependent": false
@@ -5524,7 +5481,6 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Is_PCI_compliant__c",
                   "ANG_Type_of_change_hidden__c",
                   "Change_effective_as_of__c",
                   "STEP6__c"
@@ -5832,7 +5788,14 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5854,6 +5817,24 @@
           {
             "Name": "ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION",
             "Steps": [
+              {
+                "Name": "STEP36",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "createRiskEvent",
+                    "ActionLabel": "AMS_OSCAR_Action15",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "STEP36__c"
+                ],
+                "IsDependent": false
+              },
               {
                 "Name": "STEP1",
                 "Required": [],
@@ -6001,7 +5982,8 @@
                 "DisplayFields": [
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
-                  "AMS_Correction_change_code__c"                  
+                  "AMS_Correction_change_code__c",
+                  "Is_PCI_compliant__c"
                 ],
                 "IsDependent": false
               }

@@ -121,7 +121,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
-    public static final String OSCAR_CLOSED = 'Closed (Closed)';
+    public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
@@ -130,6 +130,7 @@ public without sharing class AMS_Utils {
     public static final String HE = 'HE';
     public static final String AE = 'AE';
 
+    public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -160,6 +161,10 @@ public without sharing class AMS_Utils {
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+    public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
+                                                                                    ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
+
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -224,7 +229,7 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
-    public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_REASON_BR_IP = 'New BR / IP';  
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
@@ -245,7 +250,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
-    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
@@ -257,6 +262,10 @@ public without sharing class AMS_Utils {
     public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
 
     public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
+
+    public static final String ARC_TRAVEL_AGENT_USA_ONLY = 'ARC Travel Agent (USA Only)';
+    public static final String IATAN_PASSENGER_SALES_AGENT_USA_ONLY = 'IATAN Passenger Sales Agent (USA Only)';
+    public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
 
     //Account - Location_Class__c
@@ -279,8 +288,16 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
     public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
-    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
-    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);    
+    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH); 
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH};   
+
+    public static final String OPEN = 'Open';
+    public static final String NO_IEP_ACCOUNT = 'No IEP Account';
+
+    public static final String CC = 'CC';
+    public static final String CA = 'CA';
+    public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
 
     static {
         refreshCache();
@@ -1145,7 +1162,7 @@ public without sharing class AMS_Utils {
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
                 Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
-                (SELECT Id FROM RHC_Informations__r)
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1213,6 +1230,10 @@ public without sharing class AMS_Utils {
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
+                if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
+                    acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                }
+
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
@@ -1232,7 +1253,7 @@ public without sharing class AMS_Utils {
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
-            //if(!createRHCInfo.isEmpty()) ANG_Risk_Helper.createRHCInfo(createRHCInfo, false);
+            if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
             return changes;
 
@@ -1246,7 +1267,7 @@ public without sharing class AMS_Utils {
         
     }
 
-    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+    public static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
 
         if(oscarProcess == NEWHELITE){
 

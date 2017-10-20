@@ -1,4 +1,3 @@
-
 @isTest
 public class ANG_RiskEventHistoryPagination_Test {
 
@@ -21,14 +20,16 @@ public class ANG_RiskEventHistoryPagination_Test {
 		);
 		insert acc1;
 
+		list<ANG_Agency_Risk_Event__c> areList= new list<ANG_Agency_Risk_Event__c>();
 		for(integer i=0; i<5;i++){
-			generateRiskEvent(acc1.id,ret1.id, system.today());
+			areList.add(generateRiskEvent(acc1.id,ret1.id, system.today()));
 		}
 		
+		insert areList;
 
 	}
 
-	private static void generateRiskEvent(id accId, id riskEventTypeId, Date reDate){
+	private static ANG_Agency_Risk_Event__c generateRiskEvent(id accId, id riskEventTypeId, Date reDate){
 		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
 		ANG_AccountId__c=accId,
 		ANG_HE_AccountId__c=accId,
@@ -36,12 +37,12 @@ public class ANG_RiskEventHistoryPagination_Test {
 		ANG_Issued_Date__c = reDate
 		);
 
-		insert are;
+		return are;
 	}
 
 	static testmethod void pageMethodsCoverage(){
 		Test.startTest();
-			ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select id,name,ANG_Source_Id__c,ANG_Risk_Type__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]);
+			ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select Id, Name, ANG_AccountId__c, ANG_Source_Id__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_Event_Status__c from ANG_Agency_Risk_Event__c]);
 			rehp.first();
 			rehp.next();
 			rehp.previous();

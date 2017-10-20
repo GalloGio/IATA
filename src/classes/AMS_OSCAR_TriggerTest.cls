@@ -1,11 +1,37 @@
 @isTest class AMS_OSCAR_TriggerTest {
     
+    private static void loadCredentials() {
+        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+        Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+        Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+        List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+        creds.add(Amazon_Cred);
+        creds.add(GenericAttach);
+        creds.add(recycleBin);
+        insert creds;
+
+
+        list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+            new AWSKey__c(
+                name = 'adevconf',
+                Key__c = 'asd', 
+                Secret__c = 'asd',  
+                IAS_configuration_name__c = 'asdas', 
+                IAS_Access_Point__c = 'asd',
+                Bucket__c = 'asd',
+                AWS_ENDPOINT_URL__c = 'asd')
+        };
+        insert AWS_KEYs;
+    }
+
     @testSetup static void setup(){
-        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        
     }
 
     @isTest static void insertOSCARTest() {
         
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -39,7 +65,9 @@
     }
 
     @isTest static void updateOSCARTestOKFirstStep() {
-        
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
                 
@@ -113,13 +141,26 @@
     }
 
     @isTest static void updateOSCARTestOKSecondStep() {
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        Test.startTest();
         
-        AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId, Issue_credit_note_if_applicable__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
+        insert ctry ;
 
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
+        insert stt;
+        
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+
+        insert a1;
+        
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+        insert co1;
+
+        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.new_HO, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
         oscar.STEP1__c = 'Passed';
         oscar.STEP12__c = 'Passed';
         oscar.STEP15__c = 'Passed';
@@ -128,52 +169,82 @@
         oscar.STEP3__c = 'Passed';
         oscar.STEP4__c = 'Passed';
         oscar.STEP5__c = 'Passed';
+        oscar.First_Step_Completed__c = true;
         
-        
-        update oscar;
-
-        oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Documentation_Compliant__c,Proof_of_payment_received__c,
-                 Assessment_Performed_Date__c,Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_deadline__c,
-                 Local_Inspection_received__c,Local_Inspection_compliant__c
-                 from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-
-        System.assertEquals('Passed',oscar.STEP1__c);
-                
-        
-        oscar.STEP11__c = 'In Progress';
         oscar.STEP12__c = 'In Progress';
         oscar.STEP13__c = 'In Progress';
-        oscar.STEP20__c = 'In Progress';
+
+        insert oscar;
+
+        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
+        oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+        EF_AttachmentListController.runningForEF = false;
+        loadCredentials();
+
+        AmazonFile__c aFile = new AmazonFile__c(
+            Full_Name_Unique__c = 'test name',
+            Case__c = oscarCase.Id
+        );
+        insert aFile;
         
+        System.debug('CheckPoint 0');
+
+        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+
+        AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
+
+        theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+        theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+        theAccreditation.Branch_Office_Country__c= ctry.Id;
+        theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+        theAccreditation.Branch_Office_City__c='sdfsdfdf';
+        theAccreditation.IATA_ISO_State__c= stt.Id;
+        theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+        theAccreditation.Branch_Office_Phone__c='123123123';
+        theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+        theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+        theAccreditation.Abbreviated_Address__c='sdfsdf';
+        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Solicitation_Flag__c=false;
+        theAccreditation.Location_Class__c='P';
+        theAccreditation.Location_Type__c='HE';
+        theAccreditation.SAAM_Case__c=oscarCase.Id;
+        theAccreditation.Account_Name__c = a1.Id;
+
+        insert theAccreditation;
+
+        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+
+        AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
+            First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
+            Phone__c='123123123', Contact__c = co1.Id, Financial_interest__c = 100, RecordTypeId=personRT);
+
+        insert acontact;
+
+        Test.startTest();
+
+        oscar.STEP11__c = 'In Progress';
+
         update oscar;
-        
+
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Fees_refund_requested__c,
                  Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_deadline__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         System.assertEquals(Date.today(), oscar.Financial_Assessment_requested__c);
         System.assertEquals(Date.today()+5, oscar.Financial_Assessment_deadline__c);
-        System.assertEquals(Date.today(), oscar.Fees_refund_requested__c);
-        
-        oscar.STEP13__c = 'Not Applicable';
-        
-        update oscar;
-        
+
         Test.stopTest();
         
-        oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-        
-        oscar.STEP13__c = 'Failed';
-        oscar.STEP11__c = 'Failed';
-        
-        update oscar;
-
     }
 
     @isTest static void updateOSCARTestNOKFirstStep() {
         
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
@@ -203,7 +274,9 @@
     }
 
     @isTest static void updateOSCARTestNOKSecondStep() {
-        
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
         
         Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
@@ -268,27 +341,10 @@
     }
 
     
-    @isTest static void updateOSCARStep7() {
-        
-        Test.startTest();
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Anti_Money_Laundering_Complete__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
-        
-        //AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded AMS_Step7 = new AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded();
-        //AMS_Step7.processWork(null,oscar);
-        
-        oscar = [SELECT id, STEP7__c , Anti_Money_Laundering_Complete__c from AMS_OSCAR__c where Id = :oscar.id];
-        
-        //System.assertEquals(Date.today(), oscar.Anti_Money_Laundering_Complete__c);
-        
-        Test.stopTest();
-
-    }
-    
      @isTest static void updateOscarToClose() {
-        
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
         
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -323,7 +379,9 @@
     }
     
      @isTest static void createUpdateOscarCase() {
-        
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
          
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -434,190 +492,117 @@
         
     }
 
-    /* Deprecated AMS-1665
-    @isTest static void createOscarAndAssignToQueue() {
-
-        Test.startTest();
-        
-        // List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
-        List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
-        
-        String americas = null;
-        String europe = null;
-        String china = null;
-        String africa = null;
-        String asia = null;
-
-        for(Group q:queues){
-            if(q.DeveloperName.contains('Americas'))
-                americas = q.id;
-            else if(q.DeveloperName.contains('Europe'))
-                europe = q.id;
-            else if(q.DeveloperName.contains('China'))
-                china = q.id;
-            else if(q.DeveloperName.contains('Africa'))
-                africa = q.id;
-            else if(q.DeveloperName.contains('AgencyManagementAP'))
-                asia = q.id;
-        }
-
-        IATA_ISO_Country__c ctry = [SELECT Id, Region__c, Name from IATA_ISO_Country__c];
-
-        //Africa assignment
-        ctry.Name = 'Saudi Arabia';
-        ctry.Region__c = 'Africa & Middle East';
-        update ctry;
-
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='1');
-        
-        insert oscar;
-
-        oscar = [SELECT id, OwnerId from AMS_OSCAR__C where Invoice_number__c = '1' LIMIT 1];
-
-        System.assertEquals(oscar.OwnerId, africa);
-
-        //Europe assignment
-       
-        ctry = [SELECT Id, Name, Region__c from IATA_ISO_Country__c];
-
-        //Africa assignment
-        ctry.Name = 'Poland';
-        ctry.Region__c = 'Europe';
-        update ctry;
-
-        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='2');
-        insert oscar;
-
-        oscar = [SELECT id, OwnerId from AMS_OSCAR__C where Invoice_number__c = '2' LIMIT 1];
-
-        System.assertEquals(oscar.OwnerId,europe);
-
-        //Asia assignment
-
-        ctry = [SELECT Id, Name, Region__c from IATA_ISO_Country__c];
-
-        ctry.Name = 'French Polynesia';
-        ctry.Region__c = 'Asia & Pacific';
-        update ctry;
-
-        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='3');
-        insert oscar;
-
-        oscar = [SELECT id, OwnerId from AMS_OSCAR__C where Invoice_number__c = '3' LIMIT 1];
-
-        System.assertEquals(oscar.OwnerId,asia);
-
-        //China assignment
-
-        ctry = [SELECT Id, Region__c from IATA_ISO_Country__c];
-        
-        ctry.Name = 'Chinese Taipei';
-        ctry.Region__c = 'China & North Asia';
-        update ctry;
-
-        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-        
-        oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='4');
-        insert oscar;
-
-        oscar = [SELECT id, OwnerId from AMS_OSCAR__C where Invoice_number__c = '4' LIMIT 1];
-
-        System.assertEquals(oscar.OwnerId,china);
-
-        //Americas assignment
-
-        ctry = [SELECT Id, Region__c from IATA_ISO_Country__c];
-        
-        ctry.Name = 'Cuba';
-        ctry.Region__c = 'Americas';
-        update ctry;
-
-        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-        
-        oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='5');
-        insert oscar;
-
-        oscar = [SELECT id, OwnerId from AMS_OSCAR__C where Invoice_number__c = '5' LIMIT 1];
-
-        System.assertEquals(oscar.OwnerId,americas);
-
-        Test.stopTest();
-
-     }*/
-
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
-        
-        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
+        insert ctry ;
 
-        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
+        insert stt;
+        
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+
+        insert a1;
+        
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+        insert co1;
+
+        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.new_HO, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
+
+        insert oscar;
+
+        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
+        oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+        EF_AttachmentListController.runningForEF = false;
+        loadCredentials();
+
+        AmazonFile__c aFile = new AmazonFile__c(
+            Full_Name_Unique__c = 'test name',
+            Case__c = oscarCase.Id
+        );
+        insert aFile;
+        
+
+        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+
+        AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
+
+        theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+        theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+        theAccreditation.Branch_Office_Country__c= ctry.Id;
+        theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+        theAccreditation.Branch_Office_City__c='sdfsdfdf';
+        theAccreditation.IATA_ISO_State__c= stt.Id;
+        theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+        theAccreditation.Branch_Office_Phone__c='123123123';
+        theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+        theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+        theAccreditation.Abbreviated_Address__c='sdfsdf';
+        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Solicitation_Flag__c=false;
+        theAccreditation.Location_Class__c='P';
+        theAccreditation.Location_Type__c='HE';
+        theAccreditation.SAAM_Case__c=oscarCase.Id;
+        theAccreditation.Account_Name__c = a1.Id;
+
+        insert theAccreditation;
+
+        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+
+        AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
+            First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
+            Phone__c='123123123', Contact__c = co1.Id, Financial_interest__c = 100, RecordTypeId=personRT);
+
+        insert acontact;
+
+        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
+        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+        oscar.STEP15__c = 'Passed';
+
+        update oscar;
+
 
         Test.startTest();
         
-        Integer c = 0;
+        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-        for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 1])
-        {
+        changeCode.name = 'NEW';
+        changeCode.reasonCode = '21';
 
-            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+        changeCode.memoText = 'New application in progress';
+        changeCode.reasonDesc  = 'NEW APPLICATION';
+        changeCode.status  = '2';
 
-            changeCode.name = 'NEW';
-            changeCode.reasonCode = '21';
+        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {a1}, true); 
+     
 
-            changeCode.memoText = 'New application in progress';
-            changeCode.reasonDesc  = 'NEW APPLICATION';
-            changeCode.status  = '2';
+        oscar.Validation_Status__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
 
-            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
+        oscar = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscar.id];
 
-            oscarT.recordTypeID = newRT;
-            oscarT.STEP2__c = 'Not Started';
-            oscarT.STEP12__c = 'Passed';
-            oscarT.STEP15__c = 'Passed';
+        System.assertEquals(AMS_Utils.PASSED,oscar.STEP2__c);
+        //TODO ASSERT: assert change code fin created
 
-            update oscarT;
-
-            if( c== 0){           
-            
-            oscarT.Validation_Status__c = AMS_Utils.PASSED;
-            oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-            update oscarT;
-
-            oscarT = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscarT.id];
-
-            System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
-            //TODO ASSERT: assert change code fin created
-
-            }
-            else{
-
-            oscarT.Validation_Status__c = AMS_Utils.PASSED;
-            oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
-            update oscarT;
-
-            oscarT = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscarT.id];
-
-            System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
-            //TODO ASSERT: assert change code dis created
-                
-            }
-            
-            c++;
-        }
 
         Test.stopTest();
 
     }
 
      @isTest static void accreditationProcessLogic() {
-        
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
@@ -676,24 +661,11 @@
         Test.stopTest();
 
     }
-
-    @isTest static void callJSONLibraryMethodsNotBeingUsed() {
-        
-        Test.startTest();
-        
-        /*AMS_OSCAR_JSONHelper test = new AMS_OSCAR_JSONHelper();
-
-        test.getProcesses();
-        test.getFlows();
-        test.getFlow('AMS_OSCAR_APPLICATIONRECEIPT');
-        test.getSteps();
-        test.getStep('STEP6');*/
-
-        Test.stopTest();
-
-    }
     
     static testMethod void triggerHandler() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         insert new AMS_AgencyChangesConfig__c(Name = 'Test Combination', TC_Name__c = true);
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -716,6 +688,8 @@
     }
 
     @isTest static void testSTEP7() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
@@ -745,6 +719,8 @@
     }
 
     @isTest static void testSTEP25() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
@@ -778,6 +754,8 @@
 
     @isTest static void testSTEP16() {
 
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
@@ -805,6 +783,8 @@
 
     @isTest static void testAppointmentsUpdate() {
 
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         Test.startTest();
 
         AMS_OSCAR__c oscar = [SELECT Id, STEP10__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_GSA limit 1];
@@ -829,6 +809,8 @@
 
     @isTest static void testSTEP29() {
 
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
         AMS_OSCAR__c oscar = [SELECT id, STEP29__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         Test.startTest();
@@ -842,6 +824,8 @@
     }
 
     @isTest static void testVR_1() { 
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
         Account a = [SELECT id,Status__c from Account where Name = 'Test2 Agency' LIMIT 1];
 
@@ -880,10 +864,13 @@
 
         Test.stopTest();
     }
-	
-	@isTest static void testcoverage() { 
-		AMS_OSCARTriggerHandler.increasecoverage();	
-	}
-	
+    
+    @isTest static void testcoverage() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+         
+        AMS_OSCARTriggerHandler.increasecoverage(); 
+    }
+    
 
 }
