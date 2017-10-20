@@ -3,6 +3,8 @@ public with sharing class MITA_MemorandumsCtrl {
 	private static final String TYPE_PAX_CARGO = 'The Passenger and Cargo Interline Traffic Agreement';
 	private static final String TYPE_PAX = 'The Passenger Interline Agreement';
 	private static final String TYPE_CARGO = 'The Cargo Interline Agreement';
+	private static final String REQUESTED_BY_1 = 'Requested by Airline 1';
+	private static final String REQUESTED_BY_2 = 'Requested by Airline 2';
 
 	private static final Map<String,String> MAP_TYPES = new Map<String,String>{
 		TYPE_PAX_CARGO => 'P&C',
@@ -92,7 +94,7 @@ public with sharing class MITA_MemorandumsCtrl {
 
 	// Memorandum 1: CONCURRENCES
 	public list<WrapperAgreement> getConcurrencesAgreements(){
-		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c , Active__c , Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c, Cancellation_processed_date__c, Cancellation_date__c
+		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c , Active__c , Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c, Cancellation_processed_date__c, Cancellation_date__c, Cancellation_Reason__c
 									  FROM MITA_Agreement__c
 									  WHERE Agreement_Processed_Date__c >= :fromDate.Agreement_Processed_Date__c
 									  AND Agreement_Processed_Date__c <= :toDate.Agreement_Processed_Date__c
@@ -119,12 +121,14 @@ public with sharing class MITA_MemorandumsCtrl {
 
 	// Memorandum 2: WITHDRAWALS
 	public list<WrapperAgreement> getWithdrawalsAgreements(){
-		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c, Active__c, Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c, Cancellation_Date__c, Cancellation_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c
+		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c, Active__c, Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c,
+										Cancellation_Date__c, Cancellation_Processed_Date__c, Agreement_type__c, Created_date__c,
+										Withdrawal_Request_Reception_Date__c, Cancellation_Reason__c 
 									  FROM MITA_Agreement__c
 									  WHERE Cancellation_Processed_Date__c >= :fromDate.Cancellation_Processed_Date__c
 									  AND Cancellation_Processed_Date__c <= :toDate.Cancellation_Processed_Date__c
 									  AND MITAorBIETA__c = :selectedAgreement
-									  AND Cancellation_Reason__c in ('Requested by Airline 1','Requested by Airline 2')
+									  AND Cancellation_Reason__c in (:REQUESTED_BY_1,:REQUESTED_BY_2)
 									  ORDER BY Airline_1__r.Name_on_AOC__c, Cancellation_Date__c];
 		list<WrapperAgreement> listWrapper = new list<WrapperAgreement>();
 		for(MITA_Agreement__c agr : res) {
@@ -158,9 +162,18 @@ public with sharing class MITA_MemorandumsCtrl {
 		public MITA_Agreement__c agreement {get; set;}
 		public MITA_Agreement__c agreementPax {get; set;}
 		public MITA_Agreement__c agreementCargo {get; set;}
+		public String accountName1 {get; set;}
+		public String accountName2 {get; set;}
 
 		public WrapperAgreement(MITA_Agreement__c agreement) {
 			this.agreement = agreement;
+			if (agreement.Cancellation_Reason__c==REQUESTED_BY_1) {
+				this.accountName1 = agreement.Airline_1__r.Name_on_AOC__c;
+				this.accountName2 = agreement.Airline_2__r.Name_on_AOC__c;
+			} else if (agreement.Cancellation_Reason__c==REQUESTED_BY_2) {
+				this.accountName1 = agreement.Airline_2__r.Name_on_AOC__c;
+				this.accountName2 = agreement.Airline_1__r.Name_on_AOC__c;
+			}
 		}
 
 		public Boolean checkMixConcurrenceAgreement(MITA_Agreement__c newAgreement) {
@@ -197,7 +210,6 @@ public with sharing class MITA_MemorandumsCtrl {
 			}
 			return false;
 		}
-
 
 		public String getTypeCode() {
 			return MAP_TYPES.get(this.agreement.Agreement_type__c);

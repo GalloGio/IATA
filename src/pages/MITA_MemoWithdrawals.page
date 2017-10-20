@@ -63,8 +63,8 @@
 					</tr>
 					<apex:repeat value="{!WithdrawalsAgreements}" var="wrapper">
 					<tr>
-						<td><apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" /></td>
-						<td><apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" /></td>
+						<td><apex:outputText value="{!wrapper.accountName1}" /></td>
+						<td><apex:outputText value="{!wrapper.accountName2}" /></td>
 						<td><apex:outputText value="{!wrapper.TypeCode}" /></td>
 						<td><apex:outputField value="{!wrapper.agreement.Cancellation_date__c}" /></td>
 					</tr>
