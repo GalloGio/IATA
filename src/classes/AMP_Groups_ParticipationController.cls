@@ -204,7 +204,7 @@ public with sharing class AMP_Groups_ParticipationController {
         acc = (Account)stdController.getRecord();
         if(acc.Id != null) {
             accountId = acc.Id;
-            accountName = acc.Name;
+            // accountName = acc.Name;
         } else {
             accountId =  ApexPages.currentPage().getParameters().get('accountId');
             accountName = [SELECT Id, Name FROM Account WHERE Id = :accountId LIMIT 1].Name;
