@@ -5,9 +5,8 @@ private class ANG_OSCARNewGenTest {
 		
 		AMS_OSCAR_TestDataFactory.createNewGenTestData(AMS_Utils.NEWHESTANDARD);
 
-		AMS_OSCAR__c oscar = [SELECT Id, RPM_Approval__c, Oscar_Communication_Case_Id__c, STEP12__c FROM AMS_OSCAR__c limit 1];
+		AMS_OSCAR__c oscar = [SELECT Id, RPM_Approval__c, Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c limit 1];
 
-		oscar.STEP12__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 
