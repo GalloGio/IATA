@@ -14,7 +14,11 @@ public class ANG_RHCInformationTriggerHandler{
 		convertAndSumFS();
 	}
 	public void onAfterInsert(){
-		 new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		Map<Id, ANG_RHC_Information__c> tempMap =new Map<Id, ANG_RHC_Information__c>();
+		for(ANG_RHC_Information__c rhcrec:triggerNew){
+			tempMap.put(rhcrec.id, new ANG_RHC_Information__c());
+		}
+		new ANG_AgencyEventsGenerator(triggerNew,tempMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
 	}
 	public void onBeforeUpdate(){
 		 convertAndSumFS();
