@@ -44,7 +44,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	public static void handleBeforeInsert() {
-		assignOSCARToRegionalQueues();
+		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
         copyDataFromTargetAgency();
