@@ -64,7 +64,6 @@ private class Comm_User_HelperTest {
         String enc = Comm_User_Helper.EncryptString('testtest');
         Comm_User_Helper.DecryptString(enc);
     }
-
     
     @isTest static void resetPassword_test_method_two() {
         
@@ -172,4 +171,20 @@ private class Comm_User_HelperTest {
         system.assertEquals(res1,true);  
     }
     
+    @isTest static void validateEmailTest(){
+        Boolean result = Comm_User_Helper.validateEmail('');
+        System.assertEquals(false, result);
+
+        result = Comm_User_Helper.validateEmail('a.com');
+        System.assertEquals(false, result);
+
+        result = Comm_User_Helper.validateEmail('a@b');
+        System.assertEquals(false, result);
+
+        result = Comm_User_Helper.validateEmail('a@b.');
+        System.assertEquals(false, result);
+
+        result = Comm_User_Helper.validateEmail('a@b.com');
+        System.assertEquals(true, result);
+    }
 }

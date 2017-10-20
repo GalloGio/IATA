@@ -1,135 +1,106 @@
 <apex:component controller="VfIECLoginComponent" access="global"  allowDML="true" rendered="true">
 
-    	<script>
-    	
-			function submitLoginEnter(e)
-			{
-   				if(e && e.keyCode == 13)
-   				{
-   					submitLogin();
-   					return false;
-   				}
-   				else {
-   					return true;
-   				}
-			}    
-			
-			
-			function submitResetPasswordEnter(source, e)
-			{
-   				if(e && e.keyCode == 13)
-   				{
-   					source.blur();
-   					submitResetPassword();
-   					return false;
-   				}
-   				else {
-   					return true;
-   				}
-			} 	
-    	
-    	</script>
+  <script>
+		function submitLoginEnter(e){
+ 	    if(e && e.keyCode == 13){
+				submitLogin();
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+
+    function submitResetPasswordEnter(source, e){
+  			if(e && e.keyCode == 13){
+  				source.blur();
+  				submitResetPassword();
+  				return false;
+  			}
+  			else {
+  				return true;
+  			}
+			}
+	</script>
 
 	<apex:attribute name="hideRegisterLink" type="boolean" description="Hides the link to cration of new user account" assignTo="{!bHideRegisterLink}" />
 	<apex:attribute name="withUserName" type="string" description="Prefill user name with email" assignTo="{!sPrefillUsername}" required="false"/>
 	<apex:attribute name="ReturnURL" type="String" description="URL to return to after login" assignTo="{!retURL}" />
-	<apex:attribute name="RerenderComponentId" type="String" description="Id of the component to rerender" assignTo="{!componentIdToRerender}" required="false" />
-	<apex:componentBody >
-	
-				<apex:actionFunction name="submitLogin" action="{!login}"/>
-	            
-	          
-	          
-	          
-	            <apex:outputPanel layout="block" rendered="{!not(resetPassword) && NOT(isUserLoggedIn)}">
-	            	<div class="loginSection_centerUnique">
-					<h2 class="checkout-info__heading">Please log in</h2>
-					
-					
-					<!-- p class="checkout-info__subHeading">All fields are required</p -->
-					
-					<h4 style="margin-bottom: 0px;">Email</h4>
-					<apex:inputText value="{!username}" id="username" rendered="{!sPrefillUsername == null || sPrefillUsername == ''}" styleClass="login__input" html-placeholder="Enter you email here" onKeyPress="return submitLoginEnter(event)"/><br/>                            
-					<apex:inputText value="{!sPrefillUsername}" id="preFillUsername" rendered="{!sPrefillUsername != null && sPrefillUsername != ''}" styleClass="login__input" onKeyPress="return submitLoginEnter(event)"/>                            
-					
-					
-					<h4 style="margin-bottom: 0px;">Password</h4>
-    				<apex:inputSecret value="{!password}" id="txtHiddenPassword" styleClass="login__input" html-placeholder="Enter you password here"  onKeyPress="return submitLoginEnter(event)"/>
-		            <apex:actionFunction name="forgotPasswordAction" action="{!forgotPasswordRedirect}"/>   
-        			<apex:actionFunction name="signUpAction" action="{!register}"/>   
-        			
-        			
-        			<a href="#" onClick="forgotPasswordAction();" class="login__forgot-links">Forgot your password?</a>
-	                <apex:outputPanel id="registerLink" rendered="{!not(bHideRegisterLink)}">
-	        			<a href="#" onClick="signUpAction();" class="login__forgot-links">No account yet? Sign up!</a>
-	               	</apex:outputPanel>
-	                	
-	                 <br/>       	
-	                <apex:commandButton action="{!login}" value="Login" styleClass="tab-container__anchor  customButton" rerender="{!componentIdToRerender}" />
-	                </div>
-	            </apex:outputPanel>
-	            
-	            
-	            
-	            
-	            
-	            <!-- Forgot password -->
-	            <apex:actionFunction name="submitResetPassword" action="{!showPopup}" rerender="confirmationPopUp"/>
-	            <apex:outputPanel layout="block" >
-	                <apex:outputPanel layout="block" id="divForgotPassword" rendered="{!resetPassword}">
-	                	
-	                
-							<h2 class="checkout-info__heading">Reset your password?</h2>
-              				<br/>
-	                		
-		            
-		            		<p class="loginSection_pforpasssert">Please provide the email address that you used when you registered on the site.</p>		            	
-	    	        		<p class="loginSection_pforpasssert">We will send you an email with a temporary password to access your profile.</p>
-	        	    	
-						
-							<br/>
-								<p>Registered email address:</p>
-								<apex:inputText value="{!resetPasswordEmail}" id="txtResetEmail"  styleClass="login__input"   style="width: 500px;" onKeyPress="return submitResetPasswordEnter(this, event)"/><br/>   
+	<apex:attribute name="RerenderComponentId" type="String" description="Id of the component to rerender" assignTo="{!componentIdToRerender}" required="false"/>
 
-							<br/>
+  <apex:componentBody >
+    <apex:actionFunction name="submitLogin" action="{!login}"/>
+    <apex:outputPanel layout="block" rendered="{!not(resetPassword) && NOT(isUserLoggedIn)}">
+      <div class="loginSection_centerUnique">
+        <h2 class="checkout-info__heading">Please log in</h2>
 
-								<apex:commandButton action="{!showPopup}" value="Submit" styleClass="tab-container__anchor  customButton" rerender="confirmationPopUp"/>							                         
-							
-						
-						
-	                </apex:outputPanel>
-	            </apex:outputPanel>
-	            
-	            
-	            
-			    <apex:outputPanel id="confirmationPopUp" >
-			    	<apex:outputPanel styleClass="checkout-popupBackground" layout="block" rendered="{!bDisplayPopUp}"  />
-			        <apex:outputPanel styleClass="checkout-popup" layout="block" rendered="{!bDisplayPopUp}"  style="position: absolute;" >
-			        	<br/><br/>
-			        	<div class="loginSection_resetHeader">
-	                		<h1>Reset password confirmation</h1>
-	                	</div>
-			        	<br/><br/>
-			        	
-			        	<apex:outputText styleClass="tab-container__text" value="Are you sure you want to reset your password for {!resetPasswordEmail} ?"/>
-			        	
-			        	<br/><br/><br/><br/>
-			        	<apex:commandButton value="Cancel" 
-			        		action="{!closePopup}" 
-			        		rerender="confirmationPopUp"
-			        		styleClass="tab-container__anchor  customButton" style="width: 275px;"/>
-			        		
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			        	<apex:commandButton value="Accept"
-			        			 action="{!resetPassword}" 
-			        			 rerender="confirmationPopUp, errorMessage"
-			            		 styleClass="tab-container__anchor  customButton" style="width: 275px;"/>
-			        	<br/><br/>
-			    	</apex:outputPanel>
-			    </apex:outputPanel>		     
-			    
-			    
-			           
-       
-    </apex:componentBody>
+        <h4 style="margin-bottom: 0px;">Email</h4>
+        <apex:inputText value="{!username}" id="username" rendered="{!sPrefillUsername == null || sPrefillUsername == ''}" styleClass="login__input" html-placeholder="Enter you email here" onKeyPress="return submitLoginEnter(event)"/>
+        <br/>
+				<apex:inputText value="{!sPrefillUsername}" id="preFillUsername" rendered="{!sPrefillUsername != null && sPrefillUsername != ''}" styleClass="login__input" onKeyPress="return submitLoginEnter(event)"/>
+
+				<h4 style="margin-bottom: 0px;">Password</h4>
+				<apex:inputSecret value="{!password}" id="txtHiddenPassword" styleClass="login__input" html-placeholder="Enter you password here"  onKeyPress="return submitLoginEnter(event)"/>
+        <apex:actionFunction name="forgotPasswordAction" action="{!forgotPasswordRedirect}"/>
+
+        <apex:actionFunction name="signUpAction" action="{!register}"/>
+  			<a href="#" onClick="forgotPasswordAction();" class="login__forgot-links">Forgot your password?</a>
+
+        <apex:outputPanel id="registerLink" rendered="{!not(bHideRegisterLink)}">
+          <a href="#" onClick="signUpAction();" class="login__forgot-links">No account yet? Sign up!</a>
+       	</apex:outputPanel>
+        <br/>
+        <apex:commandButton action="{!login}" value="Login" styleClass="tab-container__anchor  customButton" rerender="{!componentIdToRerender}" />
+      </div>
+    </apex:outputPanel>
+
+    <!-- Forgot password -->
+    <apex:actionFunction name="submitResetPassword" action="{!showPopup}" rerender="confirmationPopUp"/>
+    <!-- START CHANGE MINESH CHAUHAN 28/08/17: ADDED FOR SECURITY ENHANCEMENT -->
+		<!-- : added id attribute to outputPanel to be rerendered to hide contained email input box once reset has been submitted -->
+    <apex:outputPanel layout="block" id="forgotPasswordContainerPanel" >
+    <!-- END CHANGE -->
+      <apex:outputPanel layout="block" id="divForgotPassword" rendered="{!resetPassword}">
+  	    <h2 class="checkout-info__heading">Reset your password?</h2>
+  			<br/>
+    		<p class="loginSection_pforpasssert">Please provide the email address that you used when you registered on the site.</p>
+    		<p class="loginSection_pforpasssert">We will send you an email with a temporary password to access your profile.</p>
+  	    <br/>
+  			<p>Registered email address:</p>
+  			<apex:inputText value="{!resetPasswordEmail}" id="txtResetEmail"  styleClass="login__input"   style="width: 500px;" onKeyPress="return submitResetPasswordEnter(this, event)"/>
+        <br/>
+        <br/>
+        <apex:commandButton action="{!showPopup}" value="Submit" styleClass="tab-container__anchor  customButton" rerender="confirmationPopUp"/>
+      </apex:outputPanel>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="confirmationPopUp" >
+      <apex:outputPanel styleClass="checkout-popupBackground" layout="block" rendered="{!bDisplayPopUp}"  />
+      <apex:outputPanel styleClass="checkout-popup" layout="block" rendered="{!bDisplayPopUp}"  style="position: absolute;" >
+        <br/><br/>
+        <div class="loginSection_resetHeader">
+          <h1>Reset password confirmation</h1>
+        </div>
+        <br/><br/>
+
+        <apex:outputText styleClass="tab-container__text" value="Are you sure you want to reset your password for {!resetPasswordEmail} ?"/>
+	      <br/><br/><br/><br/>
+
+        <apex:commandButton value="Cancel"
+		        		            action="{!closePopup}"
+        		                rerender="confirmationPopUp"
+      		                  styleClass="tab-container__anchor  customButton" style="width: 275px;"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- START CHANGE MINESH CHAUHAN 28/08/17: ADDED FOR SECURITY ENHANCEMENT -->
+				<!-- : added id of outputPanel to be rerendered (forgotPasswordContainerPanel) once reset has been submitted -->
+      	<apex:commandButton value="Accept"
+  			                    action="{!resetPassword}"
+	        			            rerender="confirmationPopUp, errorMessage, forgotPasswordContainerPanel"
+	            		          styleClass="tab-container__anchor  customButton"
+                            style="width: 275px;"/>
+        <!-- END CHANGE -->
+        <br/><br/>
+     </apex:outputPanel>
+   </apex:outputPanel>
+ </apex:componentBody>
 </apex:component>
