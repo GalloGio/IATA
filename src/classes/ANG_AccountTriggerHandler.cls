@@ -11,11 +11,13 @@ public class ANG_AccountTriggerHandler {
 	// ************************************************************
 
 	public void onBeforeInsert(){
+		adjustShortName();
 		updateRiskStatus();
 	}
 	public void onAfterInsert() {}
 
 	public void onBeforeUpdate(){
+		adjustShortName();
 		updateRiskStatus();
 		manageDowngrades();
 	}
@@ -374,5 +376,23 @@ public class ANG_AccountTriggerHandler {
     	}
 
     	return remitFreq;
+    }
+
+    private void adjustShortName(){
+
+		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
+		for(Account a : triggerNew){
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+				continue;
+
+			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
+
+				if(a.TradeName__c != null && a.TradeName__c != ''){
+					a.Short_Name__c = a.TradeName__c;
+				}else if(a.Name != null && a.Name != ''){
+					a.Short_Name__c = a.Name;
+				}
+			}
+		}
     }
 }
