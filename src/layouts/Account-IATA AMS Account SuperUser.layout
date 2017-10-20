@@ -134,6 +134,10 @@
                 <behavior>Edit</behavior>
                 <field>GDP_Opt_In__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_PCI_compliant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
