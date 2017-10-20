@@ -108,16 +108,17 @@ public with sharing class ANG_Risk_Helper{
     public static final String SECURITY_STATUS_ACTIVE = 'Active';
     public static final String SECURITY_STATUS_CLOSE_EXPIRY_DATE = 'Close to Expiry Date';
 
+    //set with the status of the FS to be summed
+    public static final set<string> FS_STATUS_FOR_SUM_SET = new set<string>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
+    
 
     //Currency Conversion Rates
-
-
     public static map<string,CurrencyType> convertionsRateMap{
 		get{
 			if(convertionsRateMap ==null){
 				convertionsRateMap= new map<string,CurrencyType>();
 				for (CurrencyType cur : [select Id,IsoCode, ConversionRate, DecimalPlaces from CurrencyType where IsActive=true]) {
-					convertionsRateMap.put(cur.IsoCode, cur);
+					convertionsRateMap.put(cur.IsoCode.toUpperCase(), cur);
 				}
 			}
 
@@ -221,25 +222,29 @@ public with sharing class ANG_Risk_Helper{
     }
 
     public static void sumFSAmount(List<Account> accounts){
-    	set<string> statusSet = new set<string>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
     	list<ANG_RHC_Information__c> rhcInfoList= new list<ANG_RHC_Information__c>();
     	for(account acc :accounts){
-    		decimal sum=0;
-    		if(acc.Financial_Securities__r !=null){
-	    		for(Financial_Security__c fs:acc.Financial_Securities__r){
-	    			if(statusSet.contains(fs.Security_Status__c)){
-	    				sum+=fs.ANG_ConvertedAmount__c;
-	    			}
-	    		}
-	    	}
 			rhcInfoList.add( new ANG_RHC_Information__c(
 				ANG_UniqueKey__c=acc.id+RHC_INFO_STD_RT,
 				ANG_AccountId__c=acc.id,
-				ANG_Financial_Security__c=sum
+				ANG_Financial_Security__c=sumFSConvertedAmounts(acc.Financial_Securities__r)
 				)
 			);    		
     	}
     	if(!rhcInfoList.isEmpty())upsert rhcInfoList ANG_UniqueKey__c;
+    }
+
+    public static decimal sumFSConvertedAmounts(List<Financial_Security__c> fsList){
+    	decimal sum=0;
+    	if(fsList !=null){
+			for(Financial_Security__c fs:fsList){
+				if(FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
+					sum+=fs.ANG_ConvertedAmount__c==null?0:fs.ANG_ConvertedAmount__c;
+				}
+			}
+		}
+	    	
+    	return sum;
     }
 
     public static void convertFSAmount(list<Financial_Security__c> fsList,set<id> accIdSet){
@@ -260,16 +265,25 @@ public with sharing class ANG_Risk_Helper{
 		fsList=tempList;
 	}
 
+	public static void convertFSAmountToTargetCur(list<Financial_Security__c> fsList,string targetoCurIso){
+		list<Financial_Security__c> tempList= new list<Financial_Security__c>();
+		for(Financial_Security__c fs:fsList){
+			Decimal convertedValue=ANG_Risk_Helper.currencyConverter(fs.CurrencyIsoCode,fs.Amount__c,targetoCurIso==null?fs.CurrencyIsoCode:targetoCurIso);
+			fs.ANG_ConvertedAmount__c=convertedValue;
+	    }
+	}
+	
+
     public static Decimal currencyConverter(string currentCurIso,Decimal ammount,string targetCurIso){
 
-		if(!convertionsRateMap.containsKey(currentCurIso)) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
-		if(!convertionsRateMap.containsKey(targetCurIso))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
+		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
+		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
 
 		Decimal fromRate = convertionsRateMap.get(currentCurIso.toUpperCase()).ConversionRate;
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
-		Decimal toRate = targetCur.ConversionRate;
+		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount * toRate/fromRate;
+		Decimal result = ammount==null?0:ammount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 }

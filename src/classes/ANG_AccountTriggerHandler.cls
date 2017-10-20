@@ -22,6 +22,7 @@ public class ANG_AccountTriggerHandler {
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
+		updateRHCInformation();
 	}
 
 	public void onBeforeDelete(){}
@@ -63,8 +64,17 @@ public class ANG_AccountTriggerHandler {
 
 		//fetch portal admins
 		Map<Id, Id> portalAdmins = new Map<Id, Id>();
-		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
-			portalAdmins.put(c.AccountId, c.Id);
+		Map<Id, Boolean> hasOwnAdmin = new Map<Id, Boolean>();
+
+		Set<Id> involvedAccounts = new Set<Id>();
+		involvedAccounts.addAll(new Map<Id, Account>(downGradeAtoB).keySet());
+		involvedAccounts.addAll(new Map<Id, Account>(downGradeBtoC).keySet());
+
+		for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :involvedAccounts OR AccountId IN :involvedAccounts)]){
+
+			//select a portal admin from the HE, if possible, or from the hierarchy if not
+			if(involvedAccounts.contains(c.AccountId)) portalAdmins.put(c.AccountId, c.Id);
+			else if (!portalAdmins.containsKey(c.Account.Top_Parent__c)) portalAdmins.put(c.Account.Top_Parent__c, c.Id);
 		}
 
 		//create cases
@@ -129,6 +139,15 @@ public class ANG_AccountTriggerHandler {
 	private void createVMFROscars(List<Account> allAccounts, Map<Id, Id> contacts){
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 
+		//to prevent errors on test classes
+		if(Test.isRunningTest()){
+			insert new ANG_AgencyChangesConfig__c(Name = 'ChangeVFMR', TC_VMFR__c = true,
+		                    TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
+		                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
+		                    TC_Major_Shareholding__c = false, TC_Ownership__c = false,
+		                    TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+		}
+
 		//filter accounts
 		List<Account> accounts = new List<Account>();
 		for(Account acc : allAccounts){
@@ -144,17 +163,20 @@ public class ANG_AccountTriggerHandler {
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 		for(Account acc : accounts){
 			objects.put(acc.Id, new OscarObjects());
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open');
 			oscars.add(oscar);
 
 			objects.get(acc.Id).oscar = oscar;
 		}
+
+		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
 
 		// insert oscars
 		insert oscars;
 
 		//create cases
 		List<Case> cases = new List<Case>();
+
 		for(Account acc : accounts){
 			Case c = new Case();
 
@@ -165,8 +187,10 @@ public class ANG_AccountTriggerHandler {
 			c.BSPCountry__c = acc.BillingCountry;
 			c.Region__c = acc.Region_formula__c;
 			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
-			c.Reason1__c = 'Change of '+AMS_Utils.VFMR;
 			c.ContactId = contacts.get(acc.Id);
+
+			String oscarOwner = objects.get(acc.Id).oscar.OwnerId;
+			if(!String.isEmpty(oscarOwner)) c.OwnerId = oscarOwner;
 
 			cases.add(c);
 			objects.get(acc.Id).commCase = c;
@@ -177,61 +201,64 @@ public class ANG_AccountTriggerHandler {
 
 		//create staging areas
 		List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
-	    for(Account acc : accounts){
-	    	AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
+		for(Account acc : accounts){
+			AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
-	    	stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
-	    	stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
-	    	stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
-	    	stgArea.Accept_terms_and_conditions__c           = true;
-	    	stgArea.Account_Name__c                          = acc.Name;
-	    	stgArea.Billing_State__c                         = acc.BillingState;
-	    	stgArea.Branch_Office_City__c                    = acc.BillingCity;
-	    	stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
-	    	stgArea.Branch_Office_Email__c                   = acc.Email__c;
-	    	stgArea.Branch_Office_FAX__c                     = acc.Fax;
-	    	stgArea.Branch_Office_Phone__c                   = acc.Phone;
-	    	stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
-	    	stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
-	    	stgArea.CASS_Number__c                           = acc.CASS_Number__c;
-	    	stgArea.IATACode__c                              = acc.IATACode__c;
-	    	stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
-	    	stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
-	    	stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
-	    	stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
-	    	stgArea.Location_Class__c                        = acc.Location_Class__c;
-	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
-	    	stgArea.Mobile__c                                = acc.Mobile__c;
-	    	stgArea.Operation__c                             = acc.Operation__c;
-	    	stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
-	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
-	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
-	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
-	    	stgArea.Shipping_State__c                        = acc.ShippingState;
-	    	stgArea.Shipping_Street__c                       = acc.ShippingStreet;
-	    	stgArea.Short_Name__c                            = acc.Short_Name__c;
-	    	stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
-	    	stgArea.Submitted_to_IATA__c                     = true;
-	    	stgArea.Trade_Name__c                            = acc.TradeName__c;
-	    	stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
-	    	stgArea.Website__c                               = acc.Website;
-	    	stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
+			stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
+			stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
+			stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
+			stgArea.Accept_terms_and_conditions__c           = true;
+			stgArea.Account_Name__c                          = acc.Name;
+			stgArea.Billing_State__c                         = acc.BillingState;
+			stgArea.Branch_Office_City__c                    = acc.BillingCity;
+			stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
+			stgArea.Branch_Office_Email__c                   = acc.Email__c;
+			stgArea.Branch_Office_FAX__c                     = acc.Fax;
+			stgArea.Branch_Office_Phone__c                   = acc.Phone;
+			stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
+			stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
+			stgArea.CASS_Number__c                           = acc.CASS_Number__c;
+			stgArea.IATACode__c                              = acc.IATACode__c;
+			stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
+			stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
+			stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
+			stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
+			stgArea.Location_Class__c                        = acc.Location_Class__c;
+			stgArea.Location_Type__c                         = acc.Location_Type__c;
+			stgArea.Mobile__c                                = acc.Mobile__c;
+			stgArea.Operation__c                             = acc.Operation__c;
+			stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
+			stgArea.Shipping_City__c                         = acc.ShippingCity;
+			stgArea.Shipping_Country__c                      = acc.ShippingCountry;
+			stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
+			stgArea.Shipping_State__c                        = acc.ShippingState;
+			stgArea.Shipping_Street__c                       = acc.ShippingStreet;
+			stgArea.Short_Name__c                            = acc.Short_Name__c;
+			stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
+			stgArea.Submitted_to_IATA__c                     = true;
+			stgArea.Trade_Name__c                            = acc.TradeName__c;
+			stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
+			stgArea.Website__c                               = acc.Website;
+			stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
 
-	    	stgAreas.add(stgArea);
-	    	objects.get(acc.Id).stagingArea = stgArea;
-	    }
+			stgAreas.add(stgArea);
+			objects.get(acc.Id).stagingArea = stgArea;
+		}
 
-	    //insert staging areas
-	    insert stgAreas;
+		//insert staging areas
+		insert stgAreas;
 
-	    //go back to the oscars and update according data from the case and staging areas
-	    for(AMS_OSCAR__c oscar : oscars){
-	    	oscar.Oscar_Communication_Case_Id__c = objects.get(oscar.Account__c).commCase.Id;
-	    	oscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), objects.get(oscar.Account__c).commCase.Id);
-	    	oscar.AMS_Online_Accreditation__c = objects.get(oscar.Account__c).stagingArea.Id;
-	    }
-	    
-	    update oscars;
+		//go back to the oscars and update according data from the case and staging areas
+		for(AMS_OSCAR__c oscar : oscars){
+			oscar.Oscar_Communication_Case_Id__c = objects.get(oscar.Account__c).commCase.Id;
+			oscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), objects.get(oscar.Account__c).commCase.Id);
+			oscar.AMS_Online_Accreditation__c = objects.get(oscar.Account__c).stagingArea.Id;
+			oscar.ANG_Type_of_change__c = AMS_Utils.VFMR;
+
+			AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+		}
+		
+		update oscars;
 	}
 
 	public void UpdateRiskEventStatus (){
@@ -243,10 +270,10 @@ public class ANG_AccountTriggerHandler {
 
 		//get just account ids where status changed to Terminated 
 		for(Account a : triggerNew){
-		    if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
-		        inactiveAccsIdSet.add(a.id);
-		    else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
-		        activeAccsIdSet.add(a.id);
+			if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
+				inactiveAccsIdSet.add(a.id);
+			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
+				activeAccsIdSet.add(a.id);
 		}
 
 		
@@ -260,10 +287,10 @@ public class ANG_AccountTriggerHandler {
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
 			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
 				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
-			        re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
+					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
 				
 			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
-		        re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}
 
 		}
@@ -273,14 +300,45 @@ public class ANG_AccountTriggerHandler {
 
 
 	private void runRiskAssessment() {
-        
-        Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
-        for(account acc : triggerNew){  
-            if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
-        }
+		
+		Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+		for(account acc : triggerNew){  
+			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
+		}
 
-        if(involvedAccounts.isEmpty()) return;
+		if(involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+	}
 
-        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
-    }
+	private void updateRHCInformation() {
+		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
+		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
+		Set<Id> changedStatus = new Set<Id>();
+
+		//Find relevant accounts
+		for(Account a : triggerNew){
+			if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
+			if(a.Status__c != oldMap.get(a.Id).Status__c && oldMap.get(a.Id).Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
+
+		}
+
+		//check to see if we need the logic below
+		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
+
+		//find rhc records
+		for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+			rhcToUpdate.put(r.ANG_AccountId__c, r);
+		}
+
+		//first we set the Cash Conditions that changed
+		for(Id acc : changedConditions.keySet())rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
+		
+		//then set the recalculated values
+		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
+		for(Id acc : changedStatus) reactivatedRHC.add(rhcToUpdate.get(acc));
+
+		ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
+		
+		//then, at last, we make the update
+		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
+	}
 }

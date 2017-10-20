@@ -2714,14 +2714,15 @@
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-  IF(
-    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-    false,
-    ANG_HE_CashCondition__c
-  ),
-  Parent.ANG_HE_CashCondition__c
-)</formula>
+            ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
+                false,
+                    IF(
+              ISPICKVAL(Location_Type__c ,'HE'),
+                ANG_HE_CashCondition__c,  
+                Top_parent__r.ANG_HE_CashCondition__c
+              )
+            )
+        </formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
@@ -2849,7 +2850,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>        
+        <description>Triggers Cash Condition throught risk Status assessment</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
@@ -2861,14 +2863,14 @@
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-  IF(
-    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-    &apos;Not Applicable&apos;,
-    TEXT(ANG_HE_RiskHistoryAssessment__c)
-  ),
-  TEXT(Parent.ANG_HE_RiskHistoryAssessment__c)
-)</formula>
+        ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
+            'Not Applicable',
+                IF(
+          ISPICKVAL(Location_Type__c ,'HE'),
+            TEXT(ANG_HE_RiskHistoryAssessment__c),  
+            TEXT(Top_parent__r.ANG_HE_RiskHistoryAssessment__c)
+          )
+        )</formula>
         <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2879,14 +2881,14 @@
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-  IF(
-    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-    &apos;Not Applicable&apos;,
-    TEXT(ANG_HE_RiskStatus__c)
-  ),
-  TEXT(Parent.ANG_HE_RiskStatus__c)
-)</formula>
+            ISPICKVAL(ANG_Accreditation_Model__c, 'Cashless') ||ISPICKVAL(Top_parent__r.ANG_Accreditation_Model__c, 'Cashless'),
+                'Not Applicable',
+                    IF(
+              ISPICKVAL(Location_Type__c ,'HE'),
+                TEXT(ANG_HE_RiskStatus__c),  
+                TEXT(Top_parent__r.ANG_HE_RiskStatus__c)
+              )
+            )</formula>
         <label>Risk Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
