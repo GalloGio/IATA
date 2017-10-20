@@ -296,7 +296,7 @@
 
     <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 
-    <apex:pageBlock rendered="{!oscarObj == null}">
+    <apex:pageBlock rendered="{!oscarObj.Account__c == null}">
         <div class="overlay">
         <div class="overlay-content">
             <p style="font-size: 36px;">UNAVAILABLE</p>

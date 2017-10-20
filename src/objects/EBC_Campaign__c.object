@@ -369,6 +369,15 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Payment_Step__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Payment Step</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Step1_Valid__c</fullName>
         <description>Verify if the Step 1 is valid and meet the validation.</description>
         <externalId>false</externalId>
@@ -492,10 +501,20 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step6_Valid__c</fullName>
         <description>Verify if the Step 6 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>false &amp;&amp; Is_Step5_Valid__c</formula>
+        <formula>Is_Step5_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 6 is valid and meet the validation.</inlineHelpText>
         <label>Is Step6 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step7_Valid__c</fullName>
+        <externalId>false</externalId>
+        <formula>Is_Step6_Valid__c &amp;&amp; Is_Payment_Step__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step7 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

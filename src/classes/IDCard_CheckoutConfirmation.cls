@@ -356,6 +356,10 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
         req.setTimeout(60000);
         req.setMethod('POST');
         req.setBody(payLoad);
-        HttpResponse res = h.send(req);
+        if(!Test.isRunningTest()){
+           HttpResponse res = h.send(req);
+        }
     }
+
+
 }

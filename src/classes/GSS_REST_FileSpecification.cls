@@ -26,6 +26,23 @@ global with sharing class GSS_REST_FileSpecification{
         Integer BATCH_SIZE = 200;
         RestContext.response.statuscode = 200;      //Create an empty list of FileSpecifiation that will be sent as a response
         FileSpecificationCls responseFSlist = new FileSpecificationCls();
+        //Get the input parameters in the URL
+        //if the TodayDate is not empty it will replace TodaySystem value
+        //in order to simulate the response for a specific date.
+        //SimulateTodayDate format is MM-DD-YYYY
+        Date TodaySystem = Date.today();
+        Boolean IsSimulation=false;
+        String SimulateTodayDate = RestContext.request.params.get('SimulateTodayDate');
+        System.debug('SimulateTodayDate >>>'+SimulateTodayDate);
+        if (!(SimulateTodayDate==null || SimulateTodayDate=='')){
+            String[] ArraySimulateTodayDate = SimulateTodayDate.split('-');
+            integer SimulateDay=Integer.ValueOf(ArraySimulateTodayDate[1]);
+            integer SimulateMonth=Integer.ValueOf(ArraySimulateTodayDate[0]);
+            integer SimulateYear=Integer.ValueOf(ArraySimulateTodayDate[2]);
+            TodaySystem = Date.newInstance(SimulateYear,SimulateMonth,SimulateDay);
+            System.debug('TodaySystem >>>'+TodaySystem);
+            IsSimulation=true;
+        }
         //Get the input parameters: expecting an class ListOfSubscriptionId
         //try{
             system.debug('RestContext.request.requestBody.toString()>>>' +RestContext.request.requestBody.toString());                       
@@ -43,8 +60,8 @@ global with sharing class GSS_REST_FileSpecification{
                                         ,Name
                                         ,Zuora__CustomerAccount__r.IINETUserID__c // used for the case when GSS_Subscription_Detail needs help in matching its Zuora_Subscription
                                     FROM Zuora__Subscription__c 
-                                    WHERE Zuora__SubscriptionStartDate__c<= TODAY 
-                                      AND ( Zuora__SubscriptionEndDate__c >=TODAY
+                                    WHERE Zuora__SubscriptionStartDate__c<=:TodaySystem
+                                      AND ( Zuora__SubscriptionEndDate__c >=:TodaySystem
                                             OR ( Zuora__SubscriptionEndDate__c = null
                                                 AND  Zuora__TermSettingType__c = 'EVERGREEN'
                                               )
@@ -54,6 +71,9 @@ global with sharing class GSS_REST_FileSpecification{
                                     ORDER BY Id
                                     LIMIT :BATCH_SIZE];
             System.Debug('subscriptionlist >>>'+subscriptionlist);
+            if (IsSimulation) RequestedListOfSubscriptionId.SubscriptionIdList.clear();
+            if (IsSimulation) for(Zuora__Subscription__c su:subscriptionlist) {RequestedListOfSubscriptionId.SubscriptionIdList.add(su.Id); }
+            
             //When the subscription list is empty the response should be returned empty 
             if (subscriptionlist.size()==0)  RestContext.response.responseBody = Blob.valueOf(json.serialize(responseFSlist));
             //Map<String,Id> subscriptionlistname = new Map<String,Id>();
@@ -61,6 +81,12 @@ global with sharing class GSS_REST_FileSpecification{
             for(Zuora__Subscription__c su:subscriptionlist) {subscriptionNameToObjectMap.put(su.Name,su); }
             //TODO:Get all the file specification for the sub Product & Charges related to this list Subscription
             
+            //First GSSGoLive
+            boolean IsGSSGolive=false;
+            List<GDP_Area_Definition__c> golive = new List<GDP_Area_Definition__c>();
+            golive = [Select id, name From GDP_Area_Definition__c Where Name='GSSGoLive' Limit 1];
+            if (golive.size()>0) {isGSSGolive=true;}
+
             //Read and build the List of Specification file per Subscription
             /*
             List<Zuora__SubscriptionProductCharge__c> subscriptiondetaillist = new List<Zuora__SubscriptionProductCharge__c>();
@@ -153,8 +179,7 @@ global with sharing class GSS_REST_FileSpecification{
                                     
             //Add the missing record to the main list
             if (bsubscriptiondetaillist.size()>0)  subscriptiondetaillist.addAll(bsubscriptiondetaillist);
-            
-            System.Debug('subscriptiondetaillist >>>'+subscriptiondetaillist);
+            System.Debug('0 subscriptiondetaillist >>>'+subscriptiondetaillist);
             //TODO: Make sure the subscription has not been processed already today
             //The Temporary object for Delivery is named GDP_File_Delivery__c
             //TODO: Create the object
@@ -165,7 +190,7 @@ global with sharing class GSS_REST_FileSpecification{
                                         ,GSS_Subscription_Detail__c                                        
                                     FROM GDP_File_Delivery__c 
                                     WHERE Subscription__c=: RequestedListOfSubscriptionId.SubscriptionIdList
-                                      AND Delivery_Date__c=TODAY
+                                      AND Delivery_Date__c=:TodaySystem
                                       And Status__c='Completed'
                                     ORDER BY Id
                                     LIMIT :BATCH_SIZE];
@@ -186,11 +211,16 @@ global with sharing class GSS_REST_FileSpecification{
             
             for(GSS_Subscription_Detail__c subscriptiondetail: subscriptiondetaillist)
             {
+                System.Debug('1 subscriptiondetail >>>'+subscriptiondetail);
+          
                 if(!deliveryset.Contains(subscriptiondetail.id))
                 {
-                    Boolean DayIncluded = isTodayTheDeliveryDay(subscriptionDetail);
+                    
+                    Boolean DayIncluded = isTodayTheDeliveryDay(TodaySystem,subscriptionDetail);
+                    System.Debug('2 DayIncluded >>>'+DayIncluded);
                     // if the frequency, delivery calendar option, and today do not match there will be no file delivery
                     if (!DayIncluded) continue;
+                    System.Debug('3 DayIncluded >>>'+DayIncluded);
                     
                     // -------------------------------------------------------
                     // start preparing FileSpecification, for the delivery file, while still prequalifying the subscriptiondetail
@@ -221,33 +251,49 @@ global with sharing class GSS_REST_FileSpecification{
                     fs.FileNaming = subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c;
                     fs.ZIPFileName = subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c;
                     fs.Frequency = subscriptiondetail.GDP_File_Description__r.Frequency__c;
-                    setCustomizedCoreFileName( fs, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
+                    if (fs.ZIPFileName!=null) { fs.ZIPFileName = fs.ZIPFileName.replace('&','');}
+                    if (fs.FileNaming!=null) { fs.FileNaming = fs.FileNaming.replace('&','.');}
+                    setCustomizedCoreFileName(TodaySystem, fs, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
                     
+                    //Temporary solution for the golive only
+                    //When delta with master 
+                    //do not send delta but send master only
+                    boolean masteronly=false;
+                    if (subscriptiondetail.GDP_File_Description__r.Magnitude__c=='Delta' 
+                        && subscriptiondetail.GDP_File_Description__r.Master_File_Description__c !=null) { masteronly=true;}
+                    if (!IsGSSGolive) masteronly=false;
+
                     // -------------------------------------------------------
                     // Delta and Master Delivery cases for delta file subscription
                     //
                     // check if we need to skip the normal file description delivery.
                     // the delta file will not be part of first time ever delivery for a delta subscription  
                     // check for the case of a new delta subscription: Master_File_Delivery and Next_Master_File_Delivery are null
-                    if ( (subscriptiondetail.GDP_File_Description__r.Master_File_Description__c == null) // without master desc, it is not a delta  
-                         || (subscriptiondetail.Master_File_Delivery__c != null)      // master file has been delivered, 
-                         || (subscriptionDetail.Next_Master_File_Delivery__c != null) // next master has been set 
+                    if ( (
+                          (subscriptiondetail.GDP_File_Description__r.Master_File_Description__c == null) // without master desc, it is not a delta  
+                           || (subscriptiondetail.Master_File_Delivery__c != null)      // master file has been delivered, 
+                           || (subscriptionDetail.Next_Master_File_Delivery__c != null) // next master has been set 
+                        )
+                         && masteronly == false
                         ) 
                     { // normal subscription delivery case will be done here: normal delta file, or master subscription 
                         responseFSlist.FileSpecifications.add(fs); 
                         SetUniqueSpecificationIds.Add(subscriptiondetail.GDP_File_Description__c);
+                        System.Debug('4 subscriptiondetail.GDP_File_Description__c >>>'+subscriptiondetail.GDP_File_Description__c);
                     }
                     
                     // check for a delta subscription, whether we need to send the master
                     if (subscriptiondetail.GDP_File_Description__r.Master_File_Description__c!=null)
                     {
+                        System.Debug('5 subscriptiondetail.Next_Master_File_Delivery__c >>>'+subscriptiondetail.Next_Master_File_Delivery__c);
                         //Make sur the Next Master File Delivery Date is Reached
                         integer delta_state=0;
                         if (subscriptiondetail.Master_File_Delivery__c==null) delta_state=1; // master has never been sent
                         if (subscriptiondetail.Next_Master_File_Delivery__c!=null)
-                            if (Date.Today()>=subscriptiondetail.Next_Master_File_Delivery__c) delta_state=1;
+                            if (TodaySystem>=subscriptiondetail.Next_Master_File_Delivery__c) delta_state=1;
                         
-                        if (delta_state==0) continue;
+                        if (delta_state==0 && masteronly==false) continue;
+                        System.Debug('6 masteronly >>>'+masteronly);
                         FileSpecification fs1 = new FileSpecification();
                         fs1.SubscriptionDetailID = fs.SubscriptionDetailID;
                         fs1.SubscriptionID = fs.SubscriptionID;                     
@@ -259,8 +305,9 @@ global with sharing class GSS_REST_FileSpecification{
                         // Master File & Zip File should have the master file name, set the original name first
                         fs1.FileNaming = subscriptiondetail.GDP_File_Description__r.Master_File_Description__r.File_Naming_Convention__c; 
                         fs1.ZIPFileName = subscriptiondetail.GDP_File_Description__r.Master_File_Description__r.File_Naming_Convention__c;
-                        
-                        setCustomizedCoreFileName( fs1, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
+                        if (fs1.ZIPFileName!=null) { fs1.ZIPFileName = fs1.ZIPFileName.replace('&','');}
+                        if (fs1.FileNaming!=null) { fs1.FileNaming = fs1.FileNaming.replace('&','.');}
+                        setCustomizedCoreFileName(TodaySystem, fs1, subscriptiondetail); // set intermediate customized FileNaming and ZIPFileName
                         
                         responseFSlist.FileSpecifications.add(fs1); 
                         SetUniqueSpecificationIds.Add(subscriptiondetail.GDP_File_Description__r.Master_File_Description__c);
@@ -310,7 +357,7 @@ global with sharing class GSS_REST_FileSpecification{
             {
                 //Find out the date of the last file production
                  FileProduced=false;
-                 LastDateFileProduction = System.Today();
+                 LastDateFileProduction = TodaySystem;
                  LastIdFileProduction = '';
                  for(GDP_File_Production__c fileproduction:FileDescription.GDP_File_Productions__r)
                  {
@@ -333,7 +380,8 @@ global with sharing class GSS_REST_FileSpecification{
                              fs.Frequency = FileDescription.Frequency__c;
                              fs.FileProductionName=getProductionFileName(LastIdFileProduction, Year, Month);
                              fs.TriggerFileName=''; 
-                             fs.XSDSchema = FileDescription.Reference__r.XSD_Schema__c !=null ? FileDescription.Reference__r.XSD_Schema__c :FileDescription.XSD_Schema__c;
+                             fs.XSDSchema ='';
+                             if (!IsSimulation) {fs.XSDSchema = FileDescription.Reference__r.XSD_Schema__c !=null ? FileDescription.Reference__r.XSD_Schema__c :FileDescription.XSD_Schema__c;}
                              fs.FileSubscribedFormat=FileDescription.File_Format__c;
                              
                              // for non TEXT format, add the proper extension to file name and zip file name
@@ -377,7 +425,7 @@ global with sharing class GSS_REST_FileSpecification{
     // assumption:
     //  - fs.FileNaming already set with original/core file name (GDP_File_Description__r.File_Naming_Convention__c)
     //  - fs.ZIPFileName already set with original/core file name (GDP_File_Description__r.File_Naming_Convention__c)
-    private static void setCustomizedCoreFileName( FileSpecification fs
+    private static void setCustomizedCoreFileName( Date TodaySystem, FileSpecification fs
         , GSS_Subscription_Detail__c subscriptionDetail)
     {
         /* GDP-222   Send dynamically the filename base on filenaming convension*/
@@ -393,16 +441,16 @@ global with sharing class GSS_REST_FileSpecification{
         if (subscriptiondetail.File_Name_Prefix_Option__c =='Custom') fileNamePrefix = subscriptiondetail.File_name_Custom_Prefix__c;  
         if (subscriptiondetail.File_Name_Suffix_Option__c =='Custom') fileNameSuffix = subscriptiondetail.File_Name_Custom_Suffix__c;                   
         
-        if (fileNameSuffix!='') fileNameSuffix = '_'+fileNameSuffix;
-        if (fileNamePrefix!='') fileNamePrefix = fileNamePrefix + '_';
+        //if (fileNameSuffix!='') fileNameSuffix = '_'+fileNameSuffix;
+        //if (fileNamePrefix!='') fileNamePrefix = fileNamePrefix + '_';
          
         // apply the prefix/suffix pattern to data file as required 
         if (subscriptiondetail.File_Name_Applies_on__c == FILE_NAME_APPLIES_ON_ZIP_AND_DATA )
         {
             // fs.FileNaming = getFileNameDynamic(subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c,
-            fs.FileNaming = getFileNameDynamic( fs.FileNaming, fileNamePrefix, fileNameSuffix); 
+            fs.FileNaming = getFileNameDynamic( TodaySystem, fs.FileNaming, fileNamePrefix, fileNameSuffix); 
         } else {
-            fs.FileNaming = getFileNameDynamic( fs.FileNaming, '', ''); 
+            fs.FileNaming = getFileNameDynamic( TodaySystem, fs.FileNaming, '', ''); 
         } // end if for applying data file name
          
         // set core ZIPFileName, no zip extension yet, might be extended later based on file type
@@ -411,9 +459,9 @@ global with sharing class GSS_REST_FileSpecification{
              || subscriptiondetail.File_Name_Applies_on__c == FILE_NAME_APPLIES_ON_ZIP_AND_DATA )
         { 
             // fs.ZIPFileName = getFileNameDynamic(subscriptiondetail.GDP_File_Description__r.File_Naming_Convention__c,
-            fs.ZIPFileName = getFileNameDynamic(fs.ZIPFileName, fileNamePrefix, fileNameSuffix); 
+            fs.ZIPFileName = getFileNameDynamic(TodaySystem, fs.ZIPFileName, fileNamePrefix, fileNameSuffix); 
         } else {
-            fs.ZIPFileName = getFileNameDynamic(fs.ZIPFileName, '', ''); 
+            fs.ZIPFileName = getFileNameDynamic(TodaySystem, fs.ZIPFileName, '', ''); 
         } // end if for applying zip file name
         
     } // setCustomizedCoreFileName
@@ -481,7 +529,9 @@ global with sharing class GSS_REST_FileSpecification{
     //global static String getZipFFileName(String FileName)
     static String getZipFileName(String FileName)
     {
-      return FileName.replace('.', '')+'.zip'; 
+      //return FileName.replace('.', '')+'.zip';
+      //Per Luc request mainframe client system requires zip in uppercase
+      return FileName+'.ZIP'; 
     }
     
     
@@ -534,7 +584,7 @@ global with sharing class GSS_REST_FileSpecification{
     /* GDP-222 Send dynamically the filename base on filenaming convension*/
     //Keep this function static global as it will be called by GUI 
     //This function converts the FileNamingConvension with today parameters replacements and adds prefix and suffix
-    global static  String getFileNameDynamic(String FileNaming, String Prefix, String Suffix){
+    global static  String getFileNameDynamic(Date TodaySystem, String FileNaming, String Prefix, String Suffix){
         //Example substitution
         //String Prefix = '-PREFIX-';
         //String FileNaming = 'CGOLA_Week[ww]_[yyyy].AW';
@@ -545,9 +595,9 @@ global with sharing class GSS_REST_FileSpecification{
         //-PREFIX-CGOLA_Week.43_201-SUFFIX-.AW
         String DynamicFileName = FileNaming;
         DynamicFileName = DynamicFileName.Replace('[yyyy]', DateTime.now().Format('yyyy'));
-        DynamicFileName = DynamicFileName.Replace('[ddd]' , String.valueOf( Date.Today().dayOfYear()).leftPad(3).replace(' ','0'));
+        DynamicFileName = DynamicFileName.Replace('[ddd]' , String.valueOf( TodaySystem.dayOfYear()).leftPad(3).replace(' ','0'));
         DynamicFileName = DynamicFileName.Replace('[ww]'  , DateTime.now().Format('w').leftPad(2).replace(' ','0'));
-        DynamicFileName = DynamicFileName.Replace('[1-2]' , Date.Today().Day() >= 16 ? '1': '2');
+        DynamicFileName = DynamicFileName.Replace('[1-2]' , TodaySystem.Day() >= 16 ? '1': '2');
         
         //The suffix and prefix have to be a replacement like above 
         //EX: String FileNaming = '[prefix]CGOLA_Week[ww]_[yyyy][suffix].AW';
@@ -567,63 +617,66 @@ global with sharing class GSS_REST_FileSpecification{
         Return DynamicFileName;               
     } // end of getFileNameDynamic
     
-	
-	// =======================================================================
-	// isTodayTheDeliveryDay 
-	//   return true if today is the day to do the file delivery on this GSS_Subscription_Detail
-	//   originally, this is only based on Calendar_*_Option, Frequency, and Date.today()
-	//   but to cover the change of Calendar_*_Option values we also use: 
-	//   Calendar_Next_SubmissioN_Date and Calendar_New_Submission_Effective_Date
-	private static Boolean isTodayTheDeliveryDay(GSS_Subscription_Detail__c subscriptionDetail)
-	{
-		Boolean DayIncluded=false;
-		if (subscriptiondetail.GDP_File_Description__r.Frequency__c=='Daily') DayIncluded=true;
-		
-		if (subscriptionDetail.Calendar_Next_Submission_Date__c == Date.today()) 
-		{
-			DayIncluded = true;
-		}
-		
-		if ( (subscriptionDetail.Calendar_New_Submission_Effective_Date__c != null)
-			&& (subscriptionDetail.Calendar_New_Submission_Effective_Date__c > Date.today()) )
-		{ // this is the transition period after changing the Calendar_*_Option__c values
-			// do not use Calendar_*_Option for decided to include or not.
-			return DayIncluded;
-		}
-		
-		// --------------------------------------------------------------------
-		// check the possibility that today is the delivery day based on the normal Calendar_*_Option values.
-		String Delivery_Period_Day='';
-		if (subscriptiondetail.Calendar_Semi_Monthly_First_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Semi_Monthly_First_Option__c;
-		if (subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c;
-		if (subscriptiondetail.Calendar_Monthly_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Monthly_Option__c;
-		if (Delivery_Period_Day!='')
-		{
-			String[] Pday = Delivery_Period_Day.Split(';');
-			//Get the day of  today
-			Integer  Day = System.Today().Day();                       
-			for (String dayofthemonth: Pday) 
-			{
-				if ( dayofthemonth.length()>0 
-					&& Integer.ValueOf(dayofthemonth)==Day) 
-				{
-					DayIncluded=true;
-				}
-			}
-		}
-		Delivery_Period_Day='';
-		if (subscriptiondetail.Calendar_Weekly_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Weekly_Option__c;
-		if (Delivery_Period_Day!='')
-		{
-			//Get the day of the week       
-			String dayOfWeek=System.Now().format('EEEE');
-			String[] Pday = Delivery_Period_Day.Split(';');                                               
-			for (String dayoftheweek: Pday) if (dayoftheweek==DayOfWeek) DayIncluded=true;
-		}
-		//The Period and the day is not matching so there is no file generation
-		//happening
-		
-		
-		return DayIncluded;
-	}
+    
+    // =======================================================================
+    // isTodayTheDeliveryDay 
+    //   return true if today is the day to do the file delivery on this GSS_Subscription_Detail
+    //   originally, this is only based on Calendar_*_Option, Frequency, and Date.today()
+    //   but to cover the change of Calendar_*_Option values we also use: 
+    //   Calendar_Next_SubmissioN_Date and Calendar_New_Submission_Effective_Date
+    private static Boolean isTodayTheDeliveryDay(Date TodaySystem, GSS_Subscription_Detail__c subscriptionDetail)
+    {
+        Boolean DayIncluded=false;
+        if (subscriptiondetail.GDP_File_Description__r.Frequency__c=='Daily') DayIncluded=true;
+        System.Debug('1-1 DayIncluded >>>'+DayIncluded);
+        if (subscriptionDetail.Calendar_Next_Submission_Date__c == TodaySystem) 
+        {
+            DayIncluded = true;
+        }
+        System.Debug('2-1 DayIncluded >>>'+DayIncluded);
+        if ( (subscriptionDetail.Calendar_New_Submission_Effective_Date__c != null)
+            && (subscriptionDetail.Calendar_New_Submission_Effective_Date__c > TodaySystem) )
+        { // this is the transition period after changing the Calendar_*_Option__c values
+            // do not use Calendar_*_Option for decided to include or not.
+            return DayIncluded;
+        }
+        System.Debug('3-1 DayIncluded >>>'+DayIncluded);
+        // --------------------------------------------------------------------
+        // check the possibility that today is the delivery day based on the normal Calendar_*_Option values.
+        String Delivery_Period_Day='';
+        if (subscriptiondetail.Calendar_Semi_Monthly_First_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Semi_Monthly_First_Option__c;
+        if (subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Semi_Monthly_Second_Option__c;
+        if (subscriptiondetail.Calendar_Monthly_Option__c!=null) Delivery_Period_Day += ';' +subscriptiondetail.Calendar_Monthly_Option__c;
+        if (Delivery_Period_Day!='')
+        {
+            String[] Pday = Delivery_Period_Day.Split(';');
+            //Get the day of  today
+            Integer  Day = TodaySystem.Day(); 
+            System.Debug('4-0 Day >>>'+Day);
+            for (String dayofthemonth: Pday) 
+            {
+                System.Debug('4-1 dayofthemonth >>>'+dayofthemonth);
+                if ( dayofthemonth.length()>0 
+                    && Integer.ValueOf(dayofthemonth)==Day) 
+                {
+                    DayIncluded=true;
+                }
+            }
+        }
+        System.Debug('4-2 DayIncluded >>>'+DayIncluded);
+        Delivery_Period_Day='';
+        if (subscriptiondetail.Calendar_Weekly_Option__c!=null) Delivery_Period_Day = subscriptiondetail.Calendar_Weekly_Option__c;
+        if (Delivery_Period_Day!='')
+        {
+            //Get the day of the week       
+            String dayOfWeek=System.Now().format('EEEE');
+            String[] Pday = Delivery_Period_Day.Split(';');                                               
+            for (String dayoftheweek: Pday) if (dayoftheweek==DayOfWeek) DayIncluded=true;
+        }
+        //The Period and the day is not matching so there is no file generation
+        //happening
+        System.Debug('5-1 DayIncluded >>>'+DayIncluded);
+        
+        return DayIncluded;
+    }
 }

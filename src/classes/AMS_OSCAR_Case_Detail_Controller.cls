@@ -1,7 +1,13 @@
 public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
 
-    public AMS_OSCAR__c oscarObj { get; set; }
+    public AMS_OSCAR__c oscarObj { 
+        get{ 
+            if(this.oscarObj == null)
+                return new AMS_OSCAR__c();
+            else return this.oscarObj;
+        }
+        set; }
     public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
 
     public Boolean saveAction { get; set; }
@@ -254,7 +260,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isAgencyChanges{
         get{
             //FM 10-03-2017 - Added Correction, since correction will act like the change process
-            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES || oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES  || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
         }
         private set;

@@ -857,14 +857,14 @@ public class ams2gdp_BusinessLogic
 				, IATA_Code__c = (territory.Appointment__r.Account__r.IATACode__c != null)? territory.Appointment__r.Account__r.IATACode__c.left(7) : null
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
-				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Location_Country_Name__c = (territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Airline_Code__c = code
 				, Airline_Name__c = name
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
 				, Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c 
 				, Territory_IATA_Numeric_Country_Code__c = territory.Appointment__r.Account__r.state_numeric_code__c
-				, Territory_Country_Name__c = territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Territory_Country_Name__c = (territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Territory_State_Abbreviation__c = territory.ISO_State__r.ISO_Code__c
 				, Territory_Description__c = (String.isNotBlank(territory.Comments__c))? territory.Comments__c.left(40):null
 			));

@@ -2165,6 +2165,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Lost Found Property Chart</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2238,6 +2242,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security Management System Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4496,6 +4504,10 @@ The product will only appear on the Online Store when the date entered in this f
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>StockKeepingUnit</fullName>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Use_Contract_when_ordered__c</fullName>
@@ -12925,6 +12937,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lost Found Property Chart</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -12998,6 +13014,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Management System Manual</fullName>
                 <default>false</default>
             </values>
             <values>

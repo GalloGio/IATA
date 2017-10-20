@@ -150,6 +150,20 @@ global with sharing class GSS_REST_FileProduction{
           //What is the Calendar based on Weekly or Semi-Monthly
           //Semi-Monthly
           Date NextDateProduction = System.Today();
+
+          Integer NextDay  =NextDateProduction.Day();
+          Integer NextMonth=NextDateProduction.Month();
+          Integer NextYear =NextDateProduction.Year();
+          
+          Integer LastDay  =LastDateFileProduction.Day();
+          Integer LastMonth=LastDateFileProduction.Month(); 
+          Integer LastYear =LastDateFileProduction.Year();
+
+          Date LastFirstDate = Date.newInstance(LastYear, LastMonth, 1);
+          Date LastSemiDate = Date.newInstance(LastYear, LastMonth, 16);
+          
+          Date NextFirstDate = Date.newInstance(NextYear, NextMonth, 1);
+          Date NextSemiDate = Date.newInstance(NextYear, NextMonth, 16);
          
           //Weekly
           Datetime NextDateTimeProduction = DateTime.newInstance(NextDateProduction, Time.newInstance(0, 0, 0, 0));
@@ -157,8 +171,13 @@ global with sharing class GSS_REST_FileProduction{
               
           if (fs.Frequency__c=='Daily' && LastDateFileProduction<NextDateProduction) ProduceFile=true;
           if (fs.Frequency__c=='Weekly' && (LastDateFileProduction<NextDateProduction && dayOfWeek=='sunday' )) ProduceFile=true;
-          if (fs.Frequency__c=='Semi-Monthly' && LastDateFileProduction<NextDateProduction && (NextDateProduction.Day()==16 || NextDateProduction.Day()==1) )  ProduceFile=true;
-          if (fs.Frequency__c=='Monthly' && (LastDateFileProduction.Month()<NextDateProduction.Month())) ProduceFile=true;
+         
+          //Lpd>=1 && <16 of the month and today>=16 of the same month ==> production
+          //Lpd>=16 of the last month && <1 of current month and today<16 of the current month ==> production
+          //if (fs.Frequency__c=='Semi-Monthly' && LastDateFileProduction<NextDateProduction && (NextDateProduction.Day()==16 || NextDateProduction.Day()==1) )  ProduceFile=true;
+          if (fs.Frequency__c=='Semi-Monthly' && (LastDateFileProduction>=LastFirstDate && LastDateFileProduction< LastSemiDate && NextDateProduction>=NextSemiDate )) ProduceFile=true;
+          if (fs.Frequency__c=='Semi-Monthly' && (LastDateFileProduction>=LastSemiDate && LastDateFileProduction<NextFirstDate  && LastFirstDate<NextFirstDate ))  ProduceFile=true;
+          if (fs.Frequency__c=='Monthly' && (LastFirstDate<NextFirstDate)) ProduceFile=true;
           
           if (ProduceFile)
           {
@@ -183,29 +202,29 @@ global with sharing class GSS_REST_FileProduction{
              if (fs.File_Format__c=='TXT') HIDDENFIELD=8;
              //load all the configuration for the Agency, Territory and Airline if needed
              nfs.FileSpecificationID = fs.Id;
-             nfs.AgencyFileFieldsLabels  = fieldstructure.ExtractField(0, REF_AGENCY);
-             nfs.AgencyFileFieldsLengths = fieldstructure.ExtractField(1, REF_AGENCY);
-             nfs.AgencyFileFieldsTypes   = fieldstructure.ExtractField(2, REF_AGENCY);
-             nfs.AgencyFileFieldsHidden  = fieldstructure.ExtractField(HIDDENFIELD, REF_AGENCY);
-             nfs.AgencyFileObjectName    = fieldstructure.ExtractField(4, REF_AGENCY);
-             nfs.AgencyFileFieldsAPI     = fieldstructure.ExtractField(5, REF_AGENCY);
-             nfs.AgencyFileFieldsGroup   = fieldstructure.ExtractField(11, REF_AGENCY);
+             nfs.AgencyFileFieldsLabels  = fieldstructure.ExtractField(HIDDENFIELD, 0, REF_AGENCY);
+             nfs.AgencyFileFieldsLengths = fieldstructure.ExtractField(HIDDENFIELD, 1, REF_AGENCY);
+             nfs.AgencyFileFieldsTypes   = fieldstructure.ExtractField(HIDDENFIELD, 2, REF_AGENCY);
+             nfs.AgencyFileFieldsHidden  = fieldstructure.ExtractField(HIDDENFIELD, HIDDENFIELD, REF_AGENCY);
+             nfs.AgencyFileObjectName    = fieldstructure.ExtractField(HIDDENFIELD, 4, REF_AGENCY);
+             nfs.AgencyFileFieldsAPI     = fieldstructure.ExtractField(HIDDENFIELD, 5, REF_AGENCY);
+             nfs.AgencyFileFieldsGroup   = fieldstructure.ExtractField(HIDDENFIELD, 11, REF_AGENCY);
              
-             nfs.AgencyFileXmlName       = fieldstructure.ExtractField(6, REF_AGENCY);
-             nfs.AgencyFileFieldXmlStructure  = fieldstructure.ExtractField(10, REF_AGENCY);
-             nfs.AgencyFileXmlGroup      = fieldstructure.ExtractField(9, REF_AGENCY); 
+             nfs.AgencyFileXmlName       = fieldstructure.ExtractField(HIDDENFIELD, 6, REF_AGENCY);
+             nfs.AgencyFileFieldXmlStructure  = fieldstructure.ExtractField(HIDDENFIELD, 10, REF_AGENCY);
+             nfs.AgencyFileXmlGroup      = fieldstructure.ExtractField(HIDDENFIELD, 9, REF_AGENCY); 
              
-             nfs.AirlineFileFieldsLabels  = fieldstructure.ExtractField(0, REF_AIRLINE);
-             nfs.AirlineFileFieldsLengths = fieldstructure.ExtractField(1, REF_AIRLINE);
-             nfs.AirlineFileFieldsTypes   = fieldstructure.ExtractField(2, REF_AIRLINE);
-             nfs.AirlineFileFieldsHidden  = fieldstructure.ExtractField(HIDDENFIELD, REF_AIRLINE);
-             nfs.AirlineFileObjectName    = fieldstructure.ExtractField(4, REF_AIRLINE);
-             nfs.AirlineFileFieldsAPI     = fieldstructure.ExtractField(5, REF_AIRLINE);
-             nfs.AirlineFileFieldsGroup   = fieldstructure.ExtractField(11, REF_AIRLINE);
+             nfs.AirlineFileFieldsLabels  = fieldstructure.ExtractField(HIDDENFIELD, 0, REF_AIRLINE);
+             nfs.AirlineFileFieldsLengths = fieldstructure.ExtractField(HIDDENFIELD, 1, REF_AIRLINE);
+             nfs.AirlineFileFieldsTypes   = fieldstructure.ExtractField(HIDDENFIELD, 2, REF_AIRLINE);
+             nfs.AirlineFileFieldsHidden  = fieldstructure.ExtractField(HIDDENFIELD, HIDDENFIELD, REF_AIRLINE);
+             nfs.AirlineFileObjectName    = fieldstructure.ExtractField(HIDDENFIELD, 4, REF_AIRLINE);
+             nfs.AirlineFileFieldsAPI     = fieldstructure.ExtractField(HIDDENFIELD, 5, REF_AIRLINE);
+             nfs.AirlineFileFieldsGroup   = fieldstructure.ExtractField(HIDDENFIELD, 11, REF_AIRLINE);
              
-             nfs.AirlineFileXmlName       = fieldstructure.ExtractField(6, REF_AIRLINE);
-             nfs.AirlineFileFieldXmlStructure  = fieldstructure.ExtractField(10, REF_AIRLINE);
-             nfs.AirlineFileXmlGroup      = fieldstructure.ExtractField(9, REF_AIRLINE); 
+             nfs.AirlineFileXmlName       = fieldstructure.ExtractField(HIDDENFIELD, 6, REF_AIRLINE);
+             nfs.AirlineFileFieldXmlStructure  = fieldstructure.ExtractField(HIDDENFIELD, 10, REF_AIRLINE);
+             nfs.AirlineFileXmlGroup      = fieldstructure.ExtractField(HIDDENFIELD, 9, REF_AIRLINE); 
              
              nfs.DatabaseConnector = fs.Database_Connector__c ==null ? '': fs.Database_Connector__c;
              nfs.FileSubscribedFormat = fs.File_Format__c;
@@ -280,7 +299,7 @@ global with sharing class GSS_REST_FileProduction{
             if (vXmlGroup!=null)  XmlGroup=vXmlGroup.Split('\\|');
            
         }
-        public String ExtractField(Integer TypeList, String ObjectName)
+        public String ExtractField(Integer FileType, Integer TypeList, String ObjectName)
         {
             Integer TYPE_LABEL=0;
             Integer TYPE_LENGTH=1;
@@ -299,6 +318,7 @@ global with sharing class GSS_REST_FileProduction{
             integer i=-1;
             integer m=0;
             String[] ValueList;
+            String[] FileValueList;
 
             if (TypeList==TYPE_LABEL) ValueList = this.FieldLabel;
             if (TypeList==TYPE_LENGTH) ValueList = this.FieldLength;
@@ -312,13 +332,16 @@ global with sharing class GSS_REST_FileProduction{
             if (TypeList==TYPE_XMLGROUP) ValueList = this.XmlGroup;
             if (TypeList==TYPE_XMLSTRUCTURE) ValueList = this.FieldXmlStructure; 
             if (TypeList==TYPE_GROUP) ValueList = this.FieldGroup;
+
+            if (FileType==TYPE_TXTHIDDEN && TypeList==TYPE_LENGTH) FileValueList = this.FieldTxtHiddenColumn;
             
             if (ValueList==null) return '';
             for(String stringvalue:ValueList)
              {
                   i++;                
-                  if (this.FieldGroup[i]!=ObjectName) continue;                  
+                  if (this.FieldGroup[i]!=ObjectName) continue;  
                   if (m>0) stringreturn +=','; 
+                  if (FileType==TYPE_TXTHIDDEN && TypeList==TYPE_LENGTH) { if (FileValueList[i]=='1') stringvalue='0';}
                   stringreturn +=stringvalue; 
 
                   m++;
