@@ -5,18 +5,18 @@
             <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>IATA/IATAN ID Card Online Platform</title>
-            
-            
+
+
         </head>
-        
+
         <body onload="calculateDisplayedName();">
             <c:IDCard_HeaderComponent />
             <c:IDCardToolsComponent />
             <apex:includeScript value="/soap/ajax/24.0/connection.js" />
             <apex:includeScript value="/soap/ajax/10.0/apex.js" />
             <script type="text/javascript">
-            
-           
+
+
             String.prototype.capitalize = function(){
                 return this.toLowerCase().replace( /\b\w/g, function (m) {
                 return m.toUpperCase();
@@ -25,73 +25,73 @@
 
             //////delete the attachment for ID Card applications
             function deleteMethod(id){
-                
-                if (confirm('Are you sure you want to delete this file?')) 
+
+                if (confirm('Are you sure you want to delete this file?'))
                 {
                     var tempID = id.substring(0,15);
                     document.getElementById('{!$Component.idcardForm.pb2.hdnAttachmentId}').value = tempID;
                     deleteAttachment(tempID);
                 }
-                
+
             }
-            
-            
+
+
             /**
                  * Sets the maxlength of an input field
                  */
     function setMaxLength(id, maxValue) {
         document.getElementById(id).setAttribute('maxlength',maxValue);
-    }   
-    
+    }
+
     /**
      * Function called when cropper tool has finished uploaded the image
-     */ 
+     */
     function receiveFilenameFromCropperTool(fileFullUri) {
         document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
     }
-    
+
     function scrollToTop() {
         window.scrollTo(0,0);
     }
-    
+
     function showCroppingToolIframe() {
         this.document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = '';
         this.document.getElementById('{!$Component.idcardForm.pb3.divIframeViewer}').style.display = 'none';
         this.document.getElementById('tablePhotoUpload').style.display = '';
     }
-    
+
     /**
                 **** Function responsible to calculate the displayed card name
                 */
-    function calculateDisplayedName () {            
-        
+    function calculateDisplayedName () {
+
         if (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}'))
-        {      
-            
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value)).trim();   
+        {
+
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value)).trim();
             var middleInitial = "";
             /*if (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}') != null)
                         middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}').innerHTML)).trim().replace(".","").toUpperCase();*/
                     if (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}') != null)
                         middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}').value)).trim().replace(".","").toUpperCase();
-                    
+
                     /*var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').innerHTML) ).trim();*/
                     var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value)).trim();
-                    
+
                     var displayName = "";
                     if((firstName.length + lastName.length) != 0) {
                         if(lastName.length > 22)
                             displayName =  lastName.substring(0, 22);
-                        else {  
+                        else {
                             // + 2 => (' ') for spaces
                             if ((lastName.length + 2 + firstName.length + middleInitial.length) <= 22) {
                                 if (lastName.length != 0)
                                     displayName =  firstName + " " + middleInitial + " " + lastName;
                                 else
-                                    displayName =  firstName+ " " + middleInitial;    
-                            }                   
-                            else {     
-                                //+ 3 =>   firstName first character + ('.') + (' ')                
+                                    displayName =  firstName+ " " + middleInitial;
+                            }
+                            else {
+                                //+ 3 =>   firstName first character + ('.') + (' ')
                                 if ((lastName.length + 3) <= 22)
                                     displayName =  firstName.substring(0,1) + "." + " " + lastName;
                                 else
@@ -100,18 +100,18 @@
                         }
                     }
                     document.getElementById('{!$Component.idcardForm.pb1.txtDisplayedName}').value = displayName;
-                    document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = lastName;                
-                    document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = firstName;  
-                    
+                    document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = lastName;
+                    document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = firstName;
+
                     if((lastName + " " + firstName).length > 22)
                         document.getElementById('{!$Component.idcardForm.pb1.textDisplayedName_CharacterRemaining}').innerHTML = " " + ('{!$Label.IDCard_DisplayedName_RemainingCharacter}');
                     else
-                        document.getElementById('{!$Component.idcardForm.pb1.textDisplayedName_CharacterRemaining}').innerHTML = "";   
-                    
+                        document.getElementById('{!$Component.idcardForm.pb1.textDisplayedName_CharacterRemaining}').innerHTML = "";
+
                 }
-                    
-                }            
-    
+
+                }
+
     // Add ECMA262-5 Array methods if not supported natively
     // fix for IE
     // DONT REMOVE
@@ -125,15 +125,15 @@
                     return i;
             return -1;
         };
-    }            
-    
+    }
+
     function workingFirstName() {
-        
+
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));
         //document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = firstName.capitalize();
         document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = firstName.toUpperCase();
 
-        //removing apostrophe 
+        //removing apostrophe
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));
         name = name.replace(/'/,' ');
         document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = name;
@@ -143,14 +143,14 @@
         name = name.replace(/-/,' ');
         document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = name;
     }
-    
+
     function workingLastName() {
-        
+
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));
         //document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = lastName.capitalize();
         document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = lastName.toUpperCase();
 
-        //removing apostrophe 
+        //removing apostrophe
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));
         name = name.replace(/'/,' ');
         document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = name;
@@ -160,48 +160,48 @@
         name = name.replace(/-/,' ');
         document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = name;
     }
-    
-    function isConfirmRevenuePosition(selectedPositionPicklist) {               
+
+    function isConfirmRevenuePosition(selectedPositionPicklist) {
         var positionList =["Director","Manager","Employee","Independent Consultant/Broker","Sole Owner","Partner","Shareholder"];
         var positionListShare = ["Sole Owner","Partner","Shareholder"];
-        var position = document.getElementById(selectedPositionPicklist).value;    
-        
+        var position = document.getElementById(selectedPositionPicklist).value;
+
         $('#confRevDiv').hide();
-        $('#confShareDiv').hide();              
+        $('#confShareDiv').hide();
         if ({!IsContactFromCanada}) {
-            if (positionList.indexOf(position) == -1) 
+            if (positionList.indexOf(position) == -1)
             {
-                $('#confRevDiv').hide();                                           
+                $('#confRevDiv').hide();
             }
             else
             {
-                $('#confRevDiv').show(); 
+                $('#confRevDiv').show();
                 $('#confShareDiv').children(':checkbox').attr('checked',false);
-            } 
-            if (positionListShare.indexOf(position) == -1) 
+            }
+            if (positionListShare.indexOf(position) == -1)
             {
-                $('#confShareDiv').hide();                                           
+                $('#confShareDiv').hide();
             }
             else
             {
-                $('#confShareDiv').show();                                      
+                $('#confShareDiv').show();
             }
-        } 
+        }
     }
-    
-    
+
+
     $(document).ready(function() {
-        
+
         var popupStatus = 0;
-        
+
        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
-            
+
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
             var popupHeight = $("#popupLogin").height();
             var popupWidth = $("#popupLogin").width();
-            
+
             // change the popupLogin content
             if ($(this).is("#DestinationGeography-EN")) {
                 $("#popup_Content").html("{!destinationGeography_Description}");
@@ -223,15 +223,15 @@
             }
             if ($(this).is("#Leserviceauclientvoyageur-FR")) {
                 $("#popup_Content").html("{!leserviceauclientvoyageur_Description}");
-            }  
+            }
             if ($(this).is("#SellingIntlRailTransportation-EN")) {
                 $("#popup_Content").html("{!sellingInternationalRailTransportation_Description}");
-            }                     
+            }
             if ($(this).is("#ServingtheTandTCustomer-EN")) {
                 $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
-            }    
+            }
             if ($(this).is("#SocialMediaforTandTIndustry-EN")) {
-                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");     
+                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");
             }
             if ($(this).is("#FundamentalsJourneyPricing-EN")) {
                 $("#popup_Content").html("{!fundamentalsJourneyPricing_Description}");
@@ -241,21 +241,21 @@
             }
             if ($(this).is("#TravelAgencyFees-EN")) {
                 $("#popup_Content").html("{!travelAgencyFees_Description}");
-            }           
-            
+            }
+
             //centering
             $("#popupLogin").css({
                 "position": "absolute",
                 "top": windowHeight / 2 - popupHeight / 2,
                 "left": windowWidth / 2 - popupWidth / 2
             });
-            
-            //aligning our full bg 
+
+            //aligning our full bg
             $("#LoginBackgroundPopup").css({
                 "height": windowHeight
             });
-            
-            
+
+
             // Pop up the div and Bg
             if (popupStatus == 0) {
                 $("#LoginBackgroundPopup").css({
@@ -265,11 +265,11 @@
                 $("#popupLogin").fadeIn("slow");
                 popupStatus = 1;
             }
-            
-            
+
+
         });
-        
-        
+
+
         //Close Them
         $("#popupLoginClose").click(function() {
             if (popupStatus == 1) {
@@ -278,13 +278,13 @@
                 popupStatus = 0;
             }
         });
-    });            
-    
+    });
+
     </script>
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="formSF">
             <!-- Header -->
-            <div class="HeaderIMG"> 
+            <div class="HeaderIMG">
                 <table width="100%">
                     <tr>
                         <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
@@ -306,10 +306,10 @@
         <apex:form forceSSL="true" id="idcardForm">
             <div class="background">
                 <div style="width: 750px; margin: 0 auto;">
-                    
+
                     <apex:pageBlock id="pb1" rendered="{!isPart1}">
-                        
-                        
+
+
                         <!---- BREAD CRUMB ---->
                         <br/>
                         <div>
@@ -320,19 +320,19 @@
                                 <li class ="crumbsnext">4</li>
                                 <li class ="crumbsnext">5</li>
                                 <li class ="crumbsnext">6</li>
-                                <li class ="crumbsnext">7</li>   
+                                <li class ="crumbsnext">7</li>
                             </ul>
                         </div>
-                        <br/> 
-                        
-                        
+                        <br/>
+
+
                         <div><h1>{!PageTitle}</h1></div>
-                        
-                        
+
+
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
                         </apex:actionRegion>
-                        
+
                         <center>
                             <apex:actionStatus id="saveStatus">
                                 <apex:facet name="start">
@@ -343,12 +343,12 @@
                                 <apex:facet name="stop">
                                     <h1>&nbsp;<br/></h1>
                                 </apex:facet>
-                                
+
                             </apex:actionStatus>
                         </center>
-                        
-                        
-                        
+
+
+
                         <apex:outputPanel >
                             <h2><apex:outputText value="{!$Label.ID_Card_Expiration_Date_Label}: {0,date,dd/MM/yyyy}"
                                                  style="font-weight:bold;">
@@ -388,7 +388,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
 
 </tr>-->
                                         <tr>
-                                            <td colspan="4" style="text-align: right">   
+                                            <td colspan="4" style="text-align: right">
                                                 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Title__c.Label}" />
                                             </td>
                                             <td>
@@ -398,7 +398,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                 </apex:outputPanel>
                                             </td>
                                         </tr>
-                                        <tr>      
+                                        <tr>
                                             <td colspan="4" style="text-align: right">
                                                 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Last_Name__c.Label}" />
                                             </td>
@@ -407,7 +407,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField id="txtLastName" value="{!IDCardApplicationRR.Last_Name__c}"
                                                                      onkeyup="calculateDisplayedName();workingLastName();" styleclass="outputText2" />
-                                                </apex:outputPanel>   
+                                                </apex:outputPanel>
                                             </td>
                                         </tr>
                                         <tr>
@@ -419,11 +419,11 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField id="txtFirstName"  value="{!IDCardApplicationRR.First_Name__c}" onkeyup="calculateDisplayedName();workingFirstName();" styleclass="outputText2"/>
                                                 </apex:outputPanel>
-                                                <script> 
+                                                <script>
                                                     if({!IsNewApplication}==false)
                                                     document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').setAttribute('readonly', 'readonly');
                                                 </script>
-                                                
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -438,7 +438,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                             <td colspan="4" style="text-align: right">
                                                 <apex:outputLabel styleclass="LabelsBlue" value="{!$Label.ID_Card_Displayed_Name_Label}" />
                                             </td>
-                                            
+
                                             <td>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
@@ -446,9 +446,9 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                     <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
                                                         <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
                                                     </apex:outputPanel>
-                                                    
+
                                                     <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>
-                                                    
+
                                                     </apex:outputPanel>
                                                     </td>
                                                     </tr>
@@ -480,7 +480,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                                                                 </tr>
                                                                                                 <tr>
                                                                                                     <td colspan="4" style="text-align: right" >
-                                                                                                        <apex:outputLabel rendered="{!NOT(keyAccount)}" styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Approving_Manager_s_Name__c.Label}" />  
+                                                                                                        <apex:outputLabel rendered="{!NOT(keyAccount)}" styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Approving_Manager_s_Name__c.Label}" />
                                                                                                             </td>
                                                                                                         <td>
                                                                                                             <apex:outputPanel styleClass="requiredInput" layout="block" rendered="{!NOT(keyAccount)}" >
@@ -508,7 +508,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                                                                                                                     <apex:outputPanel styleClass="requiredInput" layout="block">
                                                                                                                                                         <div class="requiredBlock" style="height:23px; margin-left: 3px;" layout="block"/>
                                                                                                                                                             <apex:inputField styleclass="outputText2" value="{!IDCardApplicationRR.Position_in_Current_Agency__c}" id="pcklstPosition"  onchange="isConfirmRevenuePosition('{!$Component.pcklstPosition}')" />
-                                                                                                                                                                
+
                                                                                                                                                                 <div id="confRevDiv" style="display: inline">
                                                                                                                                                                     <apex:inputCheckbox id="chkHoursWorked"  value="{!IDCardApplicationRR.Revenue_Confirmation__c}" />
                                                                                                                                                                         <apex:outputLabel id="lblHoursWorked" value="{!$Label.IDCard_RevenueConfirmation_Label}" />
@@ -517,8 +517,8 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                                                                                                                                             <apex:inputCheckbox id="chkShare"  value="{!IDCardApplicationRR.AgencyShare_Confirmation__c}" />
                                                                                                                                                                                 <apex:outputLabel id="lblShare"  value="{!$Label.IDCard_AgencyShareConfirmation_Label}" />
                                                                                                                                                                                     </div>
-                                                                                                                                                                                <script>    
-                                                                                                                                                                                    isConfirmRevenuePosition('{!$Component.pcklstPosition}');     
+                                                                                                                                                                                <script>
+                                                                                                                                                                                    isConfirmRevenuePosition('{!$Component.pcklstPosition}');
                                                     </script>
                                                 </apex:outputPanel>
                                             </td>
@@ -528,8 +528,8 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Duties_in_Current_Agency__c.Label}" />
                                             </td>
                                             <td>
-                                                <apex:outputPanel styleClass="requiredInput" layout="block">     
-                                                    <apex:outputPanel styleClass="requiredBlock" layout="block" style="height:23px; margin-left: 3px;" />                                  
+                                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                                    <apex:outputPanel styleClass="requiredBlock" layout="block" style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField styleclass="outputText2" value="{!IDCardApplicationRR.Duties_in_Current_Agency__c}" />
                                                 </apex:outputPanel>
                                             </td>
@@ -540,7 +540,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                             </td>
                                             <td>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
-                                                    <apex:outputPanel styleClass="requiredBlock" layout="block" style="height:23px; margin-left: 3px;" />                                     
+                                                    <apex:outputPanel styleClass="requiredBlock" layout="block" style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField styleclass="outputText2" value="{!IDCardApplicationRR.Hours_worked__c}" />
                                                 </apex:outputPanel>
                                             </td>
@@ -562,8 +562,8 @@ value="{!IDCardApplicationRR.Solicitation_Flag__c}" />
 value="{!$Label.IDCard_CommercialEmailAgreement}" />
 </apex:outputPanel>
 </apex:pageBlockSectionItem>-->
-                                        <!--<apex:pageBlockSectionItem > 
-<apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Approving_Manager_s_Name__c.Label}" />  
+                                        <!--<apex:pageBlockSectionItem >
+<apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Approving_Manager_s_Name__c.Label}" />
 <apex:outputPanel styleClass="requiredInput" layout="block">
 <apex:outputPanel styleClass="requiredBlock" layout="block" />
 <apex:inputField value="{!IDCardApplicationRR.Approving_Manager_s_Name__c}" />
@@ -576,7 +576,7 @@ value="{!$Label.IDCard_CommercialEmailAgreement}" />
 <apex:inputField value="{!IDCardApplicationRR.Approving_Manager_s_Email__c}" />
 </apex:outputPanel>
 </apex:pageBlockSectionItem>-->
-                                        
+
                                         <!--<apex:pageBlockSectionItem >
 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Position_in_Current_Agency__c.Label}" />
 <apex:outputPanel styleClass="requiredInput" layout="block">
@@ -594,29 +594,29 @@ id="pcklstPosition"  onchange="isConfirmRevenuePosition('{!$Component.pcklstPosi
 <apex:outputLabel id="lblShare"  value="{!$Label.IDCard_AgencyShareConfirmation_Label}" />
 </div>
 
-<script>    
-isConfirmRevenuePosition('{!$Component.pcklstPosition}');     
-//  {!IsContactFromCanada} ?   $('#confRevDiv').show() : $('#confRevDiv').hide();                                           
+<script>
+isConfirmRevenuePosition('{!$Component.pcklstPosition}');
+//  {!IsContactFromCanada} ?   $('#confRevDiv').show() : $('#confRevDiv').hide();
 //  {!IsContactFromCanada} ? document.getElementById('{!$Component.chkHoursWorked}').style.visibility = 'visible' : document.getElementById('{!$Component.chkHoursWorked}').style.visibility = 'hidden';
 //  {!IsContactFromCanada} ? document.getElementById('{!$Component.lblHoursWorked}').style.visibility = 'visible' : document.getElementById('{!$Component.lblHoursWorked}').style.visibility = 'hidden';
-//  document.getElementById('{!$Component.chkHoursWorked}').disabled = {!RevenueConfirmationDisabled};                                   
+//  document.getElementById('{!$Component.chkHoursWorked}').disabled = {!RevenueConfirmationDisabled};
 </script>
 
 </apex:outputPanel>
 </apex:pageBlockSectionItem>-->
-                                        
+
                                         <!--<apex:pageBlockSectionItem >
 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Duties_in_Current_Agency__c.Label}" />
-<apex:outputPanel styleClass="requiredInput" layout="block">     
-<apex:outputPanel styleClass="requiredBlock" layout="block" />                                  
+<apex:outputPanel styleClass="requiredInput" layout="block">
+<apex:outputPanel styleClass="requiredBlock" layout="block" />
 <apex:inputField value="{!IDCardApplicationRR.Duties_in_Current_Agency__c}" />
 </apex:outputPanel>
 </apex:pageBlockSectionItem>-->
-                                        
+
                                         <!--<apex:pageBlockSectionItem id="chkHoursSectionItems">
 <apex:outputLabel styleClass="LabelsBlue" value="{!$ObjectType.ID_Card_Application__c.fields.Hours_worked__c.Label}" />
 <apex:outputPanel styleClass="requiredInput" layout="block">
-<apex:outputPanel styleClass="requiredBlock" layout="block" />                                     
+<apex:outputPanel styleClass="requiredBlock" layout="block" />
 <apex:inputField value="{!IDCardApplicationRR.Hours_worked__c}" />
 </apex:outputPanel>
 </apex:pageBlockSectionItem>-->
@@ -628,7 +628,7 @@ isConfirmRevenuePosition('{!$Component.pcklstPosition}');
                             <tr>
                                 <apex:pageBlockButtons location="bottom">
                                     <td>
-                                        
+
                                         <apex:commandLink action="{!back}" id="btnBack" styleClass="btn-BlueButtonWAL" rendered="{!CanRenderPage}">
                                             <span>{!$Label.IDCard_Back}</span>
                                         </apex:commandLink>
@@ -639,16 +639,16 @@ rendered="{!CanRenderPage}" />-->
                                     <td>
                                         <apex:commandLink action="{!next}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="{!CanRenderPage}" reRender="ErrorMsgs" status="saveStatus">
                                             <span>{!$Label.ID_Card_Next_button}</span>
-                                        </apex:commandLink>                                                    
+                                        </apex:commandLink>
                                     </td>
                                 </apex:pageBlockButtons>
                             </tr>
                         </table>
                     </apex:pageBlock>
-                    
-                    
+
+
                     <apex:pageBlock id="pb2" rendered="{!isAttachmentsNeeded}">
-                        
+
                         <!---- BREAD CRUMB ---->
                         <br/>
                         <div>
@@ -662,15 +662,15 @@ rendered="{!CanRenderPage}" />-->
                                 <li class ="crumbsnext">7</li>
                             </ul>
                         </div>
-                        <br/> 
-                        
+                        <br/>
+
                         <div><h1>{!PageTitle}</h1></div>
-                        
-                        
+
+
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
                         </apex:actionRegion>
-                        
+
                         <center>
                             <apex:actionStatus id="saveStatus">
                                 <apex:facet name="start">
@@ -681,20 +681,20 @@ rendered="{!CanRenderPage}" />-->
                                 <apex:facet name="stop">
                                     <h1>&nbsp;<br/></h1>
                                 </apex:facet>
-                                
+
                             </apex:actionStatus>
                         </center>
-                        
-                        
+
+
                         <apex:inputHidden id="hdnAttachmentID" value="{!attachmentID}" />
-                        
+
                         <apex:actionFunction name="deleteAttachment" action="{!deleteAttachment}">
                             <apex:param name="attachmentID" value="" />
                         </apex:actionFunction>
                         <apex:outputtext value="{!AttachmentsNeeded}" escape="false" />
-                        
+
                         <apex:pageBlockSection showHeader="false" columns="1" id="block1">
-                            
+
                             <!--<apex:pageBlockSectionItem >
 <apex:outputLabel value="{!$Label.IDCard_LastNameChangeProof}"
 for="file" rendered="{!lastNameHasChanged}" styleclass="LabelsBlue" />
@@ -718,7 +718,7 @@ for="file1" rendered="{!isEmployee}" styleclass="LabelsBlue"/>
 filename="{!document3.name}" id="file3" rendered="{!isEmployee}"
 accept="application/pdf" />
 </apex:pageBlockSectionItem>-->
-                            
+
                             <apex:pageBlockSectionItem >
                                 <apex:inputFile value="{!document1.body}"
                                                 filename="{!document1.name}" id="file1"
@@ -730,7 +730,7 @@ accept="application/pdf" />
                                     </apex:selectList>
                                 </apex:outputPanel>
                             </apex:pageBlockSectionItem>
-                            
+
                             <apex:pageBlockSectionItem >
                                 <apex:inputFile value="{!document2.body}"
                                                 filename="{!document2.name}" id="file2"
@@ -742,7 +742,7 @@ accept="application/pdf" />
                                     </apex:selectList>
                                 </apex:outputPanel>
                             </apex:pageBlockSectionItem>
-                            
+
                             <apex:pageBlockSectionItem >
                                 <apex:inputFile value="{!document3.body}"
                                                 filename="{!document3.name}" id="file3"
@@ -754,14 +754,14 @@ accept="application/pdf" />
                                     </apex:selectList>
                                 </apex:outputPanel>
                             </apex:pageBlockSectionItem>
-                            
-                            
+
+
                             <br />
                             <br />
                             <b><apex:outputLabel value="{!$Label.IDCard_Attachments}" styleclass="LabelsBlue" /></b>
                             <apex:pageBlockTable id="docsTable" value="{!docs}" var="d"
                                                  Title="{!$Label.IDCard_Attachments}">
-                                
+
                                 <apex:column headerValue="{!$Label.IFAP_Action}" width="60">
                                     <a href="" onclick="deleteMethod('{!d.Id}');"
                                        style="color: #015ba7; cursor: pointer;"
@@ -774,45 +774,45 @@ accept="application/pdf" />
                                     <apex:outputText value="{!d.Description}" />
                                 </apex:column>
                             </apex:pageBlockTable>
-                            
-                            
+
+
                         </apex:pageBlockSection>
-                        
-                        
-                        
+
+
+
                         <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                             <tr>
                                 <apex:pageBlockButtons location="bottom">
                                     <td>
-                                        
-                                        <apex:commandLink action="{!back}" styleClass="btn-BlueButtonWAL"  
+
+                                        <apex:commandLink action="{!back}" styleClass="btn-BlueButtonWAL"
                                                           rendered="{!CanRenderPage}" status="saveStatus">
                                             <span>{!$Label.IDCard_Back}</span>
                                         </apex:commandLink>
                                     </td>
                                     <td>
-                                        <apex:commandLink action="{!upload}" styleClass="btn-BlueButtonWAR"  
+                                        <apex:commandLink action="{!upload}" styleClass="btn-BlueButtonWAR"
                                                           rendered="{!DocUploaded==false}" status="saveStatus">
                                             <span>{!$Label.IFAP_Save}</span>
-                                        </apex:commandLink>  
-                                        
-                                        <apex:commandLink action="{!next}" id="btnNext3" styleClass="btn-BlueButtonWAR"  
+                                        </apex:commandLink>
+
+                                        <apex:commandLink action="{!next}" id="btnNext3" styleClass="btn-BlueButtonWAR"
                                                           rendered="{!DocUploaded}" status="saveStatus">
                                             <span>{!$Label.ID_Card_Next_button}</span>
-                                        </apex:commandLink>                                                                                   
+                                        </apex:commandLink>
                                     </td>
                                 </apex:pageBlockButtons>
                             </tr>
                         </table>
-                        
-                        
-                        
+
+
+
                     </apex:pageBlock>
-                    
-                    
-                    
+
+
+
                     <apex:pageBlock id="pb3" rendered="{!isPart2}">
-                        
+
                         <!---- BREAD CRUMB ---->
                         <br/>
                         <div>
@@ -826,16 +826,16 @@ accept="application/pdf" />
                                 <li class ="crumbsnext">7</li>
                             </ul>
                         </div>
-                        <br/> 
-                        
-                        
+                        <br/>
+
+
                         <div><h1>{!PageTitle}</h1></div>
-                        
-                        
+
+
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
                         </apex:actionRegion>
-                        
+
                         <center>
                             <apex:actionStatus id="saveStatus">
                                 <apex:facet name="start">
@@ -846,47 +846,47 @@ accept="application/pdf" />
                                 <apex:facet name="stop">
                                     <h1>&nbsp;<br/></h1>
                                 </apex:facet>
-                                
+
                             </apex:actionStatus>
                         </center>
-                        
-                        
+
+
                         <apex:inputHidden id="hdnFilename" value="{!hiddenFilename}" />
-                        
+
                         <c:IDCard_Cropper sessionId="{!$Api.Session_ID}" fileId="{!CurrentIDCard.Photo__c}" jsCallbackName="receiveFilenameFromCropperTool" />
-                        
+
                         <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                             <tr>
                                 <apex:pageBlockButtons location="bottom">
-                                    <td>                    
+                                    <td>
                                         <apex:commandLink action="{!back}" id="btnBack" styleClass="btn-BlueButtonWAL" rendered="{!CanRenderPage}">
                                             <span>{!$Label.IDCard_Back}</span>
                                         </apex:commandLink>
                                     </td>
-                                    <td>                    
-                                        <apex:commandLink action="{!next}" styleClass="btn-BlueButtonWAR"  
+                                    <td>
+                                        <apex:commandLink action="{!next}" styleClass="btn-BlueButtonWAR"
                                                           rendered="{!CanRenderPage}" status="saveStatus">
                                             <span>{!$Label.ID_Card_Next_button}</span>
                                         </apex:commandLink>
-                                    </td>                                
+                                    </td>
                                 </apex:pageBlockButtons>
                             </tr>
-                        </table>  
-                        
+                        </table>
+
                     </apex:pageBlock>
-                    
-                    
+
+
                     <apex:pageBlock id="pb4" rendered="{!isPart3}">
-                        
+
                         <!-- ITDI Course description items  -->
                         <div id="popupLogin">
                             <a href="#" id="popupLoginClose">{!$Label.IDCard_Close_X}</a>
-                            <div  id="popup_Content" ></div>  
-                        </div>  
-                        <div id="LoginBackgroundPopup"  ></div> 
-                        <!-- --------------------->  
-                        
-                        
+                            <div  id="popup_Content" ></div>
+                        </div>
+                        <div id="LoginBackgroundPopup"  ></div>
+                        <!-- --------------------->
+
+
                         <!---- BREAD CRUMB ---->
                         <br/>
                         <div>
@@ -900,15 +900,15 @@ accept="application/pdf" />
                                 <li class ="crumbsnext">7</li>
                             </ul>
                         </div>
-                        <br/> 
-                        
+                        <br/>
+
                         <div><h1>{!PageTitle}</h1></div>
-                        
-                        
+
+
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
                         </apex:actionRegion>
-                        
+
                         <center>
                             <apex:actionStatus id="saveStatus">
                                 <apex:facet name="start">
@@ -919,65 +919,65 @@ accept="application/pdf" />
                                 <apex:facet name="stop">
                                     <h1>&nbsp;<br/></h1>
                                 </apex:facet>
-                                
+
                             </apex:actionStatus>
-                        </center>                    
-                        
-                        
-                        
+                        </center>
+
+
+
                         <apex:outputPanel id="panelIDCardFees" rendered="{!DisplayFees}">
-                            
+
                             <br/>
-                            
+
                             <apex:pageBlockSection collapsible="false"   rendered="{!IsExpediteAvailable}" >
-                                
+
                                 <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_DeliveryOption}"  rendered="{!IsExpediteAvailable}" />
                                 <br/>
-                                
-                                
+
+
                                 <apex:actionRegion >
-                                    
+
                                     <table id="expediteTable">
                                         <tr>
                                             <td style="width: 170px"><span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span></td>
-                                            <td> 
+                                            <td>
                                                 <apex:inputField id="chckExpedite"   value="{!IDCardApplicationRR.IDCard_Expedite_Delivery__c}">
                                                     <apex:actionSupport event="onclick"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>
                                                 </apex:inputField>
-                                                &nbsp;&nbsp; 
+                                                &nbsp;&nbsp;
                                                 <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationRR.CurrencyIsoCode}"   label="" rendered="{!IsExpediteAvailable}" /></td>
                                         </tr>
                                     </table>
-                                    
+                                        <!-- <span>{!$Label.IDCard_Expedite_Note}</span>   -->
                                 </apex:actionRegion>
-                                <script> 
-                                var tableStyle = document.getElementById('expediteTable').style;                                
-                                {!IsExpediteAvailable} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';    
-                                
+                                <script>
+                                var tableStyle = document.getElementById('expediteTable').style;
+                                {!IsExpediteAvailable} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';
+
                                 </script>
                             </apex:pageBlockSection>
-                            
+
                             <br/>
                             <hr/>
                             <br/>
-                            
-                            <apex:pageBlockSection columns="2" collapsible="false" />                      
-                            <strong>   <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_ITDICourse}" />    </strong>                   
+
+                            <apex:pageBlockSection columns="2" collapsible="false" />
+                            <strong>   <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_ITDICourse}" />    </strong>
                             <br />
-                            
+
                             <apex:outputLabel styleClass="labelCol" escape="false"
                                               value="{!$Label.ID_Card_Package_Travel_Professionals_1}<br/>{!$Label.ID_Card_Package_Travel_Professionals_2}" />
-                            <apex:actionRegion >                        
+                            <apex:actionRegion >
                                 <table>
                                     <tr>
                                         <td style="width: 164px"></td>
-                                        <td >     
-                                            <apex:pageBlockSection id="panelITDICourse" columns="2">                                
-                                                <apex:selectCheckboxes id="itdicourses" value="{!selectedITDICourses}" layout="pageDirection" style="width:500px;">                                   
-                                                    <apex:selectOptions value="{!itdiCourses}"/>  
-                                                    <apex:actionSupport event="onclick"  action="{!CalculateApplicationFee}" reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>                                
-                                                </apex:selectCheckboxes><br/>                                   
-                                                <!--  
+                                        <td >
+                                            <apex:pageBlockSection id="panelITDICourse" columns="2">
+                                                <apex:selectCheckboxes id="itdicourses" value="{!selectedITDICourses}" layout="pageDirection" style="width:500px;">
+                                                    <apex:selectOptions value="{!itdiCourses}"/>
+                                                    <apex:actionSupport event="onclick"  action="{!CalculateApplicationFee}" reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>
+                                                </apex:selectCheckboxes><br/>
+                                                <!--
 <apex:pageBlockSection id="panelITDICourse" columns="1">
 <apex:inputField value="{!IDCardApplicationRR.Package_of_Travel_Professionals_Course_1__c}">
 <apex:actionSupport event="onchange"
@@ -989,70 +989,70 @@ reRender="panelApplicableFee, ErrorMsgs" />
 action="{!CalculateApplicationFee}"
 reRender="panelApplicableFee, ErrorMsgs" />
 </apex:inputField>
---> 
-                                                
+-->
+
                                                 <script>
-                                                
-                                                //logic to show a warning message ( Popup) when user select ITDI course, on the 3 selection show the warning message and block the selection of this 3rd course.        
+
+                                                //logic to show a warning message ( Popup) when user select ITDI course, on the 3 selection show the warning message and block the selection of this 3rd course.
                                                 var count={!SelectedCoursesCount};
                                                 $(':checkbox').on('change',function(){
-                                                    var th = $(this), name = th.prop('name'); 
+                                                    var th = $(this), name = th.prop('name');
                                                     if(name.indexOf ("j_id0:idcardForm:pb4:panelITDICourse:itdicourses")==0)
                                                     {
                                                         if(th.is(':checked')){
-                                                            count++;                
+                                                            count++;
                                                             if(count>=3)
                                                             {
                                                                 var msg = "{!$Label.ID_Card_should_Sel_2_Packages}";
                                                                 alert(msg);
                                                                 $(this).prop('checked', false);
                                                                 count--;
-                                                                
-                                                            }                   
+
+                                                            }
                                                         }
                                                         else
-                                                        {    
+                                                        {
                                                             count --;
                                                         }
-                                                        
-                                                    }     
-                                                });   
-                                                
+
+                                                    }
+                                                });
+
                                                 </script>
                                             </apex:pageBlockSection>
-                                        </td>                                   
+                                        </td>
                                     </tr>
                                 </table>
                             </apex:actionRegion>
-                            
+
                             <br/>
                             <hr/>
                             <br/>
-                            
+
                             <apex:pageBlockSection columns="2" collapsible="false"  />
                             <strong> <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_Fees}" /> </strong>
                             <br />
-                            
-                            <apex:actionRegion >                      
-                                <apex:pageBlockSection id="panelApplicableFee" columns="2">                         
+
+                            <apex:actionRegion >
+                                <apex:pageBlockSection id="panelApplicableFee" columns="2">
                                     <apex:inputField id="txtPromotionCode"  value="{!IDCardApplicationRR.Promotion_Code__c}"   styleclass="outputText2"  onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
                                         <apex:actionSupport event="onblur"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs" status="saveStatus"/>
                                     </apex:inputField>
                                     <apex:outputText />
-                                    
-                                    <apex:outputText value="{!IDCardApplicationRR.Applicable_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeeApplicable_Label}" />                            
-                                    <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>                                  
-                                </apex:pageBlockSection>                       
+
+                                    <apex:outputText value="{!IDCardApplicationRR.Applicable_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeeApplicable_Label}" />
+                                    <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>
+                                </apex:pageBlockSection>
                             </apex:actionRegion>
-                            
-                            
+
+
                             <br/>
                             <hr/>
                             <br/>
-                            
+
                             <apex:pageBlockSection columns="2" collapsible="false"/>
                             <strong><apex:outputText styleclass="LabelsBlue" value="{!$Label.ID_Card_Terms_Condition_Label}" /></strong>
-                            
+
                             <table>
                                 <tr>
                                     <!--
@@ -1063,39 +1063,39 @@ class="labelCol">{!$Label.ID_Card_Terms_Condition_Label}</span>
                                     <td style="text-align: right; padding-right: 9px"><apex:inputCheckbox id="chkTermsAndConditions" value="{!TermsAndConditionChecked}" />
                                     </td>
                                     <td style="padding-left: 12px"><apex:outputLabel value="{!TermsAndConditions}" escape="false"/></td>
-                                </tr> 
+                                </tr>
                             </table>
                         </apex:outputPanel>
-                        
-                        
-                        
+
+
+
                         <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                             <tr>
                                 <apex:pageBlockButtons location="bottom">
                                     <td>
                                         <apex:commandLink action="{!back}" id="btnBack" styleClass="btn-BlueButtonWAL" rendered="{!CanRenderPage}">
                                             <span>{!$Label.IDCard_Back}</span>
-                                        </apex:commandLink>                    
+                                        </apex:commandLink>
                                     </td>
                                     <td>
-                                        <apex:commandLink action="{!next}" styleClass="btn-BlueButtonWAR"  
+                                        <apex:commandLink action="{!next}" styleClass="btn-BlueButtonWAR"
                                                           rendered="{!CanRenderPage}" status="saveStatus"  reRender="ErrorMsgs, chkSolicitationFlag">
                                             <span>{!$Label.ID_Card_Next_button}</span>
-                                        </apex:commandLink>      
+                                        </apex:commandLink>
                                     </td>
                                 </apex:pageBlockButtons>
                             </tr>
-                        </table>  
-                        
+                        </table>
+
                     </apex:pageBlock>
                 </div>
             </div>
         </apex:form>
     </div>
-    
+
     <c:IDCard_footerComponent />
-    
-    
+
+
     </body>
     </html>
 </apex:page>

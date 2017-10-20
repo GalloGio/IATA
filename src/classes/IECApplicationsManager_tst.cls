@@ -39,11 +39,13 @@ private class IECApplicationsManager_tst {
     private static final String AGENCY1_CODE = '55555';
     private static final String AGENCY2_CODE = '66666';
     private static final String AGENCY3_CODE = '77777';
+    private static final String AGENCY4_CODE = '88888';
     private static final String AGENT_VER_NUMBER = '5578000523';
     private static final String AGENCY_CHECK_DIGIT = '9';
     private static final String AGENCY1_NAME = 'Chillwave Agency';
     private static final String AGENCY2_NAME = 'Chilly Cheese Agency';
     private static final String AGENCY3_NAME = 'Kashmir Coats';
+    private static final String AGENCY4_NAME = 'Horde Agency';
     private static final String AREA_OF_ACTIVITY = 'My Area of Activity';
     
     
@@ -325,18 +327,19 @@ private class IECApplicationsManager_tst {
       
     
    
-
-   static void testCustomerSearch3Pre() {  
+    //@isTest(SeeAllData=true)
+    static void testCustomerSearch3Pre() {
+        initDataForCustomerSearch();  
             //account 3 - start
             List<GDP_Products_Account_View__c> lstSearchResult = null;
                  IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
                 insert oISOCountry;
                 GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
                 insert oGEODetail;
-                oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
+                oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY4_NAME, AGENCY4_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
                 oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
 
-                insert oGDPAccount3;
+                upsert oGDPAccount3;
 
                 oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
                 oAccreditation3.Status__c = oRefAgencyStatus.Id;
@@ -532,6 +535,14 @@ private class IECApplicationsManager_tst {
                             AND Date__c >= :Datetime.now().addSeconds(-5)
                         ORDER by CreatedDate desc];
         system.assert(lstUsageLive != null && lstUsageLive.size() > 0, 'The Usage Tracking record should be found');
+
+
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', '654321', '123456', IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', null, '123456', IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
         //system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Fail, lstUsageLive.get(0).Search_Status__c, 'The Search Status should be Fail');
         //system.assertEquals(1, lstUsageLive.get(0).Counter__c, 'The Counter should be set to 1');
         

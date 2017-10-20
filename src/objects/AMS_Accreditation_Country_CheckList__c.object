@@ -98,6 +98,10 @@
                 <fullName>Travel Agent - Domestic</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agent - TIDS</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>

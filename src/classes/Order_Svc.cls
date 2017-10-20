@@ -1,6 +1,6 @@
 /****************************************************************************************************
     Created by Kevin Ky 2015-09-23
-    
+
 ****************************************************************************************************/
 public without sharing class Order_Svc
 {
@@ -8,11 +8,11 @@ public without sharing class Order_Svc
 
     /****************************************************************************************************
         Created by David D 2015-12-03
-            Function to Update Order Status 
+            Function to Update Order Status
     ****************************************************************************************************/
     public static void updateOrderStatus(Map<Id, String> statusByOrderId, Map<Id, Boolean> paidByOrderId)
     {
-        //-- 1. Validate params 
+        //-- 1. Validate params
         if(statusByOrderId != null && statusByOrderId.size() > 0)
         {
             List<Order> orders2Update = new List<Order>();
@@ -26,21 +26,21 @@ public without sharing class Order_Svc
                 {
                     Order ord = new Order(Id = orderId, Status = status);
                     if(paidStatus.contains(status) && paidByOrderId.get(orderId) == true){
-                        ord.Is_Paid__c = true; 
+                        ord.Is_Paid__c = true;
                         ord.IEC_Payment_Date__c = Date.today();
                     }
-                        
+
                     orders2Update.add(ord);
                 }
-            } 
+            }
 
-            //-- Save Orders 
+            //-- Save Orders
             if(orders2Update.size() > 0)
             {
                 update orders2Update;
             }
         }
-    }   
+    }
 
     public static String getSAPPaymentType(String paymentType)
     {
@@ -62,9 +62,9 @@ public without sharing class Order_Svc
 
     /****************************************************************************************************
         Created by David D 2015-10-09
-            This function create SAP SalesOrder Request  
+            This function create SAP SalesOrder Request
     ****************************************************************************************************/
-    public static SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request createSalesOrderRequestObject(Order ord, List<OrderItem> items, 
+    public static SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request createSalesOrderRequestObject(Order ord, List<OrderItem> items,
         Map<Id, List<Order_Item_Charge__c>> charges, Map<String, SFDC_SAP_Mapping__c> sapTable, Map<Id, Location__c> locationById)
     {
         String key = ord.Type +'_' + ord.Source__c + ord.Order_Channel__c;
@@ -75,9 +75,9 @@ public without sharing class Order_Svc
         Location__c shipToLocation  =   locationById.get(ord.ShipTo_Location__c);
 
         SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request request = new SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request();
-            
+
             //-- Order Information
-            request.ECommerceOrderNo    = String.valueOf(ord.Id).left(15); 
+            request.ECommerceOrderNo    = String.valueOf(ord.Id).left(15);
             request.CustomerPORefNo     = Utility.truncate(ord.PoNumber,20);
             request.OrderDate           = ord.EffectiveDate;
             request.OrderType           = (mapEntry!=null) ? mapEntry.SAP_Order_Type__c : '';
@@ -88,7 +88,7 @@ public without sharing class Order_Svc
             request.PaymentMethod       = ((ord.Payment_Type__c == 'Credit Card' || ord.Payment_Type__c == 'Credit Card Deferred') ? 'CRC' : ((ord.Payment_Type__c == 'Bill me later') ? null : ord.Payment_Type__c));
 
             //-- new fields added on 06/09/2016
-            request.Email               = ord.ShipToContact_Email__c; 
+            request.Email               = ord.ShipToContact_Email__c;
             request.Company             = ord.ShipToAccount_Name__c;
             request.Attention           = ord.ShipToContact_Name__c;
             request.Phone               = ord.ShipToContact_Phone__c;
@@ -116,11 +116,11 @@ public without sharing class Order_Svc
                 //soldTo.Province             = Utility.truncate(soldToLocation.ISO_State_Code_SAP__c,3);
                 soldTo.Province             = ((soldToLocation.IEC_Valid_SAP_State__c != true) ? '' : Utility.truncate(soldToLocation.ISO_State_Code_SAP__c, 3));
                 soldTo.Country              = Utility.truncate(soldToLocation.ISO_Country_Code__c,3);
-                //soldTo.TaxJurisdictionCode = 
+                //soldTo.TaxJurisdictionCode =
             request.SoldTo = soldTo;
 
-            //-- BillTo 
-            SAP_SalesOrder.DT_SFDC_Partner billTo = new SAP_SalesOrder.DT_SFDC_Partner();   
+            //-- BillTo
+            SAP_SalesOrder.DT_SFDC_Partner billTo = new SAP_SalesOrder.DT_SFDC_Partner();
                 billTo.SAPPartnerID         = Utility.truncate(billToLocation.SAP_Id__c,10);
                 billTo.SalesForcePartnerID  = String.valueOf(ord.BillToContactId).left(15);
                 billTo.Company              = Utility.truncate(billToLocation.Account_Name__c,35);
@@ -132,8 +132,8 @@ public without sharing class Order_Svc
                 //billTo.Province             = Utility.truncate(billToLocation.ISO_State_Code_SAP__c,3);
                 billTo.Province             = ((billToLocation.IEC_Valid_SAP_State__c != true) ? '' : Utility.truncate(billToLocation.ISO_State_Code_SAP__c, 3));
                 billTo.Country              = Utility.truncate(billToLocation.ISO_Country_Code__c,3);
-                //billTo.TaxJurisdictionCode = 
-            request.BillTo = billTo; 
+                //billTo.TaxJurisdictionCode =
+            request.BillTo = billTo;
 
             //-- Payer = BillTo
             request.Payer = billTo;
@@ -161,7 +161,7 @@ public without sharing class Order_Svc
             request.OrderItem = new List<SAP_SalesOrder.DT_SFDC_OrderItem>();
             for(OrderItem oi : items)
             {
-                //-- SalesOrder Interface is Called only for Shippable Products 
+                //-- SalesOrder Interface is Called only for Shippable Products
                 //if(oi.Is_Shippable_Product__c == true)
                 if(oi.Use_Contract_when_ordered__c == false)
                 {
@@ -178,7 +178,7 @@ public without sharing class Order_Svc
                     //--New field added on 06/09/2016
                     sap_item.FreeShipmentFlag = (!oi.Charge_Shipping__c);
 
-                    //-- Discounts 
+                    //-- Discounts
                     List<Order_Item_Charge__c> discounts = charges.get(oi.Id);
                     if(discounts != null && discounts.size() > 0)
                     {
@@ -193,9 +193,9 @@ public without sharing class Order_Svc
                         }
                         if (sap_item.Discounts.size() == 0)
                             sap_item.Discounts = null;
-                    } 
+                    }
                     request.OrderItem.add(sap_item);
-                }   
+                }
             }
 
         return request;
@@ -211,7 +211,7 @@ public without sharing class Order_Svc
 
         if(req.inputHttpHeaders_x == null)
         {
-            req.inputHttpHeaders_x = new Map<String,String>(); 
+            req.inputHttpHeaders_x = new Map<String,String>();
         }
         req.inputHttpHeaders_x.put('Authorization', authorizationHeader);
         req.timeout_x = Utility.getIntegerSetting('SAP_CALL_TIMEOUT');
@@ -222,27 +222,27 @@ public without sharing class Order_Svc
 
     /****************************************************************************************************
         Created by David D 2015-10-09
-            This function create SalesOrder in SAP 
+            This function create SalesOrder in SAP
     ****************************************************************************************************/
 
     public static void createSapSalesOrders(Set<Id> orderIds)
     {
-        Order_Sel orderSelector             = new Order_Sel(); 
+        Order_Sel orderSelector             = new Order_Sel();
         OrderItem_Sel itemSelector          = new OrderItem_Sel();
         OrderItemCharge_Sel chargeSelector  = new OrderItemCharge_Sel();
         Location_Sel locationSelector       = new Location_Sel();
 
-        //-- Request & Response Objects 
+        //-- Request & Response Objects
         Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request> requestByOrder = new Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request>();
         Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response> responseByOrder = new Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response>();
 
-        //-- Order Details 
+        //-- Order Details
         Map<Id, Order> orderById = new Map<Id, Order>((List<Order>) orderSelector.selectSObjectById(orderIds));
 
-        //-- Order Item Details 
+        //-- Order Item Details
         Map<Id, List<OrderItem>> orderItemsByOrder = itemSelector.getOrderItems(orderIds);
 
-        //-- Order Locations 
+        //-- Order Locations
         Map<Id, Location__c> locationById = locationSelector.getOrdersLocations(orderById.values());
 
         //-- Charge (Discount) Details
@@ -250,18 +250,18 @@ public without sharing class Order_Svc
         for(List<OrderItem> lst : orderItemsByOrder.values())
             for(OrderItem oi : lst)
                 orderItemIds.add(oi.Id);
-        
+
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
 
-        //-- SFDC <=> SAP Mapping table 
+        //-- SFDC <=> SAP Mapping table
         Map<String, SFDC_SAP_Mapping__c> sapTable = orderSelector.getOrderMapTable();
 
-        //-- Build Request object 
+        //-- Build Request object
         for(Id orderId : orderById.keySet())
         {
             Order ord = orderById.get(orderId);
 
-            //validate SO not created yet 
+            //validate SO not created yet
             if(String.isBlank(ord.SAP_Order_Number__c))
             {
                 List<OrderItem> items = (orderItemsByOrder.containsKey(ord.Id)) ? orderItemsByOrder.get(ord.Id) : new List<OrderItem>();
@@ -273,8 +273,8 @@ public without sharing class Order_Svc
             }
         }
 
-        //-- Set Authentication header 
-        SAP_SalesOrder.HTTPS_Port req = new SAP_SalesOrder.HTTPS_Port(); 
+        //-- Set Authentication header
+        SAP_SalesOrder.HTTPS_Port req = new SAP_SalesOrder.HTTPS_Port();
         req = setCalloutHeader(req);
 
         //-- Errors logging
@@ -286,7 +286,7 @@ public without sharing class Order_Svc
             SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request request = requestByOrder.get(orderId);
             try
             {
-                //-- Do Callouts only if there are OrderItems 
+                //-- Do Callouts only if there are OrderItems
                 if(request !=null && request.OrderItem.size() > 0)
                 {
                     SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response response = req.SI_SFDC_SalesOrderCreate_SYNC(request);
@@ -299,7 +299,7 @@ public without sharing class Order_Svc
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_No_Shippable_Product));
                 }
             }
-            catch(Exception ex) 
+            catch(Exception ex)
             {
                 //Send notification to Administrator is the SOAP call faild
                 if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
@@ -314,9 +314,9 @@ public without sharing class Order_Svc
         }
 
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs, true);
-        
-        //-- Process responses 
-        processSalesOrderResponse(responseByOrder); 
+
+        //-- Process responses
+        processSalesOrderResponse(responseByOrder);
     }
 
     public static void processSalesOrderResponse(Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response> responseByOrder)
@@ -324,7 +324,7 @@ public without sharing class Order_Svc
         //-- Errors logging
         List<IEC_Error_Log__c> errorLogs = new List<IEC_Error_Log__c>();
 
-        //-- Process responses 
+        //-- Process responses
         List<Order> orders2update = new List<Order>();
         String error_msg;
         for(Id orderId : responseByOrder.keySet())
@@ -335,7 +335,7 @@ public without sharing class Order_Svc
             {
                 ///-- Update SAP Order Number
                 orders2update.add(new Order(
-                    Id = orderId, 
+                    Id = orderId,
                     SAP_Order_Number__c = response.SalesOrderNumber,
                     Status = 'Order Created'
                 ));
@@ -344,7 +344,7 @@ public without sharing class Order_Svc
             {
                 //@todo: handle callouts errors
                 error_msg = String.format('Order ID: {0}<br/>Error Code: {1}<br/>Error Type: {3}<br/>Message: {2}', new List<String>{
-                    orderId, response.Error.Code, response.Error.Message, response.Error.Type_x   
+                    orderId, response.Error.Code, response.Error.Message, response.Error.Type_x
                 });
 
                 if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
@@ -431,15 +431,15 @@ public without sharing class Order_Svc
         List<OrderItem> itemsToSave = new List<OrderItem>();
         Map<String, List<Order_Item_Charge__c>> itemChargesToSave = new Map<String, List<Order_Item_Charge__c>>();
 
-        //-- Order Existing products 
+        //-- Order Existing products
         Set<Id> existingOrderItemIds = new set<Id>();
         Map<Id, Set<Id>> productIdsByOrder = new OrderItem_Sel().getProductIdsByOrder(new set<Id>{theOrder.Id});
-        
+
         if(productIdsByOrder != null && productIdsByOrder.size() > 0){
             existingOrderItemIds.addAll(productIdsByOrder.get(theOrder.Id));
         }
-        
-        Set<Id> productIds = new Set<Id>(); 
+
+        Set<Id> productIds = new Set<Id>();
 
         //*** validate entries
         for(SalesOrderProduct_DTO product : products)
@@ -475,17 +475,17 @@ public without sharing class Order_Svc
                 products[i].selected = false;
                 products.remove(i);
             }
-        
-        Pricebook_Sel pricebookSelector = new Pricebook_Sel();  
-        PricebookEntry_Sel pricebookEntrySelector = new PricebookEntry_Sel();  
-        
+
+        Pricebook_Sel pricebookSelector = new Pricebook_Sel();
+        PricebookEntry_Sel pricebookEntrySelector = new PricebookEntry_Sel();
+
         Pricebook2 stdPriceBook = pricebookSelector.getStandardPriceBook();
-        
+
         Map<Id, PricebookEntry> pricebookEntryByProductId = pricebookEntrySelector.getPricebookEntryByProductId(stdPriceBook.Id, productIds);
-        
+
         String currencyCode = null;
         Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
-        
+
         try
         {
             //*** prepare order items
@@ -493,13 +493,13 @@ public without sharing class Order_Svc
             {
                 //*** get price book entry -> create if missing
                 PricebookEntry pbe = pricebookEntryByProductId.get((Id) product.ecomProduct.ProductId);
-                
+
                 if (pbe == null)
                 {
                     //*** get corporate currency code if necessary
                     if (currencyCode == null)
                         currencyCode = Utility.getDefaultCurrency();
-                    
+
                     //*** create price book entry
                     pbe = new PricebookEntry(
                         IsActive = true,
@@ -508,15 +508,15 @@ public without sharing class Order_Svc
                         UnitPrice = product.ecomProduct.UnitPrice,
                         CurrencyIsoCode = currencyCode
                     );
-                    
+
                     insert pbe;
                 }
-                
+
                 //*** create order item and prepare for setting price later
                 itemsToSave.add(new OrderItem(OrderId = theOrder.Id, PriceBookEntryId = pbe.Id, Quantity = product.quantity, Coupon__c=product.couponCode));
                 mapProductNumber_Price.put(product.ecomProduct.ProductNumber, product.ecomProduct.PriceInfo);
             }
-            
+
             //*** create order items with all prices/discounts
             if (itemsToSave.size() > 0)
             {
@@ -528,8 +528,8 @@ public without sharing class Order_Svc
         catch (Exception e)
         {
             ApexPages.addMessages(e);
-        }   
-       
+        }
+
     } //*** end of "addItemsToOrder"
 
     @future(callout=true)
@@ -538,7 +538,7 @@ public without sharing class Order_Svc
        return;
         createSAPContracts(orderIds);
     }
-    
+
     //Create Contract in SAP when Order content no shippable products
     public static void createSAPContracts(Set<Id> orderIds)
     {
@@ -579,7 +579,7 @@ public without sharing class Order_Svc
         //*** get product information and discount for order items sending to interface
         Map<Id, Product2> mapProductId_Info = productSelector.getProductById(setProductId);
         Map<Id, List<Order_Item_Charge__c>> mapOrderItemId_Discount = chargeSelector.getChargesByOrerItem(setOrderItemId);
-        
+
         //*** build list of contracts to send
         List<iataComXiSalesforceOtcWid5600Sales3.Contract_element> lstContract = new List<iataComXiSalesforceOtcWid5600Sales3.Contract_element>();
         for (Order ord : lstOrder)
@@ -589,16 +589,16 @@ public without sharing class Order_Svc
         if (lstContract.size() > 0)
         {
             //*** prepare callout header
-            iataComXiSalesforceOtcWid5600Sales3.HTTPS_Port request = new iataComXiSalesforceOtcWid5600Sales3.HTTPS_Port(); 
+            iataComXiSalesforceOtcWid5600Sales3.HTTPS_Port request = new iataComXiSalesforceOtcWid5600Sales3.HTTPS_Port();
             if (request.inputHttpHeaders_x == null)
-                request.inputHttpHeaders_x = new Map<String,String>(); 
+                request.inputHttpHeaders_x = new Map<String,String>();
             request.inputHttpHeaders_x.put('Authorization', Utility.getSAPauthorization());
             request.timeout_x = Utility.getIntegerSetting('SAP_CALL_TIMEOUT');
             request.endpoint_x = Utility.fixEndpointDomain(request.endpoint_x);
 
             //*** callout to create contracts
             List<iataComXiSalesforceOtcWid5600Sales3.Response_element> lstResponse = request.SI_SalesForce_SalesContract_OB(lstContract);
-            
+
             system.debug('Contract Request:: ' + JSON.serialize(lstContract));
             system.debug('Contract Response:: ' + JSON.serialize(lstResponse));
 
@@ -619,13 +619,13 @@ public without sharing class Order_Svc
                         //*** prepare to update all order items attached to contract
                         for (Id ordItemId : mapContractIdx_OrderItemId.get(i1))
                             lstOrderItemToUpdate.add(new OrderItem(Id=ordItemId, SAP_Contract_Number__c=strContractNumber));
-                        
+
                         //*** indicate contract is created and end of checking for contract
                         isContractCreated = true;
                         break;
                     }
 //system.debug(String.valueOf(lstResponse[i1].Return_x));
-                
+
                 //*** log error when contract is not created
                 if (!isContractCreated)
                     if (!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
@@ -659,15 +659,15 @@ public without sharing class Order_Svc
         for (OrderItem ordItem : ord.OrderItems)
         {
             product = mapProductId_Info.get(ordItem.Product__c);
-            
-            //Validate its contrat product 
+
+            //Validate its contrat product
             //if(!product.Use_Contract_when_ordered__c) continue;
-            
+
             contract = new iataComXiSalesforceOtcWid5600Sales3.Contract_element();
             lstContract.add(contract);
             mapContractIdx_OrderItemId.put(lstContract.size() - 1, new List<Id>());
             intContractNumber += 1;
-            
+
             contractHeader = new iataComXiSalesforceOtcWid5600Sales3.Header_element();
             contract.Header = contractHeader;
             contractHeader.DocType        = product.IEC_SAP_DocType__c;
@@ -694,28 +694,28 @@ public without sharing class Order_Svc
             contractHeader.TextPrint      = ord.Invoice_Text__c;
             contractHeader.SoldTo         = ord.SoldToAccount_Partner_Number__c;
             contractHeader.ShipTo         = ord.ShipToContact_Partner_Number__c;
-            
+
             contractAddress = new iataComXiSalesforceOtcWid5600Sales3.Address_element();
             contract.Address = contractAddress;
-            //contractAddress.BillingAddress      = Utility.truncate(ord.BillingStreet, 35); 
+            //contractAddress.BillingAddress      = Utility.truncate(ord.BillingStreet, 35);
             //contractAddress.BillingCity         = Utility.truncate(ord.BillingCity, 35);
             //contractAddress.BillingPostalCode   = Utility.truncate(ord.BillingPostalCode, 9);
             //contractAddress.BillingCountry      = Utility.truncate(ord.BillingCountryCode__c, 2);
             //contractAddress.BillingState        = Utility.truncate(ord.BillingStateCode_SAP__c, 2);
             //contractAddress.VATRegId            = ord.BillToContact_VAT_Number__c;
-            contractAddress.BillingAddress      = Utility.truncate(ord.BillTo_Location__r.Street__c, 35); 
+            contractAddress.BillingAddress      = Utility.truncate(ord.BillTo_Location__r.Street__c, 35);
             contractAddress.BillingCity         = Utility.truncate(ord.BillTo_Location__r.City__c, 35);
             contractAddress.BillingPostalCode   = Utility.truncate(ord.BillTo_Location__r.ZipCode__c, 9);
             contractAddress.BillingCountry      = Utility.truncate(ord.BillTo_Location__r.ISO_Country_Code__c, 2);
             contractAddress.BillingState        = ((ord.BillTo_Location__r.IEC_Valid_SAP_State__c != true) ? '' : Utility.truncate(ord.BillTo_Location__r.ISO_State_Code_SAP__c, 3));
             contractAddress.VATRegId            = ord.BillTo_Location__r.VAT_Number__c;
             //contractAddress.ShippingContactName = ord.ShipToContact_Name__c;
-            //contractAddress.ShippingAddress     = Utility.truncate(ord.ShippingStreet, 35); 
+            //contractAddress.ShippingAddress     = Utility.truncate(ord.ShippingStreet, 35);
             //contractAddress.ShippingCity        = Utility.truncate(ord.ShippingCity, 35);
             //contractAddress.ShippingPostalCode  = Utility.truncate(ord.ShippingPostalCode, 9);
             //contractAddress.ShippingCountry     = Utility.truncate(ord.ShippingCountryCode__c, 2);
             //contractAddress.ShippingState       = Utility.truncate(ord.ShippingStateCode_SAP__c, 2);
-            
+
             contract.Item = new List<iataComXiSalesforceOtcWid5600Sales3.Item_element>();
 
             //*** build link between contract and order item for later update
@@ -734,11 +734,21 @@ public without sharing class Order_Svc
             {
                 contractItem.Quantity  = '1';
                 contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);
+                system.debug('contractItem.UnitPrice ' + contractItem.UnitPrice);
             }
             else
             {
                 contractItem.Quantity  = String.valueOf(ordItem.Quantity);
                 contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+                // Decimal decNumber = ordItem.UnitPrice.stripTrailingZeros(); //ENHC0011664 start
+                // if(decNumber.scale() >= 3){
+                //     contractItem.Quantity = '1';
+                //     contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);  //ENHC0011664 end
+                // }
+                // else{
+                //
+                // }
+
             }
             contractItem.UnitPriceCurr = ord.CurrencyIsoCode;
             contractItem.DateFrom      = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_Start_Date__c : ord.EffectiveDate);
@@ -770,7 +780,7 @@ public without sharing class Order_Svc
         } //*** end of FOR
     } //*** end of "prepareSAPContracts"
 
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-09-23
         Prevent Order deletion with some status
@@ -784,7 +794,7 @@ public without sharing class Order_Svc
             if(!statusSet.contains(ord.Status)) ord.AddError(String.format(Label.Order_prevent_deletion_message,new String[]{'Order',ord.Status}));
         }
     }
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-09-30
         Prevent some Order fields modification at some Status
@@ -792,17 +802,17 @@ public without sharing class Order_Svc
     public static void preventModification(Map<Id, Order> newMap,Map<Id, Order> oldMap){
         if (System.isFuture() || System.isBatch() || System.isScheduled())
             return;
-        
+
         //Get the list of Status that some modification are not allows
         set<String> orderStatus = new set<String>(getStatusToPreventModification());
         set<String> FieldsToForbidModification = new set<String>();
-        
+
         Set<String> orderFieldsAllowModification = new set<String>();
         List<String> lstFields = Utility.getSeqTextSetting('Order fields to allow modification',',').split(',');
         for(String str : lstFields){
             orderFieldsAllowModification.add(str.toLowerCase());
         }
-        
+
 
         map<String,String> orderFields = Utility.getOrderLabelByApiName();
         for(String field:orderFields.keySet()){
@@ -815,7 +825,7 @@ public without sharing class Order_Svc
         //set<String> orderFields = new set<String>(Utility.getOrderFieldsToForbidModification());
         Id profileId = userinfo.getProfileId();
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
-        
+
         for(Order ord : newMap.values()){
             List<String> userProfiles = getUserProfileAllowOrderModification();
             set<String> profiles = new set<String>(userProfiles);
@@ -832,7 +842,7 @@ public without sharing class Order_Svc
                 }
             }
         }
-        
+
     }
 
     /**
@@ -871,14 +881,14 @@ public without sharing class Order_Svc
         if (emailTemplateId != null) {
             for (Order order : newMap.values()) {
                 Order oldOrder = oldMap.get(order.Id);
-                
+
                 System.debug('orderId: ' + order.Id + ', Status: ' + order.Status + ', order.Status[old]: ' + (oldOrder != null ? oldOrder.Status : 'NULL'));
 
                 if (order.Status == 'Payment Failure' && oldOrder != null && oldOrder.Status != order.Status) {
                     Set<String> emails = new Set<String>();
 
                     clientMail = new Mail_DTO();
-                    
+
                     clientMail.whatId = order.Id;
                     clientMail.templateId = emailTemplateId;
                     clientMail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
@@ -938,7 +948,7 @@ public without sharing class Order_Svc
         }
     }
 
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-08
         Send an notification when a product is sold
@@ -954,7 +964,7 @@ public without sharing class Order_Svc
         map<Id,Boolean> orderId_Sold = new map<Id,Boolean>();
         map<Id,List<Product_Email_Notification__c>> productIdByLstEmails;// = new map<Id,List<Product_Email_Notification__c>>();
         Map<Id,List<OrderItem>> orderId_lstOrderItems = new Map<Id,List<OrderItem>>();
-        
+
         for(Order order : newMap.values()){
             if(order.Is_Paid__c && oldMap.get(order.Id).Is_Paid__c != order.Is_Paid__c){ // && !paymentMethod.contains(order.Payment_Type__c)
                 orderIds.add(order.Id);
@@ -985,7 +995,7 @@ public without sharing class Order_Svc
             //orderId_lstOrderItems = new OrderItem_Sel().getOrderItemsForContract(orderIds);
             orderId_lstOrderItems = new OrderItem_Sel().getOrderItems(orderIds);
         }
-        
+
         //When a product is sold send notification to the list of related product email notification object records
         //Get Product by Id
         set<Id> userIds = new set<Id>();
@@ -993,7 +1003,7 @@ public without sharing class Order_Svc
         if(productIds.size() > 0){
             //Get the related list of internat and external user for a product
             productIdByLstEmails = ProductEmailNotification_Sel.getProdIdByLstEmailNotif(productIds);
-            
+
             products = new product_Sel().getProductById(productIds);
             for(Product2 prd : products.values()){
                 //Get Product Manager and Alternate product Manager
@@ -1009,23 +1019,23 @@ public without sharing class Order_Svc
                             if(pen.Internal_user__c != null){ userIds.add(pen.Internal_user__c); }
                         }
                     }
-                    
+
                 }
             }
         }
 
-        
+
 
         //get Manager and alternate manager information
         Map<Id,User> userId_User = new Map<Id,User>([SELECT id,Email From User where id in :userIds]);
-        
+
         Integer maxEmails = Utility.getIntegerSetting('Email batch max value');
 
         List<Mail_DTO> lstmails = new List<Mail_DTO>();
         for(Id orderId : orderIds){
             Order order = newMap.get(orderId);
 
-            //get productIds 
+            //get productIds
             set<Id> prodIds = productIdsByOrder.get(order.Id);
 
             String targetObjectId;
@@ -1036,7 +1046,7 @@ public without sharing class Order_Svc
             //Send Notification to Client
             Mail_DTO clientMail = new Mail_DTO();
             clientMail.whatId = order.Id;
-            
+
             if(isSold)
             {
                 clientMail.templateId = Utility.getTextSetting('Order sold templateId for client');
@@ -1075,16 +1085,16 @@ public without sharing class Order_Svc
 
             //Send email to the product manager and alternate manager if the product is sold
             if(isSold)
-            { 
-                
+            {
+
                 List<OrderItem> listOrderItem = orderId_lstOrderItems.get(orderId);
-                
+
                 //for(Id prdId : prodIds)
                 if(listOrderItem != null && listOrderItem.size() > 0){
                     for(OrderItem oi : listOrderItem)
                     {
                         Product2 prod = products.get(oi.Product__c);
-                        
+
                         set<Id> userIdToSendNotif = new set<Id>();
                         set<String> lstRecipients = new set<String>();
 
@@ -1106,24 +1116,24 @@ public without sharing class Order_Svc
                         //Add the administrator email
                         /*list<String> adminEmails = Utility.getAdminEmails();
                         lstRecipients.addAll(adminEmails);*/
-                        
+
                         //For external emails
                         if(lstRecipients.size() > 0){
                             List<String> recipients = new List<String>(lstRecipients);
                             Mail_DTO mail = newMailDTO(order.ShipToContactId,oi.Id,recipients);//prdId
                             lstmails.add(mail);
                         }
-                        
+
                     }
                 }
-                
+
             }
-             
+
         }
 
         if(lstmails.size() > 0){
             if(lstmails.size() > maxEmails){
-                
+
                 //Sending email by batch of maxEmails size
                 List<List<Mail_DTO>> listOfMailsToSend = new List<List<Mail_DTO>>();
                 integer  i = 0, j = 0;
@@ -1140,12 +1150,12 @@ public without sharing class Order_Svc
 
                 for(List<Mail_DTO> lstMail : listOfMailsToSend)
                     Utility.sendBulkEmails(lstMail);
-                
+
             }else{
                 Utility.sendBulkEmails(lstmails);
             }
         }
-         
+
     }
 
     public static Mail_DTO newMailDTO(Id targetId, id whatid,list<String> recipients){
@@ -1159,10 +1169,10 @@ public without sharing class Order_Svc
         if(recipients != null && recipients.size() > 0){
             mail.recipients.addAll(recipients);
         }
-        
+
         return mail;
     }
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-09-24
         Creates a subscription per order for the a customer and payment method
@@ -1175,7 +1185,7 @@ public without sharing class Order_Svc
                 return Label.Order_transaction_failed_message;
 
             Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod = new Map<String,ZuoraUtil.zAccountPaymentMethod>();
-            
+
             for(Id orderId : orderId_paymentType.keySet()){
                 String paymentType = orderId_paymentType.get(orderId);
                 //if (paymentType == IECConstants.PaymentThresholdType_BillMeLater)
@@ -1225,7 +1235,7 @@ public without sharing class Order_Svc
             pType = IECConstants.PaymentMethod_Other_ZuoraID;
         else if (paymentType == IECConstants.PaymentThresholdType_BillMeLater)
             pType = IECConstants.PaymentMethod_Other_ZuoraID;
-            
+
         /* TODO: Cleanup
         else if(paymentType == IECConstants.ORDER_STATUS_CREDIT_CARD_DEFERRED)
             Utility.getTextSetting('Zuora CreditCard Deferred PaymentMeth');
@@ -1242,30 +1252,30 @@ public without sharing class Order_Svc
         else if (sPmType == IECConstants.PaymentThresholdType_BillMeLater) return IECConstants.PaymentType.OTHER;
         else return null;
     }
-    
+
     public static Map<Id,Zuora.zApi.SubscribeResult> subscribe(set<Id> orderIds,Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod, Map<Id,String> orderId_paymentType){
-        /*Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod 
+        /*Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod
         Map<Id,String> orderId_paymentType*/
         //Get order by order Id
         list<Order> lstCustomerOrder = Order_Sel.getOrdersById(orderIds);
 
         Map<Id,Zuora.zApi.SubscribeResult> orderItemId_subscribeResult = new Map<Id,Zuora.zApi.SubscribeResult>();
-        
+
         //Get Order Items
         Map<Id, List<OrderItem>> orderId_orderItems = new OrderItem_Sel().getOrderItems(orderIds);
-        
+
         Map<String,Order> zuoraId_Order = new Map<String,Order>();
 
         String orderPaymentMethod = '';
-        
+
         //-- Set of AccountIDs
-        Set<Id> accountIds = new Set<Id>(); 
-        set<Id> orderItemIds = new Set<Id>(); 
-        
+        Set<Id> accountIds = new Set<Id>();
+        set<Id> orderItemIds = new Set<Id>();
+
         //Set of ContactIds
         set<Id> contactIds = new set<Id>();
         set<Id> billToContactIds = new set<Id>();
-        
+
         for(Order customerOrder :lstCustomerOrder)
         {
             accountIds.add(customerOrder.AccountId);
@@ -1274,7 +1284,7 @@ public without sharing class Order_Svc
 
             billToContactIds.add(customerOrder.BillToContactId);
         }
-        
+
 
         //Get a Map of Bill to account by account Id
         Map<Id,Account> accountId_Account = new Account_Sel().getBillToAndSoldToAccountByAccountId(accountIds);
@@ -1282,20 +1292,20 @@ public without sharing class Order_Svc
         //Get a Map of Contact by Id
         Map<Id,Contact> contactId_Contact = Contact_Sel.getContactById(contactIds);
 
-        
+
         //Get an Order related order items ids
         for(Id orderId : orderId_orderItems.keySet()){
             list<OrderItem> orderItems = orderId_orderItems.get(orderId);
             if(orderItems != null && orderItems.size() > 0){
                 for(OrderItem oi : orderItems)
                 {
-                    
+
                     //found the order payment metyhod
                     if(orderId_paymentType != null){
                         String payTy = orderId_paymentType.get(orderId);
                         orderPaymentMethod = payTy;
                     }
-                    
+
                     //Don't send to Zuora order items that are not Subscribe to Zuora set to true and payament method is BankTransfer or ICH
                     //if(!oi.IEC_Subscribe_to_Zuora__c && (orderPaymentMethod == IECConstants.PaymentThresholdType_BankTransfer || orderPaymentMethod == IECConstants.PaymentThresholdType_ICH)){
                     //}else{
@@ -1305,7 +1315,7 @@ public without sharing class Order_Svc
                 }
             }
         }
-        
+
         //Get Product Id Order Item
         Map<Id,Id> orderItemId_ProductId = OrderItem_Sel.getProductIdByOrderItemId(orderItemIds);
 
@@ -1314,10 +1324,10 @@ public without sharing class Order_Svc
 
         //Get the zuora Account information base on the SFDC Account id
         Map<Id,Zuora__CustomerAccount__c> sfAccId_ZcustAccount = CustomerAccount_Sel.getZuoraCustmerAccount(billToContactIds);
-        
+
         //Get the list of discount base on the order items
-        Map<Id, List<Order_Item_Charge__c>> orderItemId_listOrderItemCharges = new OrderItemCharge_Sel().getChargesByOrerItem(orderItemIds); 
-        
+        Map<Id, List<Order_Item_Charge__c>> orderItemId_listOrderItemCharges = new OrderItemCharge_Sel().getChargesByOrerItem(orderItemIds);
+
         List<Zuora.zApi.SubscribeRequest> subsRequestLists = new List<Zuora.zApi.SubscribeRequest>();
 
         //List of Order Item send for Subscribe
@@ -1326,7 +1336,7 @@ public without sharing class Order_Svc
         //Verified in zuora is Account already existe
         map<String,Zuora.zObject> zAccounts = new map<String,Zuora.zObject>();
         Boolean alreadyQueryZAccounts = false;
-        
+
         //Get the List of Zuora Rate Plan Charge Id from orderItem and orderItem charge
         set<String> zRatePlanChargeIds = new set<String>();
         Map<String,String> zRatePlanChargeIds_zModel = new Map<String,String>();
@@ -1363,22 +1373,22 @@ public without sharing class Order_Svc
                 //setContactIdOfNewZAccount.clear();
                 OrderItemSend.clear();
                 subsRequestLists.clear();
-                
+
                 for(Order customerOrder :lstCustomerOrder)
                 {
-                    List<Zuora.zObject> ratePlanData = new List<Zuora.zObject>(); 
+                    List<Zuora.zObject> ratePlanData = new List<Zuora.zObject>();
                     list<OrderItem> orderItems = orderId_orderItems.get(customerOrder.Id);
-        
+
                     //Get the Internal Payment type
                     String paymentType = null;
-        
+
                     OrderId_orderItemsExistInZuora = new map<Id,List<OrderItem>>();
                     Decimal totalShipping = 0.00;
                     Decimal totalTax = 0.00;
-                    
+
                     if (ixStep == 1)
                         orderItems.add(null);  //*** to create subscription for shipping & tax
-        
+
                     for(OrderItem orderItem : orderItems)
                     {
                         if (orderItem == null || orderItem.IEC_Subscribe_to_Zuora__c == true || orderPaymentMethod == IECConstants.PaymentThresholdType_CreditCard) {
@@ -1391,22 +1401,22 @@ public without sharing class Order_Svc
                                     totalShipping += orderItem.Freight_Charge__c;
                                 if (orderItem.Tax__c != null)
                                     totalTax += orderItem.Tax__c;
-                                
+
                                 //*** control to proceed order item only one
                                 if (setOrderItemIdProceeded.contains(orderItem.Id))
                                     continue;
                                 else
                                     setOrderItemIdProceeded.add(orderItem.Id);
-                                
+
                                 product = productId_product.get(orderItemId_ProductId.get(orderItem.Id));
-                                
+
                                 OrderItemSend.add(orderItem);
                             }
-                            
+
                             okForSubscription = true;
                             createNewAccount = false;
-                            
-                            //--- Order Header information          
+
+                            //--- Order Header information
                             Zuora.zObject acc = new Zuora.zObject('Account');
                             //Set the bill to contact
                             Zuora.zObject billToContact = new Zuora.zObject('Contact');
@@ -1414,29 +1424,29 @@ public without sharing class Order_Svc
                             Zuora.zObject soldToContact = new Zuora.zObject('Contact');
                             //Set the payment method
                             Zuora.zObject pm = new Zuora.zObject('PaymentMethod');
-                                
+
                             //Get the Bill to Account and the Sold To Account
                             if(sfAccId_ZcustAccount != null && sfAccId_ZcustAccount.size() > 0 && sfAccId_ZcustAccount.containsKey(customerOrder.BillToContactId))
                             {
                                 Zuora__CustomerAccount__c zuoraCustomerAccount = sfAccId_ZcustAccount.get(customerOrder.BillToContactId);
-                                
+
                                 acc.setValue('Id',zuoraCustomerAccount.Zuora__Zuora_Id__c);
                                 billToContact.setValue('Id', zuoraCustomerAccount.Zuora__BillToId__c);
-                                soldToContact.setValue('Id', zuoraCustomerAccount.Zuora__SoldToId__c);   
-                                
+                                soldToContact.setValue('Id', zuoraCustomerAccount.Zuora__SoldToId__c);
+
                                 zuoraId_Order.put(zuoraCustomerAccount.Zuora__Zuora_Id__c,customerOrder);
-                                
+
                                 if(orderId_paymentType != null && orderId_paymentType.get(customerOrder.Id) != null ){
                                     customerOrder.Payment_Type__c = orderId_paymentType.get(customerOrder.Id);
                                 }
-            
+
                                 if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard)
                                 {
                                     //For existing payment method
                                     if(orderId_paymentMethod != null && orderId_paymentMethod.containsKey(customerOrder.Id)){
-            
+
                                         IECZuoraHelper.PaymentMethod paymentMethod = orderId_paymentMethod.get(customerOrder.Id);
-            
+
                                         if(paymentMethod != null){
                                             pm = setPaymentMethodWithWrp(paymentMethod);
                                             acc.setValue('DefaultPaymentMethodId',paymentMethod.zId);
@@ -1451,7 +1461,7 @@ public without sharing class Order_Svc
                                 {
                                     if(orderId_paymentMethod != null && orderId_paymentMethod.containsKey(customerOrder.Id)){
                                         IECZuoraHelper.PaymentMethod paymentMethod = orderId_paymentMethod.get(customerOrder.Id);
-                                        
+
                                         if(paymentMethod != null){
                                             pm = setPaymentMethodWithWrp(paymentMethod);
                                             acc.setValue('DefaultPaymentMethodId',paymentMethod.zId);
@@ -1466,7 +1476,7 @@ public without sharing class Order_Svc
                                             pm.setValue('Type',paymentType);
                                         // set the default payment method
                                         acc.setValue('DefaultPaymentMethodId', zuoraPaymentId(paymentType));
-            
+
                                     }else{
                                         //pm.setValue('Type',customerOrder.Payment_Type__c);
                                         if (customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_BillMeLater)
@@ -1484,24 +1494,24 @@ public without sharing class Order_Svc
                                     zAccounts = getZuoraAccounts(billToContactIds);
                                     alreadyQueryZAccounts = true;
                                 }
-            
+
                                 //If the Account existe in Zuora
                                 if(zAccounts != null && zAccounts.size() > 0){
-                                    
+
                                     //for(String contactId : zAccounts.keySet()){
-                                        
+
                                         Zuora.zObject zAccount = zAccounts.get(customerOrder.BillToContactId);
-                                        
+
                                         if(zAccount != null){
                                             //Set the Zuora Account, Bill and Sold to Contact
                                             acc.setValue('Id', (String)zAccount.getValue('Id'));
                                             billToContact.setValue('Id', (String)zAccount.getValue('BillToId'));
                                             soldToContact.setValue('Id', (String)zAccount.getValue('SoldToId'));
-                                            
+
                                             //Set the payment method
                                             pm.setValue('Id', (String)zAccount.getValue('DefaultPaymentMethodId'));
                                             createNewAccount = false;
-                                            
+
                                         }else{
                                             createNewAccount = true;
                                         }
@@ -1512,23 +1522,23 @@ public without sharing class Order_Svc
                                     //If the Account do not existe in zuora create it
                                     createNewAccount = true;
                                 }
-            
+
                                 if(createNewAccount && !setContactIdOfNewZAccount.contains(customerOrder.BillToContactId))
                                 {
                                     setContactIdOfNewZAccount.add(customerOrder.BillToContactId);
-                                    
+
                                     //Get the Bill To Account
                                     Account billToAccount = accountId_Account.get(customerOrder.AccountId);
-                                    
+
                                     //Get the related Contact for Bill To
                                     Contact contactBillTo = contactId_Contact.get(customerOrder.BillToContactId);
-                                    
+
                                     //Create the PaymentType
                                     //Payment method
                                     String sPaymentMethodId = null;
                                     if(orderId_paymentMethod != null && orderId_paymentMethod.containsKey(customerOrder.Id)){
                                         IECZuoraHelper.PaymentMethod paymentMethod = orderId_paymentMethod.get(customerOrder.Id);
-                                        
+
                                         if(paymentMethod != null){
                                             sPaymentMethodId = paymentMethod.zId;
                                             customerOrder.Payment_Type__c = IECConstants.PaymentThresholdType_CreditCard;
@@ -1536,13 +1546,13 @@ public without sharing class Order_Svc
                                         }
                                     }
                                     else if(orderId_paymentType != null && orderId_paymentType.size() > 0){
-            
+
                                         customerOrder.Payment_Type__c = orderId_paymentType.get(customerOrder.Id);
-    
+
                                         //For new payment method
                                         pm.setValue('Id',zuoraPaymentId(customerOrder.Payment_Type__c));
-                                    }else{} 
-                                   
+                                    }else{}
+
                                     IECConstants.PaymentType ePaymentType = parsePaymentMethodToEnum(customerOrder.Payment_Type__c);
                                     //pm.setValue('Type',customerOrder.Payment_Type__c);
                                     if (customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_BillMeLater)
@@ -1550,10 +1560,10 @@ public without sharing class Order_Svc
                                     else
                                         pm.setValue('Type',customerOrder.Payment_Type__c);
                                     acc = IECZuoraHelper.createZuoraAccount(billToAccount, contactBillTo, ePaymentType, sPaymentMethodId);
-            
+
                                     //Create new zuora Bill to Contact
                                     billToContact = ZuoraUtil.createZuoraBillToContact(contactBillTo);
-                                    
+
                                     //Get the related Contact for ship To
                                     Contact contactShipTo = contactId_Contact.get(customerOrder.ShipToContactId);
                                     //Create new zuora Ship to Contact
@@ -1575,7 +1585,7 @@ public without sharing class Order_Svc
                                     okForSubscription = false;
                                 }
                             }
-                            
+
                             ratePlanData = new List<Zuora.zObject>();
                             if (okForSubscription)
                             {
@@ -1586,7 +1596,7 @@ public without sharing class Order_Svc
                                     if(orderItemId_listOrderItemCharges.containsKey(orderItem.Id)){
                                         lstOrderItemCharge = orderItemId_listOrderItemCharges.get(orderItem.Id);
                                     }
-                                    
+
                                     //Create Rate Plan Data object
                                     ratePlanData = getRatePlanData(orderItem,lstOrderItemCharge,zRatePlanChargeIds_zModel);
                                 }
@@ -1594,7 +1604,7 @@ public without sharing class Order_Svc
                                 {
                                     setOrderWithTaxSubscription.add(customerOrder.Id);
                                     OrderItemSend.add(new OrderItem(OrderId=customerOrder.Id));
-                                    
+
                                     //*** build rate plan data for shipping & tax
                                     Zuora.zObject rp, rpd, rpc, rpcd;
                                     List<Zuora.zObject> ratePlanCharge = new List<Zuora.zObject>();
@@ -1633,15 +1643,15 @@ public without sharing class Order_Svc
                                         ratePlanData.add(rpd);
                                     }
                                 }
-                                
+
                                 if (ratePlanData != null && ratePlanData.size() > 0)
                                 {
                                     //Create subscription for each ORder Item
                                     Zuora.zObject sub = new Zuora.zObject('Subscription');
-                                    
+
                                     //Date activationDate = customerOrder.EffectiveDate;
                                     Date activationDate = Date.today();
-                                    
+
                                     sub.setValue('ContractEffectiveDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
                                     sub.setValue('ContractAcceptanceDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
                                     //if(customerOrder.Payment_Type__c != IECConstants.PaymentThresholdType_BankTransfer)
@@ -1649,65 +1659,65 @@ public without sharing class Order_Svc
                                     {
                                         sub.setValue('ServiceActivationDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
                                     }
-                                    
+
                                     sub.setValue('InitialTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
                                     sub.setValue('RenewalTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
-                                    
+
                                     //AutoRenew just for electronic product
                                     //if(orderItem.Is_Electronic_Product__c && !orderItem.IEC_Subscribe_to_Zuora__c){
                                     if(orderItem != null && orderItem.Is_Electronic_Product__c){ sub.setValue('AutoRenew', orderItem.Auto_Renew__c); }
-                                    
+
                                     //Generate a single invoice for all subscriptions.
                                     sub.setValue('IsInvoiceSeparate', false);
-                                    
+
                                     //Set the order Id in Zuora
                                     sub.setValue('OrderId__c', customerOrder.Id);
-                                    
+
                                     //Set the orderItem Id in Zuora
                                     if (orderItem != null)
                                         sub.setValue('OrderItemId__c', orderItem.Id);
-                                    
+
                                     // Set the source of the Subscription Creation
                                     sub.setValue('Source__c', 'Salesforce');
-                                    
+
                                     //subscription data
                                     Zuora.zApi.SubscriptionData sd = new Zuora.zApi.SubscriptionData();
                                     sd.Subscription = sub;
                                     sd.RatePlanData = ratePlanData;
-                                    
+
                                     //subscription options
                                     Zuora.zApi.SubscribeOptions so = new Zuora.zApi.SubscribeOptions();
                                     so.GenerateInvoice = true;
                                     so.ProcessPayments = false;
-                                    
+
                                     so.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
                                     so.SubscribeInvoiceProcessingOptions.InvoiceTargetDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate(); customerOrder.EffectiveDate
                                     so.SubscribeInvoiceProcessingOptions.InvoiceDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate();
-                                    
+
                                     //subscribe request
                                     Zuora.zApi.SubscribeRequest subsRequest = new Zuora.zApi.SubscribeRequest();
-                                    
+
                                     subsRequest.ZAccount = acc;
                                     subsRequest.BillToContact = billToContact;
                                     subsRequest.SoldToContact = soldToContact;
                                     subsRequest.SubscribeOptions = so;
-                                    
+
                                     subsRequest.SubscriptionData = sd;
-                                    
+
                                     if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard){
                                         subsRequest.PaymentMethod = pm;
                                     }
-                                    
+
                                     subsRequestLists.add(subsRequest);
                                 }
                             }
-                            //-- Wait 1 s 
+                            //-- Wait 1 s
                             //Integer start = System.Now().millisecond();
                             //while(System.Now().millisecond()< start+3000){}
                         }
                     }
                 }
-                
+
                 try
                 {
                     List<Zuora.zApi.SubscribeResult> subscribeResults = new List<Zuora.zApi.SubscribeResult>();
@@ -1716,17 +1726,17 @@ public without sharing class Order_Svc
                         //System.debug('Kyle Porter Debug subscribe time: ' + DateTime.now());
                         subscribeResults = ZuoraUtil.zsubscribe(subsRequestLists);
                     }
-                    
+
                     /*System.debug( 'logger = ' + Zuora.zApi.currentLogger.toString() );
                     if (Zuora.zApi.currentLogger != null) {
                         system.debug('SOAP Request = ' + Zuora.zApi.currentLogger.request );
                         system.debug('SOAP Response = ' + Zuora.zApi.currentLogger.response );
                         System.debug( 'logger = ' + Zuora.zApi.currentLogger.toString() );
                     }*/
-                    //-- Process Result 
+                    //-- Process Result
                     //list<Order> orderToUpdate = new list<Order>();
                     Integer i = 0;
-        
+
                     if(subscribeResults.size() > 0){
                         for (Zuora.zApi.SubscribeResult result : subscribeResults) {
                             OrderItem orderItem = OrderItemSend.get(i);
@@ -1736,7 +1746,7 @@ public without sharing class Order_Svc
                                 else
                                     orderItemId_subscribeResult.put(orderItem.OrderId,result);
                             }
-        
+
                             i++;
                         }
                     }
@@ -1752,7 +1762,7 @@ public without sharing class Order_Svc
                     //Log the Zuora exception when creating a new Subscription
                     IEC_Error_Log__c errorLog = IECErrorLogger.createErrorLog('Order_Svc/subscribe','subsRequestLists: ' + subsRequestLists,ex.getMessage(),ex.getStackTraceString());
                     IECErrorLogger.logErrors(new list<IEC_Error_Log__c>{errorLog});
-                    
+
                     //Threw an exception when Zuora exception occur
                     //*** do not throw error in order to rollback -> prepare to rollback if having successful subscriptions
                     //throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
@@ -1764,7 +1774,7 @@ public without sharing class Order_Svc
                                 orderItemId_subscribeResult.put((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId, null);
                 }
             }
-        
+
         return orderItemId_subscribeResult;
     }
 
@@ -1794,15 +1804,15 @@ public without sharing class Order_Svc
 
     }
 
-    //Parse the susbscription Result 
-    public static Map<Id,String> parseSubscribeResult2UpdateItems(Map<Id,Zuora.zApi.SubscribeResult> orderItemResponse,  Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod ){ 
-        
+    //Parse the susbscription Result
+    public static Map<Id,String> parseSubscribeResult2UpdateItems(Map<Id,Zuora.zApi.SubscribeResult> orderItemResponse,  Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod ){
+
         List<OrderItem> orderItemsToUpdate = new List<OrderItem>();
         List<Order> orderToUpdate = new List<Order>();
         Set<Id> orderAlreadyToUpdate = new Set<Id>();
 
         Map<Id,String> itemsStatus = new Map<Id,String>();
-        
+
         //List Of order that contains at less one subscription that failed
         map<Id,String> orderIdsForFailedSub = new map<Id,String>();
 
@@ -1833,7 +1843,7 @@ public without sharing class Order_Svc
             Map<String,Zuora.zObject> invoiceMap = new Map<String,Zuora.zObject>();
 
             ZuoraUtil.zAccountPaymentMethod iecOrderId_paymentMethod = new ZuoraUtil.zAccountPaymentMethod();
-            
+
             for(Id orderItemId : orderItemResponse.keySet()){
                 OrderItem ordItem;
                 if (ordItemId_OrderItem.containsKey(orderItemId))
@@ -1843,7 +1853,7 @@ public without sharing class Order_Svc
                 Order order = orderMap.get(ordItem.OrderId);
 
                 if(ordItem != null){
-                    
+
                     Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id != null ? ordItem.Id : ordItem.OrderId);
                     iecOrderId_paymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
 
@@ -1875,10 +1885,10 @@ public without sharing class Order_Svc
                                 ordItem.Payment_Transaction_Number__c = subResponse.PaymentTransactionNumber;
                                 if(iecOrderId_paymentMethod.zPaymentMethodName == IECConstants.PaymentThresholdType_BankTransfer)
                                     ordItem.Zuora_Subscription_Status__c = 'Pending Activation';
-    
+
                                 zInvoicesIds.add(subResponse.InvoiceId);
                                 zAccountIds.add(subResponse.AccountId);
-    
+
                                 if(!orderId_Items.containskey(order.Id)){
                                     orderId_Items.put(order.Id, new List<OrderItem>());
                                 }
@@ -1891,14 +1901,14 @@ public without sharing class Order_Svc
                                 //order.IEC_Zuora_ST_InvoiceNumber__c = subResponse.InvoiceNumber;
                                 //order.IEC_Zuora_ST_SubscriptionId__c = subResponse.SubscriptionId;
                                 //order.IEC_Zuora_ST_SubscriptionNumber__c = subResponse.SubscriptionNumber;
-    
+
                                 zInvoicesIds.add(subResponse.InvoiceId);
                                 zAccountIds.add(subResponse.AccountId);
                             }
-    
+
                             //Set the Zuora Account Id with payment Method
                             iecOrderId_paymentMethod.zAccountId = subResponse.AccountId;
-    
+
                             itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Success');
 
                         }
@@ -1912,7 +1922,7 @@ public without sharing class Order_Svc
 
                             //Set the invoice error
                             orderIdsForFailedSub.put(ordItem.OrderId,subResponse.SubscriptionId);
-                            
+
                             //itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed');
 
                             itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed: ' + errorText);
@@ -1997,13 +2007,13 @@ public without sharing class Order_Svc
 
                 //Make a payment for Credit card
                 //List<Zuora.zApi.SaveResult> lstResults; = new List<Zuora.zApi.SaveResult>();
-                
+
                 //Make Payment on orders and get a map of Zuora response by order Id
                 Map<Id,Zuora.zApi.SaveResult> resultByOrderId;
                 try {
                     resultByOrderId = createZuoraPayment(orderMap, orderId_Items, orderId_zAccountPaymentMethod, invoiceMap);
                 } catch (Exception e) {}
-                
+
                 //Parse payment Result
                 if(resultByOrderId != null && resultByOrderId.size() > 0){
 
@@ -2028,7 +2038,7 @@ public without sharing class Order_Svc
                             }
                         }
                     }
-                    
+
                     if(paymentIds != null && paymentIds.size() > 0){
                         //Get the detail for the payment from Zuora
                         List<Zuora.zObject> zPaymentsDetails = getZuoraPayments(paymentIds,orderMap);
@@ -2036,10 +2046,10 @@ public without sharing class Order_Svc
                         //Get the payment details
                         if(zPaymentsDetails != null && zPaymentsDetails.size() > 0){
                             for(Zuora.zObject payment : zPaymentsDetails){
-                                
+
                                 String paymentStatus = (String)payment.getValue('Status');
                                 String OrderId = (String)payment.getValue('SFDCOrderId__c');
-                                
+
                                 Order order2Update = orderMap.get(OrderId);
                                 ZuoraUtil.zAccountPaymentMethod zapm = orderId_zAccountPaymentMethod.get(OrderId);
                                 if(order2Update != null){
@@ -2050,12 +2060,12 @@ public without sharing class Order_Svc
                                 }
 
                                 if(paymentStatus != null && paymentStatus.contains('Error')){
-                                    
+
                                     //Get the payment error message
                                     String GatewayResponseCode = (String)payment.getValue('GatewayResponseCode');
                                     String GatewayState = (String)payment.getValue('GatewayState');
                                     String paymentError = (String)payment.getValue('GatewayResponse');
-                                    
+
                                     //Delete all of the Subscription on Zuora
                                     orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode);
                                 }
@@ -2086,7 +2096,7 @@ public without sharing class Order_Svc
                         update orderItemsToUpdate;
                     }
                     orderItemsToUpdate.clear();
-                    
+
 /**
 
     Ecommerce Enhancements R1, do not delete Zuora Subscription. --- reverted comment on 2017-06-19.
@@ -2122,9 +2132,9 @@ public without sharing class Order_Svc
 
     //Parse the Payment result and return a map of result by Order Id
     public static Map<Id,String> parsePaymentResult(Map<Id,Zuora.zApi.SaveResult> resultsByOrderId){
-        
+
         Map<Id,String> paymentResultByOrderId = new Map<Id,String>();
-        
+
         for(Id orderId : resultsByOrderId.keySet()){
             Zuora.zApi.SaveResult result = resultsByOrderId.get(orderId);
             if(!result.Success){
@@ -2140,12 +2150,12 @@ public without sharing class Order_Svc
         return paymentResultByOrderId;
 
     }
-    
+
     //Parse the payment Results
     //public static set<String> parsePaymentResult(List<Zuora.zApi.SaveResult> results){
-        
+
     //    set<String> paymentIds = new set<String>();
-        
+
     //    for (Zuora.zApi.SaveResult result : results){
     //        if (!result.Success){
     //            Zuora.zObject[] errors = result.errors;
@@ -2159,29 +2169,29 @@ public without sharing class Order_Svc
     //    }
     //    return paymentIds;
     //}
-    
+
 
     //Query Zuora to get Invoice detail
     public static List<Zuora.zObject> getZuoraInvoices(set<String> zuoraInvIds){
         String query = getInvoiceString(zuoraInvIds);
-        
+
         List<Zuora.zObject> lstInvoices;
         if(!Test.isRunningTest()){
             lstInvoices = IECZuoraHelper.queryApiCall(query);
         }else{
             lstInvoices = TestDataGenerator.generateZInvoices(1);
         }
-        
+
         return lstInvoices;
     }
 
     //Generate the invoice query string
     public static String getInvoiceString(Set<String> zuoraInvIds)
     {
-        List<String> whereItems = new List<String>(); 
+        List<String> whereItems = new List<String>();
         for(String i: zuoraInvIds)
             whereItems.add('Id = \'' + i + '\'');
-        
+
         String zoql = 'SELECT Id,AccountID, InvoiceNumber,Amount,CreditBalanceAdjustmentAmount,Balance,RefundAmount FROM Invoice WHERE ' + String.join(whereItems, ' OR ');
         return zoql;
     }
@@ -2201,28 +2211,28 @@ public without sharing class Order_Svc
 
                 throw new OrderException(ex.getMessage());
             }
-            
+
         }else{
             lstPayments = TestDataGenerator.generateZPayments(orderMap);
         }
-        
+
         return lstPayments;
     }
 
     //Generate the payment query string
     public static String getPaymentString(Set<String> zuoraPayIds)
     {
-        List<String> whereItems = new List<String>(); 
+        List<String> whereItems = new List<String>();
         for(String i: zuoraPayIds)
             whereItems.add('Id = \'' + i + '\'');
-        
+
         String zoql = 'SELECT Id, ReferenceId,SFDCOrderId__c,GatewayResponse,GatewayResponseCode,GatewayState,Status FROM Payment WHERE ' + String.join(whereItems, ' OR ');
         return zoql;
     }
-    
+
     //Generate a list of Zuora payment Object
     public static Map<Id,Zuora.zApi.SaveResult> createZuoraPayment(Map<Id,Order> orderMap, Map<Id,List<OrderItem>> orderId_Items, Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod, Map<String,Zuora.zObject> invoiceMap){
-        
+
         List<Zuora.zObject> lstInvoicePayment = new List<Zuora.zObject>();
         List<Order> lstOrder = new List<Order>();
         List<Zuora.zApi.SaveResult> lstResults = new List<Zuora.zApi.SaveResult>();
@@ -2235,12 +2245,12 @@ public without sharing class Order_Svc
             List<Zuora.zObject> lstInvoicePaymentData = new List<Zuora.zObject>();
 
             Decimal totalToPaid = 0;
-            
+
             if (order.IEC_Zuora_ST_InvoiceId__c != null && invoiceMap.containsKey(order.IEC_Zuora_ST_InvoiceId__c))
             {
                 ipd = new Zuora.zObject('InvoicePayment');
                 zInvoice = invoiceMap.get(order.IEC_Zuora_ST_InvoiceId__c);
-                
+
                 ipd.setValue('Amount',(Decimal)zInvoice.getValue('Balance'));
                 ipd.setValue('InvoiceId', order.IEC_Zuora_ST_InvoiceId__c);
                 ipd.setValue('RefundAmount', 0);
@@ -2249,7 +2259,7 @@ public without sharing class Order_Svc
                 //Calcul the total amount to paid
                 totalToPaid += (Decimal)zInvoice.getValue('Balance');
             }
-            
+
             //Get list of Items
             List<OrderItem> lstOi = orderId_Items.get(order.Id);
             if(lstOi != null && lstOi.size() > 0){
@@ -2277,7 +2287,7 @@ public without sharing class Order_Svc
             pmt.setValue('Amount', totalToPaid);
             pmt.setValue('EffectiveDate', Zuora.zUtil.getZuoraDate(Date.today()));
             pmt.setValue('AppliedCreditBalanceAmount', 0);
-            
+
             //Set the Invoice Payment Data
             Zuora.zObject invoicePaymentData = new Zuora.zObject('InvoicePaymentData');
             invoicePaymentData.setValue('InvoicePayment', lstInvoicePaymentData);
@@ -2290,9 +2300,9 @@ public without sharing class Order_Svc
                 //Query the Account Payment Method
                 Zuora.zObject zAccount = getZaccountById(zAcc_PaymentMethod.zAccountId);
                 if(zAccount != null){ pmt.setValue('PaymentMethodId',(String)zAccount.getValue('DefaultPaymentMethodId')); }
-                
+
             }
-            
+
             pmt.setValue('Status','Processed');// Error, Processed
 
             String paymentType = 'Electronic';
@@ -2301,7 +2311,7 @@ public without sharing class Order_Svc
             {
                 paymentType = 'External';
             }
-            
+
             pmt.setValue('Type',paymentType);
 
             pmt.setValue('SFDCOrderId__c',order.Id);
@@ -2342,7 +2352,7 @@ public without sharing class Order_Svc
         deleteZuoraSubscriptionNow(orderIds);
     }
     public static void deleteZuoraSubscriptionNow(set<Id> orderIds){
-        
+
         map<Id,Order> orderMap = new Order_Sel().getOrderByStatus(orderIds);
         Map<Id, List<OrderItem>> orderId_Items = new OrderItem_Sel().getOrderItems(orderIds);
 
@@ -2359,7 +2369,7 @@ public without sharing class Order_Svc
         List<IEC_Error_Log__c> lstErrors = new List<IEC_Error_Log__c>();
 
         for(Id orderId:orderId_Items.keySet()){
-            
+
             Order order = orderMap.get(orderId);
             if(order.Zuora_Transaction_Id__c != null){ refId.add(order.Zuora_Transaction_Id__c); }
 
@@ -2381,10 +2391,10 @@ public without sharing class Order_Svc
                         inv2Delete.add(oi.Zuora_InvoiceId__c);
                     }
                 }
-            }        
+            }
         }
 
-        //Change the Payments status to Cancel 
+        //Change the Payments status to Cancel
         List<Zuora.zObject> paymentCancel = new List<Zuora.zObject>();
         for(String payId : refId){
             Zuora.zObject payment = new Zuora.zObject('Payment');
@@ -2476,24 +2486,24 @@ public without sharing class Order_Svc
             amendRequest.amendments = new List<Zuora.zObject>{ amend };
             amendRequestLists.add(amendRequest);
         }
-        
+
         System.debug('amendRequestLists ' + amendRequestLists);
         Zuora.zApi.AmendResult amendResult = new Zuora.zApi.AmendResult();
         if(amendRequestLists.size() > 0){
             for(Zuora.zApi.AmendRequest ar : amendRequestLists){
                 amendResult = IECZuoraHelper.amendApiCall(ar);
-            }   
+            }
         }
         */
 
         //Delete Payments
         try{
-            if(refId.size() > 0){ List<Zuora.zApi.DeleteResult> deleteTrans = ZuoraUtil.zdelete('Payment',refId); 
+            if(refId.size() > 0){ List<Zuora.zApi.DeleteResult> deleteTrans = ZuoraUtil.zdelete('Payment',refId);
             }
         }catch(Exception ex){
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(refId),ex.getMessage(),ex.getStackTraceString()));
         }
-        
+
         //Delete the corresponding Invoices first
         try{
             if(invIds.size() > 0){
@@ -2502,14 +2512,14 @@ public without sharing class Order_Svc
         }catch(Exception ex){
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(invIds),ex.getMessage(),ex.getStackTraceString()));
         }
-        
+
         List<String> ids = new List<String>();
         ids.addAll(sub2Delete);
         try{
             if(ids.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteSub = ZuoraUtil.zdelete('Subscription',ids);
             }
-                
+
         }catch(Exception ex){
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(ids),ex.getMessage(),ex.getStackTraceString()));
         }
@@ -2548,7 +2558,7 @@ public without sharing class Order_Svc
             //Update the OrderItem Zuora subscription status
             oi.Zuora_Subscription_Status__c = '';
         }
-        
+
         List<Zuora.zApi.SaveResult> zUpdate = (Test.isRunningTest()) ? null : IECZuoraHelper.updateApiCall(lstZsubscriptionToUpdate);
 
         update orderItems;
@@ -2557,17 +2567,17 @@ public without sharing class Order_Svc
     //Generate the invoice query string
     public static String getSubString(Set<String> itemIds)
     {
-        List<String> whereItems = new List<String>(); 
+        List<String> whereItems = new List<String>();
         for(String i: itemIds)
             whereItems.add('OrderItemId__c = \'' + i + '\'');
-        
+
         String zoql = 'SELECT Id FROM Subscription WHERE ' + String.join(whereItems, ' OR ');
         return zoql;
     }
 
     //Query existing Zuora Accounts base on the billing Contact
     public static map<String,Zuora.zObject> getZuoraAccounts(set<Id> ContactIds){
-        
+
         Set<String> billToContactIds = Utility.IdToString(ContactIds);
         map<String,Zuora.zObject> zAccounts = new map<String,Zuora.zObject>();
 
@@ -2584,23 +2594,23 @@ public without sharing class Order_Svc
 
                 throw new OrderException(ex.getMessage());
             }
-            
+
         }else{
             //lstAccounts = TestDataGenerator.generateZaccounts(ContactIds);
         }
         if(lstAccounts.size() > 0){
             for(Zuora.zObject zacc : lstAccounts){ zAccounts.put((String)zacc.getValue('CRMContactID__c'),zacc); }
         }
-        
+
         return zAccounts;
     }
 
     //Generate the Zuora Account Query
     public static string getZaccountQuery(set<String> contactIds){
-        List<String> whereItems = new List<String>(); 
+        List<String> whereItems = new List<String>();
         for(String i: contactIds)
             whereItems.add('CRMContactID__c = \'' + i + '\'');
-        
+
         String zoql = 'SELECT Id,BillToId,SoldToId,DefaultPaymentMethodId,CRMContactID__c FROM Account WHERE ' + String.join(whereItems, ' OR ');
         return zoql;
     }
@@ -2619,12 +2629,12 @@ public without sharing class Order_Svc
 
     //Generate rate plan data base on the Order Item and list of Order Item charge
     public static List<Zuora.zObject> getRatePlanData(OrderItem orderItem, List<Order_Item_Charge__c> listOrderItemCharges, Map<String,String> zRatePlanChargeIds_zModel){
-    
+
         List<Zuora.zObject> ratePlanData = new List<Zuora.zObject>();
-        
-        List<Zuora.zObject> ratePlanCharge = new List<Zuora.zObject>(); 
-        
-        //-- Unit Price RatePLan & Charge 
+
+        List<Zuora.zObject> ratePlanCharge = new List<Zuora.zObject>();
+
+        //-- Unit Price RatePLan & Charge
         Zuora.zObject rpc = new Zuora.zObject('RatePlanCharge');
         rpc.setValue('ProductRatePlanChargeId', orderItem.Zuora_Rate_Plan_Charge_Id__c);
 
@@ -2647,7 +2657,7 @@ public without sharing class Order_Svc
             rpcd.setValue('RatePlanCharge', rpc);
             ratePlanCharge.add(rpcd);
         }
-        
+
         //Set to zero the orther charges
         list<zqu__ProductRatePlanCharge__c> setValuesToZero = ProductRatePlanCharge_Sel.getChargesToSetToZero(orderItem.Zuora_Rate_Plan_Id__c,orderItem.Zuora_Rate_Plan_Charge_Id__c);
         for(zqu__ProductRatePlanCharge__c prpcZ : setValuesToZero)
@@ -2657,7 +2667,7 @@ public without sharing class Order_Svc
                 Zuora.zObject rpcz = new Zuora.zObject('RatePlanCharge');
                 rpcz.setValue('ProductRatePlanChargeId', prpcz.zqu__ZuoraId__c);
                 rpcz.setValue('Quantity', 0.00);
-                
+
                 if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE)){
                     rpcz.setValue('DiscountPercentage', 0.00);
                 }else if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT)){
@@ -2665,21 +2675,21 @@ public without sharing class Order_Svc
                 }else{
                     rpcz.setValue('Price', 0.00);
                 }
-                
+
                 Zuora.zObject rpcdz = new Zuora.zObject('RatePlanChargeData');
                 rpcdz.setValue('RatePlanCharge', rpcz);
                 ratePlanCharge.add(rpcdz);
             }
-        
+
         Zuora.zObject rp = new Zuora.zObject('RatePlan');
         rp.setValue('ProductRatePlanId', orderItem.Zuora_Rate_Plan_Id__c);
         Zuora.zObject rpd = new Zuora.zObject('RatePlanData');
         rpd.setValue('RatePlan', rp);
         rpd.setValue('RatePlanChargeData', ratePlanCharge);
-        
+
         ratePlanData.add(rpd);
 
-        //-- Set Discounts rate plan & charges 
+        //-- Set Discounts rate plan & charges
         if(listOrderItemCharges != null && listOrderItemCharges.size() > 0){
 
             for(Order_Item_Charge__c c : listOrderItemCharges){
@@ -2689,15 +2699,15 @@ public without sharing class Order_Svc
 
                 Zuora.zObject discount_rpcd = new Zuora.zObject('RatePlanChargeData');
                 discount_rpcd.setValue('RatePlanCharge', discount_rpc);
-                
+
                 Zuora.zObject discount_rp = new Zuora.zObject('RatePlan');
                 discount_rp.setValue('ProductRatePlanId', c.Zuora_Rate_Plan_Id__c);
 
                 Zuora.zObject discount_rpd = new Zuora.zObject('RatePlanData');
-                
+
                 discount_rpd.setValue('RatePlan', discount_rp);
                 discount_rpd.setValue('RatePlanChargeData', new List<Zuora.zObject>{rpcd});
-                
+
                 ratePlanData.add(discount_rpd);
             }
         }
@@ -2763,7 +2773,7 @@ public without sharing class Order_Svc
     public static list<String> getStatusToPreventDeletion(){
         return Utility.getTextSettingToArray('Order status allows order deletion',',');
     }
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-01
         Return the list of Order status allows for order modification
@@ -2771,7 +2781,7 @@ public without sharing class Order_Svc
     public static list<String> getStatusToPreventModification(){
         return Utility.getTextSettingToArray('Order status allows order modification',',');
     }
-    
+
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-01
         Return the list of Order fields to forbid modification
@@ -2779,7 +2789,7 @@ public without sharing class Order_Svc
     public static list<String> getOrderFieldsToForbidModification(){
         return Utility.getSeqTextSetting('Order fields to forbid modification',',').split(',');
     }
-    
+
 
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-05
@@ -2788,8 +2798,8 @@ public without sharing class Order_Svc
     public static list<String> getUserProfileAllowOrderModification(){
         return Utility.getTextSetting('Order User profile allows modification').split(',');
     }
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-10-19
             Determine if to calculate shipping charges and taxes for an order
@@ -2797,8 +2807,8 @@ public without sharing class Order_Svc
     public static Boolean needToGetSAP_Freight_Tax(Id idOrder) {
         return (0 < [select count() from OrderItem where OrderId = :idOrder and (Freight_Charge__c = null or Tax__c = null) limit 1]);
     } //*** end of "needToGetSAP_Freight_Tax"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-10-13
             This function calls SAP to get freight charges and taxes for an order saved in database
@@ -2813,18 +2823,18 @@ public without sharing class Order_Svc
         SAP_Freight_and_Tax.DT_SFDC_Partner soldToPartner, billToPartner, shipToPartner;
         Map<String, OrderItem> mapProduct_OrderItem = new Map<String, OrderItem>();
         OrderItem updOrderItem;
-        
+
         //*** get order to update freight & tax
         Order updOrder = Order_Sel.getOrderForFreightAndTax(idOrder, idOrderItem);
-        
+
         //*** get conversion information
         //SFDC_SAP_Mapping__c conversion = Order_Sel.getConversionSFDC_SAP(((updOrder.Type == 'Cart') ? 'Order' : updOrder.Type), updOrder.Source__c, updOrder.Order_Channel__c);
         SFDC_SAP_Mapping__c conversion = Order_Sel.getConversionSFDC_SAP(updOrder.Type, updOrder.Source__c, updOrder.Order_Channel__c);
         if (conversion == null)
             return Label.ErrMsg_Shipping_Tax_No_Conversion;
-        
+
         system.debug('conversion ' + conversion);
-        
+
         //*** build outbound products list
         outProductList.put('Order', new List<SAP_Freight_and_Tax.Product_element>());
         for (OrderItem item : updOrder.OrderItems) {
@@ -2842,7 +2852,7 @@ public without sharing class Order_Svc
                 outProductList.put(item.Id, new List<SAP_Freight_and_Tax.Product_element>{outProduct});
             else
                 outProductList.get('Order').add(outProduct);
-            
+
             //*** prepare for update later
             mapProduct_OrderItem.put(outProduct.ProductNumber, item);
         }
@@ -2850,16 +2860,16 @@ public without sharing class Order_Svc
             outProductList.remove('Order');
         if (outProductList.size() == 0)
             return null;
-        
+
         //*** callout to get freight & tax
         try {
             //*** prepare callout header
             if (request.inputHttpHeaders_x == null)
-                request.inputHttpHeaders_x = new Map<String,String>(); 
+                request.inputHttpHeaders_x = new Map<String,String>();
             request.inputHttpHeaders_x.put('Authorization', Utility.getSAPauthorization());
             request.timeout_x = Utility.getIntegerSetting('SAP_CALL_TIMEOUT');
             request.endpoint_x = Utility.fixEndpointDomain(request.endpoint_x);
-            
+
             //*** prepare partners
             soldToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
             soldToPartner.SAPPartnerID = updOrder.SoldToAccount_Partner_Number__c;
@@ -2880,11 +2890,11 @@ public without sharing class Order_Svc
             {
                 system.debug('outType ' + outType);
                 system.debug('outProductList.get(outType) ' + outProductList.get(outType));
-                
+
                 system.debug('soldToPartner ' + soldToPartner);
                 system.debug('shipToPartner ' + shipToPartner);
                 system.debug('soldToPartner ' + soldToPartner);
-                
+
                 response = request.SI_SFDC_TaxShippingCalculation_SYNC((outType == 'Order' ? conversion.SAP_Order_Type__c : 'Contract')
                                                                      , (outType == 'Order' ? conversion.SAP_Sales_Org__c : '')
                                                                      , (outType == 'Order' ? conversion.SAP_Division__c : '')
@@ -2896,11 +2906,11 @@ public without sharing class Order_Svc
                     break;
                 lstResponse.add(response);
             }
-            
+
             //*** return error message if applicable
             if (response.Error != null)
                 return String.format(Label.ErrMsg_Shipping_Tax_SAP_Error, new List<String>{response.Error.Type_x, response.Error.Code, response.Error.Message});
-            
+
             //*** set tax and freight on order item and update at the end
             for (Integer i1 = 0; i1 < lstResponse.size(); i1++)
                 for (SAP_Freight_and_Tax.CalculationResult_element calc : lstResponse[i1].CalculationResult) {
@@ -2930,7 +2940,7 @@ public without sharing class Order_Svc
             This function calls SAP to get freight charges and taxes for shopping cart
     ****************************************************************************************************/
     public static String getSAP_Freight_Tax_for_DTO(String orderType, String orderSource, String orderChannel, String soldToPartnerId, String billToPartnerId, String shipToPartnerId, List<OrderItem_DTO> listItem) {
-     
+
         SAP_Freight_and_Tax.HTTPS_Port request = new SAP_Freight_and_Tax.HTTPS_Port();
         SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response response;
         List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response> lstResponse = new List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response>();
@@ -2939,15 +2949,15 @@ public without sharing class Order_Svc
         SAP_Freight_and_Tax.DT_SFDC_Partner soldToPartner, billToPartner, shipToPartner;
         Map<String, OrderItem_DTO> mapProduct_OrderItem = new Map<String, OrderItem_DTO>();
         OrderItem_DTO updOrderItem;
-        
+
         //*** get conversion information
         //SFDC_SAP_Mapping__c conversion = Order_Sel.getConversionSFDC_SAP(((orderType == 'Cart') ? 'Order' : orderType), orderSource, orderChannel);
         SFDC_SAP_Mapping__c conversion = Order_Sel.getConversionSFDC_SAP(orderType, orderSource, orderChannel);
-        
+
         if (conversion == null)
             return Label.ErrMsg_Shipping_Tax_No_Conversion;
-    
-        
+
+
         //*** build outbound products list
         outProductList.put('Order', new List<SAP_Freight_and_Tax.Product_element>());
         for (OrderItem_DTO item : listItem) {
@@ -2960,11 +2970,11 @@ public without sharing class Order_Svc
             outProduct.Quantity = 0.00 + item.quantity;   //*** force to have 2 decimals
             outProduct.TotalCost = item.subTotal - ((item.discountAmount == null) ? 0 : item.discountAmount);
             outProduct.Currency_x = UserInfo.getDefaultCurrency();
-            outProduct.FreeShippingFlag = (item.chargeShipping != true); 
+            outProduct.FreeShippingFlag = (item.chargeShipping != true);
             if (item.isContractProduct == true) outProductList.put(item.orderItemId, new List<SAP_Freight_and_Tax.Product_element>{outProduct});
             else outProductList.get('Order').add(outProduct);
-            
-            
+
+
             //*** prepare for update later
             mapProduct_OrderItem.put(outProduct.ProductNumber, item);
         }
@@ -2972,16 +2982,16 @@ public without sharing class Order_Svc
             outProductList.remove('Order');
         if (outProductList.size() == 0)
             return null;
-        
+
         //*** callout to get freight & tax
         try {
             //*** prepare callout header
             if (request.inputHttpHeaders_x == null)
-                request.inputHttpHeaders_x = new Map<String,String>(); 
+                request.inputHttpHeaders_x = new Map<String,String>();
             request.inputHttpHeaders_x.put('Authorization', Utility.getSAPauthorization());
             request.timeout_x = Utility.getIntegerSetting('SAP_CALL_TIMEOUT');
             request.endpoint_x = Utility.fixEndpointDomain(request.endpoint_x);
-            
+
             //*** prepare partners
             soldToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
             soldToPartner.SAPPartnerID = soldToPartnerId;
@@ -2989,27 +2999,27 @@ public without sharing class Order_Svc
             billToPartner.SAPPartnerID = billToPartnerId;
             shipToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
             shipToPartner.SAPPartnerID = shipToPartnerId;
-            
+
             //*** call out
             for (String outType : outProductList.keySet())
             {
-                
+
                 response = request.SI_SFDC_TaxShippingCalculation_SYNC((outType == 'Order' ? conversion.SAP_Order_Type__c : 'Contract')
                                                                      , (outType == 'Order' ? conversion.SAP_Sales_Org__c : '')
                                                                      , (outType == 'Order' ? conversion.SAP_Division__c : '')
                                                                      , (outType == 'Order' ? conversion.SAP_Distribition_Channel__c : '')
 //                                                                     , conversion.SAP_Sales_Org__c, conversion.SAP_Division__c, conversion.SAP_Distribition_Channel__c
                                                                      , soldToPartner, shipToPartner, billToPartner, outProductList.get(outType));
-                
+
                 if (response.Error != null)
                     break;
                 lstResponse.add(response);
             }
-            
+
             //*** return error message if applicable
             if (response.Error != null)
                 return String.format(Label.ErrMsg_Shipping_Tax_SAP_Error, new List<String>{response.Error.Type_x, response.Error.Code, response.Error.Message});
-            
+
             //*** set tax and freight on order item and update at the end
             for (Integer i1 = 0; i1 < lstResponse.size(); i1++)
                 for (SAP_Freight_and_Tax.CalculationResult_element calc : lstResponse[i1].CalculationResult) {
@@ -3018,11 +3028,11 @@ public without sharing class Order_Svc
                         updOrderItem.shippingAmount = ((calc.ShippingCharge == null) ? 0 : calc.ShippingCharge);
                         updOrderItem.taxAmount = ((calc.Tax == null) ? 0 : calc.Tax);
                         updOrderItem.HandlingCharges = calc.SpecialHandlingCharge;
-                        
+
                         updOrderItem.totalAmount = updOrderItem.subTotal - ((updOrderItem.discountAmount == null) ? 0 : updOrderItem.discountAmount) + updOrderItem.shippingAmount + updOrderItem.taxAmount + ((updOrderItem.HandlingCharges == null) ? 0 : updOrderItem.HandlingCharges);
                     }
                 }
-            
+
             //*** return null for success indicator
             return null;
         } catch (Exception e) {
@@ -3065,7 +3075,7 @@ public without sharing class Order_Svc
                         done = true;
                     }
                 }
-                
+
                 if(allCookiesValues != ''){
                     //Get the list of the product code and Quantity
                     List<String> lstProdIdQty = allCookiesValues.split('#');
@@ -3075,13 +3085,13 @@ public without sharing class Order_Svc
                             List<String> prodIdsQties = str.split('_');
                             if(prodIdsQties != null && prodIdsQties.size() > 0){
                                 try{
-                                    
+
                                     if(prodIdsQties[1].contains(',')){ prodIdsQties[1] = prodIdsQties[1].replace(',','.'); }
                                     //Put the product code as a key and the quatity as a value
                                     Decimal qty = Decimal.valueOf(prodIdsQties[1]);
                                     prodId_Qty.put(prodIdsQties[0],qty);
                                 }catch(Exception ex){}
-                                
+
                             }
                         }
                     }
@@ -3134,7 +3144,7 @@ public without sharing class Order_Svc
     //            return pd;
     //        }
     //    }
-        
+
     //    return null;
     //}
 
@@ -3169,7 +3179,7 @@ public without sharing class Order_Svc
         Boolean oldChargeShippingFlag, donotChargeFlatFee;
         Map<Id, PricebookEntry> mapId_PBE = new Map<Id, PricebookEntry>();
         Order_Svc exe = new Order_Svc();
-        
+
         //*** safety check
         if (lstOrderItem == null || lstOrderItem.size() == 0){ return null; }
 
@@ -3180,12 +3190,12 @@ public without sharing class Order_Svc
                                    from PricebookEntry
                                    where Id in :mapId_PBE.keySet()])
             mapId_PBE.put(pbe.Id, pbe);
-        
-        
+
+
         //*** get information for region/country/coupon discounts
         Contact contactInfo = User_Sel.getContactDiscountInfo(idContact);
         String customerType = User_Sel.getCustomerType(idContact);
-        
+
         system.debug('lstOrderItem ' + lstOrderItem);
         //*** calculate price & discounts
         for (OrderItem oi : lstOrderItem)
@@ -3193,18 +3203,18 @@ public without sharing class Order_Svc
             //*** prepare to delete existing Zuora charges for order item
             if (oi.Id != null)
                 lstOrderItemToDeleteZCharge.add(oi.Id);
-            
+
             //*** get price plans for product
             price = mapProductNumber_Price.get(mapId_PBE.get(oi.PricebookEntryId).Product2.SAP_Material_Number__c);
             if (price == null) break;
-            
+
             //*** reset detail of order item to default
             oldUnitPrice = oi.UnitPrice;
             oldChargeShippingFlag = oi.Charge_Shipping__c;
             oi.UnitPrice = null;
             oi.Charge_Shipping__c = mapId_PBE.get(oi.PricebookEntryId).Product2.Charge_Shipping__c;
             donotChargeFlatFee = false;
-            
+
             //*** set unit price based on customer type volume price
             exe.setUnitPriceFromPlan(oi, price.customerPrice, customerType, true);
             //if (oi.UnitPrice == null) exe.setUnitPriceFromPlan(oi, price.preSalePrice, null, false);
@@ -3225,7 +3235,7 @@ public without sharing class Order_Svc
                 oi.Charge_Shipping__c = oldChargeShippingFlag;
                 break;
             }
-            
+
             //*** get all discounts -> beware the type of discount should match with prefix of discount type for SAP
             System.debug('contactInfo::'+contactInfo);
             oi.Discount__c = 0;
@@ -3235,15 +3245,15 @@ public without sharing class Order_Svc
             exe.setDiscountFromPlan(oi, price.preSalePrice, 'PreSales', lstZDiscountCharge, null, false);
             exe.setDiscountFromPlan(oi, exe.getCouponPlan(oi.Coupon__c, price.couponPrice), 'Coupon', lstZDiscountCharge, null, false);
             exe.setDiscountFromPlan(oi, price.standardPrice, 'Discount', lstZDiscountCharge, null, false);
-            
+
             //-- Setup Fee : search first in customer price then in standard
             if (!donotChargeFlatFee && oi.UnitPrice == null)
             {
                 exe.setFlatFeeFromPlan(oi, price.standardPrice, null);
                 exe.setFlatFeeFromPlan(oi, price.customerPrice, customerType);
             }
-            
-            
+
+
             //*** apply discounts
             //discountAmount = 0;
             //runningTotal = oi.UnitPrice * oi.Quantity;
@@ -3258,7 +3268,7 @@ public without sharing class Order_Svc
             for (Order_Item_Charge__c discount : lstZDiscountCharge)
                 if (discount.Name == oi.PricebookEntryId){ oi.Discount__c += discount.Discount_Amount__c; }
             if (oi.Discount__c == 0){ oi.Discount__c = null; }
-            
+
             //*** reset shipping & tax
             if (resetShippingAndTax)
             {
@@ -3267,7 +3277,7 @@ public without sharing class Order_Svc
                 oi.Tax__c = null;
             }
         }
-        
+
         //*** save changes
         Savepoint sp = Database.setSavepoint();
         try
@@ -3289,7 +3299,7 @@ public without sharing class Order_Svc
             return String.valueOf(e);
         }
     } //*** end of "setPriceToOrder"
-    
+
     void setFlatFeeFromPlan(OrderItem item, List<PriceDetail_DTO> lstPrice, String strDiscountType)
     {
         //*** safety check
@@ -3307,8 +3317,8 @@ public without sharing class Order_Svc
             }
         }
     }
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-11-20
             Set unit price to an order item
@@ -3319,7 +3329,7 @@ public without sharing class Order_Svc
         if (lstPrice == null || lstPrice.size() == 0)
             return;
         //PriceDetail_DTO price = lstPrice[0];  //*** only consider the first price
-        
+
         for (PriceDetail_DTO price : lstPrice)
         {
             if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
@@ -3348,7 +3358,7 @@ public without sharing class Order_Svc
                     item.Zuora_Rate_Plan_Charge_Id__c = price.UnitPriceChargeId;
                 }
             }
-            
+
             if (item.UnitPrice != null)
             {
                 if (!String.isBlank(price.setupFeeChargeId) && price.setupFee != null && price.setupFee > 0)
@@ -3361,8 +3371,8 @@ public without sharing class Order_Svc
             }
         }
     } //*** end of "setUnitPriceFromPlan"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2016-03-29
             Set unit price from flat fee to an order item
@@ -3372,7 +3382,7 @@ public without sharing class Order_Svc
         //*** safety check
         if (lstPrice == null || lstPrice.size() == 0)
             return;
-        
+
         for (PriceDetail_DTO price : lstPrice)
         {
             if (price.setupFee != null)
@@ -3384,8 +3394,8 @@ public without sharing class Order_Svc
             }
         }
     } //*** end of "setUnitPriceFromPlanFee"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-11-20
             Prepare Zuora discount charge record and free shipping
@@ -3398,7 +3408,7 @@ public without sharing class Order_Svc
         if (lstPrice == null || lstPrice.size() == 0)
             return;
         //PriceDetail_DTO price = lstPrice[0];  //*** only consider the first price
-        
+
         for (PriceDetail_DTO price : lstPrice)
             if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
             {
@@ -3407,7 +3417,7 @@ public without sharing class Order_Svc
 
                 //if(item.Discount__c == null)
                 //    item.Discount__c= 0;
-                
+
                 //*** try to set unit price from volume price in plan
                 if (price.discountPercentage != null)
                 {
@@ -3425,8 +3435,8 @@ public without sharing class Order_Svc
                 }
             }
     } //*** end of "setDiscountFromPlan"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-11-20
             Get the coupon plan corresponding for specified coupon
@@ -3436,16 +3446,16 @@ public without sharing class Order_Svc
         //*** safety check
         if (strCoupon == null || couponPrice == null || couponPrice.size() == 0)
             return null;
-        
+
         //*** find coupon in the list of discount coupons
         for (PriceDetail_DTO price : couponPrice)
             if (price.discountName != null && strCoupon != null && price.discountName.equalsIgnoreCase(strCoupon))
                 return new List<PriceDetail_DTO>{price};
-        
+
         //*** no coupon found
         return null;
     } //*** end of "getCouponPlan"
-    
+
 
     /****************************************************************************************************
         Created by Thai 2015-11-20
@@ -3482,7 +3492,7 @@ public without sharing class Order_Svc
         return false;
     } //*** end of "isCouponValid"
 
-    
+
 
     /****************************************************************************************************
         Created by Thai 2015-11-24
@@ -3505,15 +3515,15 @@ public without sharing class Order_Svc
 
         if (price != null)
         {
-            UnitPrice = exe.getUnitPriceFromPlan(price.customerPrice, quantity,customerType, true); 
+            UnitPrice = exe.getUnitPriceFromPlan(price.customerPrice, quantity,customerType, true);
             if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromPlan(price.standardPrice, quantity, null, false);
-            
+
             //*** try to get unit price from flat fee
             if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.customerPrice, customerType, true);
             if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.standardPrice, null, false);
         }
         return UnitPrice;
-    } 
+    }
 
 
 
@@ -3540,7 +3550,7 @@ public without sharing class Order_Svc
 
         if (price != null)
         {
-            UnitPrice = srv.getUnitPriceFromPlan(price.standardPrice, quantity, null, false); 
+            UnitPrice = srv.getUnitPriceFromPlan(price.standardPrice, quantity, null, false);
             if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.standardPrice, null, false);   //*** try to get unit price from flat fee
         }
         return UnitPrice;
@@ -3554,16 +3564,16 @@ public without sharing class Order_Svc
 
         if (price != null)
         {
-            UnitPrice = srv.getUnitPriceFromPlan(price.customerPrice, quantity, customerType, true); 
+            UnitPrice = srv.getUnitPriceFromPlan(price.customerPrice, quantity, customerType, true);
             if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.customerPrice, customerType, true);   //*** try to get unit price from flat fee
         }
         return UnitPrice;
-        //return (price != null)? srv.getUnitPriceFromPlan(price.customerPrice, quantity,customerType, true): null; 
+        //return (price != null)? srv.getUnitPriceFromPlan(price.customerPrice, quantity,customerType, true): null;
     }
 
     //public static Decimal getDiscountedPrice(PriceInfo_DTO priceData, Decimal quantity, Customer_DTO customer)
     //{
-    //    Decimal discountedPrice; 
+    //    Decimal discountedPrice;
 
 
     //    return discountedPrice;
@@ -3580,7 +3590,7 @@ public without sharing class Order_Svc
         if (lstPrice == null || lstPrice.size() == 0)
             return null;
         //PriceDetail_DTO price = lstPrice[0];  //*** only consider the first price
-        
+
         for (PriceDetail_DTO price : lstPrice)
         {
             if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
@@ -3591,7 +3601,7 @@ public without sharing class Order_Svc
                     for (VolumePrice_DTO vp : price.VolumePrice)
                         if (vp.qtyFrom != 0 && vp.price != 0 && vp.qtyFrom <= quantity && (vp.qtyTo == null || quantity <= vp.qtyTo))
                             return vp.price;
-                
+
                 //*** get unit price from plan
                 if (price.UnitPrice != null)
                     return price.UnitPrice;
@@ -3612,7 +3622,7 @@ public without sharing class Order_Svc
         //*** safety check
         if (lstPrice == null || lstPrice.size() == 0)
             return null;
-        
+
         for (PriceDetail_DTO price : lstPrice)
         {
             if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
@@ -3623,8 +3633,8 @@ public without sharing class Order_Svc
         //*** no unit price found
         return null;
     } //*** end of "getUnitPriceFromFlatFee"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-11-27
             Get list of discount plans
@@ -3632,17 +3642,17 @@ public without sharing class Order_Svc
     public static List<PriceDetail_DTO> getDiscountPlans(List<PriceDetail_DTO> lstPrice, String strDiscountName, Boolean shouldCheckDiscountName)
     {
         List<PriceDetail_DTO> lstDiscount = new List<PriceDetail_DTO>();
-        
+
         if (lstPrice != null && lstPrice.size() > 0)
             for (PriceDetail_DTO price : lstPrice)
                 if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
                     if (price.discountAmount != null || price.discountPercentage != null)
                         lstDiscount.add(price);
-        
+
         return lstDiscount;
     } //*** end of "getDiscountPlans"
-    
-    
+
+
     /****************************************************************************************************
         Created by Thai 2015-11-20
             Get all discounts for a type of price for a DTO -> no checking of discount type
@@ -3655,7 +3665,7 @@ public without sharing class Order_Svc
                 //*** free shipping
                 if (price.isFreeShipping != null && price.isFreeShipping)
                     item.chargeShipping = false;
-                
+
                 //*** discount
                 if (price.discountPercentage != null)
                     calc.add(price.discountPercentage);
@@ -3669,19 +3679,19 @@ public without sharing class Order_Svc
         Created by Thai 2015-11-20
             Calculate price & discounts for an order item DTO
     ****************************************************************************************************/
-    
+
     public static void setPriceToOrderItemDTO(OrderItem_DTO item)
     {
         setPriceToOrderItemDTO(item, User_Sel.getCustomerType(UserInfo.getUserId()));
     }
-    
+
     public static void setPriceToOrderItemDTO(OrderItem_DTO item, String sCustomerType)
     {
-        
+
         Order_Svc exe = new Order_Svc();
         Decimal runningTotal;
         List<Decimal> calc = new List<Decimal>();
-        
+
         item.unitPrice = getUnitPrice(item.PriceInfo, item.quantity, sCustomerType);
 
         System.debug('item.UnitPrice: ' + item.unitPrice);
@@ -3698,10 +3708,10 @@ public without sharing class Order_Svc
         runningTotal = item.subTotal;
         for (Integer i = 1; i < calc.size(); i++)
             runningTotal -= (runningTotal * calc[i] / 100);
-            
+
         item.discountAmount = item.subTotal - runningTotal + calc[0];
 
-            
+
     } //*** end of "setPriceToOrderItemDTO"
 
 
@@ -3774,7 +3784,7 @@ public without sharing class Order_Svc
         Create order and order items for auto renewal
     ****************************************************************************************************/
     public static List<OrderItem> createAutoRenewalOrders(IEC_Event_Release__c eventRelease, List<IEC_Event_Subscription__c> subscriptions){
-        
+
         List<Order> lstOrder = new List<Order>();
         map<Id,Contact> contactMap = new map<Id,Contact>();
         map<Id,Id> userIdByContactId = new map<Id,Id>();
@@ -3790,7 +3800,7 @@ public without sharing class Order_Svc
             }
             contactId_EventSubscription.get(subscription.Subscriber__c).add(subscription);
         }
-        
+
         //Get the details about contacts
         if(contactId_EventSubscription.size() > 0)
             contactMap = Contact_Sel.getContactById(contactId_EventSubscription.keySet());
@@ -3817,11 +3827,11 @@ public without sharing class Order_Svc
                 String msg = null;
                 if(subscription.Default_Payment_Type__c == null) msg = 'Customer do not have a payment type';
                 else msg = 'Customer not allowed for rewal for ' + subscription.Default_Payment_Type__c;
-                
+
                 lstErrors.add(IEC_EventReleaseLog_Svc.logError(msg, '', null, eventRelease.Id, 'Create order', subscription.Subscriber__c, subscription.Id, false));
             }
         }
-              
+
         if(lstOrder.size() > 0){
 
             set<Id> orderIds = new set<Id>();
@@ -3832,7 +3842,7 @@ public without sharing class Order_Svc
                 // Operation was successful, so get the ID of the record that was processed
                 if (sr.isSuccess()) { orderIds.add(sr.getId()); }
                 else {
-                    // Operation failed, so get all errors                
+                    // Operation failed, so get all errors
                     for(Database.Error err : sr.getErrors()) {
                         lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', null, false));
                     }
@@ -3841,7 +3851,7 @@ public without sharing class Order_Svc
 
             //Get the inserted orders
             list<Order> insertedOrders = Order_Sel.getOrdersById(orderIds);
-            
+
             //Create orderItem for each order
             set<Id> orderItemIds = new set<Id>();
             if(insertedOrders != null && insertedOrders.size() > 0){
@@ -3929,7 +3939,7 @@ public without sharing class Order_Svc
 
         if(userId != null)
             order.OwnerId = userId;
-        
+
         return order;
     }
 
@@ -3968,7 +3978,7 @@ public without sharing class Order_Svc
                     );
                 }
             }
-            
+
         }
 
         //insert orderITems
@@ -3977,7 +3987,7 @@ public without sharing class Order_Svc
 
         //Get Product price info
         Map<String, PriceInfo_DTO> productCode_priceInfo = new Product_Sel().getProductPriceInfo(new Set<String>{eventRelease.Product_Number__c}, null, null, null, true);
-        
+
         //Set the orderItems price
         for(Order order : lstOrder){
             setPriceToOrder(order,productCode_priceInfo);
@@ -3988,7 +3998,7 @@ public without sharing class Order_Svc
 
     //Update IEC Event Subscription for Event renewal
     public static void updateEventSubcriptions(List<Order> lstOrder, map<Id,Order> oldOrderMap){
-        
+
         //set<Id> subscriptionId = new set<Id>();
         //set<Id> releaseId = new set<Id>();
         Map<Id,IEC_Event_Release__c> eventReleaseMap = new Map<Id,IEC_Event_Release__c>();
@@ -3996,7 +4006,7 @@ public without sharing class Order_Svc
         List<IEC_Event_Subscription__c> lstEventSubscriptionToUpdate = new List<IEC_Event_Subscription__c>();
 
         for(Order cOrder : lstOrder){
-            if(cOrder.IEC_Event_Subscription__c != null && cOrder.IEC_Event_Release__c != null && cOrder.Is_Paid__c 
+            if(cOrder.IEC_Event_Subscription__c != null && cOrder.IEC_Event_Release__c != null && cOrder.Is_Paid__c
                 && cOrder.Is_Paid__c != oldOrderMap.get(cOrder.Id).Is_Paid__c)
             {
                 //subscriptionId.add(cOrder.IEC_Event_Subscription__c);
@@ -4011,7 +4021,7 @@ public without sharing class Order_Svc
         if(!eventSubscriptionMap.isEmpty()){ eventSubscriptionMap = new IEC_EventSubscription_Sel().getEventSubscriptionById(eventSubscriptionMap.keySet()); }
 
         for(Order cOrder : lstOrder){
-            if(cOrder.IEC_Event_Subscription__c != null && cOrder.IEC_Event_Release__c != null && cOrder.Is_Paid__c 
+            if(cOrder.IEC_Event_Subscription__c != null && cOrder.IEC_Event_Release__c != null && cOrder.Is_Paid__c
                 && cOrder.Is_Paid__c != oldOrderMap.get(cOrder.Id).Is_Paid__c)
             {
                 IEC_Event_Release__c eventRelease;
@@ -4021,7 +4031,7 @@ public without sharing class Order_Svc
                     eventRelease = eventReleaseMap.get(cOrder.IEC_Event_Release__c);
                 if(eventSubscriptionMap.size() > 0)
                     eventSubscription = eventSubscriptionMap.get(cOrder.IEC_Event_Subscription__c);
-                
+
                 //Set the Event Subscription product with the latest one and the subscriber
                 if(eventRelease != null && eventSubscription != null){
                     eventSubscription.Product__c = (eventRelease.Swapped_Product__c != null) ? eventRelease.Swapped_Product__c : eventRelease.Last_Version__c;
@@ -4051,7 +4061,7 @@ public without sharing class Order_Svc
         for (i1 = 0; i1 < newList.size(); i1++)
             if (oldList[i1].Is_Paid__c == false && newList[i1].Is_Paid__c == true)
                 setPaidOrderId.add(oldList[i1].Id);
-        
+
         //*** update
         if (setPaidOrderId.size() > 0)
         {
@@ -4131,18 +4141,18 @@ public without sharing class Order_Svc
 
      /*******************************************************************
         Updating IEC SAP INVOICE when ORDER Status is Payment Confirmed
-        
+
         INC295559
          checking if all the orders related to the Invoice are with status Payment Confirmed.
          IF Yes :
             - we will change the IEC SAP Invoice status to Zuora Ready
          IF No:
             - nothing happens with the IEC SAP Invoice Status
-        
+
       *******************************************************************/
     public static void sapInvoiceStatusUpdate(Map<Id, Order> newMap, Map<Id, Order> oldMap){
         system.debug('sap invoice status update starting...');
-     
+
         Set<Id> orderId = new Set<Id>();
         List<IEC_SAP_Invoice__c> sapInvoice = new List<IEC_SAP_Invoice__c>();
         List<IEC_SAP_Invoice__c> sapInvoiceToUpdate = new List<IEC_SAP_Invoice__c>();
@@ -4160,7 +4170,7 @@ public without sharing class Order_Svc
                 }
         }
 
-        
+
         if(sapInvoiceId.size() > 0){
             orderList = [SELECT id, SAP_Invoice__c, Status FROM Order where SAP_Invoice__c IN :sapInvoiceId];
 
@@ -4172,7 +4182,7 @@ public without sharing class Order_Svc
                 }
             }
         system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
-            
+
             if(!stopSapInvoiceUpdate){ // all the related orders have the status Payment Confirmed
                 sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Id IN :sapInvoiceId];
 

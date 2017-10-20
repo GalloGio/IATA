@@ -229,7 +229,7 @@ public without sharing class AMS_Utils {
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
-    public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
+    public static final String CATEGORY_IMPORT_AGENT = 'Recipient';
     public static final String CATEGORY_COURIER = 'Courier';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
@@ -305,7 +305,7 @@ public without sharing class AMS_Utils {
     public static Map<String, String> categoryCustomerMap = new Map<String, String> {
         'IATA Passenger Sales Agent' => 'IATA Travel Agent',
         'IATA Cargo Agent' =>   'IATA Cargo Agent',
-        'Import Agent' =>   'IATA Cargo Agent',
+        'Recipient' =>   'IATA Cargo Agent',
         'CASS Associate' => 'CASS Associates',
         'Courier' =>    'IATA Cargo Agent',
         'Handling Agent' => 'IATA Travel Agent',

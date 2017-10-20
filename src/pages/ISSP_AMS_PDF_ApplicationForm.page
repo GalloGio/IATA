@@ -65,17 +65,17 @@
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</td>
-                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH,$Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
+                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH, 'New TIDS HO', $Label.ISSP_AMS_OPTION_TIDS_HO, 'New TIDS BR', $Label.ISSP_AMS_OPTION_TIDS_BR, $Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_CountryConcerned}</td>
                         <td colspan="2">{!amsAllLangCountryLabel}</td>
-                    </tr>               
+                    </tr>
                 </table>
                 <br/>
             </div>
             <!-- ************************* section 1 for HO ************************* -->
-            <div style="display:{!IF(amsOfficeType != 'HO','none','')}; page-break-after:always;">
+            <div style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}; page-break-after:always;">
                 <table class="aptable" >
                     <tr>
                         <td colspan="3" class="bluebg">
@@ -173,13 +173,17 @@
                         <td class="label">{!$ObjectType.Account.fields.IATACode__c.Label}</td>
                         <td colspan="2">{!hqAccount.IATACode__c}</td>
                     </tr>
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}"> <!-- displaying for HO only -->
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}"> <!-- displaying for HO only -->
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}</td>
                         <td colspan="2">
                             <apex:outputText value="{0,date, MMMM d,  yyyy}">
                                 <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
                             </apex:outputText>
                         </td>
+                    </tr>                    
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'','none')}">
+                        <td class="label">{!$Label.ISSP_AMS_TIDS_Step2_Type_of_Business}</td>
+                        <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
                     </tr>
                     <tr style="display:{!IF(AND(amsOfficeType == 'HO', countryCheckList.License_required__c==true),'','none')}">  <!-- displaying for HO only -->
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}</td>
@@ -425,19 +429,19 @@
                         </td>
                     </tr>
             
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                         <td class="label">{!$Label.ISSP_Currency}</td>
                         <td colspan="2">{!newForm.CurrencyIsoCode}</td>
                     </tr>
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Registered_Capital__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Registered_Capital__c}</td>
                     </tr>
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Paidup_capital__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Paidup_capital__c}</td>
                     </tr>                               
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Min_Paidup_capital__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Min_Paidup_capital__c}</td>
                     </tr>
@@ -546,11 +550,11 @@
                                 </apex:form>    
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                             <td colspan="2" style="padding:10px 10px"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Previous_Default}"/></td>
                             <td style="padding:10px 10px">{!IF(newForm.ISSP_AMS_Previous_default__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
                         </tr>
-                        <tr style="display:{!IF(newForm.ISSP_AMS_Previous_default__c != 'Yes','none','')}">
+                        <tr style="display:{!IF(OR(newForm.ISSP_AMS_Previous_default__c != 'Yes',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                             <td colspan="2" class="label"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Previous_Default_Details}"/></td>                            
                             <td>{!newForm.ISSP_AMS_Prev_default_explanation__c}</td>
                         </tr>
@@ -585,7 +589,7 @@
             </div>
 
             <!-- ************************* section 5 ************************* -->
-            <div>
+            <div style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                 <table class="aptable" style="width:100%">
                     <tr>
                         <td colspan="3" class="bluebg">
@@ -607,28 +611,48 @@
             <!-- ************************* section 6 ************************* -->
             <div style="page-break-after:always;">
                 <table class="aptable" style="width:100%">
-                    <tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                         <td colspan="3" class="bluebg">
                             <p class="whitetext">{!$Label.ISSP_AMS_Step3_6_Other_Info}</p>
                         </td>
+                    </tr><tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'','none')}">
+                        <td colspan="3" class="bluebg">
+                            <p class="whitetext">{!$Label.ISSP_AMS_TIDS_Step3_5_Other_Info}</p>
+                        </td>
                     </tr>
-                    <tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                         <td colspan="3">
                             {!$Label.ISSP_AMS_If_Approved_Gross_Amnt}
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Gross_Amnt_First_year__c} {!newForm.CurrencyIsoCode}</td>
                     </tr>
-                    <tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'none','')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}</td>
                     </tr>   
-                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
+                    <tr style="display:{!IF(OR(amsOfficeType != 'HO',CONTAINS(newCase.Reason1__c, 'New TIDS')),'none','')}">
                         <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>
                         <td colspan="2">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes',$Label.ISSP_Yes, $Label.ISSP_No)}</td>
                     </tr>
+
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'','none')}">
+                        <td colspan="3">
+                            {!$Label.ISSP_AMS_TIDS_National_Association_Member}
+                        </td>
+                    </tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'','none')}">
+                        <td class="label">{!$Label.ISSP_AMS_TIDS_National_Association_Names}</td>
+                        <td colspan="2">{!newForm.Give_the_name_of_the_association_s__c}</td>
+                    </tr>
+                    <tr style="display:{!IF(CONTAINS(newCase.Reason1__c, 'New TIDS'),'','none')}">
+                        <td colspan="3">
+                            {!$Label.ISSP_AMS_TIDS_National_Association_Not_Member}
+                        </td>
+                    </tr>
+
                     <!-- <apex:outputPanel rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}"> -->
                         <tr style="display:{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c != 'Yes','none','')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}</td>
