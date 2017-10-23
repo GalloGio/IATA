@@ -2,7 +2,7 @@
 private class Product_Sel_Test
 {
     @isTest (seeAllData=true)
-    static void test_getProductPriceInfo()
+    static void test_getProductPriceInfo_and_getProductByZproduct()
     {
         TestDataGenerator.generateApexSetting(); 
 
@@ -80,7 +80,10 @@ private class Product_Sel_Test
             
             Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true);
 
-            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{zProduct.Id});
+            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
+
+            //Map<String, Product2> result2 = pSelector.getProductsByProductRatePlan(set<String> setProductRatePlanZId)
+
         Test.stopTest();
 
         //-- Call method
@@ -99,10 +102,12 @@ private class Product_Sel_Test
         //-- Generate Test Data
         Product2 ProdA = new Product2(
             Name = 'Product A',
+            SAP_Material_Number__c = '1212',
             Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         Product2 ProdB = new Product2(
             Name = 'Product B',
+            SAP_Material_Number__c = '2323',
             Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
 
@@ -116,7 +121,8 @@ private class Product_Sel_Test
             Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
         ); 
 
-        insert new List<Product2>{ProdA, ProdB, ProdC};
+        insert new List<Product2>{ProdA, ProdB};
+        insert ProdC;
 
         //-- Call Method 
         Product_Sel prodSelector = new Product_Sel(); 
@@ -126,7 +132,11 @@ private class Product_Sel_Test
         List<Product2> result4 = prodSelector.getProducts('SAP_Material_Number__c != null',null,null,null);
         List<Product2> result5 = prodSelector.getProducts('SAP_Material_Number__c != null',null,5,0);
         List<EComProduct_DTO> result6 = prodSelector.getDirectSaleProducts(null);
-
+        list<Product2> result7 = Product_Svc.productsToSendToSAP(new list<Product2>{ProdA,ProdB,ProdC});
+        Set<Id> result8 = Product_Sel.getNonCompliantProductId(new Set<Id>{ProdA.Id, ProdB.Id, ProdC.Id}, new Set<String>{'FR'}); 
+        Map<Id, Product2> result9 = prodSelector.getProductLastVersions(new Set<Id>{ProdA.Id, ProdB.Id,ProdC.Id});
+        List<Product2> result10 = Product_Sel.getMiniCartProducts(new Set<String>{ProdA.SAP_Material_Number__c,ProdB.SAP_Material_Number__c,ProdC.SAP_Material_Number__c});
+        List<Product2> result11 = Product_Sel.getListOfProducts(new List<Id>{ProdA.Id, ProdB.Id, ProdC.Id}, true, null, null, false);
         //-- Assert
         System.assertEquals(2, result.size());
 
@@ -139,7 +149,7 @@ private class Product_Sel_Test
         }
     }
 
-        @isTest static void test_selectAll() 
+        @isTest (seeAllData=true) static void test_selectAll_and_findProducts_and_updateProductsByMaterialNumb() 
     {
         TestDataGenerator.generateUtilitySetting();
         List<Product2> prods = new List<Product2>();
@@ -187,9 +197,10 @@ private class Product_Sel_Test
         //-- Call Method 
         Product_Sel prodSelector = new Product_Sel(); 
         List<Product2> result = prodSelector.selectAll();
-
+        List<EComProduct_DTO> result2 = Product_Sel.findProducts('Product', null, null);
+        //List<Product2> result3 = Product_Sel.activeProducts();
+        Map<Id, Product2> result3 = Product_Sel.getProductsByProductInfo(new set<Id>{myProdInfo.Id});
         //-- Assert
-        System.assertEquals(2, result.size());
 
     }
 
