@@ -75,6 +75,10 @@ private class Product_Sel_Test
         insert zTiers;
 
 
+        //IEC_Product_Rate_Plan_Information__c myRatePlanInfo = 
+        List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, false, 'IEC_Product_Information__c != null AND IEC_Product_Rate_Plan_Information__c != null', null, true, null);
+        
+
         Test.startTest();
             Product_Sel pSelector = new Product_Sel(); 
             
@@ -82,7 +86,7 @@ private class Product_Sel_Test
 
             Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
 
-            //Map<String, Product2> result2 = pSelector.getProductsByProductRatePlan(set<String> setProductRatePlanZId)
+            Map<String, Product2> result2 = Product_Sel.getProductsByProductRatePlan(new set<String>{'123456789'});
 
         Test.stopTest();
 
