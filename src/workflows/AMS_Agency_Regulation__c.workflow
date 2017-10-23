@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
-        <fullName>AMS_DGR_15days_after_Notification_Sent</fullName>
-        <field>Notification_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>AMS DGR 15 days after Notification Sent</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>AMS_DGR_30days_Notification_Sent</fullName>
         <field>Notification_Date__c</field>
         <formula>TODAY()</formula>
@@ -28,10 +19,10 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>X60_days</fullName>
+        <fullName>AMS_DGR_Notification_Sent</fullName>
         <field>Notification_Sent__c</field>
         <literalValue>1</literalValue>
-        <name>60 days</name>
+        <name>AMS DGR Notification Sent</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -61,15 +52,6 @@
             <value>Terminated</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>AMS_DGR_15days_after_Notification_Sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
-            <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
                 <name>AMS_DGR_60days_Notification_Sent</name>
