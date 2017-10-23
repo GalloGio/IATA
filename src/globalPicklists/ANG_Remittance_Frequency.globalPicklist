@@ -32,6 +32,10 @@
         <fullName>Daily</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Daily (China)</fullName>
+        <default>false</default>
+    </globalPicklistValues>
     <masterLabel>Remittance Frequency</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

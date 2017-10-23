@@ -299,7 +299,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(oscar.New_parent__c);
 				*/
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c not in ( ' +  getInvalidStatus() + ' )')){
 					Boolean main = (a.Id == oscar.Account__c);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.HE));
 				}
@@ -308,6 +308,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			return hierarchy;
 		}
 		set;
+	}
+
+	public String getInvalidStatus(){
+
+		return '\''+AMS_Utils.ACC_S1_NOTACCREDITED + '\'' + ',' + '\'' +  AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING + '\'' + ',' + '\'' + AMS_Utils.ACC_S3_NOTINOPERATION + '\'' + ',' + '\'' + AMS_Utils.ACC_S0_TERMINATED + '\'' + ',' + '\'' + '\'';
+
 	}
 
 	public List<HierarchyItem> hierarchyValues{
