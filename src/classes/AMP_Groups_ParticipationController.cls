@@ -88,7 +88,8 @@ public with sharing class AMP_Groups_ParticipationController {
         list<Participant__c> lsOtherParticipants = getParticipants(accountId);
         list<Participant> retList = new list<Participant>();
         List<String> lsMainGroupNames = AMP_CoreRelationshipExtension.getGroupNames();
-
+        // change the order back to alphabethical instead of the custom setting number
+        lsMainGroupNames.sort();
         String prevGroupName = '';
 
         for(String groupName : lsMainGroupNames) {

@@ -276,6 +276,7 @@ private class MITA_AgreementsCtrlTest {
 
 		Contact contact = createContact();
 		insert contact;
+		contact.Id = null;
 		controller.foundContact = contact;
 
 		Test.startTest();
@@ -310,12 +311,67 @@ private class MITA_AgreementsCtrlTest {
 		System.assert(controller.searchContactMode == false);
 		System.assert(controller.confirmMoveContactMode == false);
 		System.assert(controller.duplicateContactMode == false);
-		Related_Contact__c relatedContact = [
+		Contact foundContact = [
 			SELECT Id
-			FROM Related_Contact__c
-			WHERE Account__c = :account1.Id
-			AND Contact__c = :contact.Id];
-		System.assert(relatedContact != null);
+			FROM Contact
+			WHERE AccountId = :account1.Id
+			AND Id = :contact.Id];
+		System.assert(foundContact != null);
+	}
+
+	@isTest
+	static void Test_confirmCopyContact_Error() {
+		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
+		controller.searchContactMode = true;
+		controller.confirmMoveContactMode = true;
+		controller.duplicateContactMode = true;
+
+		Contact contact = createContact();
+		insert contact;
+		contact.Id = null;
+		controller.foundContact = contact;
+
+		Test.startTest();
+		controller.confirmCopyContact();
+		Test.stopTest();
+
+		System.assert(controller.searchContactMode == true);
+		System.assert(controller.confirmMoveContactMode == true);
+		System.assert(controller.duplicateContactMode == true);
+	}
+
+	@isTest
+	static void Test_confirmCopyContact_OK() {
+		loadData();
+		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
+		controller.searchContactMode = true;
+		controller.confirmMoveContactMode = true;
+		controller.duplicateContactMode = true;
+
+		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
+		Account account2 = [Select Id,Name from Account where Name = 'Swissair'];
+		controller.accountId = account2.Id;
+
+		Contact contact = createContact();
+		contact.AccountId = account1.Id;
+		contact.MITA_Contact__c = true;
+		insert contact;
+
+		controller.foundContact = contact;
+
+		Test.startTest();
+		controller.confirmCopyContact();
+		Test.stopTest();
+
+		System.assert(controller.searchContactMode == false);
+		System.assert(controller.confirmMoveContactMode == false);
+		System.assert(controller.duplicateContactMode == false);
+		Contact foundContact = [
+			SELECT Id
+			FROM Contact
+			WHERE AccountId = :account2.Id
+			AND Id = :contact.Id];
+		System.assert(foundContact != null);
 	}
 
 	@isTest
@@ -333,12 +389,12 @@ private class MITA_AgreementsCtrlTest {
 		controller.confirmMoveContact();
 		controller.c = contact;
 
-		list<Related_Contact__c> relatedContacts =[
-			Select Contact__c
-			from Related_Contact__c
-			where Account__c = :account1.Id
-			and Contact__c = :contact.Id
-			and Contact__r.MITA_Contact__c = true ];
+		list<Contact> relatedContacts =[
+			Select Id
+			from Contact
+			where AccountId = :account1.Id
+			and Id = :contact.Id
+			and MITA_Contact__c = true ];
 
 		System.assertEquals(relatedContacts.size(),1);
 
@@ -347,11 +403,50 @@ private class MITA_AgreementsCtrlTest {
 		Test.stopTest();
 
 		relatedContacts =[
-			Select Contact__c
-			from Related_Contact__c
-			where Account__c = :account1.Id
-			and Contact__c = :contact.Id
-			and Contact__r.MITA_Contact__c = true ];
+			Select Id
+			from Contact
+			where AccountId = :account1.Id
+			and Id = :contact.Id
+			and MITA_Contact__c = true ];
+
+		System.assertEquals(relatedContacts.size(),0);
+	}
+
+	@isTest
+	static void Test_removeAllContactFromMITA_OK() {
+		loadData();
+		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
+
+		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
+		Account account2 = [Select Id,Name from Account where Name = 'Swissair'];
+		controller.accountId = account1.Id;
+		controller.selectAccount();
+
+		Contact contact = createContact();
+		insert contact;
+		controller.foundContact = contact;
+		controller.confirmCopyContact();
+		controller.c = contact;
+
+		list<Contact> relatedContacts =[
+			Select Id
+			from Contact
+			where AccountId = :account1.Id
+			and Id = :contact.Id
+			and MITA_Contact__c = true ];
+
+		System.assertEquals(relatedContacts.size(),1);
+
+		Test.startTest();
+		controller.removeAllContactFromMITA();
+		Test.stopTest();
+
+		relatedContacts =[
+			Select Id
+			from Contact
+			where AccountId = :account1.Id
+			and Id = :contact.Id
+			and MITA_Contact__c = true ];
 
 		System.assertEquals(relatedContacts.size(),0);
 	}
@@ -400,6 +495,8 @@ private class MITA_AgreementsCtrlTest {
 		Test.startTest();
 		controller.selectMITAAgreement();
 		controller.selectBIETAAgreement();
+		controller.viewGroupedAgreement();
+		controller.viewSeparatedAgreements();
 		Test.stopTest();
 	}
 
@@ -497,8 +594,11 @@ private class MITA_AgreementsCtrlTest {
 		//System.assertEquals(wrapper.checkMixAgreement(), false);
 		wrapper.viewSeparated = false;
 		wrapper.save(true);
+		wrapper.viewSeparated = true;
+		wrapper.save(false);
 		Id resultId = wrapper.getId();
 		wrapper.getOtherDesignatorCode();
+		wrapper.getOther();
 		wrapper.getOtherAirlineName();
 		wrapper.getAgreementType();
 		wrapper.getEffectiveDate();
@@ -550,7 +650,10 @@ private class MITA_AgreementsCtrlTest {
 		Boolean result = wrapper.checkMixAgreement(agrCARGO);
 		System.assertEquals(true, result);
 
+		wrapper.viewSeparated = false;
 		wrapper.save(true);
+		wrapper.viewSeparated = true;
+		wrapper.save(false);
 
 		MITA_Agreement__c resultAgr = wrapper.getAgreement();
 		wrapper.getId();
