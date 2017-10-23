@@ -280,8 +280,16 @@ public without sharing class GenerateLateRemittanceCSVController {
                         WHERE RecordType.DeveloperName IN ('IATA_Financial_Review','ProcessEuropeSCE')
                         AND SIDRA_Exclude_from_report_exceptions__c = true 
                         AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
-                        AND Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day()) 
-                        AND Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())  
+                        AND (
+                            (   RecordType.DeveloperName = 'IATA_Financial_Review'
+                                AND Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day()) 
+                                AND Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+                            ) OR (
+                                RecordType.DeveloperName = 'ProcessEuropeSCE'
+                                AND FS_Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day()) 
+                                AND FS_Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+                            )
+                        )
                         AND Region__c = :strRegion
                         ORDER BY Id];
         
