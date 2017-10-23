@@ -2517,7 +2517,9 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
-        <formula>if(Change_effective_as_of__c - today() &gt; 60,&quot;90&quot;,if(Change_effective_as_of__c - today() &gt; 30,&quot;60&quot;,&quot;30&quot;))</formula>
+        <formula>if(Change_effective_as_of__c - today() &gt; 60,&quot;90&quot;,
+if(Change_effective_as_of__c - today() &gt; 30,&quot;60&quot;,
+if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Notification days</label>
         <required>false</required>
@@ -5752,7 +5754,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
