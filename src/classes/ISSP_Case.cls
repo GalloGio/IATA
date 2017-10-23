@@ -536,10 +536,15 @@ public without sharing class ISSP_Case {
         objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
         objectsIds.put('CASE', newCase.id); 
 
-        //ALEX
-        progressBarHelper = new ANG_ProgressBarHelper(newCase.Oscar__r.Process__c, objectsIds);
+        // If the process is null the use the reason on the casop.
+        String process = '';
+        if(newCase.Oscar__r.Process__c == null || (newCase.Oscar__r.Process__c != null && newCase.Oscar__r.Process__c == '')) {
+            process = newCase.Reason1__c;
+        } else {
+            process = newCase.Oscar__r.Process__c;
+        }
 
-        //progressBarHelper = new ANG_ProgressBarHelper('ANG.NEW.HE.STANDARD.1.0', objectsIds);        
+        progressBarHelper = new ANG_ProgressBarHelper(process, objectsIds);
 
         for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
             if (node.titleTranslatable != null && node.titleTranslatable != '') {

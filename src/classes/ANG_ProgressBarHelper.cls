@@ -9,6 +9,8 @@ public with sharing class ANG_ProgressBarHelper {
 
 	public ANG_ProgressBarHelper(String recordType, Map<String, String> objectsIds) {
 
+		recordType = '%' + recordType + '%';
+
 		List<ANG_ProgressBarSettings__c> settings =	[Select ValueOk__c,
 															ValueProgress__c,
 															Name,
@@ -18,7 +20,7 @@ public with sharing class ANG_ProgressBarHelper {
 															ValueError__c,
 															Label_Translatable__c
 													   From ANG_ProgressBarSettings__c
-													  Where RecordType__c =: recordType
+													  Where RecordType__c like : recordType
 												      Order by Order__c];
 
 		progressNodes = new List<ANG_ProgressNode>();
