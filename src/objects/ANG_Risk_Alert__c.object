@@ -118,9 +118,10 @@
     </fields>
     <fields>
         <fullName>ANG_Is_Case_Created__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Flag to record if the SMAP and SIDRA cases were created on the Alert</description>
+        <description>determinates if Risk Alert has generated a Sidra Case</description>
         <externalId>false</externalId>
+        <formula>ANG_Sidra_Lite__c != null</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Case Created</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -170,6 +171,19 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Sidra_Lite__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used to store the ID of the SIDRA case generated</description>
+        <externalId>false</externalId>
+        <label>SIDRA Lite</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ANG_Threshold_Level__c</fullName>
