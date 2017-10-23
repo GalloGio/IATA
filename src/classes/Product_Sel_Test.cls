@@ -90,7 +90,7 @@ private class Product_Sel_Test
 
     }
 
-    @isTest static void test_selectById() 
+    @isTest static void test_selectById_and_getProductById_and_getProducts() 
     {
         TestDataGenerator.generateUtilitySetting();
         
@@ -109,6 +109,8 @@ private class Product_Sel_Test
         Product_Sel prodSelector = new Product_Sel(); 
         List<Product2> result = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}); 
         List<Product2> result2 = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}, new List<String>{'Id'});
+        Map<Id,Product2> result3 = prodSelector.getProductById(new Set<Id>{ProdA.Id, ProdB.Id});
+        List<Product2> result4 = prodSelector.getProducts('SAP_Material_Number__c != null',null,null,null);
 
         //-- Assert
         System.assertEquals(2, result.size());
@@ -120,6 +122,60 @@ private class Product_Sel_Test
         {
             System.assert(e.getMessage().contains('Name'));
         }
+    }
+
+        @isTest static void test_selectAll() 
+    {
+        TestDataGenerator.generateUtilitySetting();
+        List<Product2> prods = new List<Product2>();
+        List<Product_Information__c> prodInfo = new List<Product_Information__c>();
+        
+        //-- Generate Test Data
+        Product2 ProdA = new Product2(
+            Name = 'Product A',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '4321',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+        prods.add(ProdA);
+
+        Product2 ProdB = new Product2(
+            Name = 'Product B',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '1234',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+        prods.add(ProdB);
+
+        insert prods;
+
+        // create dummy Zuora product
+        zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+        prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
+        prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
+        insert prod;
+
+        // create dummy product category
+        Product_Category__c myProdCat = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACPRO, true);
+        myProdCat.Active__c = true;
+        insert myProdCat;
+
+        // create dummy product info
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        myProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
+        insert myProdInfo;
+
+        //-- Call Method 
+        Product_Sel prodSelector = new Product_Sel(); 
+        List<Product2> result = prodSelector.selectAll();
+
+        //-- Assert
+        System.assertEquals(2, result.size());
+
     }
 
 
