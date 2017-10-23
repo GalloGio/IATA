@@ -78,7 +78,9 @@ private class Product_Sel_Test
         Test.startTest();
             Product_Sel pSelector = new Product_Sel(); 
             
-            Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true); 
+            Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true);
+
+            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{zProduct.Id});
         Test.stopTest();
 
         //-- Call method
@@ -90,7 +92,7 @@ private class Product_Sel_Test
 
     }
 
-    @isTest static void test_selectById_and_getProductById_and_getProducts() 
+    @isTest (seeAllData=true) static void test_selectById_and_getProductById_and_getProducts_and_getDirectSaleProducts() 
     {
         TestDataGenerator.generateUtilitySetting();
         
@@ -103,7 +105,18 @@ private class Product_Sel_Test
             Name = 'Product B',
             Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
-        insert new List<Product2>{ProdA, ProdB};
+
+        Product2 ProdC = new Product2(
+            Name = 'Product C',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Inventory_Status__c = 'In stock',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '4321',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+
+        insert new List<Product2>{ProdA, ProdB, ProdC};
 
         //-- Call Method 
         Product_Sel prodSelector = new Product_Sel(); 
@@ -111,6 +124,8 @@ private class Product_Sel_Test
         List<Product2> result2 = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}, new List<String>{'Id'});
         Map<Id,Product2> result3 = prodSelector.getProductById(new Set<Id>{ProdA.Id, ProdB.Id});
         List<Product2> result4 = prodSelector.getProducts('SAP_Material_Number__c != null',null,null,null);
+        List<Product2> result5 = prodSelector.getProducts('SAP_Material_Number__c != null',null,5,0);
+        List<EComProduct_DTO> result6 = prodSelector.getDirectSaleProducts(null);
 
         //-- Assert
         System.assertEquals(2, result.size());
