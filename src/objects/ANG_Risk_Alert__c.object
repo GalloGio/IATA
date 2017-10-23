@@ -70,6 +70,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_Agent_Sales__c</fullName>
+        <externalId>false</externalId>
+        <label>Agent Sales</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>ANG_Direction__c</fullName>
         <description>Information if the agency was below the threshold and it&apos;s now over it, if it&apos;s in the same leve or if is downgrading.</description>
         <externalId>false</externalId>
@@ -107,6 +117,16 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>ANG_Is_Case_Created__c</fullName>
+        <description>determinates if Risk Alert has generated a Sidra Case</description>
+        <externalId>false</externalId>
+        <formula>ANG_Sidra_Lite__c != null</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Created</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Information__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The RHC infomation record this alert is related to.</description>
@@ -127,6 +147,43 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Severity__c</fullName>
+        <externalId>false</externalId>
+        <label>Severity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Sidra_Lite__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used to store the ID of the SIDRA case generated</description>
+        <externalId>false</externalId>
+        <label>SIDRA Lite</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ANG_Threshold_Level__c</fullName>
@@ -171,6 +228,56 @@
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Risk_Alert_RTS</fullName>
+        <active>true</active>
+        <label>Risk Alert RTS</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -16,16 +16,17 @@ private class ang_rhcAlertTriggerHandler_test {
         
 
   // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', BSP_Country_free_text__c = 'FR');
         insert country;
         
-        // Create an Airline HQ account
         Account a = new Account(
         	name='acc1',
 			Location_Type__c='HE',
 			Location_Class__c='P',
+			IATAcode__c = '0000',
 			Remittance_frequency__c='Monthly',
 			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country.id,
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );
         insert a;        
@@ -135,6 +136,38 @@ private class ang_rhcAlertTriggerHandler_test {
 		test.StopTest();
 
 		system.assertEquals([select id,ANG_email_sent__c from ANG_Risk_Alert__c limit 1].get(0).ANG_email_sent__c,false,'Email was not sent');
+
+	}
+	
+	private static testmethod void testTicketingAuthorityRemoval(){
+
+    	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
+    	System.debug('##Account: '+ a.Remittance_frequency__c);
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			ang_Severity__c='Red',
+			ANG_Account__c = a.Id
+		);
+
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
+		insert iss;
+		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+		insert op;
+		
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+		insert con;
+
+		//NEWGEN-2005
+		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+
+		test.StartTest();
+			insert ra;
+		test.StopTest();
+		List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+		System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+		List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
+		System.assertEquals(logs.size(), 1, 'Response was not saved');
 
 	}
 
