@@ -240,7 +240,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true)){
                         c.WhoClosedCase__c = CurrUser;
                     }
-                if(Trigger.oldMap.get(c.Id).isClosed == true && c.isClosed == false){
+                if(Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == true && c.isClosed == false){
                     c.WhoClosedCase__c = null;
                     }
                 }
