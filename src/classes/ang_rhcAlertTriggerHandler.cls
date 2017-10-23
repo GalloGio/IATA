@@ -98,7 +98,7 @@ public class ang_rhcAlertTriggerHandler{
 
 	public void handleRedAlerts(){
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
-		Map<String,ANG_Risk_Alert__c> mapAccountRiskAlert = new Map<String,ANG_Risk_Alert__c>();
+		List<RiskAlertParentCaseWrapper> wrapperList = new List<RiskAlertParentCaseWrapper>();
 		List<Id> listIDAccsToRetriveCons = new List<Id>();
 
 
@@ -118,8 +118,6 @@ public class ang_rhcAlertTriggerHandler{
 				AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() ]){
 
 			redAlerts.add(ra);
-			mapAccountRiskAlert.put(ra.ANG_Account__c,ra);
-
 			listIDAccsToRetriveCons.add( (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c : ra.ANG_Account__c ) );
 		}
 		if(!redAlerts.isEmpty()){
@@ -134,12 +132,10 @@ public class ang_rhcAlertTriggerHandler{
 						FROM Contact WHERE AccountId IN :listIDAccsToRetriveCons  AND Status__c = 'Active'];
 
 			for (Contact con :contacts){
-				if(contactsPerAccount.keyset().contains(con.AccountId)){
-					contactsPerAccount.get(con.AccountId).add(con);
-				}
-				else{
+				if(!contactsPerAccount.keyset().contains(con.AccountId)){
 					contactsPerAccount.put(con.AccountId,new List<Contact>{con});
 				}
+				contactsPerAccount.get(con.AccountId).add(con);
 			}
 
 			Case smapParentCase;
@@ -165,6 +161,7 @@ public class ang_rhcAlertTriggerHandler{
 					End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c, 
 					Suspension_Date__c=  Date.today()
 				);
+				wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
 				//we'll get the portal approved admin or if none the ifap contact 
 				//if has parent, use parent contacts. else, use theirs
@@ -188,26 +185,16 @@ public class ang_rhcAlertTriggerHandler{
 			}
 			if(!smapParentCases.isEmpty()){
 				//insert smapParentCases --> all or none = false;
-				Database.SaveResult[] srList = Database.insert(smapParentCases, false);
+				Database.SaveResult[] resultInsSMAPcases = Database.insert(smapParentCases, false);
 
 				for(Case parentCase :smapParentCases){
 					mapCaseRiskAlert.put(parentCase.Id,parentCase);			
-				}
-
-				List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
-				// Iterate through each returned result
-				for (Database.SaveResult sr : srList) {
-					if (sr.isSuccess()) {
-						//because trigger is running on after inset we need a new instace and DML operation to update 
-						riskAlertsToUpdate.add(new ANG_Risk_Alert__c(id = mapAccountRiskAlert.get(mapCaseRiskAlert.get(sr.getId()).AccountId).id, ANG_Is_Case_Created__c = true));
-					}
-				}
-
-				if(!riskAlertsToUpdate.isEmpty())
-					update riskAlertsToUpdate;					
+				}				
 
 				Case sidraLiteCase;
 				sidraLiteCases = new List<Case>();
+
+				Map<Id, Case> mapSMAPtoSIDRA = new Map<Id, Case>();
 
 				for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
@@ -224,10 +211,10 @@ public class ang_rhcAlertTriggerHandler{
 					sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
 					sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraLiteCase.Priority = 'High'; 
-					//sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); already done on callout
+					sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
 
 					sidraLiteCase.ContactId = smapParentCase.ContactId;
-					
+					mapSMAPtoSIDRA.put(parentCase.id,sidraLiteCase);
 					//END -NEWGEN-1933
 					sidraLiteCases.add(sidraLiteCase);
 				}
@@ -235,6 +222,26 @@ public class ang_rhcAlertTriggerHandler{
 
 				if (!sidraLiteCases.isEmpty()) {
 					insert sidraLiteCases;
+
+
+					List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
+					// Iterate through each returned result
+					for (Database.SaveResult sr : resultInsSMAPcases) {
+						if (sr.isSuccess()) {
+							for (RiskAlertParentCaseWrapper w: wrapperList) {
+								if (w.smap.Id == sr.getId()) {
+									//because trigger is running on after inset we need a new instace and DML operation to update 
+									riskAlertsToUpdate.add(new ANG_Risk_Alert__c(id = w.riskAlertId, 
+										ANG_Sidra_Lite__c = mapSMAPtoSIDRA.get(sr.getId()).Id));
+									break;
+								}
+							}
+						}
+					}
+
+					if(!riskAlertsToUpdate.isEmpty())
+						update riskAlertsToUpdate;	
+
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
@@ -402,5 +409,14 @@ public class ang_rhcAlertTriggerHandler{
             insert notifications;
         }
 		insert logs;
+	}
+
+	private class RiskAlertParentCaseWrapper {
+		public Id riskAlertId;
+		public Case smap;
+		public RiskAlertParentCaseWrapper(Id riskAlertId, Case smap) {
+			this.riskAlertId = riskAlertId;
+			this.smap = smap;
+		}
 	}
 }
