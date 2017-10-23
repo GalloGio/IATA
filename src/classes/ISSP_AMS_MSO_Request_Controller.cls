@@ -305,8 +305,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         if (accountId == null || accreditationId == null || oscarID == null)  return false;
 
-        String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
-        if (generateResult[0] != '1') return false;
+        /*String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
+        if (generateResult[0] != '1') return false;*/
+        
+        //LM: improvements on IATA Code generation
+        ANG_OscarProcessHelper.EntityUpdater generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
+        if (generateResult.isFaulty == true) return false;
 
         //oscar.STEP10__c = 'Passed';
 
