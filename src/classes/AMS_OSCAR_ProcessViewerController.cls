@@ -1,5 +1,10 @@
 public class AMS_OSCAR_ProcessViewerController {
     
+    private static final String CLASS_BLACK = '';
+    private static final String CLASS_RED = 'red';
+    private static final String CLASS_GREEN = 'green';
+    private static final String CLASS_BLUE = 'blue';
+
     public AMS_OSCAR__c oscar { 
         get{ 
             if(this.oscar == null)
@@ -17,6 +22,8 @@ public class AMS_OSCAR_ProcessViewerController {
     public AMS_OSCAR_JSON accreditationProcesses {get;set;}
     public Map<String, AMS_OSCAR_JSON.Process> process {get;set;}
  
+    public Map<String,String> flowColors {get;set;}
+    public Map<String,Boolean> collapsibleMap {get;set;}
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
     public Map<String,Boolean> ddBlock {get;set;}
@@ -194,8 +201,12 @@ public class AMS_OSCAR_ProcessViewerController {
      *  Get the status of all the steps in the Process
      */
     public void getStatus(AMS_OSCAR_JSON.Process process){
-        
-        for(AMS_OSCAR_JSON.Flow flow: process.flows)
+        Boolean firstExpanded = false;
+
+        for(AMS_OSCAR_JSON.Flow flow: process.flows) {
+            flowColors.put(process.name + flow.name, CLASS_GREEN);
+            collapsibleMap.put(process.name + flow.name, true);
+
             for(AMS_OSCAR_JSON.Step step: flow.steps){
                 
                 String stepApiName = step.name + '__c';
@@ -208,7 +219,23 @@ public class AMS_OSCAR_ProcessViewerController {
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
                 ddBlock.put(flow.name, isStepBlocked(stepApiName));
+
+                if (stepValue == AMS_Utils.FAILED) {
+                    flowColors.put(process.name + flow.name, CLASS_RED);
+                } else if (stepValue == AMS_Utils.IN_PROGRESS && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLUE);
+                } else if (stepValue == 'Not Started' && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLACK);
+                }
+
+                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS)) {
+                    collapsibleMap.put(process.name + flow.name, false);
+                    firstExpanded = true;
+                }
+
             }
+
+        }
     }
     
     public List<SelectOption> getPicklistValues(Schema.DescribeFieldResult fr){
@@ -370,6 +397,8 @@ public class AMS_OSCAR_ProcessViewerController {
         
         stepFieldsData = new Map<String,StepFieldsDataWrapper>();
 
+        flowColors = new Map<String,String>();
+        collapsibleMap = new Map<String,Boolean>();
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
         ddBlock = new Map<String,Boolean>();
