@@ -384,7 +384,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 		/*UserInfoUpdate Trigger*/ //RN-INC342887
         if(UserInfoUpdate){//FLAG 
-            system.debug('##UserInfoUpdate');
+            system.debug('UserInfoUpdate');
             //IMPRO GM START
             //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             CurrUser = UserInfo.getUserId();
@@ -394,17 +394,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
                 if((Trigger.isInsert && c.isClosed == true) || 
                         (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true)){
                 	Case c1 = new Case(id = c.id, WhoClosedCase__c = CurrUser);
-                	casesWhoClosedCase.add(c1);
+                	casesWhoClosedCase.add(c);
                     }
-                if(Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == true && c.isClosed == false){     
+                if(c.isClosed==false){     
                    	Case c1 = new Case(id = c.id, WhoClosedCase__c = null);
-                	casesWhoClosedCase.add(c1);
+                	casesWhoClosedCase.add(c);
                 }
     		}// END Update L.Faccio --------------
-    		if(!casesWhoClosedCase.isEmpty()){
-    			upsert casesWhoClosedCase;
-    		}
-
         }    
         /*UserInfoUpdate Trigger*/
 
