@@ -448,7 +448,8 @@ public with sharing class ISSP_AvailableServices{
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
-                                                        Portal_Application__r.Service_Description__c
+                                                        Portal_Application__r.Service_Description__c,
+                                                        Portal_Application__r.Service_Description_Label__c
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
                                                         AND Right__c = 'Access Granted'];
@@ -485,6 +486,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
                                                         Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        Service_Description_Label__c, 
                                                         ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
