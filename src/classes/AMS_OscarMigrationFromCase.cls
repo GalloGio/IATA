@@ -1,6 +1,6 @@
 global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
-	public static boolean changeSubject = true;
+    public static boolean changeSubject = true;
 
     private List<Schema.SObjectField> caseFields{
         get{
@@ -45,11 +45,11 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         set;
     }
 
-    private	List<String> caseMigratedFields = new List<String> {'Financial_Assessment_compliant__c','Financial_Assessment_received__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Fees_refund_requested__c','Finalization_checklist__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c','AIMS_updated__c','Finalized_in_AIMS__c'};
+    private List<String> caseMigratedFields = new List<String> {'Financial_Assessment_compliant__c','Financial_Assessment_received__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Fees_refund_requested__c','Finalization_checklist__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c','AIMS_updated__c','Finalized_in_AIMS__c'};
 
-	global Process.PluginResult invoke(Process.PluginRequest request) { 
+    global Process.PluginResult invoke(Process.PluginRequest request) { 
         
-		Map<String,Object> result = new Map<String,Object>();
+        Map<String,Object> result = new Map<String,Object>();
         
         String oscarName = null;
 
@@ -70,57 +70,57 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         System.debug('Concerned agency codes: ' + concernedAgencyCodes);
         
 
-		List<AMS_Pax_Accreditation_Form__c> accreditationFormsList =  [ SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.Id = :caseId];
+        List<AMS_Pax_Accreditation_Form__c> accreditationFormsList =  [ SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.Id = :caseId];
 
-		if(!accreditationFormsList.isEmpty()){
-			isFromPortal = true;
-		}
+        if(!accreditationFormsList.isEmpty()){
+            isFromPortal = true;
+        }
 
-		List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE Id = :caseId');
+        List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE Id = :caseId');
 
-		if(caseList.isEmpty()){
-	        oscarId = '';
-	        errorMessage = 'Could not find Case to match the id provided: ' + caseId;
+        if(caseList.isEmpty()){
+            oscarId = '';
+            errorMessage = 'Could not find Case to match the id provided: ' + caseId;
 
-	        result.put('oscarId',oscarId);
-	        result.put('errorMessage',errorMessage);
+            result.put('oscarId',oscarId);
+            result.put('errorMessage',errorMessage);
             result.put('summaryMessage', '');
-	        result.put('caseNumber',oscarName);
+            result.put('caseNumber',oscarName);
 
-	        return new Process.PluginResult(result); 
+            return new Process.PluginResult(result); 
 
-		}
+        }
 
-		Case caseToMigrate = caseList.get(0);
+        Case caseToMigrate = caseList.get(0);
 
-		oscarName = caseToMigrate.CaseNumber;
+        oscarName = caseToMigrate.CaseNumber;
 
-		if(caseToMigrate.OSCAR__c != null){
-	        oscarId = '';
-	        errorMessage = 'The case already has an oscar attached: ' + caseToMigrate.OSCAR__c;
+        if(caseToMigrate.OSCAR__c != null){
+            oscarId = '';
+            errorMessage = 'The case already has an oscar attached: ' + caseToMigrate.OSCAR__c;
 
-	        result.put('oscarId',oscarId);
-	        result.put('errorMessage',errorMessage);
+            result.put('oscarId',oscarId);
+            result.put('errorMessage',errorMessage);
             result.put('summaryMessage', '');
-	        result.put('caseNumber',oscarName);
+            result.put('caseNumber',oscarName);
 
-	        System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage);
-	        
-	        return new Process.PluginResult(result); 
+            System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage);
+            
+            return new Process.PluginResult(result); 
 
-		}
+        }
 
-		changeSubject = false;
+        changeSubject = false;
 
-		AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
+        AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
 
-		System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
+        System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
-		container = AMS_MigrationToolHelper.migratecases(container,processType);
+        container = AMS_MigrationToolHelper.migratecases(container,processType);
 
-		changeSubject = true;
+        changeSubject = true;
 
-		System.debug('Migration completed.');
+        System.debug('Migration completed.');
         
         map<String, String> childCaseCreationResult = new map<String, String>();
 
@@ -141,18 +141,18 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         }
         ////
 
-		if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
-	        
-	        result.put('oscarId',oscarId);
-	        result.put('errorMessage',container.errorMessage + ' ' + childCaseCreationResult.get('errorMessage'));
+        if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
+            
+            result.put('oscarId',oscarId);
+            result.put('errorMessage',container.errorMessage + ' ' + childCaseCreationResult.get('errorMessage'));
             result.put('summaryMessage', '');
-	        result.put('caseNumber', oscarName);
+            result.put('caseNumber', oscarName);
 
-	        System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage + ' ' + childCaseCreationResult.get('errorMessage') + '; Summary: ' + childCaseCreationResult.get('summaryMessage'));
+            System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage + ' ' + childCaseCreationResult.get('errorMessage') + '; Summary: ' + childCaseCreationResult.get('summaryMessage'));
 
-	        return new Process.PluginResult(result); 
+            return new Process.PluginResult(result); 
 
-		}
+        }
 
         oscarId = container.oscarId;
         errorMessage = '';
@@ -302,7 +302,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
                Process.PluginDescribeResult.ParameterType.STRING),
              new Process.PluginDescribeResult.OutputParameter('summaryMessage', 
                Process.PluginDescribeResult.ParameterType.STRING),
-			new Process.PluginDescribeResult.OutputParameter('caseNumber', 
+            new Process.PluginDescribeResult.OutputParameter('caseNumber', 
                Process.PluginDescribeResult.ParameterType.STRING)
            }; 
         return result; 

@@ -1051,7 +1051,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP6__c"
+                "New_docs_Received__c",
+                  "STEP6__c"                  
                 ],
                 "IsDependent": false
               }

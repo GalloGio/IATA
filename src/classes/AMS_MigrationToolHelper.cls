@@ -662,9 +662,15 @@ public without sharing class AMS_MigrationToolHelper {
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
 			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP )
-				oscarRTId = oscarRT.get('CHANGE');
+				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
+				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
+				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
+				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
+				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.ContactId : '' ),
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+
 
 			insert oscar;
 
