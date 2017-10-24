@@ -23,7 +23,7 @@ global class ANG_MasterData_Interface{
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false), //List of children
-                                            (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
+                                            (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r) //RHC Information
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
             
@@ -76,10 +76,12 @@ global class ANG_MasterData_Interface{
         public string RiskStatus;
         public Decimal RHCAmount; //Number + currency
         public string RHCCurrency;
-        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency){
+        public Decimal RHCTotalFSProvided;
+        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency, Decimal RHCTotalFSProvided){
             this.RiskStatus = RiskStatus==null?'':RiskStatus;
             this.RHCAmount = RHCAmount;
             this.RHCCurrency= RHCCurrency==null?'':RHCCurrency;
+            this.RHCTotalFSProvided = RHCTotalFSProvided;
         }
     }
     
@@ -185,7 +187,7 @@ global class ANG_MasterData_Interface{
                 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
-                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.CurrencyIsoCode);
+                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
                 
                 //List  of children IATACode
                 //Returned only if specifically requested
