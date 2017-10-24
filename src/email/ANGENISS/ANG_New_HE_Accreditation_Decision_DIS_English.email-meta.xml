@@ -5,10 +5,10 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG New HE Accreditation Decision Disapproval EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation Standard with no Cash disapproved</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoLite disapproved</subject>
     <textOnly>Dear Sir/Madam,
 
-Your accreditation process (Standard with no Cash) has been disapproved.
+Your accreditation process (GoLite) has been disapproved.
  
 Yours faithfully,
 
