@@ -151,7 +151,7 @@ public class ang_rhcAlertTriggerHandler{
 					AccountId = ra.ANG_Account__c,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
-					Origin = 'Other',
+					Origin = 'Risk Monitoring Engine',
 					BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
 					Decision__c = 'Prejudiced Collection of Funds',
 					RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP,
