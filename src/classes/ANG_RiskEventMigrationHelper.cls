@@ -166,8 +166,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
 		system.debug('isMajorchange1');
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF  
-			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CSF)
