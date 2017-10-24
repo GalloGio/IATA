@@ -9910,14 +9910,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Description</shortDescription>
-        <value>GSA Appointments service description here TO BE ADDED</value>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
@@ -9945,14 +9945,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
-        <value>MSO Appointments service description TO BE ADDED</value>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
