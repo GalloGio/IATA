@@ -29,9 +29,6 @@ public class ANG_RHC_Information_test{
         );
         insert a;
         
-        
-
-
         // Create a new Financial Institution
         Financial_Institution__c fi = new Financial_Institution__c(
         	Name = 'Test', 
