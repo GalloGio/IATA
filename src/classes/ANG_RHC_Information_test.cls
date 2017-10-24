@@ -59,7 +59,6 @@ public class ANG_RHC_Information_test{
                 contactid = con.id,
                 AccountId = a.id,
                 Assessment_Performed_Date__c = date.today(),
-                Financial_Review_Result__c = 'very good'  ,
                 Financial_Security_Currency__c= 'EUR',
                 Financial_Security_Amount__c=10000                              
             );
@@ -113,7 +112,6 @@ public class ANG_RHC_Information_test{
                 Deadline_Date__c = date.today().addDays(40),                
                 AccountId = a.id,
                 Assessment_Performed_Date__c = date.today(),
-                Financial_Review_Result__c = 'very good'  ,
                 Financial_Security_Currency__c= 'EUR',
                 Financial_Security_Amount__c=20000                              
             );
@@ -177,7 +175,6 @@ public class ANG_RHC_Information_test{
             Deadline_Date__c = date.today().addDays(40),                
             AccountId = a.id,
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'very good'  ,
             Financial_Security_Currency__c= 'USD',
             Financial_Security_Amount__c=40000                              
         );
