@@ -1979,6 +1979,7 @@ public without sharing class Order_Svc
 
             //Throw exception if at less one subscription have an error
             if(orderIdsForFailedSub.size() > 0){
+                system.debug('Payment Failure - Error on credit card');
                 //Update order if an error occur
                 if(orderToUpdate.size() > 0)
                     update orderToUpdate;
@@ -2081,18 +2082,22 @@ public without sharing class Order_Svc
                                     order2Update.Payment_Type__c = zapm.zPaymentMethodName;
                                     order2Update.Zuora_Credit_Card_Id__c = zapm.zPaymentMethod;
                                 }
-
+                                system.debug('###### paymentStatus :: ' + paymentStatus);
                                 if(paymentStatus != null && paymentStatus.contains('Error')){
                                     
                                     //Get the payment error message
+                                    String GatewayResponse = (String)payment.getValue('GatewayResponse');
                                     String GatewayResponseCode = (String)payment.getValue('GatewayResponseCode');
                                     String GatewayState = (String)payment.getValue('GatewayState');
                                     String paymentError = (String)payment.getValue('GatewayResponse');
-                                    
+
+                                    order2Update.Status = 'Payment Failure';
+                                    order2Update.Is_Paid__c = false;
+
                                     //Delete all of the Subscription on Zuora
-                                    orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode);
+                                    orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode + ', GatewayResponse : ' + GatewayResponse);
                                 }
-                                system.debug('##### orderAlreadyToUpdate :: '+orderAlreadyToUpdate);
+                                system.debug('##### orderIdsForFailedSub :: '+orderIdsForFailedSub);
                                 if (!orderAlreadyToUpdate.contains(order2Update.Id))
                                 {   system.debug('##### orderAlreadyToUpdate :: '+orderAlreadyToUpdate);
                                     orderAlreadyToUpdate.add(order2Update.Id);
@@ -2374,10 +2379,11 @@ public without sharing class Order_Svc
     //Delete zuora Subscription when an error occur
     @future(callout = true)
     public static void deleteZuoraSubscription(set<Id> orderIds){
+        system.debug('deleteZuoraSubscription');
         deleteZuoraSubscriptionNow(orderIds);
     }
     public static void deleteZuoraSubscriptionNow(set<Id> orderIds){
-        
+        system.debug('deleteZuoraSubscriptionNow');
         map<Id,Order> orderMap = new Order_Sel().getOrderByStatus(orderIds);
         Map<Id, List<OrderItem>> orderId_Items = new OrderItem_Sel().getOrderItems(orderIds);
 
@@ -2397,7 +2403,7 @@ public without sharing class Order_Svc
             
             Order order = orderMap.get(orderId);
             if(order.Zuora_Transaction_Id__c != null){ refId.add(order.Zuora_Transaction_Id__c); }
-
+            
             if(order.IEC_Zuora_ST_SubscriptionId__c != null)
                 sub2Delete.add(order.IEC_Zuora_ST_SubscriptionId__c);
             if(order.IEC_Zuora_ST_InvoiceId__c != null)
@@ -2429,7 +2435,7 @@ public without sharing class Order_Svc
         }
         try{
             if(paymentCancel.size() > 0)
-            {
+            {   system.debug('paymentCancel');
                 List<Zuora.zApi.SaveResult> updatePay = ZuoraUtil.zupdate(paymentCancel);
                 System.debug('updatePay ' + updatePay);
             }
@@ -2450,7 +2456,7 @@ public without sharing class Order_Svc
         }
         try{
             if(invoicesCancel.size() > 0)
-            {
+            {   system.debug('invoicesCancel');
                 List<Zuora.zApi.SaveResult> updateInv = ZuoraUtil.zupdate(invoicesCancel);
                 System.debug('updateInv ' + updateInv);
                 for(Zuora.zObject inv : invoicesCancel)
@@ -2458,6 +2464,7 @@ public without sharing class Order_Svc
                 updateInv =  ZuoraUtil.zupdate(invoicesCancel);
             }
         }catch(Exception ex){
+            system.debug('exception : ' + ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(invoicesCancel),ex.getMessage(),ex.getStackTraceString()));
         }
 
