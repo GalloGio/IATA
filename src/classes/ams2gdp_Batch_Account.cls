@@ -5,7 +5,6 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	public Integer totalRecords;
 	public List<String> failed_records;
 	public Datetime syncStartedDate;
-	public Datetime previousSyncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
@@ -81,16 +80,9 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 			if (batchInfo != null) {
 				system.debug('##IN!!!: ' + runNext);
 				String deltaConditions;
-				//Keeps a copy of the Last_Sync_Start_Date__c to be used on the Job_1_Original_Start_Date__c
-				previousSyncStartedDate = batchInfo.Last_Sync_Start_Date__c == null ? Datetime.now() : batchInfo.Last_Sync_Start_Date__c;
 				//Run only on the deltas
-				if (runNext) {
-					deltaConditions = String.format('LastModifiedDate = {0}'
+				deltaConditions = String.format('LastModifiedDate = {0}'
 					                                , new List<String> {'LAST_N_DAYS:3'});
-				} else {
-					deltaConditions = String.format('LastModifiedDate >= {0}'
-					                                , new List<String> {batchInfo.Job_1_Original_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
-				}
 				system.debug('##deltaConditions: ' + deltaConditions);
 
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
@@ -183,41 +175,10 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	}
 
 	global void finish(Database.BatchableContext BC) {
-		AMS_GDP_Batch__c amsGdpBatch;
-		//creates last sync info in the first run
-		if (isManual) {
-			upsert new AMS_GDP_Batch__c(
-			    Batch_Name__c = batchName,
-			    Is_Manual_Replication__c = true,
-			    Total_Failed_Records__c = errorsCount,
-			    Total_Records_Processed__c = totalRecords,
-			    Failed_Records__c = String.join(failed_records, ';').left(32768)
-			)Batch_Name__c;
-		} else {
-			if (processNextBatch) {
-				//Database.executeBatch(new ams2gdp_Batch_Inspection(true, isManual));
-				upsert new AMS_GDP_Batch__c(
-				    Batch_Name__c = batchName,
-				    Is_Manual_Replication__c = false,
-				    Last_Sync_Start_Date__c = syncStartedDate,
-				    Job_1_Original_Start_Date__c = previousSyncStartedDate,
-				    Last_Sync_End_Date__c = Datetime.now(),
-				    Total_Failed_Records__c = errorsCount,
-				    Total_Records_Processed__c = totalRecords,
-				    Failed_Records__c = String.join(failed_records, ';').left(32768)
-				)Batch_Name__c;
-			} else {
-				upsert new AMS_GDP_Batch__c(
-				    Batch_Name__c = batchName,
-				    Is_Manual_Replication__c = false,
-				    Last_Sync_Start_Date__c = syncStartedDate,
-				    Last_Sync_End_Date__c = Datetime.now(),
-				    Total_Failed_Records__c = errorsCount,
-				    Total_Records_Processed__c = totalRecords,
-				    Failed_Records__c = String.join(failed_records, ';').left(32768)
-				)Batch_Name__c;
-			}
+		if(processNextBatch){
+			Database.executeBatch(new ams2gdp_Batch_Inspection(true, isManual));
 		}
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}

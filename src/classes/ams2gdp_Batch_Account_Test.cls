@@ -34,7 +34,6 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 1: GDP Products - Account View', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
-			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = new_account.Id
@@ -88,7 +87,6 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 1: GDP Products - Account View', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
-			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = accounts[0].Id
@@ -108,7 +106,6 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 4: GDS & Account Category', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
-			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = accounts[0].Id
@@ -130,7 +127,6 @@ private class ams2gdp_Batch_Account_Test
 			Batch_Name__c='Job 1: GDP Products - Account View', 
 			Last_Sync_Start_Date__c=Datetime.now(), 
 			Last_Sync_End_Date__c=Datetime.now(),
-			Job_1_Original_Start_Date__c = Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = new_account.Id
