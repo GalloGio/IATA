@@ -422,6 +422,19 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>IATA_Numeric_Country_Code__c</fullName>
+        <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
+        <externalId>false</externalId>
+        <formula>Related_Account__r.state_numeric_code__c</formula>
+        <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
+        <label>IATA Numeric Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Profit_Center__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Profit_Center__c</formula>

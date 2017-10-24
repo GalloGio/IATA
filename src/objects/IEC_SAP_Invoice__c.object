@@ -1092,34 +1092,28 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <fullName>Td</fullName>
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Order__c</columns>
+        <columns>Status__c</columns>
         <columns>Error_Message__c</columns>
         <columns>Bill_To__c</columns>
         <columns>SAP_Bill_To_Number__c</columns>
         <columns>Account__c</columns>
-        <columns>Status__c</columns>
         <columns>Total_Amount__c</columns>
         <columns>SAP_Contract_Number__c</columns>
         <columns>Pay_Method__c</columns>
         <columns>SAP_Invoice_Number__c</columns>
         <columns>Payment_Date__c</columns>
         <columns>SAP_Invoice_Clearance_Date__c</columns>
-        <columns>Ready_for_SAP__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
+            <field>Order__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
             <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sent to Zuora</value>
-        </filters>
-        <filters>
-            <field>Pay_Method__c</field>
-            <operation>equals</operation>
-            <value>Bank Transfer</value>
-        </filters>
-        <filters>
-            <field>Number_of_Zuora_Items__c</field>
-            <operation>greaterThan</operation>
-            <value>1</value>
+            <operation>notEqual</operation>
+            <value>Skipped</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

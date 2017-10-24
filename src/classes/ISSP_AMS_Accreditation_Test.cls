@@ -1552,7 +1552,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Scope_of_Change__c = 'HO - All Branches';
             ctrl.newForm.Notify_Change_Accreditation_Type__c = true;
-            ctrl.newForm.ANG_Accreditation_Model_to_Change__c = 'Cash';
+            ctrl.newForm.ANG_Accreditation_Model_to_Change__c = 'Standard Accreditation with Cash';
             ctrl.Save();  
             ctrl.contactType = 'Trained Staff';
             ctrl.newContact = new AMS_Accreditation_Contact__c();

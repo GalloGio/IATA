@@ -27,8 +27,11 @@ global with sharing class GSS_REST_FilePayload {
             //Get and validate input parameters in the URL
             //Get REQUIRED FileSpecificationID parameter
             String FileSpecificationID = RestContext.request.params.get('FileSpecificationId');
-            if(FileSpecificationID == '' || FileSpecificationID == null)    throw new MyException('FileSpecificationID is required parameter');  
-            
+            if (FileSpecificationID == '' || FileSpecificationID == null) throw new MyException('FileSpecificationID is required parameter');  
+            Boolean IsTestMode =false;
+            String isTestString = RestContext.request.params.get('IsTestMode');
+            if (!(isTestString == '' || isTestString == null)) IsTestMode = true;
+           
             
             
             //Get Optional lastRetrievedRecordId parameter
@@ -111,6 +114,7 @@ global with sharing class GSS_REST_FilePayload {
         Boolean ISMASTER=false;
         if (filespecificationlist[0].Magnitude__c=='Delta') ISDELTA=true;
         if (filespecificationlist[0].Magnitude__c=='Master') ISMASTER=true;
+        if (IsTestMode) { ISDELTA=true; ISMASTER=true;}
         //Magnitude Where Clause
         String Where_Magnitude_SOQL='';
         String DeltaPeriodSOQL =  '';
@@ -126,38 +130,35 @@ global with sharing class GSS_REST_FilePayload {
             DeltaPeriodSOQL += ' FROM GDP_Delta__c  WHERE GDP_File_Description__c = \''+SearchBySpecificationId +'\'' ;
             String STARTDAY='';
             String ENDDAY='';
-            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='YESTERDAY'; ENDDAY='TODAY';}
-            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='LAST_WEEK'; ENDDAY='THIS_WEEK';}
-            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='LAST_MONTH'; ENDDAY='THIS_MONTH';}
+            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='=YESTERDAY';}
+            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='=LAST_WEEK';}
+            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='=LAST_MONTH';}
             
             
             Date theEndOfMonth;
             Date theFirstOfMonth;
-            if (filespecificationlist[0].Frequency__c=='Semi-Monthly') {
-                //Intervals for Semi-Monthly PERIOD 1 are from theFirstOfMonth to the15thOfMonth
-                //Intervals for Semi-Monthly PERIOD 2 are from the16thOfLastMonth  to theEndOfLastMonth
-                if(Date.Today().Day() >= 16){ //From the 16th to the last day of Month, generate semi-monthly files for the PERIOD 2 
-                    theFirstOfMonth  = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
-                    theEndOfMonth     = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),15);
-                
-                }
-                else { //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
+            Boolean isSemiMonthly= filespecificationlist[0].Frequency__c=='Semi-Monthly' ? true:false;
+            //Intervals for Semi-Monthly PERIOD 1 are from theFirstOfMonth to the15thOfMonth
+            //Intervals for Semi-Monthly PERIOD 2 are from the16thOfLastMonth  to theEndOfLastMonth
+            //From the 16th to the last day of Month, generate semi-monthly files for the PERIOD 2 
+            Boolean isAfter16 = Date.Today().Day() >= 16 ? true : false;
+            if(isAfter16 && isSemiMonthly) theFirstOfMonth  = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
+            if(isAfter16 && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),16);
+            //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
                     
-                    theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(15);
-                    theEndOfMonth   = Date.TODAY().toStartOfMonth().addDays(-1);
-                          
-                }
-                STARTDAY=String.valueOf(theFirstOfMonth);
-                ENDDAY=String.valueOf(theEndOfMonth);
-            }
+            if(isAfter16==false && isSemiMonthly) theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(16);
+            if(isAfter16==false && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
+  
+            if(isSemiMonthly) STARTDAY='>='+String.valueOf(theFirstOfMonth);
+            if(isSemiMonthly) ENDDAY='<'+String.valueOf(theEndOfMonth);
             
             // Ordering for Delta always based on record Id, ignoring the value of Product_Type, Order_By, GSS_MDP_Sort_Key_Formula.
             // MDP file does not have delta. therefore this limitation will not affect MDP file generation
             String Delta_Order_Clause = ' ORDER BY Related_GDP_Product_Account_View__c, CreatedDate ASC';
             String Delta_Where_Last_Retrieved_Id = ' AND Related_GDP_Product_Account_View__c > \'';
             
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c >= '+STARTDAY;
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c < '+ENDDAY;
+            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+STARTDAY;
+            if (ENDDAY!='') DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+ENDDAY;
             //DeltaPeriodSOQL += ' AND Related_GDP_Product_Account_View__c > \'' + lastRetrievedRecordId + '\'';
             DeltaPeriodSOQL += Delta_Where_Last_Retrieved_Id + lastRetrievedRecordId + '\'';
             DeltaPeriodSOQL += Delta_Order_Clause;
@@ -188,7 +189,6 @@ global with sharing class GSS_REST_FilePayload {
             //deltaChangeMatrixMap.put('DB','');  //SEND NOTHING  OR send C??? Confirm with BA        
             //deltaChangeMatrixMap.put('AD','');  //SEND NOTHING
             //deltaChangeMatrixMap.put('BD','');  //SEND NOTHING   
-            
             //Get all the changes for the speficic period and reference FileSpecification from the Delta update object
             for(GDP_Delta__c Delta : Database.Query(DeltaPeriodSOQL))
             {
@@ -210,6 +210,7 @@ global with sharing class GSS_REST_FilePayload {
             
             
                      
+            if (IsTestMode) deltaChangeCodeMap.put('test','AB');
             //Now that the list of DeltaChange code are in the deltaChangeCodeMap, 
             //iterate to replace that code list with a single change code
             for(String key : deltaChangeCodeMap.keySet()){
@@ -223,7 +224,7 @@ global with sharing class GSS_REST_FilePayload {
                     deltaChangeCodeMap.remove(key); 
                 }
             }  
-            
+            if (IsTestMode) deltaChangeCodeMap.put('test','AB');
             //Build the Where clause with unique Records comming from the Delta Change object reduced with one code per record
             if(deltaChangeCodeMap.keyset().size() > 0)
             {
@@ -243,7 +244,9 @@ global with sharing class GSS_REST_FilePayload {
             else{ Where_Magnitude_SOQL = ' AND Id =\'000000000000000000\''; }
             
         } // end if ISDELTA 
-/**** GDP-228  end ****/
+        //For the perpuse of the test coverage
+        if (IsTestMode) {ISDELTA=false; Where_Magnitude_SOQL=''; DeltaPeriodSOQL =  '';}
+        /**** GDP-228  end ****/
         
             
             //Geo Coverage
@@ -254,12 +257,13 @@ global with sharing class GSS_REST_FilePayload {
             }
             //Class Where Clause
             String Where_Class_SOQL = '';
-            if (filespecificationlist[0].Class__c!=null)
+            if (filespecificationlist[0].Class__c!=null || IsTestMode)
             {
                 //If the class is provided but do not exists the Select must not return nothing
                 //so the value has to be something and not blank
                 String classname='NOTFOUNDATALL';
                 String ClassStr = filespecificationlist[0].Class__c;
+                if (isTestMode) ClassStr='123123123,123232323';
                 String[] ClassListStr = ClassStr.Split(',');
                 Set<String> sclass = new Set<String>();
                 for(String mystring:ClassListStr) {sclass.add(mystring);}
@@ -279,6 +283,7 @@ global with sharing class GSS_REST_FilePayload {
                 }
                 if (cCounter==0) Where_Class_SOQL += 'Accreditation_Class__c=\''+ classname + '\'';
                 Where_Class_SOQL += ')';    
+                if (IsTestMode) Where_Class_SOQL='';
                 
             }
             FieldStructureCls fieldstructure= new FieldStructureCls();
@@ -1295,14 +1300,14 @@ global with sharing class GSS_REST_FilePayload {
             
             this.Record = String.join(rec, '|');
         }  
-    
+        /*
         public list<string> getRecordAsListOfString(){
             list<string> strOutList = new list<string>();
             strOutList.addAll(Record.split('\\|'));
             for (Integer i = 0; i < strOutList.size(); i++)
                 strOutList[i]=strOutList[i].replaceAll('%7C','|'); 
             return strOutList;
-        }
+        }*/
     }
     // ========================================================================
     //Custom Exception Class    

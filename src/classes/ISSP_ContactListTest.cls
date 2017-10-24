@@ -369,6 +369,82 @@ private class ISSP_ContactListTest {
             System.AssertEquals(expectedExceptionThrown, true);
         }
     }
+    
+    static testMethod void myUnitTest_8() {
+        createTestData();
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.IATACode__c = '132';
+        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        insert acc;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Senior_Contact_Email__c = 'senior@dev.com';
+        con.Email = 'test1@iata.org';
+        con.AccountId= acc.Id;
+        con.User_Portal_Status__c = 'Active';
+        insert con;
+        String newContactId = con.Id;
+
+        Contact con2 = ISSP_ObjectFactory.createNewContact();
+        con2.Senior_Contact_Email__c = 'senior@dev.com';
+        con2.Email = 'test2@iata.org';
+        con2.AccountId= acc.Id;
+        con2.User_Portal_Status__c = 'Active';
+        insert con2;
+        String newContactId2 = con2.Id;
+
+        ISSP_ContactList ctrl = new ISSP_ContactList();
+        ISSPContactListView__c cs = new ISSPContactListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.Label_API_name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
+        insert cs;
+        ctrl.initialization();
+        
+        Test.startTest();
+        ctrl.getCSVContent();
+        Test.stopTest();
+    }
+    
+    static testMethod void test_ProfilePermissionFilter() {
+        ISSPContactListView__c cs = new ISSPContactListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.Label_API_name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
+        insert cs;
+        Test.startTest();
+        ISSP_ContactList.ProfilePermissionFilter pfilter = new ISSP_ContactList.ProfilePermissionFilter();
+        pfilter.isUserPermittedFor(cs);
+        pfilter.isDataEmpty(cs);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_PermissionSetFilter() {
+        User sysadmin = [Select id from User where Profile.Name = 'System Administrator' and isActive = true limit 1];
+        PermissionSet ps = new PermissionSet(Name = 'Test_PS', Label='TestPS');
+        System.runAs(sysadmin) {
+            insert ps;
+        }
+        
+        ISSPContactListView__c cs = new ISSPContactListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.Label_API_name__c = 'ISSP_Contacts_MyCompanyContacts';
+        cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
+        cs.Permission_set__c = ps.Id;
+        insert cs;
+        
+        Test.startTest();
+        ISSP_ContactList.PermissionSetFilter psetfilter = new ISSP_ContactList.PermissionSetFilter(new set<String>{ps.Id});
+        psetfilter.isUserPermittedFor(cs);
+        psetfilter.isDataEmpty(cs);
+        Test.stopTest();
+    }
 
     public static void createTestData(){
 
