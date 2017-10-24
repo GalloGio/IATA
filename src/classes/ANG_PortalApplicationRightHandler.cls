@@ -6,6 +6,8 @@ public class ANG_PortalApplicationRightHandler {
 	public Map<Id, Portal_Application_Right__c> newMap = (Map<Id,Portal_Application_Right__c>) Trigger.newMap;
 	public Map<Id, Portal_Application_Right__c> oldMap = (Map<Id,Portal_Application_Right__c>) Trigger.oldMap;
 
+	private String connectedAppId;
+
 	//empty constructor (for trigger)
 	public ANG_PortalApplicationRightHandler(){}
 
@@ -14,7 +16,8 @@ public class ANG_PortalApplicationRightHandler {
 	// ************************************************************
 
 	public void onAfterInsert(){
-		setConnectedAppsSSOPermission();
+		insertUserProvAccount();
+		setConnectedAppsSSOPermission();		
 	}
 	public void onAfterUpdate(){
 		setConnectedAppsSSOPermission();
@@ -31,15 +34,50 @@ public class ANG_PortalApplicationRightHandler {
 	// ********************* action methods ***********************
 	// ************************************************************
 
-	private void setConnectedAppsSSOPermission() {
-		//fetch all connected app roles that need to grant a permission set
-		Map<String, Connected_App_Roles__c> roles = new Map<String, Connected_App_Roles__c>();
+	private void insertUserProvAccount() {
+		List<UserProvAccount> upal = new List<UserProvAccount>();
 
-		for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {
-			if(role.Permission_set_SSO__c != null) {
-				roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
-			}
+		Set<String> contactIds = new Set<String>();
+		for(Portal_Application_Right__c access : filterRequestedAccess()) {
+			contactIds.add(access.Contact__c);			
 		}
+
+		List<UserProvAccount> auxUpa = [Select ExternalUserId From UserProvAccount Where ExternalUserId in : contactIds];
+
+		Set<String> existingUpa = new Set<String>();
+		for(UserProvAccount u : auxUpa) {
+			existingUpa.add(u.ExternalUserId);
+		}
+
+		List<User> users = [Select id, contactId from User where contactId in : contactIds];
+
+		Map<String, String> userMap = new Map<String, String>();
+		for(User user : users) {
+			userMap.put(user.ContactId, user.id);
+		}
+
+		for(Portal_Application_Right__c access : filterRequestedAccess()) {
+
+			if(!existingUpa.contains(access.Contact__c)) {
+	            UserProvAccount upa = new UserProvAccount (
+	            	ExternalUserId = (access.Contact__c == null ? '' : string.ValueOf(access.Contact__c).left(15)),
+	                SalesforceUserId = userMap.get(access.Contact__c),
+	                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
+	                LinkState = 'Linked',
+	                Status = 'Active'
+	            );
+	            upal.add(upa);
+	            //existingUpa.add(access.Contact__c);
+        	}
+            
+		}
+
+		System.debug(LoggingLevel.ERROR, 'INSERT UserProvAccount --> ' + upal);
+
+		insert upal;
+	}
+
+	private void setConnectedAppsSSOPermission() {
 
 		//no Connected app roles found
 		if(roles.isEmpty()) return;
@@ -65,11 +103,11 @@ public class ANG_PortalApplicationRightHandler {
 
 		for(Portal_Application_Right__c access : filterRemovedAccess()){
 			Connected_App_Roles__c role = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c);
-			System.debug(loggingLevel.FINEST, '____ [cls ANG_PortalApplicationRightHandler - setConnectedAppsSSOPermission] removed access - ' + access);
-			System.debug(loggingLevel.FINEST, '____ [cls ANG_PortalApplicationRightHandler - setConnectedAppsSSOPermission] role - ' + role);
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightHandler - setConnectedAppsSSOPermission] removed access - ' + access);
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightHandler - setConnectedAppsSSOPermission] role - ' + role);
 
-			helper.removePermission(role.Permission_set_SSO__c, access.Contact__c);
-			helper.removePermission(role.PermissionSet_Provisioning__c, access.Contact__c);
+			helper.removePermission(role.Permission_set_SSO__c, access.Contact__c, role);
+			helper.removePermission(role.PermissionSet_Provisioning__c, access.Contact__c, role);
 		}
 
 		//assign/remove users to the permission sets (must be future to prevent MIXED DML errors)
@@ -88,6 +126,7 @@ public class ANG_PortalApplicationRightHandler {
 				for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
 					if(role.Permission_set_SSO__c != null){
 						roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
+						connectedAppId = role.Provisioning_Id__c;
 					}
 				}
 
@@ -131,7 +170,7 @@ public class ANG_PortalApplicationRightHandler {
 			for(Portal_Application_Right__c access : triggerNew){
 
 				if (roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c) == null) continue;
-				else if(access.Right__c != 'Access Granted' && oldMap.get(access.Id).Right__c == 'Access Granted') filter.add(access);
+				else if(access.Right__c == 'Access Denied') filter.add(access);
 			}
 		}
 

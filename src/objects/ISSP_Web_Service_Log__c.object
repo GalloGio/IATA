@@ -316,6 +316,7 @@
         <fullName>KAVItoda</fullName>
         <columns>NAME</columns>
         <columns>Error_Message__c</columns>
+        <columns>User__c</columns>
         <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -326,7 +327,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>7/21/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>
@@ -367,7 +368,12 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>ISSP Web Service Logs</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Success__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>System__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Web_Service__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>
