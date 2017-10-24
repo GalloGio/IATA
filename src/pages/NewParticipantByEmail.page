@@ -1,14 +1,27 @@
 <apex:page standardController="Participant__c" extensions="NewParticipantByEmailCtrl">
-    <apex:form >
-    <apex:sectionHeader title="New Participant" subtitle="{!lg.Local_Governance_type__c} Participant" />
+<script type="text/javascript">
+    function groupIdFromLookup() {
+        var idGroup = document.getElementById("{!$Component.formNewParticipant.ThePageBlock.sectionNewParticipant.localGovernance}_lkid").value;
+        sendGroup(idGroup);
+        refreshPicklist();
+    }
+</script>
+    <apex:form id="formNewParticipant">
+    <apex:sectionHeader subtitle="New Participant - {!lg.Name}" />
 
-    <apex:pageBlock title="New Participant" id="ThePageBlock" mode="edit">
+    <apex:pageBlock id="ThePageBlock" mode="edit">
         <apex:Pagemessages escape="false"/>
-        <apex:pageBlockSection title="Information" >
-            <apex:inputField label="Contact Email" value="{!c.Email}" required="true"/>
-            <apex:inputField value="{!p.Local_Governance__c}" rendered="{!ISNULL(p.Local_Governance__c)}" label="Group"/>
+        <apex:pageBlockSection id="sectionNewParticipant" title="Information" >
+            <apex:inputField label="Contact Email" value="{!c.Email}" rendered="{!ISNULL(c.Email)}" required="true"/>
+            <apex:outputField value="{!c.Email}" rendered="{!NOT(ISNULL(c.Email))}" label="Contact Email"/>
+            <apex:inputField value="{!p.Local_Governance__c}" rendered="{!ISNULL(p.Local_Governance__c)}" onchange="groupIdFromLookup();" label="Group" id="localGovernance">
+                <apex:actionFunction name="sendGroup" action="{!changeParticipantRecordType}" immediate="true">
+                    <apex:actionSupport event="oncomplete" reRender="participantRole"/>
+                    <apex:param name="paramTestGroup" value=""/>
+                </apex:actionFunction>
+            </apex:inputField>
             <apex:outputField value="{!p.Local_Governance__c}" rendered="{!NOT(ISNULL(p.Local_Governance__c))}" label="Group"/>
-            <apex:inputfield value="{!p.Participant_Type__c}" required="true"/>
+            <apex:inputfield value="{!p.Participant_Type__c}" required="true" id="participantRole"/>
             <apex:inputfield value="{!p.Representing__c}" />
         </apex:pageBlockSection>
         <apex:pageBlockSection title="Choose the proper contact" rendered="{!chooseContact}" columns="1">
@@ -20,7 +33,7 @@
                 <apex:column value="{!cv.Title}" headerValue="Title"/>
                 <apex:column value="{!cv.Account.Name}" headerValue="Account Name"/>
                 <apex:column value="{!cv.Account.IATA_ISO_Country__r.Name}" headerValue="Country"/>
-            </apex:dataTable>            
+            </apex:dataTable>
         </apex:pageBlockSection>
         <style>
             .contactColumns{padding:0.5em;}
