@@ -48,9 +48,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 		
 		// List of Orders used to update the order with the status of payment
 		List<Order> lstOrderToUpdate = new List<Order>();
-		List<Order> lstOrderToUpdateWithErrors = new List<Order>();
 		List<Map<Id, OrderItem>> lst_mapOrderPaidByCreditCard = new List<Map<Id, OrderItem>>();
-		List<IEC_Payment_Error__c> lstPaymentErrors = new List<IEC_Payment_Error__c>();
 		
 		try
 		{
@@ -77,7 +75,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 				
 				// Retrieve ZAccounts related to the location records in 
 				Map<String, Zuora__CustomerAccount__c> mapAccConId_ZAccount = CustomerAccount_Sel.getZAccountByAccountContactId(setAccountContactId);
-				system.debug('### mapAccConId_ZAccount :: '+mapAccConId_ZAccount);
+				
 				/*////////////////////////////////////////////////////////////
 				// Second loop determines which order is paid by either
 				// ICH or Credit Cards
@@ -92,16 +90,13 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 				List<Map<String, ZuoraUtil.zAccountPaymentMethod>> lst_mapOrderId_AccountPaymentMethod = new List<Map<String, ZuoraUtil.zAccountPaymentMethod>>();
 				List<Map<Id, String>> lst_mapOrderId_PaymentType = new List<Map<Id, String>>();
 
-				Integer expirationMonth, expirationYear;
-				Boolean CardIsExpired = false;
-				system.debug('### scope :: '+scope);
 				// Loop over orderitems to determine which orders will be submitted to zuora
 				for (OrderItem oi : scope) {
 					// Skip order items that doesn't have tax calculation
 					if (oi.Tax__c != null)
-					{	system.debug('### tax :: '+oi.Tax__c);
+					{
 						if (oi.Order.BillToAccount__r.Default_Payment_Type__c != null)
-						{	system.debug('### default payment :: '+oi.Order.BillToAccount__r.Default_Payment_Type__c);
+						{
 							// If order is paid by ICH, then mark it as paid and set the status to be ready for SAP
 							if (oi.Order.BillToAccount__r.Default_Payment_Type__c == 'ICH')
 							{
@@ -115,93 +110,55 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 								//*** prepare to delete error logs and to update product in subscription
 								setOrderOrSubscriptionId.add(oi.OrderId);
 								if (oi.Order.IEC_Event_Subscription__c != null)
-								{	system.debug('### event subscription :: '+oi.Order.IEC_Event_Subscription__c);
+								{
 									setOrderOrSubscriptionId.add(oi.Order.IEC_Event_Subscription__c);
 									lstSubscriptionToUpdate.add(new IEC_Event_Subscription__c(Id=oi.Order.IEC_Event_Subscription__c, Product__c=oi.Product__c));
 								}
-								system.debug('### setOrderOrSubscriptionId :: '+setOrderOrSubscriptionId);
-								system.debug('### lstSubscriptionToUpdate :: '+lstSubscriptionToUpdate);
 							}
 							// If order is paid by credit card, then prep it to submit it to zuora
 							else if (oi.Order.BillToAccount__r.Default_Payment_Type__c.contains('Credit'))
-							{	
+							{
 								// Try to find the corresponding Zuora Billing Account first
 								if (mapAccConId_ZAccount.containskey(oi.Order.BillTo_Account_Contact_ID__c))
-								{	system.debug('### mapAccConId_ZAccount :: '+mapAccConId_ZAccount);
+								{
 									Zuora__CustomerAccount__c oBillingAccount = mapAccConId_ZAccount.get(oi.Order.BillTo_Account_Contact_ID__c); 
-									system.debug('### oBillingAccount :: '+oBillingAccount);
 									// Make sure the default payment on the billing account is set to Credit Card
 									if (oBillingAccount.Zuora__Default_Payment_Method__c != null && oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c == 'CreditCard')
-									{	
-										expirationMonth 		= Integer.valueOf(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationMonth__c);
-										expirationYear 			= Integer.valueOf(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationYear__c);
-										CardIsExpired 			= (Date.today() > Date.newInstance(expirationYear, expirationMonth, 1));
-										system.debug('### expirationMonth :: '+expirationMonth);
-										system.debug('### expirationYear :: '+expirationYear);
-										system.debug('### CardIsExpired :: '+CardIsExpired);
-
-										if(!CardIsExpired)
+									{
+										// If still first time in the sub-array, then instantiate a new array
+										if (j == 0)
 										{
-											system.debug('### ok :: ');
-											// If still first time in the sub-array, then instantiate a new array
-											if (j == 0)
-											{	system.debug('### ok :: ' +j);
-												
-												lst_mapOrderPaidByCreditCard.add(new Map<Id, OrderItem>());
-												lst_mapOrderId_PaymentMethod.add(new Map<Id, IECZuoraHelper.PaymentMethod>());
-												lst_mapOrderId_AccountPaymentMethod.add(new Map<String, ZuoraUtil.zAccountPaymentMethod>());
-												lst_mapOrderId_PaymentType.add(new Map<Id, String>());
-											}
-											system.debug('### lst_mapOrderPaidByCreditCard :: '+lst_mapOrderPaidByCreditCard);
-											system.debug('### lst_mapOrderId_PaymentMethod :: '+lst_mapOrderId_PaymentMethod);
-											system.debug('### lst_mapOrderId_AccountPaymentMethod :: '+lst_mapOrderId_AccountPaymentMethod);
-											system.debug('### lst_mapOrderId_PaymentType :: '+lst_mapOrderId_PaymentType);
-											// Otherwise keep adding to the same array
 											
-											// Record the order id and order item that will be submitted to Zuora
-											// susana - if expired card, don't send the order to subscribe on zuora
-											lst_mapOrderPaidByCreditCard[i].put(oi.OrderId, oi);
-											
-											system.debug('### lst_mapOrderPaidByCreditCard :: '+lst_mapOrderPaidByCreditCard);
-
-											// Define the payment method ID on the order
-											Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
-											zPaymentMethod.setValue('Id', oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
-											system.debug('### zPaymentMethod :: '+zPaymentMethod);
-											lst_mapOrderId_PaymentMethod[i].put(oi.OrderId, new IECZuoraHelper.PaymentMethod(zPaymentMethod));
-											system.debug('### lst_mapOrderId_PaymentMethod 2 :: '+lst_mapOrderId_PaymentMethod);
-											// Define the payment type on the order
-											lst_mapOrderId_PaymentType[i].put(oi.OrderId, IECConstants.PaymentThresholdType_CreditCard);
-											system.debug('### lst_mapOrderId_PaymentType 2 :: '+lst_mapOrderId_PaymentType);
-											ZuoraUtil.zAccountPaymentMethod zAccPmtMethod = new ZuoraUtil.zAccountPaymentMethod();
-											zAccPmtMethod.zPaymentMethodName = 'Credit Card';
-											zAccPmtMethod.zPaymentMethod = oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c;
-											lst_mapOrderId_AccountPaymentMethod[i].put(oi.OrderId, zAccPmtMethod);
-											system.debug('### lst_mapOrderId_AccountPaymentMethod 2 :: '+lst_mapOrderId_AccountPaymentMethod);
-											j++;
-											
-											// Once the sub-array index reaches to the maximum number allowed per callout
-											// then reset the level 2 index J and increment the Level 1 index I to force to create a new sub-array
-											if (j == iZuoraAPIObjectLimit)
-											{
-												j = 0; i++;
-											}
+											lst_mapOrderPaidByCreditCard.add(new Map<Id, OrderItem>());
+											lst_mapOrderId_PaymentMethod.add(new Map<Id, IECZuoraHelper.PaymentMethod>());
+											lst_mapOrderId_AccountPaymentMethod.add(new Map<String, ZuoraUtil.zAccountPaymentMethod>());
+											lst_mapOrderId_PaymentType.add(new Map<Id, String>());
 										}
-										else
-										{	// when credit card is expired
-											lstPaymentErrors.add(new IEC_Payment_Error__c(
-												Order__c = oi.OrderId
-												, Comment__c = 'Default payment credit card on the Bill-To Account is expired'
-												, Billing_Account__c = oBillingAccount.Id
-												, Payment_Method__c = oi.Order.BillToAccount__r.Default_Payment_Type__c
-												, Unique_External_Id__c = oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c
-												, Status__c = IECConstants.ORDER_STATUS_PAYMENT_FAILURE
-											));
-											system.debug('### lstPaymentErrors :: '+lstPaymentErrors);
-											oi.Order.Is_Paid__c = false;
-											oi.Order.Status = IECConstants.ORDER_STATUS_PAYMENT_FAILURE;
-											lstOrderToUpdateWithErrors.add(oi.Order);
-											system.debug('### lstOrderToUpdateWithErrors :: '+lstOrderToUpdateWithErrors);
+										// Otherwise keep adding to the same array
+										
+										// Record the order id and order item that will be submitted to Zuora
+										lst_mapOrderPaidByCreditCard[i].put(oi.OrderId, oi);
+										
+										// Define the payment method ID on the order
+										Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
+										zPaymentMethod.setValue('Id', oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
+										lst_mapOrderId_PaymentMethod[i].put(oi.OrderId, new IECZuoraHelper.PaymentMethod(zPaymentMethod));
+										
+										// Define the payment type on the order
+										lst_mapOrderId_PaymentType[i].put(oi.OrderId, IECConstants.PaymentThresholdType_CreditCard);
+										
+										ZuoraUtil.zAccountPaymentMethod zAccPmtMethod = new ZuoraUtil.zAccountPaymentMethod();
+										zAccPmtMethod.zPaymentMethodName = 'Credit Card';
+										zAccPmtMethod.zPaymentMethod = oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c;
+										lst_mapOrderId_AccountPaymentMethod[i].put(oi.OrderId, zAccPmtMethod);
+
+										j++;
+										
+										// Once the sub-array index reaches to the maximum number allowed per callout
+										// then reset the level 2 index J and increment the Level 1 index I to force to create a new sub-array
+										if (j == iZuoraAPIObjectLimit)
+										{
+											j = 0; i++;
 										}
 									}
 									else
@@ -230,21 +187,16 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 				// Subscribe to Zuora Orders paid by Credit Card
 				///////////////////////////////////////////////////////////*/
 				for (integer x = 0; x < lst_mapOrderPaidByCreditCard.size(); x++)
-				{	system.debug('### lst_mapOrderPaidByCreditCard 2 :: '+lst_mapOrderPaidByCreditCard);
+				{
 					// First retrieve the maps necessary maps from the two dimensional arrays
 					Map<Id, OrderItem> mapOrderPaidByCreditCard = lst_mapOrderPaidByCreditCard[x];
 					Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = lst_mapOrderId_PaymentMethod[x];
 					Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_AccountPaymentMethod = lst_mapOrderId_AccountPaymentMethod[x];
 					Map<Id, String> mapOrderId_PaymentType = lst_mapOrderId_PaymentType[x];
 					
-					system.debug('### mapOrderPaidByCreditCard :: '+mapOrderPaidByCreditCard);
-					system.debug('### mapOrderId_PaymentMethod :: '+mapOrderId_PaymentMethod);
-					system.debug('### mapOrderId_AccountPaymentMethod :: '+mapOrderId_AccountPaymentMethod);
-					system.debug('### mapOrderId_PaymentType :: '+mapOrderId_PaymentType);
-
 					// Now submit subscription reuquest to zuora
 					Map<Id, Zuora.zApi.SubscribeResult> mapZSubscribeResult = Order_Svc.subscribe(mapOrderPaidByCreditCard.keySet(), mapOrderId_PaymentMethod, mapOrderId_PaymentType);
-					
+					system.debug('##### mapZSubscribeResult :: ' + mapZSubscribeResult);
 					// Now process payments for Orders through Zuora
 					Map<Id, String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapZSubscribeResult, mapOrderId_AccountPaymentMethod);
 					
@@ -283,20 +235,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 				/*////////////////////////////////////////////////////////////
 				// Update Orders Status and Paid flag
 				///////////////////////////////////////////////////////////*/
-				if (!lstOrderToUpdate.isEmpty())
-				{
-					update lstOrderToUpdate;
-				}
-
-				if (!lstOrderToUpdateWithErrors.isEmpty())
-				{
-					update lstOrderToUpdateWithErrors;
-				}
-
-				if (!lstPaymentErrors.isEmpty())
-				{
-					upsert lstPaymentErrors;
-				}
+				update lstOrderToUpdate;
 
 				//*** delete logs for proceeded orders and/or subscriptions
 				if (setOrderOrSubscriptionId.size() > 0)

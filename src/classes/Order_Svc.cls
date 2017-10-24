@@ -1738,7 +1738,8 @@ public without sharing class Order_Svc
                         //System.debug('Kyle Porter Debug subscribe time: ' + DateTime.now());
                         subscribeResults = ZuoraUtil.zsubscribe(subsRequestLists);
                     }
-                    
+
+                    system.debug('##### subscribeResults :: ' + subscribeResults);
                     /*System.debug( 'logger = ' + Zuora.zApi.currentLogger.toString() );
                     if (Zuora.zApi.currentLogger != null) {
                         system.debug('SOAP Request = ' + Zuora.zApi.currentLogger.request );
@@ -1786,7 +1787,7 @@ public without sharing class Order_Svc
                                 orderItemId_subscribeResult.put((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId, null);
                 }
             }
-        
+        system.debug('##### orderItemId_subscribeResult :: ' + orderItemId_subscribeResult);
         return orderItemId_subscribeResult;
     }
 
@@ -1867,6 +1868,7 @@ public without sharing class Order_Svc
                 if(ordItem != null){
                     
                     Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id != null ? ordItem.Id : ordItem.OrderId);
+                    system.debug('##### subResponse :: ' + subResponse);
                     iecOrderId_paymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
 
                     if (subResponse != null && subResponse.Success) {
@@ -2024,6 +2026,7 @@ public without sharing class Order_Svc
                 Map<Id,Zuora.zApi.SaveResult> resultByOrderId;
                 try {
                     resultByOrderId = createZuoraPayment(orderMap, orderId_Items, orderId_zAccountPaymentMethod, invoiceMap);
+                    system.debug('##### resultByOrderId :: '+resultByOrderId);
                 } catch (Exception e) {}
                 
                 //Parse payment Result
@@ -2035,6 +2038,7 @@ public without sharing class Order_Svc
 
                     //Parse the Zuora payment response and get the Map of Payment Result By orderId
                     Map<Id,String> paymentResultByOrderId = parsePaymentResult(resultByOrderId);
+                    system.debug('##### paymentResultByOrderId :: '+paymentResultByOrderId);
                     if(paymentResultByOrderId != null && !paymentResultByOrderId.isEmpty()){
                         for(String orderId : paymentResultByOrderId.keySet()){
                             String zResult = paymentResultByOrderId.get(orderId);
@@ -2052,15 +2056,20 @@ public without sharing class Order_Svc
                     }
                     
                     if(paymentIds != null && paymentIds.size() > 0){
+                        system.debug('##### paymentIds :: '+paymentIds);
+                        system.debug('##### orderMap :: '+orderMap);
                         //Get the detail for the payment from Zuora
                         List<Zuora.zObject> zPaymentsDetails = getZuoraPayments(paymentIds,orderMap);
-
+                        system.debug('##### zPaymentsDetails :: '+zPaymentsDetails);
                         //Get the payment details
                         if(zPaymentsDetails != null && zPaymentsDetails.size() > 0){
                             for(Zuora.zObject payment : zPaymentsDetails){
                                 
                                 String paymentStatus = (String)payment.getValue('Status');
                                 String OrderId = (String)payment.getValue('SFDCOrderId__c');
+
+                                system.debug('##### paymentStatus :: '+paymentStatus);
+                                system.debug('##### OrderId :: '+OrderId);
                                 
                                 Order order2Update = orderMap.get(OrderId);
                                 ZuoraUtil.zAccountPaymentMethod zapm = orderId_zAccountPaymentMethod.get(OrderId);
@@ -2081,9 +2090,9 @@ public without sharing class Order_Svc
                                     //Delete all of the Subscription on Zuora
                                     orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode);
                                 }
-
+                                system.debug('##### orderAlreadyToUpdate :: '+orderAlreadyToUpdate);
                                 if (!orderAlreadyToUpdate.contains(order2Update.Id))
-                                {
+                                {   system.debug('##### orderAlreadyToUpdate :: '+orderAlreadyToUpdate);
                                     orderAlreadyToUpdate.add(order2Update.Id);
                                     orderToUpdate.add(order2Update);
                                 }
@@ -2096,7 +2105,7 @@ public without sharing class Order_Svc
                     for (Id idOrder : orderMap.keySet())
                         orderIdsForFailedSub.put(idOrder, 'Exception on payment');
                 }
-
+                system.debug('##### orderIdsForFailedSub :: '+orderIdsForFailedSub);
                 //Throw exception if the transaction failed
                 if(orderIdsForFailedSub.size() > 0){
                     //Update order if an error occur
@@ -2216,6 +2225,7 @@ public without sharing class Order_Svc
         {
             try{
                 lstPayments = IECZuoraHelper.queryApiCall(query);
+                system.debug('##### lstPayments :: '+lstPayments);
             }catch(Exception ex){
                 //Log the payment exception
                 IEC_Error_Log__c errorLog = IECErrorLogger.createErrorLog('Order_Svc/getZuoraPayments',query,ex.getMessage(),ex.getStackTraceString());
@@ -2332,7 +2342,7 @@ public without sharing class Order_Svc
             lstOrder.add(order);
 
         }
-
+        system.debug('##### lstInvoicePayment :: ' + lstInvoicePayment);
         if(lstInvoicePayment.size() > 0){
             if(!Test.isRunningTest()){
                 try{
@@ -2354,7 +2364,7 @@ public without sharing class Order_Svc
                     resultByOrderId.put(lstOrder[i].Id, lstResults[i]);
             }
         }
-
+        system.debug('##### resultByOrderId :: ' + resultByOrderId);
         return resultByOrderId;
     }
 
