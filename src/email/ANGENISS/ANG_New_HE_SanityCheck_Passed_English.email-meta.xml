@@ -5,11 +5,11 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG New HE Sanity Check Passed EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation Standard with no Cash accepted</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoLite accepted</subject>
     <textOnly>Dear Sir/Madam,
 
 
-The documentation for your accreditation process (Standard with no Cash) has been accepted and the application is going to be processed
+The documentation for your accreditation process (GoLite) has been accepted and the application is going to be processed
 
 
 Yours faithfully,
