@@ -15,12 +15,16 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 	 public static void handleAfterInsert(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
 
 	 	List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
-	 		
- 		for(Agency_Authorization__c a : triggerNew)
- 			if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId())
- 				listAuthp.add(a);
+	 	map<Id,Agency_Authorization__c> mapOldAuthP = new map<Id,Agency_Authorization__c>();
+         
+         for(Agency_Authorization__c a : triggerNew){
+             if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId()){
+                 listAuthp.add(a);
+                 mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
+             }
+         }
 
- 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c', 'Account__c').run(); 
+ 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c', 'Account__c').run(); 
 	}
 
 	public static void handleAfterUpdate(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
