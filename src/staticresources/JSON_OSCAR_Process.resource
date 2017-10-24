@@ -4079,6 +4079,7 @@
                 ],
                 "Automations": [],
                 "DisplayFields": [
+                  "Certificate_Quantity__c",
                   "Confirm_Payment_if_applicable__c",
                   "Send_Confirmation__c",
                   "STEP33__c"
