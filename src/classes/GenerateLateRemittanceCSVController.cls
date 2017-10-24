@@ -286,8 +286,8 @@ public without sharing class GenerateLateRemittanceCSVController {
                                 AND Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
                             ) OR (
                                 RecordType.DeveloperName = 'ProcessEuropeSCE'
-                                AND FS_Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day()) 
-                                AND FS_Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+                                AND Bank_Guarantee_deadline__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day()) 
+                                AND Bank_Guarantee_deadline__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
                             )
                         )
                         AND Region__c = :strRegion
