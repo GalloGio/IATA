@@ -44,7 +44,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	public static void handleBeforeInsert() {
-		assignOSCARToRegionalQueues();
+		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
         copyDataFromTargetAgency();
@@ -146,8 +146,8 @@ public class AMS_OSCARTriggerHandler {
 			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT)
 				certificationOscars.add(oscar);
 
-		if(!certificationOscars.isEmpty())
-			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);
+		/*if(!certificationOscars.isEmpty())
+			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
@@ -557,7 +557,9 @@ public class AMS_OSCARTriggerHandler {
 
 					//check if ownership needs to be copied from online form to Accounts
 					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
-						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
+						Set<Id> accountsListToMigrate = new Set<Id>();
+						accountsListToMigrate = checkProcessAndStatusToMigrateOwners(oscar.Type_of_change__c, oscar.Process__c, agenciesAffected);
+						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, accountsListToMigrate);
 
 						//fill map to check ownership alignment in hierarchy
 						if(cascadingTOCs.contains(AMS_Utils.OWNERSHIP_IATA)){
@@ -1250,8 +1252,9 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars
-						AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars])
+						//AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]) --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
+						{
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
@@ -2049,6 +2052,26 @@ public class AMS_OSCARTriggerHandler {
 	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages, Boolean isNewGenProcess){
 
 		return (!isNewGenProcess && percentages.get(oscar.Account__c) == 100) || (isNewGenProcess && percentages.get(oscar.Account__c) < 99.99);
+
+	}
+
+	public static Set<Id> checkProcessAndStatusToMigrateOwners(String typeOfChange, String process, Set<Id> accountsList)
+	{
+		Set<Id> accountsToMigrateOwners = new Set<Id>();
+		List<Account> accountsToMigrateOwnersAux = new List<Account>();
+
+		accountsToMigrateOwnersAux = [SELECT Id, Status__c FROM Account WHERE Id IN :accountsList];
+
+		if(process == AMS_Utils.AGENCYCHANGES && (typeOfChange == AMS_Utils.MAJ_SHAREHOLDING || typeOfChange == AMS_Utils.MIN_SHAREHOLDING || typeOfChange == AMS_Utils.VFMR)){
+			
+			for(Account acc : accountsToMigrateOwnersAux) {
+
+				if(Integer.valueOf(AMS_Utils.getIATANumericStatus(acc.Status__c)) > 2)
+					accountsToMigrateOwners.add(acc.Id);
+			}
+		}
+
+		return accountsToMigrateOwners;
 
 	}
 	
