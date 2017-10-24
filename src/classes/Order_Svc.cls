@@ -2004,7 +2004,7 @@ public without sharing class Order_Svc
                 //*** should not throw exception because no update nor rollback is performed
                 //throw Exception
                 //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' '));
-
+                system.debug('##### itemsStatus in error :: '+itemsStatus);
                 return itemsStatus;
             }
 
@@ -2051,6 +2051,8 @@ public without sharing class Order_Svc
                                 for (OrderItem oi : orderId_Items.get(orderId))
                                     if (oi.Id != null && itemsStatus.containsKey(oi.Id))
                                         itemsStatus.put(oi.Id, 'Failed: ' + zResult);
+
+                                system.debug('##### itemsStatus failed :: '+itemsStatus);
                             }
                         }
                     }
@@ -2131,6 +2133,7 @@ public without sharing class Order_Svc
                     //*** should not throw exception because no update nor rollback is performed
                     //throw Exception
                     //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' ') );
+                    system.debug('##### itemsStatus in error 2 :: '+itemsStatus);
                     return itemsStatus;
                 }
 
@@ -2147,7 +2150,7 @@ public without sharing class Order_Svc
         if(orderItemsToUpdate.size() > 0){
             update orderItemsToUpdate;
         }
-
+        system.debug('##### itemsStatus :: '+itemsStatus);
         return itemsStatus;
     }
 

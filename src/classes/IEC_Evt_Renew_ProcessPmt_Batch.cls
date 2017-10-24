@@ -199,14 +199,14 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 					system.debug('##### mapZSubscribeResult :: ' + mapZSubscribeResult);
 					// Now process payments for Orders through Zuora
 					Map<Id, String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapZSubscribeResult, mapOrderId_AccountPaymentMethod);
-					
+					system.debug('##### orderItemsResponse :: ' + orderItemsResponse);
 					// Loop on orderitem status to record errors
 					for (OrderItem oi : scope) {
 						// Only log erros for order items that was submitted to zuora
 						if (orderItemsResponse.containsKey(oi.Id))
 						{
 							String result = orderItemsResponse.get(oi.Id);
-							
+							system.debug('#### result :: '+result);
 							if (result == 'Success')
 							{
 								setOrderIdToUpdate.add(oi.OrderId);
