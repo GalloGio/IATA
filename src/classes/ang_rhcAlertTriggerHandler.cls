@@ -376,7 +376,7 @@ public class ang_rhcAlertTriggerHandler{
                             notifications.add(new Notification__c(
                                 Contact__c = c.Id,
                                 Subject__c = Label.RTS_TAR_Notification_Title,
-                                Message__c = Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name),
+                                Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
                                 Alert_Contact_By_Email__c = true
                             ));
                         }
