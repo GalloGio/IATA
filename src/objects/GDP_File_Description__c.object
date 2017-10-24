@@ -965,6 +965,35 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>TXT_CHANGE_FILES</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>TXT CHANGE FILES</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Test_Layouts</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
