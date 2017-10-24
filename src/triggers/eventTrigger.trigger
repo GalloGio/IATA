@@ -1,4 +1,4 @@
-trigger EventTrigger on Event  (before insert, before update, before delete) {
+trigger eventTrigger on Event  (before insert, before update, before delete) {
 	if(Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 		List<Id> lsWhatIds = new List<Id>();
 		for(Event t : Trigger.new) {

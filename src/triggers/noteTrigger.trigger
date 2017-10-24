@@ -1,4 +1,4 @@
-trigger NoteTrigger on Note  (before insert, before update, before delete) {
+trigger noteTrigger on Note  (before insert, before update, before delete) {
     if(Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
         List<Id> lsParentIds = new List<Id>();
         for(Note t : Trigger.new) {
