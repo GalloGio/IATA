@@ -284,8 +284,8 @@
 											<span class="glyphicon glyphicon-cog"></span>&nbsp;<span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a href="/ISSP_AMS_MSO_Update?msoId={!a.appointment.Account__r.Id}&action=correction"><span class="glyphicon glyphicon-pencil"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_Edit_MSO_Details}</a></li>
-											<li><a href="/ISSP_AMS_MSO_Update?msoId={!a.appointment.Account__r.Id}&action=termination"><span class="glyphicon glyphicon-ban-circle"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_MSO_Terminate_MSO}</a></li>
+											<li class="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'disabled', '') }"><a href="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'javascript://', '/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=correction') }"><span class="glyphicon glyphicon-pencil"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_Edit_MSO_Details}</a></li>
+											<li class="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'disabled', '') }"><a href="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'javascript://', '/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=termination') }"><span class="glyphicon glyphicon-ban-circle"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_MSO_Terminate_MSO}</a></li>
 										</ul>
 									</div>
 								</td>
