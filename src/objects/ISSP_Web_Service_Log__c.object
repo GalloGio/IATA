@@ -327,7 +327,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>9/14/2017 12:00 AM</value>
+            <value>9/29/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>
@@ -368,7 +368,12 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>ISSP Web Service Logs</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Success__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>System__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Web_Service__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

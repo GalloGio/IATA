@@ -420,7 +420,7 @@ HE Account: Create risk event on the HE of the current hierarchy</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Does not include</fullName>
+                <fullName>Does not Include</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -78,6 +78,16 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Is_Manual_Replication__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the batch was runned manually</description>
+        <externalId>false</externalId>
+        <label>Is Manual Replication</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Job_1_Original_Start_Date__c</fullName>
         <description>Copy of Job 1 Last Sync Start Date taken on Job 1 first execution. This date is used by the Replication Job 1 Second Pass for population of formula fields and relationship</description>
         <externalId>false</externalId>

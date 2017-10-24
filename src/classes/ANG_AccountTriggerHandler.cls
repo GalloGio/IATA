@@ -199,47 +199,50 @@ public class ANG_AccountTriggerHandler {
 		//insert cases
 		insert cases;
 
+		//populate field with operation with BSP attributes more frequent
+		String remitFreq = getHighestRemittanceFrequency(accounts);
+
 		//create staging areas
 		List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
 		for(Account acc : accounts){
 			AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
-			stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
-			stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
-			stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
-			stgArea.Accept_terms_and_conditions__c           = true;
-			stgArea.Account_Name__c                          = acc.Name;
-			stgArea.Billing_State__c                         = acc.BillingState;
-			stgArea.Branch_Office_City__c                    = acc.BillingCity;
-			stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
-			stgArea.Branch_Office_Email__c                   = acc.Email__c;
-			stgArea.Branch_Office_FAX__c                     = acc.Fax;
-			stgArea.Branch_Office_Phone__c                   = acc.Phone;
-			stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
-			stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
-			stgArea.CASS_Number__c                           = acc.CASS_Number__c;
-			stgArea.IATACode__c                              = acc.IATACode__c;
-			stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
-			stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
-			stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
-			stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
-			stgArea.Location_Class__c                        = acc.Location_Class__c;
-			stgArea.Location_Type__c                         = acc.Location_Type__c;
-			stgArea.Mobile__c                                = acc.Mobile__c;
-			stgArea.Operation__c                             = acc.Operation__c;
-			stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
-			stgArea.Shipping_City__c                         = acc.ShippingCity;
-			stgArea.Shipping_Country__c                      = acc.ShippingCountry;
-			stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
-			stgArea.Shipping_State__c                        = acc.ShippingState;
-			stgArea.Shipping_Street__c                       = acc.ShippingStreet;
-			stgArea.Short_Name__c                            = acc.Short_Name__c;
-			stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
-			stgArea.Submitted_to_IATA__c                     = true;
-			stgArea.Trade_Name__c                            = acc.TradeName__c;
-			stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
-			stgArea.Website__c                               = acc.Website;
-			stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
+	    	stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
+	    	stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
+	    	stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
+	    	stgArea.Accept_terms_and_conditions__c           = true;
+	    	stgArea.Account_Name__c                          = acc.Name;
+	    	stgArea.Billing_State__c                         = acc.BillingState;
+	    	stgArea.Branch_Office_City__c                    = acc.BillingCity;
+	    	stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
+	    	stgArea.Branch_Office_Email__c                   = acc.Email__c;
+	    	stgArea.Branch_Office_FAX__c                     = acc.Fax;
+	    	stgArea.Branch_Office_Phone__c                   = acc.Phone;
+	    	stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
+	    	stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
+	    	stgArea.CASS_Number__c                           = acc.CASS_Number__c;
+	    	stgArea.IATACode__c                              = acc.IATACode__c;
+	    	stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
+	    	stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
+	    	stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
+	    	stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
+	    	stgArea.Location_Class__c                        = acc.Location_Class__c;
+	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
+	    	stgArea.Mobile__c                                = acc.Mobile__c;
+	    	stgArea.Operation__c                             = acc.Operation__c;
+	    	stgArea.Remittance_frequency__c                  = remitFreq;
+	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
+	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
+	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
+	    	stgArea.Shipping_State__c                        = acc.ShippingState;
+	    	stgArea.Shipping_Street__c                       = acc.ShippingStreet;
+	    	stgArea.Short_Name__c                            = acc.Short_Name__c;
+	    	stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
+	    	stgArea.Submitted_to_IATA__c                     = true;
+	    	stgArea.Trade_Name__c                            = acc.TradeName__c;
+	    	stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
+	    	stgArea.Website__c                               = acc.Website;
+	    	stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
 
 			stgAreas.add(stgArea);
 			objects.get(acc.Id).stagingArea = stgArea;
@@ -343,4 +346,33 @@ public class ANG_AccountTriggerHandler {
 		//then, at last, we make the update
 		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
 	}
+
+    /**
+	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+    */
+    private String getHighestRemittanceFrequency(List<Account> accs){
+    	
+    	String remitFreq = '';
+    	List<Id> accsIds = new List<Id>();
+
+    	for (Account a: accs)
+    		accsIds.add(a.Id);
+
+    	Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
+    	List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+
+    	Integer aux = 0;
+    	for(AMS_Operation__c op: opCodes){
+    		for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+
+    			if((Integer)attr.Remittances_Per_Year__c > aux){
+    				aux = (Integer)attr.Remittances_Per_Year__c;
+    				remitFreq = attr.Remittance_Frequency__c;
+    			}
+    		}    		
+    	}
+
+    	return remitFreq;
+    }
+
 }

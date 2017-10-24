@@ -1261,6 +1261,7 @@
         <fields>Account__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
         <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
