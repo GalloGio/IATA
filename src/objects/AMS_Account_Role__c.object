@@ -592,7 +592,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     <fields>
         <fullName>Unified_Owner_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>if(isblank(Owner_Name__c), Owner_Account__r.Name, Owner_Name__c)</formula>
+        <formula>if(and(or(isblank(Owner_Name__c),(Owner_Name__c=&apos;-&apos;)),RecordType.DeveloperName=&apos;Ownership&apos;), Owner_Account__r.Name, Owner_Name__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Unified Owner Name - GDP</label>
         <required>false</required>
