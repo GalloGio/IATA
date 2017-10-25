@@ -344,12 +344,20 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     @future
     public static void closeOscar(Id oscarId) {
         try {
+            // insert case comment
+            Case c = [SELECT Id, IATAcode__c FROM Case WHERE OSCAR__c = :oscarId];
+            
+            CaseComment successComment = new CaseComment();
+            successComment.ParentId = c.Id;
+            successComment.isPublished = true;
+            successComment.CommentBody = Label.ISSP_AMS_MSO_Request_Successfull + ' ' + c.IATAcode__c;
+            insert successComment;
 
+            // update oscar & mark it closed
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             oscar.STEP10__c = 'Passed';
             oscar.Flag_Data_to_Account__c = true;
-            //update oscar;
-            
+                        
             oscar.Status__c = 'Closed';
             update oscar;
         } catch (DmlException ex) {

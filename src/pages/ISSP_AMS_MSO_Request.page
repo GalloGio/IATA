@@ -337,9 +337,9 @@
 			    	<apex:pageBlock rendered="{! step == 'success' }" mode="maindetail">
 				        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
 				           
-				           	<strong>
+				           	<!--<strong>
 				               	<apex:outputPanel>{!$Label.ISSP_AMS_MSO_StepFinal_Thanks}</apex:outputPanel>
-				           	</strong>
+				           	</strong>-->
                            
                             <apex:outputPanel rendered="{!oscarCase.IATAcode__c == null}" >
                                 <br/> <br/> 
@@ -351,10 +351,9 @@
                             </apex:outputPanel>
                            
                             <apex:outputPanel rendered="{!oscarCase.IATAcode__c <> null}" >
+                                <strong>{!$Label.ISSP_AMS_MSO_Request_Successfull} {!oscarCase.IATAcode__c}.</strong>
                                 <br/> <br/> 
                                 {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
-                                <br/><br/>
-                                {!$Label.ISSP_AMS_MSO_Request_Successfull} {!oscarCase.IATAcode__c}.
                             </apex:outputPanel>
 
 				        </div>
