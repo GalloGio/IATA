@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
+        <fullName>AMS_DGR_30days_Notification_Sent</fullName>
+        <field>Notification_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>AMS DGR 30 days Notification Sent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>AMS_DGR_60days_Notification_Sent</fullName>
+        <field>Notification_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>AMS DGR 60 days Notification Sent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AMS_DGR_Notification_Sent</fullName>
         <field>Notification_Sent__c</field>
         <literalValue>1</literalValue>
@@ -36,11 +54,29 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>AMS_DGR_60days_Notification_Sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>AMS_DGR_Notification_Sent</name>
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
             <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>AMS_DGR_30days_Notification_Sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
+            <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
