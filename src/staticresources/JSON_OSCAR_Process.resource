@@ -974,6 +974,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Change_effective_as_of__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -1025,7 +1026,6 @@
                 ],
                 "DisplayFields": [
                   "Confirm_DD_setup_with_agent__c",
-                  "Change_effective_as_of__c",
                   "STEP16__c"
                 ],
                 "IsDependent": false
@@ -1355,10 +1355,6 @@
                   {
                     "Status": "Passed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded"
-                  },
-                  {
-                    "Status": "In Progress",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_inProgress"
                   },
                   {
                     "Status": "Failed",
@@ -4083,7 +4079,6 @@
                 ],
                 "Automations": [],
                 "DisplayFields": [
-                  "Certificate_Quantity__c",
                   "Confirm_Payment_if_applicable__c",
                   "Send_Confirmation__c",
                   "STEP33__c"
