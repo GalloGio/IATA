@@ -1449,7 +1449,7 @@ public class AMS_OSCARTriggerHandler {
 																			SELECT Id, First_name__c, Last_name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c,
 																			Certificate_Name__c, Certificate_Issued_on__c, Type_of_Certificate__c, Certificate_Validity__c, Valid_until__c,
 																			Certificate_Issuer__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__c, Position_trained_staff__c, AgencyRegulation__c,
-																			Air_cargo_transport_business_exp__c, IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c
+																			Air_cargo_transport_business_exp__c, IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Registration_number__c
 																			FROM AMS_Accreditation_Contact__c
 																			WHERE AMS_Pax_Accreditation_Form__c IN :onlineAccreditations
 																			AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT]);
