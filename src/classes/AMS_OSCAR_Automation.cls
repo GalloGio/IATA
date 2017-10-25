@@ -505,7 +505,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Status__c = 'Pending Approval';
                 res = True;
             } else {
-                oscar.addError('Validation can\'t be passed if Manage Financial Security step is Not Started or In Progress.');
+                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
             }
 
             return res;
