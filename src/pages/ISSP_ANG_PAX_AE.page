@@ -968,12 +968,11 @@
                             </div>
                             </apex:outputPanel>
                            
-                             <apex:pageBlockSection >
-                            <apex:outputPanel >
+                        <apex:pageBlockSection >
                         <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        <apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" styleClass="labelCol" style="margin-left:10px" html-for="VATInput"/>
+                        <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
                         <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'47px', '64px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                            <span style="margin-left:{!If(isEUcountry,'-28px', '-9px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                             <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
@@ -982,10 +981,8 @@
                                 </apex:facet>
                             </apex:actionstatus>
                         </apex:outputpanel>
-                    </apex:pageblocksectionitem>
-                  </apex:outputPanel>
-                          </apex:pageBlockSection>
-                                                  
+                    	</apex:pageblocksectionitem>
+                   		</apex:pageBlockSection>            
 
                           <apex:pageBlockSection columns="2" id="branchphonefax">
                             <apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_address_details}" style="font-weight:bold" />
@@ -1425,7 +1422,7 @@
 
                     <apex:pageBlockSectionItem id="a" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
-                        <apex:outputPanel>
+                        <apex:outputPanel >
                           <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
                           <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                         </apex:outputPanel>
@@ -1433,7 +1430,7 @@
 
                     <apex:pageBlockSectionItem id="b" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
                         <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
-                        <apex:outputPanel>
+                        <apex:outputPanel >
                           <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
                           <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                         </apex:outputPanel>
