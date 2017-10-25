@@ -4,6 +4,7 @@ public class localgroupTriggerHandler
         List<LocalGovernance__c> lsChildren = new List<LocalGovernance__c>();
         for(LocalGovernance__c l : allGroups) {
             if(l.Reporting_to__c == parentId) {
+                lsChildren.add(l);
                 lsChildren.addAll(getChildren(l.Id, allGroups));
             }
         }
