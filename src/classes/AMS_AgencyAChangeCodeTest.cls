@@ -176,4 +176,16 @@ private class AMS_AgencyAChangeCodeTest {
 		
 		system.assertEquals('91', [select Reason_Code__c from Agency_Applied_Change_code__c where id=:cc.Id].Reason_Code__c);
 	}
+
+     @isTest static void testEventsTriggerHandler(){
+        //test to increase converage on unused events on triggerhandler
+    ANG_AgencyAChangeCodeTriggerHandler triggerhandler = new ANG_AgencyAChangeCodeTriggerHandler();
+        triggerhandler.onBeforeInsert();
+        triggerhandler.onBeforeUpdate();
+         triggerhandler.onAfterUpdate();
+         triggerhandler.onBeforeDelete();
+         triggerhandler.onAfterDelete();
+
+    }
+
 }
