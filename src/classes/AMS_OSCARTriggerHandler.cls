@@ -1483,6 +1483,7 @@ public class AMS_OSCARTriggerHandler {
 			agReg.Air_cargo_transport_business_exp__c = ac.Air_cargo_transport_business_exp__c;
 			agReg.IATA_FIATA_training_history__c = ac.IATA_FIATA_training_history__c;
 			agReg.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
+			agReg.Registration_Number__c = ac.Registration_number__c; //AMSU-14
 
 			agencyregulationsToCreate.add(agReg);
 
