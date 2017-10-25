@@ -36,9 +36,9 @@ private class IECApplicationsManager_tst {
     private static Accreditation__c oAccreditation3;
     
     private static final Integer SUB_USAGE_QTY = 42;
-    private static final String AGENCY1_CODE = '5555555';
-    private static final String AGENCY2_CODE = '6666666';
-    private static final String AGENCY3_CODE = '7777777';
+    private static final String AGENCY1_CODE = '55555';
+    private static final String AGENCY2_CODE = '66666';
+    private static final String AGENCY3_CODE = '77777';
     private static final String AGENT_VER_NUMBER = '5578000523';
     private static final String AGENCY_CHECK_DIGIT = '9';
     private static final String AGENCY1_NAME = 'Chillwave Agency';

@@ -4,6 +4,21 @@ public  class CaseChildHelper {
     // If case has status Assessment performed and the picklist __ is full then I have to create a child case. 
     
     public static boolean noValidationsOnTrgCAseIFAP = false;
+    public static List<CustomPermission> customPermissionsList {
+        get {
+            if(customPermissionsList == null) {
+                customPermissionsList = [SELECT Id, DeveloperName,
+                    (SELECT Id, Parent.Name, Parent.Profile.Id, Parent.Profile.Name 
+                        FROM SetupEntityAccessItems 
+                        WHERE Parent.Profile.Id = :UserInfo.getProfileId()
+                    )
+                FROM CustomPermission
+                WHERE DeveloperName = 'IFAP_Can_Bypass_Resubmission_Validation'];
+            }
+            return customPermissionsList;
+        }
+        set;
+    }
     
     public static boolean CreateChildCase(list<Case> olds, list<Case> news) {
         Id IFAPrt =Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId ;
@@ -51,14 +66,16 @@ public  class CaseChildHelper {
     	//      case 2 = child case id -> father to be updated
         Map<Id,Case> parentIdToChild = new Map<Id,Case>(); //every parent should have max 1 child
 
-        List<CustomPermission> customPermissions = [SELECT Id, DeveloperName,
+        List<CustomPermission> customPermissions = customPermissionsList;
+/*
+        [SELECT Id, DeveloperName,
             (SELECT Id, Parent.Name, Parent.Profile.Id, Parent.Profile.Name 
                 FROM SetupEntityAccessItems 
                 WHERE Parent.Profile.Id = :UserInfo.getProfileId()
             )
         FROM CustomPermission
         WHERE DeveloperName = 'IFAP_Can_Bypass_Resubmission_Validation'];
-
+*/
         Boolean userProfileCanBypassValidation = false;
         if(customPermissions != null && customPermissions.size() > 0)
             userProfileCanBypassValidation = customPermissions[0].SetupEntityAccessItems == null || customPermissions[0].SetupEntityAccessItems.isEmpty() ? false : true;
@@ -204,5 +221,4 @@ public  class CaseChildHelper {
 		}
 		*/
     }
-    
 }

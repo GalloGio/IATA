@@ -6,6 +6,8 @@ public without sharing class OneIdLightningLoginFormController {
     public static string ipAddress {get; set;}
     public static string siteCompleteUrl {get; set;}
     
+    public class CountryConfigException extends Exception {}
+    
     //@AuraEnabled
     public static Boolean sanctionCountry {get; set;}
 
@@ -53,8 +55,15 @@ public without sharing class OneIdLightningLoginFormController {
             
             if(ISSP_Utilities.isNotEmpty(userList)) {
                 oneUser = userList[0];
+                PermissionSetAssignment [] psa = [SELECT Id,AssigneeId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =:oneUser.id AND PermissionSetId IN 
+                (SELECT Id FROM PermissionSet WHERE Name = 'Identity_Portal_User')];
+
+                if(psa.size()==0){
+                     LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
+                }
+
 //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
-//oneUser.Portal_User_Frozen_Checkbox__c=true;
+//oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
                 system.debug('user id: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
@@ -76,7 +85,8 @@ public without sharing class OneIdLightningLoginFormController {
             String relayState = ApexPages.currentPage().getParameters().get('RelayState');
             if (relayState!=null)
                 pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
-    		*/
+            */
+            
             
                 
             username=null != oneUser ? oneUser.Username : username;
@@ -87,6 +97,19 @@ public without sharing class OneIdLightningLoginFormController {
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
             
             system.debug('page reference return from login: '+lgn);
+                        
+            List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
+                                //X2FA_Session__c, TD_User__c
+                                FROM User WHERE username =:username limit 1];
+            
+            system.debug('userListConfirmTempPassword '+ userListConfirmTempPassword[0]);
+            
+            if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
+                lgn = Site.login(username, password, (String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/s/changePassword');
+                userListConfirmTempPassword[0].UID__c ='';
+                update userListConfirmTempPassword[0];
+                
+            }
             
             //redirect to startUrl or some other page returned from the login 
             //for different login cases scenarios
@@ -131,7 +154,7 @@ public without sharing class OneIdLightningLoginFormController {
         newLog.Login_Ip__c = ipAddress;
         newLog.Finished__c = system.now();
   
-		system.debug('APEX findLocation.ipAddress: '+ipAddress);
+        system.debug('APEX findLocation.ipAddress: '+ipAddress);
         
         String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
         Http h = new Http();
@@ -141,7 +164,13 @@ public without sharing class OneIdLightningLoginFormController {
         req.setTimeout(2000);
         HttpResponse res;
         try{
-            res = h.send(req);
+            OneId_Global_Settings__c gs = OneId_Global_Settings__c.getInstance();
+            boolean isEnable = gs.ipinfo_call_enabled__c;
+            if(isEnable) {
+                res = h.send(req);
+            }else{
+                Throw new CountryConfigException('System is disable to get IP location from ipinfo Service');
+            }
             JSONParser parser = JSON.createParser(res.getBody());
             system.debug('message:' + String.valueOf(parser));
             while (parser.nextToken() != null) {

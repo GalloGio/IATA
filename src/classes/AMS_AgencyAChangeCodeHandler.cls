@@ -12,8 +12,7 @@ public class AMS_AgencyAChangeCodeHandler {
         set<id> setIdAACC = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
-        for(Agency_Applied_Change_Code__c aaccRecord : aacc)
-        {
+        for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
             {
@@ -24,7 +23,7 @@ public class AMS_AgencyAChangeCodeHandler {
 		system.debug('SALVES handleAfterInsert -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
         system.debug('SALVES handleAfterInsert -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
         if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)
-		  updateAccountReason(setIdAACC);
+		  updateAccountReason(setIdAACC, false);
 		
         //FM 22-09-2016 - Create "Agency Update" records
         AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
@@ -56,7 +55,7 @@ public class AMS_AgencyAChangeCodeHandler {
         system.debug('SALVES handleAfterUpdate -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
         system.debug('SALVES handleAfterUpdate -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
         if(!setIdAACC.isEmpty() && (AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)){
-	        updateAccountReason(setIdAACC);
+	        updateAccountReason(setIdAACC, true);
         }
     }
 
@@ -70,7 +69,7 @@ public class AMS_AgencyAChangeCodeHandler {
     //public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
 	//@future
     //SUSANA ALVES: removed @future because we don't need to update account for minor changes 
-    public static void updateAccountReason(set<id> setAACC){
+    public static void updateAccountReason(set<id> setAACC, boolean bIsUpdate){
         system.debug('SALVES --> updateAccountReason - setAACC : ' + setAACC);
     	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c, AccountNewStatus__c, Account__r.Reason__c, Account__r.Previous_Reason__c, Account__r.Status__c, Account__r.PreviousStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
     	set<id> setAccntId = new set<id>();
@@ -87,7 +86,7 @@ public class AMS_AgencyAChangeCodeHandler {
     		string sStatus = (aacc.AccountNewStatus__c==null?'':aacc.AccountNewStatus__c);
     		boolean bUpdateAccnt = false;
     		Account acc = new Account(id = aacc.Account__c);
-    		
+    		if(!bIsUpdate) acc.Organization_Last_Change_Date__c = Date.Today();
     		if(sReason != '-'){
     			if(aacc.Account__c != null){
 	    			string sAccntReason = aacc.Account__r.reason__c;
@@ -103,7 +102,8 @@ public class AMS_AgencyAChangeCodeHandler {
     		if(sStatus != ''){
     			if(aacc.Account__c != null){
 	    			string sAccntStatus = aacc.Account__r.status__c;
-	    			if(sAccntStatus != aacc.AccountNewStatus__c){
+	    			if(sAccntStatus != aacc.AccountNewStatus__c) {
+                        acc.Date_Organisation_Status_attained__c = Date.Today();
 	    				acc.status__c = sStatus;
 	    				acc.PreviousStatus__c = acc.Status__c;
 	    				bUpdateAccnt = true;
@@ -212,7 +212,7 @@ public class AMS_AgencyAChangeCodeHandler {
 					string sReasDesc = ac.Reason_Description__c;
 					string sReasonCode = 'xx';
 					if(sStatus!=null && sStatus!='' && sReasDesc != '' && sReasDesc!=null){
-						if(mapStatusReason.containsKey(sStatus)){
+						if(mapStatusReason.containsKey(sStatus)) {
 							if(mapStatusReason.get(sStatus).containsKey(sReasDesc))
 								ac.Reason_Code__c = mapStatusReason.get(sStatus).get(sReasDesc);
 						}
@@ -229,6 +229,9 @@ public class AMS_AgencyAChangeCodeHandler {
         // when creating a change code of type FIN or DIS, it should copy the information from staging Area (AMS_Pax_Accreditation_Form__c) into Master Data (Account)
 
         Id rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        Id newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+
+        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT};
 
         Set<Id> oscarIds = new Set<Id>();
 
@@ -244,7 +247,7 @@ public class AMS_AgencyAChangeCodeHandler {
 
         //aacclist = [SELECT ID, OSCAR__c, OSCAR__r.Account__c , OSCAR__r.AMS_Online_Accreditation__c from Agency_Applied_Change_code__c where id in :aaccIds and OSCAR__r.RecordTypeId = :rtNew and OSCAR__r.Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD') ];
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);

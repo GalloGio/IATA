@@ -1,4 +1,4 @@
-global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Database.Stateful 
+global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Database.Stateful
 {
 	public String query;
 	public List<String> extraIds;
@@ -6,15 +6,21 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	public Integer totalRecords;
 	public List<String> failed_records;
 	public Datetime syncStartedDate;
+	public Datetime previousSyncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
+	Set<String> locationsSet;
+	Set<String> statusSet;
+    public Boolean isManual;
 
-	public void init(Boolean runNext, List<String> ids)
+
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
-		batchName = 'Job 1: GDP Products - Account View'; 
+		isManual = manual==null ? false : manual;
+		batchName = 'Job 1: GDP Products - Account View';
 		processNextBatch = runNext;
-		extraIds = ids; 
+		extraIds = ids;
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		//-- Fields used for Sync
@@ -26,82 +32,147 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		String idsCondition;
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
-		}else{
-			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
-		}
+		}else {
+			idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
+			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+				idsCondition += ' AND Status__c IN  :statusSet ';
 
-		//-- Query conditions 
+			}
+			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+				idsCondition += ' AND Location_Class__c IN:  locationsSet';
+			}
+		}
+		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
+		// } else {
+		// }
+		// }else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+		// 	locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
+		// } else {
+		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
+		// }
+
+		//-- Query conditions
 		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'IATACode__c != null'
 			,	'CNS_Agency__c = false'
+			,	'CNS_Account__c = false'
 			,	idsCondition
-		}; 
-		
+		};
+
+		if(extraIds!=null && extraIds.size() > 0) {
+			 if(extraIds[0]=='none'){
+			 conditions.add('Id=null');}
+			 else{
+			//Run batch on specific Ids
+			List<String> specificIds = new List<String>();
+			for(String s: extraIds)
+			{
+				if(s.length() >= 15) specificIds.add(s.left(15));
+			}
+
+			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
+		}else{
+			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
+
+			if(batchInfo != null)
+			{
+				String deltaConditions;
+				//Keeps a copy of the Last_Sync_Start_Date__c to be used on the Job_1_Original_Start_Date__c
+				previousSyncStartedDate = batchInfo.Last_Sync_Start_Date__c == null ? Datetime.now() : batchInfo.Last_Sync_Start_Date__c;
+				//Run only on the deltas
+				if(runNext){
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+						,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}else{
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+						,new List<String>{batchInfo.Job_1_Original_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}
+
+				if(String.isNotBlank(batchInfo.Failed_Records__c))
+				{
+					// Reprocess failed records
+					List<String> failedRecordIds = new List<String>();
+					for(String s: batchInfo.Failed_Records__c.split(';'))
+					{
+						if(s.length() >= 15)
+							failedRecordIds.add(s.left(15));
+					}
+					if(failedRecordIds.size() > 0)
+						deltaConditions += ' OR Id IN (\'' + String.join(failedRecordIds, '\' , \'') + '\') ';
+				}
+
+				conditions.add('('+deltaConditions+')');
+			}
+		}
+
 		query = String.format('SELECT {0} '
 			+	'FROM Account '
-			+ 	'WHERE {1} ' 
+			+ 	'WHERE {1} '
 			+	'ORDER BY ParentId DESC ',
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 	}
 
-	global ams2gdp_Batch_Account() 
+	global ams2gdp_Batch_Account()
 	{
-		init(false,null);
+		init(false,null, false);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext) 
+	global ams2gdp_Batch_Account(Boolean runNext, Boolean manual)
 	{
-		init(runNext, null);
+		init(runNext,null, manual);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra) 
+	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext, extra);
+		init(runNext, extra, manual);
 	}
-	
-	global Database.QueryLocator start(Database.BatchableContext BC) 
+
+	global Database.QueryLocator start(Database.BatchableContext BC)
 	{
-		errorsCount = 0;	
+		errorsCount = 0;
 		totalRecords = 0;
-		failed_records = new List<String>();	
-		syncStartedDate =Datetime.now();
+		failed_records = new List<String>();
+		syncStartedDate = Datetime.now();
 
 		return Database.getQueryLocator(query);
 	}
 
 	/**
-	 * Synchronize Account 
+	 * Synchronize Account
 	 * 	=>	GDP Products - Account View
-	 */	
-   	global void execute(Database.BatchableContext BC, List<Account> accounts) 
+	 */
+   	global void execute(Database.BatchableContext BC, List<Account> accounts)
    	{
    		//-- Total records to be processed
    		totalRecords += accounts.size();
 
-   		//-- Errors list 
-   		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();	
+   		//-- Errors list
+   		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
 		//-- Format Account to GDP_Products_Account_View
 		List<GDP_Products_Account_View__c> products_to_save = new List<GDP_Products_Account_View__c>();
 		try
 		{
-			products_to_save = ams2gdp_BusinessLogic.formatAccount2ProductAccountView(accounts); 
+			products_to_save = ams2gdp_BusinessLogic.formatAccount2ProductAccountView(accounts);
 
 			//-- Raise exception for Unit Tests
-			if(Test.isRunningTest() &&   throwException) insert new Account();	
+			if(Test.isRunningTest() &&   throwException) insert new Account();
 		}
 		catch(Exception ex)
 		{
 			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
 		}
-		
-		//-- Save Records 
+
+		//-- Save Records
 		List<Database.UpsertResult> products_save_results = Database.upsert(products_to_save,GDP_Products_Account_View__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
 
-		//-- Process Errors 
+		//-- Process Errors
 		errors.addAll(ams2gdp_Error.formatUpsertResult(products_to_save, products_save_results, batchName, 'AMS_GDP_Key__c'));
-		
+
 		//-- Log the current Errors
 		if(!errors.isEmpty())
 		{
@@ -110,31 +181,20 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 
 			//-- Save failed records
 			Set<String> set_failed_records = new Set<String>(failed_records);
-				
+
 			for(ams2gdp_Error failed_rec : errors)
 				set_failed_records.add(failed_rec.amsRecordId);
-			
-			failed_records =new List<String>(set_failed_records);				
+
+			failed_records =new List<String>(set_failed_records);
 		}
 	}
-	
-	global void finish(Database.BatchableContext BC) 
+
+	global void finish(Database.BatchableContext BC)
 	{
-		//-- Start next batch 
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Inspection(true));	
-		//if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Account2(true));		
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Inspection(true, isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 
-		//-- Update Last Sync Info 
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName, 
-			Last_Sync_Start_Date__c=syncStartedDate, 
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c; 
-
-		//--Send completion notification 
-		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records); 		
+		//--Send completion notification
+		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}
 }

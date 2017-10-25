@@ -39,6 +39,7 @@ private class CaseBeforeTriggerTest {
         insert a;
          
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true);
@@ -153,6 +154,7 @@ private class CaseBeforeTriggerTest {
         insert a;
 
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
                                  phone = '123',
                                  accountid = a.id,
                                  User_Portal_Status__c = 'Approved Admin',
@@ -178,7 +180,7 @@ private class CaseBeforeTriggerTest {
         insert c;
     }
 
-
+/*
     @isTest static void unitTestPortal() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
         ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
@@ -310,6 +312,7 @@ private class CaseBeforeTriggerTest {
         
 
     }
+	*/
     //*********************************
 
     @isTest static void unitTest2() {
@@ -351,6 +354,7 @@ private class CaseBeforeTriggerTest {
         insert a;
          
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true);
@@ -1366,7 +1370,7 @@ private class CaseBeforeTriggerTest {
     private static list<Contact> CreateContacts(list<Account> lsAccnt) {
       list<Contact> listcontact = new list<Contact>();
       for(integer i=0; i<lsAccnt.size(); i++)
-        listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true, Email='test.preprod@test.org') );
+        listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true, Email='test.preprod@test.org') );
       return listcontact;
     }
 
@@ -1979,6 +1983,7 @@ private class CaseBeforeTriggerTest {
        insert a;
        
        Contact con =new contact(lastname = 'pluto' ,
+                    firstname = 'test',
                     phone = '123',
                     accountid = a.id,
                     Financial_Assessment_Contact__c = true);

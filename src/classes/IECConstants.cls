@@ -613,7 +613,7 @@ global class IECConstants {
     
     public static String GDPReplication_ProfileIDswithAccess {
         get {
-            return Test.isRunningTest() ? '00ew0000001R6uT,00e20000000kvcd,00e20000001QMpc,00e20000000h0gF,00520000002P7Kb,00ew0000001QUyp,00e20000000kvcdAAA,'+ + Userinfo.getProfileId()  : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
+            return Test.isRunningTest() ? '00ew0000001R6uT,00e20000000kvcd,00e20000001QMpc,00e20000000h0gF,00520000002P7Kb,00ew0000001QUyp,00e20000000kvcdAAA,00e20000000h0gC,00ew0000001QoD2' : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
         }
     }
 }

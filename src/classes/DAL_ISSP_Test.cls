@@ -10,7 +10,7 @@ public with sharing class DAL_ISSP_Test {
 	}
 	
 	static testMethod void test_getContact() {
-		Contact contact = new Contact(LastName='test');
+		Contact contact = new Contact(FirstName='Name', LastName='test');
 		insert contact;
 		
 		Contact con = DAL_ISSP.getContact(contact.Id);

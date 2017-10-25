@@ -22,14 +22,63 @@
 @isTest
 private class SCIMMessageEnhancerTest {
 
-    static testMethod void myUnitTest() {
-        
-        SCIMUser anU = new SCIMUser('userName', 'familyName', 'givenName', 'externalid', 'email', 'entitlement');
+    static testMethod void test_generic_SCIMMessage() {
+
+        Map<String,Object> inputParams = new Map<String,Object>();
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'givenName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'familyName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'email');        
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_USERNAME, 'userName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalid');
+
+        Process.PluginRequest request = new Process.PluginRequest(inputParams);
+
+        SCIMMessageEnhancer message = new SCIMMessageEnhancer('SCIMMessageEnhancer');
+        SCIMMessageEnhancer message_noConstructor = new SCIMMessageEnhancer();
+
+        Test.startTest();
+        message.enhanceMessage(request);
+        Test.stopTest();
+    }
+
+    static testMethod void test_CopaMessage() {
+
+        Map<String,Object> inputParams = new Map<String,Object>();
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'givenName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'familyName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'email');        
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_USERNAME, 'userName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalid');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, 'COPAMessage');
+
+        Process.PluginRequest request = new Process.PluginRequest(inputParams);
+
         COPASCIMMessageEnhancer cE = new COPASCIMMessageEnhancer('test');
-        cE.enhanceMessage(anU);
-        
         COPASCIMMessageEnhancer cE1 = new COPASCIMMessageEnhancer();
-        
-        
+
+        Test.startTest();
+        cE.enhanceMessage(request);
+        Test.stopTest();
+    }
+
+    static testMethod void test_ANG_IEPSCIMMessage() {
+
+        Map<String,Object> inputParams = new Map<String,Object>();
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'givenName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'familyName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'email');        
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_USERNAME, 'userName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalid');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, 'COPAMessage');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_PROPERTIES, '{"language" : "EN" , "IATA Code" : "90786"}');
+
+        Process.PluginRequest request = new Process.PluginRequest(inputParams);
+
+        ANG_IEPSCIMMessage message = new ANG_IEPSCIMMessage('ANG_IEPSCIMMessage');
+        ANG_IEPSCIMMessage message_noConstructor = new ANG_IEPSCIMMessage();
+
+        Test.startTest();
+        message.enhanceMessage(request);
+        Test.stopTest();
     }
 }

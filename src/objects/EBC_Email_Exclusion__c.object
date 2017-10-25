@@ -205,6 +205,7 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Email__c</columns>
+        <columns>Is_Relation_Created__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
@@ -225,7 +226,7 @@
         <filters>
             <field>Source_Campaign__c</field>
             <operation>contains</operation>
-            <value>TRAVEL AGENT FAMS NEW</value>
+            <value>Silvercar. Car rental the way it should be</value>
         </filters>
         <label>Exclusion Search By Source Campaign</label>
         <language>en_US</language>
@@ -291,6 +292,23 @@
             <value>HARDBOUNCE</value>
         </filters>
         <label>Hard Bounce Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>IATA_Domain_Exclusions</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Type__c</columns>
+        <columns>Event_Date_Timestamp__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Email__c</field>
+            <operation>contains</operation>
+            <value>@iata.org</value>
+        </filters>
+        <label>iata.org Domain Exclusions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -370,7 +388,7 @@
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>gm-tour@hanmail.net</value>
+            <value>@iata.org</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>

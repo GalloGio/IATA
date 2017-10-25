@@ -1943,7 +1943,7 @@
         <errorConditionFormula>AND ( 
   RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
   OR ( 
-    ISBLANK( Subject ), 
+    AND(ISBLANK( Subject__c),ISBLANK( Subject)), 
     ISBLANK( ActivityDate ) 
   ) 
 )</errorConditionFormula>

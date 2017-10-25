@@ -1,6 +1,7 @@
 public class AMS_AccountOscarWizardController {
 
     public Flow.Interview.OSCAR_Wizard_SIMPLEX myFlow { get; set; }
+    public Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX myFlowNG { get; set; }
 
     ApexPages.StandardController controller;
 
@@ -14,29 +15,42 @@ public class AMS_AccountOscarWizardController {
 
     public AMS_AccountOscarWizardController(ApexPages.StandardController stdController) {
 
-        this.controller  = stdController;
-        
+        this.controller = stdController;
+       
+    }
+
+    public Account getAccount() {
+        if(ApexPages.currentPage().getParameters().get('accountId') != null)
+            return [select ANG_IsNewGenAgency__c from Account
+                    where id = :ApexPages.currentPage().getParameters().get('accountId')];
+        return null;
     }
 
     public String getoscarId(){
-        if (myFlow==null) 
+        if (myFlow==null && myFlowNG==null) 
             return '';
+        else if(myFlow!=null)
+            return myFlow.OscarId;
         else
-         return myFlow.OscarId;
+            return myFlowNG.OscarId;
     }
 
     public String getoscarName(){
-        if (myFlow==null) 
+        if (myFlow==null && myFlowNG==null) 
             return '';
+        else if(myFlow!=null)
+            return myFlow.createdOscarName;
         else
-         return myFlow.createdOscarName;
+            return myFlowNG.createdOscarName;
     }
 
     public String getcaseId(){
-        if (myFlow==null) 
+        if (myFlow==null && myFlowNG==null) 
             return '';
+        else if(myFlow!=null)
+            return myFlow.OscarCaseId;
         else
-         return myFlow.OscarCaseId;
+            return myFlowNG.OscarCaseId;
     }
 
     public String geterrorMessage(){

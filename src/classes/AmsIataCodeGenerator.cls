@@ -82,10 +82,16 @@ global class AmsIataCodeGenerator{
         try
         {
 
-            Account theAccount = [select Id, Link_agent_code__c, Sector__c, Category__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
+            Account theAccount = [select Id, Link_agent_code__c, Sector__c, Category__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c, CNS_Agency__c from Account where Id = :accountId FOR UPDATE];
             
-            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
+            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Link_agent_name__c, Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
             
+            if(theAccount.CNS_Agency__c == false && theAccreditation.SAAM_Case__r.OSCAR__r.STEP6__c != AMS_Utils.PASSED && !(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.MSO.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.GSA.1.0' || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == 'NEW.AHA.1.0')){
+                returnedValues[0] = '2';
+                returnedValues[1] = 'IATA Code Generation is only allowed after Sanity Check step be passed.';
+                return returnedValues;
+            }
+
             isImportAgentWithLink = theAccreditation.Link_agent_name__c != null && importAgentsCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) ? true : false;
 
             System.debug('DNG: theAccount is ' + theAccount);
@@ -127,6 +133,7 @@ global class AmsIataCodeGenerator{
                 theAccreditation.A_Code__c = theAccreditation.IATACode__c.subString(2, 3);
                 theAccreditation.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 checkDigitCreation(theAccreditation, theAccount, false);
+                theAccount.Site = theAccreditation.IATACode__c;
                 theAccreditation.IATACode__c = theAccreditation.IATACode__c+theAccreditation.Chk_Dgt__c;
                 
                 theAccount.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;
@@ -137,6 +144,7 @@ global class AmsIataCodeGenerator{
                 theAccount.IATACode__c = theAccreditation.IATACode__c;
                 
                 theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
                     //hammer: new requirement has same location class mapping to different account categories...
@@ -425,6 +433,7 @@ global class AmsIataCodeGenerator{
                             }
 
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
+                            if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                             theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {

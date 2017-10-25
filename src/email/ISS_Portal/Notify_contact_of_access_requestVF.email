@@ -1,0 +1,52 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_IataPortal} - {!$Label.ISSP_Email_AccessRequest_subject1} {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name)} {!$Label.ISSP_Email_AccessRequest_subject2}" 
+
+recipientType="Contact" language="{!CASE(relatedTo.Contact__r.Preferred_Language__c, 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no', 'Chinese','zh', 'Japanese','ja','Portuguese','pt',   'EN')}" relatedToType="Portal_Application_Right__c">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+<BR/>
+
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+{!$Label.ISSP_Email_ThankYouContacting}<BR/>
+<BR/>
+{!$Label.ISSP_Email_AccessRequest1} 
+
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name)}        
+
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_AccessRequest2_IEP, $Label.ISSP_Email_AccessRequest2)}
+
+<BR/>
+<BR/>
+{!$Label.ISSP_Email_AccessRequest3}<BR/>
+<BR/>
+{!$Label.ISSP_Email_ThankYou}<BR/>
+<BR/>
+{!$Label.ISSP_Email_IataService}<BR/>
+
+<p>
+
+<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+</a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000056QFS&oid=00D2000000008TF "/>
+</apex:outputPanel>
+
+</p>
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

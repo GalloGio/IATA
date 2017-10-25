@@ -248,11 +248,11 @@
                 <field>ITDI_Courses_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Tax_2_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Tax_2_Value__c</field>
             </layoutItems>
         </layoutColumns>
