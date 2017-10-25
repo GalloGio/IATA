@@ -77,6 +77,14 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 return new PageReference('/ISSP_Homepage');
         }
 
+
+        // check if success step -> then close the OSCAR
+        if (step == 'success' && oscarCase != null && oscarCase.OSCAR__c != null) {
+            system.debug('Success step - closing the OSCAR');
+            closeOscar(oscarCase.OSCAR__c);
+        }
+        
+
         return null;
     }
 
@@ -328,7 +336,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         // send confirmation email
         sendConfirmationEmail(caseId, currentUser.ContactId, true);
 
-        closeOscar(oscarId);
+        //closeOscar(oscarId);
 
         return true;
     }
