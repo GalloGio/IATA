@@ -100,10 +100,13 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
     // disable deactivation if child groups are inactive
     List<LocalGovernance__c> lsAllGroups = [SELECT Id, Reporting_to__c, Active__c FROM LocalGovernance__c];
     for (LocalGovernance__c lg : Trigger.new) {
-        List<LocalGovernance__c> allChildren = handler.getAllChildren(lg.Id, lsAllGroups);
-        if(handler.hasActiveGroups(allChildren)) {
-            lg.addError('cannot deactive if child groups are active');
+        if(lg.Active__c == false && Trigger.oldMap.get(lg.Id).Active__c == true) {
+            List<LocalGovernance__c> allChildren = handler.getAllChildren(lg.Id, lsAllGroups);
+            if(handler.hasActiveGroups(allChildren)) {
+                lg.addError('cannot deactive if child groups are active');
+            }
         }
+
     }
 
   }
