@@ -1577,13 +1577,13 @@
                               <table>
                                 <tr>
                                   <td class="modalrow">
-                                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}" /><br/>
-                                    <apex:inputField value="{!newContact.Salutation__c}" />
+                                    <apex:outputLabel style="margin-left: -1px;" value="{!$ObjectType.Contact.fields.Salutation.Label}"/><br/>
+                                    <apex:inputField style="margin-left: -66px;" value="{!newContact.Salutation__c}"/>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td class="modalrow">
-                                    <apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
+                                    <apex:outputLabel style="margin-left: -1px;" value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
                                     <apex:inputField value="{!newContact.First_name__c}" required="true" />
                                   </td>
                                 </tr>
@@ -1591,7 +1591,7 @@
                                   <tr>
                                     <td class="modalrow">
                                       <apex:outputPanel >
-                                        <apex:outputLabel value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
+                                        <apex:outputLabel style="margin-left: -1px;" value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
                                         <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                       </apex:outputPanel>
                                       <apex:inputField value="{!newContact.Local_First_name__c}" required="true" />
@@ -1600,7 +1600,7 @@
                                 </apex:outputText>
                                 <tr>
                                   <td class="modalrow">
-                                    <apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLastNameENG, $ObjectType.Contact.fields.LastName.Label)}" /><br/>
+                                    <apex:outputLabel style="margin-left: -1px;" value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLastNameENG, $ObjectType.Contact.fields.LastName.Label)}" /><br/>
                                     <apex:inputField value="{!newContact.Last_name__c}" />
                                   </td>
                                 </tr>
@@ -1608,7 +1608,7 @@
                                   <tr>
                                     <td class="modalrow">
                                       <apex:outputPanel >
-                                        <apex:outputLabel value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
+                                        <apex:outputLabel style="margin-left: -1px;" value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
                                         <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalLastName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                       </apex:outputPanel>
                                       <apex:inputField value="{!newContact.Local_Last_Name__c}" required="true" />

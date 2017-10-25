@@ -207,7 +207,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public String agencyCodesConcernedForPDF {get; set;}
 
     public boolean newAccreditationModels {get; set;}
-    public List<AMS_Accreditation_Contact__c> checkAllOwners {get; set;}	   
+    public List<AMS_Accreditation_Contact__c> checkAllOwners {get; set;}       
 
     public String accredidationType {get; set;}
     public Integer cntIFAPContacts {get; set;}
@@ -634,6 +634,9 @@ public without sharing class ISSP_AMS_Accreditation {
         if(isHOAccredited) {
             amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
             amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+            if(amsLocationTypeLabelHq == null) {
+                amsLocationTypeLabelHq = amsLocationTypeLabel;
+            }            
         } else {
             amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
             amsLocationTypeLabelHq = amsLocationTypeLabel;
@@ -1250,6 +1253,9 @@ public without sharing class ISSP_AMS_Accreditation {
             if(isHOAccredited) {
                 amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
                 amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+                if(amsLocationTypeLabelHq == null) {
+                    amsLocationTypeLabelHq = amsLocationTypeLabel;
+                }                
             } else {
                 amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
                 amsLocationTypeLabelHq = amsLocationTypeLabel;
@@ -5597,13 +5603,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
         
         if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.AE_separate_Legal_Entity__c == 'Yes' && newForm.ISSP_AMS_when_incorporated__c == null) {
-   			newForm.ISSP_AMS_when_incorporated__c.addError(Label.ISSP_YouMustEnter);
-        	ngErrorFoundBR = true;
+            newForm.ISSP_AMS_when_incorporated__c.addError(Label.ISSP_YouMustEnter);
+            ngErrorFoundBR = true;
         }
         
-       	if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.AE_separate_Legal_Entity__c == 'Yes' && newForm.ISSP_AMS_where_incorporated__c == null) {
-   			newForm.ISSP_AMS_where_incorporated__c.addError(Label.ISSP_YouMustEnter);
-          	ngErrorFoundBR = true;
+        if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.AE_separate_Legal_Entity__c == 'Yes' && newForm.ISSP_AMS_where_incorporated__c == null) {
+            newForm.ISSP_AMS_where_incorporated__c.addError(Label.ISSP_YouMustEnter);
+            ngErrorFoundBR = true;
         }
 
         if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
@@ -7377,7 +7383,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
         // END NEWGEN-205
 
-	for(AMS_Accreditation_Contact__c amsAccCon : countAccreditationContact){ //NEWGEN-1249
+    for(AMS_Accreditation_Contact__c amsAccCon : countAccreditationContact){ //NEWGEN-1249
             if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && amsAccCon.ANG_contactFromAccount__c == false){
                 notToAdd = true;
                 break;
