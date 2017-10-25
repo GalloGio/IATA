@@ -18,11 +18,11 @@ public class ANG_RHCHelper {
 
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
-		createRHCInfo([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accountIds], sumFS);
+		//createRHCInfo([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accountIds], sumFS);
 	}
 
 	public static void createRHCInfo(List<Account> accounts, Boolean sumFS) {
-
+		/*
 		if(accounts.isEmpty()) return;
 
 		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
@@ -38,21 +38,21 @@ public class ANG_RHCHelper {
 
 		insert rhcInfos;
 
-		if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);
+		if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);*/
 	}
 
 	public static void deactivateRHCInfo(Set<Id> accounts) {
-		deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
+		//deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
 	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
-		if(!rhcInfos.isEmpty()) delete rhcInfos;
+		//if(!rhcInfos.isEmpty()) delete rhcInfos;
 	}
 
 	public static void moveRHCInfos(List<ANG_RHC_Information__c> rhcInfos, Map<Id, Id> newParents) {
-		for(ANG_RHC_Information__c rhcInfo : rhcInfos) rhcInfo.ANG_AccountId__c = newParents.get(rhcInfo.ANG_AccountId__c);
+		//for(ANG_RHC_Information__c rhcInfo : rhcInfos) rhcInfo.ANG_AccountId__c = newParents.get(rhcInfo.ANG_AccountId__c);
 
-		if(!rhcinfos.isEmpty()) update rhcInfos;
+		//if(!rhcinfos.isEmpty()) update rhcInfos;
 	}
 
 	/*public static void calculateRHCAmount(List<Account> accounts) {
