@@ -178,13 +178,13 @@ private class AMS_AgencyAChangeCodeTest {
 	}
 
      @isTest static void testEventsTriggerHandler(){
-        //test to increase converage on unused events on triggerhandler
-    ANG_AgencyAChangeCodeTriggerHandler triggerhandler = new ANG_AgencyAChangeCodeTriggerHandler();
+        //test to increase coverage on unused events on triggerhandler
+        ANG_AgencyAChangeCodeTriggerHandler triggerhandler = new ANG_AgencyAChangeCodeTriggerHandler();
         triggerhandler.onBeforeInsert();
         triggerhandler.onBeforeUpdate();
-         triggerhandler.onAfterUpdate();
-         triggerhandler.onBeforeDelete();
-         triggerhandler.onAfterDelete();
+        triggerhandler.onAfterUpdate();
+        triggerhandler.onBeforeDelete();
+        triggerhandler.onAfterDelete();
 
     }
 
