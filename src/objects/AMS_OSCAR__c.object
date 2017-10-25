@@ -262,6 +262,21 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Agency_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used on IEP Bank Account Setup</description>
+        <externalId>false</externalId>
+        <label>Agency Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>OSCARs</relationshipLabel>
+        <relationshipName>OSCARs</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -2730,6 +2745,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </picklistValues>
             <picklistValues>
                 <fullName>NGCORRECTION.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IEP.BANK.ACCOUNT.SETUP</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -15653,10 +15672,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>CERTIFICATE</fullName>
+        <fullName>BANK_ACCOUNT_SETUP</fullName>
         <active>true</active>
-        <description>Certificate OSCAR Process Record Type</description>
-        <label>CERTIFICATE</label>
+        <description>Used for IEP BANK ACCOUNT SETUP process</description>
+        <label>BANK ACCOUNT SETUP</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -16604,6 +16623,9 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>true</default>
             </values>
             <values>
+                <fullName>IEP%2EBANK%2EACCOUNT%2ESETUP</fullName>
+            </values>
+            <values>
                 <fullName>NEW%2EMSO%2E1%2E0</fullName>
                 <default>false</default>
             </values>
@@ -17536,9 +17558,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>CERTIFICATION</fullName>
+        <fullName>CERTIFICATE</fullName>
         <active>true</active>
-        <label>CERTIFICATION</label>
+        <description>Certificate OSCAR Process Record Type</description>
+        <label>CERTIFICATE</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
@@ -19406,9 +19429,9 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>CHANGE</fullName>
+        <fullName>CERTIFICATION</fullName>
         <active>true</active>
-        <label>CHANGE</label>
+        <label>CERTIFICATION</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
