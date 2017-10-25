@@ -330,15 +330,6 @@ public with sharing class ISSP_EditPortalServiceAccess{
                     ContactToAdd_Lst.add(PSAitem);
                 }
             }
-            if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0)
-            {
-                insert ContactToAdd_Lst ;
-            }
-
-            if(existPSA_Lst != null && existPSA_Lst.size() > 0)
-            {
-                update existPSA_Lst ;
-            }
             
             List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIdSet];
             List <String> activateIdList = new List <String>();
@@ -353,14 +344,29 @@ public with sharing class ISSP_EditPortalServiceAccess{
                     createIdSet.add(thisContact.Id);
                 }
             }
+
             if (!activateIdList.isEmpty()){
                 ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
                 update processContactList;
             }
+
             if (!createIdSet.isEmpty()){
                 ISSP_ContactList ctrl = new ISSP_ContactList();
                 ctrl.processMultiplePortalUserStatusChange(createIdSet, 'Approved User', 'Active');
             }
+
+            //
+            // Save all the Portal_Application_Right__c after creating the users.
+            // This is important for all EASY PAY services because they need to have the portal users.
+            //
+            if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0) {
+                insert ContactToAdd_Lst ;
+            }
+
+            if(existPSA_Lst != null && existPSA_Lst.size() > 0) {
+                update existPSA_Lst ;
+            }
+
         }
 
         Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
@@ -392,6 +398,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null
             order by name
             Limit 1000];          
         
@@ -403,6 +411,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 1000
@@ -416,6 +426,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 2000
@@ -429,6 +441,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 3000];
@@ -441,6 +455,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 4000];
