@@ -397,7 +397,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
 + &apos;:&apos; 
 + Legal_Name_1__c + Legal_Name_2__c + Legal_Name_3__c 
 + &apos;:&apos; 
-+ Id</formula>
++ Agency_Code__c + Id</formula>
         <inlineHelpText>Key string used for sorting in GSS and MDP file generation. This field is for system use only.</inlineHelpText>
         <label>GSS_MDP Sort Key Formula</label>
         <required>false</required>
