@@ -1035,120 +1035,6 @@
         ]
       },
       {
-        "Name": "IEP.BANK.ACCOUNT.SETUP",
-        "Flows": [
-          {
-            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
-            "Steps": [
-              {
-                "Name": "STEP6",
-                "Required": [],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
-                  }
-                ],
-                "DisplayFields": [
-                "New_docs_Received__c",
-                  "STEP6__c"                  
-                ],
-                "IsDependent": false
-              }
-            ]
-          },
-          {
-            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
-            "Steps": [
-              {
-                "Name": "STEP17",
-                "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "performAML",
-                    "ActionLabel": "AMS_OSCAR_Action4",
-                    "args": [
-                      "oscarid"
-                    ]
-                  }
-                ],
-                "Automations": [
-                  {
-                    "Status": "In Progress",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
-                  },
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
-                  }
-                ],
-                "DisplayFields": [
-                  "STEP17__c"
-                ],
-                "IsDependent": false
-              }
-            ]
-          },
-          {
-            "Name": "AMS_OSCAR_CHANGE_PROCESSING",
-            "Steps": [
-              {
-                "Name": "STEP7",
-                "Required": [],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step7_failed"
-                  }
-                ],
-                "DisplayFields": [
-                  "Update_IRIS_processing__c",
-                  "Confirm_DD_setup_with_R_S__c",
-                  "STEP7__c"
-                ],
-                "IsDependent": false
-              }
-            ]
-          },
-          {
-            "Name": "AMS_OSCAR_CHANGE_FINALIZATION",
-            "Steps": [
-              {
-                "Name": "STEP16",
-                "Required": [],
-                "Actions": [],
-                "Automations": [
-                  {
-                    "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step16_succeeded"
-                  },
-                  {
-                    "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step16_failed"
-                  }
-                ],
-                "DisplayFields": [
-                  "Confirm_DD_setup_with_agent__c",
-                  "Change_effective_as_of__c",
-                  "STEP16__c"
-                ],
-                "IsDependent": false
-              }
-            ]
-          }
-        ]
-      },
-      {
         "Name": "MAJOR.CHANGES",
         "Flows": [
           {
@@ -6112,6 +5998,120 @@
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
                   "AMS_Correction_change_code__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "IEP.BANK.ACCOUNT.SETUP",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+            "Steps": [
+              {
+                "Name": "STEP17",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "performAML",
+                    "ActionLabel": "AMS_OSCAR_Action4",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+                  },
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP17__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_PROCESSING",
+            "Steps": [
+              {
+                "Name": "STEP7",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step7_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Update_IRIS_processing__c",
+                  "Confirm_DD_setup_with_R_S__c",
+                  "STEP7__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_FINALIZATION",
+            "Steps": [
+              {
+                "Name": "STEP16",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step16_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step16_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Confirm_DD_setup_with_agent__c",
+                  "Effective_date__c",
+                  "STEP16__c"
                 ],
                 "IsDependent": false
               }

@@ -665,11 +665,17 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,
+				
 				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
 				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
 				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
-				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.ContactId : '' ),
-				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : '' ),
+				// For IEP BANK Account we'll populate Dossier Reception Date = today
+				Dossier_reception_date__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? Date.today() : null)
+				
+			);
+
 
 
 			insert oscar;
@@ -768,6 +774,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		public String oscarId { get; set; }
 		public String oscarCaseId { get; set; }
+		public String concernedContactId { get; set; }
 
 		public AMS_OSCAR__c oscarCreated {get; set;}
 		public Case caseCreated {get; set;}
@@ -785,7 +792,15 @@ public without sharing class AMS_MigrationToolHelper {
 			this.processing = false;
 			this.migrated = false;
 			this.fromPortal = fromPortal;
+			
 		}
+
+		public CaseContainer(Case c, Boolean fromPortal, String concernedContactId){
+			this(c, fromPortal);
+			this.concernedContactId = concernedContactId;
+		}
+
+		
 	}
 	
 	

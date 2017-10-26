@@ -63,11 +63,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         String processType = (String) request.inputParameters.get('processType');
         String scopeOfChange = (String) request.inputParameters.get('scopeOfChange');
         String concernedAgencyCodes = (String) request.inputParameters.get('concernedAgencyCodes');
+        String concernedContactId = (String) request.inputParameters.get('concernedContact');
 
         System.debug('Case to migrate is ' + caseId);
         System.debug('Type of process is ' + processType);
         System.debug('Scope of Change is ' + scopeOfChange);
         System.debug('Concerned agency codes: ' + concernedAgencyCodes);
+        System.debug('Concerned CotactId: ' + concernedContactId);
         
 
         List<AMS_Pax_Accreditation_Form__c> accreditationFormsList =  [ SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.Id = :caseId];
@@ -112,7 +114,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
         changeSubject = false;
 
-        AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
+       // AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
+        AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal,concernedContactId);
 
         System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
@@ -292,6 +295,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
             new Process.PluginDescribeResult.InputParameter('scopeOfChange', 
             Process.PluginDescribeResult.ParameterType.STRING, true),
             new Process.PluginDescribeResult.InputParameter('concernedAgencyCodes', 
+            Process.PluginDescribeResult.ParameterType.STRING, true),
+            new Process.PluginDescribeResult.InputParameter('concernedContact', 
             Process.PluginDescribeResult.ParameterType.STRING, true)
             }; 
         result.outputParameters = new 
