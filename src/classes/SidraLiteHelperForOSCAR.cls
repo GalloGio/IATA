@@ -135,6 +135,12 @@ public with sharing class SidraLiteHelperForOSCAR {
                 return reason;
             }
         }
+		if (oscar.Step35__c == 'Failed') {
+            String reason = 'Financial Security Non-compliance (OSCAR Change)';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
         if (oscar.RPM_Approval__c == 'Authorize Disapproval') {
             String reason = 'Change Deficiency';
             if (!existentReasons.contains(reason) ) {
