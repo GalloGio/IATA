@@ -119,15 +119,101 @@ public class AMS_OSCAR_WebserviceTest {
         Test.stopTest();
     }
 
-    static testMethod void test_createSidraLite() {
+    static testMethod void test_createSidraLite1() {
         
         setup();
         
         Test.startTest();
-
-        String resultcreateSIDRALiteERROR = AMS_OSCAR_Webservice.createSIDRALite(oscar.Id);
-        String resultcreateSIDRALiteSUCCESS = AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
-
+        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id, '6', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id, '6');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite2() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '1', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '9', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '11', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '12', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '14', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '26', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'RPM', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite3() {
+        
+        setup();
+        oscar6.Step6__c='Failed';
+        update oscar6;
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite4() {
+        
+        setup();
+        oscar6.STEP12__c = 'Passed';
+        oscar6.Validation_Status__c = 'Passed';
+        oscar6.RPM_Approval__c='Authorize Disapproval';
+        update oscar6;
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'RPM', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, 'RPM');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite5() {
+        
+        setup();
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
+        update oscarCase;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
+        oscar6.Step6__c='Failed';
+        update oscar6;
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, 'DGR');
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite6() {
+        
+        setup();
+        oscar6.Step6__c='Failed';
+        update oscar6;
+        
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS2).get(0);
+        update oscarCase;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+        try {
+            oscarCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
+            update oscarCase;
+            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '6', true);
+            System.assert(false, 'Exception expected');
+        } catch (WSSidraLite.ShowConfirmationException e) {
+            System.assert(true);
+        }
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
         Test.stopTest();
     }
 
