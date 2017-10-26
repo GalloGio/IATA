@@ -41,30 +41,35 @@
                     <apex:column value="{!result.RiskAlert.ANG_Severity__c} - {!result.RiskAlert.CreatedDate}" HeaderValue="Alert"/>
                     <apex:column value="{!result.theAccount.IATACode__c}" HeaderValue="IATA Code"/>
                     <apex:column value="{!result.theAccount.Name}" HeaderValue="Agency Name"/>
-                    <apex:column value="{!result.theAccount.TOP_Parent__r.IATACode__c}" HeaderValue="Top Parent IATA Code"/>
-                    <apex:column value="{!result.theAccount.TOP_Parent__r.Name}" HeaderValue="Top Parent Agency Name"/>
-                    <apex:column HeaderValue="Change Ownership/Hierarchy last 12 months">
+
+                    <apex:column value="{!result.theAccount.IATA_ISO_Country__r.name}" HeaderValue="Country"/>
+                    <apex:column value="{!result.RiskAlert.ANG_Agent_Sales__c}" HeaderValue="Sales Amount"/>
+
+
+                  <!--  <apex:column value="{!result.theAccount.TOP_Parent__r.IATACode__c}" HeaderValue="Top Parent IATA Code"/>
+                    <apex:column value="{!result.theAccount.TOP_Parent__r.Name}" HeaderValue="Top Parent Agency Name"/> -->
+                    <apex:column HeaderValue="Change of ownership 12 mo">
                         <ul>
                             <apex:repeat value="{!result.lsCHICHO}" var="CHICHO">
-                                <li>{!CHICHO.Change_Code__c} - {!CHICHO.Created_Date_To_Show__c}</li>
+                                <li>{!CHICHO.changeCode} - {!CHICHO.convertedDate}</li>
                             </apex:repeat>
                         </ul>
                     </apex:column>
-                    <apex:column HeaderValue="Change IRR/DEF last 12 months">
+                    <apex:column HeaderValue="Non-payment / Default 12 mo">
                         <ul>
                             <apex:repeat value="{!result.lsIRRDEF}" var="IRRDEF">
-                                <li>{!IRRDEF.Change_Code__c} - {!IRRDEF.Created_Date_To_Show__c}</li>
+                                <li>{!IRRDEF.changeCode} - {!IRRDEF.convertedDate}</li>
                             </apex:repeat>
                         </ul>
                     </apex:column>
-                    <apex:column HeaderValue="FIN last 24 Months">
+                    <apex:column HeaderValue="Accredited 24 mo">
                         <ul>
                             <apex:repeat value="{!result.lsFIN}" var="FIN">
-                                <li>{!FIN.Change_Code__c} - {!FIN.Created_Date_To_Show__c}</li>
+                                <li>{!FIN.changeCode} - {!FIN.convertedDate}</li>
                             </apex:repeat>
                         </ul>
                     </apex:column>
-                    <apex:column HeaderValue="RED after YELLOW">
+                    <apex:column HeaderValue="Red Alert">
                         <apex:inputcheckbox selected="{!result.REDAfterYellow}" disabled="true"/>
                     </apex:column>
                     <apex:column HeaderValue="Ticketing Authority status">

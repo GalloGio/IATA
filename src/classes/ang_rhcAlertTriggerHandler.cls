@@ -137,6 +137,12 @@ public class ang_rhcAlertTriggerHandler{
 				contactsPerAccount.get(con.AccountId).add(con);
 			}
 
+			AssignmentRule AR = new AssignmentRule();
+            AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+            //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+
 			Case smapParentCase;
 			List<Case> sidraLiteCases;
 			List<Case> smapParentCases = new List<Case>();
@@ -160,6 +166,7 @@ public class ang_rhcAlertTriggerHandler{
 					End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c, 
 					Suspension_Date__c=  Date.today()
 				);
+				smapParentCase.setOptions(dmlOpts);
 				wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
 				//we'll get the portal approved admin or if none the ifap contact 
@@ -211,8 +218,9 @@ public class ang_rhcAlertTriggerHandler{
 					sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
 					sidraLiteCase.Priority = 'High'; 
 					sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
-
 					sidraLiteCase.ContactId = smapParentCase.ContactId;
+					sidraLiteCase.setOptions(dmlOpts);
+					
 					mapSMAPtoSIDRA.put(parentCase.id,sidraLiteCase);
 					//END -NEWGEN-1933
 					sidraLiteCases.add(sidraLiteCase);
