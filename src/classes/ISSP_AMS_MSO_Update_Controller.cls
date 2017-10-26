@@ -157,6 +157,19 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 return new PageReference('/ISSP_Homepage');
         }
 
+
+        // check if success step -> then close the OSCAR
+        if (step == 'success' && oscarCase != null && oscarCase.OSCAR__c != null) {
+            system.debug('Success step - closing the OSCAR; action = ' + action);
+            
+            if (action == 'correction') {
+                closeOscar(oscarCase.OSCAR__c, oscarCase.Id, currentUser.ContactId, ACTION_CORRECTION);
+            } else if (action == 'termination') {
+                closeOscar(oscarCase.OSCAR__c, oscarCase.Id, currentUser.ContactId, ACTION_TERMINATION);
+            }            
+        }
+
+
         return null;
     }
 
@@ -292,7 +305,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
                 //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false);
 
-                closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_TERMINATION);
+                //closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_TERMINATION);
 
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
@@ -310,7 +323,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
             //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, true);
 
-            closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_CORRECTION);
+            //closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_CORRECTION);
 
         } catch (Exception ex){
             ApexPages.addMessages(ex);
@@ -342,18 +355,20 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     @future
     public static void closeOscar(Id oscarId, Id caseId, Id contactId, String actionType) {
         try {
+            Case c = [SELECT Id, IATAcode__c FROM Case WHERE Id = :caseId];
+
             if (actionType == ACTION_TERMINATION) {
                 CaseComment successComment = new CaseComment();
                 successComment.ParentId = caseId;
                 successComment.isPublished = true;
-                successComment.CommentBody = 'The MSO has been successfully terminated.';
+                successComment.CommentBody = Label.ISSP_AMS_MSO_Termination_Request_Successfull + ': ' + c.IATAcode__c;
                 insert successComment;
 
             } else if (actionType == ACTION_CORRECTION) {
                 CaseComment successComment = new CaseComment();
                 successComment.ParentId = caseId;
                 successComment.isPublished = true;
-                successComment.CommentBody = 'The correction has been successfully applied to the MSO.';
+                successComment.CommentBody = Label.ISSP_AMS_MSO_Update_Request_Successfull + ': ' + c.IATAcode__c;
                 insert successComment;
             }
 
