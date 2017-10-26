@@ -117,7 +117,7 @@
             <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!newForm.Branch_Office_City__c}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!newForm.State_Province__c}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!newForm.Branch_Office_Postal_code__c}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!newForm.Branch_Office_Country__c}"/>
+            <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!newForm.Branch_Office_Country__r.name}"/>
     </apex:pageBlockSection>        
     
 
