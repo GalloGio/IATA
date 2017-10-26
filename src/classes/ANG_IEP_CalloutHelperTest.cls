@@ -123,5 +123,16 @@ private class ANG_IEP_CalloutHelperTest {
 		
 		Test.stopTest();
 	}
+
+	@isTest static void testTriggerEvents() {
+		//covering unused events on trigger
+		ANG_agencyEventTriggerHandler triggerhandler = new ANG_agencyEventTriggerHandler();
+		triggerhandler.onBeforeInsert();
+		triggerhandler.onBeforeUpdate();
+		triggerhandler.onAfterUpdate();
+		triggerhandler.onBeforeDelete();
+		triggerhandler.onAfterDelete();
+
+	}
 	
 }
