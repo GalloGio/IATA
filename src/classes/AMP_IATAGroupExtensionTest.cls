@@ -83,18 +83,9 @@ private class AMP_IATAGroupExtensionTest
 			lg.Country__c = testCountry.Id;
 			insert lg;
 
-			// // ApexPages.currentPage().getParameters().put('id',lg.id);
-			// ApexPages.StandardController stdController = new ApexPages.StandardController(lg);
-			// AMP_IATAGroupExtension iataGroupExtension  = new AMP_IATAGroupExtension(stdController);
-			// lg.Division__c = 'CS';
-			// lg.Region__c = 'N/A';
-			// iataGroupExtension.mySave();
-			// // lg.Open_to_non_IATA_Airlines_and_Others__c = 'Yes';
-			// lg.Restricted_of_Participants__c = 'Yes';
-			// iataGroupExtension.mySave();
-			// lg.Division__c = null;
-			// lg.Region__c = null;
-
+			LocalGovernance_Meeting__c testMeeting = new LocalGovernance_Meeting__c();
+			testMeeting.Local_Governance__c = lg.Id;
+			insert testMeeting;
 
 			// create a child group
 			LocalGovernance__c lgChild = new LocalGovernance__c();
@@ -113,6 +104,11 @@ private class AMP_IATAGroupExtensionTest
 				delete lg;
 			} catch(Exception e) {
 				System.assertEquals(true, e.getMessage().contains('cannot'), 'Deleting a parent with children should not be allowed');
+			}
+			try {
+				delete testMeeting;
+			} catch(Exception e) {
+				System.assertEquals(true, e.getMessage().contains('cannot'), 'Deleting a meeting on an inactive group should not be allowed');
 			}
 		}
 
