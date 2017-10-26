@@ -1329,13 +1329,15 @@ public without sharing class ISSP_AMS_Accreditation {
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
-            if(newForm.Operation_Type__c == 'Travel_Agent') {
+            system.debug('Salesforce sectorValue-->' + sectorValue);
+
+            if(sectorValue == 'Travel_Agent') {
                 newCase.Type_of_customer__c = 'IATA Travel Agent';
-            } else if (newForm.Operation_Type__c == 'Cargo_Agent') {
+            } else if (sectorValue == 'Cargo_Agent') {
                 newCase.Type_of_customer__c = 'IATA Cargo Agent';
             } else {
                 newCase.Type_of_customer__c = con.Account.Category__c;    
-            }
+            }            
             
             if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
@@ -1389,7 +1391,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) newForm.ANG_AE_SameLegal__c = newForm.AE_separate_Legal_Entity__c;
 
                     newForm.Branch_Office_Country__c = isocountry.ID;
-                    newForm.Branch_Office_Country__r.name = isocountry.name;
                     
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ) {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
