@@ -120,17 +120,11 @@ global class ANG_OscarProcessHelper {
 		        iataCodeGeneration = true;
 
 		        updater.oscarMap.get(oscar.Id).Flag_IATACode__c = true;
-				updater.oscarMap.get(oscar.Id).STEP10__c = AMS_Utils.PASSED;
 				updater.toUpdate = true;
 
 		        System.debug('[ANG_OscarProcessHelper] IATA Code generated successfully.');
 			}else{
 				
-				if(updater.oscarMap.get(oscar.Id).STEP10__c != AMS_Utils.PASSED){
-					updater.oscarMap.get(oscar.Id).STEP10__c = AMS_Utils.PASSED;
-					update updater.oscarMap.get(oscar.Id);
-				}
-
 				iataCodeGeneration = true;
 				returnMessage += 'IATA Code was already generated (skipped). \n\r';
 				System.debug('[ANG_OscarProcessHelper] IATA Code was already generated (skipped).');
@@ -147,6 +141,11 @@ global class ANG_OscarProcessHelper {
 
 		        if(updater.isFaulty){
 		        	Database.rollback(sp);
+
+		        	if(oscar.STEP10__c != AMS_Utils.PASSED){
+			        	oscar.STEP10__c = 'Failed';update oscar;
+		        	}
+
 		        	isIATACodeGenerationRunning = false;
 		        	return new String[]{'-1',updater.errorMessage,'-1'};
 		        }
@@ -174,7 +173,13 @@ global class ANG_OscarProcessHelper {
 		       	updater = createChangeCodeNEW(updater , updater.oscarMap.get(oscar.Id));
 
 		        if(updater.isFaulty){
-		        	Database.rollback(sp);isIATACodeGenerationRunning = false;return new String[]{'-1',updater.errorMessage,'-1'};
+		        	Database.rollback(sp);isIATACodeGenerationRunning = false;
+		        	
+		        	if(oscar.STEP10__c != AMS_Utils.PASSED){
+			        	oscar.STEP10__c = 'Failed';update oscar;
+		        	}
+
+		        	return new String[]{'-1',updater.errorMessage,'-1'};
 		        }
 
 
@@ -232,6 +237,10 @@ global class ANG_OscarProcessHelper {
 
 		if(updater.toUpdate){
 			System.debug('[ANG_OscarProcessHelper] Preparing to update entities.');
+
+			// since we run everything, let's update OSCAR's Step 10 (generate IATA code).
+			updater.oscarMap.get(oscar.Id).STEP10__c = AMS_Utils.PASSED;
+
 			updateUpdater(updater);
 			System.debug('[ANG_OscarProcessHelper] Entities updated.');
 
