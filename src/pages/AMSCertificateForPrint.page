@@ -47,7 +47,7 @@
 			h1 .address{font-weight: normal;}
 			p{
 				margin: 0;
-				font-size: 1.5em;
+				font-size: 1.4em;
 				color: #bbb;
 				font-weight: bold;
 				font-style: normal;
