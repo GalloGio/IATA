@@ -25,6 +25,18 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
 
+    //FM 09-10-2017 - AMSU-72 - get date format based on user regional settings
+    date myDate = date.newInstance(2001, 12, 21);
+    public String dateFormatToShow {
+        get {
+            String s = myDate.format();
+            s = s.replace('2001', 'YYYY');
+            s = s.replace('12', 'MM');
+            s = s.replace('21', 'DD');
+            return s;
+        }
+    }
+
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
             AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
@@ -603,17 +615,41 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<5;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(wrapped.ac.Date_joined_agency__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Date_joined_agency__c.year(), wrapped.ac.Date_joined_agency__c.month(),wrapped.ac.Date_joined_agency__c.day());
+                        wrapped.dateJoined = dt.format('YYYY-MM-dd');
+                    }
                     fieldToCheck = wrapped.dateJoined;
-                if(i == 1)
+                }
+                if(i == 1){
+                    if(wrapped.ac.Prev_Job1_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_From__c.year(), wrapped.ac.Prev_Job1_From__c.month(),wrapped.ac.Prev_Job1_From__c.day());
+                        wrapped.prev1From = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1From;
-                if(i == 2)
+                }
+                if(i == 2){
+                    if(wrapped.ac.Prev_Job1_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_To__c.year(), wrapped.ac.Prev_Job1_To__c.month(),wrapped.ac.Prev_Job1_To__c.day());
+                        wrapped.prev1To = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1To;
-                if(i == 3)
+                }
+                if(i == 3){
+                    if(wrapped.ac.Prev_Job2_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_From__c.year(), wrapped.ac.Prev_Job2_From__c.month(),wrapped.ac.Prev_Job2_From__c.day());
+                        wrapped.prev2From = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2From;
-                if(i == 4)
+                }
+                if(i == 4){
+                    if(wrapped.ac.Prev_Job2_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_To__c.year(), wrapped.ac.Prev_Job2_To__c.month(),wrapped.ac.Prev_Job2_To__c.day());
+                        wrapped.prev2To = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2To;
-
+                }
                 if(!dateFieldValidation(fieldtoCheck))
                     return wrapped.ac.First_Name__c + ' '+wrapped.ac.Last_Name__c + ' with date: ' + fieldToCheck;
             }
@@ -628,11 +664,20 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<2;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(tsw.ac.Certificate_Issued_on__c != null){
+                        DateTime dt = DateTime.newInstance(tsw.ac.Certificate_Issued_on__c.year(), tsw.ac.Certificate_Issued_on__c.month(),tsw.ac.Certificate_Issued_on__c.day());
+                        tsw.certificateIssueDate = dt.format('YYYY-MM-dd');
+                    }
                     fieldToCheck = tsw.certificateIssueDate;
-                if(i == 1)
+                }    
+                if(i == 1){
+                    if(tsw.ac.Certificate_Issued_on__c != null){
+                        DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
+                        tsw.validUntil = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = tsw.validUntil;
-
+                }    
                 if(!dateFieldValidation(fieldtoCheck))
                 {
                     String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;

@@ -1,4 +1,4 @@
-<apex:page standardController="AMS_Pax_Accreditation_Form__c" extensions="AMS_AccreditationContactController" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" docType="html-5.0" id="page">
+<apex:page standardController="AMS_Pax_Accreditation_Form__c" extensions="AMS_AccreditationContactController" sidebar="false" showHeader="false" standardStylesheets="true" applyBodyTag="false" docType="html-5.0" id="page">
 
 <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
     <apex:includeScript value="{!$Resource.jquerymin}"/>
@@ -456,7 +456,10 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Date_joined_agency__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+                                                                
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Date_joined_agency__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Date_joined_agency__c}" html-placeholder="{!dateFormatToShow}" id="Date_joined_agency" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Job_title__c.Label}">
@@ -533,11 +536,17 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_From__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_From__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job1_From" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_To__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_To__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job1_To" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_IATA_accredited__c.Label}">
@@ -568,11 +577,17 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_From__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_From__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job2_From" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/-->
+
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_To__c}" html-placeholder="{!dateFormatToShow}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_To__c}" html-placeholder="{!dateFormatToShow}" id="Prev_Job2_To" rendered="{!NOT(s.blockEdit)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_IATA_accredited__c.Label}">
@@ -726,9 +741,12 @@
                                                             </td>
 
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!tsw.certificateIssueDate}" html-placeholder="YYYY-MM-DD">
+                                                                <!--apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!tsw.certificateIssueDate}" html-placeholder="YYYY-MM-DD">
                                                                     <apex:actionSupport event="onchange" reRender="expiration"/>
-                                                                </apex:inputTextArea>
+                                                                </apex:inputTextArea-->
+                                                                <apex:inputField value="{!tsw.ac.Certificate_Issued_on__c}" html-class="slds-input inputPointer" html-placeholder="{!dateFormatToShow}">
+                                                                    <apex:actionSupport event="onchange" reRender="expiration"/>
+                                                                </apex:inputField>
                                                             </td>
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Validity__c}">
@@ -736,10 +754,15 @@
                                                                 </apex:inputField>
                                                             </td>
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}">
-                                                                 <apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}" html-placeholder="YYYY-MM-DD"/>
+                                                                <!--apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}" html-placeholder="YYYY-MM-DD"/-->
+                                                                <apex:inputField value="{!tsw.ac.Valid_until__c}" html-class="slds-input inputPointer" html-placeholder="{!dateFormatToShow}">
+                                                                </apex:inputField>
                                                             </td>
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Position_trained_staff__c}"/>
+                                                            </td>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Registration_number__c}"/>
                                                             </td>
                                                         </tr>
                                                 </tbody>
@@ -791,5 +814,12 @@
             </apex:form>
         </apex:outputPanel>
     </div>
+    <style type="text/css">
+    .dateFormat{
+       display:none;
+    }
+    //visibility:hidden;
+       
+    </style>
 </html>
 </apex:page>
