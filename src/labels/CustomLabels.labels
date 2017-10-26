@@ -52,6 +52,13 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_New_Change_Code_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
+        <value>A new change code has been generated:</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -1387,7 +1394,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_RiskDescription</fullName>

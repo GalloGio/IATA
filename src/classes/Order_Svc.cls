@@ -734,11 +734,21 @@ public without sharing class Order_Svc
             {
                 contractItem.Quantity  = '1';
                 contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);
+                system.debug('contractItem.UnitPrice ' + contractItem.UnitPrice);
             }
             else
             {
-                contractItem.Quantity  = String.valueOf(ordItem.Quantity);
-                contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+                Decimal decNumber = ordItem.UnitPrice.stripTrailingZeros(); //ENHC0011664 start
+                if(decNumber.scale() >= 3){
+                    contractItem.Quantity = '1';
+                    contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);  //ENHC0011664 end 
+                }
+                else{
+                    contractItem.Quantity  = String.valueOf(ordItem.Quantity);
+                    contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+                
+                }
+                
             }
             contractItem.UnitPriceCurr = ord.CurrencyIsoCode;
             contractItem.DateFrom      = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_Start_Date__c : ord.EffectiveDate);
