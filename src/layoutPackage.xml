@@ -14,10 +14,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>Queue</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>ApprovalProcess</name>
     </types>    
     <version>37.0</version>
