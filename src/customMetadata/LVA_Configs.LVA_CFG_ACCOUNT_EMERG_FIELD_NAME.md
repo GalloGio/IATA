@@ -3,6 +3,10 @@
     <label>LVA_CFG_ACCOUNT_EMERG_FIELD_NAME</label>
     <protected>false</protected>
     <values>
+        <field>ValueLong__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Value__c</field>
         <value xsi:type="xsd:string">Sector__c</value>
     </values>

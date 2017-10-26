@@ -21485,7 +21485,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
-        <value>Contact Us thru Phone Number:</value>
+        <value>Contact Us through Phone Number:</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
@@ -21494,6 +21494,30 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_ChatWithUs</shortDescription>
         <value>Chat with Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupDesc</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupDesc</shortDescription>
+        <value>Your status has changed to:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupTitle</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupTitle</shortDescription>
+        <value>Chat Agent Status Changed</value>
+    </labels>
+    <labels>
+        <fullName>LVA_EndChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_EndChat</shortDescription>
+        <value>End Chat</value>
     </labels>
     <labels>
         <fullName>LVA_FAQsHeader</fullName>

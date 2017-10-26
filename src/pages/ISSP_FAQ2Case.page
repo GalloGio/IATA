@@ -372,6 +372,24 @@
           </div>
           <script>
               var introVideoSrc='{!livAgentIntroVidUrl}';
+              var livAgentIntroVidMode='{!livAgentIntroVidMode}';
+              var newwindow;
+
+
+              function introVideoPopUp(){
+                //console.log('basto1p - POP UP INTRO VIDEO INSIDE!');
+                if (newWindow!=undefined && !newWindow.closed){
+
+                    //cloes window in order to when open it again the popup came to the front
+                    newWindow.close();
+                }
+                newwindow = window.open('{!livAgentIntroVidUrl}',
+                                            '{!$Label.LVA_IntroductionVideo}',
+                                            'scrollbars=yes,toolbar=no,status=no,'+
+                                            'target=_blank,centerscreen=yes,'+
+                                            'width=570, height=350');
+                newwindow.focus();
+              }
 
               //program on modal hidden event
               $('#IntroVideoModal').on('hidden.bs.modal', function () {
@@ -382,32 +400,20 @@
                 $('#introVideoIFrame').attr('src', '');
               }
 
-              function openIframeVideo(){
-                $('#introVideoIFrame').attr('src', introVideoSrc);
-                $('#IntroVideoModal').modal('show');
+              function openIntroVideo(){
+                if (livAgentIntroVidMode=='LVA_INTRO_VIDEO_MODE_POP_UP'){
+                    introVideoPopUp();
+                }
+                else{
+                    $('#introVideoIFrame').attr('src', introVideoSrc);
+                    $('#IntroVideoModal').modal('show');
+                }
               }
-
-
           </script>
       <apex:outputPanel id="introVideo"
-                        rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),
-                                         livAgentIntroVidMode!='LVA_INTRO_VIDEO_MODE_POP_UP')}">
+                        rendered="{! IF(isIntroVideoAlreadyShowed==true ,false ,true)}">
           <script>
-            openIframeVideo();
-          </script>
-      </apex:outputpanel>
-
-      <apex:outputPanel id="introVideoPopUp"
-                        rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),
-                                         livAgentIntroVidMode=='LVA_INTRO_VIDEO_MODE_POP_UP')}">
-          <script>
-            //console.log('basto1p - POP UP INTRO VIDEO INSIDE!');
-            var newwindow = window.open('{!livAgentIntroVidUrl}',
-                                        '{!$Label.LVA_IntroductionVideo}',
-                                        scrollbars='yes',toolbar='no',status='no',
-                                        target='_blank',centerscreen='yes',
-                                        width='570', height='350');
-            newwindow.focus();
+            openIntroVideo();
           </script>
       </apex:outputpanel>
 
@@ -427,9 +433,9 @@
 <div class="row">
     <div class="col-xs-12 bannerLoveGradientContainer">
         <div class="bannerLoveGradient">
-            We'd love to help
+            {!$Label.LVA_ReachOutUs}
             <span class="imgMovieBut butPointer" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
-                <apex:image height="18px" onclick="openIframeVideo();" url="{!$Resource.LVA_IconsMovie}"/>
+                <apex:image height="18px" onclick="openIntroVideo();" url="{!$Resource.LVA_IconsMovie}"/>
             </span>
         </div>
     </div>
@@ -927,7 +933,7 @@
                                                             <apex:outputPanel rendered="{!showButton}">
                                                                 <!-- basto1p passing live agent new buttons -->
                                                                 <apex:repeat value="{!csButtonsList}" var="butCat">
-                                                                    <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
+                                                                    <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
                                                                                  width="26px" height="35px" scrolling="false" frameBorder="false"/>
                                                                 </apex:repeat>
                                                             </apex:outputPanel>

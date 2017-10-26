@@ -1,27 +1,209 @@
-<apex:page >
+<apex:page controller="LVA_ConsoleToolkitController" >
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
-    <apex:includeScript value="/support/console/29.0/integration.js"/>
+    <html>
+    <head>
+        <link rel="stylesheet"
+              href="{!urlfor($Resource.bootstrap,'/bootstrap-3.3.4-dist/css/bootstrap.min.css')}"> </link>
+        <script src="{!urlfor($Resource.bootstrap,'/bootstrap-3.3.4-dist/js/bootstrap.min.js')}"
+                type="text/javascript" > </script>
 
-    <script type="text/javascript">
+        <apex:includeScript value="/support/console/29.0/integration.js"/>
+    </head>
+    <body>
+        <input type="text" id="statusChangedByUser"/>
+        <input type="text" id="myUserId" value="{!myUserId}"/>
 
-        var lockAlert;
-        var lastStatus;
-        var eventHandler = function (result) {
-            if (lockAlert == false && result.state != lastStatus){
-                alert("Your status has changed to: " + result.state);
-                lastStatus = result.state;
-            }else{
-                lockAlert = false;
+        <div class="container">
+            <div id="PopUpChatConsoleAlertModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header iataBlue">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title modalTitle" id="modalTitle"></h4>
+                        </div>
+                        <div class="modal-body" >
+                            <p id="modalBody"></p>
+                        </div>
+                        <div class="modal-footer" id="modalFooter">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            //LVA_CONSOLE_ALERT_MODE_DIALOG
+            //LVA_CONSOLE_ALERT_MODE_POPUP
+            //LVA_CONSOLE_ALERT_MODE_ALERT
+            var isChatSupervisor={!isChatSupervisor};
+            var lvaCharConsoleAlertMode='{!lvaCharConsoleAlertMode}';
+            var newWindow;//GLOBAL VAR for popup window in order to be able to close it from parent
+
+
+            function getAlertHtml(title, msgToDisplay, Status){
+                var datetimeStr=generateCurrDateStr();
+
+console.log("basto1p - getAlertHtml Begin");
+                var alertHtml='<html>'+
+                    '<head>'+
+                    '<title>'+title+'</title>'+
+                    '<style>'+
+                    ' .Online {'+
+                    '    background-color: #4CAF50 !important; '+
+                    '}'+
+                    ' .Away {'+
+                    '    background-color: #ff9800 !important;'+
+                    '}'+
+                    ' .Offline {'+
+                    '    background-color: #c7c7c7 !important;'+
+                    '}'+
+                    ' .Ocupated {'+
+                    '    background-color: #f44336 !important;'+
+                    '}'+
+                    ' .alert {'+
+                    '    padding: 20px;'+
+                    '    background-color: #f44336; '+
+                    '    color: white;'+
+                    '    margin-bottom: 15px;'+
+                    '    font-family: verdana, arial;'+
+                    '    font-size:medium;'+
+                    '    text-align:center;'+
+                    '}'+
+                    ' .closebtn {'+
+                    '    margin-left: 15px;'+
+                    '    color: white;'+
+                    '    font-weight: bold;'+
+                    '    float: right;'+
+                    '    font-size: 22px;'+
+                    '    line-height: 20px;'+
+                    '    cursor: pointer;'+
+                    '    transition: 0.3s;'+
+                    '}'+
+                    ' .closebtn:hover {'+
+                    '    color: black;'+
+                    '}'+
+                    '</style>'+
+                    '</head>'+
+                    '<body>'+
+                    '    <div class="alert '+Status+'">'+
+                    '        <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>['+datetimeStr+'] '+msgToDisplay+
+                    '    </div>'+
+                    '</body>'+
+                    '</html>';
+
+console.log("basto1p - getAlertHtml before return");
+                return alertHtml;
             }
-            
-        };
-        sforce.console.chat.onAgentStateChanged(eventHandler);
 
-        $( window ).load(function(){
-            lockAlert = true;
-            lastStatus = null;          
-        });
+            function generateCurrDateStr(){
+                var currdate = new Date();
+                var dateStr = currdate.getDate() + "/"
+                    + (currdate.getMonth()+1)  + "/"
+                    + currdate.getFullYear() + " @ "
+                    + currdate.getHours() + ":"
+                    + currdate.getMinutes() + ":"
+                    + currdate.getSeconds();
+                //OR Take the ISO string, replace the "T" with a space, and trim off the milliseconds
+                dateStr=currdate.toISOString().replace('T', ' ').replace(/\..*$/, '');
 
-</script>
+                return dateStr;
+            }
+
+
+
+            function popUpChatConsoleAlert(title, msgToDisplay, Status){
+
+    console.log('basto1p - popUpChatConsoleAlert: '+msgToDisplay);
+    console.log('basto1p - lvaCharConsoleAlertMode: '+lvaCharConsoleAlertMode);
+
+              if (lvaCharConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_POPUP'){
+/*
+    var urlAux='LVA_PopUpMsg?msg='+msgToDisplay+'&title='+title;
+    console.log('basto1p - urlAux: '+urlAux);
+*/
+                if (newWindow!=undefined && !newWindow.closed){
+    console.log('basto1p - WILL CLOSE WINDOW');
+                    //cloes window in order to when open it again the popup came to the front
+                    newWindow.close();
+                }
+
+                newWindow =
+                    window.open('',
+                                title,
+                                'width=550, height=150,scrollbars=yes,toolbar=no,titlebar=no,status=no,target=_blank,resizable=no,centerscreen=yes');
+
+                var htmlToDisplay=getAlertHtml(title, msgToDisplay, Status);
+    console.log('basto1p - htmlToDisplay='+htmlToDisplay);
+                //newWindow.document.write(htmlToDisplay);//writes in the end of document
+
+                //clean document (document will not be cleaned in order to see all staus changes)
+                //newWindow.document.body.innerHTML='<html><body></body></html>';
+
+                //Write in the begin of the document
+                newWindow.document.body.insertAdjacentHTML('afterbegin', htmlToDisplay);
+                newWindow.focus();
+              }
+              else if (lvaCharConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_ALERT'){
+                alert(msgToDisplay);
+              }
+              else{
+    console.log('basto1p - popUpChatConsoleAlert - MODAL SETFIELDS IS THE NEX COMMAND.');
+/*
+                sforce.console.openPrimaryTab(null,
+                'https://iata--lar2dev.cs88.my.salesforce.com',
+                false,'salesforce',
+                openSuccess, 'salesforceTab');
+*/
+                //$('#scc_widget_LiveAgentConsoleComponent_button').addClass('sd_widget_window_click_white_alpha');
+                $('#ext-comp-1040').attr('style','position: absolute; z-index: 9050; visibility: visible; left: 416px; top: 388px; width: 270px; display: block;');
+    console.log('basto1p - popUpChatConsoleAlert - After popup component window');
+
+                $('#modalTitle').html(title);
+                $('#modalBody').html(msgToDisplay);
+                $('#modalFooter').html(footer);
+
+                $('#PopUpChatConsoleAlertModal').modal('show');
+    console.log('basto1p - popUpChatConsoleAlert - MODAL SHOW AFTER COMMAND.');
+              }
+            }
+
+    console.log('basto1p - Will configure eventHandler function ...');
+    //alert("basto1p - Will configure eventHandler function ...");
+    console.log('basto1p - eventHandler.isChatSupervisor='+isChatSupervisor);
+
+
+
+
+
+
+
+            var lockAlert=true;
+            var lastStatus=null;
+            var eventHandlerAgentStateChanged = function (result) {
+
+    console.log('basto1p - eventHandler.result.state='+JSON.stringify(result));
+
+                if (   lockAlert == false
+                    && result.state != lastStatus
+                    ){
+                    /* && isChatSupervisor */
+                    popUpChatConsoleAlert("{!$Label.LVA_ConsoleStatusChangedPopupTitle}",
+                                          "{!$Label.LVA_ConsoleStatusChangedPopupDesc} "+"<b>" + result.state + "</b>", result.state);
+                    lastStatus = result.state;
+                }else{
+                    lockAlert = false;
+                }
+            };
+
+
+
+
+            sforce.console.chat.onAgentStateChanged(eventHandlerAgentStateChanged);
+
+        </script>
+    </body>
+    </html>
 </apex:page>
