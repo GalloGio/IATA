@@ -89,6 +89,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
         strQuery += 'FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
         strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
         strQuery += 'AND Account__r.Purge_Flag__c = false ';
+        strQuery += 'AND Account__r.RecordType.DeveloperName = \'IATA_Agency\' ';
 
         if (!isMSO) {
             strQuery += ' AND Accreditation_Endorsement_organisation__r.Name <> \'' + IATAORGNAME + '\'';
