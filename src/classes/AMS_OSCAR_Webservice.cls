@@ -1,5 +1,7 @@
 global class AMS_OSCAR_Webservice {
 
+    public class OSCARException extends Exception{}
+
     WebService static String updateFormFields(String[] fieldsToUpdateKey, String[] fieldsToUpdateValue, String recordId) {
 
         Map<String, Schema.DisplayType> fTypes;
