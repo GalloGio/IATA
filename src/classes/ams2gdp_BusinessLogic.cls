@@ -299,9 +299,9 @@ public class ams2gdp_BusinessLogic
 			if(!(String.isBlank(acc.BillingStreet) && String.isBlank(acc.BillingCity) && String.isBlank(acc.BillingCountry)))
 			{
 
-				if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
+				/*if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
 				if(String.isBlank(acc.BillingCity))  acc.BillingCity = '-';
-				if(String.isBlank(acc.BillingCountry))  acc.BillingCountry = '-';
+				if(String.isBlank(acc.BillingCountry))  acc.BillingCountry = '-';*/
 				//Generate Location Address
 				List<String> streetParts = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
 				String countryId = (acc.IATA_ISO_Country__c !=null)? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
@@ -324,9 +324,9 @@ public class ams2gdp_BusinessLogic
 			if(!(String.isBlank(acc.ShippingStreet) && String.isBlank(acc.ShippingCity) && String.isBlank(acc.ShippingCountry)))
 			{
 
-				if(String.isBlank(acc.ShippingStreet))  acc.ShippingStreet = '-';
+				/*if(String.isBlank(acc.ShippingStreet))  acc.ShippingStreet = '-';
 				if(String.isBlank(acc.ShippingCity))  acc.ShippingCity = '-';
-				if(String.isBlank(acc.ShippingCountry))  acc.ShippingCountry = '-';
+				if(String.isBlank(acc.ShippingCountry))  acc.ShippingCountry = '-';*/
 				//Generate Mailing Address
 				List<String> streetParts = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
 				String countryId = (acc.IATA_ISO_Shipping_Country__c !=null)? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
