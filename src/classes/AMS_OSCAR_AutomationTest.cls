@@ -289,6 +289,75 @@ private class AMS_OSCAR_AutomationTest {
 			System.assertEquals('Failed', oscar.Finalization_result__c);
 
 
+			/*
+        		Step 07
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.IRIS_update_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step7_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.IRIS_update_result__c);
+
+
+			/*
+        		Step 30
+        	*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step30_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.Suspension_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step30_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.Suspension_result__c);
+
+
+			/*
+        		Step 31
+        	*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step31_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.Termination_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step31_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.Termination_result__c);
+
+
+			/*
+        		Step 32
+        	*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step32_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Passed', oscar.Withdrawal_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step32_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.Withdrawal_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step32_notApplicable');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('N/A', oscar.Withdrawal_result__c);
+
+
+			/*
+        		Step 35
+        	*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step35_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Valid', oscar.Financial_security_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step35_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Rejected', oscar.Financial_security_result__c);
+
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step35_notApplicable');
+			System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('N/A', oscar.Financial_security_result__c);
+
+
+
 		Test.stopTest();
 
 	}
