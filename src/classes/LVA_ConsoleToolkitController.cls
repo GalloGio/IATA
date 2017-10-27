@@ -7,6 +7,7 @@ public class LVA_ConsoleToolkitController {
 
 	//Alert mode configured paramter
 	public static final String LVA_CONSOLE_ALERT_MODE='LVA_CONSOLE_ALERT_MODE';
+	public static final String LVA_CONSOLE_ALERT_IS_ACCUMULATIVE='LVA_CONSOLE_ALERT_IS_ACCUMULATIVE';
 
 	//ALERTS MODES
 	public static final String LVA_CONSOLE_ALERT_MODE_DIALOG='LVA_CONSOLE_ALERT_MODE_DIALOG';
@@ -41,6 +42,35 @@ public class LVA_ConsoleToolkitController {
 		}
 		set;
 	}
+	public static Boolean isAccumulative {
+		get{
+			return Boolean.valueOf(vfISSP_FAQ2Case.getLivAgConfig(LVA_CONSOLE_ALERT_IS_ACCUMULATIVE));
+		}
+		set;
+	}
+
+	public static Boolean wasStatusChByMe {
+		get;
+		set;
+	}
+
+	public static PageReference WasLastUpdatedStatusMadeByMe() {
+		List<LiveAgentSession> listLiveAgentSession=
+		[SELECT LastModifiedDate,AgentId,LastModifiedById,TimeInAwayStatus, TimeIdle, TimeInOnlineStatus, TimeInChats
+				FROM LiveAgentSession
+				//WHERE AgentId=:myUserId
+		ORDER BY LastModifiedDate DESC LIMIT 5];
+
+		initConfigs();
+		wasStatusChByMe=isChatSupervisor;
+		System.debug('basto1p - wasLastUpdatedStatusByMe.myUserId=' + myUserId+'; listLiveAgentSession='+listLiveAgentSession);
+
+
+
+		return null;
+	}
+
+
 
 	/*******************************************************************************************************
     * @description Class constructor: initializes listSupervisorProfileIds according with list of profiles
@@ -59,14 +89,33 @@ public class LVA_ConsoleToolkitController {
     ********************************************************************************************************/
 	public LVA_ConsoleToolkitController(){
 
+		initConfigs();
+	}
+
+	/*******************************************************************************************************
+    * @description initializes listSupervisorProfileIds according with list of profiles
+    *              names liested separated by coma in parameter LVA_CFG_SUPERV_PROFILES from LVA_Configs__mdt
+    *
+    *
+    * @return {Void} Updates this class static variable listSupervisorProfileIds
+    *
+    * @example
+    * this.LVA_ConsoleToolkitController();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-10-23   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+	public static void initConfigs(){
 		Set<String> listOfSuervisorProfilesNames =
 				new Set<String>(vfISSP_FAQ2Case.getLivAgConfig(LVA_CFG_SUPERV_PROFILES).split(','));
 
 		List<Profile> profilesListAux=
-			new List<Profile>([SELECT Id
-								FROM Profile
-								WHERE Name
-								IN : listOfSuervisorProfilesNames]);
+				new List<Profile>([SELECT Id
+						FROM Profile
+						WHERE Name
+				IN : listOfSuervisorProfilesNames]);
 
 		listSupervisorProfileIds=(new Map<Id,Profile>(profilesListAux)).keySet();
 	}
