@@ -330,7 +330,7 @@ global class AMS_OSCAR_Webservice {
         List<Case> cases = [
             SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
             SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
-            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.RPM_Approval__c
+            oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c, oscar__r.RPM_Approval__c
             FROM Case
             WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
             LIMIT 1];

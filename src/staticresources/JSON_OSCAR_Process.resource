@@ -5465,7 +5465,7 @@
                     ]
                   },
                   {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
                       "oscarid", "6"
@@ -5535,7 +5535,7 @@
                 "Required": [],
                 "Actions": [
                   {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
                       "oscarid", "26"
@@ -5636,7 +5636,7 @@
                 ],
                 "Actions": [
 					{
-						"FunctionName": "createSIDRALite",
+						"FunctionName": "SIDRALiteAction",
 						"ActionLabel": "AMS_OSCAR_Action7",
 						"args": [
 						  "oscarid", "9"
@@ -5679,7 +5679,7 @@
                     ]
                   },
 				  {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
                       "oscarid", "11"
@@ -5760,7 +5760,7 @@
                 ],
                 "Actions": [
 					{
-						"FunctionName": "createSIDRALite",
+						"FunctionName": "SIDRALiteAction",
 						"ActionLabel": "AMS_OSCAR_Action7",
 						"args": [
 						  "oscarid", "14"
