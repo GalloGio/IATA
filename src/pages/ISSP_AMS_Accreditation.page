@@ -153,6 +153,13 @@
     </style>
     
     <script>
+
+            var showProductComparisonLink = false;
+            var hideProductComparisonLink = false;       
+        
+            setVarsProductComparisonLink('{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
+
+
             $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
             var pilotList = {{!pilotList}};
             var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -516,7 +523,7 @@
                 <div class="form-group">
                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Operation_Type}</label>
                     <div class="col-lg-9" style="padding-top:7px">
-                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged(this.value);">
+                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged(this.value, '{!isHOAccredited}', '{!con.Account.Sector__c}');">
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
                         </apex:selectRadio>
@@ -538,10 +545,17 @@
                                 </apex:selectList>
 
                                 <apex:outputPanel id="compare">
-                                    <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent', OR(!isHOAccredited, con.Account.Sector__c=='Cargo Agent'))}">
-                                        <apex:outputLink value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
-                                    </apex:outputPanel>
+                                    <apex:outputLink id="ProductComparisonLink" value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
                                 </apex:outputPanel>
+
+                                <script>
+                                    if(showProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').show();
+                                    } 
+                                    if(hideProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').hide();
+                                    }                                
+                                </script>
                             </div>
                         </div>
 
@@ -727,11 +741,14 @@
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
 
-                    function operationTypeChanged(sectorValue) {
+                    function operationTypeChanged(sectorValue, isHOAccredited, sector) {
                         if (sectorValue === 'Cargo_Agent') {
                             $('[name$=separateLegalEntitySelect]').prop('checked', false);
                             $('[name$=isGSASelect]').prop('checked', false);
                         }
+
+                        setVarsProductComparisonLink(sectorValue, isHOAccredited, sector);
+
                         refreshOfficeTypes(sectorValue);
                     }
                 </script>
