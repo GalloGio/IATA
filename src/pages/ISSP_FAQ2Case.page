@@ -375,14 +375,14 @@
               var livAgentIntroVidMode='{!livAgentIntroVidMode}';
               var newwindow;
 
-
               function introVideoPopUp(){
                 //console.log('basto1p - POP UP INTRO VIDEO INSIDE!');
-                if (newWindow!=undefined && !newWindow.closed){
 
+                if (newwindow!=undefined && !newwindow.closed){
                     //cloes window in order to when open it again the popup came to the front
-                    newWindow.close();
+                    newwindow.close();
                 }
+
                 newwindow = window.open('{!livAgentIntroVidUrl}',
                                             '{!$Label.LVA_IntroductionVideo}',
                                             'scrollbars=yes,toolbar=no,status=no,'+
