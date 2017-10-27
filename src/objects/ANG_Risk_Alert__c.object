@@ -72,7 +72,7 @@
     <fields>
         <fullName>ANG_Agent_Sales__c</fullName>
         <externalId>false</externalId>
-        <label>Agent Sales</label>
+        <label>RTS Sales Amount</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -151,7 +151,7 @@
     <fields>
         <fullName>ANG_Severity__c</fullName>
         <externalId>false</externalId>
-        <label>Severity</label>
+        <label>RTS Severity</label>
         <picklist>
             <picklistValues>
                 <fullName>Red</fullName>
