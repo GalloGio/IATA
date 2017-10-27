@@ -80,6 +80,18 @@ Object used to store objectives that can be independent, related to other object
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>AM_Global_Yes_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AM_Global__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Global Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AM_Global__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Checkbox to be used for Account Issues and Priorities RT, to represent the level at which the issue / priority is present.</description>
@@ -89,6 +101,18 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AM_Issue_with_IATA_Yes_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AM_Issue_with_IATA__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Issue with IATA Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Issue_with_IATA__c</fullName>
@@ -128,6 +152,18 @@ Object used to store objectives that can be independent, related to other object
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AM_Local_Yes_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AM_Local__c,&apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Local Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AM_Local__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Checkbox to be used for Account Issues and Priorities RT, to represent the level at which the issue / priority is present.</description>
@@ -137,6 +173,18 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AM_Public_Yes_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AM_Public__c, &apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Public Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Public__c</fullName>
@@ -149,6 +197,18 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AM_Regional_Yes_no__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AM_Regional__c, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Regional Yes/no</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Regional__c</fullName>
