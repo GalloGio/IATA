@@ -81,6 +81,7 @@ Object used to store objectives that can be independent, related to other object
     </fields>
     <fields>
         <fullName>AM_Global_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
         <externalId>false</externalId>
         <formula>IF(AM_Global__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -104,6 +105,7 @@ Object used to store objectives that can be independent, related to other object
     </fields>
     <fields>
         <fullName>AM_Issue_with_IATA_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
         <externalId>false</externalId>
         <formula>IF(AM_Issue_with_IATA__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -153,6 +155,7 @@ Object used to store objectives that can be independent, related to other object
     </fields>
     <fields>
         <fullName>AM_Local_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
         <externalId>false</externalId>
         <formula>IF(AM_Local__c,&apos;Yes&apos;, &apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -176,6 +179,7 @@ Object used to store objectives that can be independent, related to other object
     </fields>
     <fields>
         <fullName>AM_Public_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
         <externalId>false</externalId>
         <formula>IF(AM_Public__c, &apos;Yes&apos;,&apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -200,6 +204,7 @@ Object used to store objectives that can be independent, related to other object
     </fields>
     <fields>
         <fullName>AM_Regional_Yes_no__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
         <externalId>false</externalId>
         <formula>IF(AM_Regional__c, &apos;Yes&apos;, &apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
