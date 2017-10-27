@@ -12,9 +12,9 @@ public class AMS_OSCAR_WebserviceTest {
     private static Account a3;
     private static Account a4;
     private static Account a5;
+    private static Case oscarCase;
 
     private static void setup(){
-        
         oscar = new AMS_OSCAR__c(Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         insert oscar;
 
@@ -46,7 +46,7 @@ public class AMS_OSCAR_WebserviceTest {
         Contact co2 = new Contact(AccountId = a5.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = true);
         insert new List<Contact>{co1, co2};
 
-        Case oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a5.Id;
         oscarCase.ContactId = co2.Id;
         insert oscarCase;  
