@@ -155,14 +155,17 @@
         <picklist>
             <picklistValues>
                 <fullName>Red</fullName>
+                <color>#FF0000</color>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Orange</fullName>
+                <color>#FF9900</color>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Yellow</fullName>
+                <color>#F3D904</color>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
