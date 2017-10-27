@@ -63,6 +63,25 @@ public class ang_rhcAlertTriggerHandler{
 						riskAlertMap.put(ralert.ANG_Account__c,ralert);
 						continue;
 					}
+					// Create also a notification on the portal.
+
+					System.debug('ALEX--> Calling the WS');
+
+			        ISSP_WS_CreateNotification.inputData myInputData = new ISSP_WS_CreateNotification.inputData();
+			        myInputData.requestingSystem = '';
+			        myInputData.iataCode = '321423432';
+			        myInputData.designatorCode = '';
+			        myInputData.serviceName = 'RHC Information';
+			        myInputData.listOfUsers = null;
+			        myInputData.templateName = '';
+			        myInputData.languageMessageList = null;
+			        myInputData.notificationType = '';
+			        myInputData.daysToExpire = 1;
+			        myInputData.emailAlert = false;
+			        myInputData.criticalNotification = false;
+			        myInputData.campaignName = '';
+
+					ISSP_WS_CreateNotification.createNotification(myInputData);					
 				}
 			}
 		}
