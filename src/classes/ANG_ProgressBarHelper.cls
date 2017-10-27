@@ -14,9 +14,9 @@ public with sharing class ANG_ProgressBarHelper {
 		List<ANG_ProgressBarSettings__c> settings =	[Select ValueOk__c,
 															ValueProgress__c,
 															Name,
+															Label__c,
 															Order__c,
 															RecordType__c,
-															Label__c,
 															ValueError__c,
 															Label_Translatable__c
 													   From ANG_ProgressBarSettings__c

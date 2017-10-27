@@ -13,42 +13,50 @@ public class ANG_ProgressBar_Test {
 
         ANG_ProgressBarSettings__c s1 = new ANG_ProgressBarSettings__c (
         	name = 'bla1',
-			//Field__c = 'Name',
 			Label__c = 'node1',
-			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
-			ValueError__c = 'bla',
-			ValueOk__c = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED
+			ValueError__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla',
+			ValueProgress__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla',
+			ValueOk__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED
         );
 
         ANG_ProgressBarSettings__c s2 = new ANG_ProgressBarSettings__c (
         	name = 'bla2',
-			//Field__c = 'ANG_Restrict_by_Agency_Sector__c',
 			Label__c = 'node1',
-			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
-			ValueError__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-			ValueOk__c = 'bla'
+			ValueError__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=' + ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+			ValueProgress__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla|AND|PORTAL_APPLICATIONS__C.Agency__c=true',
+			ValueOk__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla'
         );
 
         ANG_ProgressBarSettings__c s3 = new ANG_ProgressBarSettings__c (
         	name = 'bla3',
-			//Field__c = 'ANG_Restrict_by_Agency_Sector__c',
 			Label__c = 'node1',
-			//Object__c = 'Portal_Applications__c',
 			Order__c = 1,
 			RecordType__c = 'test',
-			ValueError__c = 'bla',
-			ValueOk__c = 'bla'
+			ValueError__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla',
+			ValueProgress__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla',
+			ValueOk__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla|OR|PORTAL_APPLICATIONS__C.Agency__c=true'
         );
+
+        ANG_ProgressBarSettings__c s4 = new ANG_ProgressBarSettings__c (
+        	name = 'bla3',
+			Label__c = 'node1',
+			Order__c = 1,
+			RecordType__c = 'test',
+			ValueError__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=bla',
+			ValueProgress__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=' + ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+			ValueOk__c = 'PORTAL_APPLICATIONS__C.ANG_Restrict_by_Agency_Sector__c=<notin>bla'
+        );
+
 	
         insert new List<ANG_ProgressBarSettings__c>{s1,s2,s3};
 
         Map<String, String> objectsIds = new Map<String, String>();
 
-        objectsIds.put('Portal_Applications__c', p1.id);
+        objectsIds.put('PORTAL_APPLICATIONS__C', p1.id);
 
 		ANG_ProgressBarHelper helper = new ANG_ProgressBarHelper('test', objectsIds);
 
