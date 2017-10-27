@@ -171,6 +171,16 @@
             
             var isPilotCountry = pilotList[defaultHQCountry];
             var isEUcountry = {!isEUcountry};
+
+            function setVarsProductComparisonLink(sectorValue, isHOAccredited, sector) {
+                if((sectorValue === 'Travel_Agent') && (!isHOAccredited || sector === 'Cargo Agent')) {
+                    showProductComparisonLink = true;
+                    hideProductComparisonLink = false;
+                } else {
+                    hideProductComparisonLink = true;
+                    showProductComparisonLink = false;
+                }    
+            }            
          
             function setIsPilotCountry(isocode) {
                 isPilotCountry = pilotList[isocode];
