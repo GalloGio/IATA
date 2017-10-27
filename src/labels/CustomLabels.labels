@@ -25860,5 +25860,26 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ANG ISSP Conversion From GoLite Tooltip</shortDescription>
         <value>Conversion From GoLite Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
     </labels>    
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>    
+    <labels>
+        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
+        <value>Agency Accreditation Associate Entity Draft Application</value>
+    </labels>
 </CustomLabels>
