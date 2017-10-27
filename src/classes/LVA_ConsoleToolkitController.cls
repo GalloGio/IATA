@@ -49,28 +49,6 @@ public class LVA_ConsoleToolkitController {
 		set;
 	}
 
-	public static Boolean wasStatusChByMe {
-		get;
-		set;
-	}
-
-	public static PageReference WasLastUpdatedStatusMadeByMe() {
-		List<LiveAgentSession> listLiveAgentSession=
-		[SELECT LastModifiedDate,AgentId,LastModifiedById,TimeInAwayStatus, TimeIdle, TimeInOnlineStatus, TimeInChats
-				FROM LiveAgentSession
-				//WHERE AgentId=:myUserId
-		ORDER BY LastModifiedDate DESC LIMIT 5];
-
-		initConfigs();
-		wasStatusChByMe=isChatSupervisor;
-		System.debug('basto1p - wasLastUpdatedStatusByMe.myUserId=' + myUserId+'; listLiveAgentSession='+listLiveAgentSession);
-
-
-
-		return null;
-	}
-
-
 
 	/*******************************************************************************************************
     * @description Class constructor: initializes listSupervisorProfileIds according with list of profiles

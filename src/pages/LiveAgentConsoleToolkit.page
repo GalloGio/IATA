@@ -32,13 +32,6 @@
             </div>
         </div>
 
-        <apex:form id="form">
-            <apex:actionFunction name="ctrWasLastUpdatedStatusMadeByMe" action="{! WasLastUpdatedStatusMadeByMe }" rerender="fm" />
-            <apex:outputpanel id="fm">
-                <input id="isChatSupervisorElem" value="{!isChatSupervisor}"/>
-            </apex:outputpanel>
-        </apex:form>
-
         <script type="text/javascript">
             //LVA_CONSOLE_ALERT_MODE_DIALOG
             //LVA_CONSOLE_ALERT_MODE_POPUP
@@ -201,12 +194,12 @@
                 //If not accumulative clean content history
                 if (isAccumulative!=true){
                     windowContent='';
-                    heightDinamic=120;
+                    heightDinamic=100;
                     //windowName='_blank';
                     windowName='Notifications';
                 }
                 else{
-                    heightDinamic=300;
+                    heightDinamic=100;//300;
                     windowName='Notifications';
                 }
 
@@ -265,20 +258,11 @@
             var lockAlert=true;
             var lastStatus=null;
             var eventHandlerAgentStateChanged = function (result) {
-/*
-alert('antes');
-    alert(parent.document.getElementById("ext-gen184r").text);
- alert('depois');
- */
-                ctrWasLastUpdatedStatusMadeByMe();
 
-                var isChatSupervisor= document.getElementById('isChatSupervisorElem').value;
-
-console.log('basto1p - isChatSupervisor='+isChatSupervisor+'; wasStatusChByMe='+{!wasStatusChByMe});
                 if (   lockAlert == false
                     && result.state != lastStatus
                     ){
-                    //&& isChatSupervisor==true
+                    //&& isChatSupervisor=={!isChatSupervisor}
 
                     var state=result.state;
 
@@ -324,7 +308,7 @@ console.log('basto1p - isChatSupervisor='+isChatSupervisor+'; wasStatusChByMe='+
            ********************************************************************************************************/
             var eventHandlerChatRequest = function (result) {
                 popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
-                                      "{!$Label.LVA_ConsoleNewChatReqDesc} "+"<b>" + result.chatKey + "</b>",
+                                      "{!$Label.LVA_ConsoleNewChatReqDesc}",// "+"<b>" + result.chatKey + "</b>",
                                        '');
             };
 
