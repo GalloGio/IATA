@@ -68,7 +68,7 @@
         <picklist>
             <picklistValues>
                 <fullName>Daily</fullName>
-                <default>true</default>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Weekly</fullName>
