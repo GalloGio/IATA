@@ -189,11 +189,6 @@
         <columns>Stack_Trace__c</columns>
         <columns>Extra_Information__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader_WEBSTAR_GDS</value>
-        </filters>
         <label>DataLoader - Webstar GDS Errors</label>
         <language>en_US</language>
     </listViews>
