@@ -208,6 +208,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public String agencyCodesConcernedForPDF {get; set;}
 
     public boolean newAccreditationModels {get; set;}
+    public boolean namEnabled {get; set;}
     public List<AMS_Accreditation_Contact__c> checkAllOwners {get; set;}       
 
     public String accredidationType {get; set;}
@@ -243,6 +244,7 @@ public without sharing class ISSP_AMS_Accreditation {
         stepNumber = '';
         cntAgencyLookups = 0;
         newAccreditationModels = false;
+        namEnabled = false;
         cntIFAPContacts = 0;
 
         newCase = new Case();
@@ -648,6 +650,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        namEnabled = isocountry.ANG_Enable_NewGen__c;
 
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
