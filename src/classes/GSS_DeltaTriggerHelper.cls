@@ -54,6 +54,7 @@ public class GSS_DeltaTriggerHelper {
                                                                 FROM GDP_File_Description__c
                                                                 WHERE Is_Reference__c = true
                                                                 and Product_type__c in ('GSS','MDP')
+                                                                and Id in (Select GDP_File_Description__c From GDP_File_Fields_Description__c Where Do_not_Track__c=false)
                                                                ];
         
         //Nothing to do if there is no Reference file specifications

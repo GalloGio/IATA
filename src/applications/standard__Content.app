@@ -5,7 +5,6 @@
     <tab>standard-Workspace</tab>
     <tab>standard-ContentSearch</tab>
     <tab>standard-ContentSubscriptions</tab>
-    <tab>standard-ContentFavorites</tab>
     <tab>Business_Unit__c</tab>
     <tab>Licenses__c</tab>
     <tab>CSS_Tracking__c</tab>

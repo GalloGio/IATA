@@ -163,18 +163,6 @@
     </fields>
     <label>IEC Error Log</label>
     <listViews>
-        <fullName>AllErrors</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>DataLoader_All_Errors</fullName>
         <columns>NAME</columns>
         <columns>Errror_Message__c</columns>
@@ -201,11 +189,6 @@
         <columns>Stack_Trace__c</columns>
         <columns>Extra_Information__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader_WEBSTAR_GDS</value>
-        </filters>
         <label>DataLoader - Webstar GDS Errors</label>
         <language>en_US</language>
     </listViews>

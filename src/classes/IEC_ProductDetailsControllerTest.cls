@@ -15,7 +15,7 @@ private class IEC_ProductDetailsControllerTest {
 				break;
 			}
 		EComProduct_DTO selectedProduct;
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, '', null, false);
+		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, '', null, false, null);
 		for (EComProduct_DTO p : products)
 			if (p.PriceInfo != null)
 			{
