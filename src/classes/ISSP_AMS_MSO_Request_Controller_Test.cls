@@ -202,4 +202,83 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
         }
 	}
 
+
+	@isTest static void test_increase_coverage() {
+		
+        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
+        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
+        
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
+        insert isoc;
+
+        IATA_ISO_State__c isos = new IATA_ISO_State__c(Name='Test_state', IATA_ISO_Country__c = isoc.Id, ISO_Code__c='FR');
+        insert isos;
+
+        Account acc = new Account (
+			RecordTypeId = accRtId,
+			Name = 'Airline HQ', 
+			IATACode__c = '012',
+            Airline_designator__c = 'HQ',
+			IATA_ISO_Country__c = isoc.Id
+			);
+        insert acc;
+
+        Contact con = new Contact (
+			AccountId = acc.id,
+			RecordTypeId = conRtId, 
+			LastName = 'portalUser',
+			FirstName = 'first',
+			Email = 'someuser@iata.org',
+			User_Portal_Status__c = 'Approved User'
+			);
+        insert con;
+
+
+        Profile p = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' LIMIT 1];
+         
+        User newUser = new User(
+			profileId = p.id,
+			username = 'someuser@iata.org',
+			email = 'someuser@iata.org',
+			emailencodingkey = 'UTF-8',
+			localesidkey = 'de',
+			languagelocalekey = 'de',
+			timezonesidkey = 'America/Los_Angeles',
+			alias='nuser',
+			lastname='lastname',
+			contactId = con.id
+			);
+        insert newUser;
+		
+		
+        System.runAs(newUser){        	
+
+      		Test.setCurrentPage(Page.ISSP_AMS_MSO_Request);
+            ISSP_AMS_MSO_Request_Controller ctrl = new ISSP_AMS_MSO_Request_Controller();
+
+            ctrl.applyLanguage = 'es';
+            system.assertNotEquals(0, ctrl.countryISOCodeList.size());
+
+            ctrl.applyLanguage = 'fr';
+            system.assertNotEquals(0, ctrl.countryISOCodeList.size());
+    	}
+
+        isoc.IATA_Country_SP__c = 'spanishname';
+        isoc.IATA_Country_FR__c = 'frenchname';
+        update isoc;
+		
+        System.runAs(newUser){        	
+
+      		Test.setCurrentPage(Page.ISSP_AMS_MSO_Request);
+            ISSP_AMS_MSO_Request_Controller ctrl = new ISSP_AMS_MSO_Request_Controller();
+
+            ctrl.applyLanguage = 'es';
+            system.assertNotEquals(0, ctrl.countryISOCodeList.size());
+
+            ctrl.applyLanguage = 'fr';
+            system.assertNotEquals(0, ctrl.countryISOCodeList.size());
+    	}
+
+
+	}
 }
