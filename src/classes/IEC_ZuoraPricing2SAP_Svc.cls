@@ -92,7 +92,7 @@ public class IEC_ZuoraPricing2SAP_Svc
         return pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Deleted__c ||
                pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Deleted__c ||
                pricing.zqu__ProductRatePlanCharge__r.zqu__Deleted__c ||
-               pricing.zqu__Deleted__c;
+               pricing.zqu__Deleted__c || pricing.IsDeleted;
     }
 
 

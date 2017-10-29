@@ -213,7 +213,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
     static Map<String, zqu__ProductRatePlanChargeTier__c> getZuoraPricing(Map<Id, Product2> mapZProductId_Product)
     {
         Map<String, zqu__ProductRatePlanChargeTier__c> mapZId_Tier = new Map<String, zqu__ProductRatePlanChargeTier__c>();
-        for (zqu__ProductRatePlanChargeTier__c tier : [select Id, CurrencyIsoCode, zqu__ZuoraId__c
+        for (zqu__ProductRatePlanChargeTier__c tier : [select Id, CurrencyIsoCode, zqu__ZuoraId__c, IsDeleted
                      , LastModifiedDate
                      , zqu__Deleted__c
                      , zqu__Currency__c
@@ -243,7 +243,8 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                 where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :mapZProductId_Product.keySet()
                   and zqu__ProductRatePlanCharge__r.zqu__Type__c in ('One-Time', 'Recurring')
                   and zqu__ProductRatePlanCharge__r.zqu__Model__c in ('Per Unit', 'Per Unit Pricing', 'Volume', 'Volume Pricing'
-                                                                    , 'Discount-Fixed Amount', 'Discount-Percentage')])
+                                                                    , 'Discount-Fixed Amount', 'Discount-Percentage')
+                ALL ROWS])
             mapZId_Tier.put(tier.zqu__ZuoraId__c, tier);
         return mapZId_Tier;
     }

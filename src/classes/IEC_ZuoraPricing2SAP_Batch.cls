@@ -25,7 +25,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
             mapZProductId_Product = new IEC_ZuoraPricing2SAP_Svc().getTrackingProduct();
             
             // query Zuora pricing to track
-            return Database.getQueryLocator([select Id, CurrencyIsoCode
+            return Database.getQueryLocator([select Id, CurrencyIsoCode, IsDeleted
                       , LastModifiedDate
                       , zqu__Deleted__c
                       , zqu__Currency__c
@@ -59,7 +59,8 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
                       order by zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
                              , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c
                              , zqu__ProductRatePlanCharge__c
-                             , zqu__Tier__c]);
+                             , zqu__Tier__c
+                      ALL ROWS]);
         }
         else if (strProcessingStep == processingStep2)
         {
