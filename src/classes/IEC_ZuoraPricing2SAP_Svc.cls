@@ -385,8 +385,8 @@ public class IEC_ZuoraPricing2SAP_Svc
             return;
         
         // by giving a maximum of 400 characters par each pricing item uses 1500 characters in average of message
-        // by limiting of 10000 pricing items per call, a callout message will use less than 4 MB of heap
-        final Integer intLimitPricingPerCall = (Test.isRunningTest() ? 5 : 5);
+        // by limiting of 5000 pricing items per call, a callout message will use less than 2 MB of heap
+        final Integer intLimitPricingPerCall = (Test.isRunningTest() ? 5 : 5000);
         
         // determine range of pricings per call
         List<Integer> lstFrom = new List<Integer>(), lstTo = new List<Integer>();
@@ -411,7 +411,7 @@ public class IEC_ZuoraPricing2SAP_Svc
                 
             }
             String xmlOutput = getOutputXML(xml);
-system.debug(system.now().format('yyyy-MM-dd hh:mm:ss') + ': ' + xmlOutput);
+            //system.debug(system.now().format('yyyy-MM-dd hh:mm:ss') + ': ' + xmlOutput);
             
             // callout
             String strCallError = sendPricingCallout(xmlOutput);
@@ -436,11 +436,11 @@ system.debug(system.now().format('yyyy-MM-dd hh:mm:ss') + ': ' + xmlOutput);
         httpReq.setHeader('Accept', 'text/xml');
         httpReq.setHeader('Content-Type', 'text/xml');
         httpReq.setBody(xmlOutput);
-//system.debug(httpReq.getEndpoint());
+        //system.debug(httpReq.getEndpoint());
         Http httpTarget = new Http();
         HttpResponse httpResp = httpTarget.send(httpReq);
-//system.debug(httpResp.getBody());
-system.debug(httpResp.toString());
+        //system.debug(httpResp.getBody());
+        //system.debug(httpResp.toString());
         Set<Integer> setSuccessStatusCode = new Set<Integer> {200, 201};
         return (setSuccessStatusCode.contains(httpResp.getStatusCode()) ? null : httpResp.toString());
     }
