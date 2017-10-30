@@ -229,26 +229,21 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         
         /*UserInfoUpdate Trigger*/
         if(UserInfoUpdate){//FLAG 
-            system.debug('##UserInfoUpdate');
+            system.debug('UserInfoUpdate');
             //IMPRO GM START
             //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             CurrUser = UserInfo.getUserId();
-            Set<string> caseStatus = new set<string>(); //RN-INC342887 -> get isclosed cases status
-            for(CaseStatus cs : [Select ApiName from casestatus where isClosed = true] ){
-                caseStatus.add(cs.ApiName);
-            }
             //IMPRO GM END
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
-            for(Case c : Trigger.new){//RN-INC342887 - validation with isClosed
-                if((Trigger.isInsert && caseStatus.contains(c.status)) || 
-                        (Trigger.isUpdate && caseStatus.contains(c.status)) ){
+            for(Case c : Trigger.new){
+                if((Trigger.isInsert && c.isClosed == true) || 
+                        (Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed == false && c.isClosed == true)){
                         c.WhoClosedCase__c = CurrUser;
-                    }
-                if(Trigger.isUpdate && !caseStatus.contains(c.status)){
+                }else{     
                     c.WhoClosedCase__c = null;
-                    }
                 }
-            }// END Update L.Faccio --------------
+    }// END Update L.Faccio --------------
+}
             
         /*UserInfoUpdate Trigger*/
         
