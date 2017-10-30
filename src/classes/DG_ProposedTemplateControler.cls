@@ -10,9 +10,10 @@
 * 
 * Changes control (When, Why, Who, What):
 *       ------------------------------------------------------------------------------------------------------------------------------------------
-*           Version date:           Case Number:        Author:                                 Description:
+*           Version date:       Case Number:        Author:                                 Description:
 *       ------------------------------------------------------------------------------------------------------------------------------------------
-*           22_09_2017									Francisco Estanqueiro					Fix the filter on case (ori.Origin.contains('Portal'))          
+*           22_09_2017								Francisco Estanqueiro					Fix the filter on case (ori.Origin.contains('Portal')) 
+*			13_10_2017								Francisco Estanqueiro					Add the parent case to the subject instead of the ParentId field           
 *
 *****************************************************************************************************************************************************
 */
@@ -42,29 +43,28 @@ global with sharing class DG_ProposedTemplateControler{
             grp = [select Id, Name from Group where Name = 'AI Template Team' and Type = 'Queue'];
             
             Case ori = new Case();
-            ori = [Select Id, Origin from Case where Id =: caseId];
+            ori = [Select Id, Origin, CaseNumber from Case where Id =: caseId];
            
             
                 Case aux = new case();
                 aux.recordtypeId = devRecordTypeId;
-                aux.ParentId = caseId;
+                //aux.ParentId = caseId;
                 
                 aux.CaseArea__c = 'Customer Service';
                 aux.Reason1__c = 'AI Template';
                 
                 if(ori.Origin.contains('Chat')){
-                    aux.Subject = 'New Template for Chat';
+                    aux.Subject = 'New Template for Chat (Parent case:'+ ori.CaseNumber+ ')';
                 }else if(ori.Origin.contains('Portal')){
-                    aux.Subject = 'New Template for Comment';
+                    aux.Subject = 'New Template for Comment (Parent case:'+ ori.CaseNumber+ ')';
                 }else{
-                    aux.Subject = 'New Template';
+                    aux.Subject = 'New Template (Parent case:'+ ori.CaseNumber+ ')';
                 }
                 
                 aux.ownerId=grp.Id;
                 aux.Description = template;
                 
                 insert aux;
-                
                 
                 Case auxr = new Case();
                 auxr = [Select Id, CaseNumber from Case where Id =: aux.Id];

@@ -1093,11 +1093,11 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
         <columns>Order__c</columns>
+        <columns>Status__c</columns>
         <columns>Error_Message__c</columns>
         <columns>Bill_To__c</columns>
         <columns>SAP_Bill_To_Number__c</columns>
         <columns>Account__c</columns>
-        <columns>Status__c</columns>
         <columns>Total_Amount__c</columns>
         <columns>SAP_Contract_Number__c</columns>
         <columns>Pay_Method__c</columns>
@@ -1112,8 +1112,8 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         </filters>
         <filters>
             <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Zuora Ready</value>
+            <operation>notEqual</operation>
+            <value>Skipped</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>
