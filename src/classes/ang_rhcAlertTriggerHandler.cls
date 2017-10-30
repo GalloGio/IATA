@@ -6,6 +6,11 @@ public class ang_rhcAlertTriggerHandler{
 	public Map<Id, ANG_Risk_Alert__c> newMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.newMap;
 	public Map<Id, ANG_Risk_Alert__c> oldMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.oldMap;
 
+	private static String RHC_AMOUNT_USED = '#RHC_AMOUNT_USED#';
+	private static String RHC_AMOUNT_TOTAL = '#RHC_AMOUNT_TOTAL#';
+	private static String RHC_PERCENTAGE = '#RHC_PERCENTAGE#';
+	private static String RHC_INFORMATION = 'RHC Information';
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -31,7 +36,25 @@ public class ang_rhcAlertTriggerHandler{
 
 	public void sendAlertNotification(){
 		
-			system.debug(' ang_rhcAlertTriggerHandler sendAlertNotifications STARTED');
+		system.debug(' ang_rhcAlertTriggerHandler sendAlertNotifications STARTED');
+
+		Set<String> RHC_Inf_Ids = new Set<String>();
+		for(ANG_Risk_Alert__c ralert : triggerNew) {
+			RHC_Inf_Ids.add(ralert.ANG_RHC_Information__c);
+		}
+
+		List<ANG_RHC_Information__c> RHC_Inf_List = [Select Id,
+															ANG_AccountId__r.IATACode__c,
+															ANG_RHC_Amount__c,
+															ANG_ConsumedRHC__c,
+															ANG_ConsumedRHC_Percent__c
+													   From ANG_RHC_Information__c
+													  Where id in : RHC_Inf_Ids];
+
+		Map<Id, ANG_RHC_Information__c> RHC_Map = new Map<Id, ANG_RHC_Information__c>();
+		for(ANG_RHC_Information__c rhc : RHC_Inf_List) {
+			RHC_Map.put(rhc.id, rhc);
+		}
 
 		//GET Templates from custom setting 
 		list<ANG_RHC_Alert_Templates__c> alertTemplateList = new list<ANG_RHC_Alert_Templates__c>();
@@ -56,13 +79,35 @@ public class ang_rhcAlertTriggerHandler{
 		map<id,ANG_RHC_Alert_Templates__c> alertTemplateMap = new map<id,ANG_RHC_Alert_Templates__c>();
 		map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
 		for(ANG_Risk_Alert__c ralert :triggerNew){
-			for(ANG_RHC_Alert_Templates__c at:alertTemplateList){
+			for(ANG_RHC_Alert_Templates__c at:alertTemplateList){				
 				if(ralert.ANG_Direction__c==ANG_RHCHelper.RISK_ALERT_DIRECTION_UP && ralert.ANG_Threshold_Level__c==at.ANG_percentage__c){
+
+					// Create a notification on the portal.
+
+					ANG_RHC_Information__c rhc = RHC_Map.get(ralert.ANG_RHC_Information__c);
+
+					String replaceStr = RHC_AMOUNT_USED + '!' + rhc.ANG_ConsumedRHC__c.format() + '|' +
+										RHC_AMOUNT_TOTAL + '!' + rhc.ANG_RHC_Amount__c.format() + '|' +
+										RHC_PERCENTAGE + '!' + rhc.ANG_ConsumedRHC_Percent__c.format();
+
+			        ISSP_WS_CreateNotification.inputData myInputData = new ISSP_WS_CreateNotification.inputData();
+
+			        myInputData.iataCode = rhc.ANG_AccountId__r.IATACode__c;
+			        myInputData.serviceName = RHC_INFORMATION;
+			        myInputData.listOfUsers = new List<String>();
+			        myInputData.templateName = at.ANG_Portal_Notification_Template__c;
+			        myInputData.daysToExpire = 0;
+			        myInputData.emailAlert = false;
+			        myInputData.criticalNotification = false;
+			        myInputData.replaceStr = replaceStr;
+
+					ISSP_WS_CreateNotification.createNotification(myInputData);
+
 					if(!alertTemplateMap.containsKey(ralert.ANG_Account__c)){
 						alertTemplateMap.put(ralert.ANG_Account__c,at);
 						riskAlertMap.put(ralert.ANG_Account__c,ralert);
 						continue;
-					}
+					}				
 				}
 			}
 		}
