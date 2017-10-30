@@ -30,11 +30,15 @@ public with sharing class ISSP_CertificationCases {
     //FM 29-09-2017 - new list to display on page
     public map<String, list<AMS_Agency_Regulation__c>> listCases {
         get{
+            map<String, list<AMS_Agency_Regulation__c>> listCasesOrdered = new map<String, list<AMS_Agency_Regulation__c>>();
+                
             if(listCases == null){
+                
                 listCases = new map<String, list<AMS_Agency_Regulation__c>>();
                 ISSP_CertificationCases cert = new ISSP_CertificationCases();
                 List<AMS_Agency_Regulation__c> l = setCon.getRecords();
                 String sIATACode = '';
+                String sIATACodeHO = ''; //For ordering, HO must come 1st on the list
                 list<AMS_Agency_Regulation__c> lar = new list<AMS_Agency_Regulation__c>();
                 for(AMS_Agency_Regulation__c ar : l){
 
@@ -43,6 +47,9 @@ public with sharing class ISSP_CertificationCases {
                         sIATACode = ar.Account__r.IATACode__c;
                         lar.add(ar);
                         listCases.put(ar.Account__r.IATACode__c, lar);
+                        if(ar.Account__r.Location_Type__c == 'HO'){
+                            sIATACodeHO = ar.Account__r.IATACode__c;
+                        }
                     }
 
                     //if(sIATACode.equalsIgnoreCase(ar.Account__r.IATACode__c)){
@@ -55,13 +62,34 @@ public with sharing class ISSP_CertificationCases {
                         listCases.put(ar.Account__r.IATACode__c, lar);
                         lar = new list<AMS_Agency_Regulation__c>();
                         lar.add(ar);
+                        if(ar.Account__r.Location_Type__c == 'HO'){
+                            sIATACodeHO = ar.Account__r.IATACode__c;
+                        }
                     }
                 }
                 //insert last result
                 listCases.put(sIATACode, lar);
+
+
+                //Sort Map in order that HO comes 1st
+                //listCasesOrdered.put(sIATACodeHO, listCases.get(sIATACodeHO));
+                System.debug('1st listCasesOrdered: ' + listCasesOrdered);
+                for (String mapKey : listCases.keySet()) {
+                    if(mapKey != sIATACodeHO){
+                        System.debug('passei aqui: não sou HO');
+                        listCasesOrdered.put('2' + mapKey, listCases.get(mapKey));
+                    }
+                }
+                listCasesOrdered.put('1' + sIATACodeHO, listCases.get(sIATACodeHO));
+                System.debug('2nd listCasesOrdered: ' + listCasesOrdered);
+
             }
             System.debug('listCases: ' + listCases);
+            System.debug('listCases.size(): ' + listCases.size());
+            System.debug('3rd listCasesOrdered: ' + listCasesOrdered);
+            System.debug('listCasesOrdered.size(): ' + listCasesOrdered.size());
             
+            listCases = listCasesOrdered;
             return listCases;
         }
         set;}
