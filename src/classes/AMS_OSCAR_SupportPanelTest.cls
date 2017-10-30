@@ -10,6 +10,7 @@ public class AMS_OSCAR_SupportPanelTest {
         insert oscar;
         
         //updating a OSCAR step will create a lifecycle event which is where the history is stored
+        oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
         update oscar;
 
