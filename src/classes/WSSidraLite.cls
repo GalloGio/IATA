@@ -6,7 +6,7 @@ global class WSSidraLite {
     /**
         This method returns a Case with all data needed for SIDRA Lite process, including related objects
     **/
-    private static Case queryCase(Id caseId) {
+    @TestVisible private static Case queryCase(Id caseId) {
         return [
             Select Id, Status,
                 FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c, Third_FA_non_Compliance_Date__c,
