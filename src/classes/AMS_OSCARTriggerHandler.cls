@@ -89,6 +89,7 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
+        handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 	}
 
 	public static void handleBeforeInsert() {
@@ -2891,6 +2892,51 @@ public class AMS_OSCARTriggerHandler {
 		}
 
         insert authorizations;
+    }
+
+    public static void handleNewgenFOPActionsBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
+
+        List<Account> accountsToUpdate = new List<Account>();
+
+        for(AMS_OSCAR__c oscar: oscarsToInsert){
+            if(!(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGENFOP))
+                continue;
+
+            if(oscar.ANG_Sanity_checks__c == AMS_Utils.PASSED && ( oscar.ANG_Sanity_checks__c != oldOscars.get(oscar.id).ANG_Sanity_checks__c)){        
+                oscar.Process_Start_Date__c = Date.today();
+            }
+
+            if(oscar.STEP40__c == AMS_Utils.PASSED && ( oscar.STEP40__c != oldOscars.get(oscar.id).STEP40__c)){
+
+                if(oscar.Is_PCI_compliant__c == null){
+                    oscar.addError('In order to pass this step you need to check the Is PCI compliant field.');
+                    continue;
+                }
+
+                if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null){
+                    oscar.addError('For PCI compliance, you need to add an expiry date.');
+                    continue;
+                }
+
+                Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+                accountIdsInvolvedSet.add(oscar.Account__c);
+
+                for(Id accId: accountIdsInvolvedSet){        
+
+                    Account acct = new Account(Id = accId);
+
+                    acct.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+
+                    if(oscar.Is_PCI_compliant__c == 'Yes')
+                        acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
+
+                    accountsToUpdate.add(acct);
+                }
+            }
+        }
+
+        if(!accountsToUpdate.isEmpty())
+            update accountsToUpdate;
     }
 
 	public static void increasecoverage () {

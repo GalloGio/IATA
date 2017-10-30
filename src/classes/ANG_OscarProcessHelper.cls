@@ -500,6 +500,229 @@ global class ANG_OscarProcessHelper {
 	    System.debug('[ANG_OscarProcessHelper] 5. Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
     }
 
+    webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
+
+    	/*
+		Restrict FoP for the full hierarchy 
+		- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
+		- If "Restrict cash" is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CA
+		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
+    	*/
+
+		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+
+		
+		try{
+
+	    	if(oscar.STEP38__c == AMS_Utils.PASSED){
+	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
+				return new String[]{'-1',exMessage};
+	    	}
+
+			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+			Set<Id> accountHierarchyRelationships = new Set<Id>();
+			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+			accountHierarchyRelationships.add(oscar.Account__c);
+
+			restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
+			
+			oscar.ANG_Restrict_Cash__c = restrictCash; 
+			oscar.ANG_Restrict_Credit_Card__c = restrictCreditCard;
+			oscar.STEP38__c = AMS_Utils.PASSED;
+
+			EntityUpdater updater = new EntityUpdater();
+			
+			updater.oscarMap.put(oscar.Id,oscar);
+
+			List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountHierarchyRelationships];
+
+			String changeCodeName= null;
+			
+			/*
+				 - PCA if Restrict cash is set
+				 - CCA if Restrict Credit card is set 
+				 - FOP if both Restrict cash and Restrict Credit card are set
+			*/
+
+			if(restrictCreditCard && restrictCash)
+				changeCodeName = 'FOP';
+			else if(restrictCash)
+				changeCodeName = 'PCA';
+			else
+				changeCodeName = 'CCA';
+
+			updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+
+			updateUpdater(updater);
+		
+		}catch(Exception ex){
+			
+			oscar.STEP38__c = AMS_Utils.FAILED;
+			update oscar;
+
+			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			return new String[]{'-1',exMessage};
+		}
+
+		return new String[]{'0',null};
+
+    }
+
+    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash){
+
+    	/*
+			Restore FoP for the full hierarchy 
+			- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
+			- If "Restore cash" is selected set Status = "Active" on Accounts' Agency Authorization having Form of Payment ID = CA
+			- If "Restore credit card and if the Account has PCI Compliant = "Yes" then set Status = "Active" on  Agency Authorization having Form of Payment ID = CC
+    	*/
+
+    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+
+		try{
+
+	    	if(oscar.STEP39__c == AMS_Utils.PASSED){
+	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
+				return new String[]{'-1',exMessage};
+	    	}
+
+			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
+			Set<Id> accountHierarchyRelationships = new Set<Id>();
+			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+
+			accountHierarchyRelationships.add(oscar.Account__c);
+
+			restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCreditCard, restoreCash, false, false,  'Active');
+		
+			oscar.ANG_Restore_Credit_Card__c = restoreCreditCard; 
+			oscar.ANG_Restore_Cash__c = restoreCash;
+			oscar.STEP39__c = AMS_Utils.PASSED;
+			
+			EntityUpdater updater = new EntityUpdater();
+			
+			updater.oscarMap.put(oscar.Id,oscar);
+
+			List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountHierarchyRelationships];
+
+			String changeCodeName= null;
+			
+			/*
+			 - PCR if Restore cash is set
+			 - CCR if Restore Credit card is set 
+			 - FPR if both Restore cash and Restore Credit card are set
+			*/
+
+			if(restoreCreditCard && restoreCash)
+				changeCodeName = 'FPR';
+			else if(restoreCash)
+				changeCodeName = 'PCR';
+			else
+				changeCodeName = 'CCR';
+
+			updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+
+			updateUpdater(updater);
+
+		}catch(Exception ex){
+			
+			oscar.STEP39__c = AMS_Utils.FAILED;
+			update oscar;
+
+			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			return new String[]{'-1',exMessage};
+		}
+
+		return new String[]{'0',null};
+
+    }
+
+    public static void restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash, String valueToAdd){
+
+    	System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
+
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
+
+    	for(Agency_Authorization__c aa: aaLst){
+
+    		if( restrictCash || restrictCreditCard){
+
+	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
+	    			aa.Status__c = valueToAdd;
+	    			aaLstToUpdate.add(aa);
+	    		}
+
+	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
+    				aa.Status__c = valueToAdd;
+    				aaLstToUpdate.add(aa);
+    			}
+
+    		}
+
+    		if(restoreCash || restoreCreditCard){
+
+				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
+    				aa.Status__c = valueToAdd;
+    				aaLstToUpdate.add(aa);
+    			}
+
+	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
+    				aa.Status__c = valueToAdd;
+    				aaLstToUpdate.add(aa);
+    			}
+
+    		}
+
+    	}
+
+    	if(!aaLstToUpdate.isEmpty())
+    		update aaLst;
+
+    	
+    }
+
+
+    public static EntityUpdater createChangeCodeForFOP(EntityUpdater updater, AMS_Oscar__c theOSCAR, List<Account> accounts, String changeCodeName) {
+		
+		if(updater == null)
+			updater = new EntityUpdater();
+
+
+		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
+		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
+
+		For(Account acctToAddCC: accounts){
+
+			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+			changeCode.name = changeCodeName;
+			changeCode.reasonCode = '21';
+			changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
+			changeCode.reasonDesc  = 'NEW APPLICATION';
+			changeCode.status  = '2';
+
+			listOfCCToInsert.add(changeCode);
+			oscarsToAdd.add(theOSCAR);
+		}
+
+		List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(listOfCCToInsert, oscarsToAdd, accounts, false);
+
+		if(!acctList.isEmpty()){
+
+			For(Account acctToAdd: acctList){
+				updater.acctMap.put(acctToAdd.Id, acctToAdd);
+			}
+		}
+
+		updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
+
+		updater.toUpdate = true;
+
+		return updater;
+
+	}
+
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;

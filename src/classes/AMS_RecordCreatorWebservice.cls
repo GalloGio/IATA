@@ -306,6 +306,11 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
                 oscar.Type_of_change__c = typeOfChange;
+
+            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+
+                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+            }
             
         }
 
