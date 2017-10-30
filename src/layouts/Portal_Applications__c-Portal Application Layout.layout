@@ -161,6 +161,10 @@
                 <behavior>Edit</behavior>
                 <field>Application_icon_URL__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Country_Coverage__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
