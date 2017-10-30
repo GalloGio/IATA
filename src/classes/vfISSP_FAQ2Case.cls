@@ -273,7 +273,7 @@ public without sharing class vfISSP_FAQ2Case
 
             LVAConfigs=new Map<String,LVA_Configs__mdt>();
 
-            List<LVA_Configs__mdt> ConfigsList=[SELECT DeveloperName, MasterLabel, Value__c
+            List<LVA_Configs__mdt> ConfigsList=[SELECT DeveloperName, MasterLabel, Value__c, ValueLong__c
                     FROM LVA_Configs__mdt
             ORDER BY MasterLabel ASC];
 
@@ -305,7 +305,13 @@ public without sharing class vfISSP_FAQ2Case
         loadLVAConfigurations();
 
         if (LVAConfigs.containsKey(key)) {
-            return LVAConfigs.get(key).Value__c;
+            String retVal;
+
+            retVal=LVAConfigs.get(key).Value__c;
+            if (String.isBlank(retVal)){
+                retVal=LVAConfigs.get(key).ValueLong__c;
+            }
+            return retVal;
         }
         else {
             System.debug('basto1p - Configuration KEY NOT FOUND:'+key);

@@ -3,6 +3,10 @@
     <label>LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES</label>
     <protected>false</protected>
     <values>
+        <field>ValueLong__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Value__c</field>
         <value xsi:type="xsd:string">5</value>
     </values>

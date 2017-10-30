@@ -35,15 +35,38 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
     }
     
     public String topicLabel {
+    get{
+        return ApexPages.currentPage().getParameters().get('topiclbl');
+    }
+    set;
+}
+
+    public String subTopicLabel{
         get{
-            return ApexPages.currentPage().getParameters().get('topiclbl');
+        	
+        	
+            return ApexPages.currentPage().getParameters().get('subtopiclbl');
         }
         set;
     }
-    
-    public String subTopicLabel{
+
+    public String topicId {
         get{
-            return ApexPages.currentPage().getParameters().get('subtopiclbl');
+        	string topicId = ApexPages.currentPage().getParameters().get('topicId');
+        	topicId = topicId.replace('__c','');
+        	topicId = topicId.replace('_',' ');
+            return topicId;
+        }
+        set;
+    }
+   
+
+    public String subTopicId{
+        get{
+        	String subtopic = ApexPages.currentPage().getParameters().get('subTopicId');
+        	subtopic = subtopic.replace('__c','');
+        	subtopic = subtopic.replace('_',' ');
+            return subtopic;
         }
         set;
     }
