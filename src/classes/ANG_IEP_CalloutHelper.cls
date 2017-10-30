@@ -7,6 +7,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	public static final Integer THRESHOLD = 40;
 	public static boolean isRunningTestForThreshold = false;
 	public static String INTEGRATIONSYSTEM_MULESOFT = 'Mulesoft';
+	public static String MULESOFTPREFIX = 'MS_';
 
 
 
@@ -57,7 +58,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 		list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper> records2SendList = new list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper>();
 		for(AMS_Agency_Updates__c ae: agencyEventsList){
 			if(ae.Integration_System__c==INTEGRATIONSYSTEM_MULESOFT){
-				ANG_IEP_CalloutHelper.AgencyEvent2Send tempchw =new ANG_IEP_CalloutHelper.AgencyEvent2Send((ae.ANG_Account_Portal_Service__c!=null?ae.ANG_Account_Portal_Service__c+'.':'')+ae.Update_Type__c,ae.Change_Code__c,ae.IATACode__c);
+				ANG_IEP_CalloutHelper.AgencyEvent2Send tempchw =new ANG_IEP_CalloutHelper.AgencyEvent2Send((ae.ANG_Account_Portal_Service__c!=null?ae.ANG_Account_Portal_Service__c+'.':'')+ae.Update_Type__c.replace(MULESOFTPREFIX,''),ae.Change_Code__c,ae.IATACode__c);
 				records2SendList.add( new ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper(calloutMappingMap.get(ae.ConfigurationID__c),tempchw,ae.Agency_Applied_Change_code__c,ae.id));
 			}
 		}
@@ -109,7 +110,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		if(aeId!=null){
 			AMS_Agency_Updates__c aeRecord= [select id,Update_Type__c from AMS_Agency_Updates__c where id =:aeId];
-			aeRecord.Update_Type__c=isSuccess?(aeRecord.Update_Type__c+'_Sent'):'Error';
+			aeRecord.Update_Type__c=isSuccess?(aeRecord.Update_Type__c.replace(MULESOFTPREFIX,'')+'_Sent'):'Error';
 			update aeRecord;
 		}
 	}
