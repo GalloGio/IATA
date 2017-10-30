@@ -536,7 +536,7 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
 		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
-		oscar.Dossier_Reception_Date__c = saamCase.Dossier_reception_date__c;
+		oscar.Dossier_Reception_Date__c = (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? Date.today() : saamCase.Dossier_reception_date__c );
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
@@ -665,24 +665,22 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
-				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,
-				
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
 				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
 				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
 				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
-				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : '' ),
-				// For IEP BANK Account we'll populate Dossier Reception Date = today
-				Dossier_reception_date__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? Date.today() : null)
-				
+				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : null )
 			);
-
-
 
 			insert oscar;
 
 			oscarId = oscar.Id;
 
 			caseToProcess.OSCAR__c = oscar.Id;
+
+			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+				caseToProcess.Visible_on_ISS_Portal__c = false;
 			
 			update caseToProcess;
 		}
