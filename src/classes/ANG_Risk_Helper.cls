@@ -27,6 +27,43 @@ public with sharing class ANG_Risk_Helper{
 	public static final String STATUS_WITHDRAWN        = 'Inactive_Withdrawn';
 	public static final String STATUS_REVOKED          = 'Inactive_Revoked';
 	public static final String STATUS_CHANGE_OWNERSHIP = 'Inactive_CHO';
+	public static final String STATUS_MIGRATED         = 'Inactive_Migrated';
+
+	//RISK EVENT TYPES
+	public static final String RISK_TYPE_AUTH_CASH_PAYMENT         = 'Auth. Cash Payment';
+	public static final String RISK_TYPE_LATE_SHORT_PAYMENT        = 'Late/Short payment';
+	public static final String RISK_TYPE_PAYMENT_DEFAULT           = 'Payment Default';
+	public static final String RISK_TYPE_FAIL_FINANCIAL_STATEMENTS = 'Fail Financial Statements';
+	public static final String RISK_TYPE_MAJOR_CHANGE              = 'Major change (owner or legal)';
+	public static final String RISK_TYPE_UNREPORTED_CHANGE         = 'Unreported Major Change';
+	public static final String RISK_TYPE_FAIL_FINANCIAL_SECURITY   = 'Fail Financial Security';
+	public static final String RISK_TYPE_COMMON_OWNERSHIP_DEFAULT  = 'Common ownership default';
+	public static final String RISK_TYPE_PREJUDICED_COLLECTION     = 'Prejudiced collection';
+
+
+	//CHANGE CODES
+	public static final String CHANGE_CODE_FIN = 'FIN';
+	public static final String CHANGE_CODE_IRR = 'IRR';
+	public static final String CHANGE_CODE_RCR = 'RCR';
+	public static final String CHANGE_CODE_NOT = 'NOT';
+	public static final String CHANGE_CODE_MCF = 'MCF';
+	public static final String CHANGE_CODE_RVW = 'RVW';
+	public static final String CHANGE_CODE_IRW = 'IRW';
+	public static final String CHANGE_CODE_NTW = 'NTW';
+	public static final String CHANGE_CODE_CCF = 'CCF';
+	public static final String CHANGE_CODE_CHF = 'CHF';
+	public static final String CHANGE_CODE_CNF = 'CNF';
+	public static final String CHANGE_CODE_CSF = 'CSF';
+
+	//CHANGE CODES REASON DESCRIPTION 
+	public static final String CHANGE_CODE_DESCRIPTION_NCAC                  = 'NON COMPLIANCE TO ACCREDITATION CRITERIA';
+	public static final String CHANGE_CODE_DESCRIPTION_FINANCIAL_REVIEW      = 'FINANCIAL REVIEW';
+	public static final String CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION = 'PREJUDICED COLLECTION OF FUNDS';
+	public static final String CHANGE_CODE_DESCRIPTION_NCFC                  = 'NON COMPLIANCE TO FINANCIAL CRITERIA' ;
+
+	//CHANGE CODE IRREGULARITY TYPE
+	public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
+	public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
 
 	//Contact - User_Portal_Status__c
 	public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
@@ -59,6 +96,11 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CASE_IRR_APPROVED = 'Approved';
 	public static final String CASE_IRR_REJECTED = 'Rejected';
 
+	// Case - Status	
+	public static final String CASE_STATUS_CLOSED = 'Closed';
+	public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+
+
 	//Account - ANG_HE_RiskHistoryAssessment__c
 	public static final String RISK_ASSESSMENT_PASSED = 'Passed';
 	public static final String RISK_ASSESSMENT_FAILED = 'Failed';
@@ -69,6 +111,9 @@ public with sharing class ANG_Risk_Helper{
 
 	//set with the status of the FS to be summed
 	public static final Set<String> FS_STATUS_FOR_SUM_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
+
+	//set with the ifap status to update the account's last financial review
+	public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
 	
 
 	//Currency Conversion Rates
@@ -232,5 +277,21 @@ public with sharing class ANG_Risk_Helper{
 			if(process == 'Inactivate Risk Events') inactivateRisk(riskList);
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
+	}
+
+
+	public static void updateAccountFinancialReview(list<case> caseList){
+		list<Account> accList=new list<Account>();
+		for(case cs:caseList){
+			if(cs.recordtypeID==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review') && CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(cs.status)){
+				accList.add(
+					new Account(
+						id=cs.accountId,
+						Financial_Review_Result__c =cs.Financial_Review_Result__c					
+					)
+				);
+			}
+		}
+		update accList;
 	}
 }
