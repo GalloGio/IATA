@@ -194,8 +194,13 @@
         from { transform: scale(1) rotate(0deg);}
         to { transform: scale(1) rotate(360deg);}
     }
-
-
+     
+     
+	@media screen and (max-width: 920px) {
+    	.widefields {
+        	width:100%!important;
+    	}
+	}
 
 </style>
 
@@ -526,7 +531,7 @@
         <apex:outputPanel rendered="{! AND(isIATAServiceRequest!=true ,isPWCServiceRequest!=true ,isDPCServiceRequest!=true, isSISHelpDesk!=true) }">
             <div class="col-xs-2"></div>
         </apex:outputPanel>
-            <div class="col-xs-8" id="Main" >
+            <div class="col-xs-8 widefields" id="Main" >
                 <div class="row">
                     <div class="col-xs-2"></div>
                     <div class="col-xs-8">
