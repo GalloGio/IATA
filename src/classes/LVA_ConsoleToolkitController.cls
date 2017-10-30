@@ -2,7 +2,7 @@
 Class Name: LVA_ConsoleToolkitController
 Related Classes/Pages: LiveAgentConsoleToolkit.
 
-Copyright © [Client Name]
+Copyright © IATA
 
 Purpose: This class aims to handle live agent console in terms of handling agent custom events like
          onChatRequest, onAgentStatusChanged, stc...
