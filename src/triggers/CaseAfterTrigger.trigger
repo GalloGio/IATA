@@ -594,6 +594,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*Risk Event Management*/
   		if(Trigger.isInsert || Trigger.isUpdate){
     		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+    		ANG_Risk_Helper.updateAccountFinancialReview(Trigger.New);
   		}
   		/*Risk Event Management*/
 	}
