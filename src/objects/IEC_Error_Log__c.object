@@ -170,11 +170,6 @@
         <columns>Source__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader</value>
-        </filters>
         <label>DataLoader - All Errors</label>
         <language>en_US</language>
     </listViews>
