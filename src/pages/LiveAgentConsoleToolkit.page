@@ -36,7 +36,7 @@
             //LVA_CONSOLE_ALERT_MODE_DIALOG
             //LVA_CONSOLE_ALERT_MODE_POPUP
             //LVA_CONSOLE_ALERT_MODE_ALERT
-            var lvaCharConsoleAlertMode='{!lvaCharConsoleAlertMode}';
+            var lvaChatConsoleAlertMode='{!lvaChatConsoleAlertMode}';
 
             var newWindow;//GLOBAL VAR for popup window in order to be able to close it from parent
             var windowContent='';
@@ -183,7 +183,7 @@
               }
 
               //If POP UP ALERT MODE (RECOMENDED MODE)
-              if (lvaCharConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_POPUP'){
+              if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_POPUP'){
                 var heightDinamic;
 
                 if (newWindow!=undefined && !newWindow.closed){
@@ -223,7 +223,7 @@
 
                 newWindow.focus();
               }
-              else if (lvaCharConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_ALERT'){
+              else if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_ALERT'){
                 alert(msgToDisplay);
               }
               else{ //MODAL MODE

@@ -1,7 +1,20 @@
-/**
- * Created by Paulo Bastos on 23/10/2017.
- */
+/*
+Class Name: LVA_ConsoleToolkitController
+Related Classes/Pages: LiveAgentConsoleToolkit.
+
+Copyright © [Client Name]
+
+Purpose: This class aims to handle live agent console in terms of handling agent custom events like
+         onChatRequest, onAgentStatusChanged, stc...
+
+VERSION  AUTHOR                                    DATE              DETAIL/CHANGE REFERENCE
+1.0 -    paulo.bastos@rightitservices.com          23/10/2017        Initial development
+
+*/
 public class LVA_ConsoleToolkitController {
+	/*****************************************
+	* Configuration Parameters               *
+	******************************************/
 	//List of suppervisor profiles
 	public static final String LVA_CFG_SUPERV_PROFILES   = 'LVA_CFG_SUPERV_PROFILES';
 
@@ -14,9 +27,10 @@ public class LVA_ConsoleToolkitController {
 	public static final String LVA_CONSOLE_ALERT_MODE_POPUP='LVA_CONSOLE_ALERT_MODE_POPUP';
 	public static final String LVA_CONSOLE_ALERT_MODE_ALERT='LVA_CONSOLE_ALERT_MODE_ALERT';
 
+	//List of supervisor profiles attribute
 	private static Set<Id> listSupervisorProfileIds;
 
-	public static String lvaCharConsoleAlertMode{
+	public static String lvaChatConsoleAlertMode{
 		get{
 			String retVal=vfISSP_FAQ2Case.getLivAgConfig(LVA_CONSOLE_ALERT_MODE);
 			System.debug('basto1p - isChatSupervisor.retVal=' + retVal);
