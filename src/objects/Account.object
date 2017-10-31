@@ -82064,6 +82064,31 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agency_Name</fullName>
+        <active>true</active>
+        <description>prevent users should changing the agencies name</description>
+        <errorConditionFormula>AND
+(
+ISCHANGED(Name),
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR
+(
+$User.Profile_Name__c  =  &apos;System Administrator&apos;,
+$User.Profile_Name__c  =  &apos;System Administrator - automated processes&apos;,
+$User.Profile_Name__c  =  &apos;System administrator - Stakeholders&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver)&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
+$User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
+$User.Profile_Name__c  =  &apos;Developer&apos;,
+$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
