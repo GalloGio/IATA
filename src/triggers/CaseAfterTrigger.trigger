@@ -31,7 +31,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean trgCase = true;
 	
 	//EM: To be removed
-	if (Test.isRunningTest())) {
+	if (Test.isRunningTest()) {
 		Integer i=0;
 		i=0;
 		i=0;
