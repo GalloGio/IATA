@@ -280,10 +280,11 @@ public with sharing class ANG_Risk_Helper{
 	}
 
 
-	public static void updateAccountFinancialReview(list<case> caseList){
+	public static void updateAccountFinancialReview(list<case> caseList, map<id,case> oldCaseMap){
 		list<Account> accList=new list<Account>();
 		for(case cs:caseList){
-			if(cs.recordtypeID==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review') && CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(cs.status)){
+			if(cs.recordtypeID==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review') && (oldCaseMap==null || (oldCaseMap!=null && cs.status != oldCaseMap.get(cs.id).status)) && CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(cs.status)){
+
 				accList.add(
 					new Account(
 						id=cs.accountId,

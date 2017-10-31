@@ -1,6 +1,6 @@
 @isTest
 private class ANG_financialReviewOnCaseTest {
-    static testMethod void test() {
+    @testSetup static void testSetup() {
         // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR',AIMS_Area_ID__c='1');
         insert country;
@@ -25,7 +25,7 @@ private class ANG_financialReviewOnCaseTest {
         		Subject = 'rception case',
         		AccountId = a.Id, 
         		contactId=cont.Id,
-        		Status = 'Closed', 
+        		Status = 'Open', 
         		Financial_Review_Result__c='Satisfactory - New Financial Security',
                 RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),IFAP_Area__c='asda'
                  );
@@ -37,7 +37,29 @@ private class ANG_financialReviewOnCaseTest {
                         Validity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
         insert fs;
 
-        system.assertEquals(c.Financial_Review_Result__c,[select Financial_Review_Result__c from account where id=:a.id].Financial_Review_Result__c);
+       
 
-    }   
+    }
+    TestMethod static void updateCaseStatusToUpdateFinancialReview(){
+    	Test.startTest();
+	    	case c=[select id,Financial_Review_Result__c from case limit 1];
+	    	c.status='Closed';
+	        update c;
+        Test.stopTest();
+        system.assertEquals(c.Financial_Review_Result__c,[select Financial_Review_Result__c from account limit 1].Financial_Review_Result__c);
+
+    } 
+    TestMethod static void updateCaseStatusToNOTUpdateFinancialReview(){
+    	account beforeUpdateAcc =[select Financial_Review_Result__c from account limit 1];	
+
+    	Test.startTest();
+	    	case c=[select id,Financial_Review_Result__c from case limit 1];
+	    	c.status='Approved';
+	        update c;
+        Test.stopTest();
+        account afterUpdateAcc =[select Financial_Review_Result__c from account limit 1];	
+
+        system.assertEquals(afterUpdateAcc.Financial_Review_Result__c,beforeUpdateAcc.Financial_Review_Result__c);
+
+    }
 }
