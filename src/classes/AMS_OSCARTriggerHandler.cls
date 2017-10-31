@@ -255,7 +255,7 @@ public class AMS_OSCARTriggerHandler {
                     oscar.Requested_Bank_Guarantee_currency__c = 'USD';
                 }
             }else
-            	if(oscar.recordTypeId == AMS_Utils.RECTYPE_NGCHANGES && oscar.Process__c == AMS_Utils.BANKACCCHANGES){
+            	if((oscar.recordTypeId == AMS_Utils.RECTYPE_NGCHANGES || oscar.recordTypeId == AMS_Utils.RECTYPE_CHANGE) && oscar.Process__c == AMS_Utils.BANKACCCHANGES){
             		oscar.Sanity_check_deadline__c = Date.today() + 15;
             	}
 
