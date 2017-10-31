@@ -847,12 +847,11 @@
                                     <apex:inputField style="width: 174.4px;"  value="{!hqAccount.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
                                 </apex:pageBlockSectionItem>
 
-                 	<apex:outputPanel >
                     	<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        <apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" styleClass="labelCol" style="padding-left:21px" html-for="VATInput"/>
-                        <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'40px', '59px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
-                            <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px"/>
+                            <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}"/>
+                          <apex:outputpanel id="VATNumberInput">
+                            <span style="margin-left:{!If(isEUcountry,'-20px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                            <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px" />
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
                                 <apex:facet name="start">
@@ -861,7 +860,6 @@
                             </apex:actionstatus>
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
-                  </apex:outputPanel>
                                 
                                 <apex:pageBlockSectionItem >
                                 <DSE:DS_DataQuality id="HOPhone"
@@ -1035,21 +1033,19 @@
                                 <apex:inputField style="width: 174.4px;" value="{!newForm.Branch_Office_Fax_National__c}" onblur="setInternationalAccountPhoneNoTerminated('fax');" id="companyfaxinputTerminated"/>
                             </apex:pageBlockSectionItem>
                              
-                            <apex:outputPanel id="VatNumberInput">
-                    		<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        		<apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" styleClass="labelCol" style="padding-left:21px" html-for="VATInput"/>
+                            <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                        		<apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
                         		<apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'40px', '57px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
-                            <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
-                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
-                                <apex:facet name="start">
+                            		<span style="margin-left:{!If(isEUcountry,'-19px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                            		<apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
+                            		<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            		<apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
+                                	<apex:facet name="start">
                                     {!$Label.ISSP_PAX_Validating_VAT_Number}
-                                </apex:facet>
-                            </apex:actionstatus>
-                        </apex:outputpanel>
+                                	</apex:facet>
+                            	</apex:actionstatus>
+                        	</apex:outputpanel>
                     	</apex:pageblocksectionitem>
-                  		</apex:outputPanel>
                             
                             <apex:pageBlockSection id="BranchPhoneSection">
                                 <DSE:DS_DataQuality id="BranchPhone"

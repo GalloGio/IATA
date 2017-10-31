@@ -189,4 +189,15 @@ public class AMS_OSCAR_WebserviceTest {
         system.assertEquals(oscar.STEP36__c, AMS_Utils.PASSED);
     }
 
+    static testMethod void test_createIfapPortalServiceRight() {
+        
+        setup();
+        
+        Test.startTest();
+
+        String result_createIfapPortalServiceRight = AMS_OSCAR_Webservice.createIfapPortalServiceRight(oscar5.Id);
+
+        Test.stopTest();
+    }
+
 }

@@ -153,6 +153,13 @@
     </style>
     
     <script>
+
+            var showProductComparisonLink = false;
+            var hideProductComparisonLink = false;       
+        
+            setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
+
+
             $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
             var pilotList = {{!pilotList}};
             var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -164,6 +171,16 @@
             
             var isPilotCountry = pilotList[defaultHQCountry];
             var isEUcountry = {!isEUcountry};
+
+            function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
+               if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
+                    showProductComparisonLink = true;
+                    hideProductComparisonLink = false;
+                } else {
+                    hideProductComparisonLink = true;
+                    showProductComparisonLink = false;
+                }    
+            }            
          
             function setIsPilotCountry(isocode) {
                 isPilotCountry = pilotList[isocode];
@@ -516,7 +533,7 @@
                 <div class="form-group">
                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Operation_Type}</label>
                     <div class="col-lg-9" style="padding-top:7px">
-                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged(this.value);">
+                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged('{!namEnabled}', this.value, '{!isHOAccredited}', '{!con.Account.Sector__c}');">
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
                         </apex:selectRadio>
@@ -538,10 +555,17 @@
                                 </apex:selectList>
 
                                 <apex:outputPanel id="compare">
-                                    <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent', OR(!isHOAccredited, con.Account.Sector__c=='Cargo Agent'))}">
-                                        <apex:outputLink value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
-                                    </apex:outputPanel>
+                                    <apex:outputLink id="ProductComparisonLink" value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
                                 </apex:outputPanel>
+
+                                <script>
+                                    if(showProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').show();
+                                    } 
+                                    if(hideProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').hide();
+                                    }                                
+                                </script>
                             </div>
                         </div>
 
@@ -629,10 +653,10 @@
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
                                                     <apex:selectRadio required="true" id="LegacyLocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
-                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}"/>
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}" />
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                            	    	<apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!isHOcontact}" />
+                                            	    	<apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
+	                                            	<apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
+        	                                    	<apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(isHOcontact,BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
@@ -727,11 +751,14 @@
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
 
-                    function operationTypeChanged(sectorValue) {
+                    function operationTypeChanged(namEnabled, sectorValue, isHOAccredited, sector) {
                         if (sectorValue === 'Cargo_Agent') {
                             $('[name$=separateLegalEntitySelect]').prop('checked', false);
                             $('[name$=isGSASelect]').prop('checked', false);
                         }
+
+                        setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector);
+
                         refreshOfficeTypes(sectorValue);
                     }
                 </script>

@@ -312,6 +312,9 @@ global without sharing class AMS_RecordCreatorWebservice {
                 oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
             }
             
+            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+            }
         }
 
         // this needs to be fetched from Accreditation Object. For now just use this.

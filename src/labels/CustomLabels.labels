@@ -52,6 +52,13 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_New_Change_Code_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
+        <value>A new change code has been generated:</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -1387,7 +1394,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_RiskDescription</fullName>
@@ -20353,13 +20360,11 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;&lt;font face=&quot;ARIAL&quot; size=&quot;2&quot; color=&quot;rbg(0,65,123)&quot;&gt;IATA Treasury Dashboard&lt;/font&gt;&lt;/b&gt;
+        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
 &lt;/BR&gt;
 &lt;/BR&gt;
-&lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
-The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
-&lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
-&lt;/font&gt;</value>
+The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
         <fullName>ISSP_TD_Download_1</fullName>
@@ -25860,5 +25865,26 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ANG ISSP Conversion From GoLite Tooltip</shortDescription>
         <value>Conversion From GoLite Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
     </labels>    
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>    
+    <labels>
+        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
+        <value>Agency Accreditation Associate Entity Draft Application</value>
+    </labels>
 </CustomLabels>

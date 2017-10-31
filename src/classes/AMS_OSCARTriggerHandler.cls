@@ -93,8 +93,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	public static void handleBeforeInsert() {
-		assignOSCARToRegionalQueues();
-
+		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 		
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
@@ -257,7 +256,7 @@ public class AMS_OSCARTriggerHandler {
                     oscar.Requested_Bank_Guarantee_currency__c = 'USD';
                 }
             }else
-            	if(oscar.recordTypeId == AMS_Utils.RECTYPE_NGCHANGES && oscar.Process__c == AMS_Utils.BANKACCCHANGES){
+            	if((oscar.recordTypeId == AMS_Utils.RECTYPE_NGCHANGES || oscar.recordTypeId == AMS_Utils.RECTYPE_CHANGE) && oscar.Process__c == AMS_Utils.BANKACCCHANGES){
             		oscar.Sanity_check_deadline__c = Date.today() + 15;
             	}
 
@@ -363,8 +362,8 @@ public class AMS_OSCARTriggerHandler {
 			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT)
 				certificationOscars.add(oscar);
 
-		if(!certificationOscars.isEmpty())
-			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);
+		/*if(!certificationOscars.isEmpty())
+			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
@@ -776,7 +775,9 @@ public class AMS_OSCARTriggerHandler {
 
 					//check if ownership needs to be copied from online form to Accounts
 					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
-						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
+						Set<Id> accountsListToMigrate = new Set<Id>();
+						accountsListToMigrate = checkProcessAndStatusToMigrateOwners(oscar.Type_of_change__c, oscar.Process__c, agenciesAffected);
+						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, accountsListToMigrate);
 
 						//fill map to check ownership alignment in hierarchy
 						if(cascadingTOCs.contains(AMS_Utils.OWNERSHIP_IATA)){
@@ -1469,8 +1470,9 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars
-						AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars])
+						//AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]) --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
+						{
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
@@ -1665,7 +1667,7 @@ public class AMS_OSCARTriggerHandler {
 																			SELECT Id, First_name__c, Last_name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c,
 																			Certificate_Name__c, Certificate_Issued_on__c, Type_of_Certificate__c, Certificate_Validity__c, Valid_until__c,
 																			Certificate_Issuer__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__c, Position_trained_staff__c, AgencyRegulation__c,
-																			Air_cargo_transport_business_exp__c, IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c
+																			Air_cargo_transport_business_exp__c, IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Registration_number__c
 																			FROM AMS_Accreditation_Contact__c
 																			WHERE AMS_Pax_Accreditation_Form__c IN :onlineAccreditations
 																			AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT]);
@@ -1699,6 +1701,7 @@ public class AMS_OSCARTriggerHandler {
 			agReg.Air_cargo_transport_business_exp__c = ac.Air_cargo_transport_business_exp__c;
 			agReg.IATA_FIATA_training_history__c = ac.IATA_FIATA_training_history__c;
 			agReg.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
+			agReg.Registration_Number__c = ac.Registration_number__c; //AMSU-14
 
 			agencyregulationsToCreate.add(agReg);
 
@@ -2316,6 +2319,26 @@ public class AMS_OSCARTriggerHandler {
 				}
 			}
 		}
+	}
+
+	public static Set<Id> checkProcessAndStatusToMigrateOwners(String typeOfChange, String process, Set<Id> accountsList)
+	{
+		Set<Id> accountsToMigrateOwners = new Set<Id>();
+		List<Account> accountsToMigrateOwnersAux = new List<Account>();
+
+		accountsToMigrateOwnersAux = [SELECT Id, Status__c FROM Account WHERE Id IN :accountsList];
+
+		if(process == AMS_Utils.AGENCYCHANGES && (typeOfChange == AMS_Utils.MAJ_SHAREHOLDING || typeOfChange == AMS_Utils.MIN_SHAREHOLDING || typeOfChange == AMS_Utils.VFMR)){
+			
+			for(Account acc : accountsToMigrateOwnersAux) {
+
+				if(Integer.valueOf(AMS_Utils.getIATANumericStatus(acc.Status__c)) > 2)
+					accountsToMigrateOwners.add(acc.Id);
+			}
+		}
+
+		return accountsToMigrateOwners;
+
 	}
 	
 	private static void processFieldsTracking(AMS_OSCAR__c oldOscar, AMS_OSCAR__c updatedOSCAR) {

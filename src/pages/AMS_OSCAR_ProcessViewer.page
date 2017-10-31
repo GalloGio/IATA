@@ -363,6 +363,15 @@ body.loading .modal {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+
+body .bPageBlock .pbBody .red .pbSubheader{
+    background-color:#c00000;
+}
+body .bPageBlock .pbBody .green .pbSubheader{
+    background-color:#008000;
+}
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
 }
 
 </style>
@@ -497,7 +506,10 @@ function buildFunctionCall(func, argList){
         <apex:pageBlock >
             <apex:variable var="p" value="{!process[oscar.Process__c]}" />
             <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                <apex:pageBlockSection><!-- Fake section to force SF to inject the twistSection() JS code, which is not injected anymore because of the new outputpanel below, used for colors --></apex:pageBlockSection>
+
+                <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                     <apex:outputPanel layout="block" styleClass="sectionWrapper">
                         <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
                             <p>{!$Label.AMS_Due_Diligence_Lock}</p>
@@ -533,6 +545,7 @@ function buildFunctionCall(func, argList){
                         </apex:pageBlockSection>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
+                </apex:outputPanel>
             </apex:repeat>
         </apex:pageBlock>
     </apex:outputPanel>
