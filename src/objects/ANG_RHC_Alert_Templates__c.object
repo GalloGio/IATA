@@ -3,6 +3,17 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>ANG_Portal_Notification_Template__c</fullName>
+        <description>Id of the portal template</description>
+        <externalId>false</externalId>
+        <label>Portal Notification Template</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_language__c</fullName>
         <externalId>false</externalId>
         <label>Language</label>
