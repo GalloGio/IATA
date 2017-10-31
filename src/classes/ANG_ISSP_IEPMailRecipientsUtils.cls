@@ -4,6 +4,21 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
     // NOTE: The set accountIDs needs the 15 digit ids.
     //
     public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles) {
+        return getRecipients(accountIDs, roles, null, 'A');
+
+    }
+
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    //
+    public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<Id> portalServices) {
+        return getRecipients(accountIDs, null, portalServices, 'B');
+    }
+
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    //
+    public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles, Set<Id> portalServices, String type) {
 
         Map<Id, String> topParents = new Map<Id, String>();
 
@@ -32,12 +47,23 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
         //System.debug('roles--->' + roles);
         //System.debug('accountIDs--->' + accountIDs);
 
-        List<Portal_Application_Right__c> parList2 = [Select Account__c,
-                                                     Contact__c
-                                                From Portal_Application_Right__c
-                                               Where ANG_Portal_Service_Role__c in : roles
-                                                 And right__c = 'Access Granted'
-                                                 And contact__r.accountId in : accountIDsSet];
+        List<Portal_Application_Right__c> parList2;
+
+        if(type == 'A') {
+            parList2 = [Select Account__c,
+                               Contact__c
+                          From Portal_Application_Right__c
+                         Where ANG_Portal_Service_Role__c in : roles
+                           And right__c = 'Access Granted'
+                           And contact__r.accountId in : accountIDsSet];
+        } else {
+            parList2 = [Select Account__c,
+                               Contact__c
+                          From Portal_Application_Right__c
+                         Where id in : portalServices
+                           And right__c = 'Access Granted'
+                           And contact__r.accountId in : accountIDsSet];                           
+        }
 
         //System.debug('parList2-->' + parList2);
 
