@@ -2,9 +2,9 @@ public class LVA_TranscriptController {
     private Integer MAX_LENGTH = 110;
     public LiveChatTranscript lva{get;set;}
     public LVA_TranscriptController(){
-        try{//5709E000000DBdu
+        try{
             lva=new LiveChatTranscript();
-            Id lvaID = ApexPages.currentPage().getParameters().get('id')!=null ? ApexPages.currentPage().getParameters().get('id') : '5709E000000DChE';
+            Id lvaID = ApexPages.currentPage().getParameters().get('id');
             lva = [select body from LiveChatTranscript where id=:lvaID];
             
             String [] splitedBody = lva.body.split('<br>');
