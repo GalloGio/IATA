@@ -32,7 +32,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
                                         ANG_AccountId__c    = a.Account__c,
                                         ANG_OscarId__c      = a.OSCAR__c,
                                         ANG_CaseId__c       = a.SIDRA_Case__c,
-                                        ANG_Event_Status__c = ANG_Risk_Helper.STATUS_MIGRATED,
+                                        ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE,
 										ANG_Created_from__c = 'Agency_Applied_Change_code__c',
 										ANG_UniqueKey__c    = (a.SIDRA_Case__c != null ? a.SIDRA_Case__c : (a.OSCAR__C != null ? a.OSCAR__c : a.id))
                                     );
