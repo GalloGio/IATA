@@ -36,7 +36,8 @@ public class LVA_AfterChatTriggerTest {
             
             insert bulkCases;
             
-            
+            LiveChatVisitor lcv = new LiveChatVisitor();
+            insert lcv;
             
             for(Case c : bulkCases){
                 System.debug(c.Case_Thread_ID__c);
@@ -46,7 +47,7 @@ public class LVA_AfterChatTriggerTest {
                                                SupervisorTranscriptBody = 'Supervisor whisper aaaaaa',
                                                ContactId = con.Id,
                                                CaseId = c.Id,
-                                               LiveChatVisitorId = '5719E0000000WZyQAM'));
+                                               LiveChatVisitorId = lcv.Id));
             }
             test.startTest();
             insert lct;
@@ -70,12 +71,15 @@ public class LVA_AfterChatTriggerTest {
         con.AccountId = a.Id;
         insert con;
         
+        LiveChatVisitor lcv = new LiveChatVisitor();
+        insert lcv;
+        
         List<LiveChatTranscript> lct = new List<LiveChatTranscript>();
         lct.add(new LiveChatTranscript(AccountId = a.Id,
                                        Body = '<p align="center">Chat Started: Monday, August 28, 2017, 11:05:42 (+0000)</p><p align="center">Chat Origin: AirlineEnglish</p><p align="center">Agent Beatrice M</p>( 6s ) Beatrice M: Hello! <br>My name is Beatrice and I&#39;m here to help you<br>( 22s ) Beatrice M: Hello<br>( 52s ) First: Hello<br>( 1m 3s ) First: My problem was solved tahnks<br>',
                                        SupervisorTranscriptBody = 'Supervisor whisper aaaaaa',
                                        ContactId = con.Id,
-                                       LiveChatVisitorId = '5719E0000000WZyQAM'));
+                                       LiveChatVisitorId = lcv.Id));
         
         insert lct;
         
@@ -118,13 +122,16 @@ public class LVA_AfterChatTriggerTest {
                 
                 insert bulkCases;
                 
+                LiveChatVisitor lcv = new LiveChatVisitor();
+        		insert lcv;
+                
                 for(Case c : bulkCases){
                     caseIds.add(c.Id);
                     lcts.add(new LiveChatTranscript(AccountId = a.Id,
                                                     Body = '<p align="center">Chat Started: Monday, August 28, 2017, 11:05:42 (+0000)</p><p align="center">Chat Origin: AirlineEnglish</p><p align="center">Agent Beatrice M</p>( 6s ) Beatrice M: Hello! <br>My name is Beatrice and I&#39;m here to help you<br>( 22s ) Beatrice M: Hello<br>( 52s ) First: Hello<br>( 1m 3s ) First: My problem was solved tahnks<br>',
                                                     SupervisorTranscriptBody = 'Supervisor whisper aaaaaa',
                                                     ContactId = con.Id,
-                                                    LiveChatVisitorId = '5719E0000000WZyQAM'));
+                                                    LiveChatVisitorId = lcv.Id));
                 }
                 
                 

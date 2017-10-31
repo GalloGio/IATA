@@ -37,6 +37,9 @@ public class LVA_TranscriptControllerTest {
                 
                 insert bulkCases;
                 
+                LiveChatVisitor lcv = new LiveChatVisitor();
+        		insert lcv;
+                
                 for(Case c : bulkCases){
                     caseIds.add(c.Id);
                     lcts.add(new LiveChatTranscript(AccountId = a.Id,
@@ -44,7 +47,7 @@ public class LVA_TranscriptControllerTest {
                                                     SupervisorTranscriptBody = 'Supervisor whisper aaaaaa',
                                                     ContactId = con.Id,
                                                     CaseId = c.Id,
-                                                    LiveChatVisitorId = '5719E0000000WZyQAM'));
+                                                    LiveChatVisitorId = lcv.Id));
                 }
                 
                 
