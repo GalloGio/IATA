@@ -2927,10 +2927,15 @@ public without sharing class ISSP_AMS_Accreditation {
                     accountStagingFieldMapping(hqAccount, newCase.Reason1__c, false);    
                 }
             } else {
-                if(!newForm.Notify_Change_Accreditation_Type__c) {
-                    newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;                    
-                } else {                    
-                    newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
+                //
+                // If we are dealing with a bank account change then we should not set the accreditation type.
+                //
+                if(!isBankAccountChange && getIsAccreditationModelNotNullOrLegacy()) {
+                    if(!newForm.Notify_Change_Accreditation_Type__c) {
+                        newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;                    
+                    } else {                    
+                        newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
+                    }
                 }
             }
            
