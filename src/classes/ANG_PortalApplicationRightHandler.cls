@@ -65,8 +65,14 @@ public class ANG_PortalApplicationRightHandler {
 					}
 					
 					if(UPAToCreate){
+						string sExtUserId = '';
+						if(mapUser.get(access.Contact__c).FederationIdentifier==null)
+							sExtUserId = access.Contact__c;
+						else
+		            		sExtUserId = mapUser.get(access.Contact__c).FederationIdentifier;
+			            
 						UserProvAccount upa = new UserProvAccount (
-			            	ExternalUserId = (mapUser.get(access.Contact__c).FederationIdentifier==null?access.Contact__c:mapUser.get(access.Contact__c).FederationIdentifier),
+		            		ExternalUserId = sExtUserId,
 			                SalesforceUserId = mapUser.get(access.Contact__c).Id,
 			                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
 			                LinkState = 'Linked',
