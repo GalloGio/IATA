@@ -9,6 +9,7 @@ public class ang_rhcAlertTriggerHandler{
 	private static String RHC_AMOUNT_USED = '#RHC_AMOUNT_USED#';
 	private static String RHC_AMOUNT_TOTAL = '#RHC_AMOUNT_TOTAL#';
 	private static String RHC_PERCENTAGE = '#RHC_PERCENTAGE#';
+	private static String RHC_CURRENCY = '#RHC_CURRENCY#';
 	private static String RHC_INFORMATION = 'RHC Information';
 
 	// ************************************************************
@@ -40,9 +41,11 @@ public class ang_rhcAlertTriggerHandler{
 
 		List<ANG_RHC_Information__c> RHC_Inf_List = [Select Id,
 															ANG_AccountId__r.IATACode__c,
+															ANG_AccountId__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
 															ANG_RHC_Amount__c,
 															ANG_ConsumedRHC__c,
-															ANG_ConsumedRHC_Percent__c
+															ANG_ConsumedRHC_Percent__c,
+															CurrencyIsoCode
 													   From ANG_RHC_Information__c
 													  Where id in : RHC_Inf_Ids];
 
@@ -82,16 +85,21 @@ public class ang_rhcAlertTriggerHandler{
 				if(ralert.ANG_Direction__c==ANG_RHCHelper.RISK_ALERT_DIRECTION_UP && ralert.ANG_Threshold_Level__c==at.ANG_percentage__c){
 
 					if(!alertTemplateMap.containsKey(ralert.ANG_Account__c)){
+						ANG_RHC_Information__c rhc = RHC_Map.get(ralert.ANG_RHC_Information__c);
 
-						sendPortalNotifications(RHC_Map.get(ralert.ANG_RHC_Information__c), ralert, at);
+						System.debug('ALEX Currency-->' + rhc.CurrencyIsoCode);
+					
+						if(rhc.ANG_AccountId__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
+							sendPortalNotifications(rhc, ralert, at);
 
-						//
-						// Accumluate all users that will receive the portal email in the Map mailsToSendByAccount
-						//
-						getPortalMailsRecipients(RHC_Map.get(ralert.ANG_RHC_Information__c), at, mailsToSendByAccount);
-
-						alertTemplateMap.put(ralert.ANG_Account__c,at);
-						riskAlertMap.put(ralert.ANG_Account__c,ralert);
+							//
+							// Accumluate all users that will receive the portal email in the Map mailsToSendByAccount
+							//
+							getPortalMailsRecipients(rhc, at, mailsToSendByAccount);
+						} else {
+							alertTemplateMap.put(ralert.ANG_Account__c,at);
+							riskAlertMap.put(ralert.ANG_Account__c,ralert);
+						}
 						continue;
 					}				
 				}
@@ -169,7 +177,8 @@ public class ang_rhcAlertTriggerHandler{
 
 	private void sendPortalNotifications(ANG_RHC_Information__c rhc, ANG_Risk_Alert__c ralert, ANG_RHC_Alert_Templates__c at) {
 		
-		String replaceStr = RHC_AMOUNT_USED + '!' + rhc.ANG_ConsumedRHC__c.format() + '|' +
+		String replaceStr = RHC_CURRENCY + '!' + rhc.CurrencyIsoCode + '|' +
+							RHC_AMOUNT_USED + '!' + rhc.ANG_ConsumedRHC__c.format() + '|' +
 							RHC_AMOUNT_TOTAL + '!' + rhc.ANG_RHC_Amount__c.format() + '|' +
 							RHC_PERCENTAGE + '!' + rhc.ANG_ConsumedRHC_Percent__c.format();
 
