@@ -229,7 +229,9 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
-    public static final String CASE_REASON_BR_IP = 'New BR / IP';  
+    public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FOP Management';  
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';

@@ -10525,6 +10525,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Direct Debit Change</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_PCI_COMPLIANCE</fullName>
+        <categories>ISSP ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_COMPLIANCE</shortDescription>
+        <value>PCI Compliance</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_HE_All_Branches</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10899,6 +10907,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Request_for_Change</shortDescription>
         <value>Request for Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_Compliance</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
+        <value>Request for PCI Compliance</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Roles_and_Responsabilities</fullName>
@@ -11926,6 +11942,23 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Other Changes</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_proof_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Other_Changes</shortDescription>
+        <value>Provide proof of PCI Compliance</value>
+    </labels>
+     <labels>
+        <fullName>ISSP_ANG_proof_PCI_Info</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Other_Changes_Info</shortDescription>
+        <value>PCI Compliance is a pre-requisite to enable the Credit Card Form of Payment for an IATA Code.</value>
+    </labels>
+
+    <labels>
         <fullName>ISSP_AMS_Step0_Other_Changes_Msg</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -12089,7 +12122,31 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar</shortDescription>
-        <value>A. Select Agency Type &amp; Location</value>
+        <value>A. Select Agency Type &amp; Location</value>Se
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_PCI</shortDescription>
+        <value>A. IATA Code Selection</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step2_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step2_PCI</shortDescription>
+        <value>B. Upload File</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_PCI</shortDescription>
+        <value>C. Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar_New</fullName>
