@@ -2884,6 +2884,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
+        <description>PCI compliance expiry date</description>
+        <externalId>false</externalId>
+        <label>PCI compliance expiry date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(

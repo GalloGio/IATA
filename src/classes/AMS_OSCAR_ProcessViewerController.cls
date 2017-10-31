@@ -37,6 +37,10 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             if(this.oscar.Account__c == null)
                 return false;
+
+            if(this.oscar.AMS_Online_Accreditation__c == null)
+                return false;
+                
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (

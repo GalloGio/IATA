@@ -6029,6 +6029,87 @@
             ]
           }
         ]
+      },
+      {
+        "Name": "NGFormsOfPayment",
+        "Flows": [
+          {
+            "Name": "ANG_RESTRICT_FOP",
+            "Steps": [
+              {
+                "Name": "STEP38",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "aNG_RestrictFOP",
+                    "ActionLabel": "AMS_OSCAR_Action17",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }  
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Restrict_Cash__c",
+                  "ANG_Restrict_Credit_Card__c",
+                  "STEP38__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "ANG_RESTORE_FOP",
+            "Steps": [
+              {
+                "Name": "STEP39",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "aNG_RestoreFOP",
+                    "ActionLabel": "AMS_OSCAR_Action18",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Restore_Cash__c",
+                  "ANG_Restore_Credit_Card__c",
+                  "STEP39__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "ANG_PCI_COMPLIANT",
+            "Steps": [
+              {
+                "Name": "STEP40",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "ANG_checkAccountHierarchy",
+                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
+                  "ANG_Sanity_checks__c",
+                  "STEP40__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
