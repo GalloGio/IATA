@@ -20360,13 +20360,11 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;&lt;font face=&quot;ARIAL&quot; size=&quot;2&quot; color=&quot;rbg(0,65,123)&quot;&gt;IATA Treasury Dashboard&lt;/font&gt;&lt;/b&gt;
+        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
 &lt;/BR&gt;
 &lt;/BR&gt;
-&lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
-The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
-&lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
-&lt;/font&gt;</value>
+The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
         <fullName>ISSP_TD_Download_1</fullName>
