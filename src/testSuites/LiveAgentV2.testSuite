@@ -5,4 +5,7 @@
     <testClassName>LiveAgentButtonFAQ2CaseControllerTest</testClassName>
     <testClassName>LiveAgentCustomWindowControllerTest</testClassName>
     <testClassName>LiveAgentPostChatControllerTest</testClassName>
+    <testClassName>LVA_AfterChatTriggerTest</testClassName>
+    <testClassName>LVA_ConsoleToolkitControllerTest</testClassName>
+    <testClassName>LVA_TranscriptControllerTest</testClassName>
 </ApexTestSuite>
