@@ -6066,7 +6066,7 @@
             ]
           },
           {
-            "Name": "AMS_OSCAR_CHANGE_PROCESSING",
+            "Name": "AMS_OSCAR_SETUP_PROCESSING",
             "Steps": [
               {
                 "Name": "STEP7",
@@ -6092,7 +6092,7 @@
             ]
           },
           {
-            "Name": "AMS_OSCAR_CHANGE_FINALIZATION",
+            "Name": "AMS_OSCAR_SETUP_FINALIZATION",
             "Steps": [
               {
                 "Name": "STEP16",

@@ -77,6 +77,7 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';

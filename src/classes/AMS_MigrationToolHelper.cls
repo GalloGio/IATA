@@ -536,7 +536,7 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
 		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
-		oscar.Dossier_Reception_Date__c = (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? Date.today() : saamCase.Dossier_reception_date__c );
+		oscar.Dossier_Reception_Date__c = (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;

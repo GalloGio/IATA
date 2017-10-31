@@ -902,8 +902,35 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
-            //using an already existing method to send email aler to user.
+            //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP16__c <> updatedOscar.STEP16__c && updatedOscar.STEP16__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP16__c <> updatedOscar.STEP16__c && updatedOscar.STEP16__c == 'Failed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Failure of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, false);
 
         }
 
