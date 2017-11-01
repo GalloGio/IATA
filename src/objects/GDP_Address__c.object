@@ -425,7 +425,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <fullName>IATA_Numeric_Country_Code__c</fullName>
         <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
         <externalId>false</externalId>
-        <formula>Related_Account__r.state_numeric_code__c</formula>
+        <formula>IF(ISBLANK(IATA_ISO_Country__c), &apos;&apos;, Related_Account__r.state_numeric_code__c)</formula>
         <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
         <label>IATA Numeric Country Code</label>
         <required>false</required>
