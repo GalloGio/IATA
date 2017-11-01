@@ -21,7 +21,7 @@ public class ISSP_CertificationCasesTest {
         acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
         acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
         insert acc1;
-
+/*
         Account acc2 = new Account();
         acc2.Name = 'BR Account 1';
         acc2.Type = 'IATA Cargo Agent2';
@@ -31,11 +31,11 @@ public class ISSP_CertificationCasesTest {
         acc2.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
         acc2.ParentId = acc1.Id;
         insert acc2;
-
+*/
         AMS_Agency_Regulation__c certificate1 = new AMS_Agency_Regulation__c(Last_Name__c = 'test1', Account__c = acc1.Id, Expiry_Date__c = Date.today().addDays(365), Type_of_Certificate__c = 'DGR', Is_your_firm_handling_Dangerous_Goods__c = 'No');
         insert certificate1;
-        AMS_Agency_Regulation__c certificate2 = new AMS_Agency_Regulation__c(Last_Name__c = 'test2', Account__c = acc2.Id, Expiry_Date__c = Date.today().addDays(365), Type_of_Certificate__c = 'DGR', Is_your_firm_handling_Dangerous_Goods__c = 'No');
-        insert certificate2;
+//        AMS_Agency_Regulation__c certificate2 = new AMS_Agency_Regulation__c(Last_Name__c = 'test2', Account__c = acc2.Id, Expiry_Date__c = Date.today().addDays(365), Type_of_Certificate__c = 'DGR', Is_your_firm_handling_Dangerous_Goods__c = 'No');
+//        insert certificate2;
         
         cttr.initialization();
         
