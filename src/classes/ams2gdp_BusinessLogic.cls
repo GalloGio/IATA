@@ -426,8 +426,8 @@ public class ams2gdp_BusinessLogic
 		for(Account acc : accounts)
 		{
 			String gdp_product = (gdpProductIdByAccountId.containsKey(acc.Id))? gdpProductIdByAccountId.get(acc.Id):null; 
-			if(String.isNotBlank(acc.Phone))
-			{
+			//if(String.isNotBlank(acc.Phone)) -RN-INC350124
+			//{
 				Map<String, String> phoneParts = ams2gdp_Utils.getPhoneNumberParts(acc.Phone, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-P1GDP'
 					, Number__c = phoneParts.get('phone')
@@ -439,10 +439,10 @@ public class ams2gdp_BusinessLogic
 					, Related_Account__c = acc.Id
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 
-			if(String.isNotBlank(acc.Fax))
-			{
+			//if(String.isNotBlank(acc.Fax)) RN-INC350124
+			//{
 				Map<String, String> faxParts = ams2gdp_Utils.getPhoneNumberParts(acc.Fax, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-FXGDP'
 					, Number__c = faxParts.get('phone')
@@ -454,7 +454,7 @@ public class ams2gdp_BusinessLogic
 					, Related_Account__c = acc.Id
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 		}
 		
 		return result; 
