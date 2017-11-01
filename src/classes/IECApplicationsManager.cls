@@ -91,6 +91,9 @@ public without sharing class IECApplicationsManager {
         
 
         List<GDP_Products_Account_View__c> lstAgency;
+
+        String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+        List<String> CACCodesList = CACCodesStr.split(';');
         
         if (CASSCode == null || CASSCode == '') {
             lstAgency = 
@@ -102,7 +105,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c, g.Related_Accreditation_Class__r.Status__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.IATA_Code__c = :IATACode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
         }
         else {
             CASSCode = CASSCode.trim();
@@ -116,7 +119,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.IATA_Code__c = :IATACode AND g.CASS_Number__c = : CASSCode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
         }
 
         return (!lstAgency.isEmpty()) ? lstAgency : null;
@@ -148,6 +151,9 @@ public without sharing class IECApplicationsManager {
          agencyCode = agencyCode.trim();
         
         List<GDP_Products_Account_View__c> lstAgency;
+
+        String CACCodesStr = CAC_and_GAD_Settings__c.getInstance('Excluded Values').Excluded_CAC_Location_Classes__c;
+        List<String> CACCodesList = CACCodesStr.split(';');
         
         system.debug('** - getAgencyByAgencyCode: agencyCode = ' + agencyCode + ', checkCode = ' + checkCode + ', CASSCode = ' + CASSCode);
         
@@ -165,7 +171,7 @@ public without sharing class IECApplicationsManager {
                         g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                     FROM GDP_Products_Account_View__c g
                     WHERE g.IATA_Code__c = :agencyCode and g.Check_Digit__c = :checkCode
-                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
             }
             else {
@@ -185,7 +191,7 @@ public without sharing class IECApplicationsManager {
                         g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                     FROM GDP_Products_Account_View__c g
                     WHERE g.Agency_Code__c = : searchCode
-                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                        AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
 
             }
@@ -202,7 +208,7 @@ public without sharing class IECApplicationsManager {
                     g.Related_GDP_Address__r.Address_City__c, g.Related_GDP_Address__r.Address_Country_Name__c
                 FROM GDP_Products_Account_View__c g
                 WHERE g.Agency_Code__c = :agencyCode
-                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
+                    AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN :CACCodesList limit 2];
 
         }
                 
