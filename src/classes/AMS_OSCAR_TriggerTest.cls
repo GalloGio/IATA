@@ -121,6 +121,7 @@
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId, Issue_credit_note_if_applicable__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
+        oscar.STEP12__c = 'Passed';
         oscar.STEP15__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.Issue_credit_note_if_applicable__c = true;
@@ -180,6 +181,7 @@
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
+        oscar.STEP12__c = 'Passed';
         oscar.STEP15__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.STEP3__c = 'Passed';
@@ -577,6 +579,7 @@
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
+            oscarT.STEP12__c = 'Passed';
             oscarT.STEP15__c = 'Passed';
 
             update oscarT;
@@ -624,10 +627,11 @@
             Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,Release_FS_if_applicable__c,Issue_Withdrawal_notification__c,
             Issue_credit_note_withdrawal__c,Release_FS_withdrawal__c,Send_FS_request__c,Bank_Guarantee_amount__c,Update_IRIS_processing__c,
             Confirm_DD_setup_with_R_S__c,Confirm_DD_setup_with_agent__c,Confirm_DGR_DGA__c,Issue_rejection_notification_pack__c,
-            Issue_billing_document__c,RPM_Approval__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+            Issue_billing_document__c,RPM_Approval__c, Validation_Status__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
+        oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.Send_invoice__c = true;
         oscar.Send_inspection_request__c = true;
         oscar.Send_agreement__c = true;
@@ -647,7 +651,7 @@
         oscar.Issue_credit_note_withdrawal__c = true;
         oscar.Release_FS_withdrawal__c = true;
         oscar.Send_FS_request__c = true;
-        oscar.Bank_Guarantee_amount__c = 123;
+        //oscar.Bank_Guarantee_amount__c = 123;
         oscar.Update_IRIS_processing__c = true;
         oscar.Confirm_DD_setup_with_R_S__c = true;
         oscar.Confirm_DD_setup_with_agent__c = true;
@@ -748,6 +752,7 @@
         Test.startTest();
 
         oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.STEP25__c = AMS_Utils.PASSED;
 
         update oscar;
