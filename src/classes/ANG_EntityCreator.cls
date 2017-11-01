@@ -31,7 +31,7 @@ public class ANG_EntityCreator {
 
     }
 
-    public static Contact updateAccount(Contact obj, Map<String,Object> fieldsOfObject){
+    public static Contact updateContact(Contact obj, Map<String,Object> fieldsOfObject){
 
         return (Contact)addFieldsToObject((sObject)obj, fieldsOfObject);
     }
@@ -117,7 +117,7 @@ public class ANG_EntityCreator {
         return (AMS_Accreditation_Contact__c)obj;
     }
 
-    public static AMS_Accreditation_Contact__c updateStagingArea(AMS_Accreditation_Contact__c obj, Map<String,Object> fieldsOfObject){
+    public static AMS_Accreditation_Contact__c updateAccreditationContact(AMS_Accreditation_Contact__c obj, Map<String,Object> fieldsOfObject){
 
         return (AMS_Accreditation_Contact__c)addFieldsToObject((sObject)obj, fieldsOfObject);
     }
