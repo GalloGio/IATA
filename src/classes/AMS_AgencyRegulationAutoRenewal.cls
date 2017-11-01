@@ -149,7 +149,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveDGR, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
 
 					system.debug('creating renewal for DGR');
-					
+
 					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification otherwise we need to query the existing one
 					AMS_OSCAR__c oscar = null;
 					if(is90DaysNotif){
