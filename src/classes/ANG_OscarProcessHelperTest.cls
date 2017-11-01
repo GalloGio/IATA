@@ -408,4 +408,62 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 	}
+
+	@isTest static void testFOPCreation() {
+
+        Test.startTest();
+
+        Account a = [Select Id, BillingCountry from Account LIMIT 1];
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        insert authorizations;
+
+        Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+        fieldsOfObject.clear();
+		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
+
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
+		insert oscar;
+
+		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        fieldsOfObject.clear();
+        fieldsOfObject.put('Oscar__c',oscar.Id);
+        fieldsOfObject.put('BSPCountry__c',a.BillingCountry);
+        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+        fieldsOfObject.put('Origin','Internal User');
+        fieldsOfObject.put('Reason1__c','FoP Management');
+        fieldsOfObject.put('Subject','FoP Management - ');
+        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+        Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
+        insert newCaseFop;
+
+    	ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, true , true);
+
+    	ANG_OscarProcessHelper.processRestoreFOP(oscar.Id, true , true);
+
+        Test.stopTest();
+	 }
+
+	@isTest static void testFOPCreation2() {
+
+        Test.startTest();
+
+        Account a = [Select Id from Account LIMIT 1];
+
+        Case c = [Select Id from Case LIMIT 1];
+
+		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
+
+        Test.stopTest();
+	 }
+
+	 
 }

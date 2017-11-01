@@ -568,7 +568,7 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash){
+    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCreditCard , Boolean restoreCash){
 
     	/*
 			Restore FoP for the full hierarchy 
