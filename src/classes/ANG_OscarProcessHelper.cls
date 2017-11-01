@@ -723,6 +723,63 @@ global class ANG_OscarProcessHelper {
 
 	}
 
+	webservice static String[] createFOPOscar(Id accountId, Id caseId){
+		
+		Savepoint sp = Database.setSavepoint();
+		AMS_OSCAR__c oscar = null;
+		Case newCaseFop = null;
+
+		try{
+
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c from Case where Id = :caseId LIMIT 1 ];
+
+			Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.Reason1__c);
+
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, accountId, fieldsOfObject);
+
+			insert oscar;
+
+	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+	        fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Oscar__c',oscar.Id);
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('ParentId',caseId);
+	        fieldsOfObject.put('BSPCountry__c',c.Account.BillingCountry);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','FoP Management');
+	        fieldsOfObject.put('Region__c',c.Account.Region_formula__c);
+	        fieldsOfObject.put('Subject','FoP Management - ' + c.Account.IATACode__c + ' - ' + c.Account.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+	        newCaseFop =ANG_EntityCreator.createCase(caseRT, accountId, fieldsOfObject);
+
+	        insert newCaseFop;
+
+		}catch(Exception ex){
+
+       		Database.rollback(sp);
+
+        	String exMessage = 'Unhandle error on process:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+
+	        System.debug('[ANG_OscarProcessHelper createFOPOscar] Process failed with the following exception:' + ex.getStackTraceString());
+
+	        isIATACodeGenerationRunning = false;
+
+			return new String[]{'-1',exMessage};
+
+		}
+
+
+		return new String[]{'0','Oscar for Forms of Payment Management created with success',newCaseFop.Id};
+
+	}
+
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;

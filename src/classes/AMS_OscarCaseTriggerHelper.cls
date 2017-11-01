@@ -27,7 +27,7 @@ public class AMS_OscarCaseTriggerHelper {
             
             Case parent = parentCase.get(c.parentId);   
             
-            if(c.ParentId != null && c.Oscar__c != null && parent.Oscar__c != null){
+            if(c.ParentId != null && c.Oscar__c != null && parent != null && parent.Oscar__c != null){
                 if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
                     casestoremoveoscar.add(c);
             }         
