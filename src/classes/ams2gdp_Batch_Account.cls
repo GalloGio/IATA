@@ -73,13 +73,16 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 				if (specificIds.size() > 0)	conditions.add('Id IN (\'' + String.join(specificIds, '\', \'') + '\')');
 			}
 		} else {
+			system.debug('##GO TO batchInfo: ');
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
+			system.debug('##batchInfo: ' + batchInfo);
 
 			if (batchInfo != null) {
+				system.debug('##IN!!!: ' + runNext);
+				String deltaConditions;
 				//Run only on the deltas
-				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
-
+				deltaConditions = String.format('LastModifiedDate = {0}'
+					                                , new List<String> {'LAST_N_DAYS:3'});
 				system.debug('##deltaConditions: ' + deltaConditions);
 
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
@@ -103,6 +106,7 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		                      +	'ORDER BY ParentId DESC ',
 		                      new List<String> {fields, String.join(conditions, ' AND ')}
 		                     );
+		system.debug('##query: ' + query);
 	}
 
 	global ams2gdp_Batch_Account() {
