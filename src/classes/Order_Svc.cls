@@ -2090,8 +2090,8 @@ public without sharing class Order_Svc
                                     String GatewayState = (String)payment.getValue('GatewayState');
                                     String paymentError = (String)payment.getValue('GatewayResponse');
 
-                                    order2Update.Status = 'Payment Failure';
-                                    order2Update.Is_Paid__c = false;
+                                    //order2Update.Status = 'Payment Failure';
+                                    //order2Update.Is_Paid__c = false;
 
                                     //Delete all of the Subscription on Zuora
                                     orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode + ', GatewayResponse : ' + GatewayResponse);
@@ -2588,7 +2588,7 @@ public without sharing class Order_Svc
 
         //Log errors
         if(lstErrors.size() > 0) IECErrorLogger.logErrors(lstErrors);
-        system.debug('#### lstErrors~:: ' + lstErrors);
+        system.debug('#### lstErrors :: ' + lstErrors);
 
     }
 
