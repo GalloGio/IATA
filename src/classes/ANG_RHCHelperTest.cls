@@ -25,7 +25,6 @@ private class ANG_RHCHelperTest {
 		Test.stopTest();
 
 		System.assertEquals(1, [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].size());
-	
 	}
 	
 }
