@@ -2585,6 +2585,7 @@ public without sharing class Order_Svc
         
         List<String> ids = new List<String>();
         ids.addAll(sub2Delete);
+        system.debug('#### ids :: '+ids);
         try{
             if(ids.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteSub = ZuoraUtil.zdelete('Subscription',ids);
@@ -2606,6 +2607,7 @@ public without sharing class Order_Svc
     public static void orderItemsToUpdateInZuora(Set<Id> orderIds){
         //get the Pending Activation items
         List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrdersItemsPendingActivation(orderIds);
+        system.debug('#### pendingOrderItems :: ' + pendingOrderItems);
         if(pendingOrderItems != null && pendingOrderItems.size() > 0){
             //process the Pending Activation items by batch
             IEC_ZuoraSubscriptionActivation_Batch batch = new IEC_ZuoraSubscriptionActivation_Batch(pendingOrderItems);
@@ -2619,7 +2621,7 @@ public without sharing class Order_Svc
 
         //List of Subscription to Actived
         List<Zuora.zObject> lstZsubscriptionToUpdate = new List<Zuora.zObject>();
-
+        system.debug('#### updateZsubscriptions :: ' + orderItems);
         for(OrderItem oi : orderItems){
             Zuora.zObject zSubscription = new Zuora.zObject('Subscription');
             zSubscription.setValue('Id', oi.Zuora_SubscriptionId__c);
@@ -3857,7 +3859,7 @@ public without sharing class Order_Svc
         Create order and order items for auto renewal
     ****************************************************************************************************/
     public static List<OrderItem> createAutoRenewalOrders(IEC_Event_Release__c eventRelease, List<IEC_Event_Subscription__c> subscriptions){
-        
+        system.debug('##### createAutoRenewalOrders :: ');
         List<Order> lstOrder = new List<Order>();
         map<Id,Contact> contactMap = new map<Id,Contact>();
         map<Id,Id> userIdByContactId = new map<Id,Id>();
@@ -3865,6 +3867,9 @@ public without sharing class Order_Svc
         List<IEC_Event_Release_Log__c> lstErrors = new List<IEC_Event_Release_Log__c>();
 
         List<OrderItem> orderItems = new List<OrderItem>();
+
+        system.debug('##### eventRelease :: '+eventRelease);
+        system.debug('##### subscriptions :: '+subscriptions);
 
         //Get a map of Event subscription by subscriber
         for(IEC_Event_Subscription__c subscription : subscriptions){
@@ -3904,7 +3909,8 @@ public without sharing class Order_Svc
                 lstErrors.add(IEC_EventReleaseLog_Svc.logError(msg, '', null, eventRelease.Id, 'Create order', subscription.Subscriber__c, subscription.Id, false));
             }
         }
-              
+        system.debug('##### lstOrder :: '+lstOrder);
+        system.debug('##### lstErrors :: '+lstErrors); 
         if(lstOrder.size() > 0){
 
             set<Id> orderIds = new set<Id>();
@@ -3924,13 +3930,13 @@ public without sharing class Order_Svc
 
             //Get the inserted orders
             list<Order> insertedOrders = Order_Sel.getOrdersById(orderIds);
-            
+            system.debug('##### insertedOrders :: '+insertedOrders);
             //Create orderItem for each order
             set<Id> orderItemIds = new set<Id>();
             if(insertedOrders != null && insertedOrders.size() > 0){
                 orderItemIds = createOrderItemsForAutoRenewal(eventRelease, insertedOrders, contactId_EventSubscription);
             }
-
+            system.debug('##### orderItemIds :: '+orderItemIds);
             //Set the event release Sales amount and quatity
             Map<Id,OrderItem> orderItemsById = new OrderItem_Sel().getOrdersItemsById(orderItemIds);
             orderItems.addAll(orderItemsById.values());
@@ -3938,7 +3944,8 @@ public without sharing class Order_Svc
 
         //Log errors
         if(lstErrors.size() > 0) insert lstErrors;
-
+        system.debug('##### orderItems :: '+orderItems);
+        system.debug('##### lstErrors :: '+lstErrors); 
         return orderItems;
 
     }
@@ -4243,10 +4250,11 @@ public without sharing class Order_Svc
                 }
         }
 
+        system.debug('##### orderItems :: '+sapInvoiceId);
         
         if(sapInvoiceId.size() > 0){
             orderList = [SELECT id, SAP_Invoice__c, Status FROM Order where SAP_Invoice__c IN :sapInvoiceId];
-
+            system.debug('##### orderList :: '+orderList); 
             if(!orderList.isEmpty()){
                 for(Order o : orderList){
                     if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED){
@@ -4271,6 +4279,7 @@ public without sharing class Order_Svc
                     update sapInvoiceToUpdate;
             }
         }
+        system.debug('##### sapInvoiceToUpdate ' + sapInvoiceToUpdate);
 
     }
 
