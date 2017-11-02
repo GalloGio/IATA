@@ -73,8 +73,14 @@ public without sharing class ISSP_APProcess {
     public List<citySelection> cityListWithValue{get;set;}//TF
 
     public String strOT{get;set;}
-    public String strOperationTypeAux{get;set;} 
-    
+    public String strOperationTypeAux{get;set;}
+
+    public List<GST_Information__c> list_GSTNumber{get;set;}
+    public Boolean displayPopup{get;set;}
+    public String editGSTNumberId{get;set;}
+    public GST_Information__c newGSTInfo{get;set;}
+    public Boolean allGSTFieldsFilled{get;set;}
+
     public ISSP_APProcess(){        
         //Set the Variables default values
         isNewCase = true;
@@ -89,10 +95,15 @@ public without sharing class ISSP_APProcess {
         allfieldsfilled = true;
         isMandatory = false;
         isGSSAUser = false; //AS R03-SP03
+        displayPopup = false;
         
         newForm = new AP_Process_Form__c();
         newCase = new Case();
         countryRequirement = new AP_Country_Requierment__c();
+        
+        list_GSTNumber = new List<GST_Information__c>();
+        newGSTInfo = new GST_Information__c();
+        allGSTFieldsFilled = false;
         
         //Verify User Profile (AS R03-SP03)
         Id profileId=userinfo.getProfileId();
@@ -386,6 +397,7 @@ public without sharing class ISSP_APProcess {
         if (newForms.size()>0)
         {
             newForm = newForms[0];
+            list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
         }
     }
     
@@ -1308,6 +1320,65 @@ public without sharing class ISSP_APProcess {
         emails.add(mail);
         
         Messaging.sendEmail(emails);
+    }
+
+    public void editGSTNumber()
+    {        
+        String editGSTNumberId = Apexpages.currentPage().getParameters().get('recordIdEdit');
+        newGSTInfo = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE Id =: editGSTNumberId LIMIT 1];
+        displayPopup = true;
+    }
+
+    public void delGSTNumber()
+    {
+        String delGSTNumberId = Apexpages.currentPage().getParameters().get('recordIdDel');
+        GST_Information__c info = [SELECT Id FROM GST_Information__c WHERE Id =: delGSTNumberId LIMIT 1];
+        if(info != null){
+            delete info;
+            list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
+        }
+    }
+    
+    public void closePopup() {        
+        displayPopup = false;
+        newGSTInfo = new GST_Information__c();
+
+    }     
+    public void showNewGSTNumberFields() {
+        system.debug('SS## list_GSTNumber: ' + list_GSTNumber);        
+        displayPopup = true;    
+    }
+
+    public void addGSTInfo() {        
+        
+        List<GST_Information__c> list_GSTNumberAux = new List<GST_Information__c>();
+        if(newGSTInfo.AP_Process_Form__c == null){
+            newGSTInfo.AP_Process_Form__c = newForm.Id;
+        }
+
+        list_GSTNumberAux.add(newGSTInfo);    
+        
+        upsert list_GSTNumberAux;
+
+        list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
+
+        displayPopup = false;
+        newGSTInfo = new GST_Information__c();
+        allGSTFieldsFilled = false;
+    }
+
+    public void checkAllFieldGST() {
+        
+        if(newGSTInfo.India_Local_VAT_Number__c != '' &&
+            newGSTInfo.India_Local_VAT_Street__c != '' && 
+            newGSTInfo.India_Local_VAT_City__c != '' &&
+            newGSTInfo.India_Local_VAT_State_Name__c != '' &&
+            newGSTInfo.India_Local_VAT_State_Code__c != '') {
+
+            allGSTFieldsFilled = true;
+        } else {
+            allGSTFieldsFilled = false;
+        }
     }
             
 }

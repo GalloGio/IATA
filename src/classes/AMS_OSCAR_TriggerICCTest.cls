@@ -96,6 +96,7 @@ private class AMS_OSCAR_TriggerICCTest {
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP1__c = 'Passed';
+		oscar.STEP2__c = 'Passed';
         
         update oscar;
 
