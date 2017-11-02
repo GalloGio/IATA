@@ -321,10 +321,14 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
+        Set<Id> processesToUpdateCaseOnOscar = new Set<Id>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES};
+        if(processesToUpdateCaseOnOscar.contains(processType)){
+            oscar.Oscar_Communication_Case_Id__c = caseId;
+        }
+
         // this needs to be fetched from Accreditation Object. For now just use this.
         if(processType == NEWNGLITE){
             oscar.Is_using_credit_card__c = true;
-            oscar.Oscar_Communication_Case_Id__c = caseId;
         }
 
         if(processType.equalsIgnoreCase(NEWCER_PV)){

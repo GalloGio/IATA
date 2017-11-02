@@ -187,6 +187,20 @@
         <value>Forecast Risk Properties</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action17</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action17</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action18</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action18</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -622,11 +636,32 @@
         <value>Ticketing Authority</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP38</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP38</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP39</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP39</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP4</shortDescription>
         <value>Application Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP40</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP40</shortDescription>
+        <value>PCI compliance</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
