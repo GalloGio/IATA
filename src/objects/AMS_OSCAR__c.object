@@ -34147,7 +34147,8 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         NOT(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;VMFR&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Name&quot;)),
-        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;))
+        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;))
     ),
     OR(
         ISPICKVAL(Status__c, &quot;Pending Approval&quot;),
