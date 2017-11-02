@@ -670,7 +670,6 @@ public with sharing class IECZuoraHelper {
          * 1st Constructor
          */
         public SubscriptionResult(Zuora.zApi.SubscribeResult oSubscribeResult, String sProductLabel) {
-        	
         	this(oSubscribeResult, sProductLabel, '');
         }
         
@@ -688,6 +687,8 @@ public with sharing class IECZuoraHelper {
             //cyberSourceReasonCodeMessage = oSubscribeResult.GatewayResponseCode;
             
             listErrorCodeAndMessage = new List<String>();
+            system.debug('####### oSubscribeResult :: '+oSubscribeResult);
+            system.debug('####### sProductLabel :: '+sProductLabel);
             if (oSubscribeResult.Success == false) {
             	for (Zuora.zObject error: oSubscribeResult.errors) {
                     //listErrorCodeAndMessage.add((String)error.getValue('Code') + ' : ' + (String)error.getValue('Message'));
@@ -702,7 +703,8 @@ public with sharing class IECZuoraHelper {
         private void parseError(Zuora.zObject oError) {
         	String sErrorCode = (String)oError.getValue('Code');
         	String sErrorMessage = (String)oError.getValue('Message');
-        	
+        	system.debug('####### sErrorCode :: '+sErrorCode);
+            system.debug('####### sErrorMessage :: '+sErrorMessage);
         	if (sErrorCode == 'TRANSACTION_FAILED') {
         		String sReasonCodeMessage = sErrorMessage.substring(0, sErrorMessage.indexOf('.')); 
         		cyberSourceReasonCode = sErrorMessage.substring(sErrorMessage.indexOf('.') + 1, sErrorMessage.indexOf('.') + 4); 
@@ -1286,7 +1288,7 @@ public with sharing class IECZuoraHelper {
     	pmt.setValue('SISInvoiceNumber__c', ((sPmtMethod == 'ICH') ? sSISInvoiceNumber : ''));
     	pmt.setValue('Status', 'Processed');
     	pmt.setValue('Type', 'External');
-    	
+    	system.debug('#### pmt :: '+pmt);
     	return pmt;
     }
     
