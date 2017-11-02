@@ -29,10 +29,10 @@ global  class NewLocalGroupCtrl {
             }
         }
         String recordId =  ApexPages.currentPage().getParameters().get('id');
-        if(recordId != null) {
+        /*if(recordId != null) {
             lg = [SELECT Id, Name, RecordTypeId, RecordType.Name, Local_Governance_type__c,Country__c, Cluster__c FROM LocalGovernance__c WHERE Id = :recordId];
         }
-        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);
+        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);*/
         // 1. if there is already a recordtype set redirect accordingly
         if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
         else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
