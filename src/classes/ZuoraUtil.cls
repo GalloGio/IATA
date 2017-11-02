@@ -10,7 +10,22 @@ public class ZuoraUtil
     public static final Integer INVOICE_PREVIEW_TERM = 12;
     public static final Integer SUBSCRIPTION_TERM = 12;
 
-    public static Zuora.zApi zconnection{get {if (zconnection == null){zconnection = new Zuora.zApi(); zconnection.zlogin();}return zconnection;}set {zconnection = value;}}
+    public static Zuora.zApi zconnection{
+        
+        get {
+            System.debug('aqui zconnection ' + zconnection);
+            if (zconnection == null){
+                zconnection = new Zuora.zApi(); 
+                zconnection.zlogin();
+            }
+            
+            return zconnection;
+        }
+        set {
+            zconnection = value;
+        }
+
+    }
 
 	public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) 
 	{
@@ -25,10 +40,11 @@ public class ZuoraUtil
 	}
 
 	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects) 
-	{
-    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects);
+	{system.debug('### zobjects :: '+zobjects);
 
-    	return results;
+    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects); 
+    	system.debug('### results zupdate :: ' + results);
+        return results;
 	}
 
     public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests)
@@ -40,6 +56,9 @@ public class ZuoraUtil
     public static List<Zuora.zApi.DeleteResult> zdelete(String ztype, String[] ids)
     {
         List<Zuora.zApi.DeleteResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateDeleteResults(ids) :  zconnection.zdelete(ztype,ids);
+        system.debug('### results ztype :: ' + ztype);
+        system.debug('### results ids :: ' + ids);
+        system.debug('### results zdelete :: ' + results);
         return results;
     }
 
