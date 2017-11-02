@@ -193,25 +193,20 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 					Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = lst_mapOrderId_PaymentMethod[x];
 					Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_AccountPaymentMethod = lst_mapOrderId_AccountPaymentMethod[x];
 					Map<Id, String> mapOrderId_PaymentType = lst_mapOrderId_PaymentType[x];
-
-					system.debug('mapOrderPaidByCreditCard :: '+lst_mapOrderPaidByCreditCard[x]);
-					system.debug('mapOrderId_PaymentMethod :: '+lst_mapOrderId_PaymentMethod[x]);
-					system.debug('mapOrderId_AccountPaymentMethod :: '+lst_mapOrderId_AccountPaymentMethod[x]);
-					system.debug('mapOrderId_PaymentType :: '+lst_mapOrderId_PaymentType[x]);
 					
 					// Now submit subscription reuquest to zuora
 					Map<Id, Zuora.zApi.SubscribeResult> mapZSubscribeResult = Order_Svc.subscribe(mapOrderPaidByCreditCard.keySet(), mapOrderId_PaymentMethod, mapOrderId_PaymentType);
-					system.debug('##### mapZSubscribeResult :: '+mapZSubscribeResult);
+					
 					// Now process payments for Orders through Zuora
 					Map<Id, String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapZSubscribeResult, mapOrderId_AccountPaymentMethod);
-					system.debug('##### orderItemsResponse :: '+orderItemsResponse);
+					
 					// Loop on orderitem status to record errors
 					for (OrderItem oi : scope) {
 						// Only log erros for order items that was submitted to zuora
 						if (orderItemsResponse.containsKey(oi.Id))
 						{
 							String result = orderItemsResponse.get(oi.Id);
-							system.debug('#### result :: '+result);
+							
 							if (result == 'Success')
 							{
 								setOrderIdToUpdate.add(oi.OrderId);
