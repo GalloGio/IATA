@@ -18,7 +18,7 @@ public class ZuoraUtil
                 zconnection = new Zuora.zApi(); 
                 zconnection.zlogin();
             }
-            
+
             return zconnection;
         }
         set {
@@ -34,13 +34,14 @@ public class ZuoraUtil
 	}
 
 	public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) 
-	{
+	{  system.debug('### zcreate zobjects :: '+zobjects);
     	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'create') : zconnection.zcreate(zobjects, calloptions);
-    	return results;
+    	system.debug('### results zcreate :: ' + results);
+        return results;
 	}
 
 	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects) 
-	{system.debug('### zobjects :: '+zobjects);
+	{system.debug('### zupdate zobjects :: '+zobjects);
 
     	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects); 
     	system.debug('### results zupdate :: ' + results);
@@ -48,13 +49,14 @@ public class ZuoraUtil
 	}
 
     public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests)
-    {
+    {   system.debug('### zsubscribe requests :: '+requests);
         List<Zuora.zApi.SubscribeResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSubscribeResults(requests) :  zconnection.zsubscribe(requests);
+        system.debug('### results zsubscribe :: ' + results);
         return results;
     }
 
     public static List<Zuora.zApi.DeleteResult> zdelete(String ztype, String[] ids)
-    {
+    {   system.debug('### zdelete :: '+ztype+' - '+ids);
         List<Zuora.zApi.DeleteResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateDeleteResults(ids) :  zconnection.zdelete(ztype,ids);
         system.debug('### results ztype :: ' + ztype);
         system.debug('### results ids :: ' + ids);
