@@ -1,6 +1,6 @@
 @isTest
 private class ANG_RHCHelperTest {
-	/*
+	
 
 	@testSetup static void createData() {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US');
@@ -14,7 +14,7 @@ private class ANG_RHCHelperTest {
 	
 
 	static testMethod void rhcInfoInitialization() {
-		/*Account a = [SELECT Id FROM Account LIMIT 1];
+		Account a = [SELECT Id FROM Account LIMIT 1];
 
 		System.assertEquals(0, [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].size());
 
@@ -27,5 +27,5 @@ private class ANG_RHCHelperTest {
 		System.assertEquals(1, [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].size());
 	
 	}
-	*/
+	
 }
