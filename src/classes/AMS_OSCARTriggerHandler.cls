@@ -2327,7 +2327,7 @@ public class AMS_OSCARTriggerHandler {
 
 		accountsToMigrateOwnersAux = [SELECT Id, Status__c FROM Account WHERE Id IN :accountsList];
 
-		if(process == AMS_Utils.AGENCYCHANGES && (typeOfChange == AMS_Utils.MAJ_SHAREHOLDING || typeOfChange == AMS_Utils.MIN_SHAREHOLDING || typeOfChange == AMS_Utils.VFMR)){
+		if(typeOfChange != null && (typeOfChange.containsIgnoreCase(AMS_Utils.MAJ_SHAREHOLDING) || typeOfChange.containsIgnoreCase(AMS_Utils.MIN_SHAREHOLDING) || typeOfChange.containsIgnoreCase(AMS_Utils.VFMR))){
 			
 			for(Account acc : accountsToMigrateOwnersAux) {
 
