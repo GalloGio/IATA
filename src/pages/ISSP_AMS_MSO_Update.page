@@ -210,7 +210,7 @@
 						            </div>
 					            </apex:actionRegion>
 
-								<apex:outputPanel id="billingStatePanel">
+								<apex:outputPanel id="billingStatePanel" style="display:{! IF(billingStatesList.size > 1,'','None')};">
 						            <label for="billingstate" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">* {!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Billing_State__c.Label}</label>
 						            
 						            <div class="col-lg-10" >

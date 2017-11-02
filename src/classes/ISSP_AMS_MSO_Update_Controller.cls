@@ -352,7 +352,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=form&caseId=' + oscarCase.Id);
     }
 
-    @future
+    //@future
     public static void closeOscar(Id oscarId, Id caseId, Id contactId, String actionType) {
         try {
             Case c = [SELECT Id, IATAcode__c FROM Case WHERE Id = :caseId];
