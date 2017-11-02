@@ -252,10 +252,10 @@ public without sharing class Order_Svc
                 orderItemIds.add(oi.Id);
         
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
-        //-- 
+        //-- susana
         //-- Verify if the status of the order is valid before send the order to SAP
         //-- if the order is not paid and status is Payment Failure, the order cannot be created on SAP
-        for(Order o : orderById.values())
+        /*for(Order o : orderById.values())
         {   system.debug('Is_Paid__c :: ' + o.Is_Paid__c);
             system.debug('Status :: ' + o.Status);
             if(o.Is_Paid__c == false && o.Status == IECConstants.ORDER_STATUS_PAYMENT_FAILURE) //Payment Failure
@@ -263,7 +263,7 @@ public without sharing class Order_Svc
                 orderById.remove(o.id);
                 system.debug('order ' + o.id + ' removed from map');
             }
-        }
+        }*/
 
         //-- SFDC <=> SAP Mapping table 
         Map<String, SFDC_SAP_Mapping__c> sapTable = orderSelector.getOrderMapTable();
@@ -2465,7 +2465,7 @@ public without sharing class Order_Svc
                 
             }
         }catch(Exception ex){
-            system.debug('#### exception on payment ::' + ex.getStackTraceString());
+            system.debug('#### exception on payment :: ' + ex.getMessage()+ ' - ' +ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(paymentCancel),ex.getMessage(),ex.getStackTraceString()));
         }
 
