@@ -1,4 +1,4 @@
-public with sharing class LiveAgentCustomWindowController {
+public without sharing  class LiveAgentCustomWindowController {
     
     private Set<String> rtlLanguages = new Set<String>{'ar'};
         

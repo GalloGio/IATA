@@ -337,7 +337,7 @@
                         liveagent.addCustomDetail('userContactId', '{!contactId}');
                         liveagent.addCustomDetail('userAccountId', '{!accountId}');
                         liveagent.addCustomDetail('caseRTId', '{!caseRecordTypeId}');
-                        liveagent.addCustomDetail('caseCountryConcerned','{!countryConcerned}').saveToTranscript('Country_Concerned__c');
+                        liveagent.addCustomDetail('caseCountryConcerned','{!country.Name}').saveToTranscript('Country_Concerned__c');
                         liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');
                         liveagent.addCustomDetail('#TopicEN', '{!topicId}').saveToTranscript('Topic__c');
                         liveagent.addCustomDetail('#SubtopicEN', '{!subTopicId}').saveToTranscript('Subtopic__c');
