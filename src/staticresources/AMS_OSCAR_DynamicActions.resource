@@ -8,6 +8,7 @@ var dyn_functions = {
         var result;
         var result2;
         var result3;
+        var result4;
         var bUpdate = false;
         var createNewChangeCode = true;
         var inspectionRecs;
@@ -130,6 +131,16 @@ var dyn_functions = {
                 } 
 
                 sResult = sResult + '- Due diligence - ' + ddResult + '\r\n'; 
+
+                if (records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true') {
+                    result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
+
+                    if(result4 != 'OK'){
+                        sResult = sResult + '- Grant IFAP service access - Failed.\n(' + result4 +')\n\r';
+                    }else{
+                        sResult = sResult + '- Grant IFAP service access - Success!\n\r';
+                    }
+                }
 
                 if(bUpdate){
                     console.info("Update result: "+sforce.connection.update([oscar]));

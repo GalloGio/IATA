@@ -50,7 +50,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		//DGR, TSA and CATA
-		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA' OR Type_of_Certificate__c = 'CATA')]);
+		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA' OR Type_of_Certificate__c = 'CATA')]);
 
 		system.debug('allCertificates: ' + allCertificates);
 
@@ -123,6 +123,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
 				system.debug('minDgrBR ' + minDgrBR);
 
+				//FM 07-07-2017 - AMSU-14
+				Boolean is90DaysNotif = true; //if it's the 90 days notification them the OSCAR is created, otherwise we must query the existing OSCAR
+				if(agReg.Notification_Date__c != null){
+					is90DaysNotif = false;
+				}
+
 				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
 				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
 				Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
@@ -143,11 +149,30 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveDGR, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
 
 					system.debug('creating renewal for DGR');
-					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
-
+					
+					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification otherwise we need to query the existing one
+					AMS_OSCAR__c oscar = null;
+					if(is90DaysNotif){
+						oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
+						agReg.OSCAR__c = oscar.Id;
+						update agReg;
+					}else{
+						String sContactName = agReg.First_Name__c + ' ' +agReg.Last_Name__c;
+						
+						oscar = [SELECT Id, Region__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c = :agReg.Account__c
+										AND AMS_Online_Accreditation__r.DGR_Agency_Regulation__c = :agReg.Id
+										AND Process__c = :AMS_Utils.CERTIFICATION
+										order by CreatedDate desc
+										limit 1];
+					}
+					
+					System.debug('oscar: ' + oscar);
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
-					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
+					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification
+					if(is90DaysNotif){
+						renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
+					}
 				}
 			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
@@ -299,6 +324,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         theStagingArea.VAT_Number_2__c                          = accountData.VAT_Number_2__c;
         theStagingArea.Website__c                               = accountData.Website;
         theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
+        //FM 19-07-2017 - AMSU-14 -
+        theStagingArea.DGR_Agency_Regulation__c					= agReg.Id;	
 
         insert theStagingArea;
 
@@ -337,6 +364,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
             ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
             ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
             ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
+            ac.Registration_number__c = reg.Registration_Number__c; //AMSU-14
 
             accToInsert.add(ac);
 
@@ -383,6 +411,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
             List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
             system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
+            system.debug('DGR sendEmailAlert: recipents ' + recipents);
 
             List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
@@ -399,6 +428,26 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
                     }
                     mail.setTargetObjectId(recipient.Id);
+                    
+                    mail.setWhatId(oscarId);
+                   
+                    mail.setOrgWideEmailAddressId(owea.Id);
+
+                    mailsToSend.add(mail);
+
+                //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
+                //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
+                }else if(isDGR){
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.saveAsActivity = true;
+                    mail.setToAddresses(new List<String>{recipient.Email});
+                    if(templateToIATA){
+                    	mail.setTemplateId(tempIata.get(0).Id);
+                    } else {
+                    	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                    }
+                    mail.setTargetObjectId(recipient.Id);
+                    
                     mail.setWhatId(oscarId);
                     mail.setOrgWideEmailAddressId(owea.Id);
 

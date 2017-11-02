@@ -1448,6 +1448,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Phone</type>
     </fields>
     <fields>
+        <fullName>Country_ISO_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country ISO Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_Specifics_Approval_Date__c</fullName>
         <externalId>false</externalId>
         <label>Country Specifics</label>
@@ -1604,6 +1616,42 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DGR_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.First_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DGR First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Last_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DGR Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DGR_Position__c</fullName>
+        <externalId>false</externalId>
+        <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Position__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DGR Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>DPC_updated__c</fullName>
@@ -2067,6 +2115,18 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>IATACode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATACode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IFAP_Financial_Year__c</fullName>
         <description>Financial year - IFAP application</description>
         <externalId>false</externalId>
@@ -2364,6 +2424,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Location_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Location_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>NOC_Deadline__c</fullName>
         <description>Used for Late/Absence of NOC</description>
         <externalId>false</externalId>
@@ -2441,6 +2513,20 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Notification_days__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(Change_effective_as_of__c - today() &gt; 60,&quot;90&quot;,
+if(Change_effective_as_of__c - today() &gt; 30,&quot;60&quot;,
+if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Notification days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Notify_Agent_Reactivation__c</fullName>
@@ -29620,7 +29706,8 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         NOT(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;VMFR&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Name&quot;)),
-        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;))
+        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;))
     ),
     OR(
         ISPICKVAL(Status__c, &quot;Pending Approval&quot;),

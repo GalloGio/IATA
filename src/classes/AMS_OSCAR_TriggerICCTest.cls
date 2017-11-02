@@ -121,6 +121,10 @@ private class AMS_OSCAR_TriggerICCTest {
         insert oscarList;
 
         oscarList[0].First_Step_Completed__c = true;
+        oscarList[0].STEP12__c = 'Passed';
+        oscarList[0].STEP25__c = 'Passed';
+        oscarList[0].STEP15__c = 'Passed';
+        oscarList[0].STEP2__c = 'Passed';
         oscarList[0].STEP1__c = 'Passed';
 
         oscarList[1].First_Step_Completed__c = true;
@@ -128,6 +132,7 @@ private class AMS_OSCAR_TriggerICCTest {
 
         oscarList[2].First_Step_Completed__c = true;
         oscarList[2].STEP2__c = 'Failed';
+        oscarList[2].STEP12__c = 'Passed';
         oscarList[2].Validation_Status__c = AMS_Utils.PASSED;
         oscarList[2].RPM_Approval__c = 'Authorize Disapproval';
         oscarList[2].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
