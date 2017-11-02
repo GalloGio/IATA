@@ -313,20 +313,17 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         if (accountId == null || accreditationId == null || oscarID == null)  return false;
 
-        String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
+        /*String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
         if (generateResult[0] != '1') return false;
-
-        //oscar.STEP10__c = 'Passed';
 
         String copyResult = AMS_OSCAR_Webservice.copyDataToAccount(oscarId);
         if (copyResult != 'OK') return false;
 
-        //oscar.Flag_Data_to_Account__c = true;
-
         String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
-        if (changeCodeResult != 'OK') return false;
+        if (changeCodeResult != 'OK') return false;*/
 
-        //update oscar;
+        String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(accountId, accreditationId,oscarId);
+        if (result[0] != '0') return false;
 
         // update case with IATA Code and correct Contact 
         oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
@@ -341,7 +338,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         return true;
     }
 
-    @future
+    //@future
     public static void closeOscar(Id oscarId) {
         try {
             // all the different behavior when Test.isRunningTest() is in place due to the tests being unstable and randomly throwing "too many soql queries" errors
