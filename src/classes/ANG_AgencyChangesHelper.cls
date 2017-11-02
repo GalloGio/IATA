@@ -886,6 +886,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless'){
         	toUpsert = performCashLessTransformation(accountsAffected);
+
+        	removeContactsFlag(accountsAffected);
+
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
@@ -898,6 +901,36 @@ public with sharing class ANG_AgencyChangesHelper {
         	upsert toUpsert;
 
 		return toReturn;
+	}
+
+	public static void removeContactsFlag(Set<Id> accountsAffected){
+
+		List<Contact> contactsToUpdate = new List<Contact>();
+		List<Portal_Application_Right__c> portalARtoUpdate= new List<Portal_Application_Right__c>();
+
+		List<Contact> contacts = [Select Id , Financial_Assessment_Contact__c, (select id from Portal_Application_Rights__r where Portal_Application__r.Name = 'IFAP' and Right__c = 'Access Granted') from Contact where AccountId in :accountsAffected and Financial_Assessment_Contact__c = true];
+
+		for(Contact cnt: contacts){
+
+			cnt.Financial_Assessment_Contact__c = false;
+
+			contactsToUpdate.add(cnt);
+
+			for(Portal_Application_Right__c par:cnt.Portal_Application_Rights__r){
+
+				par.Right__c = 'Access Denied';
+				portalARtoUpdate.add(par);
+
+			}
+
+		}
+
+		if(!portalARtoUpdate.isEmpty())
+			update portalARtoUpdate;
+
+		if(!contactsToUpdate.isEmpty())
+			update contactsToUpdate;
+
 	}
 
 	public static List<Agency_Authorization__c> performCashLessTransformation(Set<Id> accountsAffected){
