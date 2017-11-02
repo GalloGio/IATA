@@ -171,6 +171,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Invoice_status__c = 'Outstanding';
+                oscar.Proof_of_payment_received__c = Date.today();
                 res = True;
             }
 
