@@ -14260,7 +14260,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER approved - email to R%26S new</fullName>
+        <actions>
+            <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>R_S_feedback_pending</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.Update_AIMS_DEF__c</field>
             <operation>notEqual</operation>
@@ -14268,10 +14277,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Termination_date__c</field>
+            <field>Case.Update_AIMS_TER__c</field>
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
@@ -14286,19 +14295,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>R_S_feedback_pending</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.Termination_date__c</offsetFromField>
-            <timeLength>-1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER00_Automate Date%2FTime TER Approval%2FRejection</fullName>
