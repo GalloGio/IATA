@@ -2451,7 +2451,8 @@ public without sharing class Order_Svc
             if(paymentCancel.size() > 0)
             {   system.debug('paymentCancel' + paymentCancel);
                 List<Zuora.zApi.SaveResult> updatePay = ZuoraUtil.zupdate(paymentCancel);
-
+                System.debug('updatePay ' + updatePay);
+                /*
                 for (Zuora.zApi.SaveResult result : updatePay) {
                     System.debug('updatePay ' + updatePay);
                     if (!result.Success){
@@ -2461,7 +2462,7 @@ public without sharing class Order_Svc
                             String message = (String)error.getValue('Message');
                          }
                     }
-                }
+                }*/
                 
             }
         }catch(Exception ex){
@@ -2473,6 +2474,8 @@ public without sharing class Order_Svc
         List<String> invIds = new List<String>();
         invIds.addAll(inv2Delete);
 
+        system.debug('###### invIds :: '+invIds);
+
         List<Zuora.zObject> invoicesCancel = new List<Zuora.zObject>();
         for(String invId : invIds){
             system.debug('#### cancel invoice');
@@ -2481,14 +2484,18 @@ public without sharing class Order_Svc
             invoice.setValue('Status','Draft');
             invoicesCancel.add(invoice);
         }
+
+        system.debug('###### invoicesCancel :: '+invoicesCancel);
+
         try{
             if(invoicesCancel.size() > 0)
-            {   system.debug('invoicesCancel');
+            {   system.debug('####### invoicesCancel');
                 List<Zuora.zApi.SaveResult> updateInv = ZuoraUtil.zupdate(invoicesCancel);
                 System.debug('updateInv ' + updateInv);
                 for(Zuora.zObject inv : invoicesCancel)
                     inv.setValue('Status','Canceled');
                 updateInv =  ZuoraUtil.zupdate(invoicesCancel);
+                system.debug('###### updateInv :: '+updateInv);
             }
         }catch(Exception ex){
             system.debug('#### exception on invoice :: ' + ex.getStackTraceString());
@@ -2558,6 +2565,7 @@ public without sharing class Order_Svc
         //Delete Payments
         try{
             if(refId.size() > 0){ List<Zuora.zApi.DeleteResult> deleteTrans = ZuoraUtil.zdelete('Payment',refId); 
+            system.debug('#### deleteTrans :: '+deleteTrans);
             }
         }catch(Exception ex){
             system.debug('#### exception on deleteTrans :: ' + ex.getStackTraceString());
@@ -2568,6 +2576,7 @@ public without sharing class Order_Svc
         try{
             if(invIds.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteInv = ZuoraUtil.zdelete('Invoice',invIds);
+                system.debug('#### deleteInv :: '+deleteInv);
             }
         }catch(Exception ex){
             system.debug('#### exception on deleteInv :: ' + ex.getStackTraceString());
@@ -2579,6 +2588,7 @@ public without sharing class Order_Svc
         try{
             if(ids.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteSub = ZuoraUtil.zdelete('Subscription',ids);
+                system.debug('#### deleteSub :: '+deleteSub);
             }
                 
         }catch(Exception ex){
