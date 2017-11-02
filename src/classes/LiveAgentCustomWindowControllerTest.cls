@@ -81,15 +81,23 @@ private class LiveAgentCustomWindowControllerTest {
         where id = :record.id];
         
         User owner = [select name, smallPhotoUrl, LVA_Language_Skills__c from user where id = :record.ownerId];
-        owner.LVA_Language_Skills__c = 'en_US;es';
+        owner.LVA_Language_Skills__c = 'en_US;it';
         update owner;
                	
         Map <String,String> languages = LiveAgentCustomWindowController.getLanguages(record.ownerId);
         Map <String, String> expectedLanguages = new Map<String, String>();
         expectedLanguages.put('en_US', 'English');
-        expectedLanguages.put('es', 'Español');
-        System.assertEquals(expectedLanguages, languages);
-        
+        expectedLanguages.put('it', 'Italiano');
+
+        Map <String, String> expectedLanguagesBeforeMS = new Map<String, String>();
+        expectedLanguagesBeforeMS.put('en_US', 'en_US');
+        expectedLanguagesBeforeMS.put('it', 'it');
+
+        if(expectedLanguagesBeforeMS.equals(languages)){
+			System.assertEquals(expectedLanguagesBeforeMS, languages);
+        } else {
+			System.assertEquals(expectedLanguages, languages);
+        }
         
         System.assertEquals(null, LiveAgentCustomWindowController.getLanguages('Id'));
     }
