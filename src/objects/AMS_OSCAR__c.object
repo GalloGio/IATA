@@ -4582,6 +4582,19 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>SIDRA_lite_reason__c</fullName>
+        <description>SIDRA lite reason for Oscar Creation</description>
+        <externalId>false</externalId>
+        <label>SIDRA lite reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>STEP10__c</fullName>
         <externalId>false</externalId>
         <label>STEP10</label>

@@ -22,6 +22,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
+    public static String NGFOP_PV = 'NGFormsOfPayment';
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV};
 
@@ -257,6 +258,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
             return oscarRT.get('ANG_Agency_Changes');
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
+            return oscarRT.get('NGFormsOfPayment');
         
         return null;
     
@@ -288,7 +292,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV){
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
@@ -312,6 +316,9 @@ global without sharing class AMS_RecordCreatorWebservice {
                 oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
             }
             
+            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+            }
         }
 
         // this needs to be fetched from Accreditation Object. For now just use this.
@@ -330,7 +337,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) ) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
