@@ -18,11 +18,12 @@ public class ZuoraUtil
                 zconnection = new Zuora.zApi(); 
                 zconnection.zlogin();
             }
-
+            System.debug('### get zconnection ' + zconnection);
             return zconnection;
         }
         set {
             zconnection = value;
+            System.debug('### set zconnection ' + zconnection);
         }
 
     }
