@@ -1890,7 +1890,11 @@ public class AMS_OSCARTriggerHandler {
 
 	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-	        List<Contact> contList = fetchContactInfoFromCase(oscarCommCaseId);
+			List<Contact> contList;
+	        if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP)
+	        	contList = fetchContactFromAgencyContact(oscarId);
+	        else	
+	        	contList = fetchContactInfoFromCase(oscarCommCaseId);
 
 	        if(!contList.isEmpty())
 				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -1907,6 +1911,12 @@ public class AMS_OSCARTriggerHandler {
 	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
 
 		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+
+	private static List<Contact> fetchContactFromAgencyContact(String oscarId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select Agency_Contact__c from AMS_OSCAR__c where Id = :oscarId )];
 
 	}
 	
@@ -1928,6 +1938,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId 					= 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId 	= 'IEP_Setup_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId 	= 'IEP_Setup_Finalization_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId 	= 'IEP_Setup_Finalization_Failed';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
