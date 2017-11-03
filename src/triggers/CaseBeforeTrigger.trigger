@@ -157,6 +157,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if(Trigger.isInsert || Trigger.isUpdate){
+	
+		/*DigitalGenius trigger - turn off*/
+		if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
         
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
@@ -233,15 +236,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             //IMPRO GM START
             //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             CurrUser = UserInfo.getUserId();
-            Set<string> caseStatus = new set<string>(); //RN-INC342887 -> get isclosed cases status
-            for(CaseStatus cs : [Select ApiName from casestatus where isClosed = true] ){
-                caseStatus.add(cs.ApiName);
+            Set<string> caseStatus = new set<string>(); 
+            for(CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()){//RN-INC347705 -> get isclosed cases status from custom Setting to remove a query
+                caseStatus.add(cs.name);
             }
             //IMPRO GM END
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
             for(Case c : Trigger.new){//RN-INC342887 - validation with isClosed
                 if((Trigger.isInsert && caseStatus.contains(c.status)) || 
-                        (Trigger.isUpdate && caseStatus.contains(c.status)) ){
+                        (Trigger.isUpdate && caseStatus.contains (c.status)) ){
                         c.WhoClosedCase__c = CurrUser;
                     }
                 if(Trigger.isUpdate && !caseStatus.contains(c.status)){
