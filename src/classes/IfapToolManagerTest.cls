@@ -56,7 +56,7 @@ public class IfapToolManagerTest {
                                     //status = 'Agent Notified (Mail)',
                                     status = 'Quality Issue Requested',
                                     Financial_Review_Type__c = 'Annual',
-                                    Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
+                                    //Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
                                     Origin = 'Other',
                                     SuppliedEmail = 'paia@iata.org',
                                     SuppliedPhone = '12456987456',

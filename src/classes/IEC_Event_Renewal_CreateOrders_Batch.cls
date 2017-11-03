@@ -22,7 +22,7 @@ global class IEC_Event_Renewal_CreateOrders_Batch implements Database.Batchable<
         system.debug('excludeProductId ' + excludeProductId);
         String queryLimit = '';
         if(Test.isRunningTest())
-            queryLimit = ' Limit 1';
+            queryLimit = ' Limit 5';
 
         query = 'SELECT id, Product__c, Quantity__c, Subscriber__c, Default_Payment_Type__c ' +
                 ' from IEC_Event_Subscription__c ' + 

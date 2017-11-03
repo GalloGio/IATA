@@ -40,6 +40,7 @@ private class AirlineInputHandlerTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'name' ,
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -68,7 +69,7 @@ private class AirlineInputHandlerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c1');
         insert c1;
         

@@ -158,7 +158,7 @@ public class NewLocalGroupMeetingCtrlTest{
 		NewParticipantByEmailCtrl pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
         pctrl.c.Email = conts[0].Email;
         pctrl.MySave();
-
+        
         ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
         pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
         pctrl.c.Email = conts[1].Email;

@@ -84,6 +84,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 		return null;
 	}
 
+	@TestVisible
 	private void parseLines(){
 		newProgramRanges = new Map<String,List<Code_Range__c>>();
 		newPrograms = new Map<String,AMS_Segment__c> ();    

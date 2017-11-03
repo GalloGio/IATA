@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_AMS_Accreditation" showHeader="false" sidebar="false" standardStylesheets="true" language="{!displayLanguage}" applyBodyTag="false" applyHtmlTag="false"  action="{!securityCheck}">
     <html> 
-        <c:ISSP_Header ></c:ISSP_Header>
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <c:iss_ap_css />
         <c:ISSP_WaitingStatus />    
         <body>
@@ -350,6 +350,21 @@
     function setPortalAdmin(f) {
         var adminid = document.getElementById(f).value;
         $j( "#" + adminid ).prop( "checked", true );
+
+        setInvoiceContact();
+    }
+
+    function setInvoiceContact() {
+        var invcontactid = document.getElementById('{!$Component.AMSForm.InvoicingContactId}').value;
+        if (invcontactid == '') {
+            invcontactid = document.getElementById('{!$Component.AMSForm.PortalAdminId}').value;
+        }
+        
+        if (invcontactid != '') {
+            $j( "#radio" + invcontactid ).prop( "checked", true );
+            document.getElementById('{!$Component.AMSForm.InvoicingContactId}').value = invcontactid;
+        }
+        
     }
 
     function confirmContactDelete(conid, conname, contype) {
@@ -378,6 +393,7 @@
             $j(".email__c").parent().parent().siblings('.col-lg-5').find("label").html('{!$Label.ISSP_Office_Email}');
             $j("[id$=BillingAddress]").parent().css('text-align', 'right');
             $j("[id$=HOEmail]").parent().css('text-align', 'right');
+            $j(".email__c").wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
       });
     }
                    
@@ -411,13 +427,13 @@
 
     <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />
+           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      
      <div class="panel-primary">
         <div class="panel-heading head_panel_green">
             <!-- Application for approval as {!IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), 'an', 'a')} {!newForm.Agent_Type__c} -->
-            {!IF(newForm.Agent_Type__c == 'IATA Cargo Agent', $Label.ISSP_AMS_StepsAll_Cargo_Title, 
-                IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', $Label.ISSP_AMS_StepsAll_Passenger_Title, 
+            {!IF(newForm.Agent_Type__c == 'IATA Cargo Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title), 
+                IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                     IF(newForm.Agent_Type__c == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                         IF(newForm.Agent_Type__c == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
                             IF(newForm.Agent_Type__c == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
@@ -463,6 +479,7 @@
             <apex:actionFunction name="cancelAccountUpdate" action="{!cancelAccountUpdate}" status="WaitingStatus" reRender="HQdetails,accountMessages,updateAgency"/>                  
             <!-- <apex:actionFunction name="resetSaleSaved" action"{!}" status="WaitingStatus" reRender="newSalesForm"/> -->
             <apex:inputHidden value="{!newForm.ISSP_AMS_Portal_admin__c}" id="PortalAdminId" />
+            <apex:inputHidden value="{!newForm.ISSP_AMS_Invoicing_Contact__c}" id="InvoicingContactId" />
             <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
             	<apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />
             </apex:actionFunction>
@@ -494,7 +511,7 @@
                                 {!$Label.ISSP_Loading_Travel_Agency_Details}
                             </apex:facet>
                         </apex:actionstatus>
-                        <apex:commandlink styleclass="pull-right" style="margin-right:5px" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
+                        <apex:commandlink styleclass="pull-right" style="margin-right:5px" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!IF(newlabels, $Label.ISSP_AMS_Update_Agency_New, $Label.ISSP_AMS_Update_Agency)}</apex:commandlink>
                         <apex:pageblocksectionitem >
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
@@ -686,7 +703,7 @@
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1}</strong></div>
                        <div class="col-md-12">
                            <apex:outputText escape="false">
-                               {!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1}
+                               {!IF(newlabels, $Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1_New, $Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1)}
                            </apex:outputText>
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -698,7 +715,7 @@
                                <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}"/> 
                             <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
-                            <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>
+                            <!--<apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>-->
                             <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>
                             <apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center"/>
                             <apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" style="text-align:center">
@@ -713,6 +730,10 @@
                             </apex:column>
                             <apex:column value="{!agencycon.CASS_contact__c}" style="text-align:center">
                                 <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Cargo_Cass_Contact}"/></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:center">
+                                <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Invoicing_Contact}"></apex:outputText></apex:facet>
+                                <input type="radio" name="invoicingcontact" id="radio{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.InvoicingContactId}');"/>
                             </apex:column>
                             <apex:column >
                                 <apex:actionStatus id="actEditContact" >
@@ -734,6 +755,7 @@
                                         <div class="contact-detail"><span style="font-weight:bold">{!txtLocalAgencyDetailsFirstNameLocal}&nbsp;</span>{!agencycon.Local_First_name__c}</div>
                                         <div class="contact-detail"><span style="font-weight:bold">{!txtLocalAgencyDetailsLastNameLocal}&nbsp;</span>{!agencycon.Local_Last_Name__c}</div>
                                     </apex:outputText>
+                                    <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span>{!agencycon.Phone__c}</div>
                                 	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.MobilePhone.Label}&nbsp;</span>{!agencycon.Mobile__c}</div>
                                   	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.FAX.Label}&nbsp;</span>{!agencycon.FAX__c}</div>
                                    	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!TEXT(agencycon.Financial_interest__c)}</div>
@@ -1228,7 +1250,7 @@
      </div>   
      </div>
      </div>
-         <c:ISSP_CustomFooter />
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
          </div>
        
     </body>  

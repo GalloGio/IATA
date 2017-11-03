@@ -1,0 +1,45 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_BSP_CASS_Payment_contact_Subject}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Contact" >
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="{!if(Contains(relatedTo.Community__c, 'CNS'), 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+ <BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+{!$Label.ISSP_Email_DearAdmin}<BR/>
+<BR/>
+{!$Label.ISSP_Email_BSP_CASS_Payment_contact1}<BR/>
+<BR/>
+{!$Label.ISSP_Contact}: {!relatedTo.FirstName}{!relatedTo.LastName}
+<BR/>
+{!$Label.Email}: {!relatedTo.Email}
+<BR/>
+{!$Label.ISSP_Country}: {!relatedTo.Account.IATA_ISO_Country__r.Name}
+<BR/>
+<BR/>
+
+{!if(Contains(relatedTo.Community__c, 'CNS'), $Label.ISSP_Email_BSP_CASS_Payment_contact2_CNS, $Label.ISSP_Email_BSP_CASS_Payment_contact2)}<BR/>
+<BR/>
+<apex:outputText value="{!if(Contains(relatedTo.Community__c, 'CNS'), $Label.ISSP_Email_BSP_CASS_Payment_contact3_CNS, $Label.ISSP_Email_BSP_CASS_Payment_contact3)}" escape="false" >
+</apex:outputText>
+<BR/><BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!if(Contains(relatedTo.Community__c, 'CNS'), $Label.ISSP_Email_CNS_Service, $Label.ISSP_Email_IataService)}<BR/>
+
+<p>
+
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!if(Contains(relatedTo.Community__c, 'CNS'), '','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</p>
+
+<apex:image value="{!if(Contains(relatedTo.Community__c, 'CNS'), 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

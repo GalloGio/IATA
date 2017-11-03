@@ -1,6 +1,6 @@
 <apex:page title="IATA/IATAN ID Card Online Platform"
     sidebar="false" showHeader="false" 
-    controller="IDCard_AdmUserManagmentPictureCtrl" cache="true" expires="600">
+    controller="IDCard_AdmUserManagmentPictureCtrl" cache="false"> 
     <html xmlns="http://www.w3.org/1999/xhtml">
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" />
     

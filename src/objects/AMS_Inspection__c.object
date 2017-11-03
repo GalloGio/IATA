@@ -72,12 +72,33 @@
                 <fullName>B</fullName>
                 <default>false</default>
             </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Sort_By__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Accreditation_Endorsement_organisation__r.Air_Code__c == &apos;IATA&apos;
+	, 1
+	, IF( Accreditation_Endorsement_organisation__r.Air_Code__c == &apos;IATAN&apos;
+		, 2
+		, 3
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AMS GDP Sort By</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -188,8 +209,41 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    
-    
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.Airline_designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected Account must be an Airline Headquarter</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters, Airline Branch</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Appointments (AMS) (Airline)</relationshipLabel>
+        <relationshipName>Appointments_AMS</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <fields>
         <fullName>BSPLink_or_CASSLink_activation__c</fullName>
         <defaultValue>false</defaultValue>
@@ -208,7 +262,18 @@
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
-    
+    <fields>
+        <fullName>IATA_Non_IATA_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Airline__r.Membership_status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA/Non-IATA Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Last_synchronization__c</fullName>
         <externalId>false</externalId>
@@ -268,6 +333,71 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Previous_status_code__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous status code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Valid_Code_For_GDP_Replication__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+    Accreditation_Endorsement_organisation__c != &apos;&apos;, 
+      Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
+      IF(Account__r.IATA_code_Lenght__c  &gt; 3
+        , False
+        , IF(AND(Account__r.IATA_code_Lenght__c  = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
+          ,False
+          ,True
+        )
+      )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Valid Code For GDP Replication</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>Appointment (AMS)</label>
     <nameField>

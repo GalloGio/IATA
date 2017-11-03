@@ -15,6 +15,7 @@ trigger trgCase on Case (after delete, after insert, after undelete, after updat
     if (Trigger.isAfter) {
         if (Trigger.isInsert) {
             SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
+            //AMS_CaseTriggerHandler.handleAfterInsert(Trigger.new);
         }
         if (Trigger.isUpdate) {
             //SidraLiteManager.afterUpdateSidraLiteCases(Trigger.new, Trigger.old);

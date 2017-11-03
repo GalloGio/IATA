@@ -50,7 +50,12 @@
                                             <div class="col-md-8">
 
                                                 <apex:selectlist styleclass="form-control rec mandatory" id="accountList" value="{!newCase.IATACodeProduct__c}" size="1">
-                                                    <apex:selectoptions value="{!accounts}" />
+                                                    <apex:selectOptions value="{!if(Accounts.size == 1, Accounts[0], Accounts[1])}" />
+                                                    <apex:selectOptions value="{!if(Accounts.size == 3, Accounts[2], "")}" rendered="{!if(Accounts.size == 3, true, false)}"/>
+                                                    <apex:selectOptions value="{!if(Accounts.size == 4, Accounts[3], "")}" rendered="{!if(Accounts.size == 4, true, false)}"/>
+                                                    <apex:selectOptions value="{!if(Accounts.size == 5, Accounts[4], "")}" rendered="{!if(Accounts.size == 5, true, false)}"/>
+                                                    <apex:selectOptions value="{!if(Accounts.size == 6, Accounts[5], "")}" rendered="{!if(Accounts.size == 6, true, false)}"/>
+                                                    <apex:selectOptions value="{!if(Accounts.size == 7, Accounts[6], "")}" rendered="{!if(Accounts.size == 7, true, false)}"/>
                                                 </apex:selectlist>
                                             </div>
                                         </div>
@@ -78,14 +83,14 @@
                                                 </div>
                                             </div>
                                         </apex:actionregion>
-                                            <div class="row">
+                                            <!--<div class="row">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="Quantity">{!$Label.ISSP_Quantity}</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase.QuantityProduct__c}" required="true" />
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="Description">{!$Label.ISSP_BuyCertificateText}</label>

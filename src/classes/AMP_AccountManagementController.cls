@@ -14,7 +14,7 @@ public with sharing class AMP_AccountManagementController {
               Airline_Model_Type__c 
             FROM Account
             WHERE Id = :accountId
-               LIMIT 1];
-    }
+               LIMIT 1]; 
+    } 
 
 }

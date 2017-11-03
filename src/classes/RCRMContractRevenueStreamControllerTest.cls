@@ -130,6 +130,21 @@ private class RCRMContractRevenueStreamControllerTest {
                     
                     controller.SaveSAPContractNumber();                 
                 }
+
+                system.runAs(thisUser ){
+                    ApexPages.StandardController std = new ApexPages.StandardController(con_sm);
+
+                    RCRMContractRevenueStreamController controller = new RCRMContractRevenueStreamController(std);
+
+                    Boolean showButton = controller.showSaveButton;
+
+                    delete con_sm;
+                    
+                    controller.SaveRS();
+                    
+                    controller.SaveSAPContractNumber();
+
+                }
                 
                 
             Test.StopTest();

@@ -167,19 +167,11 @@
         <label>Division</label>
         <picklist>
             <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>APCS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FDS</fullName>
+                <fullName>CS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -187,14 +179,26 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>SFO</fullName>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MER</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>N/A</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <picklistValues>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -433,11 +437,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>CEC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
@@ -860,11 +859,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Local_Groups</value>
         </filters>
-        <filters>
-            <field>Active__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
         <label>All Local Groups</label>
         <language>en_US</language>
     </listViews>
@@ -1013,10 +1007,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1311,10 +1301,6 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ICAP</fullName>
                 <default>false</default>
             </values>
@@ -1342,15 +1328,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Sales Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Member Airlines</fullName>
+                <fullName>Industry Stakeholders</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1557,6 +1535,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>MER</fullName>
                 <default>false</default>
             </values>
@@ -1620,10 +1602,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1824,10 +1802,10 @@ Record Type + Group Type + ISO_Country_Name</description>
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
@@ -1877,7 +1855,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
-  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  NOT(OR($User.Profile_Name__c =&quot;System Administrator&quot;, $User.Profile_Name__c =&quot;Account management team&quot;)), 
   AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)

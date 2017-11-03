@@ -1,0 +1,155 @@
+.THIS .profileCompany_container{
+	display:block;
+	width:100%;
+	max-width:1180px;
+	height:100%;
+	min-height:100vh;
+}
+
+.THIS .profile_container{
+	width:100%;
+	display:block;
+	height:100%;
+}
+
+.THIS .company_container{
+	height:100%;
+}
+
+.THIS .profile_col1{
+	width:50%;
+	float:left;
+	display:block;
+	height:100%;
+	margin-top:1em;
+}
+
+.THIS .profile_col2{
+	width:50%;
+	display:block;
+	height:100%;
+}
+
+.THIS .align_verticalaxis{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.THIS .profile_titlecontainer .company_titlecontainer{
+	margin-bottom:36px;
+	height:100%;
+}
+
+.THIS .company_titlecontainer{
+}
+
+.THIS .profile_readItem{
+	width:100%;
+	float:left;
+	display:block;
+	margin-top:0.6em;
+	margin-bottom:0.6em;
+	height:100%;
+}
+
+.THIS .company_readItem{
+	width:100%;
+	float:left;
+	display:block;
+	margin-top:0.6em;
+	margin-bottom:0.6em;
+	height:100%;
+}
+
+.THIS .read_span{
+	color:#00305b;
+	width:50%;
+	float:left;
+	display:block;
+	height:100%;
+}
+
+.THIS .read_output{
+	padding-left:10px;
+
+}
+
+.THIS .hide{
+	display:none;
+}
+
+.THIS .titleheader{
+	width:100%;
+	float:left;
+	display:block;
+}
+
+.THIS .editbutton{
+	float:left;
+	width:20%;
+	display:block;
+}
+
+.THIS .profileinformationtitle{
+	float:left;
+	width:80%;
+	display:block;
+}
+
+.THIS .editbuttonfloat{
+	float:right;
+}
+
+.THIS .multiplepicklistheight{
+	height:100px !important;
+}
+
+@media screen and (max-width:1100px){
+	.THIS .profileCompany_container{
+		padding:2em;
+	}
+
+
+	.THIS .profile_col1{
+		width:50%;
+	}
+
+	.THIS .profile_col2{
+		width:50%;
+	}
+
+
+	.THIS .read_span{
+		width:100%;
+	}
+
+	.THIS .read_output{
+		padding-left:10px;
+
+	}
+}
+
+@media screen and (max-width:640px){
+	.THIS .profileCompany_container{
+		padding:2em;
+	}
+
+
+	.THIS .profile_col1{
+		width:100%;
+	}
+
+	.THIS .profile_col2{
+		width:100%;
+	}
+
+
+	.THIS .read_span{
+		width:50%;
+	}
+
+	.THIS .read_output{
+		padding-left:10px;
+
+	}
+}

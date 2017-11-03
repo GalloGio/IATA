@@ -24,8 +24,8 @@ public class IDFS_Util_Test{
     TestMethod static void WebserviceMethodsTest(){
         IDFS_Util.getIATACountryEmail('Canada');
         IDFS_Util.getIATACountryEmail('');
-        IDFS_Util.getRecordTypeEmail('ProcessEuropeSCE','');
-        IDFS_Util.getRecordTypeEmail('','');
+        IDFS_Util.getRecordTypeEmail('ProcessEuropeSCE','','');
+        IDFS_Util.getRecordTypeEmail('','','');
     }
 
     TestMethod static void createInternalCaseTest(){

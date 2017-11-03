@@ -49,6 +49,7 @@ private class vfIEC_CACWKey_test {
         
         // create dummy subscription
         subscription = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        subscription.Zuora__Status__c='Active';
         subscription.Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
         insert subscription;
         

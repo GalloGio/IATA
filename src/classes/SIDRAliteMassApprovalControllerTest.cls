@@ -3,6 +3,13 @@ private class SIDRAliteMassApprovalControllerTest {
 
     public static final String APPROVED = SIDRAliteMassApprovalController.APPROVED;
     public static final String REJECTED = SIDRAliteMassApprovalController.REJECTED;
+    public static final String IRR = SIDRAliteMassApprovalController.IRR;
+    public static final String IRR_WD = SIDRAliteMassApprovalController.IRR_WD;
+    public static final String DEF = SIDRAliteMassApprovalController.DEF;
+    public static final String DEF_WD = SIDRAliteMassApprovalController.DEF_WD;
+    public static final String REI = SIDRAliteMassApprovalController.REI;
+    public static final String TER = SIDRAliteMassApprovalController.TER;
+    public static final String REI_AFTER_TER = SIDRAliteMassApprovalController.REI_AFTER_TER;
 
     @isTest
     static void controllerWithoutCases_Test() {
@@ -10,13 +17,14 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         System.AssertEquals(true, controller.listWrapperCase.isEmpty());
 
-        controller.filter.getActionTypeList();
         controller.getApprovalButtonLabel();
         controller.getRejectionButtonLabel();
         controller.confirmMassApproveCases();
         controller.confirmMassRejectCases();
         controller.cancelMassApproveCases();
         controller.cancelMassRejectCases();
+        controller.exportCSV();
+        controller.getcsvContent();
         test.stopTest();
     }
 
@@ -28,7 +36,9 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Approval_Rejection__c = null,
-            Reason_for_Default__c = 'Non-payment'
+            Reason_for_Default__c = 'Non-payment',
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            SIDRA_Lite_Default_Date__c = Date.today()
         );
         insert cse;
 
@@ -37,20 +47,22 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.Reason_for_Default__c = cse.Reason_for_Default__c;
-        controller.filter.selectedActionType = 'DEF';
+        controller.filter.selectedActionType = DEF;
 
         test.startTest();
         // check that the case is searched
         controller.search();
         System.AssertEquals(1,controller.listWrapperCase.size());
 
+        controller.exportCSV();
+        controller.getcsvContent();
+
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
-        System.AssertEquals(1, controller.getNumSelected());
+        controller.selectedIds = cse.Id;
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -67,7 +79,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Approval_Rejection__c = null,
-            Reason_for_Default__c = 'Non-payment'
+            Reason_for_Default__c = 'Non-payment',
+            SIDRA_Lite_Default_Date__c = Date.today()
         );
         insert cse;
 
@@ -76,7 +89,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.Reason_for_Default__c = cse.Reason_for_Default__c;
-        controller.filter.selectedActionType = 'DEF';
+        controller.filter.selectedActionType = DEF;
 
         test.startTest();
         // check that the case is searched
@@ -84,11 +97,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         //controller.confirmRejection = true;
         controller.confirmMassRejectCases();
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -106,7 +119,9 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             DEF_Withdrawal_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Reason__c  = 'Other'
+            DEF_Withdrawal_Reason__c  = 'Other',
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Request_DEF_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -115,7 +130,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.DEF_Withdrawal_Reason__c = cse.DEF_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'DEF Withdrawal';
+        controller.filter.selectedActionType = DEF_WD;
 
         test.startTest();
         // check that the case is searched
@@ -123,11 +138,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -144,7 +159,9 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Withdrawal_Approval_Rejection__c = null,
-            DEF_Approval_Rejection__c = APPROVED
+            DEF_Approval_Rejection__c = APPROVED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Request_DEF_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -153,7 +170,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.DEF_Withdrawal_Reason__c = cse.DEF_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'DEF Withdrawal';
+        controller.filter.selectedActionType = DEF_WD;
 
         test.startTest();
         // check that the case is searched
@@ -161,11 +178,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -189,7 +206,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR';
+        controller.filter.selectedActionType = IRR;
 
         test.startTest();
         // check that the case is searched
@@ -197,12 +214,12 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -226,7 +243,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR';
+        controller.filter.selectedActionType = IRR;
 
         test.startTest();
         // check that the case is searched
@@ -234,11 +251,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -256,7 +273,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             IRR_Withdrawal_Approval_Rejection__c = null,
             IRR_Approval_Rejection__c = APPROVED,
-            IRR_Withdrawal_Reason__c = 'Other'
+            IRR_Withdrawal_Reason__c = 'Other',
+            AG_Request_IRR_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -265,7 +283,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.IRR_Withdrawal_Reason__c = cse.IRR_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'IRR Withdrawal';
+        controller.filter.selectedActionType = IRR_WD;
 
         test.startTest();
         // check that the case is searched
@@ -273,12 +291,12 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -295,7 +313,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             IRR_Withdrawal_Approval_Rejection__c = null,
-            IRR_Approval_Rejection__c = APPROVED
+            IRR_Approval_Rejection__c = APPROVED,
+            AG_Request_IRR_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -303,7 +322,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR Withdrawal';
+        controller.filter.selectedActionType = IRR_WD;
 
         test.startTest();
         // check that the case is searched
@@ -311,11 +330,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -333,7 +352,9 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Reinstatement_Request__c = DateTime.now()
         );
         insert cse;
 
@@ -342,7 +363,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.REI_Approval_Rejection_remarks__c = 'comment';
-        controller.filter.selectedActionType = 'REI';
+        controller.filter.selectedActionType = REI;
 
         test.startTest();
         // check that the case is searched
@@ -350,8 +371,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         cse = controller.listWrapperCase[0].cse;
@@ -360,12 +380,13 @@ private class SIDRAliteMassApprovalControllerTest {
         cse.Reason_of_REI_WD__c = 'Commissioner decision';
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
         cse = [Select Id, REI_ApprovalRejectin__c, REI_Approval_Rejection_remarks__c from Case where Id = :cse.Id];
-   //     System.AssertEquals(APPROVED, cse.REI_ApprovalRejectin__c);
-  //      System.AssertEquals('comment', cse.REI_Approval_Rejection_remarks__c);
+        System.AssertEquals(APPROVED, cse.REI_ApprovalRejectin__c);
+        System.AssertEquals('comment', cse.REI_Approval_Rejection_remarks__c);
     }
 
     @isTest
@@ -377,7 +398,9 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Reinstatement_Request__c = Date.today()
         );
         insert cse;
 
@@ -386,7 +409,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.REI_Approval_Rejection_remarks__c = 'comment';
-        controller.filter.selectedActionType = 'REI';
+        controller.filter.selectedActionType = REI;
 
         test.startTest();
         // check that the case is searched
@@ -394,11 +417,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -416,7 +439,9 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            Propose_Default__c = DateTime.now()
         );
         insert cse;
 
@@ -424,7 +449,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'TER';
+        controller.filter.selectedActionType = TER;
 
         test.startTest();
         // check that the case is searched
@@ -432,12 +457,12 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -454,7 +479,9 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            Propose_Default__c = DateTime.now()
         );
         insert cse;
 
@@ -462,7 +489,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'TER';
+        controller.filter.selectedActionType = TER;
 
         test.startTest();
         // check that the case is searched
@@ -470,11 +497,11 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected

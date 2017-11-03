@@ -1,0 +1,71 @@
+.THIS label{
+    display: block !important;
+    /*
+    font-size: 24px;
+    font-weight:bold;*/
+}
+.THIS .required-input {
+    border-left: 0.3em solid red !important;
+    /*width: 200px;*/
+}
+
+
+
+
+.THIS select.multiple {
+    height: 100px !important;
+}
+
+.THIS #content {
+    width: 100% important;
+}
+.THIS h1 {
+    display: inline;
+}
+.THIS .headerText {
+    font-size: 120%;
+    /*width: 100%;*/
+}
+.THIS .headerDiv {
+    cursor: pointer;
+}
+
+.THIS .section {
+    background: #f0f0f0;
+    width: 100%;
+    border: 2px solid #aaa;
+}
+
+.THIS .inactive {
+    color: #e0e0e0;
+}
+.THIS .submitButton {
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0;
+    height: 3em;
+    background-color: #222;
+}
+
+
+/* fileUpload2.css is identical */
+.THIS .notUploading {
+    visibility: hidden;
+}
+
+.THIS .uploading {
+    visibility: visible;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.THIS .small-spinner {
+    height: 20px;
+    width: 20px;
+}
+
+.THIS .file {
+    margin-bottom: 5px;
+    display: block;
+}

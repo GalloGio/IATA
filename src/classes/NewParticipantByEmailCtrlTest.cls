@@ -154,7 +154,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
         // Now a new participant should be created
         parts = [SELECT ID FROM Participant__c];
         //system.assertEquals(1, parts.size());
-
+        
         ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
         ctrl = new NewParticipantByEmailCtrl(
             new ApexPages.StandardController(

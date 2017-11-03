@@ -1,10 +1,10 @@
 <apex:page controller="ISSP_PortalService" showHeader="false" sidebar="false" standardStylesheets="false" >
     <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
  
   <div class="container">
-      <c:ISSP_CustomNavigation />
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
             <a href="/apex/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1">Back to List: Portal Service </a>
         </div>
@@ -44,14 +44,16 @@
                 
                    <apex:pageBlockTable value="{!appsGrantedList}" var="o" >
                         <apex:column style="text-align: center;" >
-                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_PortalService?id={!o.Portal_Application__c}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_PortalService?id={!o.Portal_Application__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
                         </apex:column>  
                         <apex:column headerValue="Account Name" style="text-align: center;" >
-                            <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
+                            <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
                         </apex:column>
+                      
                         <apex:column value="{!o.Contact__r.FirstName}" style="text-align: center;" />
                         <apex:column value="{!o.Contact__r.LastName}" style="text-align: center;" />
                         <apex:column value="{!o.Right__c}" style="text-align: center;" />
+                        <apex:column value="{!o.ANG_Portal_Service_Role__c}" style="text-align: center;" />                      
                       
                    </apex:pageBlockTable>
                   
@@ -60,7 +62,7 @@
                 
                 
           </div><!-- end  div class="panel panel-primary"-->
-      <c:ISSP_CustomFooter />
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
   </div><!-- end container-->  
         </body>
     </html>

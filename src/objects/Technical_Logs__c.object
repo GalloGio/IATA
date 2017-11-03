@@ -125,6 +125,16 @@
         <columns>start_date__c</columns>
         <columns>End_Date__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>start_date__c</field>
+            <operation>equals</operation>
+            <value>9/12/2017 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Record__c</field>
+            <operation>contains</operation>
+            <value>001w00000192Qc8</value>
+        </filters>
         <label>AMS</label>
         <language>en_US</language>
     </listViews>
@@ -141,7 +151,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>96542025</value>
+            <value>60698691</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -157,9 +167,9 @@
         <columns>End_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Status__c</field>
+            <field>Record__c</field>
             <operation>equals</operation>
-            <value>error</value>
+            <value>3530728</value>
         </filters>
         <label>AMS - Error</label>
         <language>en_US</language>
@@ -226,6 +236,47 @@
             <value>96544766</value>
         </filters>
         <label>AMS - OK</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Sales_Order</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Operation__c</field>
+            <operation>contains</operation>
+            <value>AMS 2 MDM - Sales Order</value>
+        </filters>
+        <filters>
+            <field>start_date__c</field>
+            <operation>equals</operation>
+            <value>10/5/2017 12:00 AM</value>
+        </filters>
+        <label>AMS - Sales Order</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>DEFAULT_DATE_SCRIPT</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Operation__c</field>
+            <operation>contains</operation>
+            <value>DEFAULT DATE SCRIPT</value>
+        </filters>
+        <label>DEFAULT DATE SCRIPT</label>
         <language>en_US</language>
     </listViews>
     <nameField>

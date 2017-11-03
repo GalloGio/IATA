@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal FR</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – DGR renewal</subject>
+    <textOnly>Cher Monsieur / Madame,
+
+Conformément aux résolutions de l&apos;IATA, tous les agents de fret approuvés / Intermédiaires doivent répondre aux exigences et aux critères énoncés dans le Manuel du Programme.
+
+
+Conformément aux résolutions de l&apos;IATA, il est nécessaire pour votre société d&apos;avoir au moins deux employés à temps plein titulaires d&apos;un certificat valide de marchandises dangereuses datant de moins de deux ans.
+
+
+Selon nos archives, les certificats de marchandises dangereuses fournies par votre société prendront fin le {!AMS_OSCAR__c.Change_effective_as_of__c}. Par conséquent, veuillez envoyer des nouvelles copies, ou des mises à jour des certificats marchandises dangereuses, ou toute autre information indiquant que votre entreprise est conforme à nos exigences.
+
+
+Les certificats Web demandées ci-dessus doivent être envoyés à l&apos;IATA via notre Portail Service Client: http://www.iata.org/cs au plus tard le {!AMS_OSCAR__c.Change_effective_as_of__c}. Prière de joindre une copie numérisée au cas {!AMS_OSCAR__c.Name} visible sur votre page d&apos;accueil de notre site Web, sous la rubrique «Mes cas récents ».
+
+
+L&apos;administrateur des Agences procédera à un examen, et prendra une décision sur la base des données disponibles. PAR CONSÉQUENT, il est dans votre propre intérêt, de donner votre attention immédiate à ce sujet
+
+
+En comptant sur une réponse prompte de votre part à ce sujet
+
+
+Bien cordialement
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

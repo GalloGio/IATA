@@ -30,6 +30,10 @@ public with sharing class ISSP_ContactList {
     public Boolean contactsWithIdCard {get; set;}
     public String contactsWithIdCardString {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {
@@ -63,7 +67,6 @@ public with sharing class ISSP_ContactList {
 	}
     
     public ISSP_ContactList(){
-    	 
     }
     
     public PageReference initialization() {
@@ -211,7 +214,7 @@ public with sharing class ISSP_ContactList {
         system.debug('contactListViewMap >>> ' + contactListViewMap);
         //String queryConditions =  String.isBlank(selectedList) ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
         //if (selectedList == null) selectedList = '';
-        if(contactListViewMap.isEmpty())
+        if(contactListViewMap == null || contactListViewMap.isEmpty())
         	return 'WHERE ID = NULL';
         
         system.debug('selectedList: ' + selectedList);
@@ -240,7 +243,7 @@ public with sharing class ISSP_ContactList {
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate , Name , Account.Name ';
+                String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c, Portal_User_Frozen__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -277,11 +280,16 @@ public with sharing class ISSP_ContactList {
 		public Boolean hasIdCard {get; set;}
 		public Boolean hasProducts {get; set;}
 		public Contact recordContact {get; set;}
+        public User user {get; set;}
     }
     
     public List<contactWrapper> getContactList(){
     	List<contactWrapper> allContactList =  new List<contactWrapper>();   
     	List<Contact> allContacts = (List<Contact>)setCon.getRecords();
+        map<Id,User> mapContactUser = new map<Id,User>();
+        for (User user: [SELECT Id, ContactId, LastLoginDate FROM User Where ContactId in :allContacts]) {
+            mapContactUser.put(user.ContactId, user);
+        }
     	for (Contact thisContact : allContacts){
     		contactWrapper thisContactRecord = new contactWrapper();
     		if (!thisContact.ID_Cards__r.isEmpty()){
@@ -298,6 +306,7 @@ public with sharing class ISSP_ContactList {
 			}
     		thisContactRecord.selected = false;
     		thisContactRecord.recordContact = thisContact;
+            thisContactRecord.user = mapContactUser.get(thisContact.Id);
     		allContactList.add(thisContactRecord);
     	}
     	contactList = allContactList;
@@ -547,7 +556,7 @@ public with sharing class ISSP_ContactList {
 				Savepoint sPointContact = Database.setSavepoint();
 				//thisContact.User_Portal_Status__c = action;
 				//update thisContact;
-				String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason);
+				String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
 				system.debug('theResult: ' + theResult);
 				if (theResult != ''){
 					Database.rollback(sPointContact);
@@ -611,9 +620,74 @@ public with sharing class ISSP_ContactList {
 			errorMessage.add(Label.ISSP_SelectOnlyOneContact);
 		}
 		else{
-			PageReference pr = new PageReference('/ISSP_PortalUserStatusChange?id=' + thisRecordId);
+			PageReference pr = new PageReference('/ISSP_PortalUserStatusChange?id=' + thisRecordId + commParam);
 			return pr;
 		}
 		return null;
+    }
+    
+    public List<contactWrapper> getFilteredContactList() {
+        string paramSelectedList = ApexPages.currentPage().getParameters().get('selectedList');
+        if (paramSelectedList!=null) {
+            this.selectedList = paramSelectedList;
+        }
+        return getContactList();
+    }
+
+    public String getCSVHeader() {
+        return EncodingUtil.convertFromHex('EFBBBF').toString();
+    }
+    
+    public String getCSVContent() {
+        // get field info
+        list<String> listFieldLabels = new list<String>();
+        list<String> listFieldPaths = new list<String>();
+        for(Schema.FieldSetMember f : getFields()) {
+            if (f.getFieldPath() == 'Airline_Contact_Type__c') {
+                // do not add
+            } else if (f.getFieldPath() == 'Services__c') {
+                // do not add
+            } else {
+                listFieldLabels.add(f.getLabel());
+                listFieldPaths.add(f.getFieldPath());
+            }
+        }
+        if (isAdmin) {
+            listFieldLabels.add('Last Login');
+            listFieldPaths.add('LastLoginDate');
+        }
+        
+        //prepare out string
+        String out = getCSVHeader();
+        out+= '"' + String.join(listFieldLabels,'","') + '"\n';
+            for (contactWrapper wrapper: getFilteredContactList()) {
+            list<String> listFieldValues = wrapperToListValues(wrapper, listFieldPaths);
+            out+= '"' + String.join(listFieldValues,'","') + '"\n';
+        }
+        return out;
+    }
+    
+    public list<String> wrapperToListValues(contactWrapper wrapper, list<String> listFieldPaths) {
+        list<String> listFieldValues = new list<String>();
+        for (String fieldPath: listFieldPaths) {
+            try {
+                if (fieldPath == 'ISSP_Contact_Name__c') {
+                    listFieldValues.add(tostr(wrapper.recordContact.Name));
+                } else if (fieldPath == 'ISSP_Account_Portal_Link__c') {
+                    listFieldValues.add(tostr(wrapper.recordContact.Account.Name));
+                } else if (fieldPath == 'LastLoginDate') {
+                    listFieldValues.add(tostr(wrapper.user.LastLoginDate));
+                } else {
+                    listFieldValues.add(tostr(wrapper.recordContact.get(fieldPath)));
+                }
+            } catch (Exception e) {
+                listFieldValues.add('');
+            }
+        }
+        return listFieldValues;
+    }
+    
+    public static String tostr(Object obj) {
+        return obj==null? '': String.valueOf(obj).replaceAll('"','\'');
     }
 }

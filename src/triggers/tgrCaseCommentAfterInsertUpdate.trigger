@@ -6,7 +6,8 @@ trigger tgrCaseCommentAfterInsertUpdate on CaseComment (after insert, after upda
 		caseIds.add(caseComment.parentId);
 	}
 
-	Map<Id, Case> casesMap = new Map<Id, Case>([Select Id from Case where Id IN :caseIds AND (RecordType.Name = 'Application Change Request (DPC Systems - locked)' OR RecordType.Name = 'Application Change Request (DPC Systems) - ACCA')]);
+	Map<Id, Case> casesMap = new Map<Id, Case>([Select Id from Case where Id IN :caseIds AND (RecordType.Name = 'Application Change Request (DPC Systems - locked)'
+												OR RecordType.Name = 'Application Change Request (DPC System)' OR RecordType.Name = 'Application Change Request (DPC Systems) - ACCA')]);
 
 	List<CaseComment> caseComments = new List<CaseComment>();
 	for (CaseComment caseComment : Trigger.new) {

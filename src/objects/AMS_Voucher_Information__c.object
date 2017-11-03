@@ -322,4 +322,11 @@ LEN ( Year__c ) =  4
         <errorDisplayField>Year__c</errorDisplayField>
         <errorMessage>Please check the Year format YYYY (&gt; 1900)</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Voucher_Information_Only_for_Cargo</fullName>
+        <active>true</active>
+        <description>Voucher_Information_Only_for_Cargo</description>
+        <errorConditionFormula>NOT(ISPICKVAL(Account__r.Location_Class__c,&quot;C&quot;))</errorConditionFormula>
+        <errorMessage>Voucher Information is only applied to Cargo Agencies</errorMessage>
+    </validationRules>
 </CustomObject>

@@ -33,34 +33,34 @@ public with sharing class NewParticipantByEmailCtrl {
             c = new Contact();
         }
     }
-
-    public PageReference MySave(){
+    
+    public PageReference MySave(){ 
         chooseContact = false;
         if(String.isEmpty(c.Email)){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please insert a valid email'));
-            system.debug(LoggingLevel.ERROR,'####### insert a valid email');
+            system.debug(LoggingLevel.ERROR,'####### insert a valid email'); 
             return null;
         }
         contacts = new Map<Id,Contact>((List<Contact>)[SELECT Name, Email, AccountId, Account.RecordTypeId, Account.Name, Account.IATA_ISO_Country__r.Name, Account.Top_Parent__c, Title, Account.ParentId  FROM Contact WHERE Email = :c.Email]);
         //NO CONTACT
         if(contacts.size()==0){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No contact with the email '+c.email+' was found in the system. Please check the email is correct or create a new contact.'));
-            system.debug(LoggingLevel.ERROR,'####### no contact');
+            system.debug(LoggingLevel.ERROR,'####### no contact'); 
             return null;
-
+            
         //ONE CONTACT
-        }else if(contacts.size()==1){
+        }else if(contacts.size()==1){         
             p.Contact__c = contacts.values()[0].Id;
  			//p.Head_Quartier__c = calculateMainAccount(contacts.values()[0]);
-
+ 			
             List<Participant__c> ps = [SELECT Id, Local_Governance__r.RecordType.Name FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
             if(ps.size()>0){
                 if(ps[0].Local_Governance__r.RecordType.Name == 'Reg/Div Groups')
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this Reg/Div Group.'));
                 if(ps[0].Local_Governance__r.RecordType.Name == 'Local Groups')
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this Local Group.'));
-
-                system.debug(LoggingLevel.ERROR,'####### participant duplicate');
+                
+                system.debug(LoggingLevel.ERROR,'####### participant duplicate'); 
                 return null;
             }
 
@@ -85,21 +85,21 @@ public with sharing class NewParticipantByEmailCtrl {
         }
         return null;
     }
-
-
-    public pageReference chooseContact(){
+    
+ 
+    public pageReference chooseContact(){        
         String contactId = System.currentPageReference().getParameters().get('contactId');
         p.Contact__c = contactId;
         //p.Head_Quartier__c = calculateMainAccount(contacts.get(contactId));
-
+        
         List<Participant__c> ps = [SELECT Id, Local_Governance__r.RecordType.Name FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
         if(ps.size()>0){
-           if(ps[0].Local_Governance__r.RecordType.Name == 'Reg/Div Groups')
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Reg/Div Group.'));
-           if(ps[0].Local_Governance__r.RecordType.Name == 'Local Groups')
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Local Group.'));
-
-           return null;
+            if(ps[0].Local_Governance__r.RecordType.Name == 'Reg/Div Groups')
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Reg/Div Group.'));
+            if(ps[0].Local_Governance__r.RecordType.Name == 'Local Groups')    
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Local Group.'));
+    
+            return null;
         }
 
         Database.SaveResult sr = database.insert(p,false);
@@ -132,7 +132,7 @@ public with sharing class NewParticipantByEmailCtrl {
     		return c.Account.ParentId==null ? c.AccountId : c.Account.ParentId;
         else
             return c.AccountId;
-
+    	
     	return null;
     }
 

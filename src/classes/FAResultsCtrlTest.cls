@@ -21,7 +21,7 @@ private class FAResultsCtrlTest {
         Case case1 = new Case();
         
         case1.CaseArea__c = 'TTBS';
-        case1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
+        //case1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
         case1.Origin = 'Other';
         case1.SuppliedEmail = 'paia@iata.org';
         case1.SuppliedPhone = '12456987456';

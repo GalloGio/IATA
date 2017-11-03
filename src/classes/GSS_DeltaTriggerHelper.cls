@@ -5,7 +5,8 @@
 *
 * Change log:
 *  - 20160509-sl: check Related_GDP_Products_Account_View Status prior adding new Delta record
-*
+*  - 20171023-ab: the Logic to get unique list of delta has been changed to go by GDP Product Account View Id
+*  - 20171023-ab: plus Delta type plus Specification Id
 */
 
 //Class to load the fields and object name to use in the comparasion
@@ -54,6 +55,7 @@ public class GSS_DeltaTriggerHelper {
                                                                 FROM GDP_File_Description__c
                                                                 WHERE Is_Reference__c = true
                                                                 and Product_type__c in ('GSS','MDP')
+                                                                and Id in (Select GDP_File_Description__c From GDP_File_Fields_Description__c Where Do_not_Track__c=false)
                                                                ];
         
         //Nothing to do if there is no Reference file specifications
@@ -104,7 +106,7 @@ public class GSS_DeltaTriggerHelper {
         
         //Create a list of delta that will be inserted
         list<GDP_Delta__c> DeltaList = new list<GDP_Delta__c>();
-        GDP_Delta__c Delta = null;
+        //GDP_Delta__c Delta = null;
         
         //Create a map of  RecId-FileSpecId : Delta to check as we go if there is already a code to exit
         //Key of the following map is RecId-FileSpecId
@@ -148,8 +150,7 @@ public class GSS_DeltaTriggerHelper {
                 AccreditationStatusMap.put(a.Id, a.Status__r.Code__c);          
             
             
-            Map<Id, GDP_Products_Account_View__c> PAVid_StatusCodeMap 
-                = new Map<Id, GDP_Products_Account_View__c>();
+            Map<Id, GDP_Products_Account_View__c> PAVid_StatusCodeMap = new Map<Id, GDP_Products_Account_View__c>();
             //Find out if there is any accrediation used as lookup from the account view 
             //in the list of accrediation sent in the newRecords list           
             if (OBJECT_ACCREDITATION)   
@@ -202,12 +203,9 @@ public class GSS_DeltaTriggerHelper {
                 {    
                     //TODO point to correct fields in GDP_Product_Account_View__c Need to test this code.
                     try {
-                        if (ISINSERT || ISUPDATE) 
-                            NewStatusCode = Integer.valueOf(PAVid_StatusCodeMap.get((Id)newRecord.get('Id')).Related_Accreditation_Class__r.Status__r.Code__c);             
-                        if (ISUPDATE) 
-                            OldStatusCode = Integer.valueOf(AccreditationStatusMap.get((Id)oldRecords[position].get('Related_Accreditation_Class__c')));   //
-                        if (ISUPDATE && (NewStatusCode != OldStatusCode))  
-                            LogDelta=true;
+                        if (ISINSERT || ISUPDATE) NewStatusCode = Integer.valueOf(PAVid_StatusCodeMap.get((Id)newRecord.get('Id')).Related_Accreditation_Class__r.Status__r.Code__c);             
+                        if (ISUPDATE) OldStatusCode = Integer.valueOf(AccreditationStatusMap.get((Id)oldRecords[position].get('Related_Accreditation_Class__c')));   //
+                        if (ISUPDATE && (NewStatusCode != OldStatusCode)) LogDelta=true;
                     }catch(Exception e) {}                  
                 }
                 
@@ -258,16 +256,16 @@ public class GSS_DeltaTriggerHelper {
                       // those with Change_Code blank will not have related GDP Delta 
                         for(String SpecificationId : FirstSpecficationFiles)
                         {
-                            Delta = new GDP_Delta__c();
+                            GDP_Delta__c Delta = new GDP_Delta__c();
                             Delta.GDP_File_Description__c = SpecificationId;
                             if (OBJECT_ACCOUNTVIEW) Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
                             if (OBJECT_ACCREDITATION) Delta.Related_GDP_Product_Account_View__c = (id)newrecord.get('Related_GDP_Products_Account_View__c');
                             Delta.DeltaLastModifiedDate__c = System.Today();
                             Delta.Change_Code__c = StatusChangeCode;
-                            key = Delta.Related_GDP_Product_Account_View__c
-                                + '|'
-                                + Delta.GDP_File_Description__c;
-                            if(Delta.Related_GDP_Product_Account_View__c != null){
+                            key = Delta.Related_GDP_Product_Account_View__c +'|' + Delta.Change_Code__c + '|' + Delta.GDP_File_Description__c;
+                            //Key must not be contained 
+                            //GDP Product Account View must be valid
+                            if(Delta.Related_GDP_Product_Account_View__c != null && DeltaSet.Contains(key)==false){
                                 DeltaList.add(Delta);
                                 DeltaSet.Add(key);
                                 ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);
@@ -287,9 +285,8 @@ public class GSS_DeltaTriggerHelper {
         // update in related objects of GDP_Products_Account_View will only be recorded in delta if they are still active
         // therefore, we need to have some info on GDP_Products_Account_View 
         Map<Id, GDP_Products_Account_View__c> pvaIdToObjectMap = null; //new Map<Id, GDP_Products_Account_View__c> ();
-        if (!OBJECT_ACCOUNTVIEW) { 
-            pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);
-        }
+        if (!OBJECT_ACCOUNTVIEW) { pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);}
+        if (OBJECT_ACCOUNTVIEW) { for ( SObject obj : newRecords ) { pvaIdToObjectMap = new Map<Id, GDP_Products_Account_View__c> (); GDP_Products_Account_View__c objb = (GDP_Products_Account_View__c) obj; pvaIdToObjectMap.put(objb.id, objb);} }
         //Generic treatment for aby type of objects.
         //Iterate on records, fields, and File specification to detect change and add change code as needed
         //Iterate the list of new records to find if there are modifications
@@ -303,50 +300,63 @@ public class GSS_DeltaTriggerHelper {
             if (OBJECT_ACCOUNTVIEW) ParentRecordId = newrecord.id;
             //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
             if (!OBJECT_ACCOUNTVIEW) ParentRecordId = (id)newrecord.get('Related_GDP_Products_Account_View__c');
-            
-            
-            
+
+            Id new_Account = null;
+            Id old_Account = null;
+            try {
+                new_Account = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                old_Account = (id)oldRecords[position].get('Related_GDP_Products_Account_View__c');
+            }catch(Exception e){}
             
             //Reparenting a child record scenario
             //This can create two change codes: one on the original parent and one on the destination parent
             //Verify if Related_GDP_Products_Account_View__c (Parent lookup) changed
-            if ( ISUPDATE
-                  &&
-                !OBJECT_ACCOUNTVIEW 
-                   &&
-                 (newrecord.get('Related_GDP_Products_Account_View__c') != oldRecords[position].get('Related_GDP_Products_Account_View__c'))
-                )
-            {
+            if (ISUPDATE && !OBJECT_ACCOUNTVIEW && (new_Account != old_Account)){
+                Boolean isnewPvaNotEmpty=false;
+                Boolean isnewAccountNotEmpty=false;
+                Boolean isnewIdMapNotEmpty=false;
+                Boolean isoldPvaNotEmpty=false;
+                Boolean isoldAccountNotEmpty=false;
+                Boolean isoldIdMapNotEmpty=false;
+               
+                try {
+                    isnewAccountNotEmpty = (new_Account != null);
+                    isnewPvaNotEmpty     = (pvaIdToObjectMap.get(new_Account) != null );
+                    isnewIdMapNotEmpty   = (pvaIdToObjectMap.get(new_Account).Agency_Status_Code_Interpreted__c != 0);
+               
+                }catch (Exception e){}
+                try {
+                    isoldAccountNotEmpty = (old_Account != null);
+                    isoldPvaNotEmpty     = (pvaIdToObjectMap.get(old_Account) != null );
+                    isoldIdMapNotEmpty   = (pvaIdToObjectMap.get(old_Account).Agency_Status_Code_Interpreted__c != 0);
+                }catch (Exception e){}
                 for(String SpecificationId : FirstSpecficationFiles) 
                 {   
                     //StatusChangeCode C of new parent Related_GDP_Product_Account_View__c
-                    Delta = new GDP_Delta__c();
+                    GDP_Delta__c Delta = new GDP_Delta__c();
                     Delta.GDP_File_Description__c = SpecificationId;
                     Delta.DeltaLastModifiedDate__c = System.Today();
                     Delta.Change_Code__c = 'C';
-                    Delta.Related_GDP_Product_Account_View__c = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                    Delta.Related_GDP_Product_Account_View__c = new_Account;
+                    key = Delta.Related_GDP_Product_Account_View__c +'|'+Delta.Change_Code__c + '|' + SpecificationId;
                     
-                    if( (Delta.Related_GDP_Product_Account_View__c != null)
-                        && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c) != null)
-                        && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0))
-                    {
-                        DeltaList.add(Delta);   
+                    if (isnewAccountNotEmpty && isnewPvanotEmpty && isnewIdMapNotEmpty && DeltaSet.Contains(key)==false){
+                        DeltaList.add(Delta);
+                        DeltaSet.Add(key);   
                         ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);                          
                     }
-                    
                     //StatusChangeCode C of OLD parent Related_GDP_Product_Account_View__c
-                    Delta = new GDP_Delta__c();
-                    Delta.GDP_File_Description__c = SpecificationId;
-                    Delta.DeltaLastModifiedDate__c = System.Today();
-                    Delta.Change_Code__c = 'C';
-                    Delta.Related_GDP_Product_Account_View__c = (id)oldRecords[position].get('Related_GDP_Products_Account_View__c');
-                    
-                    if((Delta.Related_GDP_Product_Account_View__c != null)
-                        && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c) != null)
-                        && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0))
-                    {
-                        DeltaList.add(Delta);   
-                        ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);  
+                    GDP_Delta__c oDelta = new GDP_Delta__c();
+                    oDelta.GDP_File_Description__c = SpecificationId;
+                    oDelta.DeltaLastModifiedDate__c = System.Today();
+                    oDelta.Change_Code__c = 'C';
+                    oDelta.Related_GDP_Product_Account_View__c = (id)oldRecords[position].get('Related_GDP_Products_Account_View__c');
+                    key = oDelta.Related_GDP_Product_Account_View__c +'|'+oDelta.Change_Code__c + '|' + SpecificationId;
+                  
+                    if (isoldAccountNotEmpty && isoldPvaNotEmpty && isoldIdMapNotEmpty &&  DeltaSet.Contains(key)==false){
+                        DeltaList.add(oDelta); 
+                        DeltaSet.Add(key); 
+                        ProcessedRecordSet.add(oDelta.Related_GDP_Product_Account_View__c);  
                     }
                 }
             }
@@ -373,26 +383,22 @@ public class GSS_DeltaTriggerHelper {
                         if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;
                     if (ISINSERT || ISDELETE) LogDelta=true;
                     
-                    
+                    System.debug('field : '+ds.FieldName+' Delta: '+LogDelta);
                     if (LogDelta)
                         for(String SpecificationId : ds.SpecficationFile)
                         {
-                            if(OBJECT_ACCOUNTVIEW)  key = newrecord.id;
-                            if(!OBJECT_ACCOUNTVIEW) key = (id)newrecord.get('Related_GDP_Products_Account_View__c');
-                            key += '|' + SpecificationId;
-                            if (DeltaSet.Contains(Key)) continue;
                             
                             //StatusChangeCode
                             // load all the specification id 
-                            Delta = new GDP_Delta__c();
+                            GDP_Delta__c Delta = new GDP_Delta__c();
                             Delta.GDP_File_Description__c = SpecificationId;
                             Delta.DeltaLastModifiedDate__c = System.Today();
                             Delta.Change_Code__c = 'C';
-                            
+                            boolean IsDeltaList = false;
                             //This is the parent object
                             if(OBJECT_ACCOUNTVIEW) {
                                 Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
-                                if (ISINSERT) Delta.Change_Code__c = 'A';
+                                if (ISINSERT) {IsDeltaList = true; Delta.Change_Code__c = 'A';}
                                 if (ISDELETE) Delta.Change_Code__c = 'D';                                 
                             }
                             else{ //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
@@ -401,29 +407,33 @@ public class GSS_DeltaTriggerHelper {
                                 }
                                 catch(exception e) {}
                             }
+                            key = Delta.Related_GDP_Product_Account_View__c +'|'+Delta.Change_Code__c + '|' + SpecificationId;
+                            if (DeltaSet.Contains(key)) continue;
+                            
                             // change other than Accreditation__c.Status will be only recorded in delta
                             // if the GDP_Products_Account_View is not inactive
+                            
                             if((Delta.Related_GDP_Product_Account_View__c != null)
                                 && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c) != null)
-                                && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0))
-                            {
-                                DeltaList.add(Delta);
-                            }
+                               && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0)) {isDeltaList=true;}
+                            
+                            If (IsDeltaList) {DeltaList.add(Delta); DeltaSet.Add(key);}
+                            
                         }
                     if (LogDelta) break;
                     
                 }
-                catch(Exception e) {}
+                catch(Exception e) {
+                System.debug('field : '+ds.FieldName+' Error: '+e.getMessage());
+                }
             }   
             
            // position++;
         }
         
         //TODO OPTIMIZATION: future serialize statement for batch asynch processing
-        if (DeltaList.Size()>0) {
-            System.debug('DeltaList: '+DeltaList);
-            insert DeltaList;               
-        }
+        System.debug('DeltaList: '+DeltaList);
+        if (DeltaList.Size()>0) insert DeltaList;
     } // end of calculateDeltas
     
     
@@ -443,15 +453,11 @@ public class GSS_DeltaTriggerHelper {
        
         for ( SObject obj : oldRecords ) {
             pavId = (Id) obj.get('Related_GDP_Products_Account_View__c');
-            if ( pavId != null) {
-                pavIdSet.add(pavId);
-            }
+            if ( pavId != null) pavIdSet.add(pavId);
         }
         for ( SObject obj : newRecords ) {
             pavId = (Id) obj.get('Related_GDP_Products_Account_View__c');
-            if ( pavId != null) {
-                pavIdSet.add(pavId);
-            }
+            if ( pavId != null) pavIdSet.add(pavId);
         }
         
         Map<Id, GDP_Products_Account_View__c> relatedProductAccountView = new Map<Id, GDP_Products_Account_View__c>(

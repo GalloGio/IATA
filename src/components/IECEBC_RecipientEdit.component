@@ -125,7 +125,7 @@
                         
                         <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isIDCARDSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!isIDCARDSelectionAllowed}">                                        
@@ -138,13 +138,13 @@
                                         </apex:outputText>
                                         <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
                                             </apex:outputText>
                                             <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
                                             </apex:outputText>                                            
                                         </apex:outputText>                                        
-                                        <label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="Agent"><i class="icon"></i></label>
+                                        <label class="custom-radio" for="Agent"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                 </div>
@@ -152,7 +152,7 @@
                         </apex:outputText>
                         <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isCodeSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!isCodeSelectionAllowed}">
@@ -165,21 +165,21 @@
                                         </apex:outputText>
                                         <apex:outputText rendered="{!NOT(isCodeSelectionAllowed)}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
                                             </apex:outputText>
                                             <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
                                             </apex:outputText>                                            
                                         </apex:outputText>
                                         
-                                        <label class="{!IF(isCodeSelectionAllowed,'custom-radio','')}" for="new-list-3"><i class="icon"></i></label>
+                                        <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
                                 </div>
                                 <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}" styleClass="show-hide-toggle">
                                     <div class="field-group textarea">
                                         <label>
-                                            <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
+                                            <span class="input-label" style="font-weight: normal;">Paste your list of IATA Numeric Codes in the box below</span>
                                             <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
                                         </label>
                                         <p class="input-description">Each IATA Numeric Code needs to be entered separated by a semicolon with a max of <strong>5,000 codes</strong>.</p>

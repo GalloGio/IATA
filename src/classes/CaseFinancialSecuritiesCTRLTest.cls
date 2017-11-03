@@ -31,6 +31,7 @@ private class CaseFinancialSecuritiesCTRLTest {
                                                            
        
        Contact con =new contact(lastname = 'pluto' ,
+                    firstname = 'Name',
                     phone = '123',
                     accountid = a.id,
                     Financial_Assessment_Contact__c = true);
@@ -48,7 +49,7 @@ private class CaseFinancialSecuritiesCTRLTest {
                  contactid = con.id,
                  AccountId = a.id,
                  Assessment_Performed_Date__c = date.today(),
-                 Financial_Review_Result__c = 'very good'                                
+                 Financial_Review_Result__c = 'Satisfactory - No Action'                                
                  );
        
        insert c;

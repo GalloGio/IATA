@@ -310,6 +310,10 @@
                 <td width="50%">{!newForm.Hot_files_delivery_format__c}</td>
             </tr>
             <tr>
+                <td class="label" width="50%">iiNet Account Number: the 4 length alphanumeric code filled on the online form shall appear there.:</td>
+                <td width="50%">{!newForm.IINET_account_number__c}</td>
+            </tr>
+            <tr>
                 <td class="label" width="50%"><u>BSPlink:</u> What BSPlink access level does your Airline require?:</td>
                 <td width="50%">{!newForm.BSPLink_access_level_requested__c}</td>
             </tr>

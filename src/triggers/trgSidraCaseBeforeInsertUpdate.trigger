@@ -54,6 +54,11 @@ trigger trgSidraCaseBeforeInsertUpdate on Case (before insert, before update) {
                 // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                 accountIds.add(aCase.AccountId);
             }     
+            //INC INC249542 : Action_needed_Small_Amount__c = false 
+            if (aCase.RecordTypeId == caseRecordTypeID && aCase.Action_needed_Small_Amount__c == true && aCase.IRR_Withdrawal_Reason__c != null &&  aCase.AccountId != null)
+            {
+               aCase.Action_needed_Small_Amount__c = false;
+            }  
         }
         
         if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process

@@ -78,6 +78,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	// Boolean to determine whether to show the price on the rateplans or not
 	public boolean bShowPrice {get; set;}
 	
+	public String selectedTopic{get;set;}
+	public String selectedTopicLabel{get;set;}
 	
 
 	public IEC_ProductDetailController() 
@@ -95,19 +97,16 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			iColWidth = 100;
 
 			String searchCond = 'SAP_Material_Number__c=\''+productNumber+'\'';
-			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true);
+			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true, null);
 
 			if(ecomProducts.size() > 0)
 			{
 				//Parent found 
 				ecomProduct = ecomProducts[0];
 
-				
-
-
 				//Query sub-products 
 				String subCond = 'IEC_Parent_Product__c=\''+ecomProduct.ProductId+'\'';
-				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false);
+				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false, null);
 
 				//Query sub-product's RatePlanInfo
 				Set<Id> productRatePlanInfoIds = new Set<Id>(); 
@@ -134,6 +133,30 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 				charges = IECProductManager.getZuoraRatePlanChargesByRatePlanIDs(planIds);
 				iColWidth = (subProducts.size() > 0) ? 100/subProducts.size() : 100;
+
+				//*** get category
+				selectedCategory = new SelectOption('', '');
+				for(SelectOption so : categories)
+					if (so.getValue() == ecomProduct.megaMenu)
+					{
+						selectedCategory = so;
+						break;
+					}
+
+				//*** get topic
+				selectedTopic = [select Display_Ecom_Topic__c from Product2 where Id = :ecomProduct.ProductId limit 1][0].Display_Ecom_Topic__c;
+				selectedTopicLabel = '';
+				if (!String.isBlank(selectedTopic))
+				{
+					selectedTopic = selectedTopic.split(';')[0];   //*** take the first topic if contains multiple
+					if (subCategories.containsKey(selectedCategory.getValue()))
+						for (SelectOption so : subCategories.get(selectedCategory.getValue()))
+							if (so.getValue() == selectedTopic)
+							{
+								selectedTopicLabel = so.getLabel();
+								break;
+							}
+				}
 			}
 			else
 			{
@@ -148,6 +171,10 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bTryButtonShow = pc.Trial_available_for_this_Product__c;
 			sBannerImage = pc.Banner_Image__c;
 			sProductIcon = pc.Product_Icon__c;
+			sProductIcon = 'imgbloc5.png';   //*** default - GSS image
+			Map<String,String> mapCategory_ImageName = Utility.buildMapFromString(Utility.getTextSetting('GDP Category-Image'), ',', '=');
+			if (mapCategory_ImageName.containsKey(pc.Name))
+				sProductIcon = mapCategory_ImageName.get(pc.Name);
 			
 			bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
 			sDisplayName = pc.Display_Name__c;
@@ -238,7 +265,18 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			} 
 
 			String productNumber2Add = p.SAP_Material_Number__c;
-			Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			//Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			Map<String, Decimal> cookieContent = new Map<String, Decimal>();
+
+			if (newShoppingCart == false) {
+				cookieContent = IECOrder_Svc.getItemsInCookie();
+			} else {
+				List<IEC_Cart.CartItem> cartItemList = storeCart.getCartContent();
+
+				for (IEC_Cart.CartItem cartItem : cartItemList) {
+					cookieContent.put(cartItem.productNumber, cartItem.quantity);
+				}
+			}
 
 			//-- Validate another sub-product does not exist in the cart 
 			Boolean sibblingInCart = false; 
@@ -268,13 +306,22 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			if(!sibblingInCart && !existSubscriptionProd)
 			{
-				return IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);	
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				
+				if (newShoppingCart == false) {
+					PageReference pageRef = IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);
+				} else {
+					storeCart.addItem(p.SAP_Material_Number__c, 1, null);
+				}
+
+				return null;
 			}
 			else
 			{
 				
 				String urlParamMsg = (sibblingInCart) ? 'siblingInCart' : 'subscriptionAlreadyExist';
 
+				
 				PageReference pageRef = new Pagereference('/IEC_ShoppingCart?msg=' + urlParamMsg);
 				pageRef.setRedirect(true);
 				return pageRef;

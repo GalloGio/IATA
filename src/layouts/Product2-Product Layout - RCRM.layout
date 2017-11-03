@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>Sales_Channel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accepted_Payment_Methods__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -20,7 +20,7 @@ private  class ChooseCommunityCtrlTest {
 		}
 
 		List<SelectOption>  res = ctrl.getAvalaibleComms();
-		system.assertEquals(res.size(), 3);
+		system.assertEquals(res.size(), 4);
 		ctrl.community = Comm_User_Helper.IEC;
 		PageReference returnPage = ctrl.SendEmail();
 		system.assertEquals(string.valueOF(controller.view()),string.valueof(returnPage));

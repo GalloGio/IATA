@@ -1,14 +1,14 @@
 @isTest(SeeAllData=true)
 private class IEC_SubscriptionsControllerTest
 {
-    private static List<Zuora__Subscription__c> lstSubscriptionList;
-    private static List<Zuora__SubscriptionProductCharge__c> lstSubscriptionCharge;
+	private static List<Zuora__Subscription__c> lstSubscriptionList;
+	private static List<Zuora__SubscriptionProductCharge__c> lstSubscriptionCharge;
 
-    private static zqu__ZProduct__c oProduct;
-    private static zqu__ProductRatePlan__c oProductRatePlan;
-    private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
+	private static zqu__ZProduct__c oProduct;
+	private static zqu__ProductRatePlan__c oProductRatePlan;
+	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
 
-    private static void InitSubscription(boolean bCreateCharge){
+	private static void InitSubscription(boolean bCreateCharge){
 
         Test.startTest();
 
@@ -58,11 +58,11 @@ private class IEC_SubscriptionsControllerTest
         Datetime startDate = Datetime.now().AddDays(-2);
         Datetime endDate = Datetime.now().AddDays(2);
         IEC_Product_Access__c productAccess = new IEC_Product_Access__c(
-            Subscription_Number__c = subscription.Name,
-            Active__c = true,
-            Effective_Start_Date__c = startDate,
-            Effective_End_Date__c = endDate,
-            Usage_Unlimited__c = true
+        	Subscription_Number__c = subscription.Name,
+        	Active__c = true,
+        	Effective_Start_Date__c = startDate,
+        	Effective_End_Date__c = endDate,
+        	Usage_Unlimited__c = true
         );
         insert productAccess;
 
@@ -129,11 +129,11 @@ private class IEC_SubscriptionsControllerTest
         insert oInvoice;
 
         Invoice_Item__c invoiceItem = new Invoice_Item__c(
-            Subscription_Number__c = subscription.Name,
+        	Subscription_Number__c = subscription.Name,
             Subscription__c = subscription.Id,
             Subscription_Zuora_ID__c = subscription.Zuora__External_Id__c,
-            Invoice__c = oInvoice.Id,
-            Zuora_ID__c = IECUtil.NewGuid().substring(0, 32)
+        	Invoice__c = oInvoice.Id,
+        	Zuora_ID__c = IECUtil.NewGuid().substring(0, 32)
         );
         insert invoiceItem;
 
@@ -142,8 +142,9 @@ private class IEC_SubscriptionsControllerTest
         Test.stopTest();
     }
 
-    static void testPageLoad(){
-        PageReference pgRef = Page.IEC_DataStatisticsSubscriptions;
+	@isTest
+	static void testPageLoad(){
+		PageReference pgRef = Page.IEC_DataStatisticsSubscriptions;
         Test.setCurrentPage(pgRef);
 
 
@@ -179,5 +180,5 @@ private class IEC_SubscriptionsControllerTest
             
             
         }
-    }
+	}
 }

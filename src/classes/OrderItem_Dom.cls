@@ -73,7 +73,10 @@ public without sharing class OrderItem_Dom {
 	}
 
     private void onAfterUpdate() {
-    	
+		if (System.isFuture() == true) {
+			return;
+		}
+
     	//This is a custom setting for order max upload
     	//Avoid the orderItem triggers to fire when mass upload Orders
     	if (Utility.getNumericSetting('Execute Order Trigger for mass upload') != 1) return;
@@ -86,9 +89,15 @@ public without sharing class OrderItem_Dom {
         
 	    //Update Product Access based on Paid Flag of the OrderItem
 	    new IECProductAccess_Svc().ActivateProductAccessForPaidOrderItems(newList, oldMap);
+
+		// Ecommerce Enhancements R2
+		OrderItem_Svc.setOrderItemAcceptedPaymentMethods(newList, null);
     }
 
     private void onAfterInsert() {
+		if (System.isFuture() == true) {
+			return;
+		}
     	
     	//This is a custom setting for order max upload
     	//Avoid the orderItem triggers to fire when mass upload Orders
@@ -102,5 +111,8 @@ public without sharing class OrderItem_Dom {
         
 	    //Update Product Access based on Paid Flag of the OrderItem
 	    new IECProductAccess_Svc().ActivateProductAccessForPaidOrderItems(newList, null);
+
+		// Ecommerce Enhancements R2
+		OrderItem_Svc.setOrderItemAcceptedPaymentMethods(newList, null);
     }
 }

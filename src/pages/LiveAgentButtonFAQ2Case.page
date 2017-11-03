@@ -1,0 +1,76 @@
+<apex:page controller="LiveAgentButtonFAQ2CaseController" showHeader="false" language="{!liveAgentBtn.Language__c}" sidebar="false" standardStylesheets="false">
+<c:ISSP_Header />
+<style>
+    .btn_iata_primary{
+        border: none;
+        color: white;
+        background-color: #5cb85c;
+        margin: 5px;
+        width: 197px;
+    }
+</style>
+
+    <apex:form >
+            <apex:outputPanel layout="block" id="LiveAgentButton">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6">
+                        <button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}" class="btn btn-block btn_iata_primary" style="display: none;" onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}');return false;">
+                            {!$Label.LiveAgentButtonLanguage}
+                        </button>
+                        <button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}" class="btn btn-block btn_iata_primary" style="display: none; background-color: rgb(136, 136, 136);" onclick="return false;">
+                            {!$Label.LiveAgentOfflineButton}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"  style="display: none;">
+
+                  </div> -->
+                  
+                    <script type="text/javascript">
+                    if (!window._laq) { window._laq = []; }
+                        window._laq.push(function(){
+                            liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+                            liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+                    });
+
+                </script>
+
+
+                <script type='text/javascript' src='https://c.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/content/g/js/37.0/deployment.js'></script>
+
+                <script type="text/javascript">
+
+                        var date = new Date();
+
+                        liveagent.setName('{!contactFirstName}');
+                        liveagent.enableLogging();
+                        liveagent.addCustomDetail('#Contact', '{!userContact.Name}');
+                        liveagent.addCustomDetail('#Account', '{!userContact.Account.Name}');
+                        liveagent.addCustomDetail('#Sector', '{!userContact.Account.Sector__c}');
+                        liveagent.addCustomDetail('#Category', '{!userContact.Account.Category__c}');
+                        liveagent.addCustomDetail('Case Subject', 'Chat with IATA Customer Service '+(date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+                        liveagent.addCustomDetail('#Topic', '{!topicLabel}');
+                        liveagent.addCustomDetail('#Subtopic', '{!subTopicLabel}');
+                        liveagent.addCustomDetail('Case Status', 'Open');
+                        liveagent.addCustomDetail('Case Origin', 'Chat');
+                        liveagent.addCustomDetail('userContactId', '{!contactId}');
+                        liveagent.addCustomDetail('userAccountId', '{!accountId}');
+                        liveagent.addCustomDetail('caseRTId', '{!caseRecordTypeId}');
+                        liveagent.addCustomDetail('caseCountryConcerned',"{!country.name}");
+                        liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');
+                        //map() parameters: .map(String FieldName, String DetailName, Boolean doFind, Boolean isExactMatch, Boolean doCreate)
+                        liveagent.findOrCreate('Case').map('RecordTypeId','caseRTId',false, true, true).map('Origin','Case Origin', false, true, true)
+                            .map('Status','Case Status',false,true,true).map('Subject','Case Subject',false,true,true).map('Country_concerned_by_the_query__c','caseCountryConcerned',false,true,true).showOnCreate().saveToTranscript('Case');
+                        liveagent.findOrCreate('Contact').map('Id','userContactId', true, true, false).linkToEntity('Case','ContactId').saveToTranscript('Contact');
+                        liveagent.findOrCreate('Account').map('Id','userAccountId', true, true, false).linkToEntity('Case','AccountId').saveToTranscript('Account');
+                        liveagent.setChatWindowHeight(490);
+                        liveagent.setChatWindowWidth(315);
+                        liveagent.init('https://d.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/chat', '{!liveAgentBtn.DeploymentId__c}','{!$Organization.Id}'.substring(0,15));
+                </script>
+
+            </apex:outputPanel>
+
+    </apex:form>
+</apex:page>

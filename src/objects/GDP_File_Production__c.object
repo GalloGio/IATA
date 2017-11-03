@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -64,6 +64,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -79,6 +80,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -92,6 +94,7 @@
         <relationshipLabel>GDP File Productions</relationshipLabel>
         <relationshipName>GDP_File_Productions</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -101,6 +104,7 @@
         <label>Message</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -110,6 +114,7 @@
         <externalId>false</externalId>
         <label>Production Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -122,6 +127,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -146,6 +152,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -153,183 +160,243 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
         <columns>Size__c</columns>
+        <columns>Duration__c</columns>
         <columns>Duration_in_minutes__c</columns>
         <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00-All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CAC_Today</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
         <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
-        <columns>Duration__c</columns>
-        <columns>Size__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>File_Specification__c</field>
             <operation>contains</operation>
             <value>CAC</value>
         </filters>
-        <label>CAC Today</label>
+        <label>02-CAC Today</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Completed_Today</fullName>
-        <columns>Production_Date__c</columns>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
-        <columns>Duration__c</columns>
         <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </filters>
         <filters>
             <field>Production_Date__c</field>
             <operation>equals</operation>
             <value>TODAY</value>
         </filters>
-        <label>Completed Today</label>
+        <label>01-Today&apos;s Production</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Excel_File_Productions</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
-        <columns>Production_Date__c</columns>
         <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>File_Specification__c</field>
             <operation>contains</operation>
             <value>XLS</value>
         </filters>
-        <label>Excel File Productions</label>
+        <label>04-XLS File Productions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Failed</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
         <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
         <columns>LAST_UPDATE</columns>
-        <columns>Duration__c</columns>
-        <columns>Size__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>Failed</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>FailedToday</fullName>
-        <columns>NAME</columns>
-        <columns>File_Specification__c</columns>
-        <columns>Status__c</columns>
-        <columns>Production_Date__c</columns>
-        <columns>Message__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Failed</value>
-        </filters>
-        <filters>
-            <field>Production_Date__c</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>FailedToday</label>
+        <label>100-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>In_Progress</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
         <columns>Production_Date__c</columns>
+        <columns>Duration_in_minutes__c</columns>
         <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>In Progress</label>
+        <label>101-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>In_Progress_Today</fullName>
+        <fullName>MDP_File_Productions</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
         <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>In Progress</value>
-        </filters>
-        <filters>
-            <field>Production_Date__c</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>In Progress Today</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>TXT_File_Productions</fullName>
-        <columns>NAME</columns>
-        <columns>File_Specification__c</columns>
-        <columns>Production_Date__c</columns>
-        <columns>Status__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>File_Specification__c</field>
             <operation>contains</operation>
-            <value>TXT</value>
+            <value>MDP</value>
         </filters>
-        <label>TXT File Productions</label>
+        <label>06-MDP File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Text_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <label>03-TXT File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Text_Masters_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Master</value>
+        </filters>
+        <label>200-TXT MASTERS - File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X200_TXT_SEMI_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Semi</value>
+        </filters>
+        <label>200-TXT SEMI - File Productions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>XML_File_Productions</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
-        <columns>Production_Date__c</columns>
         <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>File_Specification__c</field>
             <operation>contains</operation>
             <value>XML</value>
         </filters>
-        <label>XML File Productions</label>
+        <label>05-XML File Productions</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>FP-{YYYYMMDD}{000000}</displayFormat>
         <label>GDP File Production Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP File Productions</pluralLabel>

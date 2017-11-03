@@ -442,6 +442,11 @@ public without sharing class vfIECGADResult extends IECPageController {
     }
     
     public Boolean getHasEBCAccess() {
+    	if (ctrSubsInfo==null) return false;
+    	if (ctrSubsInfo.loggedCustomer==null) return false;
+    	if (ctrSubsInfo.loggedCustomer.RelatedBillingAccount==null) return false;
+    	if (ctrSubsInfo.loggedCustomer.RelatedBillingAccount.eBroadcast_Product_Access__c==null) return false;
+
     	return ctrSubsInfo.loggedCustomer.RelatedBillingAccount.eBroadcast_Product_Access__c;
     }
     

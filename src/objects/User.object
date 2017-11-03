@@ -103,6 +103,7 @@
     </fields>
     <fields>
         <fullName>ANG_Customer_Country_ISO__c</fullName>
+        <description>2-letter ISO Code of the IATA ISO Country related to the contact’s Account (Agency)</description>
         <externalId>false</externalId>
         <formula>Contact.Account.Country_ISO_Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -113,6 +114,7 @@
     </fields>
     <fields>
         <fullName>ANG_Is_Accredited_Agent__c</fullName>
+        <description>Determine if the Agency is accredited</description>
         <externalId>false</externalId>
         <formula>AND( 
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
@@ -128,6 +130,7 @@ ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)
     </fields>
     <fields>
         <fullName>ANG_Sector__c</fullName>
+        <description>Sector for the contact’s Agency</description>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.Sector__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -364,6 +367,17 @@ ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account_or_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND (
+  OR( Contact.Account.CNS_Account__c , Contact.Account.CNS_Agency__c),
+  OR( Contact.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;, Contact.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Account or Agency</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>For admin use. Reason for deactivation or reactivation between other comments another admin may need to know before doing any modification.</description>
         <externalId>false</externalId>
@@ -435,6 +449,15 @@ ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Account_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.RecordType.DeveloperName</formula>
+        <label>Contact Account Record Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Account_Region__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.IATA_ISO_Country__r.Region__c)</formula>
@@ -458,7 +481,7 @@ ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)
         <fullName>Customer_type__c</fullName>
         <externalId>false</externalId>
         <formula>CASE(Contact.Account.RecordType.Name, 
-   &quot;Agency&quot;, &quot;Agency&quot;,
+   &quot;Agency&quot;, If( OR(Contact.Account.CNS_Account__c, Contact.Account.CNS_Agency__c),&quot;CNS Agency&quot;, &quot;Agency&quot;),
    &quot;Airline Branch&quot;, &quot;Airline&quot;,
    &quot;Airline Headquarters&quot;, &quot;Airline&quot;,
    &quot;General Sales Agent Branch&quot;,IF(ISBLANK(Contact.Account.IATACode__c), &quot;GSA&quot;, &quot;GSSA&quot;),
@@ -560,6 +583,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EmailForSSO__c</fullName>
+        <description>This is a copy of the standard email field. Required for the connected app configuration.</description>
+        <externalId>false</externalId>
+        <formula>Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EmailForSSO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Employee_Number_PPD__c</fullName>
@@ -747,6 +781,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IFG_Account_Member__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.IFG_Member__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFG Account Member</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ISSP_Contact_Language__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Preferred_Language__c)</formula>
@@ -889,6 +931,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <length>10</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>License_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Profile.UserLicense.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>License name</label>
+        <required>false</required>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -1382,6 +1434,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Portal_App_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>One Id Portal App Role</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Portal_User_Frozen_Checkbox__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1579,25 +1641,13 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ZMG__Zoomerang_Security_Token__c</fullName>
+        <fullName>dgai__active_user_settings__c</fullName>
+        <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
-        <label>Zoomerang Security Token</label>
-        <length>500</length>
+        <label>active user settings</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <type>LongTextArea</type>
-        <visibleLines>2</visibleLines>
-    </fields>
-    <fields>
-        <fullName>ZMG__Zoomerang_User_ID__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang User ID</label>
-        <length>100</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>isSISUser__c</fullName>
@@ -1724,6 +1774,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <operation>equals</operation>
             <value>S</value>
         </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
+        </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>
         <sharedTo>
@@ -1744,6 +1799,28 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Company_community</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>Comments__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce platform</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Company community users</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2712,9 +2789,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.DIVISION</columns>
         <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.PROFILE.NAME</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CREATED_BY_NAME</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.NAME</columns>
@@ -2732,7 +2809,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>CORE.PROFILE.NAME</field>
             <operation>contains</operation>
-            <value>Portal</value>
+            <value>ISS Portal Airline User (Partner)</value>
         </filters>
         <filters>
             <field>LANGUAGE</field>
@@ -2795,16 +2872,16 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <active>true</active>
         <description>User license cost center format validation - first 3 Alphabets (Capitals), next 3 numeric, next 2 Alphabets (Capitals) and last 2 numeric</description>
         <errorConditionFormula>AND(
-	ISPICKVAL(UserType, &apos;Standard&apos;),
-	IsActive,
-	NOT(
-		OR(
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
-		)
-	)
+    ISPICKVAL(UserType, &apos;Standard&apos;),
+    IsActive,
+    NOT(
+        OR(
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
+            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
+        )
+    )
 )</errorConditionFormula>
         <errorDisplayField>License_Cost_Center__c</errorDisplayField>
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>

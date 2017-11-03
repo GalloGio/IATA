@@ -12,5 +12,9 @@
         <members>*</members>
         <name>Layout</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>ApprovalProcess</name>
+    </types>    
     <version>37.0</version>
 </Package>

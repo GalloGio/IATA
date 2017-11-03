@@ -93,4 +93,36 @@ public without sharing class ISSP_Utilities {
 	public static Boolean isNumeric(String value) {
 		return Pattern.matches('^[-+]?[0-9]*\\.?[0-9]+$', value);
 	}
+
+	public static Boolean isCNS() {
+		User u = [
+			SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName, Contact.Account.IATA_ISO_Country__r.CNS_Country__c,Contact.Account.Sector__c
+			FROM User WHERE Id =:UserInfo.getUserId()];
+		Boolean isCNS = false;
+
+		if(u.Contact.Account.CNS_Account__c && u.Contact.Account.IATA_ISO_Country__r.CNS_Country__c &&
+			((u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency' && u.Contact.Account.CNS_Agency__c ) ||
+			(u.Contact.Account.RecordType.DeveloperName == 'Standard_Account' && u.Contact.Account.Sector__c == 'Cargo Agent'))) {
+				isCNS = true;
+		}
+
+		return isCNS;
+
+      }
+
+	public static boolean isIFGUser(){
+
+		boolean isIFG = false;
+		User u = DAL_ISSP.getUser(UserInfo.getUserId());
+
+		if((u.contact.IFG_Production__c != null && u.contact.IFG_Production__c>0 )||
+				(u.contact.IFG_PreProduction__c != null && u.contact.IFG_PreProduction__c>0 )
+		){
+			isIFG = true;
+			System.debug('basto1p - IS IFG USER');
+		}
+
+		return isIFG;
+
+	}
 }

@@ -1,0 +1,22 @@
+<aura:component >
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="page" type="integer"/>
+    
+    <aura:registerEvent name="pageChange" type="c:uprPageChangeEvent"/>
+
+    <div class="slds-grid slds-grid--align-space" >
+        <div name="helpText" class="center" style="padding-top:5px; padding-bottom:5px;"> 
+            <aura:renderIf isTrue="{!v.page > 0}">
+                <button class="slds-button slds-button--icon" style="padding-right:5px;" onclick="{!c.lastPage}">
+                    <c:svgIcon class="slds-icon slds-icon--x-small slds-icon-text-default" svgPath="/resource/SLDS202/assets/icons/utility-sprite/svg/symbols.svg#back" category="utility" name="user" />
+                </button>
+            </aura:renderIf>
+             Page {!v.page + 1} of {!v.pages + 1}  
+            <aura:renderIf isTrue="{!v.pages > !v.page}">
+                <button class="slds-button slds-button--icon" style="padding-left:5px;" onclick="{!c.nextPage}">
+                    <c:svgIcon class="slds-icon slds-icon--x-small slds-icon-text-default" svgPath="/resource/SLDS202/assets/icons/utility-sprite/svg/symbols.svg#forward" category="utility" name="user" />
+                </button>            
+            </aura:renderIf>
+		</div>
+    </div>
+</aura:component>

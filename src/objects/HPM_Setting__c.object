@@ -4,6 +4,16 @@
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Base_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>Base Url</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>HPM_App_Url__c</fullName>
         <defaultValue>&quot;https://zforsf.zuora.com/apps&quot;</defaultValue>
         <externalId>false</externalId>

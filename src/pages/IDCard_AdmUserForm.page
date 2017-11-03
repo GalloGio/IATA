@@ -283,7 +283,7 @@
                        
                        <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}" >
                             <!--<img src="{!$Label.IDCard_CroppingTool}/images/{!app.Photo__c}" style="height:120px; width:90px;"/>-->
-                            <apex:iframe src="apex/IDCardApplicationImageViewer?Id={!app.Id}" height="150px" />
+                            <apex:iframe src="apex/IDCardApplicationImageViewer?Id={!app.Id}&rnd={!NOW()}&rnd2={!app.Photo__c}" height="150px" />
                        </apex:outputPanel>
                        <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}">
                            <a href="{! pagesurl['prefix']}/IDCard_AdmUserManagmentPicture?VER={!ImageLink}"  style="color:black"

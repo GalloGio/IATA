@@ -1,10 +1,12 @@
 <apex:component >
     <div class="group-container use-html-code">
-        <p>Instructions go here:</p>
-        <ul class="list caret-right">
-            <li>Click on Basic Template tab</li>
-            <li>Choose Empty Template</li>
-            <li>...</li>
-        </ul>
-    </div>
+<h3>Instructions</h3>
+<p>Proceed as follows once on the next page:</p>
+<ul class="list caret-right">
+  <li>Click on the section located just over the existing text</li>
+  <li>From the toolbar that appeared, select the last icon on the far right (Source code)</li>
+  <li>Paste your HTML code in the pop-up window</li>
+  <li>Click OK to view the rendering</li>
+</ul>
+</div>
 </apex:component>

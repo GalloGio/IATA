@@ -521,10 +521,11 @@ public with sharing class pkb_mobile_controller {
             resp.setup.put('caseType', tmpStr);
             //emoIcon options
             tmpStr = '';
-            List<Schema.PicklistEntry>pl = Case.Customer_emoticon_value__c.getDescribe().getPickListValues();
+            //[CASE CLEANUP 2017]
+            /*List<Schema.PicklistEntry>pl = Case.Customer_emoticon_value__c.getDescribe().getPickListValues();
             for(Schema.PicklistEntry p : pl){
                 tmpStr = tmpStr + ';'+p.getLabel();
-            }
+            }*/
             resp.setup.put('caseEmoIcons', tmpStr);
             //sessionCookieName
             resp.setup.put('sessionCookieName', 'apex__'+pkb_mobile_proxy.COOKIE_SESSION_NAME);
@@ -747,11 +748,12 @@ public with sharing class pkb_mobile_controller {
                 if (req.contactData.containsKey('emoIcon')){
                     String emoIcon = req.contactData.get('emoIcon');
 
-                    Map<String,String> validEntries = pkb_controller.getActivePicklistOptions('Case','Customer_emoticon_value__c');
+                    //[CASE CLEANUP 2017]
+                    /*Map<String,String> validEntries = pkb_controller.getActivePicklistOptions('Case','Customer_emoticon_value__c');
 
                     if ( String.isNotBlank(emoIcon ) && validEntries.containsKey(emoIcon)){
                         auxCD.User_Experience = emoIcon;
-                    }
+                    }*/
                 }
                 //update geolocation
                 if (user_lat != null && user_long != null){

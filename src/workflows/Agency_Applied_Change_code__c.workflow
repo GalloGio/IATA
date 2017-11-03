@@ -164,7 +164,7 @@
         </actions>
         <active>true</active>
         <description>Set the published in bulletin flag to false if process is MSO</description>
-        <formula>IF(    OR(CONTAINS(TEXT(OSCAR__r.Process__c) , &apos;MSO&apos;),       CONTAINS(TEXT(OSCAR__r.Process__c) , &apos;TIDS&apos;),       CONTAINS(TEXT(OSCAR__r.Process__c) , &apos;GSA&apos;),       CONTAINS(TEXT(OSCAR__r.Process__c) , &apos;GSSA&apos;),       CONTAINS(TEXT(OSCAR__r.Process__c) , &apos;AHA&apos;)    ),false,true)</formula>
+        <formula>IF( OR( ISPICKVAL( Account__r.Location_Class__c , &apos;M&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;T&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;G&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;X&apos;), CONTAINS( TEXT( OSCAR__r.Process__c ) , &apos;CER.1.0&apos;)), true, false)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>

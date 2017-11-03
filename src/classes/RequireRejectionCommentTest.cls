@@ -196,13 +196,13 @@ public class RequireRejectionCommentTest
      *  test that the countries in the regional countries concerned multi pick lists have been copied into the Countries_Exception__c field
      */
     private static testmethod void testCountriesException () {
-    	case c = new case();
+        case c = new case();
         insert c;
         List<Quality__c> testBatchIS = new List<Quality__c>{};
         
         Quality__c testIS = new Quality__c(Exception_Type__c = 'Permanent', Exception_Classification_Type__c = 'testECT', Related_Case_Number__c = c.id, Exe_Category__c = 'test',
-           	Status__c = 'test', Root_Cause_Type__c = 'test', Deadline_for_Approval__c = datetime.now(), Africa_MENA_CC__c = null, Americas_CC__c='Canada;Mexico;', Europe_CC__c = 'France', 
-           	Asia_Pacific_CC__c = 'Australia; New Zealand;'
+            Status__c = 'test', Root_Cause_Type__c = 'test', Deadline_for_Approval__c = datetime.now(), Africa_MENA_CC__c = null, Americas_CC__c='Canada;Mexico;', Europe_CC__c = 'France', 
+            Asia_Pacific_CC__c = 'Australia; New Zealand;'
              );
         insert testIS;
         
@@ -210,5 +210,49 @@ public class RequireRejectionCommentTest
         
         system.assertEquals('Canada;Mexico;Australia;New Zealand;France', testIS.Countries_Exception__c);
     } 
+
+    /*
+    * test when it is inserted and then rejected
+    */
+    private static testmethod void testRejection()
+    {
+        case c = new case();
+        insert c;
+        
+        // Create a sample invoice statement object and then submit it for approval.
+        Quality__c testIS = new Quality__c(Exception_Type__c = 'Permanent',
+            Exception_Classification_Type__c = 'testECT',
+            Related_Case_Number__c = c.id, 
+            Exe_Category__c = 'test',
+            Status__c = 'test',
+            Root_Cause_Type__c = 'test',
+            Deadline_for_Approval__c = datetime.now()
+        );
+       
+        insert testIS;
+        Test.startTest();
+
+        try {
+
+            Approval.ProcessSubmitRequest testReq = new Approval.ProcessSubmitRequest();
+            testReq.setObjectId(testIS.Id);
+            testReq.setNextApproverIds(new Id[] {UserInfo.getUserId()});   
+            Approval.ProcessResult reqResult = Approval.process(testReq);        
+                
+            // Reject the submitted request
+            Approval.ProcessWorkitemRequest testRej = new Approval.ProcessWorkitemRequest();
+            testRej.setComments('Test Comment');
+            testRej.setAction  ('Reject');
+            testRej.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+            List<Id> newWorkItemIds = reqResult.getNewWorkitemIds();
+            testRej.setWorkitemId(newWorkItemIds.get(0));
+                      
+            // Attempt to process the rejection
+            Approval.ProcessResult testRejResult =  Approval.process(testRej);
+            
+        } catch(Exception e){}
+        
+        Test.stopTest();
+    }
     
 }

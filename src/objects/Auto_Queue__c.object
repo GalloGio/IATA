@@ -211,6 +211,25 @@
         <label>EUR Auto Queues</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>IATAN_Agency_Management</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>IATAN</value>
+        </filters>
+        <label>IATAN Agency Management</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>Auto Queue Name</label>
         <type>Text</type>

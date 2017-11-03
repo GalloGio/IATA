@@ -25,27 +25,35 @@
             </div>-->
             <apex:form >
                 <div class="inner-wrapper">
-                    <h1 class="page-title">Resubscribe</h1>
-                    <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.</p>
+                    <h1 class="page-title">Resubscribe to eBroadcast </h1>                    
+                    <p>Thank you for signing up! Once resubscribed, you will start receiving important messages from travel suppliers like airlines, hotels, car rentals, tour operators and cruise lines about their products, promotions, sales and commissions rules.</p>
+<p>Please complete the below information about yourself and your agency. Note, the email address presented can be changed if applicable.</p>
                     
                     <div class="columns small-8">
-                        <table class="data-table table-contact-info">
-                            <tbody><tr>
-                                <th>Agency Code:</th>
+                       <table class="data-table table-contact-info">
+                            <tbody>
+                                <tr>
+                                    <th>Your First and Last Name:</th>
+                                    <td>
+                                        <apex:input value="{!personName}" required="true" styleClass="user-input text" />
+                                    </td>
+                                </tr>
+                            <tr>
+                                <th>Agency IATA Code:</th>
                                 <td>
-                                    <apex:inputText value="{!agencyCode}" styleClass="user-input text" />
+                                    <apex:inputText value="{!agencyCode}" required="true" styleClass="user-input text" />
                                 </td>
                                 </tr>
                                 <tr>
-                                    <th>Full name:</th>
+                                    <th>Agency Name:</th>
                                     <td>
-                                        <apex:inputText value="{!fullName}" styleClass="user-input text" />
+                                        <apex:inputText value="{!fullName}" required="true" styleClass="user-input text" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Email:</th>
+                                    <th>Agency Email Address:</th>
                                     <td>
-                                        <apex:input type="email" value="{!newEmail}" styleClass="user-input text" />
+                                        <apex:input type="email" value="{!newEmail}" required="true" styleClass="user-input text" />
                                     </td>
                                 </tr>
                             </tbody>
