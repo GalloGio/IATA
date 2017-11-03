@@ -145,13 +145,12 @@ private class vfIECCAC_tst {
             gdpAccActiveCASS2.Related_Accreditation_Class__c = oAccreditation2.Id;
             update gdpAccActiveCASS2;
 
+            createCACandGADEntry();
 
         }
         catch (Exception ex) {
             System.debug('SALV - Init - Exception :' + ex.getMessage());
         }
-        
-        createCACandGADEntry();
 
         System.debug('Unit Test: Finish: Init');
     }
