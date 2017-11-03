@@ -96,11 +96,6 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CASE_IRR_APPROVED = 'Approved';
 	public static final String CASE_IRR_REJECTED = 'Rejected';
 
-	// Case - Status	
-	public static final String CASE_STATUS_CLOSED = 'Closed';
-	public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
-
-
 	//Account - ANG_HE_RiskHistoryAssessment__c
 	public static final String RISK_ASSESSMENT_PASSED = 'Passed';
 	public static final String RISK_ASSESSMENT_FAILED = 'Failed';
@@ -111,10 +106,6 @@ public with sharing class ANG_Risk_Helper{
 
 	//set with the status of the FS to be summed
 	public static final Set<String> FS_STATUS_FOR_SUM_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
-
-	//set with the ifap status to update the account's last financial review
-	public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
-	
 
 	//Currency Conversion Rates
 	public static Map<String,CurrencyType> convertionsRateMap{
