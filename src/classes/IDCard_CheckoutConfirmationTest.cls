@@ -43,10 +43,12 @@ public class IDCard_CheckoutConfirmationTest{
 
         testData.IDCards_IDCardApplications[6].RecordTypeId = recordType.Id;
 
+        Test.startTest();
         insert testData.IDCards_IDCardApplications[2];
         insert testData.IDCards_IDCardApplications[3];
         insert testData.IDCards_IDCardApplications[5];
         insert testData.IDCards_IDCardApplications[6];
+        Test.stopTest();
         
         ID_Card_Application__c testData_IDCardApplication1 = [Select Name from ID_Card_Application__c where Id =: testData.IDCards_IDCardApplications[2].Id];
         
@@ -254,6 +256,5 @@ public class IDCard_CheckoutConfirmationTest{
     
     public static TestMethod void TestProcess(){
         InitIDCard_CheckoutConfirmationTest();    
-        
     }    
 }

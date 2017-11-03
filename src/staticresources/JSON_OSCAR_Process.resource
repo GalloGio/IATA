@@ -1357,6 +1357,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded"
                   },
                   {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_inProgress"
+                  },
+                  {
                     "Status": "Failed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_failed"
                   }

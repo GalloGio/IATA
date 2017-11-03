@@ -1931,6 +1931,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
+        oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.Validation_Status__c = AMS_Utils.PASSED;
 	oscar.STEP15__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
@@ -1948,6 +1949,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
+        oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.Validation_Status__c = AMS_Utils.PASSED;
 	oscar.STEP15__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
