@@ -8358,6 +8358,14 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10060,6 +10068,14 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>Avanti</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11412,6 +11428,138 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>Agente offline</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>Agente online</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>Fai una domanda</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Chiamaci</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Orario disponibile:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>Nessun numero disponibile per il paese selezionato.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Puoi comunicare con un rappresentante IATA utilizzando il seguente numero:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Chatta con noi</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Chat_AutoGreeting --></label>
+        <name>LVA_Chat_AutoGreeting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Termina chat</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Sulla base dei criteri selezionati, altri utenti hanno trovato utili le seguenti risposte:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>Chiudi, l’ho già visto</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Chiudi, ricordamelo la prossima volta</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Benvenuto sulla pagina dell’Assistenza Clienti IATA!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Language_en_US --></label>
+        <name>LVA_Language_en_US</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Language_fr --></label>
+        <name>LVA_Language_fr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Language_pt_BR --></label>
+        <name>LVA_Language_pt_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Posso chattare con te anche in [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Vuoi uscire dalla chat?</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat non disponibile</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat non disponibile</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Siamo qui per aiutarti</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Torna alla chat</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Salva chat</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Scegli il canale che preferisci:</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>Facci un complimento</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>Segnala un problema</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11500,7 +11648,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Puoi salvare la trascrizione di questa sessione di chat utilizzando il pulsante &quot;Salva chat&quot;. La trascrizione completa di questa sessione sarà disponibile anche sul portale clienti.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11512,7 +11660,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Scrivi qui il tuo messaggio</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11564,11 +11712,11 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>Uno dei nostri rappresentanti ti risponderà a breve. Sei il cliente &lt;queuenumber&gt; in attesa. Il tempo di attesa è di circa &lt;queueminutes&gt; minuto/i. Se non puoi aspettare, puoi fare la sua domanda aprendo un ticket attraverso il portale clienti. Ti risponderemo in breve tempo. Se hai un problema urgente puoi selezionare l’opzione &quot;chiamaci&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>La chat è pronta per iniziare.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
