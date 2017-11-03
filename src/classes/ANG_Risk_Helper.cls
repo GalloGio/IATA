@@ -103,9 +103,13 @@ public with sharing class ANG_Risk_Helper{
 	//Account - ANG_HE_RiskHistoryAssessment__c
 	public static final String SECURITY_STATUS_ACTIVE = 'Active';
 	public static final String SECURITY_STATUS_CLOSE_EXPIRY_DATE = 'Close to Expiry Date';
+	public static final String SECURITY_STATUS_NOT_ACTIVE_YET = 'Not Active yet';
 
 	//set with the status of the FS to be summed
 	public static final Set<String> FS_STATUS_FOR_SUM_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
+	
+	//set with the status of the FS to be moved
+	public static final Set<String> FS_STATUS_FOR_MOVE_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE,SECURITY_STATUS_NOT_ACTIVE_YET};
 
 	//Currency Conversion Rates
 	public static Map<String,CurrencyType> convertionsRateMap{
@@ -153,14 +157,22 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 	public static void moveRiskHE(Map<Id,Id> newParents){
-		List<ANG_Agency_Risk_Event__c> updateHE = new List<ANG_Agency_Risk_Event__c>();                 
+		List<ANG_Agency_Risk_Event__c> updateREsHE = new List<ANG_Agency_Risk_Event__c>();                 
+		List<Financial_Security__c> updateFSsHE = new List<Financial_Security__c>();                 
 		
-		for(ANG_Agency_Risk_Event__c risk : [Select id, ANG_HE_AccountId__c, ANG_AccountId__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c where ANG_HE_AccountId__c in :newParents.keySet()]){                
-			risk.ANG_HE_AccountId__c = newParents.get(risk.ANG_HE_AccountId__c);             
-			updateHE.add(risk);                             
-		}       
+		for(account acc :[select id, (Select id, ANG_HE_AccountId__c FROM All_Risk_Events__r ), (select id,Account__c from Financial_Securities__r where Security_Status__c in:FS_STATUS_FOR_MOVE_SET) from account where id in :newParents.keySet()]){
+			for(ANG_Agency_Risk_Event__c risk :  acc.All_Risk_Events__r){                
+				risk.ANG_HE_AccountId__c = newParents.get(risk.ANG_HE_AccountId__c);             
+				updateREsHE.add(risk);                             
+			}
+			for(Financial_Security__c fs : acc.Financial_Securities__r){
+				fs.account__c = newParents.get(fs.account__C);  
+				updateFSsHE.add(fs);  
+			}    
+		}  
 
-		if(!updateHE.isEmpty()) update updateHE;
+		if(!updateREsHE.isEmpty()) update updateREsHE;
+		if(!updateFSsHE.isEmpty()) update updateFSsHE;
 	}
 
 	public static List<Account> updateRiskStatus(List<Account> accs){
