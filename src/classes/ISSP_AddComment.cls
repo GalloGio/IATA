@@ -50,7 +50,7 @@ public class ISSP_AddComment {
       return null;
     } finally {
       CaseComment = new CaseComment ();
-    }*/
+    }*/ 
 
     ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Added Comment successfully'));
     PageReference p = new PageReference('/apex/ISSP_Case?caseId=' + CaseId + commParam);
