@@ -8354,6 +8354,14 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label>Nossa missão é representar, liderar e servir a indústria aérea.</label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10056,6 +10064,14 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>Próximo</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11409,6 +11425,138 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>Agente offline</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>Agente online</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>Faça uma pergunta</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Ligue-nos</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Período disponível:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>Nenhum telefone disponível para o país selecionado.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Pode usar o número seguinte para falar com um representante IATA:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Fale connosco por chat</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Chat_AutoGreeting --></label>
+        <name>LVA_Chat_AutoGreeting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Terminar chat</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Com base nos seus critérios, outros utilizadores consideraram úteis as respostas seguintes:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>Fechar, já visto</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Fechar, lembrar da próxima vez</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Bem-vindo à página do Apoio ao Cliente IATA.</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>Inglês</label>
+        <name>LVA_Language_en_US</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_Language_fr --></label>
+        <name>LVA_Language_fr</name>
+    </customLabels>
+    <customLabels>
+        <label>Português</label>
+        <name>LVA_Language_pt_BR</name>
+    </customLabels>
+    <customLabels>
+        <label>Também posso falar consigo em [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Quer sair do chat?</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat indisponível</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat indisponível</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Estamos aqui para ajudar</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Regressar ao chat</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Guardar chat</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Selecione o seu canal preferido:</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>Partilhe um elogio</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>Expresse uma preocupação</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11497,7 +11645,7 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Pode guardar a transcrição desta sessão de chat, usando o botão &quot;Guardar chat&quot;. Uma transcrição completa desta sessão também fica disponível no Portal de Clientes.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11509,7 +11657,7 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Introduza a sua mensagem aqui</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11561,11 +11709,11 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>Um dos nossos representantes falará consigo em breve. Neste momento é o número &lt;queuenumber&gt; na fila de espera. O seu tempo de espera será de, aproximadamente, &lt;queueminutes&gt; minuto(s). Se tiver pouco tempo, também pode usar a sua pergunta para abrir um caso no nosso Portal de Clientes. Receberá uma resposta rapidamente. Se o seu assunto for urgente, pode selecionar a opção &quot;Ligue-nos&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>O chat está pronto para levantar voo.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
