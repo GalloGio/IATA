@@ -278,21 +278,4 @@ public with sharing class ANG_Risk_Helper{
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
 	}
-
-
-	public static void updateAccountFinancialReview(list<case> caseList, map<id,case> oldCaseMap){
-		list<Account> accList=new list<Account>();
-		for(case cs:caseList){
-			if(cs.recordtypeID==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review') && (oldCaseMap==null || (oldCaseMap!=null && cs.status != oldCaseMap.get(cs.id).status)) && CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(cs.status)){
-
-				accList.add(
-					new Account(
-						id=cs.accountId,
-						Financial_Review_Result__c =cs.Financial_Review_Result__c					
-					)
-				);
-			}
-		}
-		update accList;
-	}
 }
