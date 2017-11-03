@@ -193,6 +193,60 @@ public class ANG_RHC_Information_test{
 
 
     }
+    TestMethod static void createFinancialSecurityNotCreatingAnRHCInfoRecord(){
+         Account a = new Account(
+            name='acc1',
+            Location_Type__c='HO',
+            Location_Class__c='P',
+            Type = 'IATA Cargo Agent',
+            IATA_ISO_Country__c=[select id from IATA_ISO_Country__c limit 1].get(0).id,
+            IATACode__c ='1234567',
+            Remittance_frequency__c='Monthly',
+            billingCountry = 'fr',
+            ANG_Accreditation_Model__c ='Cash',
+            category__c = 'IATA Passenger Sales Agent',
+            sector__c = 'Travel Agent',
+            Company_Type__c='A',
+            RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')         
+        );
+        insert a;
+
+        Case c = new Case(
+            Origin = 'asd',
+            IFAP_Area__c = 'asda',
+            Financial_Review_Type__c ='bla',
+            IFAP_Financial_Year__c =  String.valueOF(date.today().year()),
+            Deadline_Date__c = date.today().addDays(40),                
+            AccountId = a.id,
+            Assessment_Performed_Date__c = date.today(),
+            Financial_Security_Currency__c= 'USD',
+            Financial_Security_Amount__c=40000                              
+        );
+
+        insert c;
+        
+           
+        Financial_Security__c fs = new Financial_Security__c(
+            Region__c = 'Americas', 
+            Security_status__c = 'Active', 
+            Account__c = a.Id, 
+            CurrencyIsoCode = 'EUR', 
+            Security_Type__c='CCG',
+            Amount__c = 100,
+            Expiry_date__c = Date.today().addYears(2), 
+            Financial_Institution__c = [select id from Financial_Institution__c limit 1 ].get(0).id,
+            Validity_Start_Date__c = Date.today().addDays(-2), 
+            Reception_Case__c = c.Id, 
+            Reception_Date__c = Date.today(), 
+            Reasonforrequest__c = 'New Application'
+        );
+        insert fs;
+
+        test.StartTest();
+            system.assertEquals(0,[select count() from ANG_RHC_Information__c where ANG_AccountId__c=: a.id]);
+
+        test.StopTest();
+    }
 
 
 }
