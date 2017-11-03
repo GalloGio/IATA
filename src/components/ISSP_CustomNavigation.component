@@ -140,7 +140,6 @@ window.onload = function HighlightBar() {
      $("#casebreadcrumbs").text("{!$Label.ISSP_Company_Administration}");
      $("#casebreadcrumbs2").text("{!$Label.ISSP_Company_Cases}");
      $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");
-
     }
         };
 
@@ -726,7 +725,13 @@ background-color:#428bca;
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
-
+        <!-- * FM 31-07-2017 - AMSU-26 -->
+        <li>
+    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
+                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
+                Trained Staff Certification 
+                </a>
+        </li>
     <!-- INC262760
     <li>
     <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">
