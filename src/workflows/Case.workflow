@@ -14260,6 +14260,48 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER approved - email to R%26S new</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA,SIDRA BR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Termination_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.REI_ApprovalRejectin__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>SIDRA</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>R_S_feedback_pending</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Case.Termination_date__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>IDFS_SIDRA_TER approved - email to R%26S v3</fullName>
         <actions>
             <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
             <type>Alert</type>
