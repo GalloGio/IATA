@@ -132,14 +132,6 @@
         <label>Calendar Semi-Monthly First Option</label>
         <picklist>
             <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>3</fullName>
                 <default>false</default>
             </picklistValues>
@@ -270,9 +262,7 @@
     <fields>
         <fullName>FileRecipent_iiNet_TDF_Recipient__c</fullName>
         <externalId>false</externalId>
-        <formula>/* Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c
-*/
-&quot;a199&quot;</formula>
+        <formula>LEFT(Zuora_Subscription__r.Zuora__CustomerAccount__r.IINETUserID__c,4)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>File Recipent iiNet TDF Recipient</label>
         <required>false</required>
@@ -498,12 +488,13 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
         <columns>GDP_File_Description__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <columns>Calendar_Semi_Monthly_First_Option__c</columns>
         <columns>Calendar_Monthly_Option__c</columns>
         <columns>Calendar_Weekly_Option__c</columns>
-        <columns>Zuora_Subscription__c</columns>
         <columns>FileRecipientEmail__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
@@ -530,6 +521,74 @@
             <value>Sabrina</value>
         </filters>
         <label>Created By Sabrina</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>File_Sub_Details_Wo_Z_Sub</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
+        <columns>Calendar_Monthly_Option__c</columns>
+        <columns>Calendar_Next_Submission_Date__c</columns>
+        <columns>Calendar_New_Submission_Effective_Date__c</columns>
+        <columns>FileRecipientEmail__c</columns>
+        <columns>FileRecipientSalutation__c</columns>
+        <columns>FileRecipientFirstName__c</columns>
+        <columns>FileRecipientLastName__c</columns>
+        <columns>FileRecipientJobTitle__c</columns>
+        <columns>FileRecipientPhone__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Zuora_Subscription__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>File Sub. Details W/o Z Sub</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>MDP_Subscriptions</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
+        <columns>Calendar_Monthly_Option__c</columns>
+        <columns>Calendar_Next_Submission_Date__c</columns>
+        <columns>Calendar_New_Submission_Effective_Date__c</columns>
+        <columns>FileRecipientEmail__c</columns>
+        <columns>FileRecipientSalutation__c</columns>
+        <columns>FileRecipientFirstName__c</columns>
+        <columns>FileRecipientLastName__c</columns>
+        <columns>FileRecipientJobTitle__c</columns>
+        <columns>FileRecipientPhone__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>contains</operation>
+            <value>MDP</value>
+        </filters>
+        <label>MDP Subscriptions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>View_All_With_Details</fullName>
+        <columns>NAME</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>FileRecipientEmail__c</columns>
+        <columns>Calendar_Semi_Monthly_First_Option__c</columns>
+        <columns>Calendar_Monthly_Option__c</columns>
+        <columns>Calendar_Weekly_Option__c</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>File_Name_Custom_Prefix__c</columns>
+        <columns>File_Name_Custom_Suffix__c</columns>
+        <columns>File_Name_Prefix_Option__c</columns>
+        <columns>File_Name_Suffix_Option__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>View All With Details</label>
         <language>en_US</language>
     </listViews>
     <nameField>

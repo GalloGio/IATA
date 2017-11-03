@@ -295,6 +295,21 @@ body.loading .modal {
     color: white;
 }
 
+.warningRed{
+    font-weight: bold;
+    color: red;
+}
+
+body .bPageBlock .pbBody .red .pbSubheader{
+    background-color:#c00000;
+}
+body .bPageBlock .pbBody .green .pbSubheader{
+    background-color:#008000;
+}
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -364,7 +379,7 @@ function buildFunctionCall(func, argList){
     });
 </script>
 
-<apex:pageBlock rendered="{!oscar == null}">
+<apex:pageBlock rendered="{!oscar.Account__c == null}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">UNAVAILABLE</p>
@@ -386,10 +401,14 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>* Specify Legal Status</li>
                 </apex:outputText>
-                <li>Location Class</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Class</li>
+                </apex:outputText>
                 <li>Country</li>
                 <li>Street name and number</li>
-                <li>Location Type</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Type</li>
+                </apex:outputText>
                 <li>City</li>
                 <apex:outputText rendered="{!isNotNewGenProcess}">
                     <li>Office Email (except for MSO process)</li>
@@ -398,6 +417,7 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>Office Email</li>
                     <li>Office Phone</li>
+                    <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
         </p>
@@ -419,7 +439,10 @@ function buildFunctionCall(func, argList){
         <apex:pageBlock >
             <apex:variable var="p" value="{!process[oscar.Process__c]}" />
             <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                <apex:pageBlockSection><!-- Fake section to force SF to inject the twistSection() JS code, which is not injected anymore because of the new outputpanel below, used for colors --></apex:pageBlockSection>
+
+                <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                     <apex:outputPanel layout="block" styleClass="sectionWrapper">
                         <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
                             <p>{!$Label.AMS_Due_Diligence_Lock}</p>
@@ -455,6 +478,7 @@ function buildFunctionCall(func, argList){
                         </apex:pageBlockSection>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
+                </apex:outputPanel>
             </apex:repeat>
         </apex:pageBlock>
     </apex:outputPanel>
@@ -465,6 +489,10 @@ function buildFunctionCall(func, argList){
         <apex:repeat value="{!flow.steps}" var="step">
             <div id="inline{!step.name}" style="display:none;">
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
+
+                <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
+                <br />
+
                 <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
                     
                 <apex:repeat value="{!step.actions}" var="action">

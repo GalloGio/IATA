@@ -1,6 +1,17 @@
 public class AMS_OSCAR_ProcessViewerController {
     
-    public AMS_OSCAR__c oscar {get;set;}
+    private static final String CLASS_BLACK = '';
+    private static final String CLASS_RED = 'red';
+    private static final String CLASS_GREEN = 'green';
+    private static final String CLASS_BLUE = 'blue';
+
+    public AMS_OSCAR__c oscar { 
+        get{ 
+            if(this.oscar == null)
+                return new AMS_OSCAR__c();
+            else return this.oscar;
+        }
+        set;}
 
     public Case oscarCase{get;set;}
 
@@ -11,6 +22,8 @@ public class AMS_OSCAR_ProcessViewerController {
     public AMS_OSCAR_JSON accreditationProcesses {get;set;}
     public Map<String, AMS_OSCAR_JSON.Process> process {get;set;}
  
+    public Map<String,String> flowColors {get;set;}
+    public Map<String,Boolean> collapsibleMap {get;set;}
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
     public Map<String,Boolean> ddBlock {get;set;}
@@ -20,12 +33,24 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean showRequiredOverlay{
         get{
+            if(this.oscar.Account__c == null)
+                return false;
+            // NG Processes specific conditions
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                return (
+                    oscar != null
+                    && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
+
+                    || !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c)
+                );
+            }
             return (
                 oscar != null
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
+
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -35,7 +60,9 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             return (
                 oscar != null
-                && oscar.Process__c != AMS_Utils.NEWHELITE
+                && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
+		&& !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
+                //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -84,6 +111,12 @@ public class AMS_OSCAR_ProcessViewerController {
                 && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED
                 ||oscar.STEP25__c == AMS_Utils.PASSED || oscar.STEP25__c == AMS_Utils.FAILED)
             );
+        }
+    }
+
+    public boolean isNewgenRT{
+        get{
+            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
         }
     }
 
@@ -168,8 +201,12 @@ public class AMS_OSCAR_ProcessViewerController {
      *  Get the status of all the steps in the Process
      */
     public void getStatus(AMS_OSCAR_JSON.Process process){
-        
-        for(AMS_OSCAR_JSON.Flow flow: process.flows)
+        Boolean firstExpanded = false;
+
+        for(AMS_OSCAR_JSON.Flow flow: process.flows) {
+            flowColors.put(process.name + flow.name, CLASS_GREEN);
+            collapsibleMap.put(process.name + flow.name, true);
+
             for(AMS_OSCAR_JSON.Step step: flow.steps){
                 
                 String stepApiName = step.name + '__c';
@@ -182,7 +219,23 @@ public class AMS_OSCAR_ProcessViewerController {
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
                 ddBlock.put(flow.name, isStepBlocked(stepApiName));
+
+                if (stepValue == AMS_Utils.FAILED) {
+                    flowColors.put(process.name + flow.name, CLASS_RED);
+                } else if (stepValue == AMS_Utils.IN_PROGRESS && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLUE);
+                } else if (stepValue == 'Not Started' && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLACK);
+                }
+
+                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS)) {
+                    collapsibleMap.put(process.name + flow.name, false);
+                    firstExpanded = true;
+                }
+
             }
+
+        }
     }
     
     public List<SelectOption> getPicklistValues(Schema.DescribeFieldResult fr){
@@ -206,7 +259,10 @@ public class AMS_OSCAR_ProcessViewerController {
         
         String currentPickValue = String.valueOf(oscar.get(fieldName));
         System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
-        
+
+        if(currentPickValue == null && AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c))
+            picklistValues.add(new SelectOption('', '--None--'));
+
         if(currentPickValue != null)
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
         
@@ -283,7 +339,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
@@ -341,6 +397,8 @@ public class AMS_OSCAR_ProcessViewerController {
         
         stepFieldsData = new Map<String,StepFieldsDataWrapper>();
 
+        flowColors = new Map<String,String>();
+        collapsibleMap = new Map<String,Boolean>();
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
         ddBlock = new Map<String,Boolean>();

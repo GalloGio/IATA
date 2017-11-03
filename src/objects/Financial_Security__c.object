@@ -57,6 +57,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_ConvertedAmount__c</fullName>
+        <description>Shows the FS amount converted to the Account&apos;s currency (located on the RHC Information object)</description>
+        <externalId>false</externalId>
+        <label>Converted Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Case_BSP_Country__c</fullName>
         <description>Country value that is transmitted to the automatically created renewal case.</description>
         <externalId>false</externalId>
