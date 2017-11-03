@@ -106,7 +106,6 @@ public with sharing class ANG_Risk_Helper{
 
 	//set with the status of the FS to be summed
 	public static final Set<String> FS_STATUS_FOR_SUM_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
-	
 
 	//Currency Conversion Rates
 	public static Map<String,CurrencyType> convertionsRateMap{
@@ -270,4 +269,5 @@ public with sharing class ANG_Risk_Helper{
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
 	}
+
 }
