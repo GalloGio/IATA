@@ -2,8 +2,26 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 
     //
     // NOTE: The set accountIDs needs the 15 digit ids.
+    // Returns Users by account.
     //
     public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles) {
+        return getRecipients(accountIDs, roles, null, 'A');
+
+    }
+
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    // Returns Users by account.
+    //
+    public static Map<String, Set<Id>> getRecipientsPortalServices(Set<Id> accountIDs, Set<Id> portalServices) {
+        return getRecipients(accountIDs, null, portalServices, 'B');
+    }
+
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    // Returns Users by account.
+    //
+    public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles, Set<Id> portalServices, String type) {
 
         Map<Id, String> topParents = new Map<Id, String>();
 
@@ -28,18 +46,31 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
             }
         }
 
-        //System.debug('topParents--->' + topParents);
-        //System.debug('roles--->' + roles);
-        //System.debug('accountIDs--->' + accountIDs);
+        //System.debug('ALEX topParents--->' + topParents);
+        //System.debug('ALEX  roles--->' + roles);
+        //System.debug('ALEX accountIDs--->' + accountIDs);
+        //System.debug('ALEX accountIDsSet-->' + accountIDsSet);
 
-        List<Portal_Application_Right__c> parList2 = [Select Account__c,
-                                                     Contact__c
-                                                From Portal_Application_Right__c
-                                               Where ANG_Portal_Service_Role__c in : roles
-                                                 And right__c = 'Access Granted'
-                                                 And contact__r.accountId in : accountIDsSet];
+        List<Portal_Application_Right__c> parList2;
 
-        //System.debug('parList2-->' + parList2);
+        if(type == 'A') {
+            parList2 = [Select Account__c,
+                               Contact__c
+                          From Portal_Application_Right__c
+                         Where ANG_Portal_Service_Role__c in : roles
+                           And right__c = 'Access Granted'
+                           And contact__r.accountId in : accountIDsSet];
+        } else {
+            System.debug('ALEX BBBBBB');
+            parList2 = [Select Account__c,
+                               Contact__c
+                          From Portal_Application_Right__c
+                         Where Portal_Application__c in : portalServices
+                           And right__c = 'Access Granted'
+                           And contact__r.accountId in : accountIDsSet];                           
+        }
+
+        //System.debug('ALEX parList2-->' + parList2);
 
         //
         // Set with all contacts per account
@@ -74,7 +105,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
             accIdToUserIdMapIep.put(topParents.get(key), userIDs);
         }
 
-        System.debug('accIdToUserIdMapIep-->' + accIdToUserIdMapIep); 
+        System.debug('ALEX accIdToUserIdMapIep-->' + accIdToUserIdMapIep); 
 
         return accIdToUserIdMapIep;
     }

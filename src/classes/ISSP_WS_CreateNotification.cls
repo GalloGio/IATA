@@ -21,7 +21,8 @@ global class ISSP_WS_CreateNotification {
         WebService Integer daysToExpire;
         WebService Boolean emailAlert;
         WebService Boolean criticalNotification;
-        WebService String campaignName;
+        WebService String campaignName;   
+        WebService String replaceStr;     
     }
     
     global class languageMessage {
@@ -58,6 +59,8 @@ global class ISSP_WS_CreateNotification {
     	description = description + 'Email Alert: ' + inputMessage.emailAlert + '\n';
     	description = description + 'Critical Notification: ' + inputMessage.criticalNotification + '\n';
     	newLog.Input_Description__c = description;
+
+    	Map<String, String> replaceMap = parseReplaceStr(inputMessage.replaceStr);
     	
     	//Contact segmentation
     	List <Contact> contactList = new List<Contact>(); // final list of contacts
@@ -418,16 +421,23 @@ global class ISSP_WS_CreateNotification {
 	            Notification_template__c nt = templateList[0];
 	            for (Contact thisContact : contactList){
 	            	system.debug('CREATING NOTIFICATION FOR THIS CONTACT: ' + thisContact);
-	            	if(notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id)) != null){
-	            		system.debug('FOUND A TRANSLATION');
-	            		nt = notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id));
+	            		            		           
+	            	if(notificationTemplateTranslateMap.containsKey(nt.Name) &&
+	            		notificationTemplateTranslateMap.get(nt.Name).containsKey(contactLanguageMap.get(thisContact.Id))
+	            	){
+	            		system.debug('ALEX FOUND A TRANSLATION');
+	            		nt = notificationTemplateTranslateMap.get(nt.Name).get(contactLanguageMap.get(thisContact.Id));
 	            	}
 	            	if (nt.Expire_in_days__c != null){
 	            		expirationDate = system.Now() + nt.Expire_in_days__c;
 	            	}
+
+	            	String notificationMsg = replacePlaceholdersMsg(nt.Message__c, replaceMap);
+
 	            	Notification__c newNotification = new Notification__c();
 	            	newNotification.Contact__c = thisContact.Id;
-	            	newNotification.Message__c = nt.Message__c;
+	            	//newNotification.Message__c = nt.Message__c;
+	            	newNotification.Message__c = notificationMsg;
                     newNotification.Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c;
                     newNotification.Subject__c = nt.Subject__c;
                     newNotification.Type__c = nt.Type__c;
@@ -582,6 +592,9 @@ global class ISSP_WS_CreateNotification {
 	    					newNotification.Message__c = languageMessage.get('en_US');
 			                newNotification.Subject__c = languageSubject.get('en_US');
 	    				}
+
+						newNotification.Message__c = replacePlaceholdersMsg(newNotification.Message__c, replaceMap);
+
 	    				newNotificationList.add(newNotification);
 	    			}
 	    			try{
@@ -615,5 +628,31 @@ global class ISSP_WS_CreateNotification {
         insert newLog;
 	    return retResponse;
     }
-    
+
+    private static Map<String, String> parseReplaceStr(String replaceStr) {
+    	if(replaceStr == null || replaceStr == '') {
+    		return null;
+    	} else {
+    		Map<String, String> replaceMap = new Map<String, String>();
+
+    		List<String> aux1 = replaceStr.split('\\|');
+
+    		for(String s : aux1) {
+    			List<String> aux2 = s.split('!');
+    			if(aux2.size() == 2)
+    				replaceMap.put(aux2[0], aux2[1]);
+    		}
+
+    		return replaceMap;
+    	}
+    }
+
+    private static String replacePlaceholdersMsg(String msg, Map<String, String> replaceMap) {
+    	if(replaceMap != null) {
+	    	for(String key : replaceMap.keySet()) {
+	    		msg = msg.replace(key, replaceMap.get(key));
+			}
+		}
+		return msg;
+    }
 }

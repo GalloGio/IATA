@@ -672,7 +672,8 @@ public with sharing class AMS_AccreditationContactController {
                     fieldToCheck = tsw.certificateIssueDate;
                 }    
                 if(i == 1){
-                    if(tsw.ac.Certificate_Issued_on__c != null){
+                    if(tsw.ac.Certificate_Issued_on__c != null && tsw.ac.Type_of_certificate__c != 'BCH'){
+                        system.debug('RB Valid until: ' + tsw.ac.Valid_until__c);
                         DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
                         tsw.validUntil = dt.format('YYYY-MM-dd');
                     }

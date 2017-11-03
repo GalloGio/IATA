@@ -170,6 +170,7 @@
     //test DGR for R specific country
     @isTest static void testCargoAgencyRegulationsHOClassR() {
 
+	/*
         AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP6__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         List<AMS_Agency_Regulation__c> aregs;
 
@@ -236,7 +237,7 @@
         }
         
         Test.stopTest();
-
+*/
         //account should have a certification oscar
         //List<AMS_OSCAR__c> certOscars = [SELECT Id FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.CERTIFICATION AND Account__c = :aregs[0].Account__c];
 

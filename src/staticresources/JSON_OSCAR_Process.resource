@@ -1357,6 +1357,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded"
                   },
                   {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_inProgress"
+                  },
+                  {
                     "Status": "Failed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_failed"
                   }
@@ -4576,8 +4580,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP6__c",
-                  "Is_PCI_compliant__c"
+                  "Is_PCI_compliant__c",
+                  "STEP6__c"
                 ],
                 "IsDependent": false
               }
@@ -5463,6 +5467,13 @@
                     "args": [
                       "oscarid"
                     ]
+                  },
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "6"
+                    ]
                   }
                 ],
                 "Automations": [
@@ -5528,10 +5539,10 @@
                 "Required": [],
                 "Actions": [
                   {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "26"
                     ]
                   },
                   {
@@ -5627,7 +5638,15 @@
                 "Required": [
                   "STEP6"
                 ],
-                "Actions": [],
+                "Actions": [
+					{
+						"FunctionName": "SIDRALiteAction",
+						"ActionLabel": "AMS_OSCAR_Action7",
+						"args": [
+						  "oscarid", "9"
+						]
+					}
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5661,6 +5680,13 @@
                     "ActionLabel": "AMS_OSCAR_Action3",
                     "args": [
                       "oscarid"
+                    ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "11"
                     ]
                   }
                 ],
@@ -5700,6 +5726,13 @@
                       "agencyid",
                       "accountNameFromOscar"
                     ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "35"
+                    ]
                   }
                 ],
                 "Automations": [
@@ -5729,7 +5762,15 @@
                   "STEP8",
                   "STEP9"
                 ],
-                "Actions": [],
+                "Actions": [
+					{
+						"FunctionName": "SIDRALiteAction",
+						"ActionLabel": "AMS_OSCAR_Action7",
+						"args": [
+						  "oscarid", "14"
+						]
+					}
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5789,6 +5830,13 @@
                     "ActionLabel": "AMS_OSCAR_Action16",
                     "args": [
                       "oscarid"
+                    ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
                     ]
                   }],
                 "Automations": [
@@ -5975,10 +6023,10 @@
                   }
                 ],
                 "DisplayFields": [
+                  "Is_PCI_compliant__c",
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
-                  "AMS_Correction_change_code__c",
-                  "Is_PCI_compliant__c"
+                  "AMS_Correction_change_code__c"
                 ],
                 "IsDependent": false
               }
