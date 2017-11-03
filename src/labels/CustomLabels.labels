@@ -14106,14 +14106,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
-        <value>IATA Passenger Sales - GoLite</value>
+        <value>IATA Passenger Sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
-        <value>IATA Passenger Sales - GoStandard</value>
+        <value>IATA Passenger Sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
