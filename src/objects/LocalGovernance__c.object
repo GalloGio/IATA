@@ -1771,6 +1771,16 @@ Record Type + Group Type + ISO_Country_Name</description>
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Restrict_edit</fullName>
+        <active>true</active>
+        <description>Only edit fields if user profile is &apos;Account management team&apos;</description>
+        <errorConditionFormula>and(or(ISCHANGED(Cargo_Passenger__c),ISCHANGED(Country__c), 
+ISCHANGED(Cluster__c),ISCHANGED(Reporting_to__c), 
+ISCHANGED(Local_Governance_type__c),ISCHANGED(Group_Owner__c)), 
+!($User.Profile_Name__c=&apos;Account management team&apos;),RecordType.DeveloperName=&apos;Local_Groups&apos;)</errorConditionFormula>
+        <errorMessage>Only the Account management team can perform the editing</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Deacitvate</fullName>
         <availability>online</availability>
