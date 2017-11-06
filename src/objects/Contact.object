@@ -4421,7 +4421,7 @@ IF(Account.IATACode__c != &apos;&apos;
 */
 
 /*Prod*/ 
-IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
+IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/service/payment?company_name=&quot;
 +SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
 &quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
 SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+

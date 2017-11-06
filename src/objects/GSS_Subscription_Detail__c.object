@@ -524,6 +524,57 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>File_Sub_Details_Wo_Z_Sub</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
+        <columns>Calendar_Monthly_Option__c</columns>
+        <columns>Calendar_Next_Submission_Date__c</columns>
+        <columns>Calendar_New_Submission_Effective_Date__c</columns>
+        <columns>FileRecipientEmail__c</columns>
+        <columns>FileRecipientSalutation__c</columns>
+        <columns>FileRecipientFirstName__c</columns>
+        <columns>FileRecipientLastName__c</columns>
+        <columns>FileRecipientJobTitle__c</columns>
+        <columns>FileRecipientPhone__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Zuora_Subscription__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>File Sub. Details W/o Z Sub</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>MDP_Subscriptions</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora_Subscription__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
+        <columns>Calendar_Monthly_Option__c</columns>
+        <columns>Calendar_Next_Submission_Date__c</columns>
+        <columns>Calendar_New_Submission_Effective_Date__c</columns>
+        <columns>FileRecipientEmail__c</columns>
+        <columns>FileRecipientSalutation__c</columns>
+        <columns>FileRecipientFirstName__c</columns>
+        <columns>FileRecipientLastName__c</columns>
+        <columns>FileRecipientJobTitle__c</columns>
+        <columns>FileRecipientPhone__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>contains</operation>
+            <value>MDP</value>
+        </filters>
+        <label>MDP Subscriptions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>View_All_With_Details</fullName>
         <columns>NAME</columns>
         <columns>GDP_File_Description__c</columns>
