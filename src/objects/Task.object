@@ -137,12 +137,12 @@
                 <closed>false</closed>
             </picklistValues>
             <picklistValues>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
                 <closed>false</closed>
             </picklistValues>
             <picklistValues>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
                 <closed>false</closed>
             </picklistValues>

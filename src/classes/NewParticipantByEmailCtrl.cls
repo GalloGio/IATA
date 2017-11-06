@@ -6,11 +6,11 @@ public with sharing class NewParticipantByEmailCtrl {
     public Map<Id,Contact> contacts {get;set;}    //all the contacts found
     public List<Contact> getContactValues(){return contacts.values();}
     public LocalGovernance__c lg {get;set;}
-    
+
     public NewParticipantByEmailCtrl(ApexPages.StandardController controller){
         if(!Test.isRunningTest())   controller.addFields(new List<String>{'Local_Governance__r.Local_governance_type__c', 'Local_Governance__r.Name'});
         p = (Participant__c) controller.getRecord();
-        
+
         try{
             if(p.Local_Governance__c!=null){
                 lg = [SELECT Name, Local_governance_type__c FROM LocalGovernance__c WHERE Id = :p.Local_Governance__c];
@@ -19,7 +19,7 @@ public with sharing class NewParticipantByEmailCtrl {
                 changeParticipantRecordType();
              }
         }catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));            
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));
         }
         chooseContact = false;
         String idFromPageStr = ApexPages.currentPage().getParameters().get('retURL').split('/')[1];
@@ -63,11 +63,11 @@ public with sharing class NewParticipantByEmailCtrl {
                 system.debug(LoggingLevel.ERROR,'####### participant duplicate'); 
                 return null;
             }
-    
+
             Database.SaveResult sr = database.insert(p,false);
             if(!sr.isSuccess()){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> raised the following error: '+sr.getErrors()[0].getMessage()));
-                system.debug(LoggingLevel.ERROR,'####### errore sul salvataggio: '+sr.getErrors()[0].getMessage()); 
+                system.debug(LoggingLevel.ERROR,'####### errore sul salvataggio: '+sr.getErrors()[0].getMessage());
                 return null;
             }else{
 
@@ -76,11 +76,11 @@ public with sharing class NewParticipantByEmailCtrl {
                 system.debug(LoggingLevel.ERROR,'############### SALVATO, ora ritorno '+returl);
                 return new PageReference(retURL);
             }
-            
+
         //MANY CONTACTS
         }else{
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Several contacts were found with the email '+c.email+'. Please select the one you want to use.'));
-            system.debug(LoggingLevel.ERROR,'####### tanti contatti, bisogna scegliere da tabella'); 
+            system.debug(LoggingLevel.ERROR,'####### tanti contatti, bisogna scegliere da tabella');
             chooseContact = true;
         }
         return null;
@@ -101,29 +101,29 @@ public with sharing class NewParticipantByEmailCtrl {
     
             return null;
         }
-        
+
         Database.SaveResult sr = database.insert(p,false);
         if(!sr.isSuccess()){
             chooseContact = false;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> raised the following error: '+sr.getErrors()[0].getMessage()));
             return null;
-            
+
         }else{
             String retURL = ApexPages.currentPage().getParameters().get('saveURL');
             if(retURL==null) retURL = '/'+p.Local_Governance__c;
             return new PageReference(retURL);
         }
-        
+
     }
-    
-    
-    
+
+
+
     // NOTE: the contact MUST include the fields c.Account.Parent, c.Account.RecordTypeId and c.Account.Top_Parent__c!!!
     public static Id calculateMainAccount(Contact c){
     	Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
         Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
         Id rtAg =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-    
+
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;
     	else if(c.Account.RecordTypeId==rtBr)
