@@ -25889,4 +25889,11 @@ title,Title,Name</value>
         <shortDescription>ISSP ANG Email AE Subject</shortDescription>
         <value>Agency Accreditation Associate Entity Draft Application</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Must Add Users To Service</shortDescription>
+        <value>At least one contact must be selected</value>
+    </labels>    
 </CustomLabels>
