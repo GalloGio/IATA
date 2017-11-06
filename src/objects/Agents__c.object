@@ -234,6 +234,7 @@
         <label>Americas - All</label>
         <language>en_US</language>
         <sharedTo>
+            <group>HUBMadrid</group>
             <group>IDFSAmericasCustomerService</group>
             <group>IDFSAmericasRegionalOffice</group>
             <group>IDFS_Americas_AM_RPM</group>

@@ -52,6 +52,13 @@
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
     </labels>
     <labels>
+        <fullName>AMS_New_Change_Code_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
+        <value>A new change code has been generated:</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -4323,7 +4330,15 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Delivery</shortDescription>
-        <value>IDCard Expedite Delivery</value>
+        <value>Certified/Expedite</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Expedite_Note</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Note</shortDescription>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
     </labels>
     <labels>
         <fullName>IDCard_ExportCSV</fullName>
@@ -4678,6 +4693,14 @@ In order to verify that you need to upload a proof of last name change.</value>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
         <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Loading_Message</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Loading_Message</shortDescription>
+        <value>Please wait…</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -14207,7 +14230,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
-        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement billing (BSP sales) to your DD account.</value>
+        <value>NOTE:  For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement notice (BSP sales) to DD account in compliance with the notification downloaded from ASD.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -15009,6 +15032,30 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Certifications</fullName>
+        <categories>S11, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications</shortDescription>
+        <value>All Certifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certifications_Active</fullName>
+        <categories>Trained staff</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications_Active</shortDescription>
+        <value>Active Certifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certifications_Expired</fullName>
+        <categories>Trained staff</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Certifications_Expired</shortDescription>
+        <value>Expired Certifications</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ChangeDDS</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -15663,6 +15710,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Download Now</shortDescription>
         <value>Download Now!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in CSV</shortDescription>
+        <value>Download in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Download_in_PDF</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Download in PDF</shortDescription>
+        <value>Download in PDF</value>
     </labels>
     <labels>
         <fullName>ISSP_Draft</fullName>
@@ -17108,7 +17171,14 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Homepage</shortDescription>
-        <value>My Company open cases</value>
+        <value>My Company open cases (assigned)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Homepage_My_Company_open_cases_un</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Homepage_My_Company_open_cases_un</shortDescription>
+        <value>My Company open cases (unassigned)</value>
     </labels>
     <labels>
         <fullName>ISSP_Homepage_My_Dashboard</fullName>
@@ -20118,13 +20188,11 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;&lt;font face=&quot;ARIAL&quot; size=&quot;2&quot; color=&quot;rbg(0,65,123)&quot;&gt;IATA Treasury Dashboard&lt;/font&gt;&lt;/b&gt;
+        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
 &lt;/BR&gt;
 &lt;/BR&gt;
-&lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
-The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
-&lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
-&lt;/font&gt;</value>
+The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
         <fullName>ISSP_TD_Download_1</fullName>

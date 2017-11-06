@@ -389,7 +389,7 @@ public class IFAP_BusinessRulesTest {
         //cObj2.RecordTypeId = IFAPcaseRecordTypeID;
         cObj2.IFAP_Financial_Year__c = '2012';
         cObj2.Status = 'Financial Security Requested';
-        cObj2.Financial_Review_Result__c = 'Satisfactory - New Financial Security';
+        cObj2.Financial_Review_Result__c = 'Satisfactory';
         cObj2.IFAP_Country_ISO__c = ic.ISO_Code__c;
         cObj2.FS_Reminder_EmailTemplate__c = e2.Id;
         cObj2.Deadline_Date__c = Date.today() + 30;
