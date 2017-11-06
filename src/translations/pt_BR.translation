@@ -11457,10 +11457,6 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11499,18 +11495,6 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label>Bem-vindo à página do Apoio ao Cliente IATA.</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label>Inglês</label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label>Português</label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>Também posso falar consigo em [languages].</label>

@@ -11456,10 +11456,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11498,18 +11494,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>IATA カスタマー サポート ページにようこそ！</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label>英語</label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label>フランス語</label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label>ポルトガル語</label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>[languages]でのチャットも可能です。</label>

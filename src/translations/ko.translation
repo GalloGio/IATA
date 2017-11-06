@@ -11457,10 +11457,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11499,18 +11495,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>IATA 고객 지원 페이지에 오신 것을 환영합니다!</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_en_US --></label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_pt_BR --></label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>[languages]로 채팅할 수도 있습니다.</label>

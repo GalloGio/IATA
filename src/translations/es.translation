@@ -11484,10 +11484,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label>¡Hola!</label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label>Enviado por usted a [timeStamp]</label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11526,18 +11522,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label>¡Bienvenido a la página de atención al cliente de IATA!</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_en_US --></label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_pt_BR --></label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>También puedo chatear con usted en [languages].</label>

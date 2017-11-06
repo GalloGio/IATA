@@ -11496,10 +11496,6 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11538,18 +11534,6 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Bienvenue sur la page d’assistance du portail clients de l’IATA !</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_en_US --></label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_pt_BR --></label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>Je peux également chatter avec vous en [languages].</label>

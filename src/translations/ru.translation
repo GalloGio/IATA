@@ -11464,10 +11464,6 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11508,19 +11504,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>LVA_IntroductionVideo</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Language_en_US --></label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_pt_BR --></label>
-        <name>LVA_Language_pt_BR</name>
-    </customLabels>
-    <customLabels>
-        <label>Я также могу общаться с вами на следующих языках: [языки].</label>
+        <label>Я также могу общаться с вами на следующих языках: [languages].</label>
         <name>LVA_LanguagesMessage</name>
     </customLabels>
     <customLabels>
