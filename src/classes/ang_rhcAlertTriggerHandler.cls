@@ -78,6 +78,8 @@ public class ang_rhcAlertTriggerHandler{
         // Map<TemplateId, Map<Account, Set<Users>>>
 		Map<String, map<String, Set<Id>>> mailsToSendByAccount = new Map<String, map<String, Set<Id>>>();
 
+		Map<String, String> portalMailParams = new Map<String, String>();
+
 		map<id,ANG_RHC_Alert_Templates__c> alertTemplateMap = new map<id,ANG_RHC_Alert_Templates__c>();
 		map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
 		for(ANG_Risk_Alert__c ralert :triggerNew){
@@ -87,15 +89,13 @@ public class ang_rhcAlertTriggerHandler{
 					if(!alertTemplateMap.containsKey(ralert.ANG_Account__c)){
 						ANG_RHC_Information__c rhc = RHC_Map.get(ralert.ANG_RHC_Information__c);
 
-						System.debug('ALEX Currency-->' + rhc.CurrencyIsoCode);
-					
 						if(rhc.ANG_AccountId__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
 							sendPortalNotifications(rhc, ralert, at);
 
 							//
 							// Accumluate all users that will receive the portal email in the Map mailsToSendByAccount
 							//
-							getPortalMailsRecipients(rhc, at, mailsToSendByAccount);
+							getPortalMailsRecipients(rhc, at, mailsToSendByAccount, portalMailParams);
 						} else {
 							alertTemplateMap.put(ralert.ANG_Account__c,at);
 							riskAlertMap.put(ralert.ANG_Account__c,ralert);
@@ -106,14 +106,15 @@ public class ang_rhcAlertTriggerHandler{
 			}
 		}
 
-		//System.debug('ALEX mailsToSendByAccount-->' + mailsToSendByAccount);
-
-
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 		set<id> accIdSet = new set<id>();
 
-		for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :alertTemplateMap.keySet() OR AccountId IN :alertTemplateMap.keySet())]){
+		List<Contact> contacts = [SELECT Id, AccountId, Account.Top_Parent__c
+			                        FROM Contact
+			                       WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
+			                         AND (Account.Top_Parent__c IN :alertTemplateMap.keySet() OR AccountId IN :alertTemplateMap.keySet())];
 
+		for(Contact c : contacts) {
 			id accId;
 			if(alertTemplateMap.containsKey(c.AccountId)) accId=c.AccountId;
 			else if (!accIdSet.contains(c.Account.Top_Parent__c)) accId=c.Account.Top_Parent__c;
@@ -134,6 +135,10 @@ public class ang_rhcAlertTriggerHandler{
 		//
 		// Create a map with a set with all the users by mail template
 		//
+
+
+		System.debug('ALEX mailsToSendByAccount-->' + mailsToSendByAccount);
+
 		Map<String, Set<Id>> mailsToSendByTemplate = new Map<String, Set<Id>>();
 		for(String templateId : mailsToSendByAccount.keySet()) {
 			Map<String, Set<Id>> aux = mailsToSendByAccount.get(templateId);
@@ -154,9 +159,15 @@ public class ang_rhcAlertTriggerHandler{
 
 		for(String templateId : mailsToSendByTemplate.keySet()) {
 
+			String rhcId = portalMailParams.get(templateId);
+
 			Set<Id> users = mailsToSendByTemplate.get(templateId);
+
 			for(Id userId : users) {
 	            Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
+
+				emailMsg.setWhatId(rhcId); 
+
 	            emailMsg.setTemplateId(templateId);
 	            emailMsg.setTargetObjectId(userId);
 	            emailMsg.saveAsActivity = false;
@@ -200,7 +211,7 @@ public class ang_rhcAlertTriggerHandler{
 	//
 	// Map<String, map<String, Set<Id>>> = Map<TemplateIp, Map<Account Set<Users>>>
 	//
-	private void getPortalMailsRecipients(ANG_RHC_Information__c rhc, ANG_RHC_Alert_Templates__c at, Map<String, Map<String, Set<Id>>> mailsToSendByAccount) {
+	private void getPortalMailsRecipients(ANG_RHC_Information__c rhc, ANG_RHC_Alert_Templates__c at, Map<String, Map<String, Set<Id>>> mailsToSendByAccount, Map<String, String> portalMailParams) {
 
 		String templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(at.ANG_Portal_Mail_Template__c);
 	
@@ -238,6 +249,7 @@ public class ang_rhcAlertTriggerHandler{
 			}
 		} else {
 			mailsToSendByAccount.put(templateId, auxMap);
+			portalMailParams.put(templateId, rhc.Id);
 		}
 	}
 }
