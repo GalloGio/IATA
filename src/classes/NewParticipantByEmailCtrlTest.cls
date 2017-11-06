@@ -72,6 +72,14 @@ public class NewParticipantByEmailCtrlTest {
 
 
     static testmethod void testLocalGroups(){
+         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+         Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = p.Id,
+            TimeZoneSidKey='America/Los_Angeles',
+            UserName=uniqueUserName, License_Cost_Center__c = 'ISF005CH01');
+         System.runAs(u) {
         prepareData();
         Test.startTest();
        
@@ -90,6 +98,7 @@ public class NewParticipantByEmailCtrlTest {
         lgctrl.MySave();
         
         //insert lg;
+       
         LocalGovernance__c lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c, Active__c
               					 FROM LocalGovernance__c WHERE Id = :lgctrl.lg.ID];
         system.assertEquals(isocs[0].Name + ' - '+lg.Local_Governance_type__c, lg.Name);
@@ -101,7 +110,8 @@ public class NewParticipantByEmailCtrlTest {
         lg.Name = 'DifferentName';
         update lg;
         
-        lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c 
+        
+         lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c 
               FROM LocalGovernance__c WHERE Id = :lg.ID];
         system.assertEquals(isocs[0].Name + ' - '+lg.Local_Governance_type__c, lg.Name);
         system.assertEquals(UserInfo.getUserId(), lg.Group_Owner__c);
@@ -193,6 +203,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
         system.assertEquals(2, parts.size());
         
     }
+}
     
     
     
