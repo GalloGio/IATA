@@ -15,7 +15,7 @@ global class IEC_ZuoraPricing2SAP_Scheduler implements Schedulable
         Integer intInterval = Utility.getIntegerSetting('ZuoraPricing2SAP Schedule Frequency');
         if (intInterval == 0)
             intInterval = 1440;   // default job frequency expressed by number of minutes - 1440 for 1 day
-        List<String> lstTime = system.now().addMinutes(intInterval).format('hh:mm').split(':');
+        List<String> lstTime = system.now().addMinutes(intInterval).format('HH:mm').split(':');
         String strCRON = '0 ' + lstTime[1] + ' ' + lstTime[0] + ' * * ?';
 
         //*** schedule job
