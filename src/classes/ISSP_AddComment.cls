@@ -41,16 +41,16 @@ public class ISSP_AddComment {
     CaseComment.ParentId = CaseId; // the record the file is attached to
     CaseComment.commentbody = inputComment ;
 
-    try {
+    //try {
       //insert CaseComment ;
       insert CaseComment;
       update tmpCase;
-    } catch (DMLException e) {
+    /*} catch (DMLException e) {
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Adding Comment'));
       return null;
     } finally {
       CaseComment = new CaseComment ();
-    }
+    }*/ 
 
     ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Added Comment successfully'));
     PageReference p = new PageReference('/apex/ISSP_Case?caseId=' + CaseId + commParam);
