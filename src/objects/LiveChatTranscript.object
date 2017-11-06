@@ -80,17 +80,8 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Contact_Language__c</fullName>
-        <externalId>false</externalId>
-        <label>Contact Language</label>
-        <length>150</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Country_Concerned__c</fullName>
+        <description>Country chosen by the customer before start chat (IATA Portal) - Used in Reports and dashboards</description>
         <externalId>false</externalId>
         <label>Country Concerned</label>
         <length>150</length>
@@ -183,6 +174,7 @@
     </fields>
     <fields>
         <fullName>Subtopic__c</fullName>
+        <description>Subtopic chosen by the customer before start chat (IATA Portal) - Used in Reports and dashboards</description>
         <externalId>false</externalId>
         <label>Subtopic</label>
         <length>150</length>
@@ -197,7 +189,7 @@
     </fields>
     <fields>
         <fullName>Topic__c</fullName>
-        <description>Topic</description>
+        <description>Topic chosen by the customer before start chat (IATA Portal) - Used in Reports and dashboards</description>
         <externalId>false</externalId>
         <label>Topic</label>
         <length>150</length>
