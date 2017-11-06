@@ -8365,6 +8365,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10067,6 +10075,14 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>Kế tiếp</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11420,6 +11436,122 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>Nhân viên ngoại tuyến</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhân viên trực tuyến</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>Đặt Câu hỏi</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Gọi cho Chúng tôi</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Khoảng thời gian Rảnh:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>Không Có sẵn Số điện thoại cho Quốc gia đã chọn.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể sử dụng số sau đây để nói chuyện với một đại diện IATA:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện với Chúng tôi</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Kết thúc Cuộc trò chuyện</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Dựa trên tiêu chí của bạn, những người dùng khác đã nhận thấy các câu hỏi sau đây hữu ích:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>Đóng, đã xem</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Đóng, nhắc vào lần sau</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Chào mừng bạn đến với trang Hỗ trợ Khách hàng IATA!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi cũng có thể trò chuyện với bạn bằng [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Rời khỏi Cuộc trò chuyện?</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện không khả dụng</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện không khả dụng</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi rất vui khi được trợ giúp bạn</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại cuộc trò chuyện</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Lưu Cuộc trò chuyện</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn kênh ưa thích của bạn:</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>Chia sẻ lời khen</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>Thể hiện mối quan ngại</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11508,7 +11640,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Bạn có thể lưu bản ghi phiên trò chuyện này bằng cách sử dụng nút &quot;Save chat” (Lưu cuộc trò chuyện). Bản ghi đầy đủ phiên này cũng có sẵn trong Cổng thông tin Khách hàng.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11520,7 +11652,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Nhập tin nhắn của bạn ở đây</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11572,11 +11704,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>Một trong những đại diện của chúng tôi sẽ sớm liên hệ với bạn. Bạn là khách hàng thứ &lt;queuenumber&gt; trong hàng đợi. Thời gian đợi của bạn sẽ là khoảng &lt;queueminutes&gt; phút. Nếu không có thời gian, bạn cũng có thể đặt câu hỏi dưới dạng một trường hợp thông qua Cổng thông tin Khách hàng của chúng tôi. Bạn sẽ nhanh chóng nhận được câu trả lời. Nếu vấn đề của bạn khẩn cấp, bạn có thể chọn tùy chọn &quot;gọi cho chúng tôi&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>Cuộc trò chuyện này đã bị xóa.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>

@@ -15521,6 +15521,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>The Current password field is mandatory.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CustomFooter_Big</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CustomFooter_Big</shortDescription>
+        <value>Our mission is to represent, lead and serve the airline industry.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CustomFooter_Small</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CustomFooter_Small</shortDescription>
+        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -18884,6 +18900,22 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Portal Application Rights</value>
     </labels>
     <labels>
+        <fullName>ISSP_Portal_BackgroundImage</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Portal_BackgroundImage</shortDescription>
+        <value>http://longwallpapers.com/Desktop-Wallpaper/sky-wallpaper-hd-resolution-For-Desktop-Wallpaper.jpg</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_BackgroundImage_size</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Portal_BackgroundImage_size</shortDescription>
+        <value>200%</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Portal_Next</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -21514,7 +21546,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
-        <value>Contact Us thru Phone Number:</value>
+        <value>Contact Us through Phone Number:</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
@@ -21523,6 +21555,54 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_ChatWithUs</shortDescription>
         <value>Chat with Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ClientMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ClientMessage</shortDescription>
+        <value>Sent by you at [timeStamp]</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleNewChatReqDesc</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleNewChatReqDesc</shortDescription>
+        <value>There’s a new Chat Request incoming</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleNewChatReqTitle</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleNewChatReqTitle</shortDescription>
+        <value>ATTENTION: New Chat Request</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupDesc</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupDesc</shortDescription>
+        <value>Your status has recently changed to:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupTitle</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupTitle</shortDescription>
+        <value>Chat Agent Status Changed</value>
+    </labels>
+    <labels>
+        <fullName>LVA_EndChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_EndChat</shortDescription>
+        <value>End Chat</value>
     </labels>
     <labels>
         <fullName>LVA_FAQsHeader</fullName>
@@ -21557,6 +21637,22 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Introduction Video</value>
     </labels>
     <labels>
+        <fullName>LVA_LanguagesMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_LanguagesMessage</shortDescription>
+        <value>I can chat with you in [languages].</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ModalMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ModalMessage</shortDescription>
+        <value>Leave Chat?</value>
+    </labels>
+    <labels>
         <fullName>LVA_NoAvailableButtons</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
@@ -21570,7 +21666,15 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_NoAvailableButtonsForCNS</shortDescription>
-        <value>Chat not allowed for CNS</value>
+        <value>Chat Buttons not available</value>
+    </labels>
+    <labels>
+        <fullName>LVA_OperatorMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_OperatorMessage</shortDescription>
+        <value>Sent by [senderName] at [timeStamp]</value>
     </labels>
     <labels>
         <fullName>LVA_ReachOutUs</fullName>
@@ -21578,7 +21682,23 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_ReachOutUs</shortDescription>
-        <value>Reach out to us</value>
+        <value>We&apos;d love to help</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ReturnToChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ReturnToChat</shortDescription>
+        <value>Return to Chat</value>
+    </labels>
+    <labels>
+        <fullName>LVA_SaveChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_SaveChat</shortDescription>
+        <value>Save Chat</value>
     </labels>
     <labels>
         <fullName>LVA_SelectPreferredChannel</fullName>
@@ -21907,7 +22027,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentFootNote</shortDescription>
-        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
+        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button. Full transcript of this chat sessions will be available in your account in our Customer Portal.</value>
     </labels>
     <labels>
         <fullName>LiveAgentNEW</fullName>
@@ -21929,7 +22049,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentPlaceHolder</shortDescription>
-        <value>Type in your message here</value>
+        <value>Type in your message here and press Enter to send</value>
     </labels>
     <labels>
         <fullName>LiveAgentPostChatChannelQuestion</fullName>

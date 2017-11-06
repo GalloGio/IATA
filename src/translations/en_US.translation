@@ -8349,6 +8349,14 @@
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10041,6 +10049,14 @@
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Portal_Next --></label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11381,6 +11397,122 @@
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label><!-- LVA_AgentOffline --></label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_AgentOnline --></label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_AskQuestion --></label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUs --></label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsAvailableHours --></label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsNoConfigAvailable --></label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>You can use the following number to speak to an IATA representative:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ChatWithUs --></label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_EndChat --></label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_FAQsHeader --></label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_IntroVidCloseDontShowNext --></label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_IntroVidCloseShowNext --></label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Welcome to the IATA Customer Support page!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>I can also chat with you in [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ModalMessage --></label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat not available</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat not available</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ReachOutUs --></label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ReturnToChat --></label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_SaveChat --></label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_SelectPreferredChannel --></label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ShareACompliment --></label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_VoiceAConcern --></label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11469,7 +11601,7 @@
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>You can save the transcript of this chat session using the &quot;Save chat&quot; button. A full transcript of this session will also be available in the Customer Portal.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11481,7 +11613,7 @@
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Type your message here</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11533,11 +11665,11 @@
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>One of our representatives will be with you shortly. You are customer &lt;queuenumber&gt; in line. Your waiting time will be approximately &lt;queueminutes&gt; minute(s). If you are short on time, you can also raise your question as a case through our Customer Portal. You will get a reply quickly. If your matter is urgent, you can select the &quot;call us&quot; option.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>The chat is ready for take off.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>

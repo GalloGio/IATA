@@ -8365,6 +8365,14 @@ and
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10068,6 +10076,14 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>ถัดไป</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11421,6 +11437,122 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>ตัวแทนออฟไลน์</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>ตัวแทนออนไลน์</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>สอบถาม</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>โทรหาเรา</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>ระยะเวลาเปิดบริการ:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถใช้โทรศัพท์สำหรับประเทศที่เลือก</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>ท่านสามารถใช้หมายเลขต่อไปนี้เพื่อพูดคุยกับตัวแทน IATA:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>พูดคุยกับเรา</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>จบแชท</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>ตามเกณฑ์ของท่าน ผู้ใช้อื่นพบว่าคำตอบต่อไปนี้เป็นประโยชน์:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>ปิด เห็นแล้ว</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>ปิด แจ้งเตือนครั้งถัดไป</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับสู่หน้าสนับสนุนลูกค้า IATA!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันยังสามารถพูดคุยกับท่านได้ในภาษา [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>ออกจากแชทใช่หรือไม่</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>แชทไม่สามารถใช้งานได้</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>แชทไม่สามารถใช้งานได้</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>เรายินดีให้ความช่วยเหลือ</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่แชท</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>บันทึกแชท</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกช่องทางที่ท่านประสงค์:</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>บอกเล่าคำชมเชย</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>แจ้งข้อกังวลใจ</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11509,7 +11641,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>ท่านสามารถบันทึกช่วงเวลาของการพูดคุยนี้ได้โดยการใช้ปุ่ม &quot;บันทึกแชท&quot;  ข้อความในการพูดคุยสำหรับช่วงเวลานี้ทั้งหมดยังมีพร้อมใช้งานในพอร์ทัลลูกค้าด้วย</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11521,7 +11653,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>พิมพ์ข้อความของท่านที่นี่</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11573,11 +11705,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>ตัวแทนของเราจะดูแลท่านในอีกไม่ช้านี้ ท่านเป็นลูกค้าลำดับที่ &lt;queuenumber&gt;  เวลาในการรอของท่านคือประมาณ &lt;queueminutes&gt; นาที หากท่านมีเวลาจำกัด ท่านสามารถส่งคำถามแบบกรณีผ่านทางพอร์ทัลลูกค้าได้ด้วย ท่านจะได้รับคำตอบอย่างรวดเร็ว หากเป็นเรื่องด่วน ท่านสามารถเลือกตัวเลือก &quot;โทรหาเรา&quot;</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>แชทพร้อมที่จะเริ่มต้นแล้ว</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
