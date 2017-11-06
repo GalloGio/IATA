@@ -11475,10 +11475,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
-        <label><!-- LVA_Chat_AutoGreeting --></label>
-        <name>LVA_Chat_AutoGreeting</name>
-    </customLabels>
-    <customLabels>
         <label><!-- LVA_ClientMessage --></label>
         <name>LVA_ClientMessage</name>
     </customLabels>
@@ -11517,18 +11513,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>Selamat datang di halaman Dukungan Pelanggan IATA!</label>
         <name>LVA_IntroductionVideo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_en_US --></label>
-        <name>LVA_Language_en_US</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_fr --></label>
-        <name>LVA_Language_fr</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- LVA_Language_pt_BR --></label>
-        <name>LVA_Language_pt_BR</name>
     </customLabels>
     <customLabels>
         <label>Saya juga dapat berbicara dengan Anda dalam bahasa [languages].</label>
@@ -11663,7 +11647,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Anda dapat menyimpan transkripsi sesi percakapan menggunakan tombol &quot;Simpan percakapan&quot;. Transkripsi lengkap sesi ini juga akan tersedia di Portal Pelanggan.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11675,7 +11659,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Ketik pesan Anda di sini</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11727,11 +11711,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>Salah satu perwakilan kami akan berbicara dengan Anda sebentar lagi. Anda adalah pelanggan dengan nomor antrean &lt;queuenumber&gt;. Waktu tunggu Anda sekitar &lt;queueminutes&gt; menit. Jika Anda terburu-buru, Anda juga dapat memberikan pertanyaan melalui Portal Pelanggan. Anda akan cepat mendapatkan balasan. Jika masalahnya mendesak, Anda dapat memilih opsi &quot;hubungi kami&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>Percakapan siap dilakukan.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>

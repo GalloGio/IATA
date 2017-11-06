@@ -21557,14 +21557,6 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Chat with Us</value>
     </labels>
     <labels>
-        <fullName>LVA_Chat_AutoGreeting</fullName>
-        <categories>LVA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LVA_Chat_AutoGreeting</shortDescription>
-        <value>Hello!</value>
-    </labels>
-    <labels>
         <fullName>LVA_ClientMessage</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
@@ -21643,30 +21635,6 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_IntroductionVideo</shortDescription>
         <value>Introduction Video</value>
-    </labels>
-    <labels>
-        <fullName>LVA_Language_en_US</fullName>
-        <categories>LVA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LVA_Language_en_US</shortDescription>
-        <value>English</value>
-    </labels>
-    <labels>
-        <fullName>LVA_Language_fr</fullName>
-        <categories>LVA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LVA_Language_fr</shortDescription>
-        <value>French</value>
-    </labels>
-    <labels>
-        <fullName>LVA_Language_pt_BR</fullName>
-        <categories>LVA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LVA_Language_pt_BR</shortDescription>
-        <value>Portuguese</value>
     </labels>
     <labels>
         <fullName>LVA_LanguagesMessage</fullName>
