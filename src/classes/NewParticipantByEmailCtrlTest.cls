@@ -79,6 +79,14 @@ public class NewParticipantByEmailCtrlTest {
 
 
     static testmethod void testLocalGroups(){
+	String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US', ProfileId = p.Id,
+			TimeZoneSidKey='America/Los_Angeles',
+			UserName=uniqueUserName, License_Cost_Center__c = 'ISF005CH01');
+         System.runAs(u) {
         prepareData();
         Test.startTest();
 
