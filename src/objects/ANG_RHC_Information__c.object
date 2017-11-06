@@ -293,6 +293,29 @@ alert(result[0].errors.message);
 }</url>
     </webLinks>
     <webLinks>
+        <fullName>Request_Consumed_RHC</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Consumed RHC</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Request_RHC_Calculation</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
