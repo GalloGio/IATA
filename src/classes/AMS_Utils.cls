@@ -159,6 +159,7 @@ public without sharing class AMS_Utils {
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
+    public static final String NGFOP            = 'NGFormsOfPayment';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
@@ -300,6 +301,9 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
+    public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
+    public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
+    public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
     static {
         refreshCache();

@@ -1,4 +1,5 @@
 <apex:page controller="ISSP_ANG_PCI"
+		   extensions="ISSP_AmazonS3_Ctrl"
            cache="false"
            sidebar="false"
            showHeader="false"          
@@ -19,9 +20,6 @@
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
        
     <style>
-        .pbTitle {
-            width: {!IF(isstep2,'90% !important','40% !important')};
-        }
        
        .pbBody {
         padding-left:10px !important;    
@@ -148,9 +146,16 @@
             .col2_inner {width:25%; vertical-align: text-top;}
                    
              .row1 {padding-bottom:16px; vertical-align: text-top;}
+
+             .btn {
+        		background:none;
+    		}
     </style>
     <script type="text/javascript">
+    var operationType = '{!sectorvalue}';
+
     function gotoStep1(myValue, nextStep) {
+    	console.log('myValue ' + myValue + ' nextStep ' + nextStep);
             defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
             if($('#brcountry').css('display') == 'none'){
                 checkBranchAbroad(nextStep);
@@ -165,6 +170,37 @@
         	
     }
 
+    function isIE(){
+            //alert(navigator.userAgent);
+            //return /MSIE/.test(navigator.userAgent);
+            if (/MSIE/.test(navigator.userAgent)){
+                return true;
+            }
+            else if (/rv:11/.test(navigator.userAgent)){
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+
+    function getFileLink(fileName) {
+	    
+	    $("#loading").show();
+	    setTimeout(function(){
+	    try{
+	        ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+	            var result2= result.replace("&amp;","&"); 
+	            var newWin = window.open(result2);
+	            if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+	                alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+	            }
+	            $("#loading").hide();
+	        },{escape:false});
+	    }catch(err){alert( err.message);}
+	    },500);
+    }
+
     </script>
             
      <div class="container">
@@ -173,7 +209,8 @@
             
     
 		    <!-- STEP 1 -->
-			<apex:outputText rendered="{!isStep1}">
+			<apex:outputText rendered="{!isStep1}">	
+				
 			    <div class="panel-primary">
 			    	<div class="panel-heading head_panel_green">
 			    		<h3 class="panel-title">{!$Label.ISSP_ANG_PCI_Compliance}</h3>
@@ -189,31 +226,45 @@
                                 </div>
 
                                 <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onClick="goToStep1('{$Component.step1Form.step1Block.operationType}','2')" value="{!$Label.ISSP_AMS_Step2_PCI}" id="Next2">
+                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_AMS_Step2_PCI}" id="Next2">
                                         <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                                     </apex:commandLink> 
                                 </div>
-
+                                
                                 <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%}">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3"/>
+                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3">					   
+
+                                    <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                                </apex:commandLink>
                                 </div>
                             </div>
+                            <apex:pageMessages ></apex:pageMessages>
                             <!--Step Progress bar End -->
 
+                            <div class="alert alert-warning"  role="alert">				                
+				                {!$Label.ISSP_AMS_Noc_StepA_message}
+				            </div>
+
                             <!--Multi select picklist Start -->
-                            <apex:outputPanel>                              
+                            <div style="padding-left:50px">
+                            	{!$Label.ISSP_ANG_IATA_CODE_TO_PROVIDE}
+                           	</div>
+
+                            <apex:outputPanel >                              
                                 <apex:outputPanel id="branchaccountsel">                                
                                     <div class="form-group">
                                         <label for="approval focus" class="col-lg-3 control-label"></label>
                                         <div class="col-lg-9">
-                                            <apex:outputPanel>
-                                                <c:MultiselectPicklist leftLabel="{!$Label.ISSP_AMS_NoC_Choose_Associate_Entities}" 
-                                                                        leftOptions="{!BranchAccounts}"
-                                                                        rightLabel="{!$Label.ISSP_AMS_Selected_Associate_Entities}"
-                                                                        rightOptions="{!agencyCodesConcerned}"
+                                        	<br></br>
+                                            <apex:outputPanel >
+                                                <c:MultiselectPicklist leftLabel="{!$Label.ISSP_ANG_PCI_Choose_IATA_Code}" 
+                                                                        leftOptions="{!RelatedAccount}"
+                                                                        rightLabel="{!$Label.ISSP_ANG_PCI_Selected_IATA_Code}"
+                                                                        rightOptions="{!AgencyCodesConcerned}"
                                                                         size="8"
                                                                         width="300px"
                                                                         btn_up_down="false"
+
                                                 />
                                             </apex:outputPanel>
                                         </div>
@@ -221,15 +272,6 @@
                                 </apex:outputPanel>
                             </apex:outputPanel>
                             <!--Multi select picklist End -->
-
-                            <!-- Country Concerned Start-->
-                            <div class="form-group">                                
-                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
-                                <div class="col-lg-9" id="brcountry" style="padding-top:7px;">
-                                    <apex:outputText value="{!countryLabel}"/>
-                                </div>
-                            </div>
-                            <!-- Country Concerned End -->
 				        	
 				            	<apex:pageBlockButtons location="bottom" style="padding-left:100px">
 				                	<apex:actionStatus id="buttonLoadingStep1">
@@ -237,78 +279,172 @@
 				                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
 				                        	<apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form"/>
 				                    	</apex:outputPanel></apex:facet>
-										<apex:facet name="start"><apex:outputPanel>
+										<apex:facet name="start"><apex:outputPanel >
 					                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>					                        
 					                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
 					                    </apex:outputPanel></apex:facet>					                               
 				                	</apex:actionStatus>
 				            	</apex:pageBlockButtons>
-				         		<apex:pageMessages ></apex:pageMessages>
+				         		
 				            </apex:pageBlock>
 				            
 				        </apex:form>         
 				    </div>
 	        	</div>
         	</apex:outputText>
-    
-<!-- STEP 2 -->
-			<apex:outputText rendered="{!isStep2}">
-			    <div class="panel-primary">
-			    	<div class="panel-heading head_panel_green">
-			    		<h3 class="panel-title">{!$Label.ISSP_ANG_PCI_Compliance}</h3>
-			    	</div>
-			    	<div class="panel-body" id="body-enquiries">
-				    	<apex:form>
-				    		<div class="progress">
-				    			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-			                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1"/>
-			                    </div>
-			                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-			                        {!$Label.ISSP_AMS_Step2_PCI}
-			                    </div>
-			                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-			                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3"/>
-			                    </div>			                    
-				    		</div>
-				    	</apex:form>			    	
 
+<!--       -->    
+<!-- STEP 2-->
+<!--       -->
+	<apex:outputText rendered="{!isStep2}">
+        <div class="panel-primary">
+	    	<div class="panel-heading head_panel_green">
+	    		<h3 class="panel-title">{!$Label.ISSP_ANG_PCI_Compliance}</h3>
+	    	</div>
+	    	<div class="panel-body" id="body-enquiries">
+	    		
+		    	<apex:form id="form">
+		    		<div class="progress">
+		    			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1"/>
+	                    </div>
+	                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+	                        {!$Label.ISSP_AMS_Step2_PCI}
+	                    </div>
+	                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3"/>
+	                    </div>			                    
+		    		</div>
+		    	</apex:form>				    		
+		    	<div class="col-md-12">
+			        <apex:variable var="sectorValueLabel" value="{!$Label.ISSP_Travel_Agent}" />
+			        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
+			            <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
+			            <br />
+			            <apex:pageMessages />
+	                   	<div id="loading" style="display:none; width:100%">
+	                        <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" ></div>
+	                        <div style="border:1px solid black; background:white; text-align:center;
+	                        display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+	                        position: absolute; top:60%; left:45%; z-index:10;" >
+	                        	<apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
+	                    	</div>
+	                    </div>
+			   			<apex:variable var="cnt" value="{!0}" />
+			    
+    			    <apex:repeat value="{!countryRequirementsList}" var="reqs">
+    			        <apex:variable var="cnt" value="{!cnt+1}"/>
+    			        <c:ISSP_AMS_FormUpload reqCnt="{!cnt}" 
+    			            reqRequired="{!reqs.File_to_Upload__c}" 
+    			            reqName="{!reqs.Name}" 
+    			            reqDescription="{!reqs.Requirement_text__c}"
+    			            reqIdentifier="{!reqs.File_Identifier2__c}"
+    			        />
+    			    </apex:repeat>
+    			    </apex:pageBlock>
 
-				    	<div class="col-md-12">
-					        <apex:variable var="sectorValueLabel" value="{!$Label.ISSP_Travel_Agent}" />
-					        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
-					            <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
-					            <br />
-					                <apex:pageMessages />
-					                      <div id="loading" style="display:none; width:100%">
-					                        <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" ></div>
-					                        <div style="border:1px solid black; background:white; text-align:center;
-					                        display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
-					                        position: absolute; top:60%; left:45%; z-index:10;" >
-					                        <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
-					                    </div>
-					                    </div>
-					    <apex:variable var="cnt" value="{!0}" />
-					    listreq - {!List_CountryReqments}
-					    <apex:repeat value="{!List_CountryReqments}" var="reqs">
-					        <apex:variable var="cnt" value="{!cnt+1}"/>
-					        <c:ISSP_AMS_FormUpload reqCnt="{!cnt}" 
-					            reqRequired="{!reqs.File_to_Upload__c}" 
-					            reqName="{!reqs.Name}" 
-					            reqDescription="{!reqs.Requirement_text__c}"
-					            reqIdentifier="{!reqs.File_Identifier2__c}"
-					        />
-					    </apex:repeat>
-					       </apex:pageBlock>
-					   </div>
-			    	</div>
+			   </div>
 
-
-
-			    </div>
-        	</apex:outputText>
+			   	<apex:form id="UploadForm">
+			        <apex:pageBlock >
+			            <apex:pageBlockButtons location="bottom">
+			    	        <apex:commandButton styleClass="btn" action="{!goToStep1}" value="{!$Label.ISSP_Back}"/>&nbsp;
+			                <apex:commandButton styleClass="btn" action="{!goToStep3}" value="{!$Label.ISSP_Next}" />
+			                <apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />			                
+			            </apex:pageBlockButtons>
+			        </apex:pageBlock>
+			    </apex:form>
+	    	</div>
+	    </div>
+    </apex:outputText>
+   	 
 <!-- STEP 3 -->
            
-    
+    <apex:outputText rendered="{!isStep3}">
+    	<div class="panel-primary">
+    		<div class="panel-heading head_panel_green">
+				<h3 class="panel-title">{!$Label.ISSP_ANG_PCI_Compliance}</h3>
+			</div>
+			<div class="panel-body" id="body-enquiries">
+				<apex:form >
+		    		<div class="progress">
+		    			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1Submit"/>
+	                    </div>
+	                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!$Label.ISSP_AMS_Step2_PCI}" id="Prev2Submit"/> 
+	                    </div>
+	                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+	                        {!$Label.ISSP_AMS_Step3_PCI}
+	                    </div>			                    
+		    		</div>
+		    	</apex:form>                     
+				
+		    		<apex:pageBlock >
+						<apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">
+							<div class="aplabel">
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="{!$Label.ISSP_ANG_Enabel_Credit_Card_Codes}"/> 
+                                    <apex:outputField value="{!newForm.Agency_Codes_Concerned__c}"  style="width: 174.4px;"/>
+								</apex:pageBlockSectionItem>
+							</div>
+						</apex:pageBlockSection>
+					</apex:pageBlock>
+
+					<apex:form id="tCondiForm">
+						<apex:pageMessages />
+						<apex:pageBlock >
+							<apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
+								<div class="aplabel">
+									<apex:outputText >
+										{!$Label.ISSP_AMS_NoC_TC_Change_CGO}
+									</apex:outputText>
+									<apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}"/>							
+									<apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true" />
+								</div>
+							</apex:pageBlockSection>
+						
+						
+						<apex:pageBlockButtons location="bottom" style="padding-left:100px">
+		                	<apex:actionStatus id="buttonLoadingStep3">
+		                    	<apex:facet name="stop"><apex:outputPanel >
+		                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
+		                        	<apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
+		                        	<apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
+		                    	</apex:outputPanel></apex:facet>
+								<apex:facet name="start"><apex:outputPanel >
+			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
+			                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
+			                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right" reRender="tCondiForm" />
+			                    </apex:outputPanel></apex:facet>					                               
+		                	</apex:actionStatus>
+		            	</apex:pageBlockButtons>
+		            	</apex:pageBlock>
+
+
+		    			<!--<div style="text-align:center;">
+		    				<apex:actionStatus id="buttonLoadingStep3PAX">
+		    					<apex:facet name="stop"><apex:outputPanel>
+				                	<apex:commandButton styleClass="btn" action="{!goToStep2}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>&nbsp;	                 
+				                	<apex:commandButton styleClass="btn" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" reRender="tCondiForm" status="buttonLoadingStep5PAX"/> 
+			                	</apex:outputPanel></apex:facet>
+			                	<apex:facet name="start"><apex:outputPanel>
+			                		<apex:commandButton  action="{!goToStep2}" value="{!$Label.ISSP_Back}" disabled="true"/>&nbsp;
+			                		<apex:commandButton  action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}..."/> 
+			                	</apex:outputPanel></apex:facet>
+		    				</apex:actionStatus>
+		    			</div>-->
+
+
+				</apex:form>
+
+
+			</div>
+    	</div>
+
+
+    	
+	</apex:outputText>
            
          </div>
          <c:ISSP_CustomFooter communityName="{!communityName}"/>
