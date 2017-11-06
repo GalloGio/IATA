@@ -10,3 +10,13 @@
 .THIS .slds-popover {
     width: auto !important;
 }
+
+@media (max-width: 1200px) {
+
+    .THIS button {
+        display: block !important;
+    }
+    .THIS .slds-button  {
+        margin-left: 0 !important;
+    }
+}
