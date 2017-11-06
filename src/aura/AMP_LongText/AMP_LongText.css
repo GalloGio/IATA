@@ -7,3 +7,15 @@
 	max-width: 100%;
 	white-space: normal;
 }
+
+@media (max-width: 1200px) {
+    .THIS.slds-truncate {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+}
