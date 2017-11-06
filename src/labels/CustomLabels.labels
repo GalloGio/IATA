@@ -638,6 +638,20 @@
         <value>Application Withdrawal</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP41</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP41</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP42</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP42</shortDescription>
+        <value>Setup Finalization</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
