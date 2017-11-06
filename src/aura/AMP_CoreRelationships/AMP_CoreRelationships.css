@@ -2,3 +2,17 @@
   font-size: 150%;
   margin-top: 1em;
 }
+
+.THIS td {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+.THIS .blue-icon {
+    display: inline;
+    margin-left: 1em;
+}
+
+.THIS .blue-icon > .slds-icon {
+    fill: blue;
+}
