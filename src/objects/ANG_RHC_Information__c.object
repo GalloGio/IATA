@@ -305,11 +305,11 @@ alert(result[0].errors.message);
 }</url>
     </webLinks>
     <webLinks>
-        <fullName>Request_Balance_Update</fullName>
+        <fullName>Request_Consumed_RHC</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Request Balance Update</masterLabel>
+        <masterLabel>Request Consumed RHC</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
