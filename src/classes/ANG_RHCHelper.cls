@@ -22,7 +22,6 @@ public class ANG_RHCHelper {
 	}
 
 	public static void createRHCInfo(List<Account> accounts, Boolean sumFS) {
-
 		if(accounts.isEmpty()) return;
 
 		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
