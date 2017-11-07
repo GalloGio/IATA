@@ -140,7 +140,7 @@ public class ANG_RHC_Information_test{
 	     
         
 
-        ANG_RHC_Information__c rhcInfo= [select id, CurrencyIsoCode from ANG_RHC_Information__c limit 1];
+        ANG_RHC_Information__c rhcInfo= [select id, CurrencyIsoCode,ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1];
 
         test.StartTest();
             rhcInfo.CurrencyIsoCode=fs.CurrencyIsoCode;
