@@ -220,7 +220,21 @@ private class IECApplicationsManager_tst {
         oCommunityUser = IECTestUtil.createSampleUser(oContact);
     } // initDataForCustomerSearch
     
-    
+
+    // ====================================================================
+    // creates a registry in tha custom setting CAC_and_GAD_Settings__c
+    // output: CAC_and_GAD_Settings__c
+    // used by testAnonymousSearch
+    private static void createCACandGADEntry(){
+
+        CAC_and_GAD_Settings__c CacGadSettings = new CAC_and_GAD_Settings__c();
+        CacGadSettings.Name = 'Excluded Values';
+        CacGadSettings.Excluded_CAC_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z';
+        CacGadSettings.Excluded_GAD_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z;C;X';
+
+        insert CacGadSettings;
+
+    }
     
     // ====================================================================
     // test customer search functionality: part 1
@@ -228,6 +242,8 @@ private class IECApplicationsManager_tst {
     @isTest(SeeAllData=true)
     static void testCustomerSearch1_Count() {
         initDataForCustomerSearch();
+
+        createCACandGADEntry();
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
         List<IEC_Product_Access__c> lstProductAccess = null;
@@ -264,6 +280,8 @@ private class IECApplicationsManager_tst {
     @isTest(SeeAllData=true)
     static void testCustomerSearch2() {
         initDataForCustomerSearch();
+
+        createCACandGADEntry();
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
         List<IEC_Product_Access__c> lstProductAccess = null;
@@ -516,6 +534,9 @@ private class IECApplicationsManager_tst {
         List<GDP_Products_Account_View__c> lstSearchResult = null;
         List<IEC_Usage_Tracker_Live__c> lstUsageLive = null;
         ID_Card__c oSearchedIDCard = null;
+
+        //Creates a regist in CAC_and_GAD_Settings__c to be used in the test
+        createCACandGADEntry();
         
         setupData();
         
