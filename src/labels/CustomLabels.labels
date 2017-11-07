@@ -763,12 +763,19 @@
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
         <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type</value>
     </labels>
+     <labels>
+        <fullName>ANG_ISSP_AFP_CreditCardNoAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AFP_CreditCardNoAccess</shortDescription>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order o submit proof of PCI Compliance.</value>
+    </labels>
     <labels>
         <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=Accreditation%20Travel%20Agent&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
@@ -16420,6 +16427,14 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for creating your draft Notice of Change form.</value>
     </labels>
     <labels>
+        <fullName>ISSP_PCI_Case_Submited</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
+        <value>Thank you for submiting the request for Credit Card form of Payment.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
         <categories>ISSP, AMS, Email</categories>
         <language>en_US</language>
@@ -18512,7 +18527,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Least_One_IATA_CODE</shortDescription>
-        <value>Please select at least one IATA CODE</value>
+        <value>Please select at least one IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Least_One_BO</fullName>

@@ -247,7 +247,9 @@
 
                             <!--Multi select picklist Start -->
                             <div style="padding-left:50px">
-                            	{!$Label.ISSP_ANG_IATA_CODE_TO_PROVIDE}
+                            	<strong>
+                            		{!$Label.ISSP_ANG_IATA_CODE_TO_PROVIDE}
+                            	</strong>
                            	</div>
 
                             <apex:outputPanel >                              
@@ -273,7 +275,7 @@
                             </apex:outputPanel>
                             <!--Multi select picklist End -->
 				        	
-				            	<apex:pageBlockButtons location="bottom" style="padding-left:100px">
+				            	<apex:pageBlockButtons location="bottom" style="padding-left:218px">
 				                	<apex:actionStatus id="buttonLoadingStep1">
 				                    	<apex:facet name="stop"><apex:outputPanel >
 				                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
@@ -316,9 +318,8 @@
 	                    </div>			                    
 		    		</div>
 		    	</apex:form>				    		
-		    	<div class="col-md-12">
-			        <apex:variable var="sectorValueLabel" value="{!$Label.ISSP_Travel_Agent}" />
-			        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
+		    	<div class="col-md-12">			       
+			        <apex:pageBlock mode="detail" id="theBlock">
 			            <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
 			            <br />
 			            <apex:pageMessages />

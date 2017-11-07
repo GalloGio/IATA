@@ -12,6 +12,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public String modalErrorMessage {get; set;}
 	public String modalErrorMessageFlag {get; set;}
 	public String cashlessMessage {get; set;}
+	public String creditCardMessage {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services) {
 		this.isCash = NO;
@@ -37,10 +38,13 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 			if(hasAccess) {
 				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessage;
+				this.creditCardMessage = System.Label.ANG_ISSP_AFP_NoCreditCardMessage;
 			} else {
-				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;				
+				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;
+				this.creditCardMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;				
 			}
 
+			System.debug('this.cashlessMessage--->' + this.cashlessMessage);
 			System.debug('this.cashlessMessage--->' + this.cashlessMessage);
 		}
 

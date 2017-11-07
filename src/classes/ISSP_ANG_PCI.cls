@@ -2,11 +2,12 @@ public with sharing class ISSP_ANG_PCI {
 
     public String communityName { get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}  
-    
-    public String sector                           						{get; set;}
-    public String stepNumber                        					{get; set;}
-    public String step1GoToNumber                   					{get; set;}
-    public String countryLabel                      					{get; set;}
+    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+	public String sector                           						{get; set;}
+	public String stepNumber                        					{get; set;}
+	public String step1GoToNumber                   					{get; set;}
+	public String countryLabel                      					{get; set;}
     public string jsonCountriesMap                  					{get; set;}
     public string jsonCountriesNotAllowedList       					{get; set;}
     public String amsCountryLabel 										{get; set;}
@@ -19,8 +20,9 @@ public with sharing class ISSP_ANG_PCI {
     private String vSAAMCaseId;
     private Id vHQAccountId;
     private Id parentAccountId; 
+    private Id vAccountConcernedId;
     public static Map<String, String> languagesMap;
-    public List<AMS_Accreditation_Requirement__c> countryRequirementsList {get; set;} 
+    public List<AMS_Accreditation_Requirement__c> countryRequirementsList 	{get; set;} 
 
     public AMS_Pax_Accreditation_Form__c newForm    					{get; set;} 
     public Contact con                              					{get; set;}
@@ -34,17 +36,12 @@ public with sharing class ISSP_ANG_PCI {
     public List<AMS_Accreditation_Requirement__c> List_CountryReqments 	{get; set;}    
     public List<Account> accList 										{get; set;}
 
-    public boolean isStep1 												{get;set;}
-    public boolean isStep2 												{get;set;}
-    public boolean isStep3 												{get;set;}
+    public boolean isStep1 												{get; set;}
+    public boolean isStep2 												{get; set;}
+    public boolean isStep3 												{get; set;}
     public boolean isNewCase 											{get; set;}
     public boolean isParentAccount										{get; set;}
     public boolean redirectToStepB 										{get; set;}
-
-
-    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-    private Id vAccountConcernedId;
-
 
     ISSP_AMS_Accreditation amsAccreditation = new ISSP_AMS_Accreditation();
     
@@ -62,7 +59,6 @@ public with sharing class ISSP_ANG_PCI {
         isParentAccount = false;
         stepNumber = '';
 
-
         getContact();
         getCountriesMap();
 
@@ -74,11 +70,11 @@ public with sharing class ISSP_ANG_PCI {
         if (ApexPages.currentPage().getParameters().containsKey('step'))
             stepNumber = ApexPages.currentPage().getParameters().get('step');
         
-         system.debug('aqui stepNumber ' + stepNumber);
+         system.debug('pci - stepNumber ' + stepNumber);
         if (stepNumber == '1' || stepNumber == '') {
             isStep1 = true;
-        }else if(stepNumber == '2'){
-        	system.debug('aqui step 2 ');
+
+        }else if(stepNumber == '2'){        	
         	Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
         	newForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
         	fetchCase(caseid);
@@ -87,7 +83,7 @@ public with sharing class ISSP_ANG_PCI {
             isstep2 = true;
 
         }else if(stepNumber == '3'){
-        	system.debug('aqui newCase.ID ' + newCase.ID + ' newForm.Accept_terms_and_conditions__c ' + newForm.Accept_terms_and_conditions__c);
+        	
         	Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
         	newForm = ISSP_SELECTOR.fetchAMSProcessForm(caseid);
         	isStep3 = true;
@@ -113,31 +109,27 @@ public with sharing class ISSP_ANG_PCI {
             newCase.Case_Language__c = 'en_US';
         
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
-    	    	vSAAMCaseId  = ApexPages.currentPage().getParameters().get('caseId');
-    	    	fetchCase(vSAAMCaseId);
+	    	vSAAMCaseId  = ApexPages.currentPage().getParameters().get('caseId');
+	    	fetchCase(vSAAMCaseId);
 
-    	    	applyLanguage = newCase.Case_Language__c;
-            	displayLanguage = newCase.Case_Language__c;
+	    	applyLanguage = newCase.Case_Language__c;
+        	displayLanguage = newCase.Case_Language__c;
+        	
+        	newForm = ISSP_Selector.fetchAMSProcessForm(vSAAMCaseId);
+        	system.debug('pci - newForm' + newForm);
+        	if (vAccountConcernedId != null)
+                accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
-            	
-            	newForm = ISSP_Selector.fetchAMSProcessForm(vSAAMCaseId);
-            	system.debug('aqui newForm' + newForm);
-            	if (vAccountConcernedId != null)
-                    fetchAccountConcernedDetails();
-
-                system.debug('aqui newForm.Agency_Codes_Concerned__c ' + newForm.Agency_Codes_Concerned__c);
-                if(newForm.Agency_Codes_Concerned__c != null)
-                	agencyCodesConcerned = getAgencyCodesConcerned();                	
-                
-    	}	
-	    
-	        
-    	    amsOfficeType = AMS_Utils.HO;
-
-    	    
+            system.debug('aqui newForm.Agency_Codes_Concerned__c ' + newForm.Agency_Codes_Concerned__c);
+            if(newForm.Agency_Codes_Concerned__c != null)
+            	agencyCodesConcerned = getAgencyCodesConcerned();                	                
+    	}   
+    	
+    	amsOfficeType = AMS_Utils.HO;
 
         amsAccreditation.setContextualHelp(userInfo.getLanguage());
     }
+
     public String getContactAccount(){
         return amsAccreditation.getContactAccount();    
     }
@@ -146,7 +138,6 @@ public with sharing class ISSP_ANG_PCI {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         con = DAL_ISSP.getContact(user.ContactId);
     }
-
 
     /**
 			GET RELATED ACCOUNT
@@ -167,55 +158,52 @@ public with sharing class ISSP_ANG_PCI {
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
         return options;
-
     }
 
     private List<Account> getAccount(){
-		    	List<String> selectedBranchCodes;
-		    	selectedBranchCodes = new List<String>();
+    	List<String> selectedBranchCodes;
+    	selectedBranchCodes = new List<String>();
 
-		    	if(newForm.Agency_Codes_Concerned__c != null)
-		    		selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
-		    	
-		    	system.debug('aqui vHQAccountId ' + vHQAccountId + ' selectedBranchCodes ' + selectedBranchCodes);
+    	if(newForm.Agency_Codes_Concerned__c != null)
+    		selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
+    	
+    	system.debug('vHQAccountId ' + vHQAccountId + ' selectedBranchCodes ' + selectedBranchCodes);
 
-		    	return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
-		                                      FROM Account
-		                                      WHERE (Top_Parent__c = :parentAccountId OR Id = :parentAccountId) AND IATACode__c != null AND RecordType.DeveloperName IN
-		                                      				 ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) 
-		                                      				 AND (IATACode__c NOT IN : selectedBranchCodes)
-		                                              ORDER BY Name, IATACode__c
-		                                     ];
-
+    	return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
+    					BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
+                        FROM Account
+                        WHERE (Top_Parent__c = :parentAccountId OR Id = :parentAccountId) AND IATACode__c != null AND RecordType.DeveloperName IN
+                                      			('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) 
+                        AND (IATACode__c NOT IN : selectedBranchCodes)
+                        ORDER BY Name, IATACode__c
+                ];
     }
 
     public List<SelectOption> getAgencyCodesConcerned(){
-        	system.debug('aqui getAgencyCodesConcerned ' + newForm.Agency_Codes_Concerned__c);
-        		List<Account> accountList;
-        		List<SelectOption> options = new List<SelectOption>();
+    	system.debug('getAgencyCodesConcerned starting...' + newForm.Agency_Codes_Concerned__c);
+		List<Account> accountList;
+		List<SelectOption> options = new List<SelectOption>();
 
-        		if(newForm.Agency_Codes_Concerned__c != null)
-        			accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+		if(newForm.Agency_Codes_Concerned__c != null)
+			accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
-        		SYSTEM.DEBUG('aqui agency concerned ' + accountList);
+		SYSTEM.DEBUG('agency concerned ' + accountList);
 
-        		for (Account thisAccount : accountList) {
-		            String theLabel;
-		            theLabel = thisAccount.IATACode__c + ' - ' + thisAccount.Name + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+		for (Account thisAccount : accountList) {
+            String theLabel;
+            theLabel = thisAccount.IATACode__c + ' - ' + thisAccount.Name + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
-		            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
-        		}
-        			return options;
+            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
+		}
+		return options;
     }
 
     public String getCountryLabel(){
-        countryLabel = amsAccreditation.getAmsAllLangCountryLabel(isocountry,UserInfo.getLanguage());
-        system.debug('aqui countryLabel' + countryLabel);
+        countryLabel = amsAccreditation.getAmsAllLangCountryLabel(isocountry,UserInfo.getLanguage());        
         return countryLabel;
     }
 
-    public PageReference goToStep1(){
-        
+    public PageReference goToStep1(){        
         return new PageReference('/ISSP_ANG_PCI?caseId=' + newCase.Id + '&step=1' + commParam);
     }
 
@@ -245,6 +233,8 @@ public with sharing class ISSP_ANG_PCI {
         SYSTEM.DEBUG('PCI - Saving Record - STEP A ' + step1GoToNumber);
         Account branchAccount;
         Boolean changeOfAccountConcerned;
+        Boolean first = true;
+	   	String agencyCodes;
 
         changeOfAccountConcerned = true;
 
@@ -258,9 +248,7 @@ public with sharing class ISSP_ANG_PCI {
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Reason1__c = AMS_UTILS.CASE_REASON_FOR_MANAGEMENT;
         newCase.Status = 'Draft';
-        newCase.Visible_on_ISS_Portal__c = true;        
-        
-
+        newCase.Visible_on_ISS_Portal__c = true;
 
         if(agencyCodesConcerned.size() > 0){
         	branchAccount = [SELECT Id, Name, IATACode__c FROM Account WHERE IATACode__c = :agencyCodesConcerned[0].getValue() LIMIT 1];	
@@ -272,19 +260,13 @@ public with sharing class ISSP_ANG_PCI {
         newCase.Account_Concerned__c = branchAccount.Id;
         vAccountConcernedId = newCase.Account_Concerned__c;
 
-        system.debug('aqui vAccountConcernedId ' + vAccountConcernedId);
+		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
 
-		fetchAccountConcernedDetails();
-		
-		system.debug('aqui accountConcerned ' + accountConcerned);
 
 		newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
 
 		fetchPCI_CountryRequirements();
-		system.debug('aqui agencyCodesConcerned ' + vAccountConcernedId);
 
-	    Boolean first = true;
-	   	String agencyCodes;
 	    for ( SelectOption ac : agencyCodesConcerned) {
 	        if (!first) {
 	            agencyCodes += ',';
@@ -313,7 +295,7 @@ public with sharing class ISSP_ANG_PCI {
 
         upsert newForm;
         
-        system.debug('aqui newCase ' + newCase.Account_Concerned__c + 'step1GoToNumber ' + step1GoToNumber);
+        system.debug('PCI - newCase ' + newCase.Account_Concerned__c + 'step1GoToNumber ' + step1GoToNumber);
         
         if (step1GoToNumber == '3') {
             return goToStep3();
@@ -326,7 +308,6 @@ public with sharing class ISSP_ANG_PCI {
 
     public Pagereference saveDraft(){
     	return new Pagereference('/ISSP_Homepage');
-
     }
 
     public PageReference submitForm(){
@@ -341,7 +322,7 @@ public with sharing class ISSP_ANG_PCI {
             	return goToStep2();
         }
                
-        system.debug('aqui ewform.Accept_terms_and_conditions__c ' + newform.Accept_terms_and_conditions__c);    
+        system.debug('PCI -  newform.Accept_terms_and_conditions__c ' + newform.Accept_terms_and_conditions__c);    
         if (!newform.Accept_terms_and_conditions__c) {
         	ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
         	return null;
@@ -359,16 +340,18 @@ public with sharing class ISSP_ANG_PCI {
         update newCase;
 
         String typeOfProcess = AMS_Utils.NGFOP;
-            ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
+        ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
 
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
     	
     	return null;
     }
 
+    /**
+		Cancel METHOD
+    **/
     public PageReference cancel(){
-
-        system.debug('in cancel');
+        
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
             return new Pagereference('/ISSP_Homepage?mid=M0S1' +commParam);
@@ -419,27 +402,9 @@ public with sharing class ISSP_ANG_PCI {
         jsonCountriesNotAllowedList = JSON.serialize(notAllowedCountries);
     }
 
-    public void saveAMSForm() {
-
-    }
-
-    public void fetchAccountConcernedDetails () {
-        accountConcerned = [
-                            SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
-                            TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
-                            Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
-                            Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                            ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                            Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c
-                               FROM Account
-                               WHERE Id = :vAccountConcernedId
-                                          LIMIT 1
-                           ];
-    }
 
     public void fetchPCI_CountryRequirements() {
-    	SYSTEM.DEBUG('aqui Fetching Country REQS -  SectorValue: ' + sectorValue);
+    	SYSTEM.DEBUG(' fetchPCI_CountryRequirements starting ');
     	countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
     	
     		String selectedLang;
@@ -449,7 +414,7 @@ public with sharing class ISSP_ANG_PCI {
             userLanguage = UserInfo.getLanguage();
             if(userLanguage == null) userLanguage = 'en_US';
 
-            SYSTEM.DEBUG('aqui Travel Agent ReqID:' + TravelReqRecType.Id);
+            SYSTEM.DEBUG('Travel Agent ReqID:' + TravelReqRecType.Id);
             
             AggregateResult[] distinctReqmentLangs;
 
@@ -461,8 +426,6 @@ public with sharing class ISSP_ANG_PCI {
                 selectedLang = 'English';
             }
 
-            system.debug('aqui amsOfficeType ' + amsOfficeType + ' selectedLang ' + selectedLang); 
-
             List_CountryReqments = [
                                        SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
                                        FROM AMS_Accreditation_Requirement__c
@@ -472,7 +435,7 @@ public with sharing class ISSP_ANG_PCI {
                                                AND RecordTypeId = :TravelReqRecType.Id  AND File_Identifier2__c = 'PCI_COMPLIANCE'                                              
                                                ORDER BY Sort_Order__c ASC
                                    ];
-system.debug('aqui List_CountryReqments ' + List_CountryReqments);
+			system.debug('List_CountryReqments ' + List_CountryReqments);
             if(List_CountryReqments.size() != 0){
 
             	Set<String> availableLanguages = new Set<String>();
@@ -523,8 +486,6 @@ system.debug('aqui List_CountryReqments ' + List_CountryReqments);
 
     }
 
-
-
     public void fetchCase(String vCaseId) {
         List <Case> newCases = [
                                    SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
@@ -535,15 +496,9 @@ system.debug('aqui List_CountryReqments ' + List_CountryReqments);
         system.debug('aqui newCases ' + newCases.size());
         if (newCases.size() > 0) {
             isNewCase = false;
-            newCase = newCases[0];
-            /*.Status != 'Draft') {
-                redirectToCasesList();
-            }*/
-        } /*else {
-            redirectToCasesList();
-        }*/
+            newCase = newCases[0];           
+        } 
     }
-
 
     private List<Account> getSelectedBranchList(List<String> branchCodes) {
         return [
@@ -556,33 +511,33 @@ system.debug('aqui List_CountryReqments ' + List_CountryReqments);
 
     private boolean validateAttachedFiles() {
 
-    		boolean errorFound = false;
-    		redirectToStepB = false;
+		boolean errorFound = false;
+		redirectToStepB = false;
 
-    		Map<String, String> folderMap = new Map<String, String>();
-        	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(newCase.Id);
-        	system.debug('List_CountryReqments: ' + List_CountryReqments + ' newCase.Id ' + newCase.Id); 
+		Map<String, String> folderMap = new Map<String, String>();
+    	folderMap = ISSP_SELECTOR.getMapAmazonFileIdentifiers(newCase.Id);
+    	system.debug('List_CountryReqments: ' + List_CountryReqments + ' newCase.Id ' + newCase.Id); 
 
-        	for (AMS_Accreditation_Requirement__c thisReq : countryRequirementsList) {
-	            if (thisReq.File_to_Upload__c == 'Mandatory') {
-	                system.debug('MANDATORY FOR: ' + thisReq.File_Identifier2__c);
-	                if (!folderMap.containsKey(thisReq.File_Identifier2__c)) {	                    
-	                    ApexPages.Message myMsg;
-	                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload + ' ' + thisReq.Name);
-	                    ApexPages.addMessage(myMsg);
+    	for (AMS_Accreditation_Requirement__c thisReq : countryRequirementsList) {
+            if (thisReq.File_to_Upload__c == 'Mandatory') {
+                system.debug('MANDATORY FOR: ' + thisReq.File_Identifier2__c);
+                if (!folderMap.containsKey(thisReq.File_Identifier2__c)) {	                    
+                    ApexPages.Message myMsg;
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload + ' ' + thisReq.Name);
+                    ApexPages.addMessage(myMsg);
 
-	                    if (thisReq.File_Identifier2__c == AMS_UTILS.PCI_COMPLIANCE)
-	                        redirectToStepB = true;
+                    if (thisReq.File_Identifier2__c == AMS_UTILS.PCI_COMPLIANCE)
+                        redirectToStepB = true;
 
-	                    errorFound = true;
-	                } else {
-	                    system.debug('FILE AVAILABLE');
-	                }
-	            }
-        	}
+                    errorFound = true;
+                } else {
+                    system.debug('FILE AVAILABLE');
+                }
+            }
+    	}
 
-        	if (errorFound)
-            return false;
+    	if (errorFound)
+        	return false;
 
         return true;
     }

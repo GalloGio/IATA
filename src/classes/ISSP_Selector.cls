@@ -87,5 +87,21 @@ public with sharing class ISSP_Selector {
     return languagesMap;
     }
 
+    public static Account fetchAccountConcernedDetails (Id vAccountConcernedId) {
+        Account accountConcerned = [
+                            SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                            TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
+                            Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
+                            Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
+                            ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
+                            Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c
+                               FROM Account
+                               WHERE Id = :vAccountConcernedId
+                                          LIMIT 1
+                           ];
+        return accountConcerned;
+    }
+
 
 }

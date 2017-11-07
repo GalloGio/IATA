@@ -1051,6 +1051,9 @@
                <apex:outputPanel rendered="{!isNoticeOfChange}">
                 {!IF(newform.Is_change_bank_account_details__c, $Label.ISSP_AMS_StepFinal_ChangeBank, $Label.ISSP_AMS_StepFinal_ChangeOther)}
                </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'FOP Management'}">
+                {!$Label.ISSP_PCI_Case_Submited}
+               </apex:outputPanel>
            </strong>
            
            
