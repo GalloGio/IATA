@@ -108,7 +108,7 @@
                             {!$Label.ISSP_Local_Groups_Industry_Title}
                         </div>
                         <div class="col-xs-2">
-                            <apex:outputLink styleclass="btn btn-primary btn-sm" value= "{!URLFOR($Page.ISSP_LocalGroupsCSV)}">
+                            <apex:outputLink styleclass="btn btn-primary btn-sm" value="{!URLFOR($Page.ISSP_LocalGroupsCSV)}">
                                 <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
                                 {!$Label.ISSP_Local_Groups_Export_CSV}
                             </apex:outputlink>
@@ -167,7 +167,7 @@
                         </td>
                         <td>
                             <apex:outputText value="{!wrapper.participant.Local_Group_Type__c}"
-                                html-data-toggle="{!IF(wrapper.groupTypeTooltip=='','','tooltip')}" title="{!IF(wrapper.groupTypeTooltip=='','',$Label[wrapper.groupTypeTooltip])}"/>
+                                html-data-toggle="{!IF(OR(wrapper.participant.Local_Group_Type__c=='',wrapper.groupTypeTooltip==''),'','tooltip')}" title="{!wrapper.groupTypeTooltip}"/>
                         </td>
                         <td>{!wrapper.participant.Local_Governance__r.Cargo_Passenger__c}</td>
                         <td>{!wrapper.participant.Participant_Type__c}</td>

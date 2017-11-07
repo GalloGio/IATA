@@ -6,7 +6,6 @@ public without sharing class ISSP_LocalGroups {
     private list<Account> listAccount;
     private User currentUser;
     public map<Id,String> mapClusterCountry;
-    public map<String,String> mapGroupTypeDescription;
     
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -37,7 +36,8 @@ public without sharing class ISSP_LocalGroups {
                 Local_Governance__r.Cluster__c,
                 Local_Governance__r.Cluster__r.Name,
                 Local_Governance__r.Local_Governance_type__c,
-                Local_Governance__r.Region__c
+                Local_Governance__r.Region__c,
+                Local_Governance__r.Mission__c
             FROM Participant__c
             WHERE Contact__r.AccountId IN :listAccount
             AND Local_Governance__r.Recordtype.DeveloperName = :'Local_Groups'
@@ -45,7 +45,6 @@ public without sharing class ISSP_LocalGroups {
             ORDER BY CreatedDate];
         
         initMapCluster(listParticipant);
-        initMapGroupTypeDescription();
         initListWrapper(listParticipant);
     }
     
@@ -80,35 +79,13 @@ public without sharing class ISSP_LocalGroups {
     }
     
     /**
-        Creates a map with the description labels to all values in th picklist
-        field called 'Local_Governance__r.Local_Governance_type__c'
-    **/
-    private void initMapGroupTypeDescription() {
-        this.mapGroupTypeDescription = new map<String,String>{
-            'ALWG' => 'ISSP_Participant_Description_ALWG',
-            'APJC' => 'ISSP_Participant_Description_APJC',
-            'APJC / FAG' => 'ISSP_Participant_Description_APJC_FAG',
-            'CAPJC' => 'ISSP_Participant_Description_CAPJC',
-            'CEC' => 'ISSP_Participant_Description_CEC',
-            'CGA' => 'ISSP_Participant_Description_CGA',
-            'EACP JC' => 'ISSP_Participant_Description_EACP_JC',
-            'ICAP' => 'ISSP_Participant_Description_ICAP',
-            'JALWG' => 'ISSP_Participant_Description_JALWG',
-            'LCAG-C' => 'ISSP_Participant_Description_LCAG_C',
-            'LCAG-P' => 'ISSP_Participant_Description_LCAG_P',
-            'LCAG-P / Credit Card WG' => 'ISSP_Participant_Description_LCAG_P_Credit_Card_WG'
-        };
-    }
-    
-    /**
         Transform the input list of Participants to a list of Wrappers
     **/
     private void initListWrapper(list<Participant__c> listParticipant) {
         this.listWrapper = new list<WrapperLocalGroup>();
         for (Participant__c participant: listParticipant) {
             String clusterTooltip = this.mapClusterCountry.get(participant.Local_Governance__r.Cluster__c);
-            String typeTooltip = this.mapGroupTypeDescription.get(participant.Local_Group_Type__c);
-            this.listWrapper.add(new WrapperLocalGroup(participant, clusterTooltip, typeTooltip));
+            this.listWrapper.add(new WrapperLocalGroup(participant, clusterTooltip));
         }
     }
     
@@ -220,10 +197,10 @@ public without sharing class ISSP_LocalGroups {
         public String countryClusterTooltip {get;set;}
         public String groupTypeTooltip {get;set;}
         
-        public WrapperLocalGroup(Participant__c p, String clusterTooltip, String typeTooltip) {
+        public WrapperLocalGroup(Participant__c p, String clusterTooltip) {
             this.participant = p;
             this.countryClusterTooltip = clusterTooltip==null? '': clusterTooltip;
-            this.groupTypeTooltip = typeTooltip==null? '': typeTooltip;
+            this.groupTypeTooltip = p.Local_Governance__r.Mission__c==null? '': p.Local_Governance__r.Mission__c;
         }
     }
 
