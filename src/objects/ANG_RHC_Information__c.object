@@ -285,24 +285,30 @@
         <masterLabel>Confirm Forecasted RHC</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+if(&apos;{!$Profile.Name}&apos;.indexOf(&apos;System Administrator&apos;) &lt; 0 &amp;&amp; &apos;{!AND(ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
+alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent has cash condition equal to FS. If the agent has no valid FS, please contact your administrator&apos;); 
+}else{ 
 
 var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
 rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
 
-rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
+rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;)); 
 
-var result = sforce.connection.update([rhcInfo]);
+var result = sforce.connection.update([rhcInfo]); 
 
-console.info(&quot;result&quot;);
-console.info(result[0]);
+console.info(&quot;result&quot;); 
+console.info(result[0]); 
 
-if (result[0].success == &quot;true&quot;) {
-window.location.reload();
-} else {
-alert(result[0].errors.message);
-}</url>
+if (result[0].success == &quot;true&quot;) { 
+window.location.reload(); 
+} else { 
+alert(result[0].errors.message); 
+} 
+
+}//end if-else profile check</url>
     </webLinks>
     <webLinks>
         <fullName>Request_Balance_Update</fullName>
