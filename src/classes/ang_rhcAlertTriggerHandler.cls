@@ -170,7 +170,7 @@ public class ang_rhcAlertTriggerHandler{
 
 	            emailMsg.setTemplateId(templateId);
 	            emailMsg.setTargetObjectId(userId);
-	            emailMsg.saveAsActivity = false;
+	            emailMsg.saveAsActivity = true;
 	            emailMsg.setReplyTo(ENV.Reply_Email);
 	            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
 
