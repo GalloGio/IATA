@@ -553,6 +553,16 @@ private class IECApplicationsManager_tst {
                             AND Date__c >= :Datetime.now().addSeconds(-5)
                         ORDER by CreatedDate desc];
         system.assert(lstUsageLive != null && lstUsageLive.size() > 0, 'The Usage Tracking record should be found');
+
+        // Test #2 - search for an existing checkCode
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', '0', null, IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
+        // Test #3 - search for an existing checkCode and CASSCode
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', '0', '0', IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
+
         //system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Fail, lstUsageLive.get(0).Search_Status__c, 'The Search Status should be Fail');
         //system.assertEquals(1, lstUsageLive.get(0).Counter__c, 'The Counter should be set to 1');
         
@@ -688,7 +698,6 @@ private class IECApplicationsManager_tst {
         bPermissionGranted = IECApplicationsManager.isEbcAccessGrantedForContact(oTestContact.Id, resetPreviouslyStoredBillingAcct); // 
         System.assertEquals( true, bPermissionGranted, 'Permission to access EBC should be granted based on BillingAccount setting');
 		
-		IECApplicationsManager.fakecoverage();
         
     } // testIsEbcAccessGrantedForContact
 } // end of IECApplicationsManager_tst
