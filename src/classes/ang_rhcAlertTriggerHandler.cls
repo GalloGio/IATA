@@ -157,6 +157,8 @@ public class ang_rhcAlertTriggerHandler{
 
 		list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
 
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+
 		for(String templateId : mailsToSendByTemplate.keySet()) {
 
 			String rhcId = portalMailParams.get(templateId);
@@ -167,6 +169,10 @@ public class ang_rhcAlertTriggerHandler{
 	            Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
 
 				emailMsg.setWhatId(rhcId); 
+
+		        if ( owea.size() > 0 ) {
+    		        emailMsg.setOrgWideEmailAddressId(owea[0].Id);
+        		}		
 
 	            emailMsg.setTemplateId(templateId);
 	            emailMsg.setTargetObjectId(userId);
