@@ -61,7 +61,6 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
                            And right__c = 'Access Granted'
                            And contact__r.accountId in : accountIDsSet];
         } else {
-            System.debug('ALEX BBBBBB');
             parList2 = [Select Account__c,
                                Contact__c
                           From Portal_Application_Right__c
@@ -93,7 +92,12 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
         for(Id key : IEP_accountIDs.keySet()) {
             Set<Id> userIDsAux = new Set<id>();
 
-            userIDsAux.addAll(PortalServiceAccessTriggerHandler.getPortalIepUsers(IEP_accountIDs.get(key)));
+            if(type == 'A') {
+                userIDsAux.addAll(PortalServiceAccessTriggerHandler.getPortalIepUsers(IEP_accountIDs.get(key)));
+            } else {
+                // In type B We get the contacts instead of the users
+                userIDsAux.addAll(IEP_accountIDs.get(key));
+            }
 
             Set<Id> userIDs = accIdToUserIdMapIep.get(topParents.get(key));
 
