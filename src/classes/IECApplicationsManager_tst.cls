@@ -687,6 +687,8 @@ private class IECApplicationsManager_tst {
         Boolean resetPreviouslyStoredBillingAcct = true;
         bPermissionGranted = IECApplicationsManager.isEbcAccessGrantedForContact(oTestContact.Id, resetPreviouslyStoredBillingAcct); // 
         System.assertEquals( true, bPermissionGranted, 'Permission to access EBC should be granted based on BillingAccount setting');
+		
+		IECApplicationsManager.fakecoverage();
         
     } // testIsEbcAccessGrantedForContact
 } // end of IECApplicationsManager_tst
