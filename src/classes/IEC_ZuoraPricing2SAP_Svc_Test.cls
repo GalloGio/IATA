@@ -73,6 +73,14 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                                      , Name='Product 3, Unit Price 3', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 5', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
+        mapZRatePlan.put('p3rX', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3rX'
+                                     , Name='Product 3, Unit Price X', zqu__Deleted__c=false
+                                     , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
+                                     , CustomerType__c='Type 6', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
+        mapZRatePlan.put('p3rY', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3rY'
+                                     , Name='Product 3, Unit Price Y', zqu__Deleted__c=false
+                                     , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
+                                     , CustomerType__c='Type 7', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
         mapZRatePlan.put('p4r1', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p4').Id, zqu__ZuoraId__c='p4r1'
                                      , Name='Product 4, Unit Price', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
@@ -119,6 +127,12 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         mapZCharge.put('p3r9c1', new zqu__ProductRatePlanCharge__c(zqu__ProductRatePlan__c=mapZRatePlan.get('p3r9').Id, zqu__ZuoraId__c='p3r9c1'
                                      , Name='Product 3, Unit Price 3, Charge', zqu__Deleted__c=false
                                      , zqu__Model__c='Per Unit', zqu__Type__c='One-Time'));
+        mapZCharge.put('p3rXc1', new zqu__ProductRatePlanCharge__c(zqu__ProductRatePlan__c=mapZRatePlan.get('p3rX').Id, zqu__ZuoraId__c='p3rXc1'
+                                     , Name='Product 3, Unit Price X, Charge', zqu__Deleted__c=false
+                                     , zqu__Model__c='Per Unit', zqu__Type__c='One-Time'));
+        mapZCharge.put('p3rYc1', new zqu__ProductRatePlanCharge__c(zqu__ProductRatePlan__c=mapZRatePlan.get('p3rY').Id, zqu__ZuoraId__c='p3rYc1'
+                                     , Name='Product 3, Unit Price Y, Charge', zqu__Deleted__c=false
+                                     , zqu__Model__c='Per Unit', zqu__Type__c='One-Time'));
         mapZCharge.put('p4r1c1', new zqu__ProductRatePlanCharge__c(zqu__ProductRatePlan__c=mapZRatePlan.get('p4r1').Id, zqu__ZuoraId__c='p4r1c1'
                                      , Name='Product 4, Unit Price, Charge', zqu__Deleted__c=false
                                      , zqu__Model__c='Per Unit', zqu__Type__c='One-Time'));
@@ -164,7 +178,13 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                          , Name='Product 3, Unit Price, Charge, Tier 1', zqu__ZuoraId__c='p3r8c1t1'
                          , zqu__Currency__c='CAD', zqu__StartingUnit__c=1, zqu__Price__c=90));
         lstZTier.add(new zqu__ProductRatePlanChargeTier__c(zqu__ProductRatePlanCharge__c=mapZCharge.get('p3r9c1').Id, zqu__Deleted__c=false
-                         , Name='Product 3, Unit Price, Charge, Tier 1', zqu__ZuoraId__c='p3r9c1t1'
+                         , Name='Product 3, Unit Price 3, Charge, Tier 1', zqu__ZuoraId__c='p3r9c1t1'
+                         , zqu__Currency__c='CAD', zqu__StartingUnit__c=1, zqu__Price__c=80));
+        lstZTier.add(new zqu__ProductRatePlanChargeTier__c(zqu__ProductRatePlanCharge__c=mapZCharge.get('p3rXc1').Id, zqu__Deleted__c=false
+                         , Name='Product 3, Unit Price X, Charge, Tier 1', zqu__ZuoraId__c='p3rXc1t1'
+                         , zqu__Currency__c='CAD', zqu__StartingUnit__c=1, zqu__Price__c=80));
+        lstZTier.add(new zqu__ProductRatePlanChargeTier__c(zqu__ProductRatePlanCharge__c=mapZCharge.get('p3rYc1').Id, zqu__Deleted__c=false
+                         , Name='Product 3, Unit Price Y, Charge, Tier 1', zqu__ZuoraId__c='p3rYc1t1'
                          , zqu__Currency__c='CAD', zqu__StartingUnit__c=1, zqu__Price__c=80));
         lstZTier.add(new zqu__ProductRatePlanChargeTier__c(zqu__ProductRatePlanCharge__c=mapZCharge.get('p4r1c1').Id, zqu__Deleted__c=false
                          , Name='Product 4, Unit Price, Charge, Tier 1', zqu__ZuoraId__c='p4r1c1t1'
@@ -257,6 +277,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         for (IEC_ZuoraPricing2SAP_Tracking__c tracking : [select Key__c, Operation__c, Material_Number__c, CustomerType__c, Currency__c
                                                                , Pricing_Type__c, EffectiveFrom__c, EffectiveTo__c, SendingTimestamp__c
                                                                , StartingUnit__c, EndingUnit__c, AmountOrPercentage__c
+                                                               , Region__c, Country__c, IsFreeShipping__c, IsPreSale__c
                                                           from IEC_ZuoraPricing2SAP_Tracking__c])
             mapKey_Tracking.put(tracking.Key__c, tracking);
         return mapKey_Tracking;
@@ -310,6 +331,12 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).Pricing_Type__c, svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.UNIT), 'Price type for Unit Price');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).Currency__c, 'CAD', 'Currency from Zuora tier');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).Pricing_Type__c, svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.UNIT), 'Price type for Unit Price');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).Currency__c, 'CAD', 'Currency from Zuora tier');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).Pricing_Type__c, svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.UNIT), 'Price type for Unit Price');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).Currency__c, 'CAD', 'Currency from Zuora tier');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Pricing_Type__c, svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.UNIT), 'Price type for Unit Price');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Currency__c, 'CAD', 'Currency from Zuora tier');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
@@ -336,28 +363,33 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         tierToUpdate = mapZId_Tier.get('p3r3c1t1');
         tierToUpdate.zqu__Price__c = 105;
         lstUpdate.add(tierToUpdate);
-        tierToUpdate = mapZId_Tier.get('p3r4c1t1');
-        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveStartDate__c=system.today().addDays(100)));
-        tierToUpdate = mapZId_Tier.get('p3r5c1t1');
-        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(100)));
-        // for update requesting to send to SAP and pricing already sent to SAP
         tierToUpdate = mapZId_Tier.get('p3r3c1t2');
         tierToUpdate.zqu__Price__c = 100;
         lstUpdate.add(tierToUpdate);
         trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t2')));
         trackingToUpdate.SendingTimestamp__c = system.now();
         lstUpdate.add(trackingToUpdate);
+        // for update that don't change pricing
+        tierToUpdate = mapZId_Tier.get('p3r4c1t1');
+        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, Region__c='Region X'));
+        trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1')));
+        trackingToUpdate.SendingTimestamp__c = system.now();
+        lstUpdate.add(trackingToUpdate);
+        tierToUpdate = mapZId_Tier.get('p3r5c1t1');
+        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, Country__c='Country X'));
+        trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1')));
+        trackingToUpdate.SendingTimestamp__c = system.now();
+        lstUpdate.add(trackingToUpdate);
         tierToUpdate = mapZId_Tier.get('p3r6c1t1');
-        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveStartDate__c=system.today().addDays(100)));
+        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, IsFreeShipping__c='No'));
         trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1')));
         trackingToUpdate.SendingTimestamp__c = system.now();
         lstUpdate.add(trackingToUpdate);
         tierToUpdate = mapZId_Tier.get('p3r7c1t1');
-        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(100)));
+        lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, IsPreSale__c='No'));
         trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1')));
         trackingToUpdate.SendingTimestamp__c = system.now();
         lstUpdate.add(trackingToUpdate);
-        // for unchanged pricing even changed on Zuora product
         tierToUpdate = mapZId_Tier.get('p4r1c1t1');
         lstUpdate.add(new zqu__ZProduct__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c, Name='PPP'));
         trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')));
@@ -380,27 +412,27 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t1'))).AmountOrPercentage__c, 105, 'Price should be tracked');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).EffectiveFrom__c, system.today().addDays(100), 'Date should be tracked');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).EffectiveTo__c, system.today().addDays(100), 'Date should be tracked');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
         // for update requesting to send to SAP and pricing already sent to SAP
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t2'))).AmountOrPercentage__c, 100, 'Price should be tracked');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t2'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.UPD), 'Should have operation UPDATE');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r3c1t2'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).EffectiveFrom__c, system.today().addDays(100), 'Date should be tracked');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.UPD), 'Should have operation UPDATE');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).EffectiveTo__c, system.today().addDays(100), 'Date should be tracked');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.UPD), 'Should have operation UPDATE');
-        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).SendingTimestamp__c, null, 'Pricing is to send to SAP');
         // for unchanged pricing
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).Region__c, 'Region X', 'Should have new region');
+        system.assertNotEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r4c1t1'))).SendingTimestamp__c, null, 'Pricing is not to send to SAP');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).Country__c, 'Country X', 'Should have new country');
+        system.assertNotEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r5c1t1'))).SendingTimestamp__c, null, 'Pricing is not to send to SAP');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).IsFreeShipping__c, false, 'Should not free shipping');
+        system.assertNotEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r6c1t1'))).SendingTimestamp__c, null, 'Pricing is not to send to SAP');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
+        system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).IsPreSale__c, false, 'Should not for pre-sales');
+        system.assertNotEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r7c1t1'))).SendingTimestamp__c, null, 'Pricing is not to send to SAP');
         system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
         system.assertNotEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).SendingTimestamp__c, null, 'Pricing is not to send to SAP');
         
-        // cover update with pricings that change SAP pricing condition
+        // cover update with pricings that change SAP pricing condition and exceptions
         Test.startTest();
             // reset data
             delete [select Id from IEC_ZuoraPricing2SAP_Tracking__c];
@@ -449,6 +481,12 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             tierToUpdate = mapZId_Tier.get('p3r9c1t1');
             lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, CustomerType__c='ZZZ'));
             mapKey.put('CustomerType', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1')))));
+            tierToUpdate = mapZId_Tier.get('p3rXc1t1');
+            lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveStartDate__c=system.today().addDays(100)));
+            mapKey.put('EffectiveFrom', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1')))));
+            tierToUpdate = mapZId_Tier.get('p3rYc1t1');
+            lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(100)));
+            mapKey.put('EffectiveTo', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1')))));
             tierToUpdate = mapZId_Tier.get('p4r1c1t1');
             lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='ZZZ'));
             mapKey.put('Material', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')))));
@@ -462,7 +500,6 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             update lstUpdate;
             mapZProductId_Product = svc.getTrackingProduct();
             mapZId_Tier = getZuoraPricing(mapZProductId_Product);
-            //system.assertEquals(true,false,String.join(lstUpdate, '\n') + '\n\n' + String.join(mapZId_Tier.values(), '\n'));
             svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
             mapKey_Tracking = getTracking();
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r2c1t1'))).Pricing_Type__c, svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.VOLUME), 'New price type is Volume Price');
@@ -501,6 +538,14 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
             system.assertNotEquals(mapKey_Tracking.get(mapKey.get('CustomerType')).SendingTimestamp__c, null, 'Deleted pricing not sent to SAP should be skipped of sending');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).EffectiveFrom__c, system.today().addDays(100), 'New customer type');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
+            system.assertNotEquals(mapKey_Tracking.get(mapKey.get('EffectiveFrom')).SendingTimestamp__c, null, 'Deleted pricing not sent to SAP should be skipped of sending');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).EffectiveTo__c, system.today().addDays(100), 'New customer type');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
+            system.assertNotEquals(mapKey_Tracking.get(mapKey.get('EffectiveTo')).SendingTimestamp__c, null, 'Deleted pricing not sent to SAP should be skipped of sending');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Material_Number__c, 'ZZZ', 'New SAP material number');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
@@ -539,6 +584,12 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             tierToUpdate = mapZId_Tier.get('p3r9c1t1');
             lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, CustomerType__c='YYY'));
             mapKey.put('CustomerType', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1')))));
+            tierToUpdate = mapZId_Tier.get('p3rXc1t1');
+            lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveStartDate__c=system.today().addDays(50)));
+            mapKey.put('EffectiveFrom', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1')))));
+            tierToUpdate = mapZId_Tier.get('p3rYc1t1');
+            lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(50)));
+            mapKey.put('EffectiveTo', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1')))));
             tierToUpdate = mapZId_Tier.get('p4r1c1t1');
             lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='YYY'));
             mapKey.put('Material', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')))));
@@ -601,11 +652,38 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3r9c1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
             system.assertEquals(mapKey_Tracking.get(mapKey.get('CustomerType')).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL), 'Deleted pricing should have operation DELETE');
             system.assertEquals(mapKey_Tracking.get(mapKey.get('CustomerType')).SendingTimestamp__c, null, 'Deleted pricing is to send to SAP');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).EffectiveFrom__c, system.today().addDays(50), 'New customer type');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rXc1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
+            system.assertEquals(mapKey_Tracking.get(mapKey.get('EffectiveFrom')).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL), 'Deleted pricing should have operation DELETE');
+            system.assertEquals(mapKey_Tracking.get(mapKey.get('EffectiveFrom')).SendingTimestamp__c, null, 'Deleted pricing is to send to SAP');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).EffectiveTo__c, system.today().addDays(50), 'New customer type');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
+            system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
+            system.assertEquals(mapKey_Tracking.get(mapKey.get('EffectiveTo')).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL), 'Deleted pricing should have operation DELETE');
+            system.assertEquals(mapKey_Tracking.get(mapKey.get('EffectiveTo')).SendingTimestamp__c, null, 'Deleted pricing is to send to SAP');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Material_Number__c, 'YYY', 'New SAP material number');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Updated pricing should have operation INSERT');
             system.assertEquals(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1'))).SendingTimestamp__c, null, 'Updated pricing is to send to SAP');
             system.assertEquals(mapKey_Tracking.get(mapKey.get('Material')).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL), 'Deleted pricing should have operation DELETE');
             system.assertEquals(mapKey_Tracking.get(mapKey.get('Material')).SendingTimestamp__c, null, 'Deleted pricing is to send to SAP');
+            
+            // cover exceptions
+            lstUpdate.clear();
+            tierToUpdate = mapZId_Tier.get('p4r1c1t1');
+            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='CCC'));
+            trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')));
+            trackingToUpdate.LatestSourceTimestamp__c = system.now().addDays(-1);
+            lstUpdate.add(trackingToUpdate);
+            update lstUpdate;
+            trackingToUpdate.Key__c = svc.buildDiscardKey(trackingToUpdate);
+            trackingToUpdate.Id = null;
+            insert trackingToUpdate;   // to cause exception on update first following by insert
+            mapZProductId_Product = svc.getTrackingProduct();
+            mapZId_Tier = getZuoraPricing(mapZProductId_Product);
+            svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
+            mapKey_Tracking = getTracking();
+            system.assertEquals(2, [select count() from IEC_Error_Log__c], 'Should have 2 errors');
         Test.stopTest();
     }
 

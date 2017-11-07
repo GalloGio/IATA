@@ -129,6 +129,8 @@ public class IEC_ZuoraPricing2SAP_Svc
         return tracking.Material_Number__c != strMaterial
             || tracking.CustomerType__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c
             || tracking.Currency__c != zuoraCurrency(pricing)
+            || tracking.EffectiveFrom__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveStartDate__c
+            || tracking.EffectiveTo__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveEndDate__c
             || isSAPUnit(tracking.Pricing_Type__c) && !isZuoraUnit(pricing.zqu__ProductRatePlanCharge__r.zqu__Model__c)
             || (isSAPVolume(tracking.Pricing_Type__c) &&
                     (!isZuoraVolume(pricing.zqu__ProductRatePlanCharge__r.zqu__Model__c) ||
@@ -230,25 +232,15 @@ public class IEC_ZuoraPricing2SAP_Svc
                     mapKey_Pricing.remove(tracking.Key__c);
                     
                     // determine if to send changes to SAP
-                    if (!isNewTracking(tracking) &&
-                        (tracking.EffectiveFrom__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveStartDate__c ||
-                         tracking.EffectiveTo__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveEndDate__c ||
-                         tracking.AmountOrPercentage__c != pricing.zqu__Price__c))
+                    if (!isNewTracking(tracking) && tracking.AmountOrPercentage__c != pricing.zqu__Price__c)
                         prepareSendingTracking(tracking, sapOperation.get(sapOT.UPD));
                     
                     // save information
-                    tracking.EffectiveFrom__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveStartDate__c;
-                    tracking.EffectiveTo__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveEndDate__c;
                     tracking.Region__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.Region__c;
                     tracking.Country__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.Country__c;
                     tracking.IsFreeShipping__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsFreeShipping__c);
                     tracking.IsPreSale__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsPreSale__c);
                     tracking.AmountOrPercentage__c = pricing.zqu__Price__c;
-                    if (isSAPVolume(tracking.Pricing_Type__c))
-                    {
-                        tracking.StartingUnit__c = pricing.zqu__StartingUnit__c;
-                        tracking.EndingUnit__c = pricing.zqu__EndingUnit__c;
-                    }
                     lstUpdateTracking.add(tracking);
                 }
             }
