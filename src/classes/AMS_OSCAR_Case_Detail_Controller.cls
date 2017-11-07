@@ -270,6 +270,13 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         private set;
     }
 
+    public Boolean isOSCARCorrection{
+        get{
+            return oscarObj != null && oscarObj.Process__c == AMS_Utils.NGCORRECTION;
+        }
+        private set;
+    }
+
     public List<FormField> accreditationFields{
         get{
             accreditationFields = new List<FormField>();
