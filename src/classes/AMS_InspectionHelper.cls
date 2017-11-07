@@ -237,28 +237,66 @@ public class AMS_InspectionHelper {
 
         try {
             map<Id, Boolean> mapActiveAppointmentPerAccountId = new map<Id, Boolean>();
+            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name FROM Account WHERE Id IN :lstAccountIdsToCheck]);
             list<AMS_Inspection__c> lstActiveInspections = [SELECT Id, Account__c FROM AMS_Inspection__c WHERE Accreditation_Endorsement_Status_code__c <> '0' AND Account__c IN :lstAccountIdsToCheck];
      
             for (AMS_Inspection__c app : lstActiveInspections) 
                 if (mapActiveAppointmentPerAccountId.get(app.Account__c) == null)
                     mapActiveAppointmentPerAccountId.put(app.Account__c, true);
-            
+
             list<Task> lstTasksToCreate = new list<Task>();
             for (Id acctId : lstAccountIdsToCheck)
                 if (mapActiveAppointmentPerAccountId.get(acctId) == null) {
+                    // Create task
                     Task t = new Task();
                     t.ActivityDate = Date.today().addDays(7);
                     t.IsReminderSet = true;
+                    t.ReminderDateTime = DateTime.now().addDays(7);
                     t.OwnerId = userInfo.getUserId();
                     t.Subject = 'Terminate agent with no appointments';
                     t.Description = '';
                     t.WhatId = acctId;
+                    t.Priority = 'Normal';
+                    t.Status = 'Not Started';
 
-                    lstTasksToCreate.add(t);
+                    lstTasksToCreate.add(t);                    
                 }
 
             if (!lstTasksToCreate.isEmpty()) {
                 insert lstTasksToCreate;
+
+                // Send the notification emails
+                List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+                OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+
+                for (Task t : lstTasksToCreate) {
+                    
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.Subject = t.Subject;
+                    mail.targetObjectId = userInfo.getUserId();
+                    mail.saveAsActivity = false;
+                    mail.HtmlBody = '<html><body style="font-family: Arial; font-size: 10pt;"><h2 style="color:#0066CC;">New Task</h2>';
+                    mail.HtmlBody+= '<p>To: ' + userInfo.getName() + '</p><p>' + userInfo.getName() + ' has assigned you the following new task:</p>';
+                    mail.HtmlBody+= '<p>Subject: ' + t.Subject + '</br>';
+                    if (mapAccountsPerId.get(t.WhatId) != null)
+                        mail.HtmlBody+= 'Account: ' + mapAccountsPerId.get(t.WhatId).Name + '</br>';
+                    mail.HtmlBody+= 'Due Date: ' + t.ActivityDate + '</br>';
+                    mail.HtmlBody+= 'Priority: ' + t.Priority + '</p>';
+                    mail.HtmlBody+= '<p>For more details, click the following link:</p>';
+                    mail.HtmlBody+= '<p><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + t.Id + '">' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + t.Id + '</a></p></body></html>';
+
+                    if ( owea.size() > 0 ) {
+                        mail.setOrgWideEmailAddressId(owea[0].Id);
+                    }
+
+                    emails.add(mail);
+                }
+
+                if (!Test.IsRunningTest()) {
+                    SYSTEM.DEBUG('Sending notification email');
+                    Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+                    SYSTEM.DEBUG('Send notification email result: ' + r[0]);
+                }
             }
         } catch (Exception e) {
             system.debug('ERROR checkActiveAppointments: ' + e.getMessage());
