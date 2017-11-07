@@ -172,13 +172,14 @@ public class ang_rhcAlertTriggerHandler{
 
 		        if ( owea.size() > 0 ) {
     		        emailMsg.setOrgWideEmailAddressId(owea[0].Id);
-        		}		
+        		} else {
+        			emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);	
+        		}
 
 	            emailMsg.setTemplateId(templateId);
 	            emailMsg.setTargetObjectId(userId);
 	            emailMsg.saveAsActivity = true;
 	            emailMsg.setReplyTo(ENV.Reply_Email);
-	            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
 
 	            msgList.add(emailMsg);				
 			}
