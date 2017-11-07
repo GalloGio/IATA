@@ -17,7 +17,8 @@
 	<table>
 		<tr>
 			<td valign="top" width="59%">
-				{!vfQuote.billToContact.contactName} <br />
+				{!vfQuote.billToContact.contactName} <br /> 
+				{!vfQuote.billToContact.accountName} <br />
 				{!vfQuote.billToAddress.street1} <br />
 				{!vfQuote.billToAddress.city}  {!vfQuote.billToAddress.stateLabel} <br />
 				{!vfQuote.billToAddress.postalCode}  {!vfQuote.billToAddress.countryLabel}
@@ -29,7 +30,7 @@
 				CANADA <br />
 				CA Tax Number 107510570RT0001<br />
 				QC Tax Number 1006066123
-			</td>
+			</td> 
 		</tr>
 	</table>
 	<br /><br />
