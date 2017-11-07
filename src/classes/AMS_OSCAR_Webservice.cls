@@ -506,7 +506,7 @@ global class AMS_OSCAR_Webservice {
 
             list<Portal_Applications__c> lstApp = [SELECT Id FROM Portal_Applications__c WHERE Application_URL__c = '/ISSP_IFAPCases' LIMIT 1];
 
-            if (lstIfapContacts.isEmpty()) {
+            if (lstApp.isEmpty()) {
                 return 'ERROR: Unable to find the IFAP portal service!';
             }
 
