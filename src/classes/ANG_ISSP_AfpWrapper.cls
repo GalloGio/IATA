@@ -41,7 +41,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				this.creditCardMessage = System.Label.ANG_ISSP_AFP_NoCreditCardMessage;
 			} else {
 				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;
-				this.creditCardMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;				
+				this.creditCardMessage = System.Label.ANG_ISSP_AFP_CreditCardNoAccess;				
 			}
 
 			System.debug('this.cashlessMessage--->' + this.cashlessMessage);

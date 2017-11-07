@@ -768,7 +768,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_AFP_CreditCardNoAccess</shortDescription>
-        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order o submit proof of PCI Compliance.</value>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to submit proof of PCI Compliance.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
