@@ -338,6 +338,11 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
             
         }
+
+        if(processType.equalsIgnoreCase(NGFOP_PV)){
+            oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
+            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;   
+        }
         
         insert oscar;
 
