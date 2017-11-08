@@ -57,6 +57,11 @@ public class IEC_ZuoraPricing2SAP_Svc
         return (isZuoraDiscountPct(pricing.zqu__ProductRatePlanCharge__r.zqu__Model__c) ? '%' :
                 (!String.isBlank(pricing.zqu__Currency__c) ? pricing.zqu__Currency__c : pricing.CurrencyIsoCode));
     }
+    String zuoraCustomerType(zqu__ProductRatePlanChargeTier__c pricing)
+    {
+        return (String.isBlank(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT :
+                pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c);
+    }
 
 
     // get products to track pricing
@@ -127,7 +132,7 @@ public class IEC_ZuoraPricing2SAP_Svc
     @TestVisible Boolean isPricingConditionChanged(String strMaterial, zqu__ProductRatePlanChargeTier__c pricing, IEC_ZuoraPricing2SAP_Tracking__c tracking)
     {
         return tracking.Material_Number__c != strMaterial
-            || tracking.CustomerType__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c
+            || tracking.CustomerType__c != zuoraCustomerType(pricing)
             || tracking.Currency__c != zuoraCurrency(pricing)
             || tracking.EffectiveFrom__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveStartDate__c
             || tracking.EffectiveTo__c != pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__EffectiveEndDate__c
@@ -262,7 +267,7 @@ public class IEC_ZuoraPricing2SAP_Svc
                 newTracking.Coupon__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.Couponcode__c;
                 newTracking.IsFreeShipping__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsFreeShipping__c);
                 newTracking.IsPreSale__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsPreSale__c);
-                newTracking.CustomerType__c = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c;
+                newTracking.CustomerType__c = zuoraCustomerType(pricing);
                 newTracking.Material_Number__c = mapZProductId_Product.get(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).SAP_Material_Number__c;
                 newTracking.Currency__c = zuoraCurrency(pricing);
                 newTracking.AmountOrPercentage__c = pricing.zqu__Price__c;
@@ -469,9 +474,9 @@ public class IEC_ZuoraPricing2SAP_Svc
         if (isSAPVolume(tracking.Pricing_Type__c))
         {
             xml.writeStartElement(null, 'ID', null);
-            xml.writeCharacters(String.valueOf(tracking.StartingUnit__c.setScale(2, system.RoundingMode.HALF_UP) + '-' +
-                                               (tracking.EndingUnit__c == null ? ''
-                                                : String.valueOf(tracking.EndingUnit__c.setScale(2, system.RoundingMode.HALF_UP)))));
+            xml.writeCharacters((tracking.StartingUnit__c == null ? '1' : String.valueOf(tracking.StartingUnit__c.setScale(2, system.RoundingMode.HALF_UP)))
+                                + '-' +
+                                (tracking.EndingUnit__c == null ? '' : String.valueOf(tracking.EndingUnit__c.setScale(2, system.RoundingMode.HALF_UP))));
             xml.writeEndElement();
         }
         
@@ -479,14 +484,9 @@ public class IEC_ZuoraPricing2SAP_Svc
         xml.writeCharacters(tracking.Pricing_Type__c);
         xml.writeEndElement();
         
-        if (!String.isBlank(tracking.CustomerType__c))
-        {
-            xml.writeStartElement(null, 'CustomerType', null);
-            xml.writeCharacters(tracking.CustomerType__c);
-            xml.writeEndElement();
-        }
-        else
-            xml.writeEmptyElement(null, 'CustomerType', null);
+        xml.writeStartElement(null, 'CustomerType', null);
+        xml.writeCharacters(String.isBlank(tracking.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT : tracking.CustomerType__c);
+        xml.writeEndElement();
         
         xml.writeStartElement(null, 'Material', null);
         xml.writeCharacters(tracking.Material_Number__c);

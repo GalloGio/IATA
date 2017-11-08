@@ -710,8 +710,12 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                             , Pricing_Type__c=svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.VOLUME), StartingUnit__c=1, EndingUnit__c=99));
         lstTracking.add(new IEC_ZuoraPricing2SAP_Tracking__c(Operation__c=svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL)
                             , EffectiveFrom__c=system.today(), EffectiveTo__c=system.today().addDays(100), CustomerType__c=null
-                            , Key__c='KeyX2', Material_Number__c='MatX2', Currency__c='USD', AmountOrPercentage__c=100
+                            , Key__c='KeyX2', Material_Number__c='MatX1', Currency__c='USD', AmountOrPercentage__c=100
                             , Pricing_Type__c=svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.VOLUME), StartingUnit__c=100));
+        lstTracking.add(new IEC_ZuoraPricing2SAP_Tracking__c(Operation__c=svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.DEL)
+                            , EffectiveFrom__c=system.today(), EffectiveTo__c=system.today().addDays(100), CustomerType__c=null
+                            , Key__c='KeyX3', Material_Number__c='MatX2', Currency__c='USD', AmountOrPercentage__c=100
+                            , Pricing_Type__c=svc.sapPrice.get(IEC_ZuoraPricing2SAP_Svc.sapPT.VOLUME)));
         insert lstTracking;
         TestDataGenerator.generateApexSetting();
         Test.startTest();
@@ -719,8 +723,8 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             Test.setMock(HttpCalloutMock.class, new IEC_ZuoraPricing2SAP_HTTP_Mock());
             svc.sendPricing(lstTracking);
             system.assertEquals(intCheckError + 1, [select count() from IEC_Error_Log__c], 'Must have 1 error');
-            system.assertEquals(2, [select count() from IEC_ZuoraPricing2SAP_Tracking__c where SendingTimestamp__c = null], 'Must have 2 tracking not sent because error');
-            system.assertEquals(lstTracking.size() - 2, [select count() from IEC_ZuoraPricing2SAP_Tracking__c where SendingTimestamp__c != null], 'Must have 1 tracking not sent because error');
+            system.assertEquals(3, [select count() from IEC_ZuoraPricing2SAP_Tracking__c where SendingTimestamp__c = null], 'Must have 3 tracking not sent because error');
+            system.assertEquals(lstTracking.size() - 3, [select count() from IEC_ZuoraPricing2SAP_Tracking__c where SendingTimestamp__c != null], 'Must have 3 tracking not sent because error');
         Test.stopTest();
     }
 }
