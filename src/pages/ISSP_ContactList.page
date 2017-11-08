@@ -317,62 +317,62 @@
 
         </thead>
         <tbody>
-          <apex:repeat value="{!contactList}" var="item">          
-            <tr>
-
-              <td style="font-size: 13px;">
-                <apex:inputCheckBox value="{!item.selected}" id="inputId" />
-              </td>
-              <td style="font-size: 13px;">
-                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
-              </td>
-
-              <apex:repeat value="{!fields}" var="f">              
+          <apex:repeat value="{!contactList}" var="auxList">
+            <apex:repeat value="{!auxList}" var="item">
+              <tr>
                 <td style="font-size: 13px;">
-                  <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
-                          <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
-                      </apex:outputpanel>
-                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
-                          <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
-                              <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
-                          </span>
-                      </apex:outputpanel>
-                      <apex:outputText value="&nbsp;" escape="false" />
-                   </apex:outputpanel>
-
-                  <apex:outputpanel rendered="{!IF(f.FieldPath != 'ISSP_Contact_Name__c' && f.FieldPath != 'ISSP_Account_Name__c',true,false)}">
-                    <apex:outputpanel rendered="{! IF(f.FieldPath!='Email', true, false) }">
-                      <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
-                    </apex:outputpanel>
-                    <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
-                        <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartgreen"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
-                      </apex:outputpanel>
-                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
-                        <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartred"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
-                      </apex:outputpanel>
-                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == '', true, false) }">
-                        <apex:outputField value="{! item.recordContact[f.fieldPath] }" />
-                      </apex:outputpanel>
-                    </apex:outputpanel>
-                  </apex:outputpanel>
-
-                  <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Contact_Name__c',true,false)}">
-                    <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
-                  </apex:outputpanel>
-
-                  <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}">
-                    <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
-                  </apex:outputpanel>
+                  <apex:inputCheckBox value="{!item.selected}" id="inputId" />
                 </td>
-              </apex:repeat>
+                <td style="font-size: 13px;">
+                  <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                </td>
 
-              <apex:outputpanel rendered="{!isAdmin}">
-                <td style="font-size: 13px;"><apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/></td>
-              </apex:outputpanel>
+                <apex:repeat value="{!fields}" var="f">              
+                  <td style="font-size: 13px;">
+                    <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                            <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
+                        </apex:outputpanel>
+                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                            <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
+                                <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
+                            </span>
+                        </apex:outputpanel>
+                        <apex:outputText value="&nbsp;" escape="false" />
+                     </apex:outputpanel>
 
-            </tr>
+                    <apex:outputpanel rendered="{!IF(f.FieldPath != 'ISSP_Contact_Name__c' && f.FieldPath != 'ISSP_Account_Name__c',true,false)}">
+                      <apex:outputpanel rendered="{! IF(f.FieldPath!='Email', true, false) }">
+                        <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
+                      </apex:outputpanel>
+                      <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                          <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartgreen"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                        </apex:outputpanel>
+                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                          <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartred"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                        </apex:outputpanel>
+                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == '', true, false) }">
+                          <apex:outputField value="{! item.recordContact[f.fieldPath] }" />
+                        </apex:outputpanel>
+                      </apex:outputpanel>
+                    </apex:outputpanel>
+
+                    <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Contact_Name__c',true,false)}">
+                      <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
+                    </apex:outputpanel>
+
+                    <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}">
+                      <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
+                    </apex:outputpanel>
+                  </td>
+                </apex:repeat>
+
+                <apex:outputpanel rendered="{!isAdmin}">
+                  <td style="font-size: 13px;"><apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/></td>
+                </apex:outputpanel>
+              </tr>
+            </apex:repeat>
           </apex:repeat>
         </tbody>
       </table>

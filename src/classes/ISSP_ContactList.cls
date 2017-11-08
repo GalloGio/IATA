@@ -3,7 +3,7 @@ public with sharing class ISSP_ContactList {
     public static Boolean avoidContactStatusTrigger = false;
 
     public string selectedList {get;set;}
-    public List<contactWrapper> contactList;
+    public List<List<contactWrapper>> contactList;
     public map<string,ISSPContactListView__c> contactListViewMap {get;set;} 
     public list<string> ListViewNameList {get;set;}
     
@@ -239,8 +239,8 @@ public with sharing class ISSP_ContactList {
         public User user {get; set;}
     }
     
-    public List<contactWrapper> getContactList(){
-        List<contactWrapper> allContactList =  new List<contactWrapper>();   
+    public List<List<contactWrapper>> getContactList(){
+        List<List<contactWrapper>> allContactList =  new List<List<contactWrapper>>();   
         //List<Contact> allContacts = (List<Contact>)setCon.getRecords();
 
         String query = 'Select CreatedDate, Name, Account.Name, Airline_Contact_Type__c,' +
@@ -258,6 +258,8 @@ public with sharing class ISSP_ContactList {
         for (User user: [SELECT Id, ContactId, LastLoginDate FROM User Where ContactId in :allContacts]) {
             mapContactUser.put(user.ContactId, user);
         }
+        Integer i = 0;
+        List<contactWrapper> auxList = new List<contactWrapper>();
         for (Contact thisContact : allContacts){
             contactWrapper thisContactRecord = new contactWrapper();
             if (!thisContact.ID_Cards__r.isEmpty()){
@@ -275,8 +277,18 @@ public with sharing class ISSP_ContactList {
             thisContactRecord.selected = false;
             thisContactRecord.recordContact = thisContact;
             thisContactRecord.user = mapContactUser.get(thisContact.Id);
-            allContactList.add(thisContactRecord);
+            auxList.add(thisContactRecord);
+            
+            i++;
+            if(i == 1000) {
+                allContactList.add(auxList);
+                auxList = new List<contactWrapper>();
+                i = 0;
+            }
         }
+        allContactList.add(auxList);
+
+        System.debug('ALEX allContactList->' + allContactList);
         contactList = allContactList;
         return allContactList;
     }
@@ -373,10 +385,12 @@ public with sharing class ISSP_ContactList {
     public void reject(){
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
-        for (contactWrapper thisContactRecord : contactList){
-            system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
-            if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
+                if (thisContactRecord.selected){
+                    contactIds.add(thisContactRecord.recordContact.Id);
+                }
             }
         }
         if (contactIds.size() == 0){
@@ -392,12 +406,14 @@ public with sharing class ISSP_ContactList {
         system.debug('checkIdCard');
         contactsWithIdCard = false;
         contactsWithIdCardString = Label.ISSP_InactiveUser_IdCard_Portal;
-        for (contactWrapper thisContactRecord : contactList){
-            if (thisContactRecord.selected){
-                if (thisContactRecord.hasIdCard){
-                    contactsWithIdCard = true;
-                    contactsWithIdCardString = contactsWithIdCardString +'</br>'+ thisContactRecord.recordContact.Name;
-                    system.debug('add id card');
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                if (thisContactRecord.selected){
+                    if (thisContactRecord.hasIdCard){
+                        contactsWithIdCard = true;
+                        contactsWithIdCardString = contactsWithIdCardString +'</br>'+ thisContactRecord.recordContact.Name;
+                        system.debug('add id card');
+                    }
                 }
             }
         }
@@ -415,16 +431,18 @@ public with sharing class ISSP_ContactList {
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
         String productMessage = '';
-        for (contactWrapper thisContactRecord : contactList){
-            system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
-            if (thisContactRecord.selected){
-                if (thisContactRecord.hasProducts){
-                    if (productMessage == ''){
-                        productMessage = Label.ISSP_InactiveUser_Subscription_Portal;
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
+                if (thisContactRecord.selected){
+                    if (thisContactRecord.hasProducts){
+                        if (productMessage == ''){
+                            productMessage = Label.ISSP_InactiveUser_Subscription_Portal;
+                        }
+                        productMessage = productMessage + '</br>'+thisContactRecord.recordContact.Name;
                     }
-                    productMessage = productMessage + '</br>'+thisContactRecord.recordContact.Name;
+                    contactIds.add(thisContactRecord.recordContact.Id);
                 }
-                contactIds.add(thisContactRecord.recordContact.Id);
             }
         }
         if (productMessage != ''){
@@ -475,10 +493,13 @@ public with sharing class ISSP_ContactList {
     public void activateContact(){
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
-        for (contactWrapper thisContactRecord : contactList){
-            system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
-            if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
+                if (thisContactRecord.selected){
+                    contactIds.add(thisContactRecord.recordContact.Id);
+                }
             }
         }
         if (contactIds.size() == 0){
@@ -493,10 +514,12 @@ public with sharing class ISSP_ContactList {
     public void makeAdmin(){
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
-        for (contactWrapper thisContactRecord : contactList){
-            system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
-            if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
+                if (thisContactRecord.selected){
+                    contactIds.add(thisContactRecord.recordContact.Id);
+                }
             }
         }
         if (contactIds.size() == 0){
@@ -557,11 +580,13 @@ public with sharing class ISSP_ContactList {
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
         String thisRecordId = '';
-        for (contactWrapper thisContactRecord : contactList){
-            system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
-            if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
-                thisRecordId = thisContactRecord.recordContact.Id;
+        for(List<contactWrapper> auxList : contactList) {
+            for (contactWrapper thisContactRecord : auxList){
+                system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
+                if (thisContactRecord.selected){
+                    contactIds.add(thisContactRecord.recordContact.Id);
+                    thisRecordId = thisContactRecord.recordContact.Id;
+                }
             }
         }
         if (contactIds.size() == 0){
@@ -577,7 +602,7 @@ public with sharing class ISSP_ContactList {
         return null;
     }
     
-    public List<contactWrapper> getFilteredContactList() {
+    public List<List<contactWrapper>> getFilteredContactList() {
         string paramSelectedList = ApexPages.currentPage().getParameters().get('selectedList');
         if (paramSelectedList!=null) {
             this.selectedList = paramSelectedList;
@@ -611,9 +636,12 @@ public with sharing class ISSP_ContactList {
         //prepare out string
         String out = getCSVHeader();
         out+= '"' + String.join(listFieldLabels,'","') + '"\n';
-            for (contactWrapper wrapper: getFilteredContactList()) {
-            list<String> listFieldValues = wrapperToListValues(wrapper, listFieldPaths);
-            out+= '"' + String.join(listFieldValues,'","') + '"\n';
+
+        for(List<contactWrapper> auxList : getFilteredContactList()) {
+            for (contactWrapper wrapper: auxList) {
+                list<String> listFieldValues = wrapperToListValues(wrapper, listFieldPaths);
+                out+= '"' + String.join(listFieldValues,'","') + '"\n';
+            }
         }
         return out;
     }
