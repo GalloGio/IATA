@@ -1,6 +1,5 @@
 trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert, after update) {
-
-
+	
 	String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
 
 	//INC195282 -  the respective mass CASE should have Status = Closed and ID Card Status = Cancelled whenever a mass IDCA has Application Status = Cancelled.
@@ -26,9 +25,21 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 
 	//determine all account
 	List<String> iataCodes = new List<String>();
+	List<String> iataCodesDefRT = new List<String>();
 	for (ID_Card_Application__c app : trigger.new) {
-		if (app.RecordTypeId.equals(massAppRT))
+		if (app.RecordTypeId.equals(massAppRT)){
 			iataCodes.add(app.IATA_Code__c);
+		}else{
+			iataCodesDefRT.add(app.IATA_Code__c);
+		}
+	}
+
+	if(Trigger.isAfter){
+		if(Trigger.isInsert || Trigger.isUpdate){
+			if(!iataCodesDefRT.isEmpty()){
+				IDCardAppHandler.updateDelivery(Trigger.new, iataCodesDefRT);
+			}
+		}
 	}
 
 	if(iataCodes.size()>0)
