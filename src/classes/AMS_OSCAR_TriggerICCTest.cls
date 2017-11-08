@@ -151,6 +151,7 @@ private class AMS_OSCAR_TriggerICCTest {
             
         oscar.First_Step_Completed__c = true;
         oscar.STEP2__c = 'Failed';
+        oscar.STEP12__c = 'Passed';
         oscar.Validation_Status__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = 'Authorize Disapproval';
         oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
