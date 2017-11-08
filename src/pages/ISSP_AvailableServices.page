@@ -1,11 +1,20 @@
 <apex:page controller="ISSP_AvailableServices" action="{!initialization}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
- <body>
+  <c:ISSP_Header ></c:ISSP_Header>    
+  <body>
      <!-- elliot 19 juin -->
      <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
     <!-- end elliot 19 juin -->
- <div class="container">
+  <div class="container">
+
+  <script src="{!URLFOR($Resource.BootstrapTableContextmenu)}"></script>  
+
+  <!--script src="{!URLFOR($Resource.bootstrap)}"></script-->  
+
+  <script src="{!URLFOR($Resource.DataTables, 'js/jquery.js')}"></script>
+  <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
+  <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.BootstrapCSS,'css/bootstrap.css')}" />
+
  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
@@ -250,11 +259,45 @@
            
             <apex:column style="text-align: center; display: {!AdminOrNot}">
                 <apex:outputPanel rendered="{!item.addUsersEnable}">
-                                
-                    <apex:outputLink rendered="{! not item.accountNotOpenError}" styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
+                    
+                aaaaaaa
 
-                    <apex:outputLabel rendered="{! item.accountNotOpenError}" styleClass="btn btn_iata_primary" onclick="errorMessageModal('{!item.lineErrorMessage}')" >{!$Label.ISSP_Add_User_to_this_service}</apex:outputLabel>
+                  <ul id="example2-context-menu" class="dropdown-menu">
+                    <li data-item="edit"><a>Edit</a></li>
+                    <li data-item="delete"><a>Delete</a></li>
+                    <li data-item="action1"><a>Action Here</a></li>
+                    <li data-item="action2"><a>And Action Here</a></li>
+                  </ul>
+                  <script>
+                    $('#example2-grid').bootstrapTable({
+                      contextMenu: '#example2-context-menu',
+                      contextMenuButton: '.example2-button',
+                      onContextMenuItem: function(row, $el){
+                        if($el.data("item") == "edit"){
+                          alert("Edit: ");
+                        } else if($el.data("item") == "delete"){
+                          alert("Delete: ");
+                        } else if($el.data("item") == "action1"){
+                          alert("Action1: ");
+                        } else if($el.data("item") == "action2"){
+                          alert("Action2: ");
+                        }
+                      }
+                    });
+                  </script>
 
+                    <!--            
+                    <apex:outputLink rendered="{! not item.accountNotOpenError}" 
+                      styleClass="btn btn_iata_primary" 
+                      value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" 
+                      target="_self">{!$Label.ISSP_Add_User_to_this_service}
+                    </apex:outputLink>
+
+                    <apex:outputLabel rendered="{! item.accountNotOpenError}" 
+                      styleClass="btn btn_iata_primary" 
+                      onclick="errorMessageModal('{!item.lineErrorMessage}')" >{!$Label.ISSP_Add_User_to_this_service}
+                    </apex:outputLabel>
+                    -->
                 </apex:outputPanel>
             </apex:column>
                 
