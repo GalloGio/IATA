@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="{!$Label.ISSP_Email_IataPortal} - {!$Label.ISSP_Email_AccressGranted_Subject1} {!IF(relatedTo.Portal_Application__r.Name == 'E-Bulletin' , $Label.ISSP_AMS_eBulletin_Title ,IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name))} {!$Label.ISSP_Email_AccressGranted_Subject2}" recipientType="Contact" language="{!CASE(relatedTo.Contact__r.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="Portal_Application_Right__c">
+<messaging:emailTemplate subject="IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status" recipientType="Contact" language="{!CASE(recipient.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="ANG_RHC_Information__c">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
@@ -6,53 +6,25 @@
 <!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
 <i>{!$Label.ISSP_Email_do_not_reply}</i><p />
 <BR/>
-{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+{!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-{!$Label.ISSP_Email_Congratulations}!  100% RHC<BR/>
-{!$Label.ISSP_Email_AccessGranted1} {!IF(relatedTo.Portal_Application__r.Name == 'E-Bulletin' , $Label.ISSP_AMS_eBulletin_Title , 
-        IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name))}        
-        {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP, $Label.ISSP_Email_Access_YourAccessTo2Granted)}
-        {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), relatedTo.ANG_Portal_Service_Role__c + ".", "")}    
-<BR/>            
-        {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2, "")}
-        
-        <apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
-            <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>
-        </apex:outputPanel>
-        <apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
-            <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>.
-        </apex:outputPanel>
-           
-        {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3, "")}
-<BR/>
-<BR/>
-
-<apex:outputPanel rendered="{!relatedTo.Access_Status_Reason__c != ''}" >
-{!$Label.ISSP_Email_Granted_Reason} {!relatedTo.Access_Status_Reason__c}
+We would like to inform you that according to our records you have reached <b>{!relatedTo.ANG_ConsumedRHC_Percent__c}%</b> of your Remittance Holding Capacity (RHC).
 <BR/><BR/>
-</apex:outputPanel>
+It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} {!relatedTo.ANG_RHC_Amount__c}</b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} {!relatedTo.ANG_ConsumedRHC__c}</b>.
+<BR/><BR/>
+Please note that if your Agency’s total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
+<BR/><BR/>
+You can consult your RHC usage at any time on the <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_ANG_RHC">IATA Customer Portal</a>.
+<BR/><BR/>
 
-{!$Label.ISSP_Email_ThankYou}<BR/>
-<BR/>
-{!$Label.ISSP_Email_IataService}<BR/>
-
-<p>
-<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
-<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
-</a>
-</apex:outputPanel>
-
-<apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000056QFS&oid=00D2000000008TF "/>
-</apex:outputPanel>
-
-</p>
-
+{!$Label.ISSP_Email_ThankYou}
+<br/><br/>
+<b>IATA – Global Delivery Center</b>
+<br/>
+<br/>
 <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
 <!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
-<BR/>
-
+<br/>
 </span>
 </div>
 </messaging:htmlEmailBody>
