@@ -7,13 +7,24 @@
     <!-- end elliot 19 juin -->
   <div class="container">
 
-  <script src="{!URLFOR($Resource.BootstrapTableContextmenu)}"></script>  
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.css')}" />
+    <!--apex:stylesheet value="{!URLFOR($Resource.DataTables, 'css/dataTables.bootstrap.min.css')}" />
+    <apex:stylesheet value="{!$Resource.InternalOrderCSS}" />
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" /-->     
 
-  <!--script src="{!URLFOR($Resource.bootstrap)}"></script-->  
+    <!-- Load JS -->  
 
-  <script src="{!URLFOR($Resource.DataTables, 'js/jquery.js')}"></script>
-  <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
-  <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.BootstrapCSS,'css/bootstrap.css')}" />
+    <script src="{!URLFOR($Resource.jquery2_1_4)}"></script> 
+    <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> 
+    <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
+
+    <script src="{!URLFOR($Resource.BootstrapTableContextmenu, 'bootstrap-table-contextmenu.js')}"></script> 
+
+
+    <!--script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
+    <script src="{!URLFOR($Resource.DataTables, 'js/dataTables.bootstrap.min.js')}"></script>
+    <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script-->  
 
  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
@@ -214,6 +225,48 @@
     </script>
     
     <apex:pageBlock id="Services" >
+
+
+     <div class="container" style="width: 80%">
+      <div class="row">
+        <table id='grid' >
+            <thead>
+              <tr>
+                <th data-field='itemid'>Item ID</th>
+                <th data-field='name'>Name</th>
+                <th data-field='price'>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>ABC</td><td>$1.00</td></tr>
+              <tr><td>2</td><td>DEF</td><td>$2.00</td></tr>
+              <tr><td>3</td><td>GHI</td><td>$3.00</td></tr>
+              <tr><td>4</td><td>XYZ</td><td>$4.00</td></tr>
+            </tbody>
+        </table>
+      </div>  
+    </div>
+  
+    <!-- context menu -->
+    <ul id="context-menu" >
+        <li data-item="edit"><a>Edit</a></li>
+        <li data-item="delete"><a>Delete</a></li>
+        <li data-item="action1"><a>Action Here</a></li>
+        <li data-item="action2"><a>And Action Here</a></li>
+    </ul>  
+
+    <script>
+    $(function() {
+      $('#grid').bootstrapTable({
+        contextMenu: '#context-menu',
+        onContextMenuItem: function(row, $el){
+          if($el.data("item") == "edit"){
+            alert(row.itemid);
+          }
+        }
+      });
+    });
+    </script>
    
         <hr />
         <apex:pageMessages escape="false"/>
@@ -259,7 +312,7 @@
            
             <apex:column style="text-align: center; display: {!AdminOrNot}">
                 <apex:outputPanel rendered="{!item.addUsersEnable}">
-                    
+             <!--       
                 aaaaaaa
 
                   <ul id="example2-context-menu" class="dropdown-menu">
@@ -285,7 +338,7 @@
                       }
                     });
                   </script>
-
+-->
                     <!--            
                     <apex:outputLink rendered="{! not item.accountNotOpenError}" 
                       styleClass="btn btn_iata_primary" 
