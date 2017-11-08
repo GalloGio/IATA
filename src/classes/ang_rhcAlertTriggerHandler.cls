@@ -1,4 +1,4 @@
-public class ang_rhcAlertTriggerHandler{
+public class ang_rhcAlertTriggerHandler {
 
 	public List<ANG_Risk_Alert__c> triggerNew = (List<ANG_Risk_Alert__c>) Trigger.new;
 	public List<ANG_Risk_Alert__c> triggerOld = (List<ANG_Risk_Alert__c>) Trigger.old;
@@ -25,16 +25,29 @@ public class ang_rhcAlertTriggerHandler{
 	public void onBeforeDelete(){}
 	public void onAfterDelete() {}
 
-	public static map<String,String> mapRemittanceFrequency = new map<String,String> {
-       	'Daily' => 'D',
-       	'4 times per month' => 'E',
-		'Fortnightly' => 'F',
-		'Monthly' => 'M',
-		'Every 5 days' => 'R',
-		'Every 3 days' => 'T',
-		'Weekly' => 'W',
-		'Every 10 days' => 'X'
-    };   
+    public static String mapRemittanceFrequency(Account acc){
+
+        if(acc.IATA_ISO_Country__r.iso_code__c  == 'BR') return 'W';
+        if(acc.Remittance_frequency__c == 'Monthly') return 'M';
+        if(acc.Remittance_frequency__c == 'Fortnightly') return 'F';
+        if(acc.Remittance_frequency__c == '4 times per month') return 'W';
+        if(acc.Remittance_frequency__c == 'Weekly') return 'W';
+        if(acc.Remittance_frequency__c == 'Daily' ) return 'D';
+        if(acc.Remittance_frequency__c == 'Every 3 days') return 'B';
+
+        /*
+        -------ignore china for now-------
+
+        if(acc.Remittance_frequency__c == 'Daily' && acc.Region_formula__c == 'Europe' && acc.IATA_ISO_Country__r.iso_code__c  != 'UA') return 'D';
+        if(acc.Remittance_frequency__c == 'Daily' && acc.IATA_ISO_Country__r.iso_code__c  == 'CN') return 'T';
+        if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'CN') return 'E';
+        if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'UA') return 'B';*/
+
+        if(acc.Remittance_frequency__c == 'Every 10 days') return 'W';
+        
+        return '';
+    }
+
 
 	public void sendAlertNotification(){
 		
@@ -103,7 +116,7 @@ public class ang_rhcAlertTriggerHandler{
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
 		for(ANG_Risk_Alert__c ra :[
-			SELECT ID,Name,ANG_Account__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
+			SELECT ID,Name,ANG_Account__c,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
 					ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
 					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
@@ -130,27 +143,31 @@ public class ang_rhcAlertTriggerHandler{
 			contacts = [SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c 
 						FROM Contact WHERE AccountId IN :listIDAccsToRetriveCons  AND Status__c = 'Active'];
 
-			for (Contact con :contacts){
-				if(!contactsPerAccount.keyset().contains(con.AccountId)){
+
+            for (Contact con :contacts){
+
+			    if(contactsPerAccount.keyset().contains(con.AccountId)){
+	                contactsPerAccount.get(con.AccountId).add(con);
+	            }
+	            else{
 					contactsPerAccount.put(con.AccountId,new List<Contact>{con});
 				}
-				contactsPerAccount.get(con.AccountId).add(con);
 			}
 
 			AssignmentRule AR = new AssignmentRule();
-            AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
-            //Creating the DMLOptions for "Assign using active assignment rules" checkbox
-            Database.DMLOptions dmlOpts = new Database.DMLOptions();
-            dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+	        AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+	        //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+	        Database.DMLOptions dmlOpts = new Database.DMLOptions();
+	        dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
 
 			Case smapParentCase;
 			List<Case> sidraLiteCases;
 			List<Case> smapParentCases = new List<Case>();
 			Map<String,case> mapCaseRiskAlert = new Map<String,case>();
+			Set<Id> accountsIds = new Set<Id>();
 			Map<Id,Operational_Calendar__c> mapAccountOpCalendar = fetchCalendar(redAlerts);
 			for(ANG_Risk_Alert__c ra: redAlerts){
 
-				//TODO: confirm all this fileds 
 				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region_formula__c,
 					Subject = '',
@@ -181,56 +198,55 @@ public class ang_rhcAlertTriggerHandler{
 						smapParentCase.ContactId = con.Id;							
 					}
 				}
-			
+				
 				//fallback to have one contact for the sidra lite case
 				if(smapParentCase.ContactId == null){
 					smapParentCase.ContactId = contactsPerAccount.get(accId)[0].Id;
 				}
 
 				smapParentCases.add(smapParentCase);
+				accountsIds.add(ra.ANG_Account__c);
 			}
+
 			if(!smapParentCases.isEmpty()){
 				//insert smapParentCases --> all or none = false;
+	            //need to store result to later interate the correct ones and then atribute the sidra case to the Alert  
 				Database.SaveResult[] resultInsSMAPcases = Database.insert(smapParentCases, false);
 
-				for(Case parentCase :smapParentCases){
-					mapCaseRiskAlert.put(parentCase.Id,parentCase);			
-				}				
+		        for(Case parentCase :smapParentCases){
+		            mapCaseRiskAlert.put(parentCase.Id,parentCase);            
+		        }
 
-				Case sidraLiteCase;
-				sidraLiteCases = new List<Case>();
+		        //Create SIDRA CASE NOW
+		        Case sidraLiteCase;
+		        Map<Id,Case> mapSMAPtoSIDRA = new Map<Id,Case>(); 
+		        sidraLiteCases = new List<Case>();
 
-				Map<Id, Case> mapSMAPtoSIDRA = new Map<Id, Case>();
+		        for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 
-				for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
-
-					//NEWGEN-1933 fill fields on sidra case
-					sidraLiteCase = WSSidraLite.createCase(parentCase.id);
-					//TODO: confirm on "sidraCase.Subject" if account site or account IATA code
-					sidraLiteCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.IATACode__c + ' - ' + parentCase.Account.Name;
-					sidraLiteCase.Case_Remarks__c = '';
-					sidraLiteCase.Description = '';					
-					sidraLiteCase.Region__c = parentCase.Region__c; 
-					sidraLiteCase.BSPCountry__c = parentCase.BSPCountry__c;
-					sidraLiteCase.BSP_CASS__c = 'BSP';
-					sidraLiteCase.Status = 'Open'; 
-					sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
-					sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
-					sidraLiteCase.Priority = 'High'; 
-					sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now();
-					sidraLiteCase.ContactId = smapParentCase.ContactId;
-					sidraLiteCase.setOptions(dmlOpts);
-					
-					mapSMAPtoSIDRA.put(parentCase.id,sidraLiteCase);
-					//END -NEWGEN-1933
-					sidraLiteCases.add(sidraLiteCase);
+		            //NEWGEN-1933 fill fields on sidra case
+		            sidraLiteCase = WSSidraLite.createCase(parentCase.id);
+		            sidraLiteCase.Subject = 'RTS Alert' + ' - ' + parentCase.Account.IATACode__c + ' - ' + parentCase.Account.Name;
+		            sidraLiteCase.Case_Remarks__c = '';
+		            sidraLiteCase.Description = '';                    
+		            sidraLiteCase.Region__c = parentCase.Region__c; 
+		            sidraLiteCase.BSPCountry__c = parentCase.BSPCountry__c;
+		            sidraLiteCase.BSP_CASS__c = 'BSP';
+		            sidraLiteCase.Status = 'Open'; 
+		            sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
+		            sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
+		            sidraLiteCase.Priority = 'High'; 
+		            //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); already done on callout
+		            sidraLiteCase.ContactId = smapParentCase.ContactId;
+		            
+		            //END -NEWGEN-1933
+		            sidraLiteCases.add(sidraLiteCase);
+		            mapSMAPtoSIDRA.put(parentCase.id,sidraLiteCase);
 				}
 
 
 				if (!sidraLiteCases.isEmpty()) {
 					insert sidraLiteCases;
-
-
 					List<ANG_Risk_Alert__c> riskAlertsToUpdate = new List<ANG_Risk_Alert__c>();
 					// Iterate through each returned result
 					for (Database.SaveResult sr : resultInsSMAPcases) {
@@ -256,7 +272,7 @@ public class ang_rhcAlertTriggerHandler{
 						accountIds.add(sLiteCase.AccountId);
 					}
 					
-	                AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
+			        AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
 					bspLinkCallout(caseIds, accountIds);
 	            }
 			}
@@ -275,8 +291,7 @@ public class ang_rhcAlertTriggerHandler{
 							ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
 							ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c));
 
-			rfs.add(mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c));
-
+			rfs.add(mapRemittanceFrequency(ra.ANG_Account__r));
 		}
 
 		List<Operational_Calendar__c> ops = [SELECT id,ISS_Operation__r.Name,Frequency_Code__c,First_Day__c, Last_Day__c, Remittance_Day__c   
@@ -293,7 +308,9 @@ public class ang_rhcAlertTriggerHandler{
 							ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
 							ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c);
 				
-				if(op.ISS_Operation__r.Name == isoCode && op.Frequency_Code__c == mapRemittanceFrequency.get(ra.ANG_Account__r.Remittance_frequency__c)){
+                if(op.ISS_Operation__r.Name == isoCode &&
+                    op.Frequency_Code__c == mapRemittanceFrequency(ra.ANG_Account__r)
+                ){
 
 					ocMap.put(ra.ANG_Account__c,op);
 					break;
