@@ -15,9 +15,6 @@ private class ang_rhcAlertTriggerHandler_test {
 	    }
         
 
-  // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
-        insert country;
         
         // Create an Airline HQ account
         Account a = new Account(
@@ -62,11 +59,14 @@ private class ang_rhcAlertTriggerHandler_test {
         	ANG_AccountId__c =a.id,
         	CurrencyIsoCode ='USD',
         	RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-        	ANG_Financial_Security__c=0
+        	ANG_Financial_Security__c=0,
+            ANG_ConsumedRHC__c = 10,
+            ANG_RHC_Amount__c = 10,
+            ANG_ConsumedRHC_Percent__c = 10
         );
         insert rhcInfo;
 
-         Financial_Security__c fs = new Financial_Security__c(
+        Financial_Security__c fs = new Financial_Security__c(
         	Region__c = 'Europe', 
         	Security_status__c = 'Active', 
         	Account__c = a.Id, 
@@ -81,26 +81,31 @@ private class ang_rhcAlertTriggerHandler_test {
             Reasonforrequest__c = 'New Application'
         );
         insert fs;
-       
 
+        Notification_template__c nt = new Notification_template__c (
+            Subject__c = 'Some subject',
+            Message__c = 'Some message',
+            Type__c = 'Information',
+            Notification_color__c = '#FF5E4D',
+            Admins_Users__c = 'User',
+            Expire_in_days__c = 0
+        );
+      
+        insert nt;
 
         ANG_RHC_Alert_Templates__c rat = new ANG_RHC_Alert_Templates__c(
         	name='not50percentTemplate',
         	ang_direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
         	ANG_language__c='English',
         	ANG_percentage__c='50%',
-        	ANG_template_api__c='emailTemplate'       
+        	ANG_template_api__c='emailTemplate',
+            ANG_Portal_Notification_Template__c = nt.Name,
+            ANG_Portal_Mail_Template__c = 'emailTemplate'
         	);
 
         insert rat;
 
-
-        
-       
-
 	}
-
-
 
 	private static testmethod void testRiskAlertCreationSendingEmailWithSuccess(){
 
@@ -137,5 +142,51 @@ private class ang_rhcAlertTriggerHandler_test {
 		system.assertEquals([select id,ANG_email_sent__c from ANG_Risk_Alert__c limit 1].get(0).ANG_email_sent__c,false,'Email was not sent');
 
 	}
+
+    private static testmethod void testRiskAlertPortal(){
+
+        ANG_RHC_Information__c rhcInfo = [select id,ANG_AccountId__c from ANG_RHC_Information__c limit 1];
+
+        ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+            ANG_RHC_Information__c =rhcInfo.id,
+            ANG_Account__c =rhcInfo.ANG_AccountId__c,
+            ANG_Direction__c=ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+            ANG_Threshold_Level__c='50%' // no configuration exists with this percentage
+        );
+
+        test.StartTest();
+
+            // Create a new ISO Country
+            IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
+            insert country;
+
+            Contact contact = [Select Id from Contact Where FirstName = 'Test'];
+
+            Account account = [Select Id from Account Where name = 'acc1'];
+
+            account.IATA_ISO_Country__c = country.id;
+
+            update account;
+
+            Portal_Applications__c par = new Portal_Applications__c (
+                    Name = 'RHC Information'
+                );
+
+            insert par;
+
+            Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+                    Portal_Application__c = par.id,
+                    Right__c = 'Access Granted',
+                    Contact__c = contact.Id
+            );       
+
+            insert appRight;
+
+            insert ara;
+        test.StopTest();
+
+        //system.assertEquals([select id,ANG_email_sent__c from ANG_Risk_Alert__c limit 1].get(0).ANG_email_sent__c,false,'Email was not sent');
+
+    }
 
 }
