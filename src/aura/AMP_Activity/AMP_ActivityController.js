@@ -50,7 +50,8 @@ console.log(JSON.stringify(activity));
     clickSaveActivity : function(component, event, helper) {
         
         var activity = component.get("v.activity");
-        var statusValues = component.find("statusList").get("v.value");
+        var status = component.find("statusList").get("v.value");
+        var statusValues = component.get("statusList");
         if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
         
