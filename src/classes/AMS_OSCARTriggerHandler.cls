@@ -2637,7 +2637,7 @@ public class AMS_OSCARTriggerHandler {
         // *************** IEP MODEL A PROCESS *****************
         // *****************************************************
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP41__c <> updatedOscar.STEP41__c && updatedOscar.STEP41__c == 'Passed'){
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
             System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
 
