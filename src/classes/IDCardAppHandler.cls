@@ -1,6 +1,5 @@
 public with sharing class IDCardAppHandler {
 	public static void  updateDelivery(list<ID_Card_Application__c> listIDCardApp, List<String> iataCodesDefRT ) {
-		system.debug('##iataCodesDefRT: ' + iataCodesDefRT);
 		Map<String, Account> accountPerIATACode = new Map<String, Account>();
 		for (Account a : [select Id, IATACode__c, ID_Card_KeyAccount_features__c , IDCard_Key_Account__c, BillingCountry, Region_formula__c from Account where IATACode__c in :iataCodesDefRT]) {
 			accountPerIATACode.put(a.IATACode__c, a);
@@ -15,7 +14,6 @@ public with sharing class IDCardAppHandler {
 			}
 		}
 		if(!listIdca.isEmpty()){
-			system.debug('##listIdca: ' + listIdca);
 			upsert listIdca;
 		}
 	}	
