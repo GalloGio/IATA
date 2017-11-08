@@ -132,9 +132,9 @@
                         <th class="headerRowFilter"></th>
                         <th class="headerRowFilter"></th>
                         <th class="headerRowFilter"></th>
-                        <th colspan="3" class="headerRowFilter">
+                        <th colspan="4" class="headerRowFilter">
                             <div class="row">
-                                <div class="hidden-xs hidden-sm col-md-5 col-lg-6 text-center ">
+                                <div class="hidden-xs hidden-sm col-md-5 col-lg-6 text-left">
                                     <apex:outputPanel rendered="{!listWrapper.size>0}" >
                                         <button id="table-filters-reset" class="btn btn-primary btn-sm">{!$Label.ISSP_Local_Groups_Industry_Reset}</button>
                                     </apex:outputPanel>
@@ -153,6 +153,7 @@
                         <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Participant_Type__c.label}"/></th>
                         <th class="headerRow"><apex:outputText value="{!$Label.ISSP_Local_Groups_Contact_Name}"/></th>
                         <th class="headerRow hidden-md hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Title__c.label}"/></th>
+                        <th class="headerRow hidden-md hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Representing__c.label}"/></th>
                         <th class="headerRow hidden-sm hidden-xs"><apex:outputText value="{!$ObjectType.Participant__c.fields.Email__c.label}"/></th>
                     </tr>
                 </thead>
@@ -176,6 +177,7 @@
                             </apex:outputLink>
                         </td>
                         <td class="hidden-md hidden-sm hidden-xs">{!wrapper.participant.Title__c}</td>
+                        <td class="hidden-md hidden-sm hidden-xs">{!wrapper.participant.Representing__r.Name}</td>
                         <td class="hidden-sm hidden-xs">{!wrapper.participant.Email__c}</td>
                       </tr>
                     </apex:repeat>

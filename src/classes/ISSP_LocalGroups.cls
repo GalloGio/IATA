@@ -23,7 +23,7 @@ public without sharing class ISSP_LocalGroups {
         
         list<Participant__c> listParticipant = [
             SELECT Region__c, Country__c, Local_Group_Type__c, Cargo_Passenger__c, Participant_Type__c, Title__c, Email__c,
-                Contact__c, Contact__r.Name, Local_Governance__r.Cargo_Passenger__c,
+                Contact__c, Contact__r.Name, Local_Governance__r.Cargo_Passenger__c, Representing__c, Representing__r.Name,
                 Local_Governance__r.Country__r.Name,
                 Local_Governance__r.Country__r.IATA_Country_ZH__c,
                 Local_Governance__r.Country__r.IATA_Country_SP__c,
