@@ -177,12 +177,15 @@ public class ang_rhcAlertTriggerHandler {
 					Origin = 'Risk Monitoring Engine',
 					BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
 					Decision__c = 'Prejudiced Collection of Funds',
-					RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP,
-					Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
-					Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
-					End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c, 
-					Suspension_Date__c=  Date.today()
+					RecordTypeId = SidraLiteManager.RECORDTYPE_SMAP
 				);
+
+				if([SELECT Name FROM profile WHERE id = :userinfo.getProfileId()].name != 'System Administrator - automated processes'){						
+					smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
+					smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
+					smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c; 
+					smapParentCase.Suspension_Date__c=  Date.today();
+				}
 				smapParentCase.setOptions(dmlOpts);
 				wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
