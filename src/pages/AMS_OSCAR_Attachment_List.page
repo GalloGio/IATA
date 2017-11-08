@@ -200,10 +200,11 @@
                 selection.push(this.value);
             });
             if (selection.length == 0) {
-                //console.log("No files selected");
+                console.log("No files selected");
+                stopLoading();
                 return;
             }
-            //console.log(selection);
+            console.log(selection.length + ' files selected');
             AMS_OSCAR_Attachments.getSelectedExpiringLink("{!caseId}",selection,function(result, event){
                 try {
                     var zipfiles = new ZipFiles(result, "files.zip");
