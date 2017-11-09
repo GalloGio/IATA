@@ -4244,7 +4244,10 @@ public without sharing class Order_Svc
         for (Order order : newMap.values()) {
                 Order oldOrder = oldMap.get(order.Id);
 
-                if(order.Status == IECConstants.ORDER_PAYMENT_CONFIRMED && oldOrder != null && oldOrder.Status != order.Status && (Order.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer || Order.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)){
+                if((order.Status == IECConstants.ORDER_PAYMENT_CONFIRMED || order.Status == IECConstants.ORDER_STATUS_INVOICED)
+                    && oldOrder != null && oldOrder.Status != order.Status 
+                    && (Order.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer || Order.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)){
+                    
                     if(order.SAP_Invoice__c != null)
                         sapInvoiceId.add(order.SAP_Invoice__c);
                 }
