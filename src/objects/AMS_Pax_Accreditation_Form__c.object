@@ -17480,33 +17480,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Travel_Agent</fullName>
+        <fullName>PCI_Compliance</fullName>
         <active>true</active>
-        <label>Travel Agent</label>
+        <label>PCI Compliance</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
-            <values>
-                <fullName>Cashless</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cash</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Enable_Credit_Card_FOP__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>

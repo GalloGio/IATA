@@ -321,12 +321,6 @@ public with sharing class ISSP_ANG_PCI {
             if(redirectToStepB)
             	return goToStep2();
         }
-               
-        system.debug('PCI -  newform.Accept_terms_and_conditions__c ' + newform.Accept_terms_and_conditions__c);    
-        if (!newform.Accept_terms_and_conditions__c) {
-        	ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
-        	return null;
-    	}
 
         newForm.Submitted_to_IATA__c = TRUE;
         upsert newForm;
