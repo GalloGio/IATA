@@ -342,7 +342,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
         theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
-
+        
         update theOscar;
 
         convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
@@ -409,8 +409,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(cR.Region__c == region)
 					emailsToSend.add(cR.Contact_Email__c);
 			}
-
-			//put the contacts in recipents list
+        	//put the contacts in recipents list
         	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend];
         	System.debug('IATA recipents list: ' + recipents);
         }
