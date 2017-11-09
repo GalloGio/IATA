@@ -757,6 +757,7 @@ global class ANG_OscarProcessHelper {
 
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
 	        fieldsOfObject.put('SIDRA_lite_reason__c',c.Reason1__c);
+			fieldsOfObject.put('Status__c','Open');
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, accountId, fieldsOfObject);
 
