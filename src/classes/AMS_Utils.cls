@@ -212,8 +212,18 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
+
+    // Case - Status    
+    public static final String CASE_STATUS_CLOSED = 'Closed';
+    public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+
+    //set with the ifap status to update the account's last financial review
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+
+
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
