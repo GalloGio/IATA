@@ -39,6 +39,68 @@ public with sharing class Attachment_Svc
 		}
 	}
 
+	//FM 06-11-2017 - AMSU28 - add "submitted" state to OSCAR record when agents attach something to the case
+	public static void validateAttachmentIsCase_DGR_Certification(List<Attachment> attachments)
+	{
+		System.debug('Attachment_Svc - validateAttachmentIsCase_DGR_Certification');
+		List<AMS_OSCAR__c> updOscar = new List<AMS_OSCAR__c>();
+		Set<Id> oscarIds = new Set<Id>();
+
+		for(Attachment attach : attachments)
+		{
+			if(attach.ParentId.getSobjectType() == AMS_OSCAR__c.SobjectType)
+			{
+				oscarIds.add(attach.ParentId);
+			}
+		}
+		System.debug('oscarIds: ' + oscarIds);
+		List<AMS_OSCAR__c> lOSCAR = [Select Id, Status__c from AMS_OSCAR__c 
+											where id in :oscarIds 
+											AND Process__c = :AMS_Utils.CERTIFICATION 
+											AND Status__c in ('Accepted_Future Date','Renewal not completed')];
+
+		System.debug('lOSCAR: ' + lOSCAR);
+
+		List<Attachment> lAuxAttach = [SELECT ParentId,Name FROM Attachment WHERE ParentId in :oscarIds];
+		Map<ID, Integer> mAuxAttach = new Map<ID, Integer>();
+
+		//Populate Map with the number of attachments that exist in the OSCARs		
+		for(Attachment attch : lAuxAttach){
+			if(!mAuxAttach.containsKey(attch.ParentId)){
+				mAuxAttach.put(attch.ParentId, 1);
+			}else{
+				Integer i = mAuxAttach.get(attch.ParentId) + 1;
+				mAuxAttach.put(attch.ParentId, i);
+			}
+		}		
+
+		System.debug('mAuxAttach: ' + mAuxAttach);
+
+		for(AMS_OSCAR__c auxOscar : lOSCAR){
+			if(auxOscar != null){
+
+				//Check for other attachments
+				Integer attachSize = 0;
+				if(mAuxAttach.containsKey(auxOscar.Id)){
+					attachSize = mAuxAttach.get(auxOscar.Id);
+				}
+				
+				System.debug('attachSize: ' + attachSize);
+				//only set the status on the 1st attachment loaded
+				if(attachSize == 1){
+					
+					auxOscar.Status__c = 'Submitted';
+					
+					updOscar.add(auxOscar);
+				}
+			}
+		}
+
+		System.debug('updOscar: ' + updOscar);
+		//if anny update the status of the cases
+		update updOscar;
+	}
+
 	/****************************************************************************************************
         Created by Kevin Ky 2015-12-21
             Delete all the giving Attachments

@@ -22,9 +22,9 @@ public with sharing class Attachment_Dom
 	        else if (trigger.isUpdate) exe.onBeforeUpdate();
 	        /*else if (trigger.isDelete) exe.onBeforeDelete();*/
 	    } else if (trigger.isAfter) {
-	        /*if (trigger.isInsert) exe.onAfterInsert();
-	        else if (trigger.isUpdate) exe.onAfterUpdate();
-	        else*/ if (trigger.isDelete) exe.onAfterDelete();
+	        if (trigger.isInsert) exe.onAfterInsert(); //FM 06-11-2017 - AMSU28
+	        /*else if (trigger.isUpdate) exe.onAfterUpdate();*/
+	        else if (trigger.isDelete) exe.onAfterDelete();
 	    }
 	} //*** end of "triggerHandler"
 	
@@ -64,9 +64,12 @@ public with sharing class Attachment_Dom
 	    Attachment_Svc.setTnCDeletedFlag(oldList);
 	}
 
-	/*private void onAfterInsert() {
+	//FM 06-11-2017 - AMSU28
+	private void onAfterInsert() {
+		System.debug('Attachment_Dom - onAfterInsert');
 	    getData(true, true);
-	}*/
+	    Attachment_Svc.validateAttachmentIsCase_DGR_Certification(newList);
+	}
 
 	/*private void onAfterUpdate() {
 	    getData(true, true);
