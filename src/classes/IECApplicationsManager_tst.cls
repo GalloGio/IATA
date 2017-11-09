@@ -392,7 +392,9 @@ private class IECApplicationsManager_tst {
         oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
         update oGDPAccount3;
         SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-        List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+        
+		/*
+		List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
         bat.execute(null, gpav);
 
         IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
@@ -419,6 +421,7 @@ private class IECApplicationsManager_tst {
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
             //system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
         }
+		*/
     }
 
     
