@@ -254,7 +254,7 @@
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>100-Failed</label>
+        <label>101-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -275,7 +275,7 @@
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>101-In Progress</label>
+        <label>102-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>

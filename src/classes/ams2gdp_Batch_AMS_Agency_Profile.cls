@@ -179,7 +179,7 @@
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual));
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual, true));
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);		
 		//--Send completion notification 
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
