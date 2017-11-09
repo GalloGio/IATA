@@ -187,7 +187,7 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			Test.startTest(); 
             	ctrl.terminate();
 
-            	ISSP_AMS_MSO_Update_Controller.closeOscar(ctrl.oscar.Id, ctrl.OscarCase.Id, con.id, ISSP_AMS_MSO_Update_Controller.ACTION_CORRECTION);
+            	//ISSP_AMS_MSO_Update_Controller.closeOscar(ctrl.oscar.Id, ctrl.OscarCase.Id, con.id, ISSP_AMS_MSO_Update_Controller.ACTION_CORRECTION);
 			Test.stopTest();
         }
 
