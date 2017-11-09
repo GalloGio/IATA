@@ -4260,12 +4260,13 @@ public without sharing class Order_Svc
             system.debug('##### orderList :: '+orderList); 
             if(!orderList.isEmpty()){
                 for(Order o : orderList){
-                    if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED){
+                    if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED || o.Status != IECConstants.ORDER_STATUS_INVOICED){
                         stopSapInvoiceUpdate = true;
                     }
                 }
             }
-        system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
+            
+            system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
             
             if(!stopSapInvoiceUpdate){ // all the related orders have the status Payment Confirmed
                 sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Id IN :sapInvoiceId];
