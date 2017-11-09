@@ -2,12 +2,27 @@
 private class ANG_financialReviewOnCaseTest {
     @testSetup static void testSetup() {
         // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR',AIMS_Area_ID__c='1');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name = 'France', 
+            ISO_Code__c = 'FR',
+            AIMS_Area_ID__c='1',
+            ANG_Enable_NewGen__c = true
+        );
         insert country;
         
         // Create an Airline HQ account
         Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
-        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id, iataCode__C='99999999',BillingCountry='France');
+        Account a = new Account(
+            Name = 'Qatar Airways', 
+            Airline_designator__c = 'QR', 
+            RecordTypeId = AirlineHQ_RT_Id, 
+            iataCode__C='99999999',
+            BillingCountry='France',
+            Location_type__C='HE',
+            Location_Class__c='P',
+            IATA_ISO_Country__c=country.id
+
+        );
         insert a;        
         
         // Create a new Financial Institution
@@ -26,6 +41,7 @@ private class ANG_financialReviewOnCaseTest {
         		AccountId = a.Id, 
         		contactId=cont.Id,
         		Status = 'Open', 
+        		Assessment_Performed_Date__c= system.today(),
         		Financial_Review_Result__c='Satisfactory - New Financial Security',
                 RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),IFAP_Area__c='asda'
                  );
