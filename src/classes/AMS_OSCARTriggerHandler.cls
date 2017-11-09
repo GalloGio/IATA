@@ -2335,7 +2335,11 @@ public class AMS_OSCARTriggerHandler {
 				if(Integer.valueOf(AMS_Utils.getIATANumericStatus(acc.Status__c)) > 2)
 					accountsToMigrateOwners.add(acc.Id);
 			}
-		}
+			
+		} else {
+
+      		return accountsList;
+     	}
 
 		return accountsToMigrateOwners;
 

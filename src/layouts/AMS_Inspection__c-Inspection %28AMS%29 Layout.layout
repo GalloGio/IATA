@@ -63,10 +63,6 @@
                 <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accreditation_Endorsement_organisation__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AMS_Appointment_Type__c</field>
             </layoutItems>
@@ -132,8 +128,13 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
         <fields>NAME</fields>
+        <fields>ISO_Country__c</fields>
         <relatedList>AMS_Territory__c.Appointment__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
