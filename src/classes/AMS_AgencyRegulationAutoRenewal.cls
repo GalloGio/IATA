@@ -103,10 +103,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
-		//FM AMSU-28 - 19-10-2017 - adding diferent types of templates for DGR
-		//Map<String, Id> countryTemplates_NoS = DGRemailTemplates('DGR_NoS');
-  //      Map<String, Id> countryTemplates_NoT = DGRemailTemplates('DGR_NoT');
-        
         Map<String, Id> countryTemplatesCATA = DGRemailTemplates('CATA');
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress]; // in order to test we must use any other email since agencymanagement@iata.org doesn't exist on preprod
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
@@ -393,8 +389,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
 		
-    	system.debug('1-DGR sendEmailAlert: recipents ' + recipents);
-
 		Id templateId;
 		        Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
@@ -427,7 +421,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
             
 
             system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
-            system.debug('2-DGR sendEmailAlert: recipents ' + recipents);
+            system.debug('DGR sendEmailAlert: recipents ' + recipents);
 
             List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
