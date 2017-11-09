@@ -195,6 +195,8 @@ public class ANG_RiskEventGenerator {
 						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
 						risk.put(sourceFields.get(objectName), o.Id);
 						risk.ANG_UniqueKey__c = uniqueKey;
+						
+						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
 						riskEvents .add(risk);
 					}
