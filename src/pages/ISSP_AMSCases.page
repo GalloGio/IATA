@@ -138,7 +138,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td style="display:{!isHOAccredited};vertical-align:top;padding-right:20px">
+                <td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top;padding-right:20px">
                     <table>
                         <tr>                            
                             <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>

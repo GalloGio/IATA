@@ -208,7 +208,9 @@
            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             
     
-		    <!-- STEP 1 -->
+<!--       -->
+<!-- STEP 1-->
+<!--       -->
 			<apex:outputText rendered="{!isStep1}">	
 				
 			    <div class="panel-primary">
@@ -266,7 +268,6 @@
                                                                         size="8"
                                                                         width="300px"
                                                                         btn_up_down="false"
-
                                                 />
                                             </apex:outputPanel>
                                         </div>
@@ -343,7 +344,6 @@
     			        />
     			    </apex:repeat>
     			    </apex:pageBlock>
-
 			   </div>
 
 			   	<apex:form id="UploadForm">
@@ -358,8 +358,10 @@
 	    	</div>
 	    </div>
     </apex:outputText>
-   	 
-<!-- STEP 3 -->
+    
+<!--       -->    	 
+<!-- STEP 3-->
+<!--       --> 
            
     <apex:outputText rendered="{!isStep3}">
     	<div class="panel-primary">
@@ -381,75 +383,43 @@
 		    		</div>
 		    	</apex:form>                     
 				
-		    		<apex:pageBlock >
-						<apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">
-							<div class="aplabel">
-								<apex:pageBlockSectionItem >
-									<apex:outputLabel value="{!$Label.ISSP_ANG_Enabel_Credit_Card_Codes}"/> 
-                                    <apex:outputField value="{!newForm.Agency_Codes_Concerned__c}"  style="width: 174.4px;"/>
-								</apex:pageBlockSectionItem>
-							</div>
-						</apex:pageBlockSection>
-					</apex:pageBlock>
+	    		<apex:pageBlock >
+					<apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">
+						<div class="aplabel">
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$Label.ISSP_ANG_Enabel_Credit_Card_Codes}"/> 
+                                <apex:outputField value="{!newForm.Agency_Codes_Concerned__c}"  style="width: 174.4px;"/>
+							</apex:pageBlockSectionItem>
+						</div>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
 
-					<apex:form id="tCondiForm">
+				<apex:form id="tCondiForm">
 						<apex:pageMessages />
 						<apex:pageBlock >
-							<apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
-								<div class="aplabel">
-									<apex:outputText >
-										{!$Label.ISSP_AMS_NoC_TC_Change_CGO}
-									</apex:outputText>
-									<apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}"/>							
-									<apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true" />
-								</div>
-							</apex:pageBlockSection>
-						
-						
-						<apex:pageBlockButtons location="bottom" style="padding-left:100px">
-		                	<apex:actionStatus id="buttonLoadingStep3">
-		                    	<apex:facet name="stop"><apex:outputPanel >
-		                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
-		                        	<apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
-		                        	<apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
-		                    	</apex:outputPanel></apex:facet>
-								<apex:facet name="start"><apex:outputPanel >
-			                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
-			                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
-			                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right" reRender="tCondiForm" />
-			                    </apex:outputPanel></apex:facet>					                               
-		                	</apex:actionStatus>
-		            	</apex:pageBlockButtons>
+							<apex:pageBlockButtons location="bottom" style="padding-left:100px">
+			                	<apex:actionStatus id="buttonLoadingStep3">
+			                    	<apex:facet name="stop"><apex:outputPanel >
+			                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
+			                        	<apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
+			                        	<apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
+			                    	</apex:outputPanel></apex:facet>
+									<apex:facet name="start"><apex:outputPanel >
+				                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
+				                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
+				                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right" reRender="tCondiForm" />
+				                    </apex:outputPanel></apex:facet>					                               
+			                	</apex:actionStatus>
+			            	</apex:pageBlockButtons>
 		            	</apex:pageBlock>
-
-
-		    			<!--<div style="text-align:center;">
-		    				<apex:actionStatus id="buttonLoadingStep3PAX">
-		    					<apex:facet name="stop"><apex:outputPanel>
-				                	<apex:commandButton styleClass="btn" action="{!goToStep2}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>&nbsp;	                 
-				                	<apex:commandButton styleClass="btn" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" reRender="tCondiForm" status="buttonLoadingStep5PAX"/> 
-			                	</apex:outputPanel></apex:facet>
-			                	<apex:facet name="start"><apex:outputPanel>
-			                		<apex:commandButton  action="{!goToStep2}" value="{!$Label.ISSP_Back}" disabled="true"/>&nbsp;
-			                		<apex:commandButton  action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}..."/> 
-			                	</apex:outputPanel></apex:facet>
-		    				</apex:actionStatus>
-		    			</div>-->
-
-
 				</apex:form>
-
-
 			</div>
     	</div>
-
-
-    	
 	</apex:outputText>
            
-         </div>
-         <c:ISSP_CustomFooter communityName="{!communityName}"/>
-         </div>
+     </div>
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
+     </div>
        
     </body>  
 </html>
