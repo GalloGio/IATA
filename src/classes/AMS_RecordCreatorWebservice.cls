@@ -22,7 +22,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
-    public static String NGFOP_PV = 'NGFormsOfPayment';
+    public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV, NEWTIDS_PV, IEP_BANK_ACCOUNT_SETUP};
 

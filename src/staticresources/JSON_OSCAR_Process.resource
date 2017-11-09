@@ -6035,7 +6035,7 @@
         ]
       },
       {
-        "Name": "NGFormsOfPayment",
+        "Name": "ANG.FOPMANAGEMENT.1.0",
         "Flows": [
           {
             "Name": "ANG_RESTRICT_FOP",

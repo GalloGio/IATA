@@ -159,7 +159,7 @@ public without sharing class AMS_Utils {
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
-    public static final String NGFOP            = 'NGFormsOfPayment';
+    public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
@@ -2337,7 +2337,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return lRes;
     }
 
-	//20-06-2017 - Change AMSU-93 - special chars replacement
+    //20-06-2017 - Change AMSU-93 - special chars replacement
     public static String cleanSpecialChars(String s){
 
         String sRes = '';
