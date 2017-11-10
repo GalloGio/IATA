@@ -247,8 +247,8 @@ public with sharing class ISSP_ContactList {
                 size = 10;
 
                 String searchFilter = '';
-                if(currentSearch != null) {
-                    searchFilter = ' AND name Like \'%' + currentSearch + '%\'';
+                if(searchString != null && searchString != '') {
+                    searchFilter = ' AND ((name Like \'%' + searchString + '%\') OR (email Like \'%' + searchString + '%\'))';
                 }
 
                 String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c, Portal_User_Frozen__c ';
@@ -323,7 +323,6 @@ public with sharing class ISSP_ContactList {
 
     public PageReference doSearch() {
         setCon = null;
-        searchString = currentSearch;
         return null;
     }
      

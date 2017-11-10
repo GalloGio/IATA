@@ -11,9 +11,19 @@
 
       var activeSearch = "";
 
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            doSearch();
+            return false;
+          }
+        });
+      });      
+
     // When document is ready
     $(document).ready(function() {
-        onready();
+      onready();
     });
 
     function onready() {
@@ -72,46 +82,6 @@
       $('#rejectionReason').modal('hide');
     }
 
-    $(function($) {
-      var input = $('#searchString');
-      input.on('keydown', function() {
-        var key = event.keyCode || event.charCode;
-
-        if( key == 8 || key == 46 )
-            return false;
-      });
-    });
-
-/*
-    function search(event) {
-      var keynum;
-
-      if(window.event) { // IE                    
-        keynum = event.keyCode;
-      } else if(event.which) { // Netscape/Firefox/Opera                   
-        keynum = event.which;
-      }
-
-      var newSearch = $('[id$="searchString"]').val();
-
-      if(keynum != null)
-        newSearch += String.fromCharCode(keynum);
-
-      alert('newSearch-->' + newSearch + ' activeSearch-->' + activeSearch)
-
-      if((newSearch.length >= 3 && newSearch.length != activeSearch.length && newSearch != activeSearch)) {
-        //alert(newSearch);
-        if(newSearch.length < 3) {
-          newSearch = '';
-        }
-        activeSearch = newSearch;   
-
-        $('[id$=currentSearch]').val(newSearch);
-        doSearch(); 
-      }
-      
-    }
-*/
     </script>
 
 
@@ -256,12 +226,13 @@
         </apex:repeat>
       </span>
 
+      <!-- SEARCH -->
       <span>
-        <apex:outputLabel value="Search:"/>    
-        <!--apex:inputText id="searchString" value="{!searchString}" onkeypress="return search(event);"/-->  
-        <apex:inputText id="searchString" value="{!searchString}"/>  
+        <apex:outputLabel style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" value="Search:"/>    
+        <apex:inputText style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" id="searchString" value="{!searchString}"/>  
       </span>
-      <apex:inputHidden value="{!currentSearch}" id="currentSearch"/>
+
+       
 
         <!-- <apex:pageMessages escape="false"/> -->
         <apex:pageBlockTable value="{!contactList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_contacts">
