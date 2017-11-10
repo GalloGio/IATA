@@ -271,6 +271,21 @@ public class ang_rhcAlertTriggerHandler {
 					if(!riskAlertsToUpdate.isEmpty())
 						update riskAlertsToUpdate;	
 
+					//Newgen-2179 - Generate Change code (Requires a update)
+                    AMS_OscarCase_RiskMgmt.EndRun();
+                                       
+                    list<Case> sidrasToGenerateChangeCode = new list<Case>();
+                    for(Case sidraToUpdate : sidraLiteCases){
+                         sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
+                        sidraToUpdate.SIDRA_Lite_Default_Date__c = Date.today();
+                        sidraToUpdate.Reason_for_Default__c = 'Under Review';
+                        sidraToUpdate.Update_AIMS_DEF__c = Date.today();
+                        sidraToUpdate.CS_Rep_Acc_DEF__c = userInfo.getUserId();
+                        sidrasToGenerateChangeCode.add(sidraToUpdate);
+                    }
+                    update sidrasToGenerateChangeCode;  
+                    //Newgen-2179 - END
+
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
