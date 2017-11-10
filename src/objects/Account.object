@@ -83089,6 +83089,13 @@ newmsoagency.Location_Class__c = &quot;M&quot;;
 newmsoagency.Location_Type__c = &quot;HO&quot;;
 newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
 
+if({!Account.IATA_Member__c} == true) { 
+newmsoagency.Location_Category__c = &quot;IC&quot;; 
+} 
+else { 
+newmsoagency.Location_Category__c = &quot;NI&quot;; 
+}
+
 result = sforce.connection.create([newmsoagency]);
 var accId = result[0].id;
 

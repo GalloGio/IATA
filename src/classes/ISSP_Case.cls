@@ -478,7 +478,7 @@ public without sharing class ISSP_Case {
             /*06/08/2014 Merge of 2 RTs ISS Portal PwC Edit + ISS Portal PwC => ISS Portal PwC - Gavriel
             if(newCase.RecordType.name=='ISS Portal PwC Edit'){ isPWCCase = true; }*/
 
-            if (newCase.RecordType.Name == 'ISS Portal PwC') {
+            if (newCase.RecordType.Name == 'ISS Portal PwC' ||  newCase.RecordType.Name == 'ISS Portal PwC for IATA user') {
                 isISSPortalPwCCase = true;
                 isPWCCase = true;
             }
