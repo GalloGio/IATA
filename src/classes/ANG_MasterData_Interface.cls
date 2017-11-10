@@ -22,8 +22,8 @@ global class ANG_MasterData_Interface{
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
-                                            (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false), //List of children
-                                            (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
+                                            (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
+                                            (Select Id, ANG_RHC_Amount_Simulation__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
             
@@ -185,7 +185,7 @@ global class ANG_MasterData_Interface{
                 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
-                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.CurrencyIsoCode);
+                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount_Simulation__c, rhc.CurrencyIsoCode);
                 
                 //List  of children IATACode
                 //Returned only if specifically requested
