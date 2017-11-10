@@ -4,103 +4,12 @@
  <body>
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
-    
-    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
-    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>  
-    <script src="{!URLFOR($Resource.JqueryDataTablesAlphabetSearch)}"></script>
-
-    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
-
-    <style type="text/css">
-      div.alphabet {
-        clear:both;
-        position:relative;
-        margin:0.5em 0;
-      }
-
-      @media screen and (max-width:640px){
-        div.alphabet {
-          text-align:center;
-        }
-      }
-
-      div.alphabet ul {
-        display:inline-block;
-        margin:0;
-        padding:0;
-        list-style:none;
-      }
-
-      div.alphabet li {
-        display:inline-block;
-      }
-
-      div.alphabet a {
-        display:inline-block;
-        cursor:pointer;
-        text-align:center;
-        text-decoration:none;
-        box-sizing:content-box;
-        padding:0.2em 0.1em;
-        min-width:1.3em;
-        color:#333 !important;
-        border:1px solid transparent;
-        border-radius:2px;
-      }
-
-      div.alphabet a:hover {
-        color:#FFF !important;
-        border:1px solid #111;
-        background-color:#585858;
-        background:linear-gradient(to bottom, #585858 0%, #111 100%);
-      }
-
-      div.alphabet a:active {
-        outline:none;
-        background-color:#2b2b2b;
-        background:linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%);
-        box-shadow:inset 0 0 3px #111;
-      } 
-
-      div.alphabet a.empty {
-        color:#888 !important;
-      }
-
-      div.alphabet a.active,
-      div.alphabet a.active.empty {
-        color:#333 !important;
-        border:1px solid #979797;
-        background-color:#FFF;
-        background:linear-gradient(to bottom, #fff 0%, #dcdcdc 100%)
-      }
-
-      div.alphabet .alphabet-info-display {
-        margin-right:0.5em;
-      }
-
-      div.alphabet div.alphabet-info {
-        position:absolute;
-        border:1px solid #111;
-        background-color:#585858;
-        background:linear-gradient(to bottom, #585858 0%, #111 100%);
-        border-radius:2px;
-        color:#FFF;
-        margin-top:0.2em;
-        padding:0.2em 0.4em;
-        text-align:center;
-        opacity:0;
-        z-index:9999;
-      }
-
-      tr.alphabet-group, tr.alphabet-group:hover {
-        background-color:rgba(0,0,0,0.15) !important;
-      }      
-    </style>
-
     <div class="container">
-     <c:ISSP_CustomNavigation communityName="{!communityName}" />
+ <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
+
+      var activeSearch = "";
 
     // When document is ready
     $(document).ready(function() {
@@ -162,6 +71,47 @@
     function closeRejectModal(){
       $('#rejectionReason').modal('hide');
     }
+
+    $(function($) {
+      var input = $('#searchString');
+      input.on('keydown', function() {
+        var key = event.keyCode || event.charCode;
+
+        if( key == 8 || key == 46 )
+            return false;
+      });
+    });
+
+/*
+    function search(event) {
+      var keynum;
+
+      if(window.event) { // IE                    
+        keynum = event.keyCode;
+      } else if(event.which) { // Netscape/Firefox/Opera                   
+        keynum = event.which;
+      }
+
+      var newSearch = $('[id$="searchString"]').val();
+
+      if(keynum != null)
+        newSearch += String.fromCharCode(keynum);
+
+      alert('newSearch-->' + newSearch + ' activeSearch-->' + activeSearch)
+
+      if((newSearch.length >= 3 && newSearch.length != activeSearch.length && newSearch != activeSearch)) {
+        //alert(newSearch);
+        if(newSearch.length < 3) {
+          newSearch = '';
+        }
+        activeSearch = newSearch;   
+
+        $('[id$=currentSearch]').val(newSearch);
+        doSearch(); 
+      }
+      
+    }
+*/
     </script>
 
 
@@ -194,14 +144,15 @@
 
     <apex:form id="contactListForm">
 
-<!--
     <apex:actionFunction name="next" action="{!setCon.next}" rerender="Contacts" />
     <apex:actionFunction name="previous" action="{!setCon.previous}" rerender="Contacts" />
     <apex:actionFunction name="first" action="{!setCon.first}" rerender="Contacts" />
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Contacts" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="contactListForm" />
-  -->
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/>
+
+    <apex:actionFunction action="{!doSearch}" name="doSearch" rerender="Contacts"/>
+
     <!-- <apex:pageMessages /> -->
     <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         {!$Label.ISSP_Contacts}<br />
@@ -295,102 +246,144 @@
             </apex:outputlink>
         </span>
       </div>
+      <!--  </apex:pageBlockButtons> -->
+      <span style="float: right; margin: 5px 5px 5px 5px;">
+        <apex:repeat value="{!AlphaList}" var="a">
+            <apex:commandLink value="{!a}" action="{!refresh}"
+                styleClass="alpha-link{!if(AlphaFilter=a,' alpha-select','')}" >
+                <apex:param name="AlphaFilter" value="{!a}" assignTo="{!AlphaFilter}" />
+            </apex:commandLink>
+        </apex:repeat>
+      </span>
 
-    <div>
-      <table id="pbt_contacts2" class="table table-striped compact" cellspacing="0">
-        <thead>
-          <tr>
-            <th class="tableFormat" style="color: #428bca; font-size: 12px;">
-              <apex:inputCheckBox id="selectAll" onclick="selectAllCheckboxes(this,'inputId')" />
-            </th>
-            <th class="tableFormat" style="color: #428bca; font-size: 12px;">{!$Label.ISSP_My_Contact_Action}&nbsp;</th>
+      <span>
+        <apex:outputLabel value="Search:"/>    
+        <!--apex:inputText id="searchString" value="{!searchString}" onkeypress="return search(event);"/-->  
+        <apex:inputText id="searchString" value="{!searchString}"/>  
+      </span>
+      <apex:inputHidden value="{!currentSearch}" id="currentSearch"/>
 
+        <!-- <apex:pageMessages escape="false"/> -->
+        <apex:pageBlockTable value="{!contactList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_contacts">
+            <apex:column >
+                <apex:facet name="header" >
+                    <apex:inputCheckBox id="selectAll" onclick="selectAllCheckboxes(this,'inputId')" />
+                </apex:facet>
+                <apex:inputCheckBox value="{!item.selected}" id="inputId" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header" >
+                    {!$Label.ISSP_My_Contact_Action}
+                </apex:facet>
+                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink> 
+            </apex:column>
             <apex:repeat value="{!fields}" var="f">
-              <th class="tableFormat" style="color: #428bca; font-size: 12px;">{!f.label}&nbsp;</th>
-            </apex:repeat>
+                  <apex:column >
 
-            <apex:outputpanel rendered="{!isAdmin}">
-              <th class="tableFormat" style="color: #428bca; font-size: 12px;">{!$ObjectType.User.fields.LastLoginDate.label}&nbsp;</th>
-            </apex:outputpanel>
-            
-          </tr>
+                   <!-- For e-mail field, display if this a valid e-mail -->
+                  <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                          <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
+                      </apex:outputpanel>
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                          <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
+                              <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
+                          </span>
+                      </apex:outputpanel>
+                      <apex:outputText value="&nbsp;" escape="false" />
+                   </apex:outputpanel>
 
-        </thead>
-        <tbody>
-          <apex:repeat value="{!contactList}" var="auxList">
-            <apex:repeat value="{!auxList}" var="item">
-              <tr>
-                <td style="font-size: 13px;">
-                  <apex:inputCheckBox value="{!item.selected}" id="inputId" />
-                </td>
-                <td style="font-size: 13px;">
-                  <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
-                </td>
-
-                <apex:repeat value="{!fields}" var="f">              
-                  <td style="font-size: 13px;">
-                    <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
-                            <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
-                        </apex:outputpanel>
-                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
-                            <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
-                                <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
-                            </span>
-                        </apex:outputpanel>
-                        <apex:outputText value="&nbsp;" escape="false" />
-                     </apex:outputpanel>
+                    <apex:facet name="header">
+                       <apex:commandLink action="{!refresh}" reRender="pbt_contacts">{!f.label}
+                         <apex:outputPanel layout="none" rendered="{!AND(OR(sortExpression==f.FieldPath,AND(sortExpression=='Name',f.FieldPath=='ISSP_Contact_Name__c')), sortDirection='ASC')}">&#9650;</apex:outputPanel>
+                         <apex:outputPanel layout="none" rendered="{!AND(OR(sortExpression==f.FieldPath,AND(sortExpression=='Name',f.FieldPath=='ISSP_Contact_Name__c')), sortDirection='DESC')}">&#9660;</apex:outputPanel>
+                         <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
+                       </apex:commandLink>
+                    </apex:facet>
 
                     <apex:outputpanel rendered="{!IF(f.FieldPath != 'ISSP_Contact_Name__c' && f.FieldPath != 'ISSP_Account_Name__c',true,false)}">
-                      <apex:outputpanel rendered="{! IF(f.FieldPath!='Email', true, false) }">
-                        <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
-                      </apex:outputpanel>
-                      <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
-                          <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartgreen"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                        <apex:outputpanel rendered="{! IF(f.FieldPath!='Email', true, false) }">
+                            <apex:outputfield value="{!item.recordContact[f.fieldPath]}" />
                         </apex:outputpanel>
-                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
-                          <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartred"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                        <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                                <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartgreen"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                                <a href="mailto:{! item.recordContact[f.fieldPath] }"><span class="domainpartred"><apex:outputText value="{! item.recordContact[f.fieldPath] }" /></span></a>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == '', true, false) }">
+                                <apex:outputField value="{! item.recordContact[f.fieldPath] }" />
+                            </apex:outputpanel>
                         </apex:outputpanel>
-                        <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == '', true, false) }">
-                          <apex:outputField value="{! item.recordContact[f.fieldPath] }" />
-                        </apex:outputpanel>
-                      </apex:outputpanel>
                     </apex:outputpanel>
 
                     <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Contact_Name__c',true,false)}">
-                      <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
                     </apex:outputpanel>
 
                     <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}">
-                      <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
+                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
                     </apex:outputpanel>
-                  </td>
-                </apex:repeat>
 
-                <apex:outputpanel rendered="{!isAdmin}">
-                  <td style="font-size: 13px;"><apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/></td>
-                </apex:outputpanel>
-              </tr>
+                  </apex:column>
             </apex:repeat>
-          </apex:repeat>
-        </tbody>
-      </table>
-      <script type="text/javascript">      
-        $('#pbt_contacts2').dataTable( { 
-          "pageLength": 10,
-          "lengthMenu": [5, 10, 25, 50 ],
-          "searching": true,
-          dom: 'Alfrtip',
-          alphabetSearch: {
-            column: 2
-          }
-        } );                      
-        $("div.alphabet-group").remove();        
-      </script>
 
-    </div>
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
 
+        </apex:pageBlockTable>
+
+        <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
+           <div class="paginator">
+              <span class="left">
+                 <span class="selectorTarget" >
+                    {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  of {!setCon.ResultSize }
+             </span>
+          </span>
+          <span class="prevNextLinks">
+
+           <span class="prevNext"  style="display:{!IF(setCon.HasPrevious,'none','')}">
+            <img src="/s.gif" class="firstoff" alt="First Page"/>
+           </span>
+           <span style="display:{!IF(setCon.HasPrevious,'','none')}">
+               <a href="javascript:first()" class="prevNext"><img src="/s.gif" title="First Page" alt="First Page" class="first"/></a>
+           </span>
+
+           <span class="prevOff" style="display:{!IF(setCon.HasPrevious,'none','')}">
+               <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}
+            </span>
+            <span style="display:{!IF(setCon.HasPrevious,'','none')}">
+                <a href="javascript:previous()" class="prevNext"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}</a>
+            </span>
+
+           <span class="nextOff" style="display:{!IF(setCon.HasNext,'none','')}">{!$Label.ISSP_Next}
+               <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            </span>
+            <span style="display:{!IF(setCon.HasNext,'','none')}">
+                <a href="javascript:next()" class="prevNext">{!$Label.ISSP_Next}<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+            </span>
+
+           <span class="prevNext" style="display:{!IF(setCon.HasNext,'none','')}">
+                <img src="/s.gif" class="lastoff" alt="Last Page"/>
+           </span>
+           <span class="prevNext" style="display:{!IF(setCon.HasNext,'','none')}">
+               <a href="javascript:last()"><img src="/s.gif" title="Last Page" alt="Last Page" class="last"/></a>
+           </span>
+
+           </span>
+           <span class="right">{!$Label.ISSP_Page}
+               {!setCon.PageNumber}
+               {!$Label.ISSP_of} {!CEILING(noOfRecords/size)}
+
+        </span>
+   </div>
+   <div class="clearingBox"></div>
+</div>
     </apex:pageBlock>
 
     <!-- Modal ask for inactivation reason -->
