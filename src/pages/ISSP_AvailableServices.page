@@ -19,9 +19,6 @@
     <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> 
     <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
 
-    <script src="{!URLFOR($Resource.BootstrapTableContextmenu, 'bootstrap-table-contextmenu.js')}"></script> 
-
-
     <!--script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
     <script src="{!URLFOR($Resource.DataTables, 'js/dataTables.bootstrap.min.js')}"></script>
     <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script-->  
@@ -160,6 +157,173 @@
       //alert(' closeDialog : ');
       $('#myModal').modal('toggle');
     }
+
+          !function($) {
+
+    'use strict';
+
+    $.extend($.fn.bootstrapTable.defaults, {
+        // Option defaults
+        contextMenu: undefined,
+        contextMenuTrigger: 'right',
+        contextMenuAutoClickRow: true,
+        contextMenuButton: undefined,
+        beforeContextMenuRow: function (e, row, buttonElement) {
+            // return false here to prevent menu showing
+        },
+        // Event default handlers
+        onContextMenuItem: function (row, $element) {
+            return false;
+        },
+        onContextMenuRow: function (row, $element) {
+            return false;
+        }
+    });
+  
+  // Methods
+    $.fn.bootstrapTable.methods.push('showContextMenu');
+
+  // Events
+    $.extend($.fn.bootstrapTable.Constructor.EVENTS, {
+        'contextmenu-item.bs.table': 'onContextMenuItem',
+        'contextmenu-row.bs.table': 'onContextMenuRow'
+    });
+
+    var BootstrapTable = $.fn.bootstrapTable.Constructor,
+        _initBody = BootstrapTable.prototype.initBody;
+
+    BootstrapTable.prototype.initBody = function () {
+
+        // Init Body
+        _initBody.apply(this, Array.prototype.slice.apply(arguments));
+
+        // Init Context menu
+        if (this.options.contextMenu || this.options.contextMenuButton || this.options.beforeContextMenuRow) {
+            this.initContextMenu();
+        }
+    };
+
+    // Init context menu
+    BootstrapTable.prototype.initContextMenu = function () {
+        var that = this;
+
+        // Context menu on Right-click
+        if (that.options.contextMenuTrigger == 'right' || that.options.contextMenuTrigger == 'both') {
+            that.$body.find('> tr[data-index]').off('contextmenu.contextmenu').on('contextmenu.contextmenu', function (e) {             
+                var rowData = that.data[$(this).data('index')],
+                    beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, null]);
+
+                if(beforeShow !== false){
+                    that.showContextMenu({event: e});
+                }
+                return false;
+            });
+        }
+
+        // Context menu on Left-click
+        if (that.options.contextMenuTrigger == 'left' || that.options.contextMenuTrigger == 'both') {
+            that.$body.find('> tr[data-index]').off('click.contextmenu').on('click.contextmenu', function (e) {             
+                var rowData = that.data[$(this).data('index')],
+                    beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, null]);
+
+                if(beforeShow !== false){
+                    that.showContextMenu({event: e});
+                }
+                return false;
+            });
+        }
+
+        // Context menu on Button-click
+        if (typeof that.options.contextMenuButton === 'string') {
+            that.$body.find('> tr[data-index]').find(that.options.contextMenuButton).off('click.contextmenu').on('click.contextmenu', function (e) {                
+                var rowData = that.data[$(this).closest('tr[data-index]').data('index')],
+                    beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, this]);
+
+                if(beforeShow !== false){
+                    that.showContextMenu({event: e, buttonElement: this});
+                }
+                return false;
+            });
+        }
+    };
+
+    // Show context menu
+    BootstrapTable.prototype.showContextMenu = function (params) {
+        if(!params || !params.event){ return false; }
+        if(params && !params.contextMenu && typeof this.options.contextMenu !== 'string'){ return false; }
+
+        var that = this,
+            $menu, screenPosX, screenPosY,
+            $tr = $(params.event.target).closest('tr[data-index]'),
+            item = that.data[$tr.data('index')];
+
+        if(params && !params.contextMenu && typeof this.options.contextMenu === 'string'){
+            screenPosX = params.event.clientX;
+            screenPosY = params.event.clientY;
+            $menu = $(this.options.contextMenu);
+        }
+        if(params && params.contextMenu){
+            screenPosX = params.event.clientX;
+            screenPosY = params.event.clientY;
+            $menu = $(params.contextMenu);
+        }
+        if (params && params.buttonElement) {
+            screenPosX = params.buttonElement.getBoundingClientRect().left;
+            screenPosY = params.buttonElement.getBoundingClientRect().bottom;
+        }
+
+        function getMenuPosition($menu, screenPos, direction, scrollDir) {
+            var win = $(window)[direction](),
+                scroll = $(window)[scrollDir](),
+                menu = $menu[direction](),
+                position = screenPos + scroll;
+
+            if (screenPos + menu > win && menu < screenPos)
+                position -= menu;
+
+            return position;
+        }
+
+        // Bind click on menu item
+        $menu.find('li').off('click.contextmenu').on('click.contextmenu', function (e) {
+            var rowData = that.data[$menu.data('index')];
+            that.trigger('contextmenu-item', rowData, $(this));
+        });
+
+        // Click anywhere to hide the menu
+        $(document).triggerHandler('click.contextmenu');
+        $(document).off('click.contextmenu').on('click.contextmenu', function (e) {
+      // Fixes problem on Mac OSX
+          if(that.pageX != e.pageX || that.pageY != e.pageY){
+            $menu.hide();
+            $(document).off('click.contextmenu');
+          }
+        });
+        that.pageX = params.event.pageX;
+        that.pageY = params.event.pageY;
+
+        // Show the menu
+        $menu.data('index', $tr.data('index'))
+            .appendTo($('body'))
+            .css({
+                position: "absolute",
+                left: getMenuPosition($menu, screenPosX, 'width', 'scrollLeft'),
+                top: getMenuPosition($menu, screenPosY, 'height', 'scrollTop'),
+                zIndex: 1100
+            })
+            .show();
+
+        // Trigger events
+        that.trigger('contextmenu-row', item, $tr);
+        if(that.options.contextMenuAutoClickRow && that.options.contextMenuTrigger == 'right') {
+            that.trigger('click-row', item, $tr);
+        }
+    };
+
+
+}(jQuery);
+
+
     </script>
 
     <style type="text/css">
@@ -189,6 +353,11 @@
        font-size: 11px;
        color: #015BA7 !important;
     }
+
+        #contextMenu {
+      position: absolute;
+      display:none;
+}
     </style>
     <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Available_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
@@ -225,56 +394,40 @@
     </script>
     
     <apex:pageBlock id="Services" >
-
-
-     <div class="container" style="width: 80%">
-      <div class="row">
-        <table id='grid' >
-            <thead>
-              <tr>
-                <th data-field='itemid'>Item ID</th>
-                <th data-field='name'>Name</th>
-                <th data-field='price'>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td>ABC</td><td>$1.00</td></tr>
-              <tr><td>2</td><td>DEF</td><td>$2.00</td></tr>
-              <tr><td>3</td><td>GHI</td><td>$3.00</td></tr>
-              <tr><td>4</td><td>XYZ</td><td>$4.00</td></tr>
-            </tbody>
-        </table>
-      </div>  
-    </div>
-  
     <!-- context menu -->
-    <ul id="context-menu" >
-        <li data-item="edit"><a>Edit</a></li>
-        <li data-item="delete"><a>Delete</a></li>
-        <li data-item="action1"><a>Action Here</a></li>
-        <li data-item="action2"><a>And Action Here</a></li>
+    <ul id="context-menu" class="dropdown-menu">
+        <li data-item="add" data-id="cenas"><a>{!$Label.ISSP_Add_User_to_this_service}</a></li>
+        <li data-item="view"><a>{!$Label.ISSP_View_Portal_Users}</a></li>
     </ul>  
 
     <script>
-    $(function() {
-      $('#grid').bootstrapTable({
+    $(function() {      
+      $('[id$=pbt_Services]').bootstrapTable({
         contextMenu: '#context-menu',
+        contextMenuButton: '.example2-button',        
         onContextMenuItem: function(row, $el){
-          if($el.data("item") == "edit"){
-            alert(row.itemid);
+
+          var string = row[3].substring("Id=");          
+          var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));
+          var getName = row[1].substring("_self");          
+          var servName = getName.substring(getName.indexOf("_self")+7,getName.indexOf("&"));
+          
+          if($el.data("item") == "add"){          
+            window.location.href = "/ISSP_EditPortalServiceAccess?Id="+linkId+"&op=Edit&PSId="+linkId+"&PSname="+servName;
+          }
+          else if($el.data("item") == "view"){
+            window.location.href = "/ISSP_PortalService?Id="+linkId;
           }
         }
       });
     });
+
     </script>
-   
+
         <hr />
         <apex:pageMessages escape="false"/>
-        <apex:pageBlockTable value="{!ServiceList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_Services">
-          
-       
+        <apex:dataTable value="{!ServiceList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_Services">       
             <apex:repeat value="{!fields}" var="f">
-
                   <apex:column >
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" reRender="pbt_Services">{!f.label}
@@ -292,12 +445,11 @@
                      <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
-
                   </apex:column>
             </apex:repeat>
+            
             <apex:column headerValue="{!$Label.ISSP_Status}">
                   <apex:outputtext value="{!CASE(item.Status, 'Access Under Provisioning', $Label.ISSP_Access_Under_Provisioning, 'Access Granted', $Label.ISSP_Access_Granted, 'Access Denied', $Label.ISSP_Access_Denied, $Label.ISSP_Access_Requested)}" rendered="{!IF(item.Status != null , true,false)}"/>
-
                   <a onclick="doRequest('{!item.recordService.Id}')"   class="pull-right btn_iata_success btn btn-block"  
                   style="display:{!IF(item.Status == null || item.Status =='' , '','none')}">
                   <!--{!$label.ISSP_New_Service_Request}-->
@@ -308,54 +460,19 @@
                   style="display:none">
                   </a>
             </apex:column>
+
+            <apex:column headerValue="Actions" id='actionId' rendered="{!item.addUsersEnable}">
+                <button type="button" class="example2-button"><span class="glyphicon glyphicon-cog"></span></button>
+            </apex:column>
           <!--elliot 19 juin-->  
            
-            <apex:column style="text-align: center; display: {!AdminOrNot}">
-                <apex:outputPanel rendered="{!item.addUsersEnable}">
-             <!--       
-                aaaaaaa
-
-                  <ul id="example2-context-menu" class="dropdown-menu">
-                    <li data-item="edit"><a>Edit</a></li>
-                    <li data-item="delete"><a>Delete</a></li>
-                    <li data-item="action1"><a>Action Here</a></li>
-                    <li data-item="action2"><a>And Action Here</a></li>
-                  </ul>
-                  <script>
-                    $('#example2-grid').bootstrapTable({
-                      contextMenu: '#example2-context-menu',
-                      contextMenuButton: '.example2-button',
-                      onContextMenuItem: function(row, $el){
-                        if($el.data("item") == "edit"){
-                          alert("Edit: ");
-                        } else if($el.data("item") == "delete"){
-                          alert("Delete: ");
-                        } else if($el.data("item") == "action1"){
-                          alert("Action1: ");
-                        } else if($el.data("item") == "action2"){
-                          alert("Action2: ");
-                        }
-                      }
-                    });
-                  </script>
--->
-                    <!--            
-                    <apex:outputLink rendered="{! not item.accountNotOpenError}" 
-                      styleClass="btn btn_iata_primary" 
-                      value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" 
-                      target="_self">{!$Label.ISSP_Add_User_to_this_service}
-                    </apex:outputLink>
-
-                    <apex:outputLabel rendered="{! item.accountNotOpenError}" 
-                      styleClass="btn btn_iata_primary" 
-                      onclick="errorMessageModal('{!item.lineErrorMessage}')" >{!$Label.ISSP_Add_User_to_this_service}
-                    </apex:outputLabel>
-                    -->
+            <!--<apex:column style="text-align: center; display: {!AdminOrNot}">
+                <apex:outputPanel rendered="{!item.addUsersEnable}">             
                 </apex:outputPanel>
-            </apex:column>
+            </apex:column>-->
                 
              <!-- end elliot 19 juin -->
-        </apex:pageBlockTable>
+        </apex:dataTable>
          
         <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
            <div class="paginator">
