@@ -51,6 +51,7 @@ console.log(JSON.stringify(activity));
         
         var activity = component.get("v.activity");
         var status = component.find("statusList").get("v.value");
+        var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
         

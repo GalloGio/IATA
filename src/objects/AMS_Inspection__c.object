@@ -323,6 +323,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Nr_of_AMS_Territories__c</fullName>
+        <description>This field&apos;s purpose is to count the nr of AMS territories created against an Appointment, to be used in validations for some scenarios.</description>
+        <externalId>false</externalId>
+        <label>Nr. of AMS Territories</label>
+        <summaryForeignKey>AMS_Territory__c.Appointment__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>OSCAR__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -410,4 +421,13 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Class_G_Appointments</fullName>
+        <active>true</active>
+        <description>Prevent GSA/GSSA Appointment with status = 9 with no Territory Associated</description>
+        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;), 
+
+Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFormula>
+        <errorMessage>You cannot create an Appointment for a GSA/GSSA with Status greater or equal than 5 without creating an AMS Territory first. Please create the Appointment with status 2 and change it &gt;= 5 once the Account is Approved and the AMS Territory is created.</errorMessage>
+    </validationRules>
 </CustomObject>

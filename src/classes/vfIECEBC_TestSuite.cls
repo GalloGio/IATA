@@ -466,6 +466,9 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+
+            //saveAsTemplate() coverage
+            PageReference pref = campaignExtCon.saveAsTemplate();
             
             System.debug(campaignExtCon.campaign);
             vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
