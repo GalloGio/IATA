@@ -353,9 +353,9 @@ private class AMS_InspectionHelperTest {
 
         Test.startTest();
         List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
-        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7', Date_Organisation_Status_attained__c=System.today());
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
         agencyInspectionList.add(ins1);
-        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '9', Date_Organisation_Status_attained__c=System.today());
+        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
         agencyInspectionList.add(ins2);
         insert agencyInspectionList;
 
