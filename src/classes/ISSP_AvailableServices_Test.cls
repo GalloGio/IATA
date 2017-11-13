@@ -3,6 +3,8 @@ public class ISSP_AvailableServices_Test {
 
     @testSetup
     static void setup() {
+
+
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
@@ -144,7 +146,7 @@ public class ISSP_AvailableServices_Test {
         );
 
         insert new List<Portal_Application_Right__c>{appRight,appRight2};
-        
+        /*
         Connected_App_Roles__c car = new Connected_App_Roles__c(
             Name = 'ANG Test2',
             Connected_App__c = 'IATA EasyPay (EDENRED)',
@@ -154,6 +156,7 @@ public class ISSP_AvailableServices_Test {
             Min_Users_With_Role__c = 2
         );
         insert car;
+        */
 
     }
 
@@ -194,6 +197,7 @@ public class ISSP_AvailableServices_Test {
         ISSP_AvailableServices cttr = new ISSP_AvailableServices();
 
         cttr.initialization();
+
         
     }
     
@@ -617,5 +621,323 @@ public class ISSP_AvailableServices_Test {
 
             Test.stopTest();
         }
+    }   
+
+
+    public static testMethod void testnewAppsRequest3() {
+            
+        Account acc = ISSP_ObjectFactory.createNewAccount();        
+        acc.Location_Type__c = 'HO';
+
+        insert acc;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.lastName = 'IATA';
+        con.AccountId = acc.id;
+        con.Authorized_Signatory__c = true;
+
+        insert con;
+
+        Test.startTest();
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = con.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com',
+                License_Cost_Center__c = 'XSMW01JO01'
+            );
+
+        System.runAs(testeUser3) {
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();        
+            acc2.Location_Type__c = 'HO';
+            acc2.ANG_IEP_Status__c = 'In Progress';
+
+            insert acc2;    
+
+            //Account.Location_Type__c,
+            //Account.Top_Parent__r.Location_Type__c, 
+            
+            //Account.Is_Branch_Abroad__c = true;
+            //Account.Status__c
+
+            Contact con2 = ISSP_ObjectFactory.createNewContact();
+            con2.AccountId = acc2.id;
+            con2.Authorized_Signatory__c = true;
+            //con2.User_Portal_Status__c =
+
+            insert con2;
+            
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            cttr.initialization();
+        }
+        Test.stopTest();
+    }     
+
+    public static testMethod void testnewAppsRequest4() {
+            
+        Account acc = ISSP_ObjectFactory.createNewAccount();        
+
+        insert acc;
+
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.id;
+
+        insert con;
+
+        Test.startTest();
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = con.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com',
+                License_Cost_Center__c = 'XSMW01JO01'
+            );
+
+        System.runAs(testeUser3) {
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();        
+            acc2.Location_Type__c = 'HO';
+
+            insert acc2;
+
+            Contact con2 = ISSP_ObjectFactory.createNewContact();
+            con2.lastName = 'IATA';
+            con2.AccountId = acc2.id;
+            con2.Authorized_Signatory__c = false;
+
+            insert con2;
+            
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            cttr.initialization();
+        }
+        Test.stopTest();
     }    
+
+    public static testMethod void testnewAppsRequest5() {
+            
+        Account acc = ISSP_ObjectFactory.createNewAccount();        
+
+        insert acc;
+
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.id;
+
+        insert con;
+
+        Test.startTest();
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = con.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com',
+                License_Cost_Center__c = 'XSMW01JO01'
+            );
+
+        System.runAs(testeUser3) {
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();        
+            acc2.ANG_IEP_Status__c = 'Open';
+            acc2.Location_Type__c = 'HE';
+
+            insert acc2;
+
+            Contact con2 = ISSP_ObjectFactory.createNewContact();
+            con2.lastName = 'IATA';
+            con2.AccountId = acc2.id;
+            con2.Authorized_Signatory__c = false;
+
+            insert con2;
+            
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            cttr.initialization();
+        }
+        Test.stopTest();
+    }    
+
+
+    public static testMethod void testnewAppsRequest6() {
+            
+        Account acc = ISSP_ObjectFactory.createNewAccount();        
+
+        insert acc;
+
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.id;
+
+        insert con;
+
+        Test.startTest();
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = con.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com',
+                License_Cost_Center__c = 'XSMW01JO01'
+            );
+
+        System.runAs(testeUser3) {
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();        
+            acc2.ANG_IEP_Status__c = 'Open';
+            acc2.Location_Type__c = 'AO';
+
+            insert acc2;
+
+            Contact con2 = ISSP_ObjectFactory.createNewContact();
+            con2.lastName = 'IATA';
+            con2.AccountId = acc2.id;
+            con2.Authorized_Signatory__c = false;
+
+            insert con2;
+
+            Connected_App_Roles__c car = new Connected_App_Roles__c(
+                Name = 'ANG Test2',
+                Connected_App__c = 'IATA EasyPay (EDENRED)',
+                Permission_set_SSO__c = 'IEP_EdenRed',
+                Role__c = 'IEP Admin',
+                Default_User_Role__c = true,
+                Min_Users_With_Role__c = 2
+            );
+            insert car;
+
+            Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                    Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                    ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                    ANG_Accredited_Agents_Only__c = false,
+                    Agency__c = true
+                );
+
+            insert easyPay1;
+            
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            cttr.Serv = new ISSP_AvailableServices.ServiceWrapper(easyPay1, 'Open', true, true);
+
+            cttr.initialization();
+
+            List<SelectOption> l = cttr.availablePortalServiceRoles;
+        }
+        Test.stopTest();
+    }
+
+    public static testMethod void testnewAppsRequest7() {
+            
+        Account acc = ISSP_ObjectFactory.createNewAccount();        
+
+        insert acc;
+
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.id;
+
+        insert con;
+
+        Test.startTest();
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = con.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com',
+                License_Cost_Center__c = 'XSMW01JO01'
+            );
+
+        System.runAs(testeUser3) {
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();        
+            acc2.ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT;
+            acc2.Location_Type__c = 'AO';
+
+            insert acc2;
+
+            Contact con2 = ISSP_ObjectFactory.createNewContact();
+            con2.lastName = 'IATA';
+            con2.AccountId = acc2.id;
+            con2.Authorized_Signatory__c = false;
+
+            insert con2;
+
+            Connected_App_Roles__c car = new Connected_App_Roles__c(
+                Name = 'ANG Test2',
+                Connected_App__c = 'IATA EasyPay (EDENRED)',
+                Permission_set_SSO__c = 'IEP_EdenRed',
+                Role__c = 'IEP Admin',
+                Default_User_Role__c = true,
+                Min_Users_With_Role__c = 2
+            );
+            insert car;
+
+            Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                    Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                    ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                    ANG_Accredited_Agents_Only__c = false,
+                    Agency__c = true
+                );
+
+            insert easyPay1;
+            
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            cttr.Serv = new ISSP_AvailableServices.ServiceWrapper(easyPay1, ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT, true, true);
+
+            String x = cttr.Serv.portalServiceRole;
+
+            cttr.initialization();
+
+            List<SelectOption> l = cttr.availablePortalServiceRoles;
+        }
+        Test.stopTest();
+    }    
+    
 }
