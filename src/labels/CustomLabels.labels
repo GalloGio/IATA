@@ -14550,6 +14550,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Add Financial Assessment Contact</value>
     </labels>
     <labels>
+        <fullName>ISSP_View_Portal_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Add FAP Contact</shortDescription>
+        <value>View all Users for this service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
