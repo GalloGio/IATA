@@ -121,7 +121,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
 
                     for(ID userId : portalAdminUserIDs) {
                         Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
-                        if(!requestByUserMap.get(par.Portal_Application__c) && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
+                        if(!requestByUserMap.get(par.Portal_Application__c) && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {                            
                             emailMsg.setTemplateId(templateIdIEPAprove);
                         } else {
                             if(par.Conctact_is_CNS__c!=null && par.Conctact_is_CNS__c){

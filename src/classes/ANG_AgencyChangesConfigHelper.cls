@@ -35,7 +35,7 @@ public class ANG_AgencyChangesConfigHelper{
 					fieldValueMapping.put('B_' + apiNametoLabel.get(toc).toLowerCase(), String.valueOf(config.get(toc)));
 			}
 			combMap.add(fieldValueMapping);
-			System.debug('ANG_AgencyChangesConfigHelper: type of change combination: ' + fieldValueMapping);
+			//System.debug('ANG_AgencyChangesConfigHelper: type of change combination: ' + fieldValueMapping);
 		}
 		return combMap;
 	}
@@ -115,11 +115,11 @@ public class ANG_AgencyChangesConfigHelper{
 		for(String toc: tocs){
 			String matchingFieldSet = 'ANG_'+ (toc.toLowerCase()).replaceAll('[ -]', '');
 
-			System.debug('[ANG_AgencyChangesConfigHelper] - matchingFieldSet:'+matchingFieldSet);
-			System.debug('[ANG_AgencyChangesConfigHelper] - field set:' + Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap());
+			//System.debug('[ANG_AgencyChangesConfigHelper] - matchingFieldSet:'+matchingFieldSet);
+			//System.debug('[ANG_AgencyChangesConfigHelper] - field set:' + Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap());
 			Schema.FieldSet fieldSet = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap().get(matchingFieldSet);
 			if(fieldSet!=null){
-				System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
+				//System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
 				fieldsToMigrate.addAll(getFieldSetFieldsApiName(fieldSet));
 			}
 		}
@@ -181,6 +181,17 @@ public class ANG_AgencyChangesConfigHelper{
 		system.debug('Application withdrawal change code: ' + changeCode);
 
 		return changeCode;
+	}
+
+	public static Boolean getManagerApprovalRequired(Map<String, String> config){
+		Boolean isApprovalRequired = false;
+
+		if (config.get('Requires Manager Approval') != null)
+			isApprovalRequired = config.get('Requires Manager Approval') == 'true' ? true : false;
+
+		system.debug('Requires Manager Approval: ' + isApprovalRequired);
+
+		return isApprovalRequired;
 	}
 
 
