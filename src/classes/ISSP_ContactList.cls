@@ -17,7 +17,10 @@ public with sharing class ISSP_ContactList {
     public Boolean buttonAdmin {get;set;}
     public Boolean buttonInactivate {get;set;}
     public Boolean buttonReject {get;set;}
-        
+    
+    public list<String> AlphaList {get; set;}
+    public String AlphaFilter {get; set;}
+    
     public list<String> errorMessage {get; set;}
     
     public List<SelectOption> rejectionReasonOptions {get;set;}
@@ -26,6 +29,9 @@ public with sharing class ISSP_ContactList {
     
     public Boolean contactsWithIdCard {get; set;}
     public String contactsWithIdCardString {get; set;}
+
+    public String searchString {get; set;}
+    public String currentSearch {get; set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -84,7 +90,7 @@ public with sharing class ISSP_ContactList {
             //inactiveReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
             inactiveReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
             
-            //AlphaList = new list<String> {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other', 'All'};
+            AlphaList = new list<String> {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other', 'All'};
             initFilters();
             initContactListViewMap();
             String currentUserProfileId = UserInfo.getProfileId();
@@ -202,7 +208,7 @@ public with sharing class ISSP_ContactList {
             buttonInactivate = contactListViewMap.get(selectedList).Button_Deactivate__c;
             buttonReject = contactListViewMap.get(selectedList).Button_Reject__c;
         }
-        //setCon = null;
+        setCon = null;
         return null;
     }
     public string getQueryConditions() {
@@ -228,8 +234,54 @@ public with sharing class ISSP_ContactList {
     
     Public Integer noOfRecords{get; set;}
     Public Integer size{get;set;}
+    public ApexPages.StandardSetController setCon {
+        get{
+            if(setCon == null){
+                string sortFullExp = '';
+                if (sortExpression == 'ISSP_Contact_Name__c')
+                    sortFullExp = 'Name'  + ' ' + sortDirection;
+                else
+                    sortFullExp = sortExpression  + ' ' + sortDirection;
+                system.debug('ORDERING BY: ' + sortExpression);
+                system.debug('ORDERING LIKE: ' + sortDirection);
+                size = 10;
 
-    
+                String searchFilter = '';
+                if(searchString != null && searchString != '') {
+                    searchFilter = ' AND ((name Like \'%' + searchString + '%\') OR (email Like \'%' + searchString + '%\'))';
+                }
+
+                String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c, Portal_User_Frozen__c ';
+                for(Schema.FieldSetMember f : this.getFields()) {
+                    query +=  ', '+f.getFieldPath() ;
+                }
+                string queryString = '';
+                string otherQuery = ',(SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like \'Cancelled%\'), (SELECT Id FROM IEC_Subscriptions_History__r)';
+                system.debug('AlphaFilter: ' + AlphaFilter);
+                if (AlphaFilter != '' && AlphaFilter != null && AlphaFilter != 'All' && sortExpression != 'CreatedDate' && AlphaFilter != 'Other'){
+                    if (sortExpression == 'ISSP_Contact_Name__c')
+                        queryString = 'select '+query+otherQuery+' from Contact  '+getQueryConditions()+ searchFilter + ' AND Name like \'' + AlphaFilter + '%\'' + ' order by '+ sortFullExp;
+                    else
+                        queryString = 'select '+query+otherQuery+' from Contact  '+getQueryConditions()+ searchFilter + ' AND ' + sortExpression + ' like \'' + AlphaFilter + '%\'' + ' order by '+ sortFullExp;
+                }
+                else if (AlphaFilter == 'Other' && sortExpression != 'CreatedDate'){
+                    if (sortExpression == 'ISSP_Contact_Name__c')
+                        queryString = 'select '+query+otherQuery+' from Contact  '+getQueryConditions()+ searchFilter + ' AND (Name < \'A\' OR Name > \'Z\') AND (NOT Name LIKE \'Z%\') order by '+ sortFullExp;
+                    else
+                        queryString = 'select '+query+otherQuery+' from Contact  '+getQueryConditions()+ searchFilter + ' AND (' + sortExpression + ' < \'A\' OR ' + sortExpression + ' > \'Z\') AND (NOT ' + sortExpression + ' LIKE \'Z%\') order by '+ sortFullExp;
+                }
+                else{
+                    queryString = 'select '+query+otherQuery+' from Contact  '+getQueryConditions() + searchFilter + ' order by '+ sortFullExp;
+                }
+
+                ISSP_Utilities.log('SQL String: ' + queryString);
+                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
+                setCon.setPageSize(size);
+                noOfRecords = setCon.getResultSize();
+            }
+            return setCon;
+        }set;
+    }
     
     public class contactWrapper {
         public Boolean selected {get; set;}
@@ -241,19 +293,7 @@ public with sharing class ISSP_ContactList {
     
     public List<contactWrapper> getContactList(){
         List<contactWrapper> allContactList =  new List<contactWrapper>();   
-        //List<Contact> allContacts = (List<Contact>)setCon.getRecords();
-
-        String query = 'Select CreatedDate, Name, Account.Name, Airline_Contact_Type__c,' +
-                              'Services__c, Phone, ISSP_Account_Portal_Link__c, IATA_Code__c,' +
-                              'Account_Country__c, Email, User_Portal_Status__c,' +
-                              'ValidContactDomainName__c, ValidContactDomainImage__c,' +
-                              'Portal_User_Frozen__c,' +
-                              '(SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like \'Cancelled%\'),' +
-                              '(SELECT Id FROM IEC_Subscriptions_History__r)' +
-                       ' From Contact ' + getQueryConditions();
-
-        List<Contact> allContacts = Database.query(query);
-
+        List<Contact> allContacts = (List<Contact>)setCon.getRecords();
         map<Id,User> mapContactUser = new map<Id,User>();
         for (User user: [SELECT Id, ContactId, LastLoginDate FROM User Where ContactId in :allContacts]) {
             mapContactUser.put(user.ContactId, user);
@@ -280,13 +320,15 @@ public with sharing class ISSP_ContactList {
         contactList = allContactList;
         return allContactList;
     }
+
+    public PageReference doSearch() {
+        setCon = null;
+        return null;
+    }
      
-    /*
     public List<Contact> getContacts(){
         return (List<Contact>)setCon.getRecords();
     }
-    */
-
     //AEF:
     public static set<String> getPermissionSetForUserSet(set<String> permissionSetIDs, ID userId) {
         set<String> permissionSetForUserSet = new Set<String>();
@@ -542,7 +584,27 @@ public with sharing class ISSP_ContactList {
             system.debug('NOTHING TO PROCESS');
         }
     }
-        
+    
+    /*
+    public void disableUser(String contactId){
+        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated');
+        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
+        Set <Id> teamMemberIdSet = new Set <Id>();
+        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:contactId];
+        for(User u : usersToUpdate){
+            teamMemberIdSet.add(u.Id);
+        }
+        if (!teamMemberIdSet.isEmpty()){
+            ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(teamMemberIdSet);
+        }
+    }
+    
+    public void rejectUser(String contactId){
+        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated', Status__c='Inactive');
+        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
+    }
+    */
+    
     @future
     public static void updateContact (String contactId, String userStatus){
         system.debug('updating contact: ' + contactId);
