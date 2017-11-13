@@ -5324,6 +5324,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>STEP41__c</fullName>
+        <description>Step used on Bank Account Setup Oscar Process</description>
         <externalId>false</externalId>
         <label>STEP41</label>
         <picklist>
@@ -5353,6 +5354,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <fields>
         <fullName>STEP42__c</fullName>
+        <description>Step used on Bank Account Setup Oscar Process</description>
         <externalId>false</externalId>
         <label>STEP42</label>
         <picklist>
