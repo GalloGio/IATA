@@ -194,7 +194,7 @@ public class ANG_RHCInformationTriggerHandler{
 
 			changeCode.name = changeCodeConfigFOP.Change_Code__c;
 			changeCode.reasonCode = changeCodeConfigFOP.Reason_Code__c;
-			changeCode.memoText = changeCodeConfigFOP.Bulletin_Memo_Text__c;
+			changeCode.memoText = changeCodeConfigFOP.Bulletin_Memo_Text__c.replace('due to <SIDRA Lite Reason>.','');
 			changeCode.reasonDesc  = changeCodeConfigFOP.Reason_Code_Description__c;
 			changeCode.status  = changeCodeConfigFOP.Account_status_change__c;
 
