@@ -16,6 +16,7 @@ public with sharing class SidraLiteHelperForOSCAR {
         '12' => 'Financial Security Non-compliance (OSCAR Change)',
         '14' => 'Non submission of PSAA',
         '26' => 'Late/Absence of Notification of Change',
+        '35' => 'Financial Security Non-compliance (OSCAR Change)',
         'RPM' => 'Change Deficiency',
         'DGR' => 'Failure to submit DGR certificate by deadline'
     };
@@ -156,7 +157,7 @@ public with sharing class SidraLiteHelperForOSCAR {
             }
         }
 		if (oscar.Step35__c == 'Failed') {
-            String reason = MAP_STEP_REASON.get('12');
+            String reason = MAP_STEP_REASON.get('35');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }

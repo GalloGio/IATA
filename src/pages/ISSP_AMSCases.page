@@ -38,8 +38,13 @@
                         bootbox.alert('{!$Label.ISSP_AMS_Cases_Notify_IATA_Changes_Error}');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
-                    }
+                    }                  
                 }
+
+                function proofOfPCI(){
+                    navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                }
+
             
                 function proceedToVMFR() {
                     bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
@@ -119,19 +124,28 @@
                     <apex:commandLink action="{!redirectToCasePage}" value="Travel Industry Designator Service (TIDS)" id="TIDSCommandLink" rendered="{!AND(NOT(isHOAccredited), con.Account.Sector__c=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="TIDS" />
                     </apex:commandLink>
-                    -->
-                    <br/>
+                    -->                    
                 </td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top">
                     <table>
                         <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/></td>
-                            <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/></td>
+                            <td style="padding-left:8px;width:66%"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}" /></td>
                         <!--<td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top">-->
                         </tr>
                     </table>
                 </td>
-
+            </tr>
+            <tr>
+                <td></td>
+                <td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top;padding-right:20px">
+                    <table>
+                        <tr>                            
+                            <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>
+                            <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/></td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
                 <tr>
                     <td style="padding-top:20px">
@@ -162,7 +176,10 @@
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='FOP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FOP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
             </apex:column>
             <apex:column value="{!MyAMSCases.Subject}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.Portal_Case_Status__c}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>

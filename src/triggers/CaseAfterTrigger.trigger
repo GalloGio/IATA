@@ -389,6 +389,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			list<Case> casesToUdpateTheAccts = new list<Case>();
+			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
 			for(Case c: CasesToConsider){
 				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
@@ -396,10 +397,22 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
 				casesToUdpateTheAccts.add(c);
 				}
+
+				if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) && AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)){
+               		casesToUpdateNGaccsMap.put(c.AccountId,c);
+				}
+
 			}
 			if(!casesToUdpateTheAccts.isEmpty())  {              
 				// throw new transformationException();
 				AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+			}         
+			if(!casesToUpdateNGaccsMap.isEmpty())  { 
+				//NEWGEN - adds NG account to be updated
+				for(account acc:[select id from account where id in :casesToUpdateNGaccsMap.keySet() and ANG_IsNewGenAgency__c=true]){	
+					acc.Financial_Review_Result__c = casesToUpdateNGaccsMap.get(acc.id).Financial_Review_Result__c;
+					AcctToBeUpdatedPerId.put(acc.id, acc);
+				}
 			}         
 		} 
 		System.debug('***After checking record type ' + caseRecType);

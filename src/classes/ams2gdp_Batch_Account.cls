@@ -11,13 +11,15 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	Set<String> locationsSet;
 	Set<String> statusSet;
 	public Boolean isManual;
+	public Boolean secondRun;
 
 
-	public void init(Boolean runNext, List<String> ids, Boolean manual) {
+	public void init(Boolean runNext, List<String> ids, Boolean manual, Boolean secondR) {
 		isManual = manual == null ? false : manual;
 		batchName = 'Job 1: GDP Products - Account View';
 		processNextBatch = runNext;
 		extraIds = ids;
+		secondRun = secondR;
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		//-- Fields used for Sync
@@ -77,8 +79,14 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 
 			if (batchInfo != null) {
 				//Run only on the deltas
-				String deltaConditions = String.format('LastModifiedDate >= {0}'
+				String deltaConditions;
+				if(secondRun){
+					deltaConditions = String.format('LastModifiedDate >= {0}'
 					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}else{
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}
 
 				system.debug('##deltaConditions: ' + deltaConditions);
 
@@ -106,16 +114,16 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	}
 
 	global ams2gdp_Batch_Account() {
-		init(false, null, false);
+		init(false, null, false, false);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext, Boolean manual) {
-		init(runNext, null, manual);
+	global ams2gdp_Batch_Account(Boolean runNext, Boolean manual, Boolean secondRun) {
+		init(runNext, null, manual, secondRun);
 	}
 
 	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra, Boolean manual) {
 		system.debug('##ams2gdp_Batch_Account, extra: ' + extra);
-		init(runNext, extra, manual);
+		init(runNext, extra, manual, false);
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {

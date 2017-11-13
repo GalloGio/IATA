@@ -24,7 +24,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
     public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV, NEWTIDS_PV, IEP_BANK_ACCOUNT_SETUP};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -49,7 +49,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('Arguments cannot be null.');
 
             String oscarRecordType = fetchOscarRecordType(typeOfProcess);
-
+            
             if(String.isBlank(oscarRecordType))
                 throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
                 //return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
@@ -61,7 +61,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 realAccountId = accountId;
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin, Reason1__c from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
  
@@ -101,7 +101,7 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
                     if(oscarCase.AccountId != realAccountId)
                         oscarCase.AccountId = realAccountId;
 
@@ -133,14 +133,17 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
             return accountId;
 
-        List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
+        List<Case> cases = [SELECT Id, Account_Concerned__c, Reason1__c from CASE where Id = :caseId LIMIT 1];
 
         if(!cases.isEmpty()){
-            System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
-            return cases.get(0).Account_Concerned__c;
+            if (typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && cases.get(0).Reason1__c == 'New TIDS HO') {
+                System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess + ' and case reason is New TIDS HO');
+            } else {
+                System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
+                return cases.get(0).Account_Concerned__c;
+            }
         }else{
             System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
-
         }
 
         return null;
@@ -300,7 +303,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
         }
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
@@ -346,7 +349,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) ) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -427,13 +430,13 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c, SAAM_Case__r.Reason1__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
     }
 
     private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
-        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
+        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only' || accreditationObj.SAAM_Case__r.Reason1__c != 'FOP Management')
             return;
 
         if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){

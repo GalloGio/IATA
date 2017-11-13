@@ -45,8 +45,10 @@ public class ANG_RHCInformationTriggerHandler{
 		set<id> accIdSet = new set<id>();		
 		map<id,ANG_RHC_Information__c> accRhcMap = new map<id,ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhc:triggerNew){
+			if(Trigger.isInsert || Trigger.isUpdate && rhc.currencyIsoCode != oldMap.get(rhc.id).currencyIsoCode){				
 			accIdSet.add(rhc.ANG_AccountId__c);
 			accRhcMap.put(rhc.ANG_AccountId__c,rhc);
+		}
 		}
 
 		if(!accIdSet.isEmpty()){
@@ -58,6 +60,9 @@ public class ANG_RHCInformationTriggerHandler{
 			for(id accid :accFSmap.KeySet()){
 				ANG_Risk_Helper.convertFSAmountToTargetCur(accFSmap.get(accid),accRhcMap.get(accid).CurrencyIsoCode);
 				accRhcMap.get(accid).ANG_Financial_Security__c =ANG_Risk_Helper.sumFSConvertedAmounts(accFSmap.get(accid));
+				
+				//only updates the minimum FS on update rhc record
+				if(Trigger.isUpdate)accRhcMap.get(accid).ANG_Minimum_Financial_Security__c =ANG_Risk_Helper.currencyConverter(oldMap.get(accRhcMap.get(accid).id).currencyIsoCode,accRhcMap.get(accid).ANG_Minimum_Financial_Security__c,accRhcMap.get(accid).currencyIsoCode);
 				fsList.addAll(accFSmap.get(accid));
 			}
 			if(!fsList.isEmpty()){

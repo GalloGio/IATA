@@ -498,9 +498,13 @@ global class ISSP_WS_CreateNotification {
     		Map <String, String> languageMessage = new Map <String, String> ();
 	    	List<languageMessage> languageList = inputMessage.languageMessageList;
 	    	system.debug('languageList: ' + languageList);
-	    	if (languageList.isEmpty()){
+	    	if (languageList == null || languageList.isEmpty()){
 	    		errorCode = 'A008';
-	    		errorMessage = ISSP_Int_Error__c.getValues('A008').Error_Message__c;
+
+	    		if(ISSP_Int_Error__c.getValues('A008') != null)
+	    			errorMessage = ISSP_Int_Error__c.getValues('A008').Error_Message__c;
+	    		else 
+	    			errorMessage = 'Unknown error';
 	    		
 	    		retResponse.isSuccess = false;
 				retResponse.responseErrorCode = 'A008';
