@@ -175,7 +175,7 @@ public with sharing class ISSP_ANG_PCI {
                         WHERE (Top_Parent__c = :parentAccountId OR Id = :parentAccountId) AND IATACode__c != null AND RecordType.DeveloperName IN
                                       			('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) 
                         AND (IATACode__c NOT IN : selectedBranchCodes)
-                        ORDER BY Name, IATACode__c
+                        ORDER BY Top_Parent__c DESC NULLS FIRST
                 ];
     }
 
