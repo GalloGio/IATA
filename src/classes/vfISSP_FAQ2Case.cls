@@ -41,8 +41,11 @@ public without sharing class vfISSP_FAQ2Case
     public static final String LVA_CFG_INTRO_VIDEO_URL='LVA_CFG_INTRO_VIDEO_URL';
     public static final String LVA_CFG_INTRO_VIDEO_MODE='LVA_CFG_INTRO_VIDEO_MODE';
     public static final String LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES='LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES';
+
+    //Emergency button enable for account (settins)
     public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_NAME='LVA_CFG_ACCOUNT_EMERG_FIELD_NAME';
     public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE='LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE';
+    public static final String LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY='LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY';
 
     //basto1p - live agent v2 cookies prefixs
     public static final String LVA_COOK_INTRO_VIDEO='LVA_COOK_INTRO_VIDEO';
@@ -905,10 +908,30 @@ public without sharing class vfISSP_FAQ2Case
             if  (this.csButtonsList.size()>0){
                 resVal=true;
             }
+
             return resVal;
         }
         set;
     }
+
+    public Boolean showChatButtons {
+        get{
+            Boolean resVal=false;
+
+            //basto1p live agente v2
+            if  (showButton){
+                resVal=true;
+            }
+
+            //Dont show chat btton if is CNS
+            if (isCNS){
+                resVal=false;
+            }
+            return resVal;
+        }
+        set;
+    }
+
 
     /*******************************************************************************************************
     * @description Checks primary conditions needed for a chat buttons to display
@@ -963,26 +986,35 @@ for (string topicver:listofAllowedTopics){
                 //Check 24/7 (emergency) service/feature is enable for this user account (key account)
                 ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
                 ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
-                //Account accObj = [SELECT ID_Card_KeyAccount_features__c FROM Account WHERE id =:uAccId];
-                SObject accObj = Database.query('SELECT id,' + getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME) +
-                                                ' FROM Account WHERE id =\''+uAccId+'\'');
 
-                System.debug('basto1p - accObj='+accObj);
-                String fieldValue='';
-                if (accObj != null){
-                    fieldValue=String.valueOf(accObj.get(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME)));
+                do {
+                    //Account accObj = [SELECT ID_Card_KeyAccount_features__c FROM Account WHERE id =:uAccId];
+                    SObject accObj = Database.query('SELECT id, ParentId, ' + getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME) +
+                            ' FROM Account WHERE id =\'' + uAccId + '\'');
+
+                    System.debug('basto1p - accObj=' + accObj);
+                    String fieldValue = '';
+                    if (accObj != null) {
+                        fieldValue = String.valueOf(accObj.get(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME)));
+                    }
+                    System.debug('basto1p - fieldValue=' + fieldValue);
+
+                    if (!String.isBlank(fieldValue) &&
+                            fieldValue.contains(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE))) {
+                        allowedSubTopic = true;
+                    } else {
+                        allowedSubTopic = false;
+                    }
+
+                    System.debug('basto1p - setLiveAgentButtonsNames ' +
+                            getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME) + '=' +
+                            fieldValue);
+
+                    uAccId=(Id)accObj.get('ParentId');
                 }
-                System.debug('basto1p - fieldValue='+fieldValue);
-
-                if (    ! String.isBlank(fieldValue)
-                        && fieldValue.contains(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE))) {
-                    allowedSubTopic = true;
-                } else {
-                    allowedSubTopic = false;
-                }
-
-                System.debug('basto1p - setLiveAgentButtonsNames '+getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME)+'=' +
-                        fieldValue);
+                while (    !String.isBlank(uAccId)
+                        && (allowedSubTopic!=true)
+                        && Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY))==true);
             }
         }
 

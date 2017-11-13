@@ -874,6 +874,13 @@
                                  </apex:outputPanel>
                                 <row>
                                     <div class="col-md-1"></div>
+
+
+                                    <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                    <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
+                                        <div class="col-md-2"></div>
+                                    </apex:outputPanel>
+
                                     <div class="col-sm-12 col-md-3">
                                         <!-- CancelAndCreateACase - CREATE CASE BUTT -->
                                         <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
@@ -911,58 +918,60 @@
                                     <!-- ************************** -->
                                     <!-- CHAT OR ATTACH BUTTONS     -->
                                     <!-- ************************** -->
-                                    <div class="col-sm-12 col-md-4">
-                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                    newCase.IFAP_Country_ISO__c != null)}">
-                                            <!-- Chat Buttons -->
-                                            <div class = "col-md-12 removeMargin text-center" id="butChat"
-                                                 onmouseover="overEfect('butChat');" onmouseleave="overEfectCleanAllButSec2();">
-                                                <div class = "thumbButt" id="butThuChat">
-                                                    <apex:image url="{!$Resource.LVA_IconsChat}"
-                                                                title="{!$Label.LVA_ChatWithUs}" />
-                                                </div>
-                                                <div class = "caption text-center">
-                                                    <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
-                                                        <h4>{!$Label.LVA_ChatWithUs}</h4>
-                                                    </apex:outputPanel>
-                                                    <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
-                                                        <h4>{!$Label.LVA_NoAvailableButtons}</h4>
-                                                    </apex:outputPanel>
-                                                    <apex:outputPanel rendered="{!isCNS}">
-                                                        <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
-                                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{! OR(IF(showChatButtons==true, true, false), currentButtonsToShow != 'CancelAndCreateACase')}">
+                                        <div class="col-sm-12 col-md-4">
+                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                        newCase.IFAP_Country_ISO__c != null)}">
+                                                <!-- Chat Buttons -->
+                                                <div class = "col-md-12 removeMargin text-center" id="butChat"
+                                                     onmouseover="overEfect('butChat');" onmouseleave="overEfectCleanAllButSec2();">
+                                                    <div class = "thumbButt" id="butThuChat">
+                                                        <apex:image url="{!$Resource.LVA_IconsChat}"
+                                                                    title="{!$Label.LVA_ChatWithUs}" />
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
+                                                            <h4>{!$Label.LVA_ChatWithUs}</h4>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
+                                                            <h4>{!$Label.LVA_NoAvailableButtons}</h4>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!isCNS}">
+                                                            <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
+                                                        </apex:outputPanel>
 
-                                                    <!-- Chat Buttons -->
-                                                    <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
-                                                        <div id="liveAgentIframes" class="row text-center">
-                                                            <apex:outputPanel rendered="{!showButton}">
-                                                                <!-- basto1p passing live agent new buttons -->
-                                                                <apex:repeat value="{!csButtonsList}" var="butCat">
-                                                                    <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
-                                                                                 width="26px" height="35px" scrolling="false" frameBorder="false"/>
-                                                                </apex:repeat>
-                                                            </apex:outputPanel>
-                                                        </div>
-                                                    </apex:outputPanel>
+                                                        <!-- Chat Buttons -->
+                                                        <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
+                                                            <div id="liveAgentIframes" class="row text-center">
+                                                                <apex:outputPanel rendered="{!showButton}">
+                                                                    <!-- basto1p passing live agent new buttons -->
+                                                                    <apex:repeat value="{!csButtonsList}" var="butCat">
+                                                                        <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
+                                                                                     width="26px" height="35px" scrolling="false" frameBorder="false"/>
+                                                                    </apex:repeat>
+                                                                </apex:outputPanel>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </apex:outputPanel>
+                                            </apex:outputPanel>
 
-                                        <!-- Submit&Attach - ATTACH FILE BUTTON -->
-                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butSaveAttach"
-                                                 onclick="controllerSaveAttach();"
-                                                 onmouseover="overEfect('butSaveAttach');" onmouseleave="overEfectCleanAllButSec2();"
-                                                 title="{!$Label.ISSP_SubmitAttach}" >
-                                                <div class = "thumbButt" id="butThuSaveAtach">
-                                                    <apex:image url="{!$Resource.LVA_IconsAttach}"/>
+                                            <!-- Submit&Attach - ATTACH FILE BUTTON -->
+                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                <div class = "col-md-12 removeMargin text-center" id="butSaveAttach"
+                                                     onclick="controllerSaveAttach();"
+                                                     onmouseover="overEfect('butSaveAttach');" onmouseleave="overEfectCleanAllButSec2();"
+                                                     title="{!$Label.ISSP_SubmitAttach}" >
+                                                    <div class = "thumbButt" id="butThuSaveAtach">
+                                                        <apex:image url="{!$Resource.LVA_IconsAttach}"/>
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <h4>{!$Label.ISSP_SubmitAttach}</h4>
+                                                    </div>
                                                 </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.ISSP_SubmitAttach}</h4>
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                    </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </apex:outputPanel>
 
                                     <!-- ************************** -->
                                     <!-- CALL US OR CANCEL BUTTON   -->
@@ -1000,6 +1009,12 @@
                                         </apex:outputPanel>
 
                                     </div>
+
+                                    <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                    <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}}">
+                                        <div class="col-md-2"></div>
+                                    </apex:outputPanel>
+
                                     <div class="col-md-1"></div>
 
                                 </row>
