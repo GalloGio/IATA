@@ -53,14 +53,18 @@
           var select = $('<select class="select-filter" data-index="'+i+'"></select>');
           select.append( '<option value="" selected>' + title + '</option>' )
           // get all distinct values and creates an option value
-          tbl.column(i).data().unique().sort().each( function ( d, j ) {
+          values = new Array();
+          tbl.column(i).data().unique().each( function ( d, j ) {
               var text = d;
               if ($($.parseHTML(text)).is("span")) {
                 text = $(d).text();
               }
               //alert(text + " " +  d + " " + j);
-              select.append( '<option value="'+addslashes(text)+'">'+text+'</option>' );
+              values.push(text);
           } );
+          values.sort().forEach(function(element) {
+              select.append( '<option value="'+addslashes(element)+'">'+element+'</option>' );
+          });
           $(this).html( select );
       }
     } );

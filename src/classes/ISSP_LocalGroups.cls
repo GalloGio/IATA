@@ -42,7 +42,7 @@ public without sharing class ISSP_LocalGroups {
             WHERE Contact__r.AccountId IN :listAccount
             AND Local_Governance__r.Recordtype.DeveloperName = :'Local_Groups'
             AND Local_Governance__r.Active__c = true
-            ORDER BY CreatedDate];
+            ORDER BY Local_Governance__r.Cluster__r.Name ASC, Local_Governance__r.Country__r.Name ASC, Participant_Type__c ASC];
         
         initMapCluster(listParticipant);
         initListWrapper(listParticipant);
