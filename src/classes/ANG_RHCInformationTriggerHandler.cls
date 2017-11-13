@@ -1,5 +1,8 @@
 public class ANG_RHCInformationTriggerHandler{
 
+	public final Double UPPERFLUCTUATION = 1;
+	public final Double LOWERFLUCTUATION = 2;
+
 	public List<ANG_RHC_Information__c> triggerNew = (List<ANG_RHC_Information__c>) Trigger.new;
 	public List<ANG_RHC_Information__c> triggerOld = (List<ANG_RHC_Information__c>) Trigger.old;
 
@@ -24,6 +27,7 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onBeforeUpdate(){
 		convertAndSumFS();
 		sumRHCAmount();
+		analyzeConsumedRHCAdjustment();
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
@@ -81,5 +85,123 @@ public class ANG_RHCInformationTriggerHandler{
 		}
 
 		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
+	}
+
+	private void analyzeConsumedRHCAdjustment(){
+
+		Set<Id> toActivateAccounts = new Set<Id>();
+		Set<Id> toDeactivateAccounts = new Set<Id>(); 
+		List<Agency_Authorization__c> toUpdate = new List<Agency_Authorization__c>();
+
+		for(ANG_RHC_Information__c rhc:triggerNew){
+			if(rhc.ANG_ConsumedRHC_Percent__c  <> oldMap.get(rhc.Id).ANG_ConsumedRHC_Percent__c){
+
+				if(hasfluctuation(rhc.ANG_ConsumedRHC_Percent__c,oldMap.get(rhc.Id).ANG_ConsumedRHC_Percent__c) == UPPERFLUCTUATION){
+					toDeactivateAccounts.add(rhc.ANG_AccountId__c);
+				}
+				else if(hasfluctuation(rhc.ANG_ConsumedRHC_Percent__c,oldMap.get(rhc.Id).ANG_ConsumedRHC_Percent__c) == LOWERFLUCTUATION){
+					toActivateAccounts.add(rhc.ANG_AccountId__c);	
+				}
+			}
+		}
+
+		if(!toDeactivateAccounts.isEmpty()){
+			
+			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);		
+			toDeactivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toDeactivateAccountsMap);
+
+			toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
+
+		}
+		if(!toActivateAccounts.isEmpty()){
+			
+			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);		
+			toActivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toActivateAccountsMap);
+
+			toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+
+		}
+
+
+		if(!toUpdate.isEmpty())
+			update toUpdate;
+
+		Set<Id> accountsToCreateFOP = new Set<Id>();
+
+		for(Agency_Authorization__c aa: toUpdate){
+			accountsToCreateFOP.add(aa.Account__c);
+		}
+
+		if(!accountsToCreateFOP.isEmpty())
+			createChangeCodeForFOP(accountsToCreateFOP);
+
+
+	}
+
+	private Decimal hasfluctuation(Decimal newValue, Decimal oldValue){
+
+		Decimal UPPERTHRESHOLD = 100;
+
+		newValue = newValue == null ? 0 : newValue;
+		oldValue = oldValue == null ? 0 : oldValue;
+		 
+		if(newValue > oldValue && oldValue < UPPERTHRESHOLD && newValue >= UPPERTHRESHOLD) // If the value goes from below 100 to above/equals 100
+			return UPPERFLUCTUATION;
+
+		if(newValue < oldValue && oldValue >= UPPERTHRESHOLD && newValue < UPPERTHRESHOLD) // If the value goes from above/equal 100 to below 100  
+			return LOWERFLUCTUATION;
+
+		return -1;
+
+	}
+
+
+	private List<Agency_Authorization__c> performFOPaction(Set<Id> accounts, Decimal action){
+
+		List<Agency_Authorization__c> toReturn = new List<Agency_Authorization__c>();
+
+		String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
+
+        Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+
+		List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
+
+		for(Agency_Authorization__c aa: aaLst){
+			
+			if(aa.Status__c != statusFOP){
+				aa.Status__c = statusFOP;
+				toReturn.add(aa);
+			}
+
+		}
+		
+		return toReturn;
+
+	}
+
+	public void createChangeCodeForFOP(Set<Id> accountIds) {
+
+		AMS_ChangeCodes__c changeCodeConfigFOP = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('FOP');
+
+		List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIds];
+
+		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
+		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
+
+		For(Account acctToAddCC: accountToCreateCC){
+
+			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+			changeCode.name = changeCodeConfigFOP.Change_Code__c;
+			changeCode.reasonCode = changeCodeConfigFOP.Reason_Code__c;
+			changeCode.memoText = changeCodeConfigFOP.Bulletin_Memo_Text__c;
+			changeCode.reasonDesc  = changeCodeConfigFOP.Reason_Code_Description__c;
+			changeCode.status  = changeCodeConfigFOP.Account_status_change__c;
+
+			listOfCCToInsert.add(changeCode);
+		}
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(listOfCCToInsert, oscarsToAdd, accountToCreateCC, true);
+
 	}
 }
