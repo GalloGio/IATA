@@ -194,11 +194,26 @@ public class ang_rhcAlertTriggerHandler{
 	}
 
 	private void sendPortalNotifications(ANG_RHC_Information__c rhc, ANG_Risk_Alert__c ralert, ANG_RHC_Alert_Templates__c at) {
-		
+
+		Decimal consumedRHC = ang_rhcAlertTriggerHandler.chkNull(rhc.ANG_ConsumedRHC__c);
+
+		String consumedRHCStr = consumedRHC.format();
+
+		Decimal rhcAmount = ang_rhcAlertTriggerHandler.chkNull(rhc.ANG_RHC_Amount__c);
+
+		String rhcAmountStr = rhcAmount.format();
+
+		Decimal consumedRHC_Percent = ang_rhcAlertTriggerHandler.chkNull(rhc.ANG_ConsumedRHC_Percent__c);
+
+		String consumedRHC_PercentStr = consumedRHC_Percent.format();
+							
 		String replaceStr = RHC_CURRENCY + '!' + rhc.CurrencyIsoCode + '|' +
-							RHC_AMOUNT_USED + '!' + rhc.ANG_ConsumedRHC__c.format() + '|' +
-							RHC_AMOUNT_TOTAL + '!' + rhc.ANG_RHC_Amount__c.format() + '|' +
-							RHC_PERCENTAGE + '!' + rhc.ANG_ConsumedRHC_Percent__c.format();
+							RHC_AMOUNT_USED + '!' + consumedRHCStr + '|' +
+							RHC_AMOUNT_TOTAL + '!' + rhcAmountStr + '|' +
+							RHC_PERCENTAGE + '!' + consumedRHC_PercentStr;
+
+		System.debug(LoggingLevel.ERROR, 'replaceStr-->' + replaceStr);
+
 
         ISSP_WS_CreateNotification.inputData myInputData = new ISSP_WS_CreateNotification.inputData();
 
@@ -213,6 +228,13 @@ public class ang_rhcAlertTriggerHandler{
 
 		ISSP_WS_CreateNotification.createNotification(myInputData);
 
+	}
+
+	private static Decimal chkNull(Decimal val) {
+		if(val == null) {
+			return (Decimal)0;
+		}
+		return val;
 	}
 
 	//
