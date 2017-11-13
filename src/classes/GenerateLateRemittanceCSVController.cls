@@ -68,7 +68,7 @@ public without sharing class GenerateLateRemittanceCSVController {
         
         /* REPORT 1 - Late payment fee report */
         List<Case> tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c, 
-        								Remittance_Date__c, Remittance_Period__c, Currency__c 
+        								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c
                                     FROM Case
                                     WHERE RecordType.DeveloperName = 'SIDRA'
                                     AND Update_AIMS_IRR__c <> null 
@@ -116,7 +116,13 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.BillingDate = '';
             cw.TextPrint = '';
             cw.InternalRemark = '';
-            cw.Material = '800395';
+            //cw.Material = '800395';
+            if (c.BSP_CASS__c == 'BSP') {
+                cw.Material = '800395';
+            }
+            if (c.BSP_CASS__c == 'CASS') {
+                cw.Material = '800931';
+            }
             cw.MatDesc = 'Late Remittance Recovery ' + c.Remittance_Period__c;
             cw.Quantity = '1';
             cw.UnitPrice = '';
@@ -144,7 +150,13 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.BillingDate = '';
             cw.TextPrint = '';
             cw.InternalRemark = '';
-            cw.Material = '800394';
+            //cw.Material = '800394';
+            if (c.BSP_CASS__c == 'BSP') {
+                cw.Material = '800394';
+            }
+            if (c.BSP_CASS__c == 'CASS') {
+                cw.Material = '801185';
+            }
             cw.MatDesc = 'Late Remittance Interest ' + c.Remittance_Period__c;
             cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
             cw.UnitPrice = c.Short_Payment_Amount__c != null ? String.valueOf(c.Short_Payment_Amount__c) : '';
