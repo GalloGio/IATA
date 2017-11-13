@@ -11469,6 +11469,16 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SIS_Entry_Date__c</fullName>
+        <description>Used by SIS team to store when the account joined to SIS</description>
+        <externalId>false</externalId>
+        <label>SIS Entry Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>SIS_ID__c</fullName>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
