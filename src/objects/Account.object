@@ -82126,6 +82126,31 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agency_Name</fullName>
+        <active>true</active>
+        <description>prevent users should changing the agencies name</description>
+        <errorConditionFormula>AND
+(
+ISCHANGED(Name),
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR
+(
+$User.Profile_Name__c  =  &apos;System Administrator&apos;,
+$User.Profile_Name__c  =  &apos;System Administrator - automated processes&apos;,
+$User.Profile_Name__c  =  &apos;System administrator - Stakeholders&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver)&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
+$User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
+$User.Profile_Name__c  =  &apos;Developer&apos;,
+$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
@@ -82172,6 +82197,23 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>The CASS Number must have 3 digits</description>
         <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
         <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cannot_change_HO_location_type</fullName>
+        <active>true</active>
+        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+  ISCHANGED(Location_Type__c),
+  OR (
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
+  ),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+  Has_a_Financial_Assessment_Contact__c
+)</errorConditionFormula>
+        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>
@@ -82810,6 +82852,13 @@ newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
 newmsoagency.Location_Class__c = &quot;M&quot;;
 newmsoagency.Location_Type__c = &quot;HO&quot;;
 newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+if({!Account.IATA_Member__c} == true) { 
+newmsoagency.Location_Category__c = &quot;IC&quot;; 
+} 
+else { 
+newmsoagency.Location_Category__c = &quot;NI&quot;; 
+}
 
 result = sforce.connection.create([newmsoagency]);
 var accId = result[0].id;

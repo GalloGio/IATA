@@ -169,7 +169,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			FROM FeedItem
 			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate > YESTERDAY
 			ORDER By CreatedDate Desc, Body
-			LIMIT 100];
+			LIMIT 10000];
 
 		return lsFeedItem;
 	}
