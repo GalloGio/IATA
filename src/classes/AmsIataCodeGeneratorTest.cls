@@ -1665,6 +1665,22 @@ public class  AmsIataCodeGeneratorTest
 
     }
 
+     static testMethod void generatedAgencyIATACodeWithNullAccreditation(){
+
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'HO', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',REASON_FOR_CREATION__C = 'Created by customer'
+                         ,CASS_Number__c ='000', IATACode__c = '02310000000');
+       
+        
+        insert account1;
+       
+
+        ANG_OscarProcessHelper.EntityUpdater opEU=AmsIataCodeGenerator.generatedAgencyIATACode(account1, null,null);
+     }
+
     static AMS_OSCAR__c createCaseAndOSCAR(Account theAccount, Contact theContact, String cassNumber){
 
         // Create the Staging area for the Account
