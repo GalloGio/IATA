@@ -16,7 +16,7 @@
     <!-- Load JS -->  
 
     <script src="{!URLFOR($Resource.jquery2_1_4)}"></script> 
-    <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> 
+    <!--<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> -->
     <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
 
     <!--script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
@@ -158,7 +158,7 @@
       $('#myModal').modal('toggle');
     }
 
-          !function($) {
+   !function($) {
 
     'use strict';
 
@@ -410,8 +410,8 @@
           var string = row[3].substring("Id=");          
           var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));
           var getName = row[1].substring("_self");          
-          var servName = getName.substring(getName.indexOf("_self")+7,getName.indexOf("&"));
-          
+          var servName = getName.substring(getName.indexOf(">")+1,getName.indexOf("</span>"));          
+          console.log(servName);
           if($el.data("item") == "add"){          
             window.location.href = "/ISSP_EditPortalServiceAccess?Id="+linkId+"&op=Edit&PSId="+linkId+"&PSname="+servName;
           }
@@ -426,7 +426,7 @@
 
         <hr />
         <apex:pageMessages escape="false"/>
-        <apex:dataTable value="{!ServiceList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_Services">       
+        <apex:pageBlockTable value="{!ServiceList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_Services">       
             <apex:repeat value="{!fields}" var="f">
                   <apex:column >
                     <apex:facet name="header">
@@ -461,8 +461,10 @@
                   </a>
             </apex:column>
 
-            <apex:column headerValue="Actions" id='actionId' rendered="{!item.addUsersEnable}">
+            <apex:column headerValue="Actions" id='actionId' >
+              <apex:outputPanel rendered="{!item.addUsersEnable}">
                 <button type="button" class="example2-button"><span class="glyphicon glyphicon-cog"></span></button>
+              </apex:outputPanel>
             </apex:column>
           <!--elliot 19 juin-->  
            
@@ -472,7 +474,7 @@
             </apex:column>-->
                 
              <!-- end elliot 19 juin -->
-        </apex:dataTable>
+        </apex:pageBlockTable>
          
         <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
            <div class="paginator">
