@@ -76,7 +76,7 @@ public with sharing class ISSP_CertificationCases {
                 System.debug('1st listCasesOrdered: ' + listCasesOrdered);
                 for (String mapKey : listCases.keySet()) {
                     if(mapKey != sIATACodeHO){
-                        System.debug('passei aqui: não sou HO');
+                        System.debug('not HO');
                         listCasesOrdered.put('2' + mapKey, listCases.get(mapKey));
                     }
                 }
