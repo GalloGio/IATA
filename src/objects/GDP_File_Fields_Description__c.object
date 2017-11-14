@@ -359,7 +359,7 @@
         <filters>
             <field>Target__c</field>
             <operation>equals</operation>
-            <value>Airline</value>
+            <value>Agency</value>
         </filters>
         <label>Field Details - GSS Member - TXT</label>
         <language>en_US</language>
