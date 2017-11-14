@@ -1906,8 +1906,8 @@ public class ANG_AgencyChangesHelperTest {
         };
         insert AWS_KEYs;
     }
-	
-	@isTest static void testANGAccountHierarchySelectionController(){
+
+	@isTest static void test_getChangeCodes(){
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
@@ -2052,44 +2052,6 @@ public class ANG_AgencyChangesHelperTest {
 
         insert accreditationContacts;
 
-        PageReference pg = Page.ANG_AccountHierarchySelection;
-        pg.getParameters().put('Id', oscar.Id);
-
-        ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
-
-        List<String> notesSet = con.noteList;
-
-        List<String> oscarFieldList = con.oscarFieldList;
-        List<String> accountFieldList = con.accountFieldList;
-        Map<Id, ANG_AccountHierarchySelectionController.HierarchyItem> hierarchy = con.hierarchy;
-        List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
-        Integer pageInteger = con.currentPage;
-        pageInteger = con.totalPages;
-        pageInteger = con.totalPages;
-
-        con.doSelectAll();
-        con.getDisablePrevious();
-        con.selectMain();
-        con.FetchNewParent();
-        con.Beginning();
-        con.Previous();
-        con.Next();
-        con.End();
-        con.isMovingTopLocationTypeAccount();
-        con.isSingleDestinationHierarchy(he1.Id);
-        con.isAllHierarchySelected();
-        con.hasTopLocationType(he1.Id);
-        con.isTerminatedAccount(he1.Id);
-        con.isJustOneAgencySelected();
-        con.performValidations();
-        con.getDisableNext();
-        boolean showTargetAgency = con.showTargetAgency;
-        boolean showTopPanel = con.showTopPanel;
-        boolean editable = con.editable;
-        boolean closeTab = con.closeTab;
-
-        con.updateRelatedRecords();
-
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
@@ -2107,8 +2069,6 @@ public class ANG_AgencyChangesHelperTest {
 		insert att;
 		
 		update oscar;
-
-        notesSet = con.noteList;
 
 		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
 
