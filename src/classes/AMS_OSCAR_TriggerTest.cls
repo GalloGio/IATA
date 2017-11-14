@@ -567,6 +567,7 @@
         oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
         oscar.STEP15__c = 'Passed';
+        oscar.STEP12__c = 'Passed';
 
         update oscar;
 

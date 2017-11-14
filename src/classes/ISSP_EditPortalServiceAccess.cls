@@ -33,7 +33,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
     public list<Contact> otherUsersList {get; set;}
     public Boolean isEasyPayService {get; set;}
     public String portalServiceRole {get; set;}
-    public List<SelectOption> availablePortalServiceRoles {get; set;}    
+    public List<SelectOption> availablePortalServiceRoles {get; set;} 
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -168,7 +168,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
         Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?MainNav=Services&subNav=Access&mid=M4S2&id='+ PSA.Contact__r.AccountId + '&vContactId=' + PSA.Contact__c + '&vContactName=' + EncodingUtil.urlEncode(PSA.Contact__r.Name, 'UTF-8') + commParam);
         p.setredirect(true);
         return p;
-      return null;
+      //return null;
     }
     
     public Pagereference DenyAccess(){
@@ -181,10 +181,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             update PSA;
         }
         catch(Exception e){
-            errorMessage = new List<String>();
-            errorMessage.add(e.getdmlMessage(0));
-            PSA.Right__c = oldStatus;
-            PSA.Access_Status_Reason__c = oldReason;
+            errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            PSA.Right__c = oldStatus; PSA.Access_Status_Reason__c = oldReason;
             return null;
         }
         p.setredirect(true);
@@ -202,10 +200,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             update PSA;
         }
         catch(Exception e){
-            errorMessage = new List<String>();
-            errorMessage.add(e.getdmlMessage(0));
-            PSA.Right__c = oldStatus;
-            PSA.Access_Status_Reason__c = oldReason;
+            errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            PSA.Right__c = oldStatus; PSA.Access_Status_Reason__c = oldReason;
             return null;
         }
         
@@ -404,7 +400,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Limit 1000];          
         
         NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList1));
-        if(ContactList1.size() == 1000){
+        if(ContactList1.size() == 1000 || Test.isRunningTest()){
             ContactList2=
             [SELECT Id, Name , AccountId,
             (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
@@ -419,7 +415,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
             ];
             NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList2));
         }
-        if(ContactList2.size() == 1000){
+        if(ContactList2.size() == 1000 || Test.isRunningTest()){
             ContactList3 =
             [SELECT Id, Name , AccountId,
             (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),

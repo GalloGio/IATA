@@ -54,6 +54,8 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         result = controller.showRequiredOverlay;
         stringResult = controller.getEffectiveDate();
         result = controller.getIsAgencyChange();
+        result = controller.isNewGenHEProcess;
+        result = controller.isAnalystProfile;
 
         Test.stopTest();
     }
