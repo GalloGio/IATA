@@ -127,14 +127,14 @@ public class ANG_RHCInformationTriggerHandler{
 
 		}
 
-
 		if(!toUpdate.isEmpty())
 			update toUpdate;
 
-		Set<Id> accountsToCreateFOP = new Set<Id>();
+		Map<Id,String> accountsToCreateFOP = new Map<Id,String> ();
 
 		for(Agency_Authorization__c aa: toUpdate){
-			accountsToCreateFOP.add(aa.Account__c);
+
+			accountsToCreateFOP.put(aa.Account__c,aa.Status__c);
 		}
 
 		if(!accountsToCreateFOP.isEmpty())
@@ -163,6 +163,8 @@ public class ANG_RHCInformationTriggerHandler{
 
 	private List<Agency_Authorization__c> performFOPaction(Set<Id> accounts, Decimal action){
 
+		System.debug('Performing FOP actions on accounts ' + accounts + ' with action ' + action);
+
 		List<Agency_Authorization__c> toReturn = new List<Agency_Authorization__c>();
 
 		String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
@@ -184,9 +186,12 @@ public class ANG_RHCInformationTriggerHandler{
 
 	}
 
-	public void createChangeCodeForFOP(Set<Id> accountIds) {
+	public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
-		AMS_ChangeCodes__c changeCodeConfigFOP = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('FOP');
+		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
+		AMS_ChangeCodes__c changeCodeConfigPCR = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCR');
+
+		Set<Id> accountIds = accountsAndStatus.keySet();
 
 		List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIds];
 
@@ -195,18 +200,28 @@ public class ANG_RHCInformationTriggerHandler{
 
 		For(Account acctToAddCC: accountToCreateCC){
 
+			oscarsToAdd.add(null);
+
 			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-			changeCode.name = changeCodeConfigFOP.Change_Code__c;
-			changeCode.reasonCode = changeCodeConfigFOP.Reason_Code__c;
-			changeCode.memoText = changeCodeConfigFOP.Bulletin_Memo_Text__c.replace('due to <SIDRA Lite Reason>.','');
-			changeCode.reasonDesc  = changeCodeConfigFOP.Reason_Code_Description__c;
-			changeCode.status  = changeCodeConfigFOP.Account_status_change__c;
+			AMS_ChangeCodes__c toUse = accountsAndStatus.get(acctToAddCC.Id) == 'Active' ? changeCodeConfigPCR : changeCodeConfigPCA;
+
+			changeCode.name = toUse.Change_Code__c;
+			changeCode.reasonCode = toUse.Reason_Code__c;
+
+			if(accountsAndStatus.get(acctToAddCC.Id) == 'Active')
+				changeCode.memoText	='Agent has complied to Agency Rules. Cash payment methods are reinstated.';
+			else
+				changeCode.memoText = 'Agent is restricted from using Cash form of payment method as all amounts Owing are higher than the Remittance Holding Capacity.';
+
+			changeCode.reasonDesc  = toUse.Reason_Code_Description__c;
+			changeCode.status  = toUse.Account_status_change__c;
 
 			listOfCCToInsert.add(changeCode);
 		}
 
-		AMS_ChangeCodesHelper.createAAChangeCodes(listOfCCToInsert, oscarsToAdd, accountToCreateCC, true);
+		if(!listOfCCToInsert.isEmpty())
+			AMS_ChangeCodesHelper.createAAChangeCodes(listOfCCToInsert, oscarsToAdd, accountToCreateCC, true);
 
 	}
 }

@@ -727,6 +727,7 @@ global class ANG_OscarProcessHelper {
 			else
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
+			changeCode.memoText = memoTextTemp;
 			changeCode.reasonDesc  = changeCodeConfig.Reason_Code_Description__c;
 			changeCode.status  = changeCodeConfig.Account_status_change__c;
 
