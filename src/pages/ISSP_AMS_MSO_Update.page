@@ -359,17 +359,17 @@
                            
                             <apex:outputPanel rendered="{!step == 'pending'}" >
                                 <br/> <br/> 
-                                {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
+                                {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} {!oscarCase.CaseNumber}.<!--<a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
                                 <br/><br/>
                                 <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
                                 <br/><br/>
-                                {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+                                {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.-->
                             </apex:outputPanel>
                             
                             <apex:outputPanel rendered="{!step == 'success'}" >
                                 <strong>{!$Label.ISSP_AMS_MSO_Update_Request_Successfull}: {!msoAccount.IATACode__c}.</strong>
-                                <br/> <br/> 
-                                {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.
+                                <!--<br/> <br/> 
+                                {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!oscarCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!oscarCase.CaseNumber}</a>.-->
                             </apex:outputPanel>
 
 				        </div>
