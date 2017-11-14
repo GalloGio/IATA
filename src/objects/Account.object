@@ -11260,7 +11260,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
-        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; which can&apos;t be used on the sharing rules (multiselect, which was a requirement so the field could be reused).</description>
         <externalId>false</externalId>
         <label>Record Sharing Criteria AUX</label>
         <length>255</length>
@@ -15072,7 +15072,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Airlines AOC expiring in 90 days or less</label>
         <language>en_US</language>
         <sharedTo>
+            <roleAndSubordinatesInternal>Americas_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
             <roleAndSubordinatesInternal>DistributionAirlineManagementHO</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>Distribution_Airline_Coding</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>
     <listViews>

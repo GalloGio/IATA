@@ -64,6 +64,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Decreasing_Target__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Initial__c</field>
             </layoutItems>
             <layoutItems>
@@ -86,10 +90,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Target__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Decreasing_Target__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
