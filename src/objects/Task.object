@@ -134,7 +134,7 @@
             <picklistValues>
                 <fullName>Aborted</fullName>
                 <default>false</default>
-                <closed>false</closed>
+                <closed>true</closed>
             </picklistValues>
             <picklistValues>
                 <fullName>On Track</fullName>
