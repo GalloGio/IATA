@@ -355,7 +355,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     //@future
     public static void closeOscar(Id oscarId, Id caseId, Id contactId, String actionType) {
         try {
-            Case c = [SELECT Id, IATAcode__c FROM Case WHERE Id = :caseId];
+            Case c = [SELECT Id, IATAcode__c, Do_Not_Send_Notification__c FROM Case WHERE Id = :caseId];
 
             if (actionType == ACTION_TERMINATION) {
                 CaseComment successComment = new CaseComment();
@@ -372,14 +372,15 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 insert successComment;
             }
 
-            Case oscarCase = new Case(Id = caseId, ContactId = contactId);
+            Case oscarCase = new Case(Id = caseId, ContactId = contactId, Do_Not_Send_Notification__c = true); // mark notification sent, to not send it again in case of page refresh / browser "back"
             update oscarCase;
 
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             oscar.Status__c = 'Closed';
             update oscar;
 
-            sendConfirmationEmail(caseId, contactId, actionType == ACTION_CORRECTION);
+            if (c.Do_Not_Send_Notification__c == false)
+                sendConfirmationEmail(caseId, contactId, actionType == ACTION_CORRECTION);
 
         } catch (DmlException ex) {
             system.debug('Error closing the OSCAR: ' + ex.getMessage());
