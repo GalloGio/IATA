@@ -46,6 +46,7 @@ public without sharing class vfISSP_FAQ2Case
     public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_NAME='LVA_CFG_ACCOUNT_EMERG_FIELD_NAME';
     public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE='LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE';
     public static final String LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY='LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY';
+    public static final String LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND='LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND';
 
     //basto1p - live agent v2 cookies prefixs
     public static final String LVA_COOK_INTRO_VIDEO='LVA_COOK_INTRO_VIDEO';
@@ -321,7 +322,7 @@ public without sharing class vfISSP_FAQ2Case
             return null;
         }
     }
-    
+
     public PageReference pageLoad() {
         errorMessage = new list<string>();
 
@@ -374,7 +375,7 @@ public without sharing class vfISSP_FAQ2Case
         Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
         AccountISOCountry = con.Account.IATA_ISO_Country__r.ISO_Code__c != null ? con.Account.IATA_ISO_Country__r.ISO_Code__c : '';
         this.parentAccountId = con.AccountId;
-        
+
         //Call for the new method that arrange the fields according to the Custom settings
         GenerateFieldsBySettings();
 
@@ -976,7 +977,12 @@ for (string topicver:listofAllowedTopics){
         system.debug('basto1p - isLiveAgentButtonAllowed allowedSubTopic='+allowedSubTopic);
 
         //Specific Exceptions for subtopic not allowed
-        if (allowedSubTopic!=true){
+        if (       ( (allowedSubTopic!=true)
+                    &&(Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND))==false)
+                    )
+                || ( (allowedSubTopic==true)
+                        &&(Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND))==true) )
+        ){
 
             //////////////////////////////////////////////////////////////////////
             // Check emergency enabled conditions
