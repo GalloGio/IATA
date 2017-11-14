@@ -1,4 +1,4 @@
-var dyn_functions = {
+var dyn_functions = { 
     generateIataCode:function (args) { 
         $body = $("body");
         $body.addClass("loading");
