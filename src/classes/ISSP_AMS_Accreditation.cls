@@ -293,7 +293,10 @@ public without sharing class ISSP_AMS_Accreditation {
         if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
             fetchHQAccountDetails();
-            if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer'){
+            if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer' && con.Account.Status__c != 'Not in operation' && 
+                (con.Account.Status__c != 'Endorsed' || (con.Account.Location_Class__c != 'V' && con.Account.Location_Class__c != 'P') || (isocountry != null && isocountry.ISO_Code__c != 'US' && isocountry.ISO_Code__c != 'UP')) && 
+                (con.Account.Status__c != 'Listed' || (isocountry != null && isocountry.ISO_Code__c != 'CN' )) ){
+
                 isHOAccredited = true; //This is an accredited  Agency Account
                 isUserAccAccredited = true;
             }
@@ -305,7 +308,9 @@ public without sharing class ISSP_AMS_Accreditation {
             if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
                 isUserAccAccredited = true;
             
-            if (hqAccount.RecordType.DeveloperName == 'IATA_Agency' && hqAccount.Status__c != 'Terminated' && hqAccount.Status__c != 'Not accreditated' && hqAccount.Status__c != 'No longer a customer' && hqAccount.Status__c != 'New application pending')
+            if (hqAccount.RecordType.DeveloperName == 'IATA_Agency' && hqAccount.Status__c != 'Terminated' && hqAccount.Status__c != 'Not accreditated' && hqAccount.Status__c != 'No longer a customer' && hqAccount.Status__c != 'New application pending' && hqAccount.Status__c != 'Not in operation' && 
+                (hqAccount.Status__c != 'Endorsed' || (hqAccount.Location_Class__c != 'V' && hqAccount.Location_Class__c != 'P') || (isocountry != null && isocountry.ISO_Code__c != 'US' && isocountry.ISO_Code__c != 'UP')) && 
+                (hqAccount.Status__c != 'Listed' || (isocountry != null && isocountry.ISO_Code__c != 'CN' )) )
                 isHOAccredited = true; //This is an accredited  Agency Account
 
             isHOcontact = false;
