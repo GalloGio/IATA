@@ -342,7 +342,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
