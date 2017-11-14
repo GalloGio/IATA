@@ -254,6 +254,34 @@ global class AMS_OSCAR_Attachments {
         }
         return listFileDef;
     }
+    
+    /**
+        get a list of files with valid links to download them from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getSelectedExpiringLink(String objectId, String[] attachmentIds) {
+        set<String> setAttachmentIds = new set<String>();
+        setAttachmentIds.addAll(attachmentIds);
+        
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId, true)) {
+            if(setAttachmentIds.contains(attach.Id)) {
+                FileDef filedef = new FileDef();
+                filedef.name = attach.name;
+                if (attach.fileType == 'Amazon') {
+                    filedef.url = getExpiringLink(attach.fullName);
+                    filedef.data='';
+                    listFileDef.add(filedef);
+                }
+                if (attach.fileType == 'Salesforce') {
+                    filedef.url='';
+                    filedef.data= EncodingUtil.base64Encode(attach.fileAttachment.Body);
+                    listFileDef.add(filedef);
+                }
+            }
+        }
+        return listFileDef;
+    }
 
     global class FileDef {
         String name;
