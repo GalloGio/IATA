@@ -122,7 +122,7 @@ public class ang_rhcAlertTriggerHandler {
 					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
 					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c,
                     ANG_Account__r.Name, ANG_Account__r.IATACode__c, ANG_Account__r.Top_Parent__c,
-                    CurrencyIsoCode
+                    CurrencyIsoCode, ANG_Account__r.Guaranteed_amount__c
 
 				FROM ANG_Risk_Alert__c 
 				WHERE ID IN :triggerNew
@@ -242,6 +242,7 @@ public class ang_rhcAlertTriggerHandler {
 					sidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
 					sidraLiteCase.Reason_for_Default__c = 'Under Review';
 					sidraLiteCase.Update_AIMS_DEF__c = Date.today();
+                    sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
 		            //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); already done on callout
 		            sidraLiteCase.ContactId = smapParentCase.ContactId;
 		            
@@ -364,11 +365,13 @@ public class ang_rhcAlertTriggerHandler {
             String tBody = template.Body;
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
+            String gAmount = (riskAlert.ANG_Account__r.Guaranteed_amount__c == null ? '' : String.valueOf(riskAlert.ANG_Account__r.Guaranteed_amount__c));
             tBody = tBody.replace('{{agentName}}', riskAlert.ANG_Account__r.Name);
             tBody = tBody.replace('{{iataCode}}', iataCode);
             tBody = tBody.replace('{{iataCountry}}', riskAlert.ANG_Account__r.IATA_ISO_Country__r.Name);
             tBody = tBody.replace('{{agentSales}}', agentSales);
             tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
+            tbody = tBody.replace('{{fsAmount}}', gAmount);
             
             mail.setPlainTextBody(tBody);
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });

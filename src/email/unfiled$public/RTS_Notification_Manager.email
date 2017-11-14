@@ -1,6 +1,1 @@
-The following agent has received a Real Time Sales Monitoring – RED Alert 
-
-- Agent Name: {{agentName}}
-- IATA Code: {{iataCode}}
-- IATA Country: {{iataCountry}}
-- Agent Sales: {{agentSales}} {{currencyIsoCode}}
+This is to inform you that according to our Real Time Sales monitoring activities, we have detected that {{agentName}} – {{iataCode}}, {{iataCountry}} have reached the average daily sales threshold of  {{agentSales}} {{currencyIsoCode}} and/or utilization of the financial security amount of {{fsAmount}} USD. Consequently, we have removed the ticketing authority for the entire hierarchy with immediate effect.
