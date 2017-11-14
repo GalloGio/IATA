@@ -21,11 +21,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
-    public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
-    public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';    
     public static String NGFOP_PV = 'NGFormsOfPayment';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV, NEWTIDS_PV, IEP_BANK_ACCOUNT_SETUP};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -62,7 +61,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 realAccountId = accountId;
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin, Reason1__c from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
  
@@ -102,7 +101,7 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
                     if(oscarCase.AccountId != realAccountId)
                         oscarCase.AccountId = realAccountId;
 
@@ -134,15 +133,12 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
             return accountId;
 
-        List<Case> cases = [SELECT Id, Account_Concerned__c, Reason1__c from CASE where Id = :caseId LIMIT 1];
+        List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
 
         if(!cases.isEmpty()){
-            if (typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && cases.get(0).Reason1__c == 'New TIDS HO') {
-                System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess + ' and case reason is New TIDS HO');
-            } else {
                 System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
                 return cases.get(0).Account_Concerned__c;
-            }
+            
         }else{
             System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
         }
@@ -317,10 +313,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
 
-                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
-            }
-            
-            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
                 oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
             }
         }
