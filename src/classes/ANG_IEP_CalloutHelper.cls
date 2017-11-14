@@ -46,6 +46,9 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 	 //**** ===========================  ACTION METHODS  =================================== ****
 
+	  @InvocableMethod(label='Create a payload to be sent to mulesoft' description='Create a payload to be sent to mulesoft')
+    public static void invokeCustomImpl(List<Agency_Applied_Change_code__c> objList) {}
+
     public static void invokeCustomImpl(List<AMS_Agency_Updates__c> agencyEventsList) {
     	
 		Map<String,Id> changeCodeIdMap = new Map<String,Id>();
