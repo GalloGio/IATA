@@ -71,13 +71,18 @@ public with sharing class AMP_CoreRelationshipExtension {
 			lsParticipants =
 				[SELECT Id, Local_Governance__c, Local_Governance__r.Name,	Participant_Type__c,
 						Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
-						Contact__r.Title, Contact__r.Email, Representing__c,
+						Contact__r.Title, Contact__r.Email, Representing__c, Hidden_Account_Id__c,
 						Local_Governance__r.Group_Owner__r.Name, Local_Governance__r.Group_Owner_Text__c
 				FROM Participant__c
 				WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId15)
 				AND Local_Governance__r.Active__c = true
 				AND Local_Governance__r.Name IN :groupNames];
-			return lsParticipants;
+
+            // for case sensitivity
+        List<Participant__c> filteredList = new List<Participant__c>();
+        for(Participant__c p : lsParticipants) {if(accountId15.equals(p.Hidden_Account_Id__c)  || accountId15.equals(p.Representing__c)) filteredList.add(p);}
+
+        return filteredList;
 		}
 
 		@AuraEnabled
