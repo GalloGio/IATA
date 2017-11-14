@@ -712,15 +712,23 @@ global class ANG_OscarProcessHelper {
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
 		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
 
+		AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodesConfigHelper.getChangeCodeConfig(changeCodeName);
+
 		For(Account acctToAddCC: accounts){
 
 			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-			changeCode.name = changeCodeName;
-			changeCode.reasonCode = '21';
-			changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
-			changeCode.reasonDesc  = 'NEW APPLICATION';
-			changeCode.status  = '2';
+			changeCode.name = changeCodeConfig.Name;
+			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
+			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
+
+			if(theOscar.SIDRA_lite_reason__c == null)
+				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
+			else
+				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
+
+			changeCode.reasonDesc  = changeCodeConfig.Reason_Code_Description__c;
+			changeCode.status  = changeCodeConfig.Account_status_change__c;
 
 			listOfCCToInsert.add(changeCode);
 			oscarsToAdd.add(theOSCAR);

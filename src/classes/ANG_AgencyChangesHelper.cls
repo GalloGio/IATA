@@ -538,8 +538,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-				if(newAccreditationModel ==  'Cashless')
+				if(newAccreditationModel ==  'Cashless'){
 					toUpsert = performCashLessTransformation(accountsAffected);
+					removeContactsFlag(accountsAffected);
+				}
 				if(newAccreditationModel ==  'Cash')
 					toUpsert = performCashTransformation(accountsAffected);
 
@@ -661,8 +663,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-			if(newAccreditationModel ==  'Cashless')
+			if(newAccreditationModel ==  'Cashless'){
 				toUpsert = performCashLessTransformation(accountsAffected);
+				removeContactsFlag(accountsAffected);
+			}
 			if(newAccreditationModel ==  'Cash')
 				toUpsert = performCashTransformation(accountsAffected);
 
