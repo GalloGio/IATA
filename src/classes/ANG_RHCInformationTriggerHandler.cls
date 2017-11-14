@@ -112,18 +112,28 @@ public class ANG_RHCInformationTriggerHandler{
 
 		if(!toDeactivateAccounts.isEmpty()){
 			
-			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);		
-			toDeactivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toDeactivateAccountsMap);
-
-			toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
-
+			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);
+			            
+			if(isEmptySetOfLists(toDeactivateAccountsMap.values())){		
+				toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
+			}else{
+				toDeactivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toDeactivateAccountsMap);
+				toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
+			}
 		}
+		
 		if(!toActivateAccounts.isEmpty()){
 			
-			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);		
-			toActivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toActivateAccountsMap);
+			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);
+			            
+			if(isEmptySetOfLists(toActivateAccountsMap.values())){ // does not have a hierarchy
+				toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+			}else{
+				toActivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toActivateAccountsMap);
+				toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+			}
 
-			toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+
 
 		}
 
@@ -141,6 +151,19 @@ public class ANG_RHCInformationTriggerHandler{
 			createChangeCodeForFOP(accountsToCreateFOP);
 
 
+	}
+
+	private boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
+
+		if(setOfLists.isEmpty())
+			return true;
+
+		for(List<AMS_Agencies_relationhip__c> lst: setOfLists){
+			if(!lst.isEmpty())
+				return false;
+		}
+
+		return true;
 	}
 
 	private Decimal hasfluctuation(Decimal newValue, Decimal oldValue){
