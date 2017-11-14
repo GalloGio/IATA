@@ -649,14 +649,19 @@ DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         </actions>
         <active>true</active>
         <description>Used in SIDRA Cases when a comment is received from E2C to trigger CS Actions</description>
-        <formula>AND(
-CreatedDate=NOW(),CreatedById=&apos;00520000000h6AU&apos;,
-Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,
-  OR
-  (ISBLANK(Parent.Update_AIMS_DEF__c),
-  DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),
-  ISPICKVAL(Parent.Status,&quot;Closed&quot;),
-  CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
+        <formula>AND( 
+
+CreatedDate=NOW(),
+
+OR(CreatedById=&apos;00520000000h6AU&apos;,
+AND(ISPICKVAL(Parent.New_interaction__c,&quot;New Comment&quot;),CONTAINS(Parent.LastModifiedBy.Profile.Name,&quot;ISS Portal&quot;))),
+
+Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,   
+
+OR   (ISBLANK(Parent.Update_AIMS_DEF__c),   
+        DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),   
+        ISPICKVAL(Parent.Status,&quot;Closed&quot;),   
+        CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
