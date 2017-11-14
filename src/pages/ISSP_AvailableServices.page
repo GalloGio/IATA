@@ -13,7 +13,9 @@
     <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" /-->     
 
     <!-- Load JS -->  
-
+    <script language="JavaScript1.2" src="/js/functions.js"></script>
+    <script src="/soap/ajax/9.0/connection.js" type="text/javascript"></script>
+    <script id="clientEventHandlersJS" language="javascript"></script>
     <script src="{!URLFOR($Resource.jquery2_1_4)}"></script> 
     <!--<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> -->
     <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
@@ -406,14 +408,20 @@
         contextMenu: '#context-menu',
         contextMenuButton: '.example2-button',        
         onContextMenuItem: function(row, $el){
-
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
           var string = row[3].substring("Id=");          
-          var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));
-          var getName = row[1].substring("_self");          
-          var servName = getName.substring(getName.indexOf(">")+1,getName.indexOf("</span>"));          
-          console.log(servName);
+          var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));          
+          
+          var qr = sforce.connection.query('SELECT id,name FROM Portal_Applications__c where id in (\''+linkId+ '\')');
+          records = qr.getArray("records");
+            
+          for (var i=0; i< records.length; i++) {
+              var record = records[i];
+              var servName = record.Name;              
+          }
+            
           if($el.data("item") == "add"){          
-            window.location.href = "/ISSP_EditPortalServiceAccess?Id="+linkId+"&op=Edit&PSId="+linkId+"&PSname="+servName;
+              window.location.href = "/ISSP_EditPortalServiceAccess?Id="+linkId+"&op=Edit&PSId="+linkId+"&PSname="+servName;
           }
           else if($el.data("item") == "view"){
             window.location.href = "/ISSP_PortalService?Id="+linkId;
