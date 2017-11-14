@@ -161,12 +161,6 @@
                                     <apex:outputText value="{!sSection3Description}" escape="false" />
                                 </section>
 
-                                <!-- Section 5 -->
-                                <section class="section-container features" id="section5" style="padding-top:0; margin-bottom:50px; display:{!IF(bSection5Show, 'block','none')}">
-                                    <h2 class="section-title">{!sSection5Name}</h2>
-                                    <apex:outputText value="{!sSection5Description}" escape="false" />
-                                </section>
-
                                 <!-- Prices -->
                                 <section class="section-container pricing" id="pricing">
                                     <apex:form >
@@ -239,6 +233,12 @@
                                             </apex:repeat>
                                         </ul>
                                     </apex:form>
+                                </section>
+
+                                <!-- Section 5 -->
+                                <section class="section-container features" id="section5" style="margin-bottom:50px; margin-top:50px; display:{!IF(bSection5Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection5Name}</h2>
+                                    <apex:outputText value="{!sSection5Description}" escape="false" />
                                 </section>
 
                                 <!-- Resources -->
