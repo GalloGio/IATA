@@ -9849,7 +9849,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
-        <value>Please review your application details before accepting the Terms &amp;amp; Conditions below and submitting to IATA.</value>
+        <value>Please review your application details before submitting to IATA.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>

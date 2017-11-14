@@ -29,7 +29,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         billingStatesList = new list<SelectOption>();
 
         currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-        currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name, Account.ParentId FROM Contact WHERE Id = :currentUser.ContactId];
+        currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name, Account.ParentId, Account.IATA_Member__c FROM Contact WHERE Id = :currentUser.ContactId];
 
         applyLanguage = UserInfo.getLanguage();
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
@@ -209,6 +209,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 msoAccount.Location_Class__c = 'M';
                 msoAccount.Location_Type__c = 'HO';
                 msoAccount.Reason_for_creation__c = 'New Agent';
+                msoAccount.Location_Category__c = currentUserContact.Account.IATA_Member__c == true ? 'IC' : 'NI';
                 insert msoAccount;
 
                 // create new OSCAR
