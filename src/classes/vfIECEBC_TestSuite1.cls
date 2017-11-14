@@ -833,6 +833,10 @@ insert gpavs;*/
             
             templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
             templateExtCon.upsertDesignAndContinue();
+            // next() coverage
+            PageReference nextStep = campaignExtCon.next();
+            // previous() coverage
+            PageReference prevStep = campaignExtCon.previous();
         }
     }
     

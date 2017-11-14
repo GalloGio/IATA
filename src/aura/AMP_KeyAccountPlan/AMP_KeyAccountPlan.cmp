@@ -65,7 +65,7 @@
                 <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                     <thead>
                         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Actions</span></th>
+                            <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
                             <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
