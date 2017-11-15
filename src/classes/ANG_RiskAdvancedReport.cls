@@ -101,7 +101,7 @@ public without sharing class ANG_RiskAdvancedReport {
                 hasResult = true;
                 map<id, Account> mapAccount = new map<id, Account>();
 
-                for(Account accnt:[Select Name, IATACode__c, Top_Parent__r.Name,Guaranteed_amount__c, Top_Parent__r.IATACode__c, IATA_ISO_Country__r.name,
+                for(Account accnt:[Select Name, IATACode__c, Guaranteed_amount__c, IATA_ISO_Country__r.name,
                                                 (Select Status__c From Agency_Authorizations__r where recordType.DeveloperName='BSPLink'), 
                                                 (Select Change_Code__c, Created_Date_To_Show__c, Irregularity_Type__c 
                                                     From Agencies_Applied_Change_codes__r 

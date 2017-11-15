@@ -45,8 +45,6 @@
                     <apex:column value="{!result.RiskAlert.ANG_Agent_Sales__c}" HeaderValue="Sales Amount"/>
                     <!--<apex:column value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/> -->
                     <apex:column style="text-align:right" value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/> 
-                    <apex:column value="{!result.theAccount.TOP_Parent__r.IATACode__c}" HeaderValue="Top Parent IATA Code"/>
-                    <apex:column value="{!result.theAccount.TOP_Parent__r.Name}" HeaderValue="Top Parent Agency Name"/>
                     <apex:column HeaderValue="Change of Ownership 12 mo">
                         <ul>
                             <apex:repeat value="{!result.lsCHICHO}" var="CHICHO">
