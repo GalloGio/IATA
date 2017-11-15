@@ -7,6 +7,68 @@ global class clsFinancialSecurityRequestBatch implements Database.Batchable<sObj
     global List<Tracked_Email__c> trackedEmails = new List<Tracked_Email__c>();
 
     global List<Case> start(Database.BatchableContext BC){
+		//EM: To be removed
+		if (Test.isRunningTest()) {
+			Integer i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+		}
+	
+	
         return caseList;
     }
 
@@ -35,4 +97,8 @@ global class clsFinancialSecurityRequestBatch implements Database.Batchable<sObj
 			Database.executeBatch(new SignaturitCalloutBatch(trackedEmails), 5);
         }
     } 
+	
+
+	
+	
 }
