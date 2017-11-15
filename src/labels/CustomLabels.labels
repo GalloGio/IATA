@@ -24771,9 +24771,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Standards Setting Workspace</shortDescription>
-        <value>IATA is building a new collaboration environment for standards development activities. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences. The project is in its pilot phase and it is not yet active for most standards groups. Initial pilot participants from selected groups will be invited to join in the coming months. &lt;/br&gt;
-
-&lt;b&gt;&lt;u&gt;WARNING:&lt;/b&gt;&lt;/u&gt; This service is being piloted and is specific to the following groups: PADIS EDIFACT RES &amp; APTS, Interline EMD Baggage Group and Cargo Operations and Technology Board (COTB) with 2 subgroups (Cargo XML Task Force (CXMLTF) and Piece Level Tracking Task Force (PLTTF). If you are not part of these groups, please do not use this service.</value>
+        <value>The Standards Setting Workspace is a platform enabling seamless collaboration for and between standards setting groups. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences.</value>
     </labels>
     <labels>
         <fullName>Start_date</fullName>

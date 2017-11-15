@@ -111,7 +111,7 @@
                                 </section>
 
                                 <!-- Features -->
-                                <section class="section-container features" id="features" style="padding-top:0">
+                                <section class="section-container features" id="features" style="padding-top:0; margin-bottom:50px;">
                                     <h2 class="section-title">Features</h2>
                                     <ul class="list dot">
                                         <apex:variable value="{!$User}" var="u" rendered="{!bFeature1Show}">
@@ -149,6 +149,17 @@
                                     
                                 </section>
                                 
+                                <!-- Section 2 -->
+                                <section class="section-container features" id="section2" style="padding-top:0; margin-bottom:50px; display:{!IF(bSection2Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection2Name}</h2>
+                                    <apex:outputText value="{!sSection2Description}" escape="false" />
+                                </section>
+
+                                <!-- Section 3 -->
+                                <section class="section-container features" id="section3" style="padding-top:0; margin-bottom:50px; display:{!IF(bSection3Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection3Name}</h2>
+                                    <apex:outputText value="{!sSection3Description}" escape="false" />
+                                </section>
 
                                 <!-- Prices -->
                                 <section class="section-container pricing" id="pricing">
@@ -222,6 +233,12 @@
                                             </apex:repeat>
                                         </ul>
                                     </apex:form>
+                                </section>
+
+                                <!-- Section 5 -->
+                                <section class="section-container features" id="section5" style="margin-bottom:50px; margin-top:50px; display:{!IF(bSection5Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection5Name}</h2>
+                                    <apex:outputText value="{!sSection5Description}" escape="false" />
                                 </section>
 
                                 <!-- Resources -->
