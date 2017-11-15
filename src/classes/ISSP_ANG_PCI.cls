@@ -297,6 +297,8 @@ public with sharing class ISSP_ANG_PCI {
         else
             newForm.Operation_Type__c = 'Cargo_Agent';
 
+        newform.Scope_of_Change__c = 'HO - Selected Branches';
+
         upsert newForm;
         
         system.debug('PCI - newCase ' + newCase.Account_Concerned__c + 'step1GoToNumber ' + step1GoToNumber);
