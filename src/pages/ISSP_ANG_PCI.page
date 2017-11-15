@@ -388,7 +388,7 @@
 						<div class="aplabel">
 							<apex:pageBlockSectionItem >
 								<apex:outputLabel value="{!$Label.ISSP_ANG_Enabel_Credit_Card_Codes}"/> 
-                                <apex:outputField value="{!newForm.Agency_Codes_Concerned__c}"  style="width: 174.4px;"/>
+                                <apex:outputField value="{!agencyCodesConcernedStr}"  style="width: 174.4px;"/>
 							</apex:pageBlockSectionItem>
 						</div>
 					</apex:pageBlockSection>
