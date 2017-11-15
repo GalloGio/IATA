@@ -41,6 +41,8 @@
                     <apex:column value="{!result.RiskAlert.ANG_Severity__c} - {!result.RiskAlert.CreatedDate}" HeaderValue="Alert"/>
                     <apex:column value="{!result.theAccount.IATACode__c}" HeaderValue="IATA Code"/>
                     <apex:column value="{!result.theAccount.Name}" HeaderValue="Agency Name"/>
+                    <apex:column value="{!result.theAccount.IATA_ISO_Country__r.name}" HeaderValue="Country"/>
+                    <apex:column value="{!result.RiskAlert.ANG_Agent_Sales__c}" HeaderValue="Sales Amount"/>
                     <apex:column value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/>
                     <!-- <apex:column style="text-align:right" value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/> -->
                     <apex:column value="{!result.theAccount.TOP_Parent__r.IATACode__c}" HeaderValue="Top Parent IATA Code"/>

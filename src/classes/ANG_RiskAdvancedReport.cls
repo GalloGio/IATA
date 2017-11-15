@@ -80,7 +80,7 @@ public without sharing class ANG_RiskAdvancedReport {
             set<id> setAccntIdWithYellowAfterRed = new set<id>();
             set<id> setAccntIdWithRed = new set<id>();
             
-            list<ANG_Risk_Alert__c> lsRiskAlert = [select ANG_Account__c, ANG_Severity__c, CreatedDate 
+            list<ANG_Risk_Alert__c> lsRiskAlert = [select ANG_Account__c, ANG_Severity__c, CreatedDate, ANG_Agent_Sales__c 
                                                     from ANG_Risk_Alert__c 
                                                     where recordtype.developername = 'Risk_Alert_RTS' 
                                                         and CreatedDate>=:dtFrom 
@@ -101,7 +101,7 @@ public without sharing class ANG_RiskAdvancedReport {
                 hasResult = true;
                 map<id, Account> mapAccount = new map<id, Account>();
 
-                for(Account accnt:[Select Name, IATACode__c, Top_Parent__r.Name,Guaranteed_amount__c, Top_Parent__r.IATACode__c, 
+                for(Account accnt:[Select Name, IATACode__c, Top_Parent__r.Name,Guaranteed_amount__c, Top_Parent__r.IATACode__c, IATA_ISO_Country__r.name,
                                                 (Select Status__c From Agency_Authorizations__r where recordType.DeveloperName='BSPLink'), 
                                                 (Select Change_Code__c, Created_Date_To_Show__c 
                                                     From Agencies_Applied_Change_codes__r 
@@ -115,11 +115,11 @@ public without sharing class ANG_RiskAdvancedReport {
                 }
                         
                         
-
+                /*
                 Map<Id,ANG_RHC_Information__c> mapAccIDrhcInfos = new Map<Id,ANG_RHC_Information__c>();
                 for (ANG_RHC_Information__c rhc : [SELECT ANG_Financial_Security__c,CurrencyIsoCode,ANG_AccountId__c FROM ANG_RHC_Information__c WHERE  ANG_AccountId__c in :mapAccount.keyset()]){
                     mapAccIDrhcInfos.put(rhc.ANG_AccountId__c, rhc);
-                }
+                }*/
 
                 for(ANG_Risk_Alert__c ar:lsRiskAlert){
                     resultWrapper rw = new resultWrapper();
@@ -152,12 +152,10 @@ public without sharing class ANG_RiskAdvancedReport {
                         rw.lsFIN = lsFIN;
 
                         
-                        if(!mapAccIDrhcInfos.isEmpty() && mapAccIDrhcInfos.containsKey(Accnt.id) && mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c != null && mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode != null)
+                        /*if(!mapAccIDrhcInfos.isEmpty() && mapAccIDrhcInfos.containsKey(Accnt.id) && mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c != null && mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode != null)
                             rw.guaranteedAmount = mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c.setscale(2) + ' ' +  mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode;
-                            //rw.guaranteedAmount = '. Total FS ' + mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c.setscale(2) + ' ' +  mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode;
-                        else
-                            rw.guaranteedAmount = Accnt.Guaranteed_amount__c.setscale(2) + ' USD';
-                            //rw.guaranteedAmount = 'Guaranteed Amount ' +Accnt.Guaranteed_amount__c + ' USD';
+                        else*/
+                        rw.guaranteedAmount = Accnt.Guaranteed_amount__c.setscale(2) + ' USD';
                        
                        lsWrapperResult.add(rw);
                        system.debug('DTULLO --> ' + lsWrapperResult);
