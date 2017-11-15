@@ -365,7 +365,7 @@ public class ang_rhcAlertTriggerHandler {
             String tBody = template.Body;
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
-            String gAmount = (riskAlert.ANG_Account__r.Guaranteed_amount__c == null ? '' : String.valueOf(riskAlert.ANG_Account__r.Guaranteed_amount__c));
+            String gAmount = (riskAlert.ANG_Account__r.Guaranteed_amount__c == null ? '' : String.valueOf(riskAlert.ANG_Account__r.Guaranteed_amount__c.setScale(2)));
             tBody = tBody.replace('{{agentName}}', riskAlert.ANG_Account__r.Name);
             tBody = tBody.replace('{{iataCode}}', iataCode);
             tBody = tBody.replace('{{iataCountry}}', riskAlert.ANG_Account__r.IATA_ISO_Country__r.Name);
