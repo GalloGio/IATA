@@ -14201,7 +14201,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
-        <value>Request Credit Card Form of Payment</value>
+        <value>PCI Compliance</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
