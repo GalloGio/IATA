@@ -352,6 +352,10 @@ body .bPageBlock .pbBody .blue .pbSubheader{
     background-color:#01AAE8;
 }
 
+.datePicker{
+    z-index: 999999 !important;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
