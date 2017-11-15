@@ -1273,7 +1273,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>GOStandard</value>
+        <value>GoStandard</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
@@ -1281,7 +1281,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>GOLite</value>
+        <value>GoLite</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
@@ -1377,7 +1377,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GoStandard accreditation type in order to issue tickets using the Cash Form of Payment 
         </value>
     </labels>
     <labels>
