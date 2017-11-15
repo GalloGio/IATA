@@ -79,8 +79,17 @@ public with sharing class SignaturitUtils {
 	            // Send the email with signaturit       
     	        SignaturitRest.MailInfoResponse response = SignaturitRest.sendMail(trackedEmail);
             
-            	// case 1 : success
-            	if(response.Id != null){
+            	// case 1 : no response
+            	if (response == null) {
+					trackedEmail.Status__c = 'Failed';
+					failureMessage = '<tr><td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Id + '">' + trackedEmail.Name + '</a></td>'
+		           					+ '<td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Case__r.Id + '">' + trackedEmail.Case__r.CaseNumber + '</a></td>'
+									+ '<td>' + trackedEmail.Subject__c + '</td>'
+				                    + '<td>' + recipients + '</td>'
+		           					+ '<td>No response from Signaturit server</td></tr>';
+	            }
+            	// case 2 : success
+            	else if(response.Id != null){
 	                trackedEmail.Signaturit_Id__c = response.id;
 	    			trackedEmail.Status__c = SignaturitRestEvents.SENT;
 	                
@@ -94,32 +103,22 @@ public with sharing class SignaturitUtils {
 	
 	                certificates.addAll(SignaturitUtils.getCertificatesFromResponse(trackedEmail.Id, response));
             	}
-            	// case 2 : no response
-        	    else if (response == null) {
-					trackedEmail.Status__c = 'Failed';
-		           failureMessage = '<tr><td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Id + '">' + trackedEmail.Name + '</a></td>'
-		           					+ '<td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Case__r.Id + '">' + trackedEmail.Case__r.CaseNumber + '</a></td>'
-									+ '<td>' + trackedEmail.Subject__c + '</td>'
-				                    + '<td>' + recipients + '</td>'
-		           					+ '<td>No response from Signaturit server</td></tr>';
-	            }
             	// case 3 : Signaturit error
 	            else{
 					trackedEmail.Status__c = 'Failed';
-		           failureMessage = '<tr><td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Id + '">' + trackedEmail.Name + '</a></td>' 
+					failureMessage = '<tr><td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Id + '">' + trackedEmail.Name + '</a></td>' 
 		           					+ '<td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Case__r.Id + '">' + trackedEmail.Case__r.CaseNumber + '</a></td>'
 									+ '<td>' + trackedEmail.Subject__c + '</td>'
 				                    + '<td>' + recipients + '</td>'
 		           					+ '<td>' + response.responseBody + '</td>';
 	            }
-	            
         	}catch ( Exception e) {
 				trackedEmail.Status__c = 'Failed';
 				failureMessage = '<tr><td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Id + '">' + trackedEmail.Name + '</a></td>'
-									+ '<td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Case__r.Id + '">' + trackedEmail.Case__r.CaseNumber + '</a></td>'
-									+ '<td>' + trackedEmail.Subject__c + '</td>'
-				                    + '<td>' + recipients + '</td>'
-									+ '<td>' + e.getMessage() + '</td></tr>';
+								+ '<td><a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + trackedEmail.Case__r.Id + '">' + trackedEmail.Case__r.CaseNumber + '</a></td>'
+								+ '<td>' + trackedEmail.Subject__c + '</td>'
+			                    + '<td>' + recipients + '</td>'
+								+ '<td>' + e.getMessage() + '</td></tr>';
 	        }
 	        
 	        // send an email to the sender if any error occured
