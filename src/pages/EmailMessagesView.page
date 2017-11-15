@@ -111,8 +111,8 @@
         function SendEmail(){
 
             var countryEmail = getCountryEmail();
-            var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p4={!cse.E2CP__AdditionalCC__c}&p26=" + countryEmail;
-            var redirectUrlTwo = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p4={!cse.E2CP__AdditionalCC__c}";
+            var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail;
+            var redirectUrlTwo = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
 
             if(countryEmail != '')
             {
@@ -140,42 +140,35 @@
                     ServiceConsoleIntegration(retUrl);
                 } else {
                     window.top.location=retUrl;
-        }
+            }
         }
 
         function sendTrackedEmail(){
-            if({!$Permission.Can_send_a_tracked_email}){
-                window.top.location= "/apex/sendSingleTrackedEmail?case={!cse.Id}";
-            }
-            else{
-                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-            }
+			sendTrackedRedirection("/apex/sendSingleTrackedEmail?case={!cse.Id}&retURL={!cse.Id}");
         }
 
         function sendTrackedReplyTo(emailId){
             var id = emailId;
-            if({!$Permission.Can_send_a_tracked_email}){
-                window.top.location = "/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyTo";
-            }
-            else{
-                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-            }
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyTo");
         }
 
         function sendTrackedReplyAll(emailId){
             var id = emailId;
-            if({!$Permission.Can_send_a_tracked_email}){
-                window.top.location = "/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyToAll";
-            }
-            else{
-                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-            }
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyToAll");
         }
-
+        
         function sendTrackedForward(emailId){
             var id = emailId;
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=Forward");
+        }
+        
+        function sendTrackedRedirection(redirectURL){
             if({!$Permission.Can_send_a_tracked_email}){
-                window.top.location = "/apex/sendsingletrackedemail?originalEmail=" + id + "&action=Forward";
+                if (sforce.console.isInConsole()) {
+		            ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
+                } else {
+                    window.top.location= redirectURL;
+	            }
             }
             else{
                 alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
@@ -259,16 +252,16 @@
                             </td>
                             <td class="actionColumn" style="display:{!message.displayTrackedActions}">
                                 <a href="" onclick="sendTrackedReplyTo('{!message.emailId}');return false;" title="Reply" style="color:#015ba7; cursor: pointer;">
-                                    <span value="View" class="view">Reply</span>
-                                </a>
-                                <span value="|" class="view"> |</span>
-                                <a href="" onclick="sendTrackedReplyAll('{!message.emailId}');return false;" title="To All" style="color:#015ba7; cursor: pointer;">
-                                    <span value="View" class="view">To All</span>
-                                </a>
-                                <span value="|" class="view"> |</span>
-                                <a href="" onclick="sendTrackedForward('{!message.emailId}');return false;" title="Forward" style="color:#015ba7; cursor: pointer;">
-                                    <span value="View" class="view">Forward</span>
-                                </a>
+                            		<span value="View" class="view">Reply</span>
+                            	</a>
+								<span value="|" class="view"> |</span>
+                            	<a href="" onclick="sendTrackedReplyAll('{!message.emailId}');return false;" title="To All" style="color:#015ba7; cursor: pointer;">
+                            		<span value="View" class="view">To All</span>
+                            	</a>
+								<span value="|" class="view"> |</span>
+                            	<a href="" onclick="sendTrackedForward('{!message.emailId}');return false;" title="Forward" style="color:#015ba7; cursor: pointer;">
+                            		<span value="View" class="view">Forward</span>
+                            	</a>
                             </td>
                             <td class=" dataCell " scope="row">
                                 <apex:outputText value="{!message.status}" />
@@ -280,14 +273,14 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!message.emailId}" target="_parent" onclick="openSubTab('{!message.emailId}');return false;">{!message.subject}</a>
+                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_parent" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
                                 <br/> 
                                 <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                             </td>
                             <td class=" dataCell ">
                                 <apex:outputText value="{!message.emailAddress}" />
                             </td>
-                            <td class=" dataCell "><apex:outputText value="{!message.MessageDate}"/></td>
+                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
                         </tr>
                     </apex:repeat> 
                 </tbody>
