@@ -48,7 +48,7 @@ public without sharing class ANG_RiskAdvancedReport {
     public list<Account> lsResult   {get; set;}
     
     private string FIN = 'FIN';
-    private set<string> IRRDEF = new set<string>{'IRR', 'IRS', 'DEF', 'DFE'};
+    private set<string> IRRDEF = new set<string>{'IRR', 'IRS', 'DFE'};
     private set<string> CHICHO = new set<string>{'CHH','CHI','CHO','CIJ','COH',
                                                 'COL','CON','COS','HIN','HIS','HNL',
                                                 'HNM','HNR','HSL','HSM','HSN','ONL',
@@ -103,7 +103,7 @@ public without sharing class ANG_RiskAdvancedReport {
 
                 for(Account accnt:[Select Name, IATACode__c, Top_Parent__r.Name,Guaranteed_amount__c, Top_Parent__r.IATACode__c, IATA_ISO_Country__r.name,
                                                 (Select Status__c From Agency_Authorizations__r where recordType.DeveloperName='BSPLink'), 
-                                                (Select Change_Code__c, Created_Date_To_Show__c 
+                                                (Select Change_Code__c, Created_Date_To_Show__c, Irregularity_Type__c 
                                                     From Agencies_Applied_Change_codes__r 
                                                     where (Created_Date_To_Show__c>=:system.now().addMonths(-12) AND (Change_Code__c in:CHICHO OR Change_Code__c in: IRRDEF))
                                                             OR (Created_Date_To_Show__c>=:system.now().addMonths(-24) AND Change_Code__c=:FIN)
@@ -123,42 +123,42 @@ public without sharing class ANG_RiskAdvancedReport {
 
                 for(ANG_Risk_Alert__c ar:lsRiskAlert){
                     resultWrapper rw = new resultWrapper();
-                        rw.RiskAlert = ar;
-                        Account Accnt = mapAccount.get(ar.ANG_Account__c);
-                        list<Agency_Applied_Change_code__c> lsCHICHO = new list<Agency_Applied_Change_code__c>();
-                        list<Agency_Applied_Change_code__c> lsIRRDEF = new list<Agency_Applied_Change_code__c>();
-                        list<Agency_Applied_Change_code__c> lsFIN = new list<Agency_Applied_Change_code__c>();
-                        
-                        for(Agency_Applied_Change_code__c aacc:accnt.Agencies_Applied_Change_codes__r){
-                            if(aacc.Change_Code__c==FIN)    lsFIN.add(aacc);
-                            if(IRRDEF.contains(aacc.Change_Code__c))    lsIRRDEF.add(aacc);
-                            if(CHICHO.contains(aacc.Change_Code__c))    lsCHICHO.add(aacc);
-                        }
-                        
-                        if(!Accnt.Agency_Authorizations__r.isEmpty())
-                            rw.TAStatus = Accnt.Agency_Authorizations__r[0].Status__c;
-                        else
-                            rw.TAStatus = '';
-                        
-                        rw.REDAfterYellow = false;
-                        if(ar.ANG_Severity__c=='Red'){
-                            if(setAccntIdWithYellowAfterRed.contains(ar.ANG_Account__c))
-                                rw.REDAfterYellow = true;
-                        }
-                        
-                        rw.theAccount = Accnt;
-                        rw.lsCHICHO = lsCHICHO;
-                        rw.lsIRRDEF = lsIRRDEF;
-                        rw.lsFIN = lsFIN;
+                    rw.RiskAlert = ar;
+                    Account Accnt = mapAccount.get(ar.ANG_Account__c);
+                    list<ChangeCodeWrapper> lsCHICHO = new list<ChangeCodeWrapper>();
+                    list<ChangeCodeWrapper> lsIRRDEF = new list<ChangeCodeWrapper>();
+                    list<ChangeCodeWrapper> lsFIN = new list<ChangeCodeWrapper>();
+                    
+                    for(Agency_Applied_Change_code__c aacc:accnt.Agencies_Applied_Change_codes__r){
+                        if(aacc.Change_Code__c==FIN)    lsFIN.add(new ChangeCodeWrapper(aacc.Change_Code__c,aacc.Created_Date_To_Show__c)); //lsFIN.add(aacc);
+                        if((IRRDEF.contains(aacc.Change_Code__c) && aacc.irregularity_type__c == 'OV2') || aacc.Change_Code__c == 'DFE' )   lsIRRDEF.add(new ChangeCodeWrapper(aacc.Change_Code__c,aacc.Created_Date_To_Show__c)); //lsIRRDEF.add(aacc);
+                        if(CHICHO.contains(aacc.Change_Code__c))    lsCHICHO.add(new ChangeCodeWrapper(aacc.Change_Code__c,aacc.Created_Date_To_Show__c)); //lsCHICHO.add(aacc);
 
-                        
-                        /*if(!mapAccIDrhcInfos.isEmpty() && mapAccIDrhcInfos.containsKey(Accnt.id) && mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c != null && mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode != null)
-                            rw.guaranteedAmount = mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c.setscale(2) + ' ' +  mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode;
-                        else*/
-                        rw.guaranteedAmount = Accnt.Guaranteed_amount__c.setscale(2) + ' USD';
-                       
-                       lsWrapperResult.add(rw);
-                       system.debug('DTULLO --> ' + lsWrapperResult);
+                    }
+                    
+                    if(!Accnt.Agency_Authorizations__r.isEmpty())
+                        rw.TAStatus = Accnt.Agency_Authorizations__r[0].Status__c;
+                    else
+                        rw.TAStatus = '';
+                    
+                                        
+                    if(setAccntIdWithRed.contains(ar.ANG_Account__c))
+                        rw.REDAfterYellow = true;
+
+                    
+                    rw.theAccount = Accnt;
+                    rw.lsCHICHO = lsCHICHO;
+                    rw.lsIRRDEF = lsIRRDEF;
+                    rw.lsFIN = lsFIN;
+
+                    
+                    /*if(!mapAccIDrhcInfos.isEmpty() && mapAccIDrhcInfos.containsKey(Accnt.id) && mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c != null && mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode != null)
+                        rw.guaranteedAmount = mapAccIDrhcInfos.get(Accnt.id).ANG_Financial_Security__c.setscale(2) + ' ' +  mapAccIDrhcInfos.get(Accnt.id).CurrencyIsoCode;
+                    else*/
+                    rw.guaranteedAmount =+ 'USD ' +  Accnt.Guaranteed_amount__c.setscale(2) ;
+                   
+                   lsWrapperResult.add(rw);
+                   system.debug('DTULLO --> ' + lsWrapperResult);
                 }
             }
         }
@@ -172,9 +172,20 @@ public without sharing class ANG_RiskAdvancedReport {
         public Account theAccount   {get;set;}
         public string TAStatus  {get;set;}
         public string guaranteedAmount  {get;set;}
-        public list<Agency_Applied_Change_code__c> lsCHICHO {get;set;}
-        public list<Agency_Applied_Change_code__c> lsIRRDEF {get;set;}
-        public list<Agency_Applied_Change_code__c> lsFIN    {get;set;}
+        public list<ChangeCodeWrapper> lsCHICHO {get;set;}
+        public list<ChangeCodeWrapper> lsIRRDEF {get;set;}
+        public list<ChangeCodeWrapper> lsFIN    {get;set;}
         public boolean REDAfterYellow   {get;set;}
     }
+
+    public class ChangeCodeWrapper{
+        public String changeCode {get;set;} 
+        public String convertedDate {get;set;}
+
+        public ChangeCodeWrapper(String changeCode, Datetime convertedDate){
+            this.changeCode = changeCode;
+            this.convertedDate = convertedDate.format('dd-MMM-yyyy');
+        }
+    }
+
 }
