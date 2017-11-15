@@ -8,9 +8,6 @@
  <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
-
-      var activeSearch = "";
-
       $(document).ready(function() {
         $(window).keydown(function(event){
           if(event.keyCode == 13) {
@@ -234,7 +231,7 @@
           <!--apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="OLA" target="_blank">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
           </apex:outputLink-->
-          <a href="" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+          <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
         </span>
       </span>
 
