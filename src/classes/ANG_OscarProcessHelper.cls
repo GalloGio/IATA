@@ -230,6 +230,19 @@ global class ANG_OscarProcessHelper {
 						}
 					}
 			}
+
+			if(iataCodeGeneration){
+
+				updater = createIfapPortalServiceRight(updater, oscar);
+
+				if(updater.isFaulty){
+		        	Database.rollback(sp);
+		        	return new String[]{'-1','Grant IFAP service access - Failed.\n(' + updater.errorMessage +')\n\r','-1'};
+		        }
+
+		        returnMessage += 'Grant IFAP service access - Success!. \n\r';
+
+			}
 			
 		
 			Datetime processNowTime = datetime.now(); 
@@ -320,6 +333,9 @@ global class ANG_OscarProcessHelper {
 
 		if(!updater.codeRangesMap.values().isEmpty())
 			update updater.codeRangesMap.values();
+
+		if(!updater.parList.isEmpty())
+			insert updater.parList;
 
 	}
 
@@ -544,7 +560,7 @@ global class ANG_OscarProcessHelper {
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
 			if(!isEmptySetOfLists(allRelationsOnHierarchy.values())){
-				accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
 			}
 
 			accountHierarchyRelationships.add(oscar.Account__c);
@@ -844,6 +860,41 @@ global class ANG_OscarProcessHelper {
 
 	}
 
+    public static EntityUpdater createIfapPortalServiceRight(EntityUpdater updater, AMS_Oscar__c theOSCAR) {
+
+    	if(updater == null)
+			updater = new EntityUpdater();
+
+        List<Contact> lstIfapContacts = [SELECT Id FROM Contact WHERE AccountId = :theOSCAR.Account__c AND Financial_Assessment_Contact__c = true LIMIT 1];
+
+        if (lstIfapContacts.isEmpty()) {
+            updater.isFaulty=true;
+			updater.errorMessage = 'No Financial Assessment contact found!';
+
+			return updater;
+        }
+
+        list<Portal_Applications__c> lstApp = [SELECT Id FROM Portal_Applications__c WHERE Application_URL__c = '/ISSP_IFAPCases' LIMIT 1];
+
+        if (lstApp.isEmpty()) {
+            updater.isFaulty=true;
+			updater.errorMessage = 'Unable to find the IFAP portal service!';
+
+			return updater;
+        }
+
+        Portal_Application_Right__c par = new Portal_Application_Right__c();
+        par.Contact__c = lstIfapContacts[0].Id;
+        par.Portal_Application__c = lstApp[0].Id;
+        par.Right__c = 'Access Granted';
+
+        updater.parList.add(par);
+        updater.toUpdate = true;
+
+        return updater;
+
+    }
+	
 	public static boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
 
 		if(setOfLists.isEmpty())
@@ -864,6 +915,7 @@ global class ANG_OscarProcessHelper {
     	public Map<Id,AMS_Oscar__c> oscarMap;
     	public Map<Id,Code_Range__c> codeRangesMap;
     	public Map<Id,Case> caseMap;
+    	public List<Portal_Application_Right__c> parList;
     	public String errorMessage;
     	public boolean isFaulty;
     	public boolean toUpdate;
@@ -875,6 +927,7 @@ global class ANG_OscarProcessHelper {
 			oscarMap = new Map<Id, AMS_Oscar__c>();
 			codeRangesMap = new Map<Id,Code_Range__c>();
 			caseMap = new Map<Id,Case>();
+			parList = new List<Portal_Application_Right__c>();
 			isFaulty = false;
 			toUpdate = false;
 
