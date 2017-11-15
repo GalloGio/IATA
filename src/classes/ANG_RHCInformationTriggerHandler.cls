@@ -112,18 +112,28 @@ public class ANG_RHCInformationTriggerHandler{
 
 		if(!toDeactivateAccounts.isEmpty()){
 			
-			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);		
-			toDeactivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toDeactivateAccountsMap);
-
-			toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
-
+			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);
+			            
+			if(isEmptySetOfLists(toDeactivateAccountsMap.values())){		
+				toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
+			}else{
+				toDeactivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toDeactivateAccountsMap);
+				toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
+			}
 		}
+		
 		if(!toActivateAccounts.isEmpty()){
 			
-			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);		
-			toActivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toActivateAccountsMap);
+			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);
+			            
+			if(isEmptySetOfLists(toActivateAccountsMap.values())){ // does not have a hierarchy
+				toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+			}else{
+				toActivateAccounts = ANG_AgencyChangesHelper.extractAllAccounts(toActivateAccountsMap);
+				toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+			}
 
-			toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
+
 
 		}
 
@@ -141,6 +151,19 @@ public class ANG_RHCInformationTriggerHandler{
 			createChangeCodeForFOP(accountsToCreateFOP);
 
 
+	}
+
+	private boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
+
+		if(setOfLists.isEmpty())
+			return true;
+
+		for(List<AMS_Agencies_relationhip__c> lst: setOfLists){
+			if(!lst.isEmpty())
+				return false;
+		}
+
+		return true;
 	}
 
 	private Decimal hasfluctuation(Decimal newValue, Decimal oldValue){
@@ -193,6 +216,18 @@ public class ANG_RHCInformationTriggerHandler{
 
 		Set<Id> accountIds = accountsAndStatus.keySet();
 
+		List<Agency_Applied_Change_code__c> activeChangeCodes =
+		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+
+		//map accountId -> active change code
+		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+
+		for (Id accId : accountIds) {
+			for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
+				if (changeCode.Account__c == accId)
+					accountsChangeCode.put(accId, changeCode);
+		}
+
 		List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIds];
 
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
@@ -215,6 +250,16 @@ public class ANG_RHCInformationTriggerHandler{
 				changeCode.memoText = 'Agent is restricted from using Cash form of payment method as all amounts Owing are higher than the Remittance Holding Capacity.';
 
 			changeCode.reasonDesc  = toUse.Reason_Code_Description__c;
+
+
+			if(changeCode.reasonCode == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+				changeCode.reasonCode = accountsChangeCode.get(acctToAddCC.Id).Reason_Code__c;
+			}
+
+			if(changeCode.reasonDesc == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+				changeCode.reasonDesc = accountsChangeCode.get(acctToAddCC.Id).Reason_Description__c;
+			}
+
 			changeCode.status  = toUse.Account_status_change__c;
 
 			listOfCCToInsert.add(changeCode);

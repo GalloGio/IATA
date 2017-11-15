@@ -529,7 +529,7 @@ global class ANG_OscarProcessHelper {
 		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
     	*/
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
 		
 		try{
@@ -540,8 +540,13 @@ global class ANG_OscarProcessHelper {
 	    	}
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
-			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+
+			if(!isEmptySetOfLists(allRelationsOnHierarchy.values())){
+				accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+			}
+
 			accountHierarchyRelationships.add(oscar.Account__c);
 
 			restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
@@ -708,6 +713,22 @@ global class ANG_OscarProcessHelper {
 		if(updater == null)
 			updater = new EntityUpdater();
 
+		Set<Id> accountIds = new Set<Id>();
+
+		for(Account acct: accounts)
+			accountIds.add(acct.Id);
+
+		List<Agency_Applied_Change_code__c> activeChangeCodes =
+		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+
+		//map accountId -> active change code
+		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+
+		for (Id accId : accountIds) {
+			for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
+				if (changeCode.Account__c == accId)
+					accountsChangeCode.put(accId, changeCode);
+		}
 
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
 		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
@@ -722,6 +743,8 @@ global class ANG_OscarProcessHelper {
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
 
+			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
+
 			if(theOscar.SIDRA_lite_reason__c == null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
 			else
@@ -729,7 +752,18 @@ global class ANG_OscarProcessHelper {
 
 			changeCode.memoText = memoTextTemp;
 			changeCode.reasonDesc  = changeCodeConfig.Reason_Code_Description__c;
+			
+			if(changeCode.reasonCode == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+				changeCode.reasonCode = accountsChangeCode.get(acctToAddCC.Id).Reason_Code__c;
+			}
+
+			if(changeCode.reasonDesc == null && accountsChangeCode.get(acctToAddCC.Id) != null){
+				changeCode.reasonDesc = accountsChangeCode.get(acctToAddCC.Id).Reason_Description__c;
+			}
+
 			changeCode.status  = changeCodeConfig.Account_status_change__c;
+
+			System.debug('Adding changeCode:' + changeCode);
 
 			listOfCCToInsert.add(changeCode);
 			oscarsToAdd.add(theOSCAR);
@@ -760,12 +794,12 @@ global class ANG_OscarProcessHelper {
 
 		try{
 
-			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c from Case where Id = :caseId LIMIT 1 ];
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :caseId LIMIT 1 ];
 
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
 	        fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
-	        fieldsOfObject.put('SIDRA_lite_reason__c',c.Reason1__c);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
 			fieldsOfObject.put('Status__c','Open');
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, accountId, fieldsOfObject);
@@ -808,6 +842,19 @@ global class ANG_OscarProcessHelper {
 
 		return new String[]{'0','Oscar for Forms of Payment Management created with success',newCaseFop.Id};
 
+	}
+
+	public static boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
+
+		if(setOfLists.isEmpty())
+			return true;
+
+		for(List<AMS_Agencies_relationhip__c> lst: setOfLists){
+			if(!lst.isEmpty())
+				return false;
+		}
+
+		return true;
 	}
 
     public Class EntityUpdater{
