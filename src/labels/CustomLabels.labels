@@ -796,7 +796,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment</value>
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GoStandard accreditation type in order to issue tickets using the Cash Form of Payment</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AFP_CashlessMessageNoAccess</fullName>
