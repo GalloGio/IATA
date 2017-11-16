@@ -8,9 +8,6 @@
  <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
-
-      var activeSearch = "";
-
       $(document).ready(function() {
         $(window).keydown(function(event){
           if(event.keyCode == 13) {
@@ -228,11 +225,15 @@
 
       <!-- SEARCH -->
       <span>
-        <apex:outputLabel style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" value="Search:"/>    
-        <apex:inputText style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" id="searchString" value="{!searchString}"/>  
+        <apex:outputLabel style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" value="{! $Label.ISSP_ANG_SearchContacts}"/>        
+        <span>
+          <apex:inputText style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" id="searchString" value="{!searchString}"/>  
+          <!--apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="OLA" target="_blank">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </apex:outputLink-->
+          <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+        </span>
       </span>
-
-       
 
         <!-- <apex:pageMessages escape="false"/> -->
         <apex:pageBlockTable value="{!contactList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_contacts">

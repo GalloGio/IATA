@@ -26071,4 +26071,11 @@ title,Title,Name</value>
         <shortDescription>Must Add Users To Service</shortDescription>
         <value>At least one contact must be selected</value>
     </labels>    
+    <labels>
+        <fullName>ISSP_ANG_SearchContacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search for Contacts String</shortDescription>
+        <value>Search for Contacts</value>
+    </labels>    
 </CustomLabels>
