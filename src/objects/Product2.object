@@ -2025,10 +2025,6 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2114,6 +2110,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4506,6 +4506,10 @@ The product will only appear on the Online Store when the date entered in this f
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>StockKeepingUnit</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Use_Contract_when_ordered__c</fullName>
         <description>IEC - indicator to send to SAP as contract instead of sales order</description>
         <externalId>false</externalId>
@@ -6818,10 +6822,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -6903,6 +6903,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12797,10 +12801,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -12882,6 +12882,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>

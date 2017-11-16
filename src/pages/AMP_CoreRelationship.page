@@ -9,7 +9,14 @@
 			<apex:column value="{!participant.salutation}" headerValue="Salutation" style="width:5%;"/>
 			<apex:column value="{!participant.firstName}" headerValue="First Name" style="width:20%;"/>
 			<apex:column value="{!participant.lastName}" headerValue="Last Name" style="width:20%;"/>
-			<apex:column value="{!participant.title}" headerValue="Title" style="width:20%;"/>
+			<apex:column  headerValue="Title" style="width:20%;">
+			<apex:outputPanel rendered="{! participant.title != null }">
+			{!participant.title}
+				<apex:outputPanel rendered="{! participant.Representing != null }">
+					<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			</apex:column>
 		</apex:pageBlockTable>
 
 	</apex:pageBlock>

@@ -4421,7 +4421,7 @@ IF(Account.IATACode__c != &apos;&apos;
 */
 
 /*Prod*/ 
-IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
+IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/service/payment?company_name=&quot;
 +SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
 &quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
 SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
@@ -7878,7 +7878,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
-        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; which can&apos;t be used on the sharing rules (multiselect, which was a requirement so the field could be reused).</description>
         <externalId>false</externalId>
         <label>Record Sharing Criteria AUX</label>
         <length>255</length>

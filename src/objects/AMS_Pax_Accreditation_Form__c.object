@@ -1912,6 +1912,19 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>DGR_Agency_Regulation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>DGR Agency Regulation</label>
+        <referenceTo>AMS_Agency_Regulation__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>DG_Air_Freight_Charges__c</fullName>
         <externalId>false</externalId>
         <label>* DG Air Freight Charges</label>
@@ -3880,7 +3893,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

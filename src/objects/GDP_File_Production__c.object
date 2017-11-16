@@ -254,7 +254,7 @@
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>100-Failed</label>
+        <label>101-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -275,7 +275,7 @@
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>101-In Progress</label>
+        <label>102-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -344,6 +344,136 @@
             <value>Master</value>
         </filters>
         <label>200-TXT MASTERS - File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X07_TXT_DAILY_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Daily</value>
+        </filters>
+        <label>07-TXT DAILY File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X08_TXT_WEEKLY_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Weekly</value>
+        </filters>
+        <label>08-TXT WEEKLY File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X09_TXT_SEMI_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Semi</value>
+        </filters>
+        <label>09-TXT SEMI File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X10_TXT_MONTHLY_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Monthly</value>
+        </filters>
+        <label>10-TXT MONTHLY File Productions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X200_TXT_SEMI_File_Productions</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>XLS,XML,CAC</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Semi</value>
+        </filters>
+        <label>200-TXT SEMI - File Productions</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -154,7 +154,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -178,7 +178,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>M,G</fullName>
+                <fullName>M,G,X</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -538,7 +538,7 @@
         <label>Order By</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -610,7 +610,7 @@
         <inlineHelpText>Used on the Reference Record To Limit the Query as clause where inside the REST API</inlineHelpText>
         <label>Reference Clause</label>
         <length>4000</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -659,7 +659,7 @@
         <inlineHelpText>For CAC Web Service Default returned response when the code is not found</inlineHelpText>
         <label>Web Service Default Response</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -965,6 +965,40 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>TXT_CHANGE_FILES</fullName>
+        <columns>NAME</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Weekly</value>
+        </filters>
+        <label>TXT CHANGE FILES</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Test_Layouts</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
@@ -993,6 +1027,7 @@
         <columns>Geo_Coverage_Definition__c</columns>
         <columns>Master_File_Description__c</columns>
         <columns>Is_Reference__c</columns>
+        <columns>Order_By__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -1000,24 +1035,19 @@
             <value>0</value>
         </filters>
         <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
             <field>File_Format__c</field>
             <operation>equals</operation>
             <value>TXT</value>
         </filters>
         <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Member Master</value>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
         </filters>
         <label>01_GSS_Member_TXT_Masters</label>
         <language>en_US</language>
@@ -1255,7 +1285,7 @@
     </listViews>
     <nameField>
         <label>GDP File Description Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GDP File Descriptions</pluralLabel>
