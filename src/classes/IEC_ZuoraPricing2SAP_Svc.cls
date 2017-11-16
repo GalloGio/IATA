@@ -59,8 +59,9 @@ public class IEC_ZuoraPricing2SAP_Svc
     }
     String zuoraCustomerType(zqu__ProductRatePlanChargeTier__c pricing)
     {
-        return (String.isBlank(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT :
-                pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c);
+        return pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c;
+        //return (String.isBlank(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT :
+        //        pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c);
     }
 
 
@@ -485,7 +486,8 @@ public class IEC_ZuoraPricing2SAP_Svc
         xml.writeEndElement();
         
         xml.writeStartElement(null, 'CustomerType', null);
-        xml.writeCharacters(String.isBlank(tracking.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT : tracking.CustomerType__c);
+        xml.writeCharacters(String.isBlank(tracking.CustomerType__c) ? '': tracking.CustomerType__c);
+        //xml.writeCharacters(String.isBlank(tracking.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT : tracking.CustomerType__c);
         xml.writeEndElement();
         
         xml.writeStartElement(null, 'Material', null);
