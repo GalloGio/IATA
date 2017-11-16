@@ -104,7 +104,7 @@
         <fullName>Agency_Info_Reinstatements__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Agency_Info_Reinstatements</label>
+        <label>Reinstatements</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
