@@ -93,7 +93,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     private static Account updateSISAccount(InputData inputData) {
         list<Account> listAccount = [
             SELECT Id, SIS_ID__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_Status__c,
-            SIS_Sub_Status__c, SIS_Entry_Date__c, ICH_Member__c, ACH_Member__c
+            SIS_Sub_Status__c, ICH_Member__c, ACH_Member__c
             FROM Account
             WHERE SIS_ID__c = :inputData.SISMemberID
             LIMIT 1];
@@ -106,7 +106,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             account.EF_SIS_Designator__c = inputData.MemberDesignator;
             account.SIS_Status__c = inputData.ISMembershipStatus;
             account.SIS_Sub_Status__c = inputData.IsMembershipSubStatus;
-            account.SIS_Entry_Date__c = inputData.ISEntryDate;
+            //account.SIS_Entry_Date__c = inputData.ISEntryDate;
             account.ICH_Member__c = Boolean.ValueOf(inputData.ICHMembershipStatus);
             account.ACH_Member__c = Boolean.ValueOf(inputData.ACHMembershipStatus);
             update account;
