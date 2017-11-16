@@ -326,8 +326,11 @@ global class ANG_OscarProcessHelper {
 		if(!updater.onlineAMap.values().isEmpty())		
 			update updater.onlineAMap.values();
 
-		if(!updater.oscarMap.values().isEmpty())
+		if(!updater.oscarMap.values().isEmpty()){
+			isIATACodeGenerationRunning = false;
 			update updater.oscarMap.values();
+			isIATACodeGenerationRunning = true;
+		}
 
 		if(!updater.codeRangesMap.values().isEmpty())
 			update updater.codeRangesMap.values();

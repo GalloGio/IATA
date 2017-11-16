@@ -101,6 +101,30 @@ private class ANG_OscarProcessHelperTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		update oscar;
+
+
+		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
+            new AMS_ChangeCodes__c(
+                Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
+            )
+        };
+
+        insert changeCodeList;
 		
 	}
 
@@ -453,6 +477,50 @@ private class ANG_OscarProcessHelperTest {
 	 }
 
 	@isTest static void testFOPCreation2() {
+
+        Test.startTest();
+
+        Account a = [Select Id, BillingCountry from Account LIMIT 1];
+
+		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        insert authorizations;
+
+        Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+        fieldsOfObject.clear();
+		fieldsOfObject.put('Process__c',AMS_Utils.NGFOP);
+		fieldsOfObject.put('SIDRA_lite_reason__c','FOP Management');
+
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
+		insert oscar;
+
+		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        fieldsOfObject.clear();
+        fieldsOfObject.put('Oscar__c',oscar.Id);
+        fieldsOfObject.put('BSPCountry__c',a.BillingCountry);
+        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+        fieldsOfObject.put('Origin','Internal User');
+        fieldsOfObject.put('Reason1__c','FoP Management');
+        fieldsOfObject.put('Subject','FoP Management - ');
+        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+        Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
+        insert newCaseFop;
+
+    	ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false , true);
+
+    	ANG_OscarProcessHelper.processRestoreFOP(oscar.Id, true , false);
+
+        Test.stopTest();
+	 }
+
+	@isTest static void testFOPCreation3() {
 
         Test.startTest();
 
