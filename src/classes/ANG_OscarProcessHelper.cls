@@ -235,12 +235,10 @@ global class ANG_OscarProcessHelper {
 
 				updater = createIfapPortalServiceRight(updater, oscar);
 
-				if(updater.isFaulty){
-		        	Database.rollback(sp);
-		        	return new String[]{'-1','Grant IFAP service access - Failed.\n(' + updater.errorMessage +')\n\r','-1'};
-		        }
-
-		        returnMessage += 'Grant IFAP service access - Success!. \n\r';
+				if(updater.isFaulty)
+		        	returnMessage += 'Grant IFAP service access - Failed.\n(' + updater.errorMessage +')\n\r';
+		        else
+		        	returnMessage += 'Grant IFAP service access - Success!. \n\r';
 
 			}
 			
