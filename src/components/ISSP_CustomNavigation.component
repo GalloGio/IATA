@@ -127,7 +127,7 @@ window.onload = function HighlightBar() {
         var subvar = getUrlParameter('subNav');
         var menuid = mid && mid.substr(0,2);
 
-     $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
+     $("#searchbox").css("display", (menuid=="M2" || mid=="M4S1") ? "none" : "");    /* hides the search box if for resources & docs*/
 
 
      $("#"+mid).parentsUntil("nav").addClass("in active-issp");
