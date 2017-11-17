@@ -81,13 +81,13 @@ public with sharing class SignaturitRest {
             
             Integer j = 0;
             if(trackedEmail.ToContact__r.Name != null && trackedEmail.ToContact__r.Email != null){
-	            header += '\r\n--' + boundary
-	                        +'Content-Disposition: form-data; name="recipients[to][0][fullname]"'
-	                        +'\r\n\r\n'+ trackedEmail.ToContact__r.Name
-	                        +'\r\n--'+boundary
-	                        +'\r\nContent-Disposition: form-data; name="recipients[to][0][email]"'
-	                        +'\r\n\r\n' + trackedEmail.ToContact__r.Email;
-	            j++;
+                header += '\r\n--' + boundary
+                            +'Content-Disposition: form-data; name="recipients[to][0][fullname]"'
+                            +'\r\n\r\n'+ trackedEmail.ToContact__r.Name
+                            +'\r\n--'+boundary
+                            +'\r\nContent-Disposition: form-data; name="recipients[to][0][email]"'
+                            +'\r\n\r\n' + trackedEmail.ToContact__r.Email;
+                j++;
             }
             
             if(trackedEmail.AdditionalTo__c != null && trackedEmail.AdditionalTo__c != ''){
@@ -224,56 +224,82 @@ public with sharing class SignaturitRest {
         }
     }
 
+	public static void updateEmailStatus(List<Tracked_Email__c> trackedEmails){
+		try{
+	        for(Tracked_Email__c trackedEmail : trackedEmails){
+	        	if(trackedEmail.Signaturit_Id__c != null && trackedEmail.Signaturit_Id__c != ''){
+			    Set<String> mainRecipients = new Set<String>(trackedEmail.Email__c.split(';'));
+				
+	            // Retrieve all registered events for main recipients
+	            List<Tracked_Email_Event__c> mainEvents = [select Recipient_Address__c, Status__c from Tracked_Email_Event__c where Parent__c =: trackedEmail.ID and Recipient_Address__c in : mainRecipients];
+	            
+	            // this map will contain the current status for each main recipient
+	            Map<String,String> statusPerRecipient = new Map<String,String>();
+	            
+	            for(Tracked_Email_Event__c mainEvent : mainEvents){
+	            	String recipient = mainEvent.Recipient_Address__c;
+	            	if(!statusPerRecipient.containsKey(recipient)){
+	            		statusPerRecipient.put(recipient, mainEvent.Status__c);
+	            	}
+	            	else{
+	            		if(SignaturitRestEvents.RECIPIENT_STATUSES.get(mainEvent.Status__c) > SignaturitRestEvents.RECIPIENT_STATUSES.get(statusPerRecipient.get(recipient))){
+	                		statusPerRecipient.put(recipient, mainEvent.Status__c);
+	            		}
+	            	}
+	            }
+	
+	            String newStatus = SignaturitRestEvents.SENT;
+	            for(String status : statusPerRecipient.values()){
+					if(SignaturitRestEvents.EMAIL_STATUSES.get(status) > SignaturitRestEvents.EMAIL_STATUSES.get(newStatus)){
+						newStatus = status;
+					}
+	            }
+	
+	            if(newStatus != trackedEmail.Status__c){
+	                trackedEmail.Status__c = newStatus;
+	            }
+			}
+			}
+			
+			update trackedEmails;
+        	
+        }catch(Exception e){
+            System.debug('SignaturitRestEvents.receiveEvent():' + e);
+        }		
+	}
+
     /**
         get the events for a particular email from signaturit and insert them in Salesforce
     **/
-    public static void updateEventList( Tracked_Email__c trackedEmail) {
-        MailInfoResponse response = SignaturitRest.getMailInfo(trackedEmail);
+    public static List<Tracked_Email_Event__c> updateEventList(Tracked_Email__c trackedEmail) {
 
-        // get events from all certificates, it is grouped by recipient to remove duplicities
-        map<String,CertificateInfoResponse> mapEvents = new map<String,CertificateInfoResponse>();
-        for ( CertificateInfoResponse certificate: response.certificates) {
-            mapEvents.put(certificate.email, certificate);
-        }
+		try{
 
-        // creates a list of Tracked_Email_Event__c ready to insert in the Tracked_Email__c record
-        EventDataInfoResponse lastEvent = null;
-        list<Tracked_Email_Event__c> listNewEvents = new list<Tracked_Email_Event__c>();
-        for (String mail: mapEvents.keyset() ) {
-            for (EventDataInfoResponse ev: mapEvents.get(mail).events ) {
-                String name = mapEvents.get(mail).name;
-                listNewEvents.add( new Tracked_Email_Event__c(
-                    Recipient_Name__c = name != null && name.length() > 80 ? name.left(80) : name,
-                    Recipient_Address__c = mail,
-                    Timestamp__c = ev.getDate(),
-                    Status__c = ev.type,
-                    Parent__c  = trackedEmail.id
-                ));
-                if (lastEvent==null || lastEvent.getDate() <= ev.getDate()) {
-                    lastEvent = ev;
-                }
-            }
-        }
-
-        System.debug('updateEventList listNewEvents: ' + listNewEvents);
-
-        if ( !listNewEvents.isEmpty() ) {
-            Savepoint sp = Database.setSavepoint();
-            try {
-                list<Tracked_Email_Event__c> listEvents = [Select Id from Tracked_Email_Event__c where Parent__c = :trackedEmail.Id ];
-                if ( !listEvents.isEmpty() ) {
-                    delete listEvents;
-                }
-                insert listNewEvents;
-                trackedEmail.Status__c = lastEvent.type;
-                update trackedEmail;
-                System.debug('SignaturitRest.updateEventList ' + trackedEmail.Id + ': INSERTED ' + listEvents.size() + ' EVENTS');
-
-            } catch (Exception e) {
-                System.debug('ERROR SignaturitRest.updateEventList ' + trackedEmail.Id + ': ' + e.getMessage());
-                Database.rollback(sp);
-            }
-        }
+	        MailInfoResponse response = SignaturitRest.getMailInfo(trackedEmail);
+	
+			List<Tracked_Email_Event__c> eventsToInsert = new List<Tracked_Email_Event__c>();
+	
+	        for ( CertificateInfoResponse certificate: response.certificates) {
+	        	for(EventDataInfoResponse event : certificate.events){
+					Tracked_Email_Event__c eventToInsert = new Tracked_Email_Event__c(
+			            Parent__c = trackedEmail.Id,
+			            Recipient_Address__c = certificate.email,
+			            Recipient_Name__c = certificate.name,
+	//		            Attachment__c = params.get('certificate[file][name]'),
+			            Timestamp__c = Datetime.now(),
+			            Status__c = event.type,
+			            Event_Unique_Field__c = trackedEmail.Id + '-' + certificate.email + '-' + event.type
+			        );
+	
+					eventsToInsert.add(eventToInsert);        	
+	        	}
+	        }
+	
+			return eventsToInsert;
+		}
+		catch(Exception e){
+			return new List<Tracked_Email_Event__c>(); 
+		}
     }
 
     public static String getToken(Tracked_Email__c trackedEmail) {
