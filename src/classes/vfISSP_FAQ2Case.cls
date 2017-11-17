@@ -39,8 +39,12 @@ public without sharing class vfISSP_FAQ2Case
 
     //basto1p - live agent v2 - config parameters
     public static final String LVA_CFG_INTRO_VIDEO_URL='LVA_CFG_INTRO_VIDEO_URL';
+    public static final String LVA_CFG_INTRO_VIDEO_SECTORS='LVA_CFG_INTRO_VIDEO_SECTORS';
     public static final String LVA_CFG_INTRO_VIDEO_MODE='LVA_CFG_INTRO_VIDEO_MODE';
     public static final String LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES='LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES';
+
+
+    public static final String LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED='LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED';
 
     //Emergency button enable for account (settins)
     public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_NAME='LVA_CFG_ACCOUNT_EMERG_FIELD_NAME';
@@ -169,10 +173,17 @@ public without sharing class vfISSP_FAQ2Case
             else if (!isItDefaultTopic){
                 resVal=true;
             }
+
+            //basto1p - Live agent V2
+            if (!areFAQsAllowedForCurrentCountry()){
+                resVal=false;
+            }
+
             system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
             return resVal;
         }
     set;}
+
 
 	private static Boolean isCNSInitialized = false;
 	public static Boolean isCNS {
@@ -231,13 +242,41 @@ public without sharing class vfISSP_FAQ2Case
     }
     public String livAgentIntroVidUrl{
         get{
-            return getLivAgConfig(LVA_CFG_INTRO_VIDEO_URL);
+            String retVal='';
+
+            String sectorsList='';
+            String videoUrl='';
+            integer i=1;
+            do {
+                sectorsList=getLivAgConfig(LVA_CFG_INTRO_VIDEO_SECTORS+i);
+                videoUrl=getLivAgConfig(LVA_CFG_INTRO_VIDEO_URL+i);
+                if (sectorsList!=null && sectorsList.containsIgnoreCase(this.Sector)){
+                    retVal=videoUrl;
+                    break;
+                }
+                i=i+1;
+                System.debug('basto1p - sectorsList='+sectorsList);
+            }
+            while (videoUrl!=null);//when there is no video url it means the list is over
+
+            return retVal;
         }
         set;
     }
     public String livAgentIntroVidMode{
         get{
             return getLivAgConfig(LVA_CFG_INTRO_VIDEO_MODE);
+        }
+        set;
+    }
+    public Boolean livAgentIntroVidIsAllowed{
+        get{
+            if (isCNS || (String.isBlank(livAgentIntroVidUrl))) {
+                return false;
+            }
+            else{
+                return true;
+            }
         }
         set;
     }
@@ -321,6 +360,48 @@ public without sharing class vfISSP_FAQ2Case
             System.debug('basto1p - Configuration KEY NOT FOUND:'+key);
             return null;
         }
+    }
+
+    /*******************************************************************************************************
+    * @description Checks if FAQs items will are NOT allowed to be displayed in Case Portal User Interface
+    *              Based in list of not allowed countries in configuration parameter existent in
+    *              LVA_Configs.LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED
+    *
+    * @return {Boolean} True if FAQs are allowed, false if not
+    *
+    * @example
+    * areFAQsAllowedForCurrentCountry();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-11-16   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    private static Boolean areFAQsAllowedForCurrentCountry(){
+        Boolean resVal=true;
+        //basto1p - LiveAgentv2 - only generates articles view if faqs area available for that country
+        Id currentUserId=UserInfo.getUserId();
+        String listCountriesFAQsNotAvailable=getLivAgConfig(LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED);
+        String currentUserCountry=UserInfo.getLocale().substring(0, 2);
+        List<LoginHistory> loginHistoryList;
+
+        loginHistoryList=[SELECT CountryIso, UserId, LoginTime
+        FROM LoginHistory
+                WHERE UserId=:currentUserId
+                ORDER BY LoginTime DESC
+                LIMIT 1];
+        if (loginHistoryList.size()>0){
+                currentUserCountry=loginHistoryList[0].CountryIso;
+        }
+
+        System.debug('basto1p - isToShowFAQs.currentUserCountry='+currentUserCountry);
+        System.debug('basto1p - isToShowFAQs.UserInfo.getLocale()=='+UserInfo.getLocale());
+        if(listCountriesFAQsNotAvailable!=null&&
+                listCountriesFAQsNotAvailable.containsIgnoreCase(currentUserCountry)){
+            resVal=false;
+        }
+
+        return resVal;
     }
 
     public PageReference pageLoad() {
@@ -971,7 +1052,7 @@ for (string topicver:listofAllowedTopics){
         system.debug('basto1p - isLiveAgentButtonAllowed subtopic='+subtopic);
 
 
-        //Chack if subtopic is allowed
+        //Check if subtopic is allowed
         allowedSubTopic=listofAllowedTopics.contains(subtopic);
 
         system.debug('basto1p - isLiveAgentButtonAllowed allowedSubTopic='+allowedSubTopic);
@@ -1732,6 +1813,7 @@ for (string topicver:listofAllowedTopics){
         system.debug('SFI2 CALL setSubTopicByPermissions ' + topic + ' isTopicDefault ' + isTopicDefault);
         if(isTopicDefault != true) //INC263231
             setSubTopicByPermissions();
+        
         system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
     }
 
@@ -1776,6 +1858,9 @@ for (string topicver:listofAllowedTopics){
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                
+                //this.setLiveAgentButtonsNames(); /* Change to this if live agent becomes available for CNS */
+                this.getAndSetCallUsString();
             }
         }
 
@@ -1997,62 +2082,74 @@ for (string topicver:listofAllowedTopics){
      */
     public static list<ArticleViewLine> buildArticleViewLines(String headCat, String childCat, String lang)
     {
-        String[] childCatList = String.isNotEmpty(childCat) ? new String[] {childCat} : null;
-        //List<String> childCatList = String.isNotEmpty(childCat) ? new List<String> {childCat} : null;
-        List<FAQ__kav> articalList = getArticalsByCat(headCat, childCatList);
-        Map<ID, FAQ__kav> artical2ParentIdMap = new Map<ID, FAQ__kav>();
-        Map<Id, FAQ__kav> parentIdToMyLanguageArticle_Map = new Map<Id, FAQ__kav>();
-        Set<Id> parentVotIdsSet= new Set<Id>();
-
-        // Iterating over all articles(for specific category) and creating a map between the articles and their parent's Id
-        for(FAQ__kav oneArtical : articalList)
-        {
-            artical2ParentIdMap.put(oneArtical.KnowledgeArticleId, oneArtical);
-        }
-
-        // Top 5 articles
-        list<FAQ__VoteStat> voteStatList = getArticleVoteStatByIds(artical2ParentIdMap.keySet(), ENV.ArticleChannel.AllChannels);//todo chanel
-
-        // Create a set Id with all top 5 articles
-        for(FAQ__VoteStat article : voteStatList)
-        {
-            parentVotIdsSet.add(article.ParentId);
-        }
-
-        // From the Top 5 articles create a list with articles in my language
-        List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language,
-         Answer__c ,
-         KnowledgeArticleId,
-                                                    PublishStatus, ArticleNumber, LastPublishedDate
-                                                    FROM FAQ__kav
-                                                    WHERE KnowledgeArticleId IN :parentVotIdsSet AND Language =: lang AND PublishStatus = 'Online'];
-
-        // Create a map with the parent Id of each article in 'myLanguageArticle_List'
-        for (FAQ__kav otherlanguageArticle : myLanguageArticle_List) {
-            parentIdToMyLanguageArticle_Map.put(otherlanguageArticle.KnowledgeArticleId, otherlanguageArticle);
-
-        }
-
+        //basto1p - LiveAgentv2 - only generates articles view if faqs area available for that country
         list<ArticleViewLine> articleViewLines = new list<ArticleViewLine>();
+        if (areFAQsAllowedForCurrentCountry()) {
+            String[] childCatList = String.isNotEmpty(childCat) ? new String[] {childCat} : null;
+            //List<String> childCatList = String.isNotEmpty(childCat) ? new List<String> {childCat} : null;
+            List<FAQ__kav> articalList = getArticalsByCat(headCat, childCatList);
+            Map<ID, FAQ__kav> artical2ParentIdMap = new Map<ID, FAQ__kav>();
+            Map<Id, FAQ__kav> parentIdToMyLanguageArticle_Map = new Map<Id, FAQ__kav>();
+            Set<Id> parentVotIdsSet = new Set<Id>();
 
-        // Iterating over 5 Top voted articles
-        for(FAQ__VoteStat oneVoteStat : voteStatList)
-        {
-            FAQ__kav artical = new FAQ__kav();
+            // Iterating over all articles(for specific category) and creating a map between the articles and their parent's Id
+            for (FAQ__kav oneArtical : articalList)
+            {
+                artical2ParentIdMap.put(oneArtical.KnowledgeArticleId, oneArtical);
+            }
 
-            // If we have the article in other language
-            if (parentIdToMyLanguageArticle_Map.containsKey(oneVoteStat.ParentId)){
-                artical = parentIdToMyLanguageArticle_Map.get(oneVoteStat.ParentId);
+            // Top 5 articles
+            list<FAQ__VoteStat> voteStatList =
+                    getArticleVoteStatByIds(artical2ParentIdMap.keySet(), ENV.ArticleChannel.AllChannels);//todo chanel
+
+            // Create a set Id with all top 5 articles
+            for (FAQ__VoteStat article : voteStatList)
+            {
+                parentVotIdsSet.add(article.ParentId);
             }
-            else {
-                // If we dont have the article in our language then get the article in the english language
-                artical = artical2ParentIdMap.get(oneVoteStat.ParentId);
+
+
+            // From the Top 5 articles create a list with articles in my language
+            /*
+            List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language,
+                    Answer__c ,
+                    KnowledgeArticleId,
+                    PublishStatus, ArticleNumber, LastPublishedDate
+                    FROM FAQ__kav
+                    WHERE KnowledgeArticleId IN :parentVotIdsSet AND Language =: lang AND PublishStatus = 'Online'];
+            */
+            List<FAQ__kav> myLanguageArticle_List = Database.query('SELECT Id, UrlName, Summary, Title, Language,'+
+                    'Answer__c ,'+
+                    'KnowledgeArticleId,'+
+                    'PublishStatus, ArticleNumber, LastPublishedDate'+
+                    ' FROM FAQ__kav'+
+                    ' WHERE KnowledgeArticleId IN :parentVotIdsSet'+
+                    ' AND Language =: lang '+
+                    ' AND PublishStatus = \'Online\'');
+
+            // Create a map with the parent Id of each article in 'myLanguageArticle_List'
+            for (FAQ__kav otherlanguageArticle : myLanguageArticle_List) {
+                parentIdToMyLanguageArticle_Map.put(otherlanguageArticle.KnowledgeArticleId, otherlanguageArticle);
+
             }
-            system.debug('Adding one');
-            ArticleViewLine viewLine = new ArticleViewLine(artical, oneVoteStat);
-            articleViewLines.add(viewLine);
+
+            // Iterating over 5 Top voted articles
+            for (FAQ__VoteStat oneVoteStat : voteStatList)
+            {
+                FAQ__kav artical = new FAQ__kav();
+
+                // If we have the article in other language
+                if (parentIdToMyLanguageArticle_Map.containsKey(oneVoteStat.ParentId)) {
+                    artical = parentIdToMyLanguageArticle_Map.get(oneVoteStat.ParentId);
+                } else {
+                    // If we dont have the article in our language then get the article in the english language
+                    artical = artical2ParentIdMap.get(oneVoteStat.ParentId);
+                }
+                system.debug('Adding one');
+                ArticleViewLine viewLine = new ArticleViewLine(artical, oneVoteStat);
+                articleViewLines.add(viewLine);
+            }
         }
-
         return articleViewLines;
     }
 

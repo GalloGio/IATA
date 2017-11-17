@@ -11465,7 +11465,7 @@
         <name>LVA_IntroVidCloseShowNext</name>
     </customLabels>
     <customLabels>
-        <label>Welcome to the IATA Customer Support page!</label>
+        <label>Click to show page introduction movie</label>
         <name>LVA_IntroductionVideo</name>
     </customLabels>
     <customLabels>
