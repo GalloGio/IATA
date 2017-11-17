@@ -111,7 +111,7 @@ public class VFEmailTemplateController{
 
     public void VFEmailTemplateController(){
         IATAcodeTag = 'IATA numeric code:';
-
+        System.debug('### VFEmailTemplateController');
         try{
             System.debug('*** VFEmailTemplateController');
 
@@ -304,7 +304,7 @@ public class VFEmailTemplateController{
             tmp = c.FS_Third_Deadline_Date__c <> null ?  c.FS_Third_Deadline_Date__c :c.FS_Second_Deadline_Date__c <> null ?  c.FS_Second_Deadline_Date__c :c.FS_Deadline_Date__c;
             FSdeadline  =   this.formatThisDate(e.Template_Language__c,tmp); // c.Formatted_FS_Deadline_Date__c;// String.valueOf(c.FS_Deadline_Date__c); THIS IS THE FINANCIAL SECURITY
             tmp = null;
-
+            system.debug('###pRemError: ' + pRemError + ' e: ' + e );
             if(pRemError == null && e == null){
                 agentType = c.Account.Agent_Type_Code__c;
                 agentCode = c.Account.IATACode__c;
@@ -368,186 +368,8 @@ public class VFEmailTemplateController{
             }
         }
         catch(Exception ex){
+            system.debug('###Exception!!!!' + ex);
             emailBody2 = 'Exception!!!!' + ex;
         }
-    }
-	
-	
-	public void fakemethod() {
-	Integer i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;
-	i=1;	
-	
-	}
-	
-	
+    }	
 }
