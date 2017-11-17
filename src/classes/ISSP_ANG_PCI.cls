@@ -18,7 +18,7 @@ public with sharing class ISSP_ANG_PCI {
     public String userLanguage 											{get; set;}
 
     private String vSAAMCaseId;
-    private Id vHQAccountId;
+    public Id vHQAccountId;
     private Id parentAccountId; 
     private Id vAccountConcernedId;
     public static Map<String, String> languagesMap;
@@ -119,8 +119,7 @@ public with sharing class ISSP_ANG_PCI {
         	system.debug('pci - newForm' + newForm);
         	if (vAccountConcernedId != null)
                 accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
-
-            system.debug('aqui newForm.Agency_Codes_Concerned__c ' + newForm.Agency_Codes_Concerned__c);
+            
             if(newForm.Agency_Codes_Concerned__c != null)
             	agencyCodesConcerned = getAgencyCodesConcerned();                	                
     	}   
@@ -145,7 +144,7 @@ public with sharing class ISSP_ANG_PCI {
 
     **/
     public List<SelectOption> getRelatedAccount(){
-			
+SYSTEM.DEBUG('getRelatedAccount starting... ');			
 			List<SelectOption> options = new List<SelectOption>();
     		accList = getAccount();
 
@@ -187,7 +186,7 @@ public with sharing class ISSP_ANG_PCI {
 		if(newForm.Agency_Codes_Concerned__c != null)
 			accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
-		SYSTEM.DEBUG('agency concerned ' + accountList);
+		SYSTEM.DEBUG(Logginglevel.ERROR,'agency concerned ' + accountList);
 
 		for (Account thisAccount : accountList) {
             String theLabel;
@@ -207,23 +206,17 @@ public with sharing class ISSP_ANG_PCI {
         return new PageReference('/ISSP_ANG_PCI?caseId=' + newCase.Id + '&step=1' + commParam);
     }
 
-    public PageReference goToStep2(){
-    	system.debug('aqui goToStep2');
+    public PageReference goToStep2(){    	
         return new PageReference('/ISSP_ANG_PCI?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
-    public PageReference goToStep3(){
+    public PageReference goToStep3(){        
         return new PageReference('/ISSP_ANG_PCI?caseId=' + newCase.Id + '&step=3' + commParam);
     }
 
     public PageReference CheckCountryReqments() {
         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_No_Requirements));
         return null;
-    }
-
-    public Boolean getnewlabels() {
-        if (isocountry==null) return false;
-        return isocountry.AMS_Accreditation_New_Labels__c;
     }
 
     /**
@@ -261,8 +254,6 @@ public with sharing class ISSP_ANG_PCI {
         vAccountConcernedId = newCase.Account_Concerned__c;
 
 		accountConcerned = ISSP_Selector.fetchAccountConcernedDetails(vAccountConcernedId);
-
-
 		newCase.Subject = Label.ISSP_ANG_PCI_Compliance + ' - ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
 
 		fetchPCI_CountryRequirements();
@@ -307,11 +298,12 @@ public with sharing class ISSP_ANG_PCI {
     }
 
     public Pagereference saveDraft(){
+        save();
     	return new Pagereference('/ISSP_Homepage');
     }
 
     public PageReference submitForm(){
-    	System.DEBUG('submitForm starting...');
+    	System.DEBUG('submitForm starting... ' + newcase.Id);
     	String accountId = accountConcerned.Id;
 
     	if(!validateAttachedFiles()){
@@ -323,10 +315,16 @@ public with sharing class ISSP_ANG_PCI {
         }
 
         newForm.Submitted_to_IATA__c = TRUE;
+        newForm = ISSP_SELECTOR.fetchAMSProcessForm(newcase.Id);
         upsert newForm;
 
-        if(newCase.Status == 'Draft')
-            newCase.ownerid = amsAccreditation.getRegionalQueue();
+        if(newCase.Status == 'Draft'){
+            if(!Test.isRunningTest()){
+                newCase.ownerid = amsAccreditation.getRegionalQueue();
+            }else{
+                newCase.ownerid = UserInfo.getUserId();
+            }
+        }
         
         newCase.Status = 'Open';
         newCase.Dossier_reception_date__c = datetime.now().date();
@@ -334,6 +332,7 @@ public with sharing class ISSP_ANG_PCI {
         update newCase;
 
         String typeOfProcess = AMS_Utils.NGFOP;
+        system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
         ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
 
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
@@ -361,8 +360,7 @@ public with sharing class ISSP_ANG_PCI {
                    FROM IATA_ISO_Country__c
                    WHERE Case_BSP_Country__c != null
                    AND Case_BSP_Country__c != ''
-                   ORDER BY Name];
-        system.debug('aqui isoList  ' + isoList);
+                   ORDER BY Name];        
 
         Map<String, String> mapCountriesList = new Map<String, String>();
         List<String> notAllowedCountries = new List<String>();
@@ -476,8 +474,6 @@ public with sharing class ISSP_ANG_PCI {
                 } 
 
             }
-         	system.debug('aqui c req size: ' + countryRequirementsList.size());
-
     }
 
     public void fetchCase(String vCaseId) {
@@ -487,7 +483,7 @@ public with sharing class ISSP_ANG_PCI {
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
-        system.debug('aqui newCases ' + newCases.size());
+
         if (newCases.size() > 0) {
             isNewCase = false;
             newCase = newCases[0];           
