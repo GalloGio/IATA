@@ -200,6 +200,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Ticketing_Authority_Removed__c</fullName>
+        <description>Date of Ticketing Authority Removal triggered by RTS Red Alert</description>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(ANG_Severity__c, &quot;Red&quot;),  CreatedDate , null)</formula>
+        <label>Ticketing Authority Removed</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_email_sent__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
