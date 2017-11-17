@@ -1,289 +1,317 @@
 <apex:page standardController="Tracked_Email__c" extensions="sendSingleTrackedEmailController" action="{!initPage}">
-<html>
-    <head>
-        <style>
-            p{
-                margin-top:0px; 
-                margin-bottom:0px;
-                -webkit-margin-before: 0em;
-                -webkit-margin-after: 0em;
-            }
+	<html>
+	    <head>
+	        <style>
+	            p{
+	                margin-top:0px; 
+	                margin-bottom:0px;
+	                -webkit-margin-before: 0em;
+	                -webkit-margin-after: 0em;
+	            }
+	            
+	            html{
+	                min-height:100%;/* make sure it is at least as tall as the viewport */
+	                position:relative;
+	            }
+	            
+	            body{
+	                height:100%; /* force the BODY element to match the height of the HTML element */
+	            }
+	            
+	            .cke_reset{
+	                max-width:700px;
+	            }
+	            
+	            .cke_editable{
+	                line-height:0.6;
+	            }
             
-            html{
-                min-height:100%;/* make sure it is at least as tall as the viewport */
-                position:relative;
-            }
-            
-            body{
-                height:100%; /* force the BODY element to match the height of the HTML element */
-            }
-            
-            .cke_reset{
-                max-width:650px;
-            }
-            
-            .cke_editable{
-                line-height:0.6;
-            }
-            
-        .LockOn {
-            background-image: url('/img/loading.gif');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            display: float; 
-            visibility: visible; 
-            position: absolute; 
-            z-index: 999; 
-            top: 0px; 
-            left: 0px; 
-            width: 100%; 
-            height: 100%; 
-            background-color: #ccc; 
-            text-align: center; 
-            filter: alpha(opacity=75); 
-            opacity: 0.75; 
-        }
+		        .LockOn {
+		            background-image: url('/img/loading.gif');
+		            background-repeat: no-repeat;
+		            background-attachment: fixed;
+		            background-position: center;
+		            display: float; 
+		            visibility: visible; 
+		            position: absolute; 
+		            z-index: 999; 
+		            top: 0px; 
+		            left: 0px; 
+		            width: 100%; 
+		            height: 100%; 
+		            background-color: #ccc; 
+		            text-align: center; 
+		            filter: alpha(opacity=75); 
+		            opacity: 0.75; 
+		        }
+		
+		        .LockOff { 
+		            display: none; 
+		            visibility: hidden; 
+		        }
+		        
+		        .black_overlay{
+		            display: none;
+		            position: absolute;
+		            top: 0;
+		            left: 0;
+		            bottom:0;
+		            right:0;
+		            background-color: black;
+		            z-index:1001;
+		            -moz-opacity: 0.8;
+		            opacity:.80;
+		            filter: alpha(opacity=80);
+		        }
+		        
+		        .white_content {
+		            display: none;
+		            position: absolute;
+		            top: 5%;
+		            left: 10%;
+		            width: 80%;
+		            padding: 16px;
+		            border: 1px solid black;
+		            background-color: white;
+		            z-index:1002;
+		            overflow: hidden;
+		        }
+	
+		        input[type='text'] {
+		        	width: 460px;
+		        }
+	
+		        textarea {
+		            height: 90px;
+		            width: 458px 
+		        }
+	        </style>
+	    </head>
 
-        .LockOff { 
-            display: none; 
-            visibility: hidden; 
-        }
-        
-        .black_overlay{
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom:0;
-            right:0;
-            background-color: black;
-            z-index:1001;
-            -moz-opacity: 0.8;
-            opacity:.80;
-            filter: alpha(opacity=80);
-        }
-        .white_content {
-            display: none;
-            position: absolute;
-            top: 5%;
-            left: 10%;
-            width: 80%;
-            //height: 80%;
-            padding: 16px;
-            border: 1px solid black;
-            background-color: white;
-            z-index:1002;
-            overflow: hidden;
-        }
+	    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+		<apex:includescript value="{!URLFOR($Resource.ckeditor473, 'ckeditor/ckeditor.js')}" />
+		<apex:includeScript value="/support/console/40.0/integration.js"/>
 
-            
-        </style>
-    </head>
+	    <script>
+	        CKEDITOR.replace( 'editor1', {
+	            extraPlugins: 'autogrow',
+	            autoGrow_minHeight: 200,
+	            autoGrow_maxHeight: 600,
+	            autoGrow_maxWidth: 700,
+	            autoGrow_bottomSpace: 50,
+	            removePlugins: 'resize'
+	        });
 
-    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
-    <apex:includescript value="{!URLFOR($Resource.ckeditor471, 'ckeditor/ckeditor.js')}" />
+			function cancel() {
+				sforce.console.getFocusedSubtabId(closeCurrentSubTab);
+			}
 
-    <script>
-        CKEDITOR.on( 'instanceReady', function( ev ) {
-            if(!ev.editor.getData()){
-                ev.editor.setData('<span style="font-family:Arial, Helvetica, sans-serif"><span style="font-size:10pt;">&nbsp;</span></span>');
-            }
-        });
-        
-        CKEDITOR.replace( 'editor1', {
-            extraPlugins: 'autogrow',
-            autoGrow_minHeight: 200,
-            autoGrow_maxHeight: 600,
-            autoGrow_maxWidth: 700,
-            autoGrow_bottomSpace: 50,
-            removePlugins: 'resize'
-        });
-    </script>
+			function refreshAndClose() {
+				sforce.console.getEnclosingPrimaryTabId(refreshEnclosingPrimaryTab)
+			}
 
-    <style>
-        input[type='text'] { width: 460px; }
-        textarea {
-            height: 90px;
-            width: 458px 
-        }
-    </style>
-<body>
-    <c:SelectTrackedEmailRecipients ctrl="{!thisController}" />
-    <c:SelectEmailTemplate ctrl="{!thisController}" />
-    <c:SelectTrackedEmailAttachments ctrl="{!thisController}" />
-    <c:TrackedEmailPreview ctrl="{!thisController}" />
+			function refreshEnclosingPrimaryTab(result){
+				sforce.console.refreshPrimaryTabById(result.id, true, getCurrentSubTab);
+			}
 
-    <apex:form id="editform" >
+			function getCurrentSubTab(){
+				sforce.console.getEnclosingTabId(closeCurrentSubTab);
+			}
 
-        <apex:outputPanel id="recipientsPanel" rendered="{!showRecipientsPanel}">
-            <script>
-                showRecipientsPanel(true);
-            </script>
-        </apex:outputPanel>
+			function closeCurrentSubTab(result){
+				sforce.console.closeTab(result.id);
+			}
+	    </script>
 
-        <apex:outputPanel id="templatePanel" rendered="{!showTemplatePanel}">
-            <script>
-                showTemplatePanel(true);
-            </script>
-        </apex:outputPanel>
+		<body>
+		    <c:SelectTrackedEmailRecipients ctrl="{!thisController}" />
+		    <c:SelectEmailTemplate ctrl="{!thisController}" />
+		    <c:SelectTrackedEmailAttachments ctrl="{!thisController}" />
+		    <c:TrackedEmailPreview ctrl="{!thisController}" />
 
-        <apex:outputPanel id="attachmentsPanel" rendered="{!showAttachmentsPanel}">
-            <script>
-                showAttachmentsPanel(true);
-            </script>
-        </apex:outputPanel>
+		    <apex:form id="editform" >
 
-        <apex:outputPanel id="previewPanel" rendered="{!showPreviewPanel}">
-            <script>
-                showPreviewPanel(true);
-            </script>
-        </apex:outputPanel>
+		        <apex:outputPanel id="recipientsPanel" rendered="{!showRecipientsPanel}">
+		            <script>
+		                showRecipientsPanel(true);
+		            </script>
+		        </apex:outputPanel>
 
-        <!-- apex:outputPanel id="sendEmailPanel" rendered="{!sendEmail}">
-            <script>
-                $( document ).ready(function() {
-                    sendTrackedEmail();
-                });
-            </script>
-        </apex:outputPanel-->
+		        <apex:outputPanel id="templatePanel" rendered="{!showTemplatePanel}">
+		            <script>
+		                showTemplatePanel(true);
+		            </script>
+		        </apex:outputPanel>
 
-        <apex:pagemessages escape="false"/>
+		        <apex:outputPanel id="attachmentsPanel" rendered="{!showAttachmentsPanel}">
+		            <script>
+		                showAttachmentsPanel(true);
+		            </script>
+		        </apex:outputPanel>
 
-        <apex:outputPanel id="editPanel">
+		        <apex:outputPanel id="previewPanel" rendered="{!showPreviewPanel}">
+		            <script>
+		                showPreviewPanel(true);
+		            </script>
+		        </apex:outputPanel>
 
-            <apex:actionFunction name="sendTrackedEmail" action="{!sendTrackedEmail}"/>
+		        <apex:pagemessages escape="false"/>
 
-            <apex:sectionHeader title="Task" subtitle="Send a Tracked Email"/>
+				<apex:actionFunction name="templateSetFromJavascriptAF" action="{!templateSetFromJavascript}" rerender="templatePanel"/>
 
-            <apex:pageBlock mode="edit" rendered="{!cse!=null}" >
+		        <apex:outputPanel id="editPanel">
 
-                <apex:pageBlockSection title="Edit Tracked Email" columns="1" collapsible="false" >
+					<apex:outputPanel rendered="{!processStatus != null}">
+						<script>
+							if('{!processStatus}' == 'sent'){
+								refreshAndClose();
+							}
+							else{
+								cancel();
+							}
+						</script>
+					</apex:outputPanel>
 
-                    <apex:outputText label="Email Format" rendered="{!isSwitchable && !isHtml}">
-                        <b>Text-Only [ <u><apex:commandLink action="{!switchToHtml}" value="Switch to HTML" id="switchToHtml"/></u> ]</b>
-                    </apex:outputText>
+		            <apex:sectionHeader title="Task" subtitle="Send a Tracked Email"/>
 
-                    <apex:outputText label="Email Format" rendered="{!isSwitchable && isHtml}">
-                        <b>HTML [ <u><apex:commandLink onclick="return confirm('All HTML formatting will be removed.\n\nAre you sure?');" action="{!switchToTextOnly}" value="Switch to Text-Only" id="switchToTextOnly"/></u> ]</b>
-                    </apex:outputText>
+		            <apex:pageBlock mode="edit" rendered="{!cse!=null}" >
 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputPanel styleClass="requiredBlock" layout="block" >
-                            <apex:outputLabel value="From" for="senderList"/>
-                        </apex:outputPanel>
-                        <apex:outputPanel styleClass="requiredInput" layout="block">
-                            <apex:outputPanel styleClass="requiredBlock" layout="block" />                
-                            <apex:selectList value="{!selectedFrom}" size="1" id="senderList">
-                                <apex:selectOptions value="{!fromAddresses}" />
-                            </apex:selectList>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
+		                <apex:pageBlockSection title="Edit Tracked Email" columns="1" collapsible="false" >
 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="To" for="contactField"/>
-                        <apex:inputField id="contactField" value="{!email.ToContact__c}" required="false" />
-                    </apex:pageBlockSectionItem>
+		                    <apex:outputText label="Email Format" rendered="{!isSwitchable && !isHtml}">
+		                        <b>Text-Only [ <u><apex:commandLink action="{!switchToHtml}" value="Switch to HTML" id="switchToHtml"/></u> ]</b>
+		                    </apex:outputText>
 
-                    <apex:outputField value="{!email.Case__c}" />
+		                    <apex:outputText label="Email Format" rendered="{!isSwitchable && isHtml}">
+		                        <b>HTML [ <u><apex:commandLink onclick="return confirm('All HTML formatting will be removed.\n\nAre you sure?');" action="{!switchToTextOnly}" value="Switch to Text-Only" id="switchToTextOnly"/></u> ]</b>
+		                    </apex:outputText>
 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="Additional To" />
-                        <apex:outputPanel >
-                            <apex:inputTextArea value="{!email.AdditionalTo__c}" style="height:30px;" required="false" />
-                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
-                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputPanel styleClass="requiredBlock" layout="block" >
+		                            <apex:outputLabel value="From" for="senderList"/>
+		                        </apex:outputPanel>
+		                        <apex:outputPanel styleClass="requiredInput" layout="block">
+		                            <apex:outputPanel styleClass="requiredBlock" layout="block" />                
+		                            <apex:selectList value="{!selectedFrom}" size="1" id="senderList">
+		                                <apex:selectOptions value="{!fromAddresses}" />
+		                            </apex:selectList>
+		                        </apex:outputPanel>
+		                    </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="CC" />
-                        <apex:outputPanel >
-                            <apex:inputTextArea value="{!email.CcAddress__c}" style="height:30px;" required="false" />
-                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
-                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputLabel value="To" for="contactField"/>
+		                        <apex:inputField id="contactField" value="{!email.ToContact__c}" required="false" />
+		                    </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="BCC" />
-                        <apex:outputPanel >
-                            <apex:inputTextArea value="{!email.BccAddress__c}" style="height:30px;" required="false" />
-                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
-                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
-                    
-                    <apex:pageBlockSectionItem >
-                        <apex:outputPanel styleClass="requiredBlock" layout="block" >
-                            <apex:outputLabel value="Subject" for="subject"/>
-                        </apex:outputPanel>
-                        <apex:outputPanel styleClass="requiredInput" layout="block">
-                            <apex:outputPanel styleClass="requiredBlock" layout="block" />                
-                            <apex:inputField id="subject" value="{!email.Subject__c}"/>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
-                    
-                    <apex:inputtextarea label="Body" id="body1" value="{!rawText}" styleClass="ckeditor" richtext="false" rendered="{!isHtml && isBodyEditable}"/>
-                    <apex:inputtextarea label="Body" id="body2" value="{!rawText}" styleClass="ckeditor" richtext="false" readonly="true" rendered="{!isHtml && !isBodyEditable}"/>
-                    <apex:inputtextarea label="Body" id="body3" value="{!plainText}" richtext="false" rendered="{!!isHtml && isBodyEditable}"/>
+		                    <apex:outputField value="{!email.Case__c}" />
 
-                </apex:pageBlockSection>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputLabel value="Additional To" />
+		                        <apex:outputPanel >
+		                            <apex:inputTextArea value="{!email.AdditionalTo__c}" style="height:30px;" required="false" />
+		                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
+		                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
+		                            </apex:commandLink>
+		                        </apex:outputPanel>
+		                    </apex:pageBlockSectionItem>
 
-                <apex:pageBlockButtons location="both" >
-                    <apex:commandButton value="Send" action="{!sendTrackedEmail}"/>
-                    <apex:commandButton value="Select Template" action="{!showTemplatePanel}" />
-                    <apex:commandButton value="Attach Files" action="{!showAttachmentsPanel}" />
-                    <apex:commandButton value="Preview" action="{!showPreviewPanel}" rendered="{!isHtml}"/>
-                    <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" />
-                </apex:pageBlockButtons>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputLabel value="CC" />
+		                        <apex:outputPanel >
+		                            <apex:inputTextArea value="{!email.CcAddress__c}" style="height:30px;" required="false" />
+		                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
+		                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
+		                            </apex:commandLink>
+		                        </apex:outputPanel>
+		                    </apex:pageBlockSectionItem>
 
-            </apex:pageBlock>
-            
-            <apex:pageBlock title="Attachments">
-                <apex:pageBlockButtons location="top" >
-                    <apex:commandButton value="Attach Files" action="{!showAttachmentsPanel}" />
-                </apex:pageBlockButtons>
-                        
-                <apex:outputPanel >
-                    Up to 30 files can be attached to a tracked email. Their total size can't exceed 4 MB
-                    <br/>
-                    <br/>
-                </apex:outputPanel>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputLabel value="BCC" />
+		                        <apex:outputPanel >
+		                            <apex:inputTextArea value="{!email.BccAddress__c}" style="height:30px;" required="false" />
+		                            <apex:commandLink action="{!showRecipientsPanel}" style="text-decoration:none;">
+		                                <img style="vertical-align:top;" src="/img/s.gif" class="lookupIcon" onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Related To Lookup (New Window)"/>
+		                            </apex:commandLink>
+		                        </apex:outputPanel>
+		                    </apex:pageBlockSectionItem>
 
-                <apex:outputPanel rendered="{!isDocumentMapEmpty}">
-                    no attachments
-                </apex:outputPanel>
-                
-                <apex:pageBlockTable value="{!documents}" var="documentId" rendered="{!!isDocumentMapEmpty}">
-                    <apex:column >
-                        <apex:facet name="header">Action</apex:facet>
-                            <apex:commandLink onclick="return confirm('Are you sure?');" action="{!deleteAttachment}" value="Del" style="color: #015ba7; text-decoration: none; font-weight: normal;">
-                                <apex:param name="documentId" value="{!documentId}" assignTo="{!documentToDelete}"/>
-                            </apex:commandLink>
-                    </apex:column>
-                    
-                    <apex:column >
-                        <apex:facet name="header">File</apex:facet>
-                            <a href="/servlet/servlet.FileDownload?file={!documentId}" target="_blank">{!documentMap[documentId].Name}</a>
-                    </apex:column>
-                    
-                    <apex:column >
-                        <apex:facet name="header">Size</apex:facet>
-                            {!documentMap[documentId].Size}
-                    </apex:column>
-                    
-                </apex:pageBlockTable>
-                    
-            </apex:pageBlock>
+		                    <apex:pageBlockSectionItem >
+		                        <apex:outputPanel styleClass="requiredBlock" layout="block" >
+		                            <apex:outputLabel value="Subject" for="subject"/>
+		                        </apex:outputPanel>
+		                        <apex:outputPanel styleClass="requiredInput" layout="block">
+		                            <apex:outputPanel styleClass="requiredBlock" layout="block" />                
+		                            <apex:inputField id="subject" value="{!email.Subject__c}"/>
+		                        </apex:outputPanel>
+		                    </apex:pageBlockSectionItem>
 
-        </apex:outputPanel>
+							<script>
+								if({!setHtmlBodyFromJavascript}){
+									CKEDITOR.on( 'instanceReady', function( ev ){
+										ev.editor.setData('{!templateBody}');
+									});
+									templateSetFromJavascriptAF();
+								}
+								else{
+									CKEDITOR.on( 'instanceReady', function( ev ) {
+										if(!ev.editor.getData()){
+											ev.editor.setData('<span style="font-family:Arial, Helvetica, sans-serif"><span style="font-size:10pt;">&nbsp;</span></span>');
+										}
+									});
+								}
+							</script>
 
-    </apex:form>
-    </body>
+		                    <apex:inputtextarea label="Body" id="body1" value="{!rawText}" styleClass="ckeditor" richtext="false" rendered="{!isHtml && isBodyEditable}"/>
+		                    <apex:inputtextarea label="Body" id="body2" value="{!rawText}" styleClass="ckeditor" richtext="false" readonly="true" rendered="{!isHtml && !isBodyEditable}"/>
+		                    <apex:inputtextarea label="Body" id="body3" value="{!plainText}" richtext="false" rendered="{!!isHtml && isBodyEditable}"/>
+
+		                </apex:pageBlockSection>
+
+		                <apex:pageBlockButtons location="both" >
+		                    <apex:commandButton value="Send" action="{!sendTrackedEmail}"/>
+		                    <apex:commandButton value="Select Template" action="{!showTemplatePanel}" />
+		                    <apex:commandButton value="Attach Files" action="{!showAttachmentsPanel}" />
+		                    <apex:commandButton value="Preview" action="{!showPreviewPanel}" rendered="{!isHtml}"/>
+							<apex:commandButton value="Cancel" action="{!cancel}" immediate="true" rerender="editPanel"/>
+		                </apex:pageBlockButtons>
+
+		            </apex:pageBlock>
+
+		            <apex:pageBlock title="Attachments">
+		                <apex:pageBlockButtons location="top" >
+		                    <apex:commandButton value="Attach Files" action="{!showAttachmentsPanel}" />
+		                </apex:pageBlockButtons>
+
+		                <apex:outputPanel >
+		                    Up to 30 files can be attached to a tracked email. Their total size can't exceed 4 MB
+							<br/><br/>
+		                </apex:outputPanel>
+
+		                <apex:outputPanel rendered="{!isDocumentMapEmpty}">
+		                    no attachments
+		                </apex:outputPanel>
+
+		                <apex:pageBlockTable value="{!documents}" var="documentId" rendered="{!!isDocumentMapEmpty}">
+		                    <apex:column >
+		                        <apex:facet name="header">Action</apex:facet>
+		                            <apex:commandLink onclick="return confirm('Are you sure?');" action="{!deleteAttachment}" value="Del" style="color: #015ba7; text-decoration: none; font-weight: normal;">
+		                                <apex:param name="documentId" value="{!documentId}" assignTo="{!documentToDelete}"/>
+		                            </apex:commandLink>
+		                    </apex:column>
+
+		                    <apex:column >
+		                        <apex:facet name="header">File</apex:facet>
+	                            <a href="/servlet/servlet.FileDownload?file={!documentId}" target="_blank">{!documentMap[documentId].Name}</a>
+		                    </apex:column>
+
+		                    <apex:column >
+		                        <apex:facet name="header">Size</apex:facet>
+	                            {!documentMap[documentId].Size}
+		                    </apex:column>
+		                </apex:pageBlockTable>
+		            </apex:pageBlock>
+		        </apex:outputPanel>
+		    </apex:form>
+	    </body>
     </html>
-
 </apex:page>
