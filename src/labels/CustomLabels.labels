@@ -14813,6 +14813,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Case_Payment_status</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Payment status</shortDescription>
+        <value>Payment status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
