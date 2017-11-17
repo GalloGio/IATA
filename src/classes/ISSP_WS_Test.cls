@@ -182,6 +182,7 @@ private class ISSP_WS_Test {
         con.User_Portal_Status__c = 'Approved User';  
         con.Community__c = '';  
         update con;
+		Test.startTest();
         ISSP_WS_NewUser.createUser(myInput);
         myInput.services = 'SIS';
         ISSP_WS_NewUser.createUser(myInput);
@@ -191,6 +192,7 @@ private class ISSP_WS_Test {
         ISSP_WS_NewUser.createUser(myInput);
         myInput.email = 'a';
         ISSP_WS_NewUser.createUser(myInput);
+		Test.stopTest();
     }
 
     static testMethod void NewUser_4() {
