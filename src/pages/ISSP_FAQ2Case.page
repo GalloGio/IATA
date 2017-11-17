@@ -1184,14 +1184,17 @@
       <div class="row">
           <div class="col-xs-12" height="10px">&nbsp;</div>
       </div>
-      <div class="row">
-          <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
-            <span class="imgMovieBut butPointer" onclick="openIntroVideo();" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
-                <apex:image height="30px" url="{!$Resource.LVA_IconsMovie}"/><br/>
-                {!$Label.LVA_IntroductionVideo}
-            </span>
-          </div>
-      </div>
+
+	<apex:outputPanel id="introVideo2" rendered="{! IF(livAgentIntroVidIsAllowed==true ,true ,false)}">
+        <div class="row">
+            <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
+                <span class="imgMovieBut butPointer" onclick="openIntroVideo();" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
+                    <apex:image height="30px" url="{!$Resource.LVA_IconsMovie}"/><br/>
+                    {!$Label.LVA_IntroductionVideo}
+                </span>
+            </div>
+        </div>
+    </apex:outputpanel>
     <!------------------------------------------------------------------------------------>
 <!--------------------------- Lock Screen while Processing  ---------------------------->
 <!------------------------------------------------------------------------------------>

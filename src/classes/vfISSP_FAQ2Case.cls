@@ -1809,6 +1809,7 @@ for (string topicver:listofAllowedTopics){
         system.debug('SFI2 CALL setSubTopicByPermissions ' + topic + ' isTopicDefault ' + isTopicDefault);
         if(isTopicDefault != true) //INC263231
             setSubTopicByPermissions();
+        
         system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
     }
 
@@ -1853,6 +1854,9 @@ for (string topicver:listofAllowedTopics){
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                
+                //this.setLiveAgentButtonsNames(); /* Change to this if live agent becomes available for CNS */
+                this.getAndSetCallUsString();
             }
         }
 
