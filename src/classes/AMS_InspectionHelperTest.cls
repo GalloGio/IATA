@@ -359,19 +359,34 @@ private class AMS_InspectionHelperTest {
         agencyInspectionList.add(ins2);
         insert agencyInspectionList;
 
+        /*
         list<Task> acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
         System.assertEquals(0, acctTasks.size());
+        */
 
         ins1.Accreditation_Endorsement_Status_code__c='0';
         update ins1;
-
+        /*
         acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
         System.assertEquals(0, acctTasks.size());
+        */
+
+        ApexPages.StandardController stdController = new ApexPages.StandardController(ins2);
+        AMS_InspectionNotificationController ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(false, ctrl.hasNoActiveInspections);
 
         ins2.Accreditation_Endorsement_Status_code__c='0';
         update ins2;
 
+        /*
         acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
         System.assertEquals(1, acctTasks.size());
+        */
+
+        stdController = new ApexPages.StandardController(ins2);
+        ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(true, ctrl.hasNoActiveInspections);
     }
 }
