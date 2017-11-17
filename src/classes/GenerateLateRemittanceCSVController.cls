@@ -218,7 +218,13 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.BillingDate = '';
             cw.TextPrint = '';
             cw.InternalRemark = '';
-            cw.Material = '800395';
+            //cw.Material = '800395';
+            if (c.BSP_CASS__c == 'BSP') {
+                cw.Material = '800395';
+            }
+            if (c.BSP_CASS__c == 'CASS') {
+                cw.Material = '800931';
+            }
             cw.MatDesc = 'Late Remittance Recovery ' + c.Remittance_Period__c;
             cw.Quantity = '1';
             cw.UnitPrice = '';
@@ -246,7 +252,13 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.BillingDate = '';
             cw.TextPrint = '';
             cw.InternalRemark = '';
-            cw.Material = '800394';
+            //cw.Material = '800394';
+            if (c.BSP_CASS__c == 'BSP') {
+                cw.Material = '800394';
+            }
+            if (c.BSP_CASS__c == 'CASS') {
+                cw.Material = '801185';
+            }
             cw.MatDesc = 'Late Remittance Interest ' + c.Remittance_Period__c;
             cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
             cw.UnitPrice = c.Short_Payment_Amount__c != null ? String.valueOf(c.Short_Payment_Amount__c) : '';
