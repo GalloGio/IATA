@@ -383,12 +383,16 @@ public without sharing class vfISSP_FAQ2Case
         Id currentUserId=UserInfo.getUserId();
         String listCountriesFAQsNotAvailable=getLivAgConfig(LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED);
         String currentUserCountry=UserInfo.getLocale().substring(0, 2);
+        List<LoginHistory> loginHistoryList;
 
-            currentUserCountry=[SELECT CountryIso, UserId, LoginTime
-            FROM LoginHistory
-                    WHERE UserId=:currentUserId
-                    ORDER BY LoginTime DESC
-                    LIMIT 1].CountryIso;
+        loginHistoryList=[SELECT CountryIso, UserId, LoginTime
+        FROM LoginHistory
+                WHERE UserId=:currentUserId
+                ORDER BY LoginTime DESC
+                LIMIT 1];
+        if (loginHistoryList.size()>0){
+                currentUserCountry=loginHistoryList[0].CountryIso;
+        }
 
         System.debug('basto1p - isToShowFAQs.currentUserCountry='+currentUserCountry);
         System.debug('basto1p - isToShowFAQs.UserInfo.getLocale()=='+UserInfo.getLocale());
