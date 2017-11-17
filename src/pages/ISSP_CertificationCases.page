@@ -85,7 +85,7 @@
           }
         </style>
 
-        <apex:outputPanel  rendered="{!IF(listCasesSize = 0,true,false)}">
+        <apex:outputPanel rendered="{!IF(listCasesSize = 0,true,false)}">
           <div class="toprow"  id="RecentCasesFail">
             <div class="panel panel-primary">
               <div class="panel-heading head_panel_green">
@@ -130,11 +130,11 @@
                      </apex:outputpanel>
 
                       
-                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && (item.Expiry_Date__c-90) <= TODAY(),true,false)}" style="color: red;"> <!-- && f.label!='Expiry Date' -->
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && item.Expiry_Date__c <> null && (item.Expiry_Date__c-90) <= TODAY(),true,false)}" style="color: red;"> <!-- && f.label!='Expiry Date' -->
                         <apex:outputfield value="{!item[f.fieldPath]}" />
-                        <apex:image rendered="{!NOT(item.Expired__c)}" value="/img/msg_icons/info16.png" style="margin-left:3px;" title="Expiring in less than {!IF(item.Expiry_Date__c-30 <= TODAY(),'30',IF(item.Expiry_Date__c-60 <= TODAY(),'60','90'))} days" html-data-html="false" html-data-placement="right" html-data-toggle="tooltip2" />
+                        <apex:image rendered="{!NOT(item.Expired__c)}" value="/img/msg_icons/info16.png" style="margin-left:3px;" title="Expiring in less than {!IF(item.Expiry_Date__c <> null && item.Expiry_Date__c-30 <= TODAY(),'30',IF(item.Expiry_Date__c <> null && item.Expiry_Date__c-60 <= TODAY(),'60','90'))} days" html-data-html="false" html-data-placement="right" html-data-toggle="tooltip2" />
                      </apex:outputpanel>
-                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && (item.Expiry_Date__c-90) > TODAY(),true,false)}"> <!-- && f.label!='Expiry Date' -->
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && item.Expiry_Date__c <> null && (item.Expiry_Date__c-90) > TODAY(),true,false)}"> <!-- && f.label!='Expiry Date' -->
                         <apex:outputfield value="{!item[f.fieldPath]}" />
                      </apex:outputpanel>
 
