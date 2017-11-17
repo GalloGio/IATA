@@ -94,6 +94,8 @@
         padding-right: 0;
     }
     .buttons1LiveAgentRow{
+        padding-top:5px !important;
+        padding-bottom:5px !important;
         background-color: #F8F8F8;
         cursor: pointer;
     }
@@ -130,14 +132,17 @@
         height:30px;
         width:30px;
     }
-    .pageSectionHeader{
-        /* padding-top:15px; */
+    .pageSectionHeaderPadding{
         padding-bottom:15px;
+    }
+    .pageSectionHeader{
         text-align:center !important;
+        vertical-align:middle !important;
         font-weight: bold !important;
         font-size:16px !important;
         color: rgb(48,115,173) !important;
     }
+
     .faqsBackground{
         background-color: #F8F8F8;/* rgb(241,239,226); */
     }
@@ -363,7 +368,7 @@
                       <div class="modal-body">
                           <p>
                               <apex:iframe src="" id="introVideoIFrame"
-                                           width="570px" height="350px" scrolling="false" frameBorder="false"/>
+                                           width="100%" height="350px" scrolling="false" frameBorder="false"/>
                           </p>
                       </div>
                       <div class="modal-footer">
@@ -416,7 +421,7 @@
               }
           </script>
       <apex:outputPanel id="introVideo"
-                        rendered="{! IF(isIntroVideoAlreadyShowed==true ,false ,true)}">
+                        rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),livAgentIntroVidIsAllowed)}">
           <script>
             openIntroVideo();
           </script>
@@ -439,9 +444,6 @@
     <div class="col-xs-12 bannerLoveGradientContainer">
         <div class="bannerLoveGradient">
             {!$Label.LVA_ReachOutUs}
-            <span class="imgMovieBut butPointer" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
-                <apex:image height="18px" onclick="openIntroVideo();" url="{!$Resource.LVA_IconsMovie}"/>
-            </span>
         </div>
     </div>
 </div>
@@ -868,7 +870,7 @@
                                 <!-- ************************** -->
                                  <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
                                                                                 newCase.IFAP_Country_ISO__c != null)}">
-                                     <div class="col-xs-12 pageSectionHeader">
+                                     <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
                                         {!$Label.LVA_SelectPreferredChannel}
                                     </div>
                                  </apex:outputPanel>
@@ -1116,7 +1118,7 @@
 <!---------------------------------------------------------------------------->
         <div class="col-xs-8"  id="Answers" >
             <div class="row">
-                <div class="col-xs-12 pageSectionHeader">
+                <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
                     {!$Label.LVA_FAQsHeader}
                 </div>
             </div>
@@ -1139,7 +1141,6 @@
                                     Loading...
                             </apex:facet>
                         </apex:actionStatus>
-
                         <ul>
                             <apex:repeat value="{!articleViewLines}" var="articleViewLine" >
                                 <!-- <li class="artical-holder-il"> -->
@@ -1179,6 +1180,18 @@
       </div>
       </apex:outputpanel>
       </apex:outputpanel>
+
+      <div class="row">
+          <div class="col-xs-12" height="10px">&nbsp;</div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
+            <span class="imgMovieBut butPointer" onclick="openIntroVideo();" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
+                <apex:image height="30px" url="{!$Resource.LVA_IconsMovie}"/><br/>
+                {!$Label.LVA_IntroductionVideo}
+            </span>
+          </div>
+      </div>
     <!------------------------------------------------------------------------------------>
 <!--------------------------- Lock Screen while Processing  ---------------------------->
 <!------------------------------------------------------------------------------------>
