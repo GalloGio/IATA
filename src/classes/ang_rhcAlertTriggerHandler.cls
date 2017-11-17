@@ -172,7 +172,7 @@ public class ang_rhcAlertTriggerHandler {
 
 				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region_formula__c,
-					Subject = '',
+					Subject = 'Real Time Sales RED Alert - ' +   ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c + ' - ' + ra.ANG_Account__r.IATACode__c ,
 					AccountId = ra.ANG_Account__c,
 					Status = 'Accepted',
 					BSP_CASS__c = 'BSP',
@@ -243,7 +243,7 @@ public class ang_rhcAlertTriggerHandler {
 					sidraLiteCase.Reason_for_Default__c = 'Under Review';
 					sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
-		            //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); already done on callout
+		            sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
 		            sidraLiteCase.ContactId = smapParentCase.ContactId;
 		            
 		            //END -NEWGEN-1933
