@@ -5989,6 +5989,120 @@
             ]
           }
         ]
+      },
+      {
+        "Name": "IEP.BANK.ACCOUNT.SETUP",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+            "Steps": [
+              {
+                "Name": "STEP17",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "performAML",
+                    "ActionLabel": "AMS_OSCAR_Action4",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+                  },
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP17__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_SETUP_PROCESSING",
+            "Steps": [
+              {
+                "Name": "STEP41",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step41_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step41_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Update_IRIS_processing__c",
+                  "Confirm_DD_setup_with_R_S__c",
+                  "STEP41__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_SETUP_FINALIZATION",
+            "Steps": [
+              {
+                "Name": "STEP42",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step42_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step42_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Confirm_DD_setup_with_agent__c",
+                  "Effective_date__c",
+                  "STEP42__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
