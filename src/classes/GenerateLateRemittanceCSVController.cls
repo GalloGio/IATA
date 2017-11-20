@@ -170,7 +170,7 @@ public without sharing class GenerateLateRemittanceCSVController {
         
         /* REPORT 2 - Reinstatement fee report */
         tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c, 
-								Remittance_Date__c, Remittance_Period__c, Currency__c 
+								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c
                         FROM Case
                         WHERE RecordType.DeveloperName = 'SIDRA'
                         AND Update_AIMS_REI_DEFWITH__c <> null 
