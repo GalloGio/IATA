@@ -28,6 +28,10 @@
         <fullName>Inactive_TER</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Inactive_Cashless</fullName>
+        <default>false</default>
+    </globalPicklistValues>
     <masterLabel>Risk Status</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

@@ -25,6 +25,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String STATUS_WITHDRAWN        = 'Inactive_Withdrawn';
 	public static final String STATUS_REVOKED          = 'Inactive_Revoked';
 	public static final String STATUS_CHANGE_OWNERSHIP = 'Inactive_CHO';
+	public static final String STATUS_INACTIVE_CASHLESS = 'Inactive_Cashless';
 
 	//Contact - User_Portal_Status__c
 	public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
