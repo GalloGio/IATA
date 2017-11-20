@@ -82,10 +82,6 @@
         <label>Local Group Type</label>
         <picklist>
             <picklistValues>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>APJC</fullName>
                 <default>false</default>
             </picklistValues>
@@ -95,6 +91,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>CAPJC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CCC</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -125,7 +125,7 @@
                 <fullName>LCAG-P / Credit Card WG</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>

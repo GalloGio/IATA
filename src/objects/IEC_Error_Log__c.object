@@ -255,8 +255,8 @@
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
         <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
         <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>
