@@ -42,7 +42,6 @@ public class ANG_RiskEventTriggerHandler {
         List<ANG_Agency_Risk_Event__c> changedRisks = new List<ANG_Agency_Risk_Event__c>();
 
         for(ANG_Agency_Risk_Event__c re : triggerNew){
-            if(re.ANG_isCashlessAgency__c) re.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
             ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
             if(
                 re.ANG_AccountId__c != oldRe.ANG_AccountId__c
