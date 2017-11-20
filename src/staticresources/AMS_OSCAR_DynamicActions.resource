@@ -528,14 +528,20 @@ var dyn_functions = {
 
         var result;
 
-        result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestrictFOP", {oscarId: argList[0],restrictCreditCard: argList[1], restrictCash: argList[2]});
+        if(argList[1] == 'false' && argList[2] == 'false'){
+            alert('Before clicking the button Restrict Forms of Payment you need to select at least one form of payment to restrict.')
+        }
+        else{
 
-        if(result[0] == '0'){
-         
-            alert('Forms of Payment Restricted with success.')
+            result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestrictFOP", {oscarId: argList[0],restrictCreditCard: argList[1], restrictCash: argList[2]});
 
-        }else
-            alert(result[1]);
+            if(result[0] == '0'){
+             
+                alert('Forms of Payment Restricted with success.')
+
+            }else
+                alert(result[1]);
+        }
     },
 
     aNG_RestoreFOP:function (args) {
@@ -544,13 +550,19 @@ var dyn_functions = {
 
         var result;
 
-        result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestoreFOP", {oscarId: argList[0],restoreCreditCard: argList[1], restoreCash: argList[2]});
+        if(argList[1] == 'false' && argList[2] == 'false'){
+            alert('Before clicking the button Restore Forms of Payment you need to select at least one form of payment to restore.')
+        }
+        else{
 
-        if(result[0] == '0'){
-         
-            alert('Forms of Payment Restored with success.')
+            result = sforce.apex.execute("ANG_OscarProcessHelper", "processRestoreFOP", {oscarId: argList[0],restoreCreditCard: argList[1], restoreCash: argList[2]});
 
-        }else
-            alert(result[1]);
+            if(result[0] == '0'){
+             
+                alert('Forms of Payment Restored with success.')
+
+            }else
+                alert(result[1]);
+        }
     }
 };
