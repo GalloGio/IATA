@@ -16,7 +16,7 @@
     <script language="JavaScript1.2" src="/js/functions.js"></script>
     <script src="/soap/ajax/9.0/connection.js" type="text/javascript"></script>
     <script id="clientEventHandlersJS" language="javascript"></script>
-    <script src="{!URLFOR($Resource.jquery2_1_4)}"></script> 
+    <!--<script src="{!URLFOR($Resource.jquery2_1_4)}"></script>--> 
     <!--<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script> -->
     <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
 
@@ -206,33 +206,7 @@
 
     // Init context menu
     BootstrapTable.prototype.initContextMenu = function () {
-        var that = this;
-
-        // Context menu on Right-click
-        if (that.options.contextMenuTrigger == 'right' || that.options.contextMenuTrigger == 'both') {
-            that.$body.find('> tr[data-index]').off('contextmenu.contextmenu').on('contextmenu.contextmenu', function (e) {             
-                var rowData = that.data[$(this).data('index')],
-                    beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, null]);
-
-                if(beforeShow !== false){
-                    that.showContextMenu({event: e});
-                }
-                return false;
-            });
-        }
-
-        // Context menu on Left-click
-        if (that.options.contextMenuTrigger == 'left' || that.options.contextMenuTrigger == 'both') {
-            that.$body.find('> tr[data-index]').off('click.contextmenu').on('click.contextmenu', function (e) {             
-                var rowData = that.data[$(this).data('index')],
-                    beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, null]);
-
-                if(beforeShow !== false){
-                    that.showContextMenu({event: e});
-                }
-                return false;
-            });
-        }
+        var that = this;  
 
         // Context menu on Button-click
         if (typeof that.options.contextMenuButton === 'string') {

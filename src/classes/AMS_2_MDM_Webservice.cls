@@ -291,7 +291,8 @@ global class AMS_2_MDM_Webservice {
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     IATA_ISO_Country__r.Region__c,
-                    Abbreviated_name__c, Abbreviated_address__c,Status__c
+                    Abbreviated_name__c, Abbreviated_address__c,Status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id = :agencyId];
             
  /* NEWGEN-801

@@ -42,6 +42,10 @@ public with sharing class ISSP_ANG_PCI {
     public boolean isNewCase 											{get; set;}
     public boolean isParentAccount										{get; set;}
     public boolean redirectToStepB 										{get; set;}
+    public String agencyCodesConcernedStr                               {get{
+                                                                            return newForm.Agency_Codes_Concerned__c.replaceAll(',',', ') + '.';
+                                                                        } set;}
+
 
     ISSP_AMS_Accreditation amsAccreditation = new ISSP_AMS_Accreditation();
     
@@ -292,6 +296,8 @@ public with sharing class ISSP_ANG_PCI {
             newForm.Operation_Type__c = 'Travel_Agent';
         else
             newForm.Operation_Type__c = 'Cargo_Agent';
+
+        newform.Scope_of_Change__c = 'HO - Selected Branches';
 
         upsert newForm;
         

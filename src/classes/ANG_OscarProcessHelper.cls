@@ -230,7 +230,6 @@ global class ANG_OscarProcessHelper {
 						}
 					}
 			}
-			
 		
 			Datetime processNowTime = datetime.now(); 
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
@@ -547,7 +546,7 @@ global class ANG_OscarProcessHelper {
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
 			if(!isEmptySetOfLists(allRelationsOnHierarchy.values())){
-				accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
 			}
 
 			accountHierarchyRelationships.add(oscar.Account__c);
@@ -846,7 +845,7 @@ global class ANG_OscarProcessHelper {
 		return new String[]{'0','Oscar for Forms of Payment Management created with success',newCaseFop.Id};
 
 	}
-
+	
 	public static boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
 
 		if(setOfLists.isEmpty())
