@@ -682,6 +682,7 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
