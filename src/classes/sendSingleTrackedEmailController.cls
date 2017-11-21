@@ -6,6 +6,12 @@ public with sharing class sendSingleTrackedEmailController {
 
     public Case cse {get;set;}
    
+    public Boolean isInConsole {get;set;}
+	public String processStatus {get;set;}
+
+	public Boolean setHtmlBodyFromJavascript {get;set;}
+	public String templateBody {set;get;}
+   
     // This variable is not used anymore. It stays here for deployment reasons
     public Boolean isNew {
         get {return this.email.Id==null;}
@@ -110,20 +116,45 @@ public with sharing class sendSingleTrackedEmailController {
         list<String> listFields = new list<String>{'ToContact__c', 'TextBody__c', 'Html_Body__c', 'Subject__c', 'Signaturit_Id__c', 'FromAddress__c', 'FromName__c', 'CcAddress__c', 'Case__c', 'BccAddress__c', 'AdditionalTo__c'};
         if (!Test.IsRunningtest()) stdController.addFields(listFields);
         email = (Tracked_Email__c)stdController.getRecord();
+
+        String isInConsoleParameter = ApexPages.currentPage().getParameters().get('isInConsole');
+        isInConsole = isInConsoleParameter == 'true';
+        
+		setHtmlBodyFromJavascript = false;
     }
+
+	public void templateSetFromJavascript(){
+		setHtmlBodyFromJavascript = false;
+	}
 
     public void initPage(){
         if (email != null && email.Id == null ) {
-            try {
-                email = createNewEmail();
+            try{
+				email = createNewEmail();
+            }
+            catch(Exception e){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'A valid case is required' ));
+            }
 
+            String templateId = ApexPages.currentPage().getParameters().get('templateId');
+            if(templateId != null){
+	            try{
+					setTemplate((Id) templateId);
+	            }
+	            catch(Exception e){
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'templateId parameter \'' + templateId + '\' is not a valid Email Template Id' ));
+	            }
+            }
+            else{
                 String templateDeveloperName = ApexPages.currentPage().getParameters().get('template');
-
                 if(templateDeveloperName != null){
-                    setTemplate(templateDeveloperName);
-                }               
-            } catch (Exception e) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'A valid case is required' ));
+		            try{
+						setTemplate(templateDeveloperName);
+		            }
+		            catch(Exception e){
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'template parameter \'' + templateDeveloperName + '\' is not a valid Email Template Name' ));
+		            }
+                }
             }
         }
         
@@ -164,7 +195,9 @@ public with sharing class sendSingleTrackedEmailController {
         else{
             Tracked_Email__c email = [select Id, Case__c, FromName__c, FromAddress__c, ToContact__c, CreatedDate, Email__c, AdditionalTo__c, CcAddress__c, Subject__c, BccAddress__c, Html_Body__c, TextBody__c from Tracked_Email__c where Id =: originalEmail];
             
-            cse = [Select Id, AccountId, Account.name, Contact.email, Contact.name from Case where Id = :email.Case__c ];
+            cse = [Select Id, AccountId, Account.name, Contact.email, Contact.name, Case_Thread_ID__c from Case where Id = :email.Case__c ];
+
+            caseThreadId = cse.Case_Thread_ID__c;
 
             rawText = SignaturitUtils.pStyle + '<br/><br/><br/>'
                         + '--------------- Original Message ---------------<br/>'
@@ -234,17 +267,7 @@ public with sharing class sendSingleTrackedEmailController {
     
     public void setTemplate(){        
         // Send a fake email with this message in order to update the subject and the body if necessary
-        Savepoint sp = Database.setSavepoint();
-        
-        if(emailTemplate.TemplateType == 'html' && !Test.isRunningTest()){
-            // We need to update the template to determinate precisely where the body starts and ends after the fake body is sent 
-            emailTemplate.HtmlValue = emailTemplate.HtmlValue.replaceFirst('<table', '<table id=\'SIGNATURIT_BODY_START\'');
-            update emailTemplate;
-        }
-
-        Tracked_Email__c trackedEmail = SignaturitRest.sendDummyEmail(new List<SignaturitRest.DummyEmail>{new SignaturitRest.DummyEmail(emailTemplate, cse, email.ToContact__c)})[0];
-
-        Database.rollback(sp);
+        Tracked_Email__c trackedEmail = SignaturitRest.sendDummyEmail(new List<SignaturitRest.DummyEmail>{new SignaturitRest.DummyEmail(emailTemplate, cse, email.ToContact__c)})[0];		
 
         // Update data
         email.Subject__c = trackedEmail.Subject__c;
@@ -261,42 +284,77 @@ public with sharing class sendSingleTrackedEmailController {
             isSwitchable = false;
         }
         else if(emailTemplate.TemplateType == 'html'){
-            // Store body header and footer values for further use
-            
-            // First, we need to find the <table> tag with id='SIGNATURIT_BODY_START'
-            Integer i = trackedEmail.Html_Body__c.indexOf('SIGNATURIT_BODY_START');
-            bodyHeader = trackedEmail.Html_Body__c.substringBefore('SIGNATURIT_BODY_START');
-            Integer j = bodyHeader.lastIndexOf('<table');
-            bodyHeader = bodyHeader.substring(0,j);
-            
-            // Now we have to find the related </table> closing tag
-            
-            Integer openedTags = 1;
-            Integer closingTabIndex;
-            Integer startIndex = j;
-            while(openedTags > 0){
-                Integer nextOpeningTagIndex = trackedEmail.Html_Body__c.indexOf('<table', startIndex + 1);
-                Integer nextClosingTagIndex = trackedEmail.Html_Body__c.indexOf('</table>', startIndex + 1);
 
-                if(nextOpeningTagIndex < nextClosingTagIndex && nextOpeningTagIndex != -1){
-                    openedTags++;
-                    startIndex = nextOpeningTagIndex;
+        	setHtmlBodyFromJavascript = true;
+
+			System.debug('emailTemplate.HtmlValue : ' + emailTemplate.HtmlValue);
+			System.debug('trackedEmail.Html_Body__c : ' + trackedEmail.Html_Body__c);
+			
+			// Retrieve the tEditID parameter of the <td> tag enclosing the body in the template
+			Integer int1 = emailTemplate.HtmlValue.indexOf('![CDATA[');
+			
+			if(emailTemplate.TemplateStyle == 'formalLetter'){
+				int1 = emailTemplate.HtmlValue.indexOf('![CDATA[', int1+1);
+			}
+			
+			String templateHeader = emailTemplate.HtmlValue.substring(0, int1);	
+			System.debug('template header : ' + templateHeader);
+	
+			Integer int2 = templateHeader.lastIndexOf('tEditID="') + 'tEditID="'.length();			
+			String tdParameters = templateHeader.substring(int2);
+			System.debug('td parameters : ' + tdParameters);
+	
+			Integer int3 = tdParameters.indexOf('"');
+			String tEditID = tdParameters.substring(0, int3);
+			System.debug('tEditID : ' + tEditID);
+
+
+
+			// Search for the tEditID in the tracked email body
+			Integer int4 = trackedEmail.Html_Body__c.lastIndexOf(tEditID);
+			Integer int5 = trackedEmail.Html_Body__c.indexOf('>', int4) + 1;
+			
+			// Header of the tracked email ends with the <td> tag containing the tEditID parameter
+			bodyHeader = trackedEmail.Html_Body__c.substring(0, int5);
+			System.debug('tracked email header : ' + bodyHeader);
+
+            // Now we have to find the related </td> closing tag
+			String workingCopy = trackedEmail.Html_Body__c.substring(int5);
+            Integer openedTDTags = 0;
+            Integer closingTabIndex1;
+            Integer startIndex1 = -1;
+
+			System.debug('Working copy : ' + workingCopy);
+
+            while(openedTDTags >= 0){
+                Integer nextOpeningTDTagIndex = workingCopy.indexOf('<td', startIndex1 + 1);
+                Integer nextClosingTDTagIndex = workingCopy.indexOf('</td>', startIndex1 + 1);
+
+                if(nextOpeningTDTagIndex == nextClosingTDTagIndex){
+					// We might have a malformed template here, but at least we leave the loop
+					break;
+				}
+                if(nextOpeningTDTagIndex < nextClosingTDTagIndex && nextOpeningTDTagIndex != -1){
+                    openedTDTags++;
+                    startIndex1 = nextOpeningTDTagIndex;
                 }
                 else{
-                    openedTags--;
-                    startIndex = nextClosingTagIndex;
-            }
+                    openedTDTags--;
+                    startIndex1 = nextClosingTDTagIndex;
+	            }
             }
             
-            // Now, startIndex is the position of the </table> tag we were looking for
-            rawText = SignaturitUtils.pStyle + trackedEmail.Html_Body__c.substring(j, startIndex + '</table>'.length());
-            bodyFooter = trackedEmail.Html_Body__c.substring(startIndex + '</table>'.length());
-                                   
+			// Body of the tracked email ends before the </td> tag we just found
+			templateBody =  SignaturitUtils.pStyle + workingCopy.substring(0, startIndex1).replace('\'','\\\'').replaceAll('\r\n', ' ').replaceAll('\n\r', ' ').replaceAll('\n', ' ');
+
+			// What remains of the string is the tracked email footer
+			bodyFooter = workingCopy.substring(startIndex1);
+
             bodyHeader = addPx(bodyHeader);
             bodyFooter = addPx(bodyFooter);
             
             System.debug('bodyheader after setTemplate\r\n' + bodyHeader + '\r\n');
-            System.debug('rawText after setTemplate\r\n' + rawText + '\r\n');
+            System.debug('templateBody after setTemplate\r\n' + templateBody + '\r\n');
             System.debug('bodyfooter after setTemplate\r\n' + bodyFooter + '\r\n');
             
             isHtml = true;
@@ -395,7 +453,7 @@ public with sharing class sendSingleTrackedEmailController {
             result = false;
         }
         
-        Pattern emailPattern = Pattern.compile('([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})');
+        Pattern emailPattern = Pattern.compile('([a-zA-Z0-9_\\-\\.]+)@((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,15}|[0-9]{1,3})');
         
         // Check Additional To addresses
         if(email.AdditionalTo__c != null && email.AdditionalTo__c != ''){
@@ -496,7 +554,12 @@ public with sharing class sendSingleTrackedEmailController {
                 System.debug('email.Html_Body__c\r\n' + email.Html_Body__c);
                 
             }
-            email.TextBody__c = (rawText != null? rawText.replaceAll('</p>', '</p><br/>').stripHtmlTags() : '') + '\r\n' + caseThreadId;
+            email.TextBody__c = (rawText != null? rawText.replaceAll('</p>', '</p><br/>').stripHtmlTags() : '');
+
+            if(!email.TextBody__c.contains(caseThreadId)){
+                email.TextBody__c += caseThreadId != '' ? '\r\n' + caseThreadId : '';
+            }
+
         }
         else{
             email.IsHtml__c = false;
@@ -514,16 +577,66 @@ public with sharing class sendSingleTrackedEmailController {
         
         //Update the recipients fields if not well formated
         if(email.AdditionalTo__c != null){
-            email.AdditionalTo__c = email.AdditionalTo__c.normalizeSpace().replace(' ',';');
+			email.AdditionalTo__c = email.AdditionalTo__c.normalizeSpace().replace('; ',';').replace(' ;',';').replace(' ',';');
+			
+			List<String> addressList = email.AdditionalTo__c.split(';');			
+			List<String> cleanAddressList = new List<String>();
+
+			for(String address : addressList){
+				if(address != ''){
+					cleanAddressList.add(address);
+				}
         }
+			
+			email.AdditionalTo__c = String.join(cleanAddressList, ';');
+		}
         if(email.CcAddress__c != null){
-            email.CcAddress__c = email.CcAddress__c.normalizeSpace().replace(' ',';');
+			email.CcAddress__c = email.CcAddress__c.normalizeSpace().replace('; ',';').replace(' ;',';').replace(' ',';');
+			
+			List<String> addressList = email.CcAddress__c.split(';');			
+			List<String> cleanAddressList = new List<String>();
+
+			for(String address : addressList){
+				if(address != ''){
+					cleanAddressList.add(address);
+				}
+			}
+			
+			email.CcAddress__c = String.join(cleanAddressList, ';');
         }
         if(email.BccAddress__c != null){
-            email.BccAddress__c = email.BccAddress__c.normalizeSpace().replace(' ',';');
+			email.BccAddress__c = email.BccAddress__c.normalizeSpace().replace('; ',';').replace(' ;',';').replace(' ',';');
+			
+			List<String> addressList = email.BccAddress__c.split(';');			
+			List<String> cleanAddressList = new List<String>();
+
+			for(String address : addressList){
+				if(address != ''){
+					cleanAddressList.add(address);
+				}
+			}
+			
+			email.BccAddress__c = String.join(cleanAddressList, ';');
         }
-        
-        insert email;
+
+		// When sending manually several emails in a row, the "UNABLE_TO_LOCK_ROW" DML Exception might happen when inserting the tracked email
+		// To prevent as much as possible, we'll make up to 5 attempts to insert the tracked email
+		// If it fails, a message will be displayed to the user
+		for(Integer i = 0; i < 5; i++){
+			try{
+				insert email;
+				System.debug('Tracked Email ' + email.Subject__c + ' : insert successfull on attempt ' + (i+1));
+				break;
+			}
+			catch (System.DMLException ex) {
+				System.debug('Tracked Email ' + email.Subject__c + ' : insert error on attempt ' + (i+1));
+				if(i == 4){
+					System.debug('Tracked Email ' + email.Subject__c + ' : ABORTING insertion');
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'System was not able to send your tracked email, please try again.'));
+					return null;
+				}
+			}
+		}
 
         // Create Attachments linked to the Tracked Email record
         List<Attachment> attachments = new List<Attachment>();
@@ -567,23 +680,30 @@ public with sharing class sendSingleTrackedEmailController {
             delete documentsToDelete;
         }
         
-        sendSingleTrackedEmailController.sendTrackedEmailFuture(email.Id);
+        sendSingleTrackedEmailController.sendTrackedEmailFuture(new List<Id> {email.Id});
 
-        String retURL = ApexPages.CurrentPage().getParameters().get('retURL');
-        String url = retUrl==null? '/' + cse.Id : retURL;
-        PageReference pageref = new PageReference(url);
-        pageref.setRedirect(true);
-        return pageref;
+        processStatus = 'sent';
+
+        if(!isInConsole){
+	        String retURL = ApexPages.CurrentPage().getParameters().get('retURL');
+	        String url = retUrl==null? '/' + cse.Id : retURL;
+	        PageReference pageref = new PageReference(url);
+	        pageref.setRedirect(true);
+	        return pageref;
+	    }
+        else{
+        	return null;
+    	}
     }
 
     // We use a future method to double the Heap Size limit (6Mb -> 12 Mb)
     @future(callout=true)
-    public static void sendTrackedEmailFuture(Id trackedEmailId) {
-        Tracked_Email__c trackedEmail = [select Id, Name, Status__c, FromAddress__c, Email__c, ToContact__r.Name, ToContact__r.Email, Case__c, Html_Body__c, TextBody__c, AdditionalTo__c, CcAddress__c, BccAddress__c, Subject__c, FromName__c, Reason__c, OwnerId, Case__r.Id, Case__r.CaseNumber, Case__r.Case_Thread_ID__c from Tracked_Email__c where Id =: trackedEmailId];
+    public static void sendTrackedEmailFuture(List<Id> trackedEmailIds) {
+        List<Tracked_Email__c> trackedEmails = [select Id, Name, Status__c, FromAddress__c, Email__c, ToContact__r.Name, ToContact__r.Email, Case__c, Html_Body__c, TextBody__c, AdditionalTo__c, CcAddress__c, BccAddress__c, Subject__c, FromName__c, Reason__c, OwnerId, Case__r.Id, Case__r.CaseNumber, Case__r.Case_Thread_ID__c from Tracked_Email__c where Id in: trackedEmailIds];
 
-        SignaturitUtils.sendTrackedEmails(new List<Tracked_Email__c>{trackedEmail});
+        SignaturitUtils.sendTrackedEmails(trackedEmails);
     }
-
+    
     // Delete email and its attachments if sending fails
     private void deleteEmail(){
         // delete tracked email and attachments
@@ -598,11 +718,17 @@ public with sharing class sendSingleTrackedEmailController {
     Redirect to retURL or home without doing changes
     **/
     public PageReference cancel() {
+        processStatus = 'cancelled';
+        if(!isInConsole){
         String retURL = ApexPages.CurrentPage().getParameters().get('retURL');
         String url = retUrl==null? '/' + cse.Id : retURL;
         PageReference pageref = new PageReference(url);
         pageref.setRedirect(true);
         return pageref;
+    }
+        else{
+        	return null;
+        }
     }
 
     public PageReference showRecipientsPanel(){ 

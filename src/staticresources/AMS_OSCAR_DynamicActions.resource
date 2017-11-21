@@ -39,19 +39,19 @@ var dyn_functions = {
 
         }
 
-		/* THIS PIECE OF CODE CAME FROM PROD AFTER THE REFACTOR OF THIS METHOD
-			WE NEED TO ADAPT IT TO THE CURRENT IMPLEMENTATION SOMEHOW <NewGen Team>
-		if (records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true') {
-			result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
+        var ifapPSR;
+
+		if (records.length > 0 && resultExecution[0] == '0') { // IATA Code created
+			var result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
 
 			if(result4 != 'OK'){
-				sResult = sResult + '- Grant IFAP service access - Failed.\n(' + result4 +')\n\r';
+				ifapPSR = 'Grant IFAP service access - Failed.\n(' + result4 +')\n\r';
 			}else{
-				sResult = sResult + '- Grant IFAP service access - Success!\n\r';
+				ifapPSR = 'Grant IFAP service access - Success!\n\r';
 			}
-		}*/
+		}
 
-        alert('\n\r ' + resultExecution[1]);
+        alert('\n\r ' + resultExecution[1] + ifapPSR);
 
     },
     issueInvoice:function (args) { 

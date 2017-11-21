@@ -154,7 +154,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -538,7 +538,7 @@
         <label>Order By</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -610,7 +610,7 @@
         <inlineHelpText>Used on the Reference Record To Limit the Query as clause where inside the REST API</inlineHelpText>
         <label>Reference Clause</label>
         <length>4000</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -659,7 +659,7 @@
         <inlineHelpText>For CAC Web Service Default returned response when the code is not found</inlineHelpText>
         <label>Web Service Default Response</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -967,9 +967,9 @@
     <listViews>
         <fullName>TXT_CHANGE_FILES</fullName>
         <columns>NAME</columns>
-        <columns>Product_Type__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
+        <columns>Product_Type__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
@@ -989,6 +989,11 @@
             <field>Magnitude__c</field>
             <operation>equals</operation>
             <value>Delta</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Weekly</value>
         </filters>
         <label>TXT CHANGE FILES</label>
         <language>en_US</language>
@@ -1280,7 +1285,7 @@
     </listViews>
     <nameField>
         <label>GDP File Description Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GDP File Descriptions</pluralLabel>

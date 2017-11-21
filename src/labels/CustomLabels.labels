@@ -1303,7 +1303,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>GOStandard</value>
+        <value>GoStandard</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
@@ -1311,7 +1311,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>GOLite</value>
+        <value>GoLite</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
@@ -1407,7 +1407,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GOStandard accreditation type in order to issue tickets using the Cash Form of Payment 
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GoStandard accreditation type in order to issue tickets using the Cash Form of Payment 
         </value>
     </labels>
     <labels>
@@ -25068,9 +25068,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Standards Setting Workspace</shortDescription>
-        <value>IATA is building a new collaboration environment for standards development activities. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences. The project is in its pilot phase and it is not yet active for most standards groups. Initial pilot participants from selected groups will be invited to join in the coming months. &lt;/br&gt;
-
-&lt;b&gt;&lt;u&gt;WARNING:&lt;/b&gt;&lt;/u&gt; This service is being piloted and is specific to the following groups: PADIS EDIFACT RES &amp; APTS, Interline EMD Baggage Group and Cargo Operations and Technology Board (COTB) with 2 subgroups (Cargo XML Task Force (CXMLTF) and Piece Level Tracking Task Force (PLTTF). If you are not part of these groups, please do not use this service.</value>
+        <value>The Standards Setting Workspace is a platform enabling seamless collaboration for and between standards setting groups. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences.</value>
     </labels>
     <labels>
         <fullName>Start_date</fullName>

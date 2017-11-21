@@ -188,7 +188,7 @@ global class AMS_OSCAR_Webservice {
                                     Reason1__c = fetchAMLCaseReason(oscar.Process__c),
                                     ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, 
                                     Subject = (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP ? 'Due Diligence – ' + oscarCommCase.OSCAR__r.Account__r.Name : 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c),
-                                    OSCAR__c = oscar.Id, Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
+                                    Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
 
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
