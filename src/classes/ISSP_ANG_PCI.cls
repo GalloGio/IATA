@@ -21,6 +21,7 @@ public with sharing class ISSP_ANG_PCI {
     private Id vHQAccountId;
     private Id parentAccountId; 
     private Id vAccountConcernedId;
+    private Id toBeUsed;
     public static Map<String, String> languagesMap;
     public List<AMS_Accreditation_Requirement__c> countryRequirementsList 	{get; set;} 
 
@@ -173,10 +174,15 @@ public with sharing class ISSP_ANG_PCI {
     	
     	system.debug('vHQAccountId ' + vHQAccountId + ' selectedBranchCodes ' + selectedBranchCodes);
 
+        if(parentAccountId != null){
+            toBeUsed = parentAccountId;
+        }else{
+                toBeUsed = vHQAccountId;    
+         }
     	return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
     					BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
                         FROM Account
-                        WHERE (Top_Parent__c = :parentAccountId OR Id = :parentAccountId) AND IATACode__c != null AND RecordType.DeveloperName IN
+                        WHERE (Top_Parent__c = :toBeUsed OR Id = :toBeUsed) AND IATACode__c != null AND RecordType.DeveloperName IN
                                       			('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) 
                         AND (IATACode__c NOT IN : selectedBranchCodes)
                         ORDER BY Top_Parent__c DESC NULLS FIRST
