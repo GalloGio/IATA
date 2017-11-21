@@ -255,9 +255,9 @@ public class AMS_InspectionHelper {
                     mail.targetObjectId = userInfo.getUserId();
                     mail.saveAsActivity = false;
                     mail.HtmlBody = '<html><body style="font-family: Arial; font-size: 10pt;"><p>Dear ' + userInfo.getName() + ',</p>';
-                    mail.HtmlBody = '<p>You have recently deactivated the last appointment for ' + mapAccountsPerId.get(acctId).Name + '. Please terminate the agency.</p>';
-                    mail.HtmlBody = '<p>Account name: <a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + acctId + '">' + mapAccountsPerId.get(acctId).Name + '</a><br/>';
-                    mail.HtmlBody = 'IATA Code: ' + mapAccountsPerId.get(acctId).IATACode__c + '</p>';
+                    mail.HtmlBody+= '<p>You have recently deactivated the last appointment for ' + mapAccountsPerId.get(acctId).Name + '. Please terminate the agency.</p>';
+                    mail.HtmlBody+= '<p>Account name: <a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + acctId + '">' + mapAccountsPerId.get(acctId).Name + '</a><br/>';
+                    mail.HtmlBody+= 'IATA Code: ' + mapAccountsPerId.get(acctId).IATACode__c + '</p>';
                     mail.HtmlBody+= '<p>This is an automatically generated email, please do not reply.</p></body></html>';
 
                     if ( owea.size() > 0 ) {
