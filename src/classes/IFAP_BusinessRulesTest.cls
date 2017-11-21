@@ -296,6 +296,9 @@ public class IFAP_BusinessRulesTest {
         Contact contact1 = createContact(account1);
         insert contact1;
 
+        IATA_ISO_Country_Set__c iso = new IATA_ISO_Country_Set__c(Name = 'CA', Country_Name__c = 'Canada');
+        insert iso;
+
         EmailTemplate et = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP'];
 
 
@@ -362,7 +365,7 @@ public class IFAP_BusinessRulesTest {
 
         vtc1.VFEmailTemplateController();
 
-
+         System.debug('##--------------------Last Case!!');
         EmailTemplate et2 = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP FS Reminder'];
         EmailTemplate__c e2 = new EmailTemplate__c();
         //e2.recordType.Name = 'IFAP';
@@ -394,6 +397,7 @@ public class IFAP_BusinessRulesTest {
         cObj2.FS_Reminder_EmailTemplate__c = e2.Id;
         cObj2.Deadline_Date__c = Date.today() + 30;
         cObj2.Financial_Review_Type__c = 'Annual';
+        cObj2.FS_Mass_Email_Send__c = true;
 
         insert cObj2;
         VFEmailTemplateController vtc2 = new VFEmailTemplateController();
@@ -404,12 +408,13 @@ public class IFAP_BusinessRulesTest {
         vtc2.isEnglish = true;
         vtc2.VFEmailTemplateController();
 
+        System.debug('##Last Case!!');
         Case cObj3 = new Case();
         cObj2.Subject = 'Test FR';
         cObj2.ContactId = contact1.Id;
         //cObj2.RecordTypeId = IFAPcaseRecordTypeID;
         cObj2.IFAP_Financial_Year__c = '2012';
-        cObj2.Status = 'Financial Security Requested';
+        cObj2.Status = 'Assessment Performed';
         cObj2.Financial_Review_Result__c = 'Satisfactory';
         cObj2.IFAP_Country_ISO__c = ic.ISO_Code__c;
         cObj2.Deadline_Date__c = Date.today() + 30;
