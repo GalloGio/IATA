@@ -11,7 +11,6 @@ public class ANG_RiskEventTriggerHandler {
 	// ************************************************************
 
 	public void onBeforeInsert(){
-        setInactiveforCashless(triggerNew);
 		loadInformationsInsert();
 	}
 	public void onAfterInsert(){
@@ -87,11 +86,5 @@ public class ANG_RiskEventTriggerHandler {
         if(involvedAccounts.isEmpty()) return;
 
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
-    }
-
-    private void setInactiveforCashless(list<ANG_Agency_Risk_Event__c> reList){
-        for(ANG_Agency_Risk_Event__c re:reList){
-            if(re.ANG_isCashlessAgency__c) re.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
-        }
     }
 }
