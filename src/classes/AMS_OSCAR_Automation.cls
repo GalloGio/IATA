@@ -673,11 +673,11 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step1_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO)) {
+            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO))
                 oscar.addError('Application Finalization cannot be granted if the Approval step does not equals PASSED');
             else if(oscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
                 oscar.addError('Cannot set application finalization to passed because manager approval is not authorized.');
-            } else {
+            else {
 
                 if (oscar != null) {
 

@@ -702,7 +702,7 @@ global with sharing class ANG_ConversionHelper {
         List<AMS_OSCAR_JSON.ChangeCode> corChangeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
 
         for(Account acc: accountsToApply){
-        	accts.add(acct);
+        	accts.add(acc);
         	corChangeCodes.add(changeCode);
         	oscars.add(null);
         }
