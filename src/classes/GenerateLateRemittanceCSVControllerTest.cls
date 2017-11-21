@@ -32,6 +32,9 @@ private class GenerateLateRemittanceCSVControllerTest {
                                                                     Region__c = 'Europe');
         insert isoCountry;
         
+        Late_Payment_Fees_CASS_ISO_Countries_Exc__c excludedCountry = new Late_Payment_Fees_CASS_ISO_Countries_Exc__c(Name='France');
+        insert excludedCountry;
+        
         Account a = new Account( Name ='IFAP ACCT',
                                  Industry = 'pluto',
                                  IATA_ISO_Country__c = isoCountry.id,
