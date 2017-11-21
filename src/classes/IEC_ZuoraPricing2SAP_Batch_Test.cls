@@ -49,6 +49,7 @@ private class IEC_ZuoraPricing2SAP_Batch_Test
     @isTest static void testAllMethod()
     {
         TestDataGenerator.generateApexSetting();
+        insert new Apex_Setting__c(Name='ZuoraPricing2SAP Notify Job Completion', Text_1__c='true');
         Test.startTest();
             Test.setMock(HttpCalloutMock.class, new IEC_ZuoraPricing2SAP_HTTP_Mock());
             Database.executeBatch(new IEC_ZuoraPricing2SAP_Batch(IEC_ZuoraPricing2SAP_Batch.processingStep1), 2000);

@@ -95,5 +95,8 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
         // send pricing to SAP after tracking changes
         if (strProcessingStep == processingStep1)
             Database.executeBatch(new IEC_ZuoraPricing2SAP_Batch(processingStep2), 2000);
+        // send notification to support after sending pricing to SAP
+        else if (strProcessingStep == processingStep2 && Boolean.valueOf(Utility.getTextSetting('ZuoraPricing2SAP Notify Job Completion')))
+            TransformationHelper.sendEmailSupport('Zuora Pricing 2 SAP', 'Job complete at ' + system.now().format('yyyy-MM-dd HH:mm:ss'));
     }
 }
