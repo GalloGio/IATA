@@ -820,6 +820,27 @@
         <value>&lt;a href=&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=true&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency's Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Effective_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Effective_Date</shortDescription>
+        <value>Effective date: </value>
+    </labels>
+    <labels>
+     <fullName>ANG_VR_SELECTED_CODES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_VR_SELECTED_CODES</shortDescription>
+        <value>To include list of all selected codes</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -10528,6 +10549,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Select the IATA Code(s) for which proof of PCI Compliance is to be provided:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_WISH_TO_RELINQUISH</shortDescription>
+        <value>I wish to relinquish:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_Selected_IATA_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10619,6 +10647,20 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC HE All Branches</shortDescription>
         <value>Head Entity &amp; All Associate Entities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ENTIRE_HIERARCHY</shortDescription>
+        <value>Entire Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ONE_OR_MORE_AE</shortDescription>
+        <value>One or more Associate Entities</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
@@ -12189,6 +12231,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>A. IATA Code Selection</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Step1_VR</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step1_VR</shortDescription>
+        <value>B. Submit to IATA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13397,6 +13447,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable Credit Card Form of Payment for the Code(s)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Iata_Codes_Relinquish</fullName>
+        <categories>PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
+        <value>IATA Codes to relinquish</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -14244,6 +14302,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
         <value>PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Voluntary_Relinquishment</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
+        <value>Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>

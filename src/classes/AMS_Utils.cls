@@ -234,7 +234,8 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
     public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
-    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';  
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
+    public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';
