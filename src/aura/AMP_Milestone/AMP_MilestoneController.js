@@ -66,6 +66,7 @@
 
         var milestone = component.get("v.milestone");
         var status = component.find("statusList").get("v.value");
+        var statusValues = component.get("v.statusValues");
         if(status === undefined) status = statusValues[0];
         milestone.Status = status;
 
