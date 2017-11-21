@@ -422,6 +422,7 @@
         <fields>Email__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Agency_owner__c</fields>
+        <fields>Duplicate_contact_exists__c</fields>
         <fields>Agency_role__c</fields>
         <fields>Financial_interest__c</fields>
         <fields>Time_devoted_to_Agency_business__c</fields>
