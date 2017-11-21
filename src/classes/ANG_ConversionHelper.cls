@@ -492,6 +492,8 @@ global with sharing class ANG_ConversionHelper {
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 
 		createAgencyAuthorizations(accountsToUpdate);
+
+		createCorrectionChangeCodes(accountsToUpdate)
 		
 		return toReturn;
 
@@ -681,6 +683,31 @@ global with sharing class ANG_ConversionHelper {
 
     	return !(acct.IATACode__c == null ||  acct.Status__c == 'New application pending' || acct.Status__c == 'Not accreditated' || acct.Purge_Flag__c == true);
 
+    }
+
+    private static void createCorrectionChangeCodes(Set<Account> accountsToApply){
+
+    	//create correction change code definition
+    	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+        changeCode.name = 'COR';
+        changeCode.memoText = 'Correction';
+        changeCode.publishedOnEBulletin = false;
+        changeCode.status  = null;
+
+        //prepare data structures to feed into change code generator
+        List<Account> accts = new List<Account>();
+        //No oscars are involved in this process but we still need it to pass onto the method
+        List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+        List<AMS_OSCAR_JSON.ChangeCode> corChangeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
+
+        for(Account acc: accountsToApply){
+        	accts.add(acct);
+        	corChangeCodes.add(changeCode);
+        	oscars.add(null);
+        }
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(corChangeCodes, oscars, accts, true);
     }
 
 	public class MigrationContainer{
