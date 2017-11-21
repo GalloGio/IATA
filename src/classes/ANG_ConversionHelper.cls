@@ -493,7 +493,7 @@ global with sharing class ANG_ConversionHelper {
 
 		createAgencyAuthorizations(accountsToUpdate);
 
-		createCorrectionChangeCodes(accountsToUpdate)
+		createCorrectionChangeCodes(accountsToUpdate);
 		
 		return toReturn;
 
