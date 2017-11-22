@@ -4880,7 +4880,12 @@
                     ]
                   }
                 ],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step36_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "STEP36__c"
                 ],
@@ -5872,7 +5877,12 @@
                     ]
                   }
                 ],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step36_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "STEP36__c"
                 ],

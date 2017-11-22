@@ -269,6 +269,10 @@
         <label>Change Code</label>
         <picklist>
             <picklistValues>
+                <fullName>AFN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>BSF</fullName>
                 <default>false</default>
             </picklistValues>
@@ -397,7 +401,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>FOP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FPR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>FPY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IAF</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -425,6 +441,14 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>LSP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LSW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>MCH</fullName>
                 <default>false</default>
             </picklistValues>
@@ -441,11 +465,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>NCW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>NEP</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>NEW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NFS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -474,6 +506,14 @@
             </picklistValues>
             <picklistValues>
                 <fullName>REI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>REW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RNC</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -534,6 +574,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>VRW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WCP</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -1886,6 +1930,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
+                <fullName>AFN</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSF</fullName>
                 <default>false</default>
             </values>
@@ -2014,7 +2062,19 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>FOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IAF</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2027,6 +2087,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>LRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSW</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2046,11 +2114,19 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>NCW</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEP</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>NEW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2079,6 +2155,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>REI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RNC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2139,6 +2223,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>VRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WCP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

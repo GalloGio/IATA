@@ -2539,4 +2539,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return oscarSteps;
     }
 
+    public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
+        'Legacy' => 'Legacy',
+        'Cashless' =>   'GoLite',
+        'Cash' =>   'GoStandard',
+        'Multicountry' => 'GoGlobal'
+    };   
+
 }
