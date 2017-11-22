@@ -27,6 +27,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String STATUS_WITHDRAWN        = 'Inactive_Withdrawn';
 	public static final String STATUS_REVOKED          = 'Inactive_Revoked';
 	public static final String STATUS_CHANGE_OWNERSHIP = 'Inactive_CHO';
+	public static final String STATUS_INACTIVE_CASHLESS = 'Inactive_Cashless';
 	public static final String STATUS_MIGRATED         = 'Inactive_Migrated';
 
 	//RISK EVENT TYPES
