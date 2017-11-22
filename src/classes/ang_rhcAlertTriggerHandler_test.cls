@@ -143,6 +143,17 @@ private class ang_rhcAlertTriggerHandler_test {
 
     	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
     	System.debug('##Account: '+ a.Remittance_frequency__c);
+
+    	AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+    		IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
+    		ANG_Send_Email_Agent__c=true ,
+    		ANG_Create_Sidra_Lite__c= true, 
+    		ANG_Remove_Ticketing_Authority__c= true
+    	);
+
+    	insert csa;
+
+
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
 			Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
 			ang_Severity__c='Red',

@@ -25,6 +25,22 @@ public class ang_rhcAlertTriggerHandler {
 	public void onBeforeDelete(){}
 	public void onAfterDelete() {}
 
+	// ************************************************************
+	// ****************** Variables ********************
+	// ************************************************************
+
+	private map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap{get;set;}
+
+
+
+
+
+	// ************************************************************
+	// ****************** Action Methods ********************
+	// ************************************************************
+
+
+
     public static String mapRemittanceFrequency(Account acc){
 
         if(acc.IATA_ISO_Country__r.iso_code__c  == 'BR') return 'W';
@@ -112,7 +128,12 @@ public class ang_rhcAlertTriggerHandler {
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 		List<RiskAlertParentCaseWrapper> wrapperList = new List<RiskAlertParentCaseWrapper>();
 		List<Id> listIDAccsToRetriveCons = new List<Id>();
+		rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();
+		for(AMS_Country_Specific_Attribute__c csa: [select IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c from AMS_Country_Specific_Attribute__c]){
+			rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
+		}
 
+		if(rtsConfigMap.isEmpty())return;
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
 		for(ANG_Risk_Alert__c ra :[
@@ -127,7 +148,9 @@ public class ang_rhcAlertTriggerHandler {
 				FROM ANG_Risk_Alert__c 
 				WHERE ID IN :triggerNew
 				AND ANG_Severity__c = 'Red' 
-				AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() ]){
+				AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() 
+				AND ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c in :rtsConfigMap.keySet()//filters records from countries that arent configured
+				]){
 
 			redAlerts.add(ra);
 			listIDAccsToRetriveCons.add( (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c : ra.ANG_Account__c ) );
@@ -160,6 +183,7 @@ public class ang_rhcAlertTriggerHandler {
 	        Database.DMLOptions dmlOpts = new Database.DMLOptions();
 	        dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
 
+
 			Case smapParentCase;
 			List<Case> sidraLiteCases;
 			List<Case> smapParentCases = new List<Case>();
@@ -169,7 +193,7 @@ public class ang_rhcAlertTriggerHandler {
 
 
 			for(ANG_Risk_Alert__c ra: redAlerts){
-
+				if(rtsConfigMap.get(ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c).ANG_Create_Sidra_Lite__c){
 				smapParentCase = new Case(
 					Region__c =	ra.ANG_Account__r.Region_formula__c,
 					Subject = 'Real Time Sales RED Alert - ' +   ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c + ' - ' + ra.ANG_Account__r.IATACode__c ,
@@ -210,6 +234,8 @@ public class ang_rhcAlertTriggerHandler {
 				smapParentCases.add(smapParentCase);
 				accountsIds.add(ra.ANG_Account__c);
 			}
+			}
+
 
 			if(!smapParentCases.isEmpty()){
 				//insert smapParentCases --> all or none = false;
@@ -225,7 +251,12 @@ public class ang_rhcAlertTriggerHandler {
 		        Map<Id,Case> mapSMAPtoSIDRA = new Map<Id,Case>(); 
 		        sidraLiteCases = new List<Case>();
 
-		        for(Case parentCase :[Select Id, IATAcode__c, Account.Name,Account.IATACode__c, Account.Site, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+		        //map to get account's IsoCode- used to control RTS actions
+		        map<id,string> accIsoCode = new map<id,string>();
+
+		        for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+		        	
+		        	accIsoCode.put(parentCase.AccountId,parentCase.Account.IATA_ISO_Country__r.ISO_Code__c);
 
 		            //NEWGEN-1933 fill fields on sidra case
 		            sidraLiteCase = WSSidraLite.createCase(parentCase.id);
@@ -290,8 +321,10 @@ public class ang_rhcAlertTriggerHandler {
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
+						if(rtsConfigMap.get(accIsoCode.get(sLiteCase.AccountId)).ANG_Remove_Ticketing_Authority__c){
 						caseIds.add(sLiteCase.Id);
 						accountIds.add(sLiteCase.AccountId);
+					}
 					}
 					
 			        AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
@@ -362,6 +395,7 @@ public class ang_rhcAlertTriggerHandler {
         mail.setSubject(template.Subject); 
         mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
+        	if(rtsConfigMap.get(riskAlert.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c).ANG_Send_Email_Agent__c){
             String tBody = template.Body;
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
@@ -376,6 +410,7 @@ public class ang_rhcAlertTriggerHandler {
             mail.setPlainTextBody(tBody);
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
         }
+    }
     }
     // END - NEWGEN-2005
 		
