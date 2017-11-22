@@ -778,10 +778,10 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Withdrawal_result__c = 'Passed';
 
                 if(oscar.Process__c == AMS_Utils.NGCHANGES){
-                    List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
+                    List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
                     if(riskEvents != null && !riskEvents.isEmpty()){
                         for(ANG_Agency_Risk_Event__c rEvent : riskEvents)
-                            rEvent.Status__c = 'Inactive_Withdrawn';
+                            rEvent.ANG_Event_Status__c = 'Inactive_Withdrawn';
 
                         update riskEvents;
                     }
