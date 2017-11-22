@@ -1,5 +1,13 @@
 public class ANG_AccountTriggerHandler {
 
+    public static Boolean isExpiration{
+        get{
+            if(isExpiration == null) isExpiration = false;
+            return isExpiration;
+        }
+        set;
+    }
+
     public static void handleBeforeInsert(List<Account> accs){
 
         updateRiskStatus(accs, new Map<Id,Account>(), true);
