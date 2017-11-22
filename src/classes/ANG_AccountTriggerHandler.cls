@@ -1,5 +1,13 @@
 public class ANG_AccountTriggerHandler {
 
+	public static Boolean isExpiration{
+		get{
+			if(isExpiration == null) isExpiration = false;
+			return isExpiration;
+		}
+		set;
+	}
+
 	public List<Account> triggerNew = (List<Account>) Trigger.new;
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
 
