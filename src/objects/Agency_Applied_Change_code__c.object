@@ -289,7 +289,15 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>CCA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>CCF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CCR</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -490,6 +498,18 @@
             </picklistValues>
             <picklistValues>
                 <fullName>NWD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PCA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PCN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PCR</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -898,20 +918,20 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <fullName>Irregularity_Type_Description__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;,
-	  CASE( TEXT(Irregularity_Type__c) ,
-	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
-	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
-	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
-	    &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
-	    &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
-	    &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
-	    &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
-	    &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
-	    &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
-	    &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
-	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
-	  &quot;&quot;)
-	)</formula>
+      CASE( TEXT(Irregularity_Type__c) ,
+        &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
+        &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
+        &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
+        &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
+        &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
+      &quot;&quot;)
+    )</formula>
         <label>Irregularity Type Description</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1950,7 +1970,15 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CCF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2139,6 +2167,18 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>NWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCR</fullName>
                 <default>false</default>
             </values>
             <values>
