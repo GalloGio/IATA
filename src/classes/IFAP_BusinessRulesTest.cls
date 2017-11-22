@@ -322,8 +322,23 @@ public class IFAP_BusinessRulesTest {
         vtc.caseURL = 'http://www.google.com';
         vtc.displayDeadline = true;
         vtc.isEnglish = true;
-
+        vtc.templateName='IFAP_FA_Reminder';        
         vtc.VFEmailTemplateController();
+
+        cObj.Status = 'Agent Notified';
+        cObj.Mass_Case_Creation_Email_Send__c = false;
+        cObj.Mass_Email_Send__c = true;
+        cObj.Reminder_EmailTemplate__c = e.Id;
+        update cObj;
+        vtc.VFEmailTemplateController();
+
+
+        cObj.Status = 'Agent Notified (Tracked Email)';
+        cObj.Mass_Case_Creation_Email_Send__c = false;
+        cObj.Mass_Email_Send__c = false;
+        update cObj;
+        vtc.VFEmailTemplateController();
+
 
         EmailTemplate et1 = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP FA Reminder'];
         EmailTemplate__c e1 = new EmailTemplate__c();
@@ -362,10 +377,10 @@ public class IFAP_BusinessRulesTest {
         vtc1.caseURL = 'http://www.google.com';
         vtc1.displayDeadline = true;
         vtc1.isEnglish = true;
+        vtc1.templateName='IFAP';
 
         vtc1.VFEmailTemplateController();
 
-         System.debug('##--------------------Last Case!!');
         EmailTemplate et2 = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP FS Reminder'];
         EmailTemplate__c e2 = new EmailTemplate__c();
         //e2.recordType.Name = 'IFAP';
@@ -406,19 +421,20 @@ public class IFAP_BusinessRulesTest {
         vtc2.caseURL = 'http://www.google.com';
         vtc2.displayDeadline = true;
         vtc2.isEnglish = true;
+        vtc2.templateName='IFAP_FS_Reminder';
         vtc2.VFEmailTemplateController();
 
-        System.debug('##Last Case!!');
         Case cObj3 = new Case();
-        cObj2.Subject = 'Test FR';
-        cObj2.ContactId = contact1.Id;
-        //cObj2.RecordTypeId = IFAPcaseRecordTypeID;
-        cObj2.IFAP_Financial_Year__c = '2012';
-        cObj2.Status = 'Assessment Performed';
-        cObj2.Financial_Review_Result__c = 'Satisfactory';
-        cObj2.IFAP_Country_ISO__c = ic.ISO_Code__c;
-        cObj2.Deadline_Date__c = Date.today() + 30;
-        cObj2.Financial_Review_Type__c = 'Annual';
+        cObj3.Subject = 'Test FR';
+        cObj3.ContactId = contact1.Id;
+        //cObj3.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        cObj3.IFAP_Financial_Year__c = '2012';
+        cObj3.Status = 'Financial Security Requested';
+        cObj3.Financial_Review_Result__c = 'Satisfactory';
+        cObj3.IFAP_Country_ISO__c = ic.ISO_Code__c;
+        cObj3.Deadline_Date__c = Date.today() + 30;
+        cObj3.Financial_Review_Type__c = 'Annual';
+        cObj3.FS_Request_Mass__c = true;        
         insert cObj3;
 
         VFEmailTemplateController vtc3 = new VFEmailTemplateController();
@@ -427,6 +443,12 @@ public class IFAP_BusinessRulesTest {
         vtc3.caseURL = 'http://www.google.com';
         vtc3.displayDeadline = true;
         vtc3.isEnglish = true;
+        vtc3.templateName='IFAP_FS_Request';    
+        vtc3.checkValue='test';
+        vtc3.displayReminderContent=false;
+        vtc3.reviewType='test';
+        vtc3.agentType='test';
+        vtc3.ISOCode='test';    
         vtc3.VFEmailTemplateController();
 
     }
