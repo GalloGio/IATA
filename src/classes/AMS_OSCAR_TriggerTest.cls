@@ -875,7 +875,10 @@
     
 
     @isTest static void testIEPModelAProcess(){
-        AMS_OSCAR__c oscar = [SELECT Id, Step6__c, Step41__c, Step42__c, Process__c, RecordTypeId, Agency_Contact__c, Oscar_Communication_Case_Id__c 
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        AMS_OSCAR__c oscar = [SELECT Id, STEP6__c, STEP41__c, STEP42__c, Process__c, RecordTypeId, Agency_Contact__c, Oscar_Communication_Case_Id__c 
                                 FROM AMS_OSCAR__c LIMIT 1][0];
     
         oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('BANK ACCOUNT SETUP').getRecordTypeId();
