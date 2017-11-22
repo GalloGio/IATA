@@ -204,7 +204,7 @@
         var el = document.getElementById(fldId);
         console.log(v);
         console.log(fldId);
-        if(v=='AE') {
+        if(v=='Selected Branches Only') {
             el.style.display='block';
         } else {
             el.style.display='none';
@@ -216,7 +216,7 @@
         var el = document.getElementById(fldId);
         console.log(v);
         console.log(fldId);
-        if(v=='Entire hierarchy'){
+        if(v=='HO - All Branches'){
              el.style.display='block';
         }else{
          el.style.display='none';   
@@ -273,11 +273,11 @@
                                     <div class="col-lg-9" style="padding-top:7px">                                        
                                         <apex:outputPanel rendered="{!accList.size=0 }">
                                             <apex:outputPanel rendered="{!locationType == 'HE'}">
-                                                <input type="radio" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
                                             </apex:outputPanel>                                            
                                              
                                             <apex:outputPanel rendered="{!locationType == 'HO'}">
-                                                <input type="radio" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
                                             </apex:outputPanel>
                                             <br></br><br></br>                                            
                                             <apex:outputLabel value="{!$Label.ANG_Effective_Date}" />
@@ -286,19 +286,18 @@
 
                                         <apex:outputPanel rendered="{!accList.size>0}">
                                             <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
-                                            <apex:selectRadio required="true" id="LocationType" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
-                                                <apex:selectOption itemValue='Entire hierarchy' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
-                                                <apex:selectOption itemValue='AE' itemLabel="{!$Label.ISSP_ANG_ONE_OR_MORE_AE}"/>
+                                            <apex:selectRadio required="true" id="LocationType" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
+                                                <apex:selectOption itemValue='HO - All Branches' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
+                                                <apex:selectOption itemValue='Selected Branches Only' itemLabel="{!$Label.ISSP_ANG_ONE_OR_MORE_AE}"/>
                                             </apex:selectRadio> 
-                                            </apex:outputPanel>
-
+                                            </apex:outputPanel>                                            
                                             <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
-                                            <apex:selectRadio required="true" id="LocationType2" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
-                                                <apex:selectOption itemValue='Entire hierarchy' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
-                                                <apex:selectOption itemValue='AE' itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}"/>
+                                            <apex:selectRadio required="true" id="LocationType2" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
+                                                <apex:selectOption itemValue='HO - All Branches' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
+                                                <apex:selectOption itemValue='Selected Branches Only' itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}"/>
                                             </apex:selectRadio> 
                                             </apex:outputPanel>   
-
+                                            
                                             <br></br><br></br>        
                                             <apex:outputPanel id ='dateId' style="display:{!IF(newForm.Scope_of_Change__c =='Entire hierarchy','none','')}">
                                                 <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
@@ -379,30 +378,33 @@
                         </div>                              
                     </div>
                 </apex:form>                     
-                hq - {!newForm.Scope_of_Change__c}
-                ac - {!accountConcerned.IATACode__c}
-                vh - {!vAccountConcernedId}
-                vvv - {!vHQAccountId}
                 <apex:pageBlock >
                     <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">
                         <div class="aplabel">
-                            <apex:panelGrid >
+                            <apex:pageBlockSectionItem >
                                 <apex:outputText >{!$Label.ISSP_ANG_Iata_Codes_Relinquish}</apex:outputText>
-                                <apex:outputText value="{!CASE(newForm.Scope_of_Change__c, 'HO Only', $Label.ISSP_AMS_NoC_Head_Office + ' (' + hqAccount.IATACode__c + ')', 'HO - All Branches', $Label.ISSP_AMS_NoC_HO_All_Branches,'')}"/>
-                                <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>
-                            <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}" value="{!IF(newForm.Scope_of_Change__c=='HO - Selected Branches', accountConcerned.IATACode__c, 'hey hey')}"/>
-                            </apex:panelGrid>
+                                <apex:outputText value="{!agencyCodesConcernedStr}"></apex:outputText>
+                            </apex:pageBlockSectionItem>
                         </div>
                     </apex:pageBlockSection>
                 </apex:pageBlock>
-
+                <apex:form>
+                <apex:pageBlock>
+                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
+                    <div class="aplabel">
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs1}"/>
+                    </div>
+                    <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/> 
+                </apex:pageBlockSection> 
+                </apex:pageBlock>
+                </apex:form>
                 <apex:form id="tCondiForm">
                         <apex:pageMessages />
                         <apex:pageBlock >
                             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                 <apex:actionStatus id="buttonLoadingStep3">
                                     <apex:facet name="stop"><apex:outputPanel >
-                                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
                                         <apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
                                         <apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
                                     </apex:outputPanel></apex:facet>

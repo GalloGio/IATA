@@ -18,6 +18,7 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
     public String displayLanguage 										{get; set;}
     public String amsOfficeType 										{get; set;}
     public String userLanguage 											{get; set;}
+    private Id toBeUsed;
 
     private String vSAAMCaseId;
     public Id vHQAccountId	{get; set;}		
@@ -102,8 +103,10 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
                 isHOAccredited = true; //This is an accredited  Agency Account
 
             isHOcontact = false;
-        }        
-system.debug('aqui vHQAccountId ' + vHQAccountId);
+        }
+        newForm.HO_Account__c = vHQAccountId;        
+		system.debug('aqui vHQAccountId ' + vHQAccountId);
+        
         if (ApexPages.currentPage().getParameters().containsKey('step'))
             stepNumber = ApexPages.currentPage().getParameters().get('step');
         
@@ -112,7 +115,7 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
             isStep1 = true;
         }
 
-        newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
+        newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'HO - All Branches'; //Set default
 
         if(stepNumber == '2'){        	
         	Id caseid  = ApexPages.currentPage().getParameters().get('caseId');
@@ -227,12 +230,18 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
     	if(newForm.Agency_Codes_Concerned__c != null)
     		selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
     	
-    	system.debug('vHQAccountId ' + vHQAccountId + ' selectedBranchCodes ' + selectedBranchCodes + ' parentAccountId ' + parentAccountId);
+    	if(parentAccountId != null){
+            toBeUsed = parentAccountId;
+        }else{
+            toBeUsed = vHQAccountId;    
+        }
+    	
+    	system.debug('vHQAccountId ' + vHQAccountId + ' selectedBranchCodes ' + selectedBranchCodes + ' toBeUsed ' + parentAccountId);
 
     	return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
     					BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
                         FROM Account
-                        WHERE (Top_Parent__c = :parentAccountId) AND IATACode__c != null AND RecordType.DeveloperName IN
+                        WHERE (Top_Parent__c = :toBeUsed OR Id = :toBeUsed) AND IATACode__c != null AND RecordType.DeveloperName IN
                                       			('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) 
                         AND (IATACode__c NOT IN : selectedBranchCodes)                        
                 ];
@@ -268,7 +277,7 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
 
     public PageReference goToStep2(){
     	system.debug('aqui goToStep1');
-        return new PageReference('/ISSP_ANG_VoluntaryRelinquishment?caseId=' + newCase.Id + '&step=1' + commParam);
+        return new PageReference('/ISSP_ANG_VoluntaryRelinquishment?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
     public PageReference CheckCountryReqments() {
@@ -285,7 +294,8 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
 		SAVE METHOD
     **/
     public PageReference save(){
-        SYSTEM.DEBUG('VR - Saving Record - STEP A ' + newForm.Scope_of_Change__c);        
+        SYSTEM.DEBUG('VR - Saving Record - STEP A ' + newForm.Scope_of_Change__c);
+        SYSTEM.DEBUG('AQUI con.AccountID' + con.AccountId);        
         Boolean changeOfAccountConcerned;
         Boolean first = true;
 	   	String agencyCodes;
@@ -303,21 +313,35 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
         newCase.Reason1__c = AMS_UTILS.CASE_REASON_VR_CLOSURE;
         newCase.Status = 'Draft';
         newCase.Visible_on_ISS_Portal__c = true;
-        newCase.Description = Label.ANG_VR_SELECTED_CODES;
+        newCase.Description = Label.ANG_VR_SELECTED_CODES;	
 
-        if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
+        if (con.Account.Top_Parent__c == null) { 
+            vHQAccountId = con.AccountId;
+        }else{
+            vHQAccountId = con.Account.Top_Parent__c;
+        }
+
+        if (newForm.Scope_of_Change__c == 'HO - Selected Branches' && agencyCodesConcerned.size()==0) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (amsAccreditation.getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
         }       
         
+
+        if(newForm.Scope_of_Change__c == 'HO - All Branches'){
+        	agencyCodesConcerned = getRelatedAccount();
+        	system.debug('aqui accList ' + agencyCodesConcerned);
+        }
+
         system.debug('aqui newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Scope_of_Change__c ' + newForm.Scope_of_Change__c);
-		if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
+
+		if (newForm.Scope_of_Change__c=='HO Only') {
                 if(newCase.Account_Concerned__c != null)
                     changeOfAccountConcerned = true;
 
                 newCase.Account_Concerned__c = null;
                 newForm.Agency_Codes_Concerned__c = null;
         }else{
+        	system.debug('aqui agencyCodesConcerned ' + agencyCodesConcerned);
         	for ( SelectOption ac : agencyCodesConcerned) {
 	        if (!first) {
 	            agencyCodes += ',';
@@ -372,8 +396,6 @@ system.debug('aqui vHQAccountId ' + vHQAccountId);
             newForm.Operation_Type__c = 'Travel_Agent';
         else
             newForm.Operation_Type__c = 'Cargo_Agent';
-
-        newform.Scope_of_Change__c = 'HO - Selected Branches';
 
         upsert newForm;
         
