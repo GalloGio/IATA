@@ -2543,4 +2543,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>ANG_Block_Irregularity_Change_Codes</fullName>
+        <active>true</active>
+        <description>blocks the creation of irregularity change codes on newgen agencies</description>
+        <errorConditionFormula>AND( RecordType.Name = &apos;Irregularities&apos;,  Account__r.ANG_IsNewGenAgency__c )</errorConditionFormula>
+        <errorMessage>Irregularity change codes cannot be created on newgen agencies.</errorMessage>
+    </validationRules>
 </CustomObject>
