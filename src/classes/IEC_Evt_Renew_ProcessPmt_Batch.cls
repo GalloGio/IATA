@@ -202,7 +202,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 											mapOrdersNotRenewed.put(oi.OrderId, '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
 											mapOrderItemsNotRenewed.put(oi.Id, '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
 											System.debug('susana mapOrdersNotRenewed - ' + mapOrdersNotRenewed);
-											lstReleaseLog.add(IEC_EventReleaseLog_Svc.logError('Zuora Billing Account\'s default payment method is not a valid credit card to proceed with the payment.', null, oi.OrderId, idEventRelease, 'Credit Card Validation', oi.Order.BillToContactId, false));
+											lstReleaseLog.add(IEC_EventReleaseLog_Svc.logError('Zuora Billing Account\'s default payment method is not a valid credit card to proceed with the payment.', '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c, oi.OrderId, idEventRelease, 'Credit Card Validation', oi.Order.BillToContactId, false));
 										}
 									}
 									else
