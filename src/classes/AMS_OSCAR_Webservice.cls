@@ -187,7 +187,7 @@ global class AMS_OSCAR_Webservice {
             Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
                                     Reason1__c = (oscar.Process__c == AMS_Utils.AGENCYCHANGES ? 'Agent Change of Ownership' : 'New Accredited Agent'),
                                     ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c,
-                                    OSCAR__c = oscar.Id, Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
+                                    Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
 
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -215,7 +215,7 @@ global class AMS_OSCAR_Webservice {
     WebService static String copyDataToAccount(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID, Is_PCI_compliant__c from AMS_OSCAR__c where Id = : oscarId];
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
         } catch (Exception ex) {
@@ -470,8 +470,12 @@ global class AMS_OSCAR_Webservice {
 
         try{
 
-            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =: oscarId];
+
             if(oscar!=null && oscar.size()>0){
+
+                if((oscar[0].Process__c == AMS_Utils.NEWHESTANDARD || (oscar[0].Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar[0].ANG_Type_Of_Change__c))) && oscar[0].RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+                    return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
                 oscar[0].Risk_event_creation_date__c = System.today();
                 oscar[0].STEP36__c = 'Passed';

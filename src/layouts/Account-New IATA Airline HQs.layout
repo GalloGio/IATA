@@ -5,9 +5,6 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -136,6 +133,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Type_of_Service__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Model_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -285,10 +286,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Membership_status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Airline_Model_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

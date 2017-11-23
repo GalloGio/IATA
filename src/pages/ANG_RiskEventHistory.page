@@ -62,7 +62,7 @@
 			links.forEach(function(el){
 				if(el.innerHTML != 'Del'){
 					var linkURL = el.getAttribute("href");
-					var title = el.dataset.tabname;
+					var title = el.getAttribute('data-tabname');
 					el.addEventListener('click', function(e){
 						e.preventDefault();
 						e.stopPropagation();
@@ -71,9 +71,6 @@
 					}, false);
 				}
 			});
-
-			//start observing for changes
-			new MutationObserver(bindLinks).observe($('.observed')[0], { attributes: false, childList: true, characterData: false, subtree: true });
 		}
 
 		function openPopUp(Id) {
@@ -229,10 +226,10 @@
 					</span>
 				</div>
 			</apex:outputPanel>
+
+			<script>
+				bindLinks();
+			</script>
 		</apex:pageBlock>
 	</apex:form>
-
-	<script>
-		bindLinks();
-	</script>
 </apex:page>

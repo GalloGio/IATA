@@ -29,7 +29,7 @@
             &nbsp;&nbsp;
             &nbsp;&nbsp;
             <button class="slds-button slds-button--neutral slds-col--bump-left" >
-                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;pv2=' + v.accountId +'&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
                     Export Details
                 </a>
             </button>
