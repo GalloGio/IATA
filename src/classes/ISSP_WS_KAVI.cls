@@ -206,6 +206,7 @@ public class ISSP_WS_KAVI {
 									notNull('EmailAddress', newUser.Email)+
 									notNull('Zip', newUser.PostalCode)+
 									notNull('Mobile', newUser.MobilePhone)+
+									notNull('IsVisibleToGroups', true) +
 									'</Request>';
 							system.debug('xmlRequest: ' + xmlRequest);
 
