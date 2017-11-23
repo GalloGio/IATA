@@ -87,6 +87,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
+
     public List<String> accreditationFieldNames {
         get{
             if(accreditationFieldNames == null){
@@ -137,6 +139,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
         if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
         if(fieldName == 'ANG_Accreditation_Type__c') return isNewGenProcess;
+
+        if(hidenFieldsNewgenApplications.contains(fieldName))
+            return  !isNewGenProcess;
 
         return true;
     }
@@ -259,13 +264,19 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean isAgencyChanges{
         get{
-            //FM 10-03-2017 - Added Correction, since correction will act like the change process
             if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES  || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
         }
         private set;
     }
-
+    
+    public Boolean isOSCARCorrection{
+        get{
+            return oscarObj != null && oscarObj.Process__c == AMS_Utils.NGCORRECTION;
+        }
+        private set;
+    }
+    
     public List<FormField> accreditationFields{
         get{
             accreditationFields = new List<FormField>();
