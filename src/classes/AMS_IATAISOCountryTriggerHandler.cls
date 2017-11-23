@@ -76,6 +76,11 @@ public class AMS_IATAISOCountryTriggerHandler {
 
 	    boolean flagDone;
 	    for (IATA_ISO_Country__c isoc : triggerNew) {
+
+	    	System.debug('isoc.ISO_Code__c-->' + isoc.ISO_Code__c);
+
+			System.debug('isoc.ANG_Portal_Service__c-->' + isoc.ANG_Portal_Service__c);
+
 	        for (Portal_Applications__c portal : portals) {
 
 	            flagDone = false;
@@ -86,6 +91,9 @@ public class AMS_IATAISOCountryTriggerHandler {
 
 	            if (isUpdate) {
 	                IATA_ISO_Country__c oldCountry = oldMap.get(isoc.id);
+
+	                System.debug('oldCountry.ANG_Portal_Service__c-->' + oldCountry.ANG_Portal_Service__c);
+
 	                
 	                if (oldCountry.ISO_Code__c != isoc.ISO_Code__c) {
 	                    if (portal.ANG_Country_Coverage__c.contains(oldCountry.ISO_Code__c)) {
@@ -98,8 +106,6 @@ public class AMS_IATAISOCountryTriggerHandler {
 	                // Handle the countries that were modified and the association with the portal service was removed.
 	                //
 	                if(oldCountry.ANG_Portal_Service__c != null && isoc.ANG_Portal_Service__c == null ) {
-
-						System.debug(LoggingLevel.ERROR, '-------------------------------');
 
 	                    if (flagDone) {
 	                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(',' + isoc.ISO_Code__c, '');
@@ -123,13 +129,15 @@ public class AMS_IATAISOCountryTriggerHandler {
 	                }
 	            }
 
-	            if (!flagDone && !portal.ANG_Country_Coverage__c.contains(isoc.ISO_Code__c)) {
-	                if (portal.ANG_Country_Coverage__c == '') {
-	                    portal.ANG_Country_Coverage__c = isoc.ISO_Code__c;
-	                } else {
-	                    portal.ANG_Country_Coverage__c += ',' + isoc.ISO_Code__c;
-	                }
-	            }
+  	        	if(isoc.ANG_Portal_Service__c == portal.id) {
+		            if (!flagDone && !portal.ANG_Country_Coverage__c.contains(isoc.ISO_Code__c) && isoc.ANG_Portal_Service__c != null) {
+		                if (portal.ANG_Country_Coverage__c == '') {
+		                    portal.ANG_Country_Coverage__c = isoc.ISO_Code__c;
+		                } else {
+		                    portal.ANG_Country_Coverage__c += ',' + isoc.ISO_Code__c;
+		                }
+		            }	        		
+	        	}
 	        }
 	    }
 

@@ -105,7 +105,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                                     // check the Agent Type of the Account
                                     for (Account Acct : Cont2Account){
                                         if(theContact.AccountId == Acct.id){
-                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent') {
+                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
                                                 theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
                                             }
                                         }
