@@ -212,6 +212,29 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Exclusion_Search_By_Billing_Account</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>BillingAccName__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>Is_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BillingAccName__c</field>
+            <operation>contains</operation>
+            <value>Silver</value>
+        </filters>
+        <label>Exclusion Search By Billing Account</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Exclusion_Search_By_Source_Campaign</fullName>
         <columns>NAME</columns>
         <columns>Email__c</columns>

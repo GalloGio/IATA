@@ -41,40 +41,53 @@ public class ANG_PortalApplicationRightHandler {
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
 			contactIds.add(access.Contact__c);			
 		}
-
-		List<UserProvAccount> auxUpa = [Select ExternalUserId From UserProvAccount Where ExternalUserId in : contactIds];
-
-		Set<String> existingUpa = new Set<String>();
-		for(UserProvAccount u : auxUpa) {
-			existingUpa.add(u.ExternalUserId);
+		
+		map<id, User> mapUser = new map<id, User>();
+		set<id> setUserId = new set<id>();
+		
+		for(user u: [select id, ContactId, FederationIdentifier from User where ContactId in:contactIds]){
+			mapUser.put(u.ContactId, u);
+			setUserId.add(u.Id);
 		}
-
-		List<User> users = [Select id, contactId from User where contactId in : contactIds];
-
-		Map<String, String> userMap = new Map<String, String>();
-		for(User user : users) {
-			userMap.put(user.ContactId, user.id);
-		}
-
+		
+		List<UserProvAccount> ExistingUPA = [Select ExternalUserId, ConnectedAppId From UserProvAccount Where SalesforceUserId in : setUserId];
+		
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
-
-			if(!existingUpa.contains(access.Contact__c)) {
-	            UserProvAccount upa = new UserProvAccount (
-	            	ExternalUserId = (access.Contact__c == null ? '' : string.ValueOf(access.Contact__c).left(15)),
-	                SalesforceUserId = userMap.get(access.Contact__c),
-	                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
-	                LinkState = 'Linked',
-	                Status = 'Active'
-	            );
-	            upal.add(upa);
-	            //existingUpa.add(access.Contact__c);
-        	}
-            
+			if(roles.containsKey(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c)){
+				string sConnId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c;
+				//It means it's IEP
+				if(sConnId != '' && sConnId!=null){
+					sConnId = sConnId.left(15); //to be sure is same length
+					boolean UPAToCreate = true;
+					for(UserProvAccount upa: ExistingUPA){
+						if(string.ValueOf(upa.ConnectedAppId).left(15) == sConnId)
+							UPAToCreate = false;
+					}
+					
+					if(UPAToCreate){
+						string sExtUserId = '';
+						if(mapUser.get(access.Contact__c).FederationIdentifier==null)
+							sExtUserId = access.Contact__c;
+						else
+		            		sExtUserId = mapUser.get(access.Contact__c).FederationIdentifier;
+			            
+						UserProvAccount upa = new UserProvAccount (
+		            		ExternalUserId = sExtUserId,
+			                SalesforceUserId = mapUser.get(access.Contact__c).Id,
+			                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
+			                LinkState = 'Linked',
+			                Status = 'Active'
+			            );
+			            upal.add(upa);
+					}
+				}
+			}
 		}
-
+		
 		System.debug(LoggingLevel.ERROR, 'INSERT UserProvAccount --> ' + upal);
-
-		insert upal;
+		
+		if(!upal.isEmpty())
+			insert upal;
 	}
 
 	private void setConnectedAppsSSOPermission() {

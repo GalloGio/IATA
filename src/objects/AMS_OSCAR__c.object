@@ -13582,6 +13582,17 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -29626,8 +29637,38 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <validationRules>
         <fullName>ANG_Is_PCI_compliant_mandatory</fullName>
         <active>true</active>
-        <errorConditionFormula>TEXT(Process__c) = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
+        <errorConditionFormula>OR(
+TEXT(Process__c) = &apos;ANG.NEW.HE.STANDARD.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.HE.LITE.1.0&apos;,
+TEXT(Process__c) = &apos;ANG.NEW.AE.1.0&apos;
+)
+&amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
         <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Remittance_frequency_mandatory</fullName>
+        <active>true</active>
+        <description>Do not allow approval until the remittance frequency field is populated</description>
+        <errorConditionFormula>(TEXT(Process__c) = &quot;ANG.NEW.HE.LITE.1.0&quot; || TEXT(Process__c) = &quot;ANG.NEW.HE.STANDARD.1.0&quot;) &amp;&amp;  ISCHANGED(RPM_Approval__c) &amp;&amp;
+TEXT(RPM_Approval__c) = &quot;Authorize Approval&quot; &amp;&amp; ISBLANK(AMS_Online_Accreditation__r.Remittance_frequency__c)</errorConditionFormula>
+        <errorMessage>The OSCAR cannot be approved until the remittance frequency is populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cannot_Approve_Oscar_If_FS_not_confirmed</fullName>
+        <active>true</active>
+        <description>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</description>
+        <errorConditionFormula>AND(
+ISCHANGED(RPM_Approval__c),
+ISPICKVAL(RPM_Approval__c, &quot;Authorize Approval&quot;),
+ISPICKVAL(STEP34__c, &quot;Passed&quot;),
+NOT(ISPICKVAL(STEP35__c, &quot;Passed&quot;)),
+OR(
+ISPICKVAL(Process__c, &quot;ANG.MAJOR.CHANGES.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)
+)
+)</errorConditionFormula>
+        <errorMessage>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Effective_date_mandatory_in_VR</fullName>
