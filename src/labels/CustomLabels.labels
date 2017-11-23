@@ -26077,5 +26077,12 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Search for Contacts String</shortDescription>
         <value>Search for Contacts</value>
-    </labels>    
+    </labels>  
+    <labels>
+        <fullName>ISSP_ANG_GenericError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic error message</shortDescription>
+        <value>An error has occurred. Please contact support</value>
+    </labels>       
 </CustomLabels>
