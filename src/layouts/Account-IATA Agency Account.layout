@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_PCI_compliant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -541,22 +545,6 @@
                 <page>ImportantContacts</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Risk Event</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>220</height>
-                <page>ANG_RiskEventHistory</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

@@ -326,6 +326,17 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Form_Of_Payment_CC_and_PCI_Compliant</fullName>
+        <active>true</active>
+        <description>The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false</description>
+        <errorConditionFormula>AND(  ISPICKVAL(ANG_FormOfPayment_ID__c ,&apos;CC&apos;)  ,
+ISPICKVAL(Status__c ,&apos;Active&apos;),
+ISPICKVAL(Account__r.Is_PCI_compliant__c ,&apos;No&apos;) 
+,$RecordType.Name = &quot;Form Of Payment&quot;
+)</errorConditionFormula>
+        <errorMessage>The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>New_Agency_Authorization</fullName>
         <availability>online</availability>

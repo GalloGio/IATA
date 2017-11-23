@@ -57,7 +57,7 @@
     <!-- ****************************************************************************** -->
     <apex:outputPanel >
       <div style="page-break-after:always;">
-        <table class="aptable">
+        <table class="aptable" style="width: 100%;">
           <tr>
             <td colspan="3" class="bluebg">
               <p class="whitetext">
@@ -73,6 +73,10 @@
             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
             <td colspan="2">{!hqAccount.TradeName__c}</td>
           </tr>
+          <tr>
+            <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+            <td colspan="2">{!amsLocationTypeLabelHq}</td>
+          </tr>          
           <tr>
             <td class="label">{!$Label.ISSP_AN_Step1_AE_Full_Address}</td>
             <td colspan="2">
@@ -127,15 +131,18 @@
                                 </p>
                             </td>
                         </tr>
-                        
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
-                            <td colspan="2">{!newForm.Account_Name__c} -- {!newForm.AE_separate_Legal_Entity__c}</td>
+                            <td colspan="2">{!newForm.Account_Name__c}</td>
                         </tr>
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
                             <td colspan="2">{!newForm.Trade_Name__c}</td>
                         </tr>
+                        <tr>
+                          <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
+                          <td colspan="2">{!amsLocationTypeLabel}</td>
+                        </tr>                        
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_Legal_Status__c}</td>
@@ -202,14 +209,14 @@
                         <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
                           <td colspan="3" width="40%"><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></td>                            
                         </tr>
-                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
+                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','','none')}">
                           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}</td>
                           <td colspan="2">{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}</td>
                         </tr>
-                          <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','none','')}">
-                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}</td>
-                            <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
-                          </tr>
+                        <tr style="display: {!IF(newForm.AE_separate_Legal_Entity__c == 'No','','none')}">
+                          <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}</td>
+                          <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
+                        </tr>
                           <tr>
 	                        <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}</td>
                             <td colspan="2">
@@ -218,15 +225,17 @@
                                 </apex:outputText>
                             </td>
 	                      </tr>
-                          <tr>
+                          <tr style="display: {!IF(countryCheckList.License_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_License_No__c}</td>
                           </tr>
-                          <tr>
+
+                          <tr style="display: {!IF(countryCheckList.Registration_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_Trade_Reg_No__c}</td>
                           </tr>
-                          <tr>
+
+                          <tr style="display: {!IF(countryCheckList.License_required__c==true,'','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}</td>
                               <td colspan="2">
                                 <apex:outputText value="{0,date, MMMM d,  yyyy}">
@@ -234,7 +243,8 @@
                                 </apex:outputText>
                               </td>
                           </tr>
-                        <tr>
+
+                        <tr style="display: {!IF(countryCheckList.Registration_required__c==true,'','none')}">
                           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}</td>
                           <td colspan="2">
                               <apex:outputText value="{0,date, MMMM d,  yyyy}">
@@ -443,7 +453,7 @@
           <!-- *********************************************** -->
           <div style="page-break-after:always;" class="pdf-section">
                   <apex:pageBlock >
-                      <table class="aptable">
+                      <table class="aptable" style="width: 100%;">
                         <tr>
                             <td colspan="2" class="bluebg">
                                 <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
@@ -452,11 +462,11 @@
 
                         <tr style="display:{!IF(con.Account.ANG_Accreditation_Model__c!='Cashless','','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
-                            <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
+                            <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                         </tr>
                         <tr style="display:{!IF(con.Account.ANG_Accreditation_Model__c!='Cashless','','none')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
-                            <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
+                            <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                         </tr>
 
                         <tr>
