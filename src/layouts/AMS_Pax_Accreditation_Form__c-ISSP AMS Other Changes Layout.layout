@@ -39,6 +39,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Confirm_accreditation_type_are_correct__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Current_Accreditation_type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Confirm_Legal_Details_are_correct__c</field>
             </layoutItems>
             <layoutItems>
@@ -55,6 +63,14 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notify_Change_Accreditation_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Accreditation_type__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Notify_Change_Legal_Details__c</field>
@@ -401,6 +417,7 @@
         <fields>Email__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Agency_owner__c</fields>
+        <fields>Duplicate_contact_exists__c</fields>
         <fields>Agency_role__c</fields>
         <fields>Financial_interest__c</fields>
         <fields>Time_devoted_to_Agency_business__c</fields>

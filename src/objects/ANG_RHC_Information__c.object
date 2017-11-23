@@ -115,15 +115,6 @@
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>ANG_Consumed_RHC_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Consumed RHC Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>ANG_Enable_Calculation__c</fullName>
         <description>Reports the account status. Used to prevent queries on the RHC trigger.</description>
         <externalId>false</externalId>
@@ -206,6 +197,18 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_Amount_Simulation__c</fullName>
+        <description>Temporary field to be used during simulation of RHC</description>
+        <externalId>false</externalId>
+        <label>RHC Amount (Simulation)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Amount__c</fullName>
         <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>
@@ -226,26 +229,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_RME_Amount_Last_Update__c</fullName>
-        <externalId>false</externalId>
-        <label>RME Amount Last Update</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_RME_Amount_Provisional__c</fullName>
-        <externalId>false</externalId>
-        <label>Provisional RME Amount</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>4</scale>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_RME_Amount__c</fullName>
@@ -319,6 +302,29 @@ if (result[0].success == &quot;true&quot;) {
 window.location.reload();
 } else {
 alert(result[0].errors.message);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_Balance_Update</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Balance Update</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
 }</url>
     </webLinks>
     <webLinks>

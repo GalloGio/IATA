@@ -205,19 +205,7 @@
     <fields>
         <fullName>Data_Quality_Description__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( Data_Quality_Score__c =100,&quot;All Account Details Captured&quot;, &quot;Missing: &quot;
-
-
-&amp;IF( LEN(Address_1__c) = 0, &quot;Street, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Telephone_Int__c) = 0, &quot;Tel. Intl Code, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Telephone_STD__c) = 0, &quot;Tel. Area Code, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Telephone__c) = 0, &quot;Tel. Local Number, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Email__c) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(State__c) = 0, &quot;State, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(AMS_ZipCode__c) = 0, &quot;Postal Code, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Account__r.Sub_Region__c) = 0, &quot;Sub Region, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Account__r.Region_formula__c) = 0, &quot;Region, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Country__c) = 0, &quot;Country, &quot;,&quot;&quot;)&amp;&quot;&quot;)</formula>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Details Captured&quot;, &quot;Missing: &quot; &amp;IF( LEN(Address_1__c) = 0, &quot;Street, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.Phone) = 0, &quot;Telephone, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.Email__c) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.Iso_State__c) = 0, &quot;State, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(Account__r.Country_ISO_Code__c != &quot;HK&quot;,LEN(AMS_ZipCode__c) = 0), &quot;Postal Code, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(Account__r.Country_ISO_Code__c != &quot;SG&quot;),(Account__r.Country_ISO_Code__c != &quot;HK&quot;),LEN(Account__r.VAT_Number__c) = 0),&quot;VAT Number, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.IATA_ISO_Country__c) = 0, &quot;Country, &quot;,&quot;&quot;)&amp;&quot;&quot;)</formula>
         <label>Data Quality Description</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -228,22 +216,7 @@
     <fields>
         <fullName>Data_Quality_Score__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;)),OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;))),
-
-
-(IF( 
-
- LEN(Address_1__c)= 0, 0,15)
- +IF(LEN(Telephone_Int__c)= 0, 0,5)
- +IF(LEN(Telephone_STD__c )= 0, 0,5)
- +IF(LEN(Telephone__c  )= 0, 0,5)
- +IF(LEN(Email__c )= 0, 0,10)
- +IF(LEN(State__c )= 0, 0,10)
- +IF(LEN(AMS_ZipCode__c )= 0, 0,10)
- +IF(LEN(Country__c )= 0, 0,10)
- +IF(LEN(Account__r.Sub_Region__c)= 0, 0,10)
- +IF(LEN(Account__r.Region_formula__c)= 0, 0,10)
- +IF(LEN(City__c )= 0, 0,10)),1)</formula>
+        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,OR(ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;)),OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;))), (IF(LEN(Address_1__c)= 0, 0,15) +IF(LEN(Account__r.Phone)= 0, 0,15) +IF(LEN(Account__r.Email__c )= 0, 0,15) +IF(LEN(Account__r.Iso_State__c)= 0, 0,10) +IF(LEN(Account__r.IATA_ISO_Country__c)= 0, 0,15) +IF(CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),10,IF(LEN(AMS_ZipCode__c) = 0, 0,10)) +IF(OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;),(CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;))),10,IF(LEN(Account__r.VAT_Number__c) = 0, 0,10)) +IF(LEN(City__c )= 0, 0,10)),1)</formula>
         <label>Data Quality Score</label>
         <precision>18</precision>
         <required>false</required>

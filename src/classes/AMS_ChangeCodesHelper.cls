@@ -179,7 +179,7 @@ public class AMS_ChangeCodesHelper {
 
         List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
 
-        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
+        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts) && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
                 update accountsToUpdateList;
         }
@@ -329,7 +329,7 @@ public class AMS_ChangeCodesHelper {
         
         if(oscar != null){
 
-            if( aacNEW.Change_Code__c == 'NEW' ){
+            if( aacNEW.Change_Code__c == 'NEW' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning){
                 oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice

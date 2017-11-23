@@ -170,6 +170,7 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
+                oscar.Proof_of_payment_received__c = Date.today();
                 oscar.Invoice_status__c = 'Outstanding';
                 res = True;
             }
@@ -286,7 +287,8 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
-                oscar.Bank_Guarantee_received__c = Date.today();
+                //RB: 15-11-2017 - INC354179 FS Bank_Guarantee_received__c should only be populated when FS Step is Valid.
+                //oscar.Bank_Guarantee_received__c = Date.today();
                 oscar.Financial_security_result__c = 'Rejected';
                 res = True;
             }
