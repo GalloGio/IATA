@@ -628,7 +628,7 @@
         <filters>
             <field>Responsible__c</field>
             <operation>equals</operation>
-            <value>Yazan Naouri</value>
+            <value>Manuel garcia del salto</value>
         </filters>
         <filters>
             <field>Deadline__c</field>
