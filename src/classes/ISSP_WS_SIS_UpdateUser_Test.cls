@@ -175,7 +175,7 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         Test.stopTest();
         
         System.assertEquals(false, response.IsSuccess);
-        System.assertEquals('022', response.ErrorCode);
+        System.assertEquals('024', response.ErrorCode);
     }
     
     static testMethod void updateSISUser_InactiveUserError() {

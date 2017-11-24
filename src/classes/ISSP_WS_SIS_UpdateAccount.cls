@@ -8,7 +8,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         WebService String MemberDesignator;
         WebService String ISMembershipStatus;
         WebService String IsMembershipSubStatus;
-        WebService DateTime ISEntryDate;
+        WebService String ISEntryDate;
         WebService String ICHMembershipStatus;
         WebService String ACHMembershipStatus;
         WebService String TypeOfService;
@@ -42,7 +42,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             // rollback all database changes
             Database.rollback(sPointContact);
             //Return an Error Response
-            System.debug(e);
+            System.debug(e.getStackTraceString());
             ISSP_WS_SIS_Common.WSException wsException = new ISSP_WS_SIS_Common.WSException('001','Exception not handled');
             return createResponseError(inputData, wsException);
         }
@@ -53,7 +53,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     **/
     private static void validateInputData(InputData inputData) {
         if (String.isBlank(inputData.SISMemberID)) {
-            throw new ISSP_WS_SIS_Common.WSException('018',''); //new error
+            throw new ISSP_WS_SIS_Common.WSException('018','');
         }
         if (String.isBlank(inputData.MemberAccountingCode)) {
             throw new ISSP_WS_SIS_Common.WSException('023','MemberAccountingCode');
@@ -67,8 +67,10 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         if (String.isBlank(inputData.IsMembershipSubStatus)) {
             throw new ISSP_WS_SIS_Common.WSException('023','IsMembershipSubStatus');
         }
-        if (inputData.ISEntryDate==null) {
-            throw new ISSP_WS_SIS_Common.WSException('023','ISEntryDate');
+        if (!String.isBlank(inputData.ISEntrydate)) {
+            if (strToDate(inputData.ISEntrydate) == null ) {
+                throw new ISSP_WS_SIS_Common.WSException('025','');
+            }
         }
         if (String.isBlank(inputData.ICHMembershipStatus)) {
             throw new ISSP_WS_SIS_Common.WSException('023','ICHMembershipStatus');
@@ -80,7 +82,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             throw new ISSP_WS_SIS_Common.WSException('010','');
         }
         if (!VALID_REQUEST_TYPES.contains(inputData.RequestType)) {
-            throw new ISSP_WS_SIS_Common.WSException('022',''); // new error, invalid Request Type
+            throw new ISSP_WS_SIS_Common.WSException('022','');
         }
     }
     
@@ -106,7 +108,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             account.EF_SIS_Designator__c = inputData.MemberDesignator;
             account.SIS_Status__c = inputData.ISMembershipStatus;
             account.SIS_Sub_Status__c = inputData.IsMembershipSubStatus;
-            //account.SIS_Entry_Date__c = inputData.ISEntryDate;
+            //if (inputData.ISEntryDate!=null) account.SIS_Entry_Date__c = strToDate(inputData.ISEntryDate);
             account.ICH_Member__c = Boolean.ValueOf(inputData.ICHMembershipStatus);
             account.ACH_Member__c = Boolean.ValueOf(inputData.ACHMembershipStatus);
             update account;
@@ -165,6 +167,25 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         log.Error_Code__c = wsException.errorCode;
         log.Error_Message__c = wsException.description;
         insert log;
+    }
+    
+    /**
+        Convert string from SIS to a valid Date
+    **/
+    private static final map<String,Integer> MONTHS  = new map<String,Integer>{
+        'JAN' => 1,'FEB' => 2,'MAR' => 3,'APR' => 4,'MAY' => 5,'JUN' => 6,
+        'JUL' => 7,'AUG' => 8,'SEP' => 9,'OCT' => 10,'NOV' => 11,'DEC' => 12
+    };
+    private static Date strToDate(String str) {
+        try {
+            String[] part = str.split('-');
+            Integer day = Integer.valueOf(part[0]);
+            Integer month = MONTHS.get(part[1]);
+            Integer year = Integer.valueOf(part[2]);
+            return Date.newInstance(year, month, day);
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     /**

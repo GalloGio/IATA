@@ -46,7 +46,7 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         inputData.MemberDesignator = '12';
         inputData.ISMembershipStatus = 'Active';
         inputData.IsMembershipSubStatus = 'IATA Office';
-        inputData.ISEntryDate = Date.today();
+        inputData.ISEntryDate = '01-OCT-2004';
         inputData.ICHMembershipStatus = 'true';
         inputData.ACHMembershipStatus = 'true';
         inputData.TypeOfService = 'SIS';
@@ -114,16 +114,16 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         System.assertEquals('023', response.ErrorCode);
     }
     
-    static testMethod void updateAccount_noISEntryDate() {
+    static testMethod void updateAccount_invalidISEntryDate() {
         ISSP_WS_SIS_UpdateAccount.InputData inputData = createInputData();
         
         Test.startTest();
-        inputData.ISEntryDate = null;
+        inputData.ISEntryDate = '01-XXX-2017'; //wrong date
         ISSP_WS_SIS_UpdateAccount.ResponseData response = ISSP_WS_SIS_UpdateAccount.updateAccount(inputData);
         Test.stopTest();
         
         System.assertEquals(false, response.IsSuccess);
-        System.assertEquals('023', response.ErrorCode);
+        System.assertEquals('025', response.ErrorCode);
     }
 
     static testMethod void updateAccount_noICH() {

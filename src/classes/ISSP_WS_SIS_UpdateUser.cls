@@ -88,7 +88,7 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         }
         
         updateSISContact(theContact, inputData.SISMemberID, inputData.UserType);
-        ISSP_WS_SIS_ActivateUser.grantAccessToSIS(theContact);
+        ISSP_WS_SIS_Common.grantAccessToSIS(theContact);
         
         return theUser;
     }
@@ -97,7 +97,7 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         Boolean updateContact = false;
         // Check SIS_ID__c = SISmemberId
         if (SISMemberID != contact.Account.SIS_ID__c) { // or contact SIS ID
-            throw new ISSP_WS_SIS_Common.WSException('022', 'The Account SIS ID is different than provided by SIS service.'); // new error
+            throw new ISSP_WS_SIS_Common.WSException('024',''); // new error
         }
         //check if contact is active
         if (contact.User_Portal_Status__c == 'Rejected'

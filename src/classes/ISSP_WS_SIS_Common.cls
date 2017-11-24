@@ -47,4 +47,36 @@ global class ISSP_WS_SIS_Common {
         Matcher matcher = EMAIL_PATTERN.matcher(checkEmail);
         return matcher.matches();
     }
+    
+    /**
+        Grant access to SIS application to given contact
+    **/
+    public static void grantAccessToSIS(Contact contact) {
+        List <Portal_Application_Right__c> appRightList = [
+            SELECT Id, Right__c
+            FROM Portal_Application_Right__c
+            WHERE Contact__c = :contact.Id
+            AND Portal_Application__c = :SIS_ID_PORTAL_APP];
+
+        if (appRightList.isEmpty()){
+            //create new app right
+            try {
+                Portal_Application_Right__c appRight = ISSP_WS_Utilities.createApp(SIS_ID_PORTAL_APP, contact.Id);
+                insert appRight;
+            } catch (Exception e) {
+                throw new WSException('001', 'Application right creation failed ' + e.getMessage());
+            }
+        } else {
+            //grant access to already existing app right
+            Portal_Application_Right__c appRight = appRightList[0];
+            if (appRight.Right__c != 'Access Granted'){
+                try{
+                    appRight.Right__c = 'Access Granted';
+                    update appRight;
+                } catch (Exception e){
+                    throw new WSException('001', 'Application right update failed ' + e.getMessage());
+                }
+            }
+        }
+    }
 }

@@ -159,7 +159,7 @@ global with sharing class ISSP_WS_SIS_NewUser {
                 }
             }
         }
-        ISSP_WS_SIS_ActivateUser.grantAccessToSIS(theContact);
+        ISSP_WS_SIS_Common.grantAccessToSIS(theContact);
         return theUser;
     }
     
