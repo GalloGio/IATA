@@ -405,6 +405,22 @@
         <value>Application Rejection</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_SETUP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_FINALIZATION</shortDescription>
+        <value>Setup Finalization</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_SETUP_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_PROCESSING</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -627,6 +643,20 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP4</shortDescription>
         <value>Application Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP41</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP41</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP42</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP42</shortDescription>
+        <value>Setup Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>

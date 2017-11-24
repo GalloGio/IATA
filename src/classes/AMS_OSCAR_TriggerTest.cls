@@ -874,4 +874,39 @@
     }
     
 
+    @isTest static void testIEPModelAProcess(){
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        AMS_OSCAR__c oscar = [SELECT Id, STEP6__c, STEP41__c, STEP42__c, Process__c, RecordTypeId, Agency_Contact__c, Oscar_Communication_Case_Id__c 
+                                FROM AMS_OSCAR__c LIMIT 1][0];
+    
+        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('BANK ACCOUNT SETUP').getRecordTypeId();
+        oscar.Process__c = AMS_Utils.IEPBANKACCOUNTSETUP;
+        oscar.Agency_Contact__c = [SELECT Id FROM Contact where Email = 'test@test.com'][0].Id;
+        oscar.Oscar_Communication_Case_Id__c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id].Id;
+
+        update oscar;
+
+        Test.startTest();
+
+        oscar.Step6__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar.Step41__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar.Step42__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar.Step42__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
 }
