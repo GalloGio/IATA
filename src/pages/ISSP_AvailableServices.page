@@ -32,6 +32,10 @@
     var redirected = false;
     var requested = 0;
 
+    var $serviceName = '';
+    var $serviceId = '';
+    var $accountId = '';
+
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
       if(redirected) return false;
@@ -227,6 +231,29 @@
         if(!params || !params.event){ return false; }
         if(params && !params.contextMenu && typeof this.options.contextMenu !== 'string'){ return false; }
 
+        // in the data-state attribute we have the ServiceName;Right;ServiceId
+        var dataState = params.buttonElement.getAttribute("data-state");
+
+        var aux = dataState.split(";");
+
+        $serviceName = aux[0];
+        $serviceId = aux[1];
+        $accountId = aux[2];
+
+        console.log('$serviceName->' + $serviceName);
+        console.log('$serviceId->' + $serviceId);
+        console.log('$accountId->' + $accountId);
+
+        if($serviceName == 'IFAP') {
+          $('li[data-item="add"]').hide();
+          $('li[data-item="view"]').show();
+          $('li[data-item="ifapAssign"]').show();
+        } else {
+          $('li[data-item="add"]').show();
+          $('li[data-item="view"]').show();
+          $('li[data-item="ifapAssign"]').hide();
+        }
+
         var that = this,
             $menu, screenPosX, screenPosY,
             $tr = $(params.event.target).closest('tr[data-index]'),
@@ -371,39 +398,42 @@
     
     <apex:pageBlock id="Services" >
     <!-- context menu -->
-    <ul id="context-menu" class="dropdown-menu">
+    <ul id="context-menu" class="dropdown-menu">      
         <li data-item="add" data-id="cenas"><a>{!$Label.ISSP_Add_User_to_this_service}</a></li>
         <li data-item="view"><a>{!$Label.ISSP_View_Portal_Users}</a></li>
+        <li data-item="ifapAssign"><a>{! $Label.ISSP_Assign_IFAP}</a></li>
     </ul>  
 
     <script>
-    $(function() {      
-      $('[id$=pbt_Services]').bootstrapTable({
-        contextMenu: '#context-menu',
-        contextMenuButton: '.example2-button',        
-        onContextMenuItem: function(row, $el){
-          sforce.connection.sessionId = '{!$Api.Session_ID}';
-          var string = row[3].substring("Id=");          
-          var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));          
-          
-          var qr = sforce.connection.query('SELECT id,name FROM Portal_Applications__c where id in (\''+linkId+ '\')');
-          records = qr.getArray("records");
+      $(function() {      
+        $('[id$=pbt_Services]').bootstrapTable({
+          contextMenu: '#context-menu',
+          contextMenuButton: '.example2-button',        
+          onContextMenuItem: function(row, $el){
+            /*
+            sforce.connection.sessionId = '{!$Api.Session_ID}';
+            var string = row[3].substring("Id=");          
+            var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));          
             
-          for (var i=0; i< records.length; i++) {
-              var record = records[i];
-              var servName = record.Name;              
+            var qr = sforce.connection.query('SELECT id,name FROM Portal_Applications__c where id in (\''+linkId+ '\')');
+            records = qr.getArray("records");
+              
+            for (var i=0; i< records.length; i++) {
+                var record = records[i];
+                var servName = record.Name;              
+            }
+            */
+              
+            if($el.data("item") == "add") {
+              window.location.href = "/ISSP_EditPortalServiceAccess?Id=" + $serviceId + "&op=Edit&PSId=" + $serviceId + "&PSname=" + $serviceName;
+            } else if($el.data("item") == "view") {
+              window.location.href = "/ISSP_PortalService?Id=" + $serviceId;
+            } else if ($el.data("item") == "ifapAssign") {
+              window.location.href = "ISSP_AssignFinancialContact?id=" + $accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
+            }
           }
-            
-          if($el.data("item") == "add"){          
-              window.location.href = "/ISSP_EditPortalServiceAccess?Id="+linkId+"&op=Edit&PSId="+linkId+"&PSname="+servName;
-          }
-          else if($el.data("item") == "view"){
-            window.location.href = "/ISSP_PortalService?Id="+linkId;
-          }
-        }
+        });
       });
-    });
-
     </script>
 
         <hr />
@@ -445,7 +475,7 @@
 
             <apex:column headerValue="Actions" id="actionId" rendered="{!AdminOrNot}">
               <apex:outputPanel rendered="{!item.addUsersEnable}">
-                <button type="button" class="example2-button"><span class="glyphicon glyphicon-cog"></span></button>
+                <button type="button" class="example2-button" data-state="{!item.recordService.ServiceName__c};{!item.recordService.id};{!currentPortalUser.contact.AccountId}"><span class="glyphicon glyphicon-cog"></span></button>
               </apex:outputPanel>
             </apex:column>
           <!--elliot 19 juin-->  
@@ -600,6 +630,11 @@
                   <td style="padding-left: 10px; padding-top: 10px">
                   <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
                     <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
+                    <!--
+                    <apex:selectRadio id="portalRoles" value="{!Serv.portalServiceRole}" layout="pageDirection">
+                        <apex:selectOptions value="{!availablePortalServiceRoles}"/>
+                    </apex:selectRadio>
+                    -->
                     <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
                       <apex:selectOptions value="{!availablePortalServiceRoles}"/>
                       <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
