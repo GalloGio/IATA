@@ -321,6 +321,16 @@ body.loading .modal {
     color: red;
 }
 
+body .bPageBlock .pbBody .red .pbSubheader{
+    background-color:#c00000;
+}
+body .bPageBlock .pbBody .green .pbSubheader{
+    background-color:#008000;
+}
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
+}
+
 .loaderCircle {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
@@ -341,15 +351,6 @@ body.loading .modal {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-
-body .bPageBlock .pbBody .red .pbSubheader{
-    background-color:#c00000;
-}
-body .bPageBlock .pbBody .green .pbSubheader{
-    background-color:#008000;
-}
-body .bPageBlock .pbBody .blue .pbSubheader{
-    background-color:#01AAE8;
 }
 
 .datePicker{
