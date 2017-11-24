@@ -120,7 +120,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		AMS_VoucherPDFCreationBatch pdfCreationBatch = new AMS_VoucherPDFCreationBatch(vouchersToPrint,region,process);
 
-		Id pdfCreationBatchId = Database.executeBatch(pdfCreationBatch,1500);
+		Id pdfCreationBatchId = Database.executeBatch(pdfCreationBatch,VOUCHERSPERPDF);
 
 		process.Vouchers_PDF_Creation_Batch__c = pdfCreationBatchId;
 
