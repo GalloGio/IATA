@@ -9,6 +9,15 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Generate_Unique_key</fullName>
+        <field>Country_Class_Check__c</field>
+        <formula>RecordType.Name+IATA_ISO_Country__r.ISO_Code__c+TEXT(ANG_RTS_Severity__c)</formula>
+        <name>Generate Unique key</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>Country%2FClass Check</fullName>
         <actions>
