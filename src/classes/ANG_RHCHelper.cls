@@ -75,4 +75,35 @@ public class ANG_RHCHelper {
 			}
 		}
 	}
+	@future
+	public static void sendMailUpdateRiskAlert(String targetId,String whatId,String templateId,String riskAlertId){
+
+		sendMailUpdate(new Map<String, String>{targetId => whatId}, templateId);
+
+		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c();
+		ara.id=riskAlertId;
+		ara.ANG_email_sent__c= true;
+
+		upsert ara;
+
+	}
+
+	public static void sendMailUpdate(Map<String, String> targetsId, String templateId) {
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+
+		for(String targetId : targetsId.keySet()){
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTargetObjectId(targetId);
+			mail.setWhatId(targetsId.get(targetId));
+			mail.setTemplateId(templateID);
+			mail.setOrgWideEmailAddressId ([select Id from OrgWideEmailAddress where address ='noreply@iata.org'].id);
+			emails.add(mail);
+		}
+		
+		try{
+			if(!Test.isRunningTest()) Messaging.sendEmail(emails); 
+		}catch(Exception e){
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_RHCHelper - sendMailUpdate] Failed to send email to users - '+e.getMessage());
+		}
+	}
 }
