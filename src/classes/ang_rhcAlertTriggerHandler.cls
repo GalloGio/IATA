@@ -200,7 +200,7 @@ public class ang_rhcAlertTriggerHandler {
 					Origin = 'Risk Monitoring Engine',
 					BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
 					Decision__c = 'Prejudiced Collection of Funds',
-					RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('case').get('SIDRA_Lite'),
+					RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
 					Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
 					Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
 					End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c,
@@ -464,8 +464,8 @@ public class ang_rhcAlertTriggerHandler {
                         	if(rtsConfigMap.get(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c).ANG_Send_Email_Agent__c){
                             notifications.add(new Notification__c(
                                 Contact__c = c.Id,
-	                                Subject__c = 'This is the notification Subject',
-	                                Message__c = 'this is the message',
+	                            Subject__c = Label.RTS_TAR_Notification_Title,
+                                Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
                                 Alert_Contact_By_Email__c = true
                             ));
                         }
