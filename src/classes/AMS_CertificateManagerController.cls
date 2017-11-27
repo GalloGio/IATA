@@ -169,7 +169,7 @@ public class AMS_CertificateManagerController {
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
 
 		Set<String> iataCodesSet = iataCodes.keySet();
-		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet');
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet order by id');
 
 
 		List<Account> warnings = new List<Account>();
@@ -229,7 +229,7 @@ public class AMS_CertificateManagerController {
 
 	private void updateAccounts() {
 		Map<Id, Account> accounts = new Map<Id, Account>();
-		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE Id IN :accountIds')){
+		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE Id IN :accountIds order by id')){
 			if(!a.Certificate_Generated_Current_Year__c){
 				a.Certificate_Generated_Current_Year__c = true;
 				accounts.put(a.Id, a);
