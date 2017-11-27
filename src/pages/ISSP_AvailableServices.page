@@ -399,9 +399,9 @@
     <apex:pageBlock id="Services" >
     <!-- context menu -->
     <ul id="context-menu" class="dropdown-menu">      
-        <li data-item="add" data-id="cenas"><a>{!$Label.ISSP_Add_User_to_this_service}</a></li>
-        <li data-item="view"><a>{!$Label.ISSP_View_Portal_Users}</a></li>
         <li data-item="ifapAssign"><a>{! $Label.ISSP_Assign_IFAP}</a></li>
+        <li data-item="add" data-id="cenas"><a>{!$Label.ISSP_Add_User_to_this_service}</a></li>
+        <li data-item="view"><a>{!$Label.ISSP_View_Portal_Users}</a></li>        
     </ul>  
 
     <script>
