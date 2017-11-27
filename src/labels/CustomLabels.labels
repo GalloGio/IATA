@@ -757,6 +757,27 @@
         <value>The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Apply&lt;/a&gt; to convert to the GoStandard accreditation type in order to issue tickets using the Cash Form of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CashlessMessageNoAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -880,6 +901,27 @@
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ConfirmRequestIEP_3</shortDescription>
         <value>For information on the available roles, please click</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFrom</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From</shortDescription>
+        <value>Conversion From</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoLite Tooltip</shortDescription>
+        <value>Conversion From GoLite Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoStandardTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoStandard Tooltip</shortDescription>
+        <value>Conversion From GoStandard Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryConcerned</fullName>
@@ -1273,7 +1315,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>Standard Accreditation with Cash</value>
+        <value>GoStandard</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
@@ -1281,7 +1323,120 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>Standard Accreditation with no Cash</value>
+        <value>GoLite</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode1</shortDescription>
+        <value>ProgressBarNode1</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode2</shortDescription>
+        <value>ProgressBarNode2</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode3</shortDescription>
+        <value>ProgressBarNode3</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode4</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode4</shortDescription>
+        <value>ProgressBarNode4</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode5</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode5</shortDescription>
+        <value>ProgressBarNode5</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode6</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode6</shortDescription>
+        <value>ProgressBarNode6</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_AccessEasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH AccessEasyPay</shortDescription>
+        <value>Access your IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_DateIssued</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_REH_RiskDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP REH RiskDescription</shortDescription>
+        <value>Risk Description</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information</shortDescription>
+        <value>RHC Information</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC - Request Balance Update</shortDescription>
+        <value>Request Balance Update</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Request_ICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Request ICE</shortDescription>
+        <value>In order to view your upcoming payments &amp; remittance dates&lt;br/a&gt;
+            &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;Request access to the ICE - IATA Customer E-Statement&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RP_Cash_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Cash Conditions</shortDescription>
+        <value>Cash Conditions</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RP_Financial_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Financial Review</shortDescription>
+        <value>Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RP_Risk_History</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RP Risk History</shortDescription>
+        <value>Risk History</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
@@ -1364,6 +1519,34 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Accreditation Model Tooltip</shortDescription>
+        <value>RHC Accreditation Model Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_AmountTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_HUB_Current_UsageTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC HUB Current Usage Tooltip</shortDescription>
+        <value>RHC HUB Current Usage Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RHC_RiskStatusTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
+        <value>RHC Risk Status Tooltip</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -7441,7 +7624,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
-        <value>New Associate Entity - Cash</value>
+        <value>New Associate Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
@@ -7449,7 +7632,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
-        <value>New Associate Entity - Cashless</value>
+        <value>New Associate Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
@@ -9186,14 +9369,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with Cash</value>
+        <value>New Head Entity - GoStandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with no Cash</value>
+        <value>New Head Entity - GoLite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
@@ -9471,6 +9654,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
         <value>1. Identification of Agency for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>2. Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section2</fullName>
@@ -12680,14 +12870,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoStandard&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
-        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - GoLite&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_FIN_Interest</fullName>
@@ -12726,7 +12916,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ErrMsg Max FinContacts2</shortDescription>
-        <value>&apos; Financial Assessment Contact(s) is already defined for this agency.&apos;</value>
+        <value>Financial Assessment Contact(s) is already defined for this agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_Prev_Employ</fullName>
@@ -13273,6 +13463,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Validation Percent Ownership2</shortDescription>
         <value>SECTIONS 4.1 PEOPLE &amp; 4.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership2_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership2 for AE</shortDescription>
+        <value>SECTIONS 3.1 PEOPLE &amp; 3.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Percent_Ownership_AE</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Percent Ownership for AE</shortDescription>
+        <value>SECTION 3.1 PEOPLE - Please ensure that the % Total Ownership equals 100%.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Validation_Portal_Admin</fullName>
@@ -13893,11 +14099,39 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>View Country Requirements</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
+        <value>Agency Accreditation Associate Entity Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
         <value>1. IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Must Add Users To Service</shortDescription>
+        <value>At least one contact must be selected</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
@@ -13911,14 +14145,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
-        <value>IATA Passenger Sales - Standard with no Cash</value>
+        <value>IATA Passenger Sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
-        <value>IATA Passenger Sales - Standard with Cash</value>
+        <value>IATA Passenger Sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
@@ -14834,6 +15068,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>Case Closed For More Than 2 Months</shortDescription>
         <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Payment_status</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Payment status</shortDescription>
+        <value>Payment status</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
@@ -18994,6 +19236,85 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB</shortDescription>
+        <value>Remittance Holding Capacity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP</shortDescription>
+        <value>Available Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Cash</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
+        <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP Credit Card</shortDescription>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Curr_Financial_Security</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Curr Financial Security</shortDescription>
+        <value>Current Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Current_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Current Usage</shortDescription>
+        <value>Current usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Last_Updated</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Last Updated</shortDescription>
+        <value>Last Updated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_Percentage_Usage</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Percentage Usage</shortDescription>
+        <value>Percentage usage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_RH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB Risk History</shortDescription>
+        <value>Risk Events History</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_RP</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB RP</shortDescription>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
