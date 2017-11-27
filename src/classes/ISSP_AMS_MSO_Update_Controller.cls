@@ -22,6 +22,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     public List<SelectOption> countryISOCodeList {get;set;}
     public List<SelectOption> billingStatesList {get; set; }
 
+    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
@@ -181,6 +183,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     public PageReference save() {
         // validate selection
         Boolean isValid = true;
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
@@ -197,6 +200,22 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 isValid = false;
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid email address'));
             }
+        }
+        
+        // Verify only latin characters have been used in the address, city & postal code
+        if (accreditationForm.Branch_Office_Street_name_number__c != null && !p.matcher(accreditationForm.Branch_Office_Street_name_number__c).matches()) {
+            accreditationForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+        
+        if (accreditationForm.Branch_Office_Postal_code__c != null && !p.matcher(accreditationForm.Branch_Office_Postal_code__c).matches()) {
+            accreditationForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+        
+        if (accreditationForm.Branch_Office_City__c != null && !p.matcher(accreditationForm.Branch_Office_City__c).matches()) {
+            accreditationForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
         }
 
 
