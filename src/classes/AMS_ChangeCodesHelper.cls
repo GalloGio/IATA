@@ -527,7 +527,7 @@ public class AMS_ChangeCodesHelper {
         return new AMS_Utils.Container(changeCodes, accountsToReturn, oscars);
     }
 
-    private static string convertToHubEffectiveDate(datetime dValue){
+    public static string convertToHubEffectiveDate(datetime dValue){
         if(dValue==null) return '';
         list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
         return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
