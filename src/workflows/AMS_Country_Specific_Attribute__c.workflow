@@ -28,4 +28,14 @@
         <formula>IF(RecordType.DeveloperName=&quot;Irregularity_Threshold&quot;, ISNEW() || ISCHANGED(Location_Class__c) || ISCHANGED(IATA_ISO_Country__c), false)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
+    <rules>
+        <fullName>Generate Key</fullName>
+        <actions>
+            <name>Generate_Unique_key</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>RecordType.DeveloperName==&apos;RTS_Risk_Alert_Notification&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
 </Workflow>
