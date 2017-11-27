@@ -45,7 +45,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         set;
     }
 
-    private	List<String> caseMigratedFields = new List<String> {'Financial_Assessment_compliant__c','Financial_Assessment_received__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Fees_refund_requested__c','Finalization_checklist__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c','AIMS_updated__c','Finalized_in_AIMS__c'};
+    private List<String> caseMigratedFields = new List<String> {'Financial_Assessment_compliant__c','Financial_Assessment_received__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Fees_refund_requested__c','Finalization_checklist__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c','AIMS_updated__c','Finalized_in_AIMS__c'};
 
 	global Process.PluginResult invoke(Process.PluginRequest request) { 
         
@@ -63,11 +63,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         String processType = (String) request.inputParameters.get('processType');
         String scopeOfChange = (String) request.inputParameters.get('scopeOfChange');
         String concernedAgencyCodes = (String) request.inputParameters.get('concernedAgencyCodes');
+        String concernedContactId = (String) request.inputParameters.get('concernedContact');
 
         System.debug('Case to migrate is ' + caseId);
         System.debug('Type of process is ' + processType);
         System.debug('Scope of Change is ' + scopeOfChange);
         System.debug('Concerned agency codes: ' + concernedAgencyCodes);
+        System.debug('Concerned CotactId: ' + concernedContactId);
         
 
 		List<AMS_Pax_Accreditation_Form__c> accreditationFormsList =  [ SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.Id = :caseId];
@@ -76,7 +78,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 			isFromPortal = true;
 		}
 
-		List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE Id = :caseId');
+        List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE Id = :caseId');
 
 		if(caseList.isEmpty()){
 	        oscarId = '';
@@ -112,7 +114,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 		changeSubject = false;
 
-		AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
+       // AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal);
+        AMS_MigrationToolHelper.CaseContainer container = new AMS_MigrationToolHelper.CaseContainer(caseToMigrate,isFromPortal,concernedContactId);
 
 		System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
@@ -292,6 +295,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
             new Process.PluginDescribeResult.InputParameter('scopeOfChange', 
             Process.PluginDescribeResult.ParameterType.STRING, true),
             new Process.PluginDescribeResult.InputParameter('concernedAgencyCodes', 
+            Process.PluginDescribeResult.ParameterType.STRING, true),
+            new Process.PluginDescribeResult.InputParameter('concernedContact', 
             Process.PluginDescribeResult.ParameterType.STRING, true)
             }; 
         result.outputParameters = new 

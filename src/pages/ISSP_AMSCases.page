@@ -44,7 +44,6 @@
                 function proofOfPCI(){
                     navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
-
             
                 function proceedToVMFR() {
                     bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
@@ -124,13 +123,14 @@
                     <apex:commandLink action="{!redirectToCasePage}" value="Travel Industry Designator Service (TIDS)" id="TIDSCommandLink" rendered="{!AND(NOT(isHOAccredited), con.Account.Sector__c=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="TIDS" />
                     </apex:commandLink>
-                    -->                    
+                    -->
+                    <br/>
                 </td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top">
                     <table>
                         <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/></td>
-                            <td style="padding-left:8px;width:66%"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}" /></td>
+                            <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/></td>
                         <!--<td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top">-->
                         </tr>
                     </table>

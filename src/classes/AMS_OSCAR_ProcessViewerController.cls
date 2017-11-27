@@ -57,6 +57,7 @@ public class AMS_OSCAR_ProcessViewerController {
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
                 && (!(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.Account__r.ANG_IsNewGenAgency__c))
+                && oscar.Process__c != AMS_Utils.IEPBANKACCOUNTSETUP
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }

@@ -365,6 +365,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     <listViews>
         <fullName>In_Progress</fullName>
         <columns>NAME</columns>
+        <columns>GSS_Subscription_Detail__c</columns>
         <columns>Subscription__c</columns>
         <columns>File_Specification__c</columns>
         <columns>File_Name__c</columns>

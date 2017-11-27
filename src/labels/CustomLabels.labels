@@ -419,6 +419,22 @@
         <value>Application Rejection</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_SETUP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_FINALIZATION</shortDescription>
+        <value>Setup Finalization</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_SETUP_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_PROCESSING</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -662,6 +678,20 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP40</shortDescription>
         <value>PCI compliance</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP41</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP41</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP42</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP42</shortDescription>
+        <value>Setup Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
@@ -1426,8 +1456,8 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <fullName>ANG_ISSP_REH_DateIssued</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ANG OSCAR CHANGE DISAPPROVAL FINALIZATION</shortDescription>
-        <value>Disapproval Finalization</value>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_RiskDescription</fullName>
@@ -14210,11 +14240,39 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>View Country Requirements</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
+        <value>Agency Accreditation Associate Entity Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
         <value>1. IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Must Add Users To Service</shortDescription>
+        <value>At least one contact must be selected</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
@@ -15182,6 +15240,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>Case Closed For More Than 2 Months</shortDescription>
         <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Payment_status</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Payment status</shortDescription>
+        <value>Payment status</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
@@ -26043,34 +26109,6 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
-    <labels>
-        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
-        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
-    </labels>    
-    <labels>
-        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
-        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
-    </labels>    
-    <labels>
-        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
-        <value>Agency Accreditation Associate Entity Draft Application</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Must Add Users To Service</shortDescription>
-        <value>At least one contact must be selected</value>
-    </labels>    
     <labels>
         <fullName>ISSP_ANG_SearchContacts</fullName>
         <language>en_US</language>
