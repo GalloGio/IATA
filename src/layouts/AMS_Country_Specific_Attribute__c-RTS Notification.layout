@@ -17,15 +17,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_Create_Sidra_Lite__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_Remove_Ticketing_Authority__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Send_Email_Agent__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Create_Sidra_Lite__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
