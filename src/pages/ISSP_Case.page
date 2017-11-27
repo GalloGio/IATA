@@ -630,6 +630,8 @@
                                         <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
                                         <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
                                         
+                                        <apex:outputfield label="{!$Label.ISSP_Case_Payment_status}" rendered="{!newCase.RecordType.Name=='Invoicing Collection Cases'}" value="{!newCase.Has_the_agent_paid_invoice__c}" />
+                                        
                                         <!-- SIDRA Fields - Display even when empty -->
                                         <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$ObjectType.Case.fields.Remittance_Date__c.Label}" rendered="{!caseType =='SIDRA'}">
                 							<apex:param value="{!newCase.Remittance_Date__c}"/>
