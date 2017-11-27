@@ -4,7 +4,7 @@ public class AMS_CertificateHelper {
 
 	public static String createCertificate(AMS_Certificate_Request__c req) {
 
-		Case oscarCommCase = [select Id from Case where OSCAR__c = :req.OSCAR__c AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+		Case oscarCommCase = [select Id from Case where OSCAR__c = :req.OSCAR__c AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ORDER BY OSCAR__r.IATACode__c limit 1];
 
 		//get content
 	    PageReference pdf = Page.AMSCertificateForPrint;
