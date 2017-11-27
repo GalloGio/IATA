@@ -54,7 +54,9 @@ public class AMS_OSCARTriggerHandler {
                 'STEP6__c' => System.Label.AMS_OSCAR_STEP6,
                 'STEP7__c' => System.Label.AMS_OSCAR_STEP7,
                 'STEP8__c' => System.Label.AMS_OSCAR_STEP8,
-                'STEP9__c' => System.Label.AMS_OSCAR_STEP9
+                'STEP9__c' => System.Label.AMS_OSCAR_STEP9,
+                'STEP41__c' => System.Label.AMS_OSCAR_STEP41,
+                'STEP42__c' => System.Label.AMS_OSCAR_STEP42
             };
         }
         set;
@@ -2111,7 +2113,11 @@ public class AMS_OSCARTriggerHandler {
 
 	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-	        List<Contact> contList = fetchContactInfoFromCase(oscarCommCaseId);
+			List<Contact> contList;
+	        if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP)
+	        	contList = fetchContactFromAgencyContact(oscarId);
+	        else	
+	        	contList = fetchContactInfoFromCase(oscarCommCaseId);
 
 	        if(!contList.isEmpty())
 				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -2128,6 +2134,12 @@ public class AMS_OSCARTriggerHandler {
 	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
 
 		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+
+	private static List<Contact> fetchContactFromAgencyContact(String oscarId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select Agency_Contact__c from AMS_OSCAR__c where Id = :oscarId )];
 
 	}
 	
@@ -2149,6 +2161,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId 					= 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId 	= 'IEP_Setup_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId 	= 'IEP_Setup_Finalization_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId 	= 'IEP_Setup_Finalization_Failed';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -2508,6 +2523,33 @@ public class AMS_OSCARTriggerHandler {
 
             //using an already existing method to send email aler to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Failed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Failure of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, false);
 
         }
 

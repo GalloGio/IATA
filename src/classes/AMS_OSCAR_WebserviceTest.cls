@@ -93,7 +93,8 @@ public class AMS_OSCAR_WebserviceTest {
         String resultcreateAMLCase = AMS_OSCAR_Webservice.createAMLCase(oscar.Id);
         String resultcreateAMLCase4 = AMS_OSCAR_Webservice.createAMLCase(oscar6.Id);
         String resultcreateAMLCasenoUpdate = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate([select Name, STEP17__c, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscar6.Id]);
-
+        String reason = AMS_Oscar_Webservice.fetchAMLCaseReason(AMS_Utils.AGENCYCHANGES);
+        reason = AMS_Oscar_Webservice.fetchAMLCaseReason(AMS_Utils.IEPBANKACCOUNTSETUP);
         Test.stopTest();
     }
 
