@@ -15,6 +15,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public AMS_Pax_Accreditation_Form__c accreditationForm {get; set;}
     public AMS_OSCAR__c oscar {get; set;}
 
+    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
@@ -177,6 +179,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public PageReference save() {
         // validate selection
         Boolean isValid = true;
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
@@ -187,6 +190,23 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Billing_State_ErrMsg));
             isValid = false;
         }
+        
+        // Verify only latin characters have been used in the address, city & postal code
+        if (accreditationForm.Branch_Office_Street_name_number__c != null && !p.matcher(accreditationForm.Branch_Office_Street_name_number__c).matches()) {
+            accreditationForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+        
+        if (accreditationForm.Branch_Office_Postal_code__c != null && !p.matcher(accreditationForm.Branch_Office_Postal_code__c).matches()) {
+            accreditationForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+        
+        if (accreditationForm.Branch_Office_City__c != null && !p.matcher(accreditationForm.Branch_Office_City__c).matches()) {
+            accreditationForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+
 
         if (accreditationForm.Branch_Office_Email__c != null && accreditationForm.Branch_Office_Email__c != '') { // email is optional
             if (accreditationForm.Branch_Office_Email__c.indexOf('@') < 1 || accreditationForm.Branch_Office_Email__c.indexOf('.', accreditationForm.Branch_Office_Email__c.indexOf('@') + 2) < 0 || accreditationForm.Branch_Office_Email__c.length() < accreditationForm.Branch_Office_Email__c.lastIndexOf('.')+3) {
