@@ -1168,4 +1168,71 @@ public with sharing class AMS_OSCAR_Automation {
         }
     }
 
+    public class AMS_OSCAR_Step41_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Failed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step41_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_succeeded.processWork');
+
+            Boolean res = False;
+
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Passed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_succeeded.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Passed';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Failed';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
 }

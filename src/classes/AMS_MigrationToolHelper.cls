@@ -536,7 +536,7 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
 		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
-		oscar.Dossier_Reception_Date__c = saamCase.Dossier_reception_date__c;
+		oscar.Dossier_Reception_Date__c = (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
@@ -568,7 +568,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static AMS_OSCAR__c postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal, String caseStatus, Case oscarCase){
 
-		List<AMS_OSCAR__c> oscars = [SELECT Id,Status__c, Name, Bank_Guarantee_amount__c, First_Step_Completed__c, Assessment_Performed_Date__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_Reception_Date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Billing_Document_Number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,Welcome_Pack_Sent__c,Sanity_check_deadline__c,Update_AIMS_Rejection_Date__c,Update_AIMS_Rejection__c,Update_AIMS_Approval_Date__c,Update_AIMS_Approval__c from AMS_OSCAR__c where Id = :oscarId];
+		List<AMS_OSCAR__c> oscars = [SELECT Id,Status__c, Name, Bank_Guarantee_amount__c, First_Step_Completed__c, Assessment_Performed_Date__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_Reception_Date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Billing_Document_Number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,Welcome_Pack_Sent__c,Sanity_check_deadline__c,Update_AIMS_Rejection_Date__c,Update_AIMS_Rejection__c,Update_AIMS_Approval_Date__c,Update_AIMS_Approval__c,Oscar_Communication_Case_Id__c, Process__c from AMS_OSCAR__c where Id = :oscarId];
 
 		if(!oscars.isEmpty()){
 
@@ -588,6 +588,9 @@ public without sharing class AMS_MigrationToolHelper {
 			}
 
 			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
+
+			if (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+				oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 			if(oscar == null)
 				return null;
@@ -626,7 +629,7 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -641,13 +644,14 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0')
+		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' 
+			&& processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
 			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 
 
 		String oscarId = null;
 
-		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
@@ -660,14 +664,26 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP )
+				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId,		
+				// For IEP BANK Acc Setup we'll pick Account_Concerned__c instead
+				Account__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? caseToProcess.Account_Concerned__c : caseToProcess.AccountId), 
+				// For IEP BANK Account we'll populate Agency_Contact with the contact from saam case
+				Agency_Contact__c = (processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ? cont.concernedContactId : null )
+			);
 
 			insert oscar;
 
 			oscarId = oscar.Id;
 
 			caseToProcess.OSCAR__c = oscar.Id;
+
+			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP)
+				caseToProcess.Visible_on_ISS_Portal__c = false;
 			
 			update caseToProcess;
 		}
@@ -759,6 +775,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		public String oscarId { get; set; }
 		public String oscarCaseId { get; set; }
+		public String concernedContactId { get; set; }
 
 		public AMS_OSCAR__c oscarCreated {get; set;}
 		public Case caseCreated {get; set;}
@@ -777,6 +794,12 @@ public without sharing class AMS_MigrationToolHelper {
 			this.migrated = false;
 			this.fromPortal = fromPortal;
 		}
+
+		public CaseContainer(Case c, Boolean fromPortal, String concernedContactId){
+			this(c, fromPortal);
+			this.concernedContactId = concernedContactId;
+		}
+
 	}
 	
 	
