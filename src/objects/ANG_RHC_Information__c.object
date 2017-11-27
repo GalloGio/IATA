@@ -288,7 +288,7 @@
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
 
-if(&apos;{!$Profile.Name}&apos;.indexOf(&apos;System Administrator&apos;) &lt; 0 &amp;&amp; &apos;{!AND(ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
+if(&apos;{!AND(NOT(CONTAINS(LOWER($Profile.Name), &apos;system administrator&apos;)), ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
 alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent has cash condition equal to FS. If the agent has no valid FS, please contact your administrator&apos;); 
 }else{ 
 
