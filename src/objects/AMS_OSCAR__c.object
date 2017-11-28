@@ -9711,6 +9711,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
             <picklist>STEP41__c</picklist>
             <values>
                 <fullName>Failed</fullName>
