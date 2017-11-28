@@ -911,7 +911,7 @@
     }
 
     @isTest static void testCertificates() {
-        Test.startTest();
+        
 
         AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
          
@@ -922,7 +922,7 @@
         AMS_Accreditation_Contact__c dgr = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Plitt'];
         dgr.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
         update dgr;        
-
+        Test.startTest();
         oscar.STEP6__c = 'Passed';
         update oscar;
 
