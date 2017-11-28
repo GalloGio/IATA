@@ -75,7 +75,8 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
                 Contact.User_Portal_Status__c,
                 Contact.Status__c,
                 Contact.SIS_Contact_Type__c,
-                Contact.Account.SIS_ID__c
+                Contact.Account.SIS_ID__c,
+                Contact.Community__c
             FROM User
             WHERE FederationIdentifier = :inputData.FederationID ];
         if (listUser.isEmpty()) {
