@@ -12872,6 +12872,44 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
+                <picklistValues>
+            <picklist>STEP3__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP40__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
 		<picklistValues>
             <picklist>STEP41__c</picklist>
             <values>
@@ -12893,63 +12931,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>STEP42__c</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>STEP4__c</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>STEP3__c</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>STEP40__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
