@@ -35,7 +35,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>RecordType.DeveloperName==&apos;RTS_Risk_Alert_Notification&apos;</formula>
+        <formula>RecordType.DeveloperName==&apos;RTS_Risk_Alert_Notification&apos; &amp;&amp; (ISNEW() || ISCHANGED(RecordTypeId) || ISCHANGED(IATA_ISO_Country__c) || ISCHANGED(ANG_RTS_Severity__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
