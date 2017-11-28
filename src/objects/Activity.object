@@ -158,13 +158,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Involved__c</fullName>
-        <externalId>false</externalId>
-        <label>Involved</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>Issuer__c</fullName>
         <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
@@ -213,13 +206,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Responsible__c</fullName>
-        <externalId>false</externalId>
-        <label>Responsible</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>Result_Summary__c</fullName>
         <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
@@ -239,13 +225,6 @@
         <fullName>Subject__c</fullName>
         <externalId>false</externalId>
         <label>Subject</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
-        <fullName>Support_Required_from_Account__c</fullName>
-        <externalId>false</externalId>
-        <label>Support Required from Account</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
