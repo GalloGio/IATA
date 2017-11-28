@@ -146,7 +146,7 @@ public class ang_rhcAlertTriggerHandler {
 				WHERE ID IN :triggerNew
 				AND ANG_Severity__c = 'Red'
 				AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS')
-				AND ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c in :rtsConfigMap.keySet()//filters records from countries that arent configured
+				AND ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c in :rtsConfigMap.keySet()//filters out records from countries that arent configured
 				]){
 
 			redAlerts.add(ra);
@@ -191,46 +191,46 @@ public class ang_rhcAlertTriggerHandler {
 
 			for(ANG_Risk_Alert__c ra: redAlerts){
 				if(rtsConfigMap.get(ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c).ANG_Create_Sidra_Lite__c){
-				smapParentCase = new Case(
-					Region__c =	ra.ANG_Account__r.Region_formula__c,
-					Subject = 'Real Time Sales RED Alert - ' +   ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c + ' - ' + ra.ANG_Account__r.IATACode__c ,
-					AccountId = ra.ANG_Account__c,
-					Status = 'Accepted',
-					BSP_CASS__c = 'BSP',
-					Origin = 'Risk Monitoring Engine',
-					BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
-					Decision__c = 'Prejudiced Collection of Funds',
-					RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
-					Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
-					Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
-					End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c,
-					Suspension_Date__c=  Date.today()
-				);
+					smapParentCase = new Case(
+						Region__c =	ra.ANG_Account__r.Region_formula__c,
+						Subject = 'Real Time Sales RED Alert - ' +   ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c + ' - ' + ra.ANG_Account__r.IATACode__c ,
+						AccountId = ra.ANG_Account__c,
+						Status = 'Accepted',
+						BSP_CASS__c = 'BSP',
+						Origin = 'Risk Monitoring Engine',
+						BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
+						Decision__c = 'Prejudiced Collection of Funds',
+						RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
+						Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
+						Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
+						End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c,
+						Suspension_Date__c=  Date.today()
+					);
 
-				smapParentCase.setOptions(dmlOpts);
-				wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
+					smapParentCase.setOptions(dmlOpts);
+					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
-				//we'll get the portal approved admin or if none the ifap contact 
-				//if has parent, use parent contacts. else, use theirs
-				Id accId = (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c: ra.ANG_Account__c);
+					//we'll get the portal approved admin or if none the ifap contact 
+					//if has parent, use parent contacts. else, use theirs
+					Id accId = (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c: ra.ANG_Account__c);
 
-				for(Contact con :contactsPerAccount.get(accId)){						
-					if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
-						smapParentCase.ContactId = con.Id;
-						break;
-					}else if(con.Financial_Assessment_Contact__c){
-						smapParentCase.ContactId = con.Id;							
+					for(Contact con :contactsPerAccount.get(accId)){						
+						if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
+							smapParentCase.ContactId = con.Id;
+							break;
+						}else if(con.Financial_Assessment_Contact__c){
+							smapParentCase.ContactId = con.Id;							
+						}
 					}
-				}
-				
-				//fallback to have one contact for the sidra lite case
-				if(smapParentCase.ContactId == null){
-					smapParentCase.ContactId = contactsPerAccount.get(accId)[0].Id;
-				}
+					
+					//fallback to have one contact for the sidra lite case
+					if(smapParentCase.ContactId == null){
+						smapParentCase.ContactId = contactsPerAccount.get(accId)[0].Id;
+					}
 
-				smapParentCases.add(smapParentCase);
-				accountsIds.add(ra.ANG_Account__c);
-			}
+					smapParentCases.add(smapParentCase);
+					accountsIds.add(ra.ANG_Account__c);
+				}
 			}
 
 
@@ -305,7 +305,7 @@ public class ang_rhcAlertTriggerHandler {
                                        
                     list<Case> sidrasToGenerateChangeCode = new list<Case>();
                     for(Case sidraToUpdate : sidraLiteCases){
-                         sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
+                        sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
                         sidraToUpdate.SIDRA_Lite_Default_Date__c = Date.today();
                         sidraToUpdate.Reason_for_Default__c = 'Under Review';
                         sidraToUpdate.Update_AIMS_DEF__c = Date.today();
@@ -319,9 +319,9 @@ public class ang_rhcAlertTriggerHandler {
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
 						if(rtsConfigMap.get(accIsoCode.get(sLiteCase.AccountId)).ANG_Remove_Ticketing_Authority__c){
-						caseIds.add(sLiteCase.Id);
-						accountIds.add(sLiteCase.AccountId);
-					}
+							caseIds.add(sLiteCase.Id);
+							accountIds.add(sLiteCase.AccountId);
+						}
 					}
 					
 			        AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(sidraLiteCases);
@@ -462,14 +462,14 @@ public class ang_rhcAlertTriggerHandler {
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
                         	if(rtsConfigMap.get(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c).ANG_Send_Email_Agent__c){
-                            notifications.add(new Notification__c(
-                                Contact__c = c.Id,
-	                            Subject__c = Label.RTS_TAR_Notification_Title,
-                                Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
-                                Alert_Contact_By_Email__c = true
-                            ));
-                        }
-                    }
+	                            notifications.add(new Notification__c(
+	                                Contact__c = c.Id,
+		                            Subject__c = Label.RTS_TAR_Notification_Title,
+	                                Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
+	                                Alert_Contact_By_Email__c = true
+	                            ));
+	                        }
+	                    }
                     }
                     //END - NEWGEN-2006
 					hasSuccess = true;
