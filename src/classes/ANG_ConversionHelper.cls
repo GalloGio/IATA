@@ -23,6 +23,36 @@ global with sharing class ANG_ConversionHelper {
     public static final Set<String> TOPLEVELLOCATIONTYPES = new Set<String>{'HO','AO'};
 
 	public static final Set<String> LOCATIONTYPESNEWGEN = new Set<String>{'AE','HE'};
+
+    public static Set<String> LOCATIONTYPESBRS {
+
+    	get{
+    		if(LOCATIONTYPESBRS == null){
+
+		    	Set<String> pickListValuesList= new Set<String>();
+
+				Schema.DescribeFieldResult fieldResult = Account.Location_Type__c.getDescribe();
+
+				List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+				for( Schema.PicklistEntry pickListVal : ple){
+
+					String valuePickList = pickListVal.getValue();
+
+					if((!(LOCATIONTYPESNEWGEN.contains(valuePickList) || TOPLEVELLOCATIONTYPES.contains(valuePickList))) && pickListVal.isActive())
+						pickListValuesList.add(valuePickList);
+
+				}    
+
+				LOCATIONTYPESBRS = pickListValuesList;
+
+    		}
+
+			return LOCATIONTYPESBRS;
+    	}
+
+    	Set;
+    }
     
     public static Map<Integer, String> errorMessages = new Map<Integer, String> {
         -2 => 'Hierarchies with wrong Record Type',
@@ -31,7 +61,7 @@ global with sharing class ANG_ConversionHelper {
         -5 => 'Agencies in multiple hierarchies',
         -6 => 'Hierarchies with invalid agencies sectors',
         -7 => 'Hierarchies with agencies missing top parent',
-        -8 => 'Orphan Branches (BR)',
+        -8 => 'Orphan Branches (BR,SA,ST,etc.)',
 		-9 => 'Different Top Parent in the Hierarchies'
     };
 
@@ -70,11 +100,16 @@ global with sharing class ANG_ConversionHelper {
 		Set<Id> allAgencies = new Set<Id>();
 		Set<Id> allHierarchies = new Set<Id>();
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Purge_Flag__c, Child_Account__r.IATACode__c, Child_Account__r.Purge_Flag__c, Child_Account__r.Top_Parent__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c, Child_Account__r.Top_Parent__r.Purge_Flag__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Purge_Flag__c, Child_Account__r.IATACode__c, Child_Account__r.Purge_Flag__c, Child_Account__r.Top_Parent__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c, Child_Account__r.Top_Parent__r.Purge_Flag__c, Child_Account__r.Expiry_Date__c, Parent_Account__r.Expiry_Date__c, Child_Account__r.Top_Parent__r.Expiry_Date__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
+		Date frontierDate = Date.today().addMonths(-6);
+
 		for(AMS_Agencies_relationhip__c relationShip: allRelations){
+
+			if(relationShip.child_Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && relationShip.Child_Account__r.Top_Parent__r.Expiry_Date__c < frontierDate) // let's ignore it
+				continue;
 
 			allAgencies.add(relationShip.Child_Account__c);
 			allAgencies.add(relationShip.Child_Account__r.Top_Parent__c);
@@ -88,15 +123,34 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES) OR Status__c = :AMS_Utils.ACC_S0_TERMINATED)];
 
-		for(Account acct: allAccountsSingleHierarchyHO)
-			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+		for(Account acct: allAccountsSingleHierarchyHO){
 
-		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c ='BR' and ParentId  = null and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
+				if(acct.Expiry_Date__c < frontierDate){
+					continue;
+				}else
+					toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+			}else
+				toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+		}
 
-		for(Account acct: allAccountsSingleHierarchyBR)
-			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Class__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c from Account where Location_Type__c in :LOCATIONTYPESBRS and ParentId  = null and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+
+		for(Account acct: allAccountsSingleHierarchyBR){
+			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
+				if(acct.Expiry_Date__c < frontierDate){
+					continue;
+				}else{
+					toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+				}
+			}else{
+				if(ALLOWEDLOCATIONCLASSES.contains(acct.Location_Class__c)){
+					toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+				}
+			}
+		}
 
 		List<AMS_Agencies_Hierarchy__c> alreadyMigratedStructures = [select Id from AMS_Agencies_Hierarchy__c where migrated__c = true and Id in (select Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country)];
 
@@ -118,7 +172,7 @@ global with sharing class ANG_ConversionHelper {
 
 	public static Map<Id,ANG_ConversionHelper.HierarchyStructure> buildSingleHierarchyStructure(String hierarchyId){
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.Migrated__c, Hierarchy__r.RecordType.Name, Hierarchy__r.Name, Hierarchy__c, Child_Account__c, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Purge_Flag__c, Child_Account__r.Purge_Flag__c, Child_Account__r.IATACode__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Child_Account__r.Top_Parent__r.Purge_Flag__c from AMS_Agencies_relationhip__c where Hierarchy__c = :hierarchyId];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.Migrated__c, Hierarchy__r.RecordType.Name, Hierarchy__r.Name, Hierarchy__c, Child_Account__c, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Purge_Flag__c, Child_Account__r.Purge_Flag__c, Child_Account__r.IATACode__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Child_Account__r.Top_Parent__r.Purge_Flag__c, Parent_Account__r.Expiry_Date__c, Child_Account__r.Expiry_Date__c, Child_Account__r.Top_Parent__r.Expiry_Date__c from AMS_Agencies_relationhip__c where Hierarchy__c = :hierarchyId];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
@@ -167,8 +221,16 @@ global with sharing class ANG_ConversionHelper {
 	public static boolean validateCorrectLocationClasses(List<AMS_Agencies_relationhip__c> relationShips){
 
 		for(AMS_Agencies_relationhip__c rel: relationShips){
-			if(!(ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Location_Class__c) && ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Top_Parent__r.Location_Class__c)))
-				return false;
+			if(!(ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Location_Class__c) && ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Top_Parent__r.Location_Class__c))){
+
+				if(!(ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Top_Parent__r.Location_Class__c)))
+					return false;
+
+				if(!(rel.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED))
+					return false;
+
+			}
+
 		}
 
 		return true;
@@ -596,6 +658,7 @@ global with sharing class ANG_ConversionHelper {
 			*/
 
 
+		Date frontierDate = Date.today().addMonths(-6);
 
 		Set<Account> accountsToUpdate = new Set<Account>();
 
@@ -606,7 +669,14 @@ global with sharing class ANG_ConversionHelper {
 			if(allAgencies.get(struct.topParentId).Location_Type__c == AMS_Utils.AO && allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S4_LISTED)
 				allAgencies.get(struct.topParentId).Status__c = AMS_Utils.ACC_S9_APPROVED;		
 			
-			allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+			if(allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S0_TERMINATED && !TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c)){
+				allAgencies.get(struct.topParentId).Location_Type__c = 'AE';					
+			}
+			else
+				if(TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c))
+					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+				else
+					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';		
 
 			allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
 			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
@@ -631,24 +701,35 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
 					allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
 
-					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
-					allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
-					allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-					allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
-					allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
 
-					if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
-						allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
-					
+					if(!(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && rel.Child_Account__r.Expiry_Date__c < frontierDate)) { // let's ignore it
+						
+						allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
+						allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
+						allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+						allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
+						allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
+
+						if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
+							allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
+
+
+						if(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && (!ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Location_Class__c))){
+							allAgencies.get(rel.Child_Account__c).Location_Class__c = 'P';
+						}
+
+						accountsToUpdate.add(allAgencies.get(rel.Child_Account__c));
+					}
+
 					rel.Hierarchy__r.Migrated__c= true;
 
-					accountsToUpdate.add(allAgencies.get(rel.Parent_Account__c));
-					accountsToUpdate.add(allAgencies.get(rel.Child_Account__c));
+					accountsToUpdate.add(allAgencies.get(rel.Parent_Account__c));					
 
 					relationsToUpdate.add(rel);
 
 				}
 		}
+
 		struct.migrated = true;
 
 		if(!struct.isSingleAgencyHierarchy){
@@ -710,6 +791,7 @@ global with sharing class ANG_ConversionHelper {
 		AMS_ChangeCodesHelper.createAAChangeCodes(corChangeCodes, oscars, accts, true);
     }
 
+    
 	public class MigrationContainer{
 
 		ANG_ConversionHelper.HierarchyStructure struct;
@@ -799,6 +881,7 @@ global with sharing class ANG_ConversionHelper {
 
 		public HierarchyStructure(Account acct){
 
+			Date frontierDate = Date.today().addMonths(-6);
 			isSingleAgencyHierarchy = true;
 			hierarchyId = acct.Id;
 			topParentId = acct.Id;
@@ -807,6 +890,12 @@ global with sharing class ANG_ConversionHelper {
 			nameTopParent = acct.Name;
 
 			isValid = TOPLEVELLOCATIONTYPES.contains(acct.Location_Type__c);
+
+			if(!isValid){
+
+				if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED && acct.Expiry_Date__c > frontierDate)
+					isValid = true;
+			}
 
 			errorCategory = isValid ? DEFAULTMESSAGE : ORFANBRANCH;
 			migrated = LOCATIONTYPESNEWGEN.contains(acct.Location_Type__c);
