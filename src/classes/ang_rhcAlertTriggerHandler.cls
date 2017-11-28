@@ -126,7 +126,10 @@ public class ang_rhcAlertTriggerHandler {
 		map<id,string> accIsoCode;//map to get account's IsoCode- used to control RTS actions
 		List<Id> listIDAccsToRetriveCons = new List<Id>();
 		map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
-		for(AMS_Country_Specific_Attribute__c csa: [select IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c from AMS_Country_Specific_Attribute__c]){
+		for(AMS_Country_Specific_Attribute__c csa: [
+			SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
+			FROM AMS_Country_Specific_Attribute__c 
+			WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
 			rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
 		}
 
@@ -428,7 +431,10 @@ public class ang_rhcAlertTriggerHandler {
 
 
 		map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
-		for(AMS_Country_Specific_Attribute__c csa: [select IATA_ISO_Country__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c from AMS_Country_Specific_Attribute__c]){
+		for(AMS_Country_Specific_Attribute__c csa:  [
+			SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
+			FROM AMS_Country_Specific_Attribute__c 
+			WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
 			rtsConfigMap.put(csa.IATA_ISO_Country__c,csa);
 		}
 		

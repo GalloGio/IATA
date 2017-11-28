@@ -149,6 +149,7 @@ private class ang_rhcAlertTriggerHandler_test {
     		ANG_Send_Email_Agent__c=true ,
     		ANG_Create_Sidra_Lite__c= true, 
     		ANG_Remove_Ticketing_Authority__c= true
+    		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
     	);
 
     	insert csa;
