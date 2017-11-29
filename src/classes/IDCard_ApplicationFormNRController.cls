@@ -1348,9 +1348,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     docDesc1 = 'desc';
     docDesc2 = 'desc';
     docDesc3 = 'desc';
-    this.document1 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document2 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document3 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
+    this.document1 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document2 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document3 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
     this.upload();
     this.back();
     this.GetAssociatedContact('aaa');
