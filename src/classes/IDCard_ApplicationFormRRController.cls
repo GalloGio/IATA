@@ -99,7 +99,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       {
         if (listPriceTables[0].Expedite__c != null ){
           if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
-            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+            IDCardApplicationRR.IDCard_Expedite_Delivery__c = true;
             IsExpediteDelivery = true;
           }
           return true;
@@ -626,7 +626,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       if (isValid) {
         IDCardApplicationRR.IDCard_Prefered_Language__c = Language;
         if(IsExpediteAvailable){
-            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+            IDCardApplicationRR.IDCard_Expedite_Delivery__c = true;
           }
         update IDCardApplicationRR;
 
