@@ -833,7 +833,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type</value>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GoLite accreditation type</value>
     </labels>
      <labels>
         <fullName>ANG_ISSP_AFP_CreditCardNoAccess</fullName>
