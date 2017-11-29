@@ -28,7 +28,8 @@ public class ang_rhcAlertTriggerHandler {
 
 
 
-
+	private map<id,account> raAccMap{get;private set;}
+	
 
 	// ************************************************************
 	// ****************** Action Methods ********************
@@ -123,7 +124,13 @@ public class ang_rhcAlertTriggerHandler {
 		List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
 		List<RiskAlertParentCaseWrapper> wrapperList = new List<RiskAlertParentCaseWrapper>();
 		
-		map<id,string> accIsoCode;//map to get account's IsoCode- used to control RTS actions
+		
+
+		set<id> accIdSet= new set<id>();
+		for(ANG_Risk_Alert__c ra :triggerNew ){
+			accIdSet.add(ra.ANG_Account__c);
+		}
+
 		List<Id> listIDAccsToRetriveCons = new List<Id>();
 		map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
 		for(AMS_Country_Specific_Attribute__c csa: [
@@ -136,46 +143,41 @@ public class ang_rhcAlertTriggerHandler {
 		if(rtsConfigMap.isEmpty())return;
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
-		for(ANG_Risk_Alert__c ra :[
-			SELECT ID,Name,ANG_Account__c,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,
-					ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
-					ANG_Account__r.IATA_ISO_Country__r.BSP__c,ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,
-					ANG_Account__r.Remittance_frequency__c,ANG_Account__r.IATA_ISO_Country__c,ANG_Account__r.IATA_ISO_Country__r.Name,
-					ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c, ANG_Account__r.Region_formula__c,
-                    ANG_Account__r.Name, ANG_Account__r.IATACode__c, ANG_Account__r.Top_Parent__c,
-                    CurrencyIsoCode, ANG_Account__r.Guaranteed_amount__c
+		raAccMap= new map<id,account>();
+		Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
 
-				FROM ANG_Risk_Alert__c 
-				WHERE ID IN :triggerNew
-				AND ANG_Severity__c = 'Red'
-				AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS')
-				AND ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c in :rtsConfigMap.keySet()//filters out records from countries that arent configured
-				]){
+		for(Account acc :[
+			SELECT id,Name, IATACode__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
+					IATA_ISO_Country__r.ISO_Code__c, Region_formula__c,
+        
+		(SELECT ID,Name,ANG_Account__c,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
+		FROM Risk_Alerts__r 
+		WHERE ID IN :triggerNew
+		AND ANG_Severity__c = 'Red'
+		AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS') 
+		),
+		(SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c
+		FROM contacts
+		WHERE Status__c = 'Active'
+		)
+		FROM ACCOUNT
+		where ID IN :accIdSet]){
+			for(ANG_Risk_Alert__c ra: acc.Risk_Alerts__r){
+				redAlerts.add(ra);	
+				raAccMap.put(ra.id,acc);	
+			}
 
-			redAlerts.add(ra);
-			listIDAccsToRetriveCons.add( (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c : ra.ANG_Account__c ) );
+			contactsPerAccount.put(acc.id,acc.contacts);
+			listIDAccsToRetriveCons.add( (acc.Top_Parent__c != null ? acc.Top_Parent__c : acc.id ) );
 		}
+
+		 	
+
+
 		if(!redAlerts.isEmpty()){
             // NEWGEN-2005
             sendNotificationToSeniors(redAlerts);
             // END - NEWGEN-2005
-
-			Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
-
-			List<Contact> contacts = new List<Contact>();
-			contacts = [SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c 
-						FROM Contact WHERE AccountId IN :listIDAccsToRetriveCons  AND Status__c = 'Active'];
-
-
-            for (Contact con :contacts){
-
-			    if(contactsPerAccount.keyset().contains(con.AccountId)){
-	                contactsPerAccount.get(con.AccountId).add(con);
-	            }
-	            else{
-					contactsPerAccount.put(con.AccountId,new List<Contact>{con});
-				}
-			}
 
 			AssignmentRule AR = new AssignmentRule();
 	        AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
@@ -193,15 +195,15 @@ public class ang_rhcAlertTriggerHandler {
 
 
 			for(ANG_Risk_Alert__c ra: redAlerts){
-				if(rtsConfigMap.get(ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c).ANG_Create_Sidra_Lite__c){
+				if(rtsConfigMap.get(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c).ANG_Create_Sidra_Lite__c){
 					smapParentCase = new Case(
-						Region__c =	ra.ANG_Account__r.Region_formula__c,
-						Subject = 'Real Time Sales RED Alert - ' +   ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c + ' - ' + ra.ANG_Account__r.IATACode__c ,
+						Region__c =	raAccMap.get(ra.id).Region_formula__c,
+						Subject = 'Real Time Sales RED Alert - ' +   raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c + ' - ' + raAccMap.get(ra.id).IATACode__c ,
 						AccountId = ra.ANG_Account__c,
 						Status = 'Accepted',
 						BSP_CASS__c = 'BSP',
 						Origin = 'Risk Monitoring Engine',
-						BSPCountry__c = ra.ANG_Account__r.IATA_ISO_Country__r.Name,
+						BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
 						Decision__c = 'Prejudiced Collection of Funds',
 						RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
 						Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
@@ -215,7 +217,7 @@ public class ang_rhcAlertTriggerHandler {
 
 					//we'll get the portal approved admin or if none the ifap contact 
 					//if has parent, use parent contacts. else, use theirs
-					Id accId = (ra.ANG_Account__r.Top_Parent__c != null ? ra.ANG_Account__r.Top_Parent__c: ra.ANG_Account__c);
+					Id accId = (raAccMap.get(ra.id).Top_Parent__c != null ? raAccMap.get(ra.id).Top_Parent__c: ra.ANG_Account__c);
 
 					for(Contact con :contactsPerAccount.get(accId)){						
 						if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
@@ -252,7 +254,7 @@ public class ang_rhcAlertTriggerHandler {
 		        sidraLiteCases = new List<Case>();
 
 		        //map to get account's IsoCode- used to control RTS actions
-		        accIsoCode = new map<id,string>();
+		       	map<id,string>  accIsoCode = new map<id,string>();
 
 		        for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
 		        	
@@ -342,11 +344,11 @@ public class ang_rhcAlertTriggerHandler {
 		Map<Id,operational_Calendar__c> ocMap = new Map<Id,operational_Calendar__c>();
 		for(ANG_Risk_Alert__c ra : ras){
 
-			isoCodes.add('BSP-' +(ra.ANG_Account__r.IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-							ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
-							ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c));
+			isoCodes.add('BSP-' +(raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
+							raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
+							raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c));
 
-			rfs.add(mapRemittanceFrequency(ra.ANG_Account__r));
+			rfs.add(mapRemittanceFrequency(raAccMap.get(ra.id)));
 		}
 
 		List<Operational_Calendar__c> ops = [SELECT id,ISS_Operation__r.Name,Frequency_Code__c,First_Day__c, Last_Day__c, Remittance_Day__c   
@@ -359,12 +361,12 @@ public class ang_rhcAlertTriggerHandler {
 		for(ANG_Risk_Alert__c ra : ras){
 			for(Operational_Calendar__c op: ops){
 				
-				String isoCode = 'BSP-' + (ra.ANG_Account__r.IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-							ra.ANG_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c : 
-							ra.ANG_Account__r.IATA_ISO_Country__r.ISO_Code__c);
+				String isoCode = 'BSP-' + (raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
+							raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
+							raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c);
 				
                 if(op.ISS_Operation__r.Name == isoCode &&
-                    op.Frequency_Code__c == mapRemittanceFrequency(ra.ANG_Account__r)
+                    op.Frequency_Code__c == mapRemittanceFrequency(raAccMap.get(ra.id))
                 ){
 
 					ocMap.put(ra.ANG_Account__c,op);
@@ -397,11 +399,11 @@ public class ang_rhcAlertTriggerHandler {
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
             String tBody = template.Body;
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
-            String iataCode = (riskAlert.ANG_Account__r.IATACode__c == null ? '' : riskAlert.ANG_Account__r.IATACode__c);
-            String gAmount = (riskAlert.ANG_Account__r.Guaranteed_amount__c == null ? '' : String.valueOf(riskAlert.ANG_Account__r.Guaranteed_amount__c.setScale(2)));
-            tBody = tBody.replace('{{agentName}}', riskAlert.ANG_Account__r.Name);
+            String iataCode = (raAccMap.get(riskAlert.id).IATACode__c == null ? '' : raAccMap.get(riskAlert.id).IATACode__c);
+            String gAmount = (raAccMap.get(riskAlert.id).Guaranteed_amount__c == null ? '' : String.valueOf(raAccMap.get(riskAlert.id).Guaranteed_amount__c.setScale(2)));
+            tBody = tBody.replace('{{agentName}}', raAccMap.get(riskAlert.id).Name);
             tBody = tBody.replace('{{iataCode}}', iataCode);
-            tBody = tBody.replace('{{iataCountry}}', riskAlert.ANG_Account__r.IATA_ISO_Country__r.Name);
+            tBody = tBody.replace('{{iataCountry}}', raAccMap.get(riskAlert.id).IATA_ISO_Country__r.Name);
             tBody = tBody.replace('{{agentSales}}', agentSales);
             tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
             tbody = tBody.replace('{{fsAmount}}', gAmount);
