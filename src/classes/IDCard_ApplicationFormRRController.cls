@@ -18,7 +18,8 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   public Contact associatedContact {get; set;}
   public ID_Card__c associatedIDCard {get; set;}
   // public Attachment attachmentProof {get; set;}
-
+  
+  public Boolean IsExpediteDelivery;
   public list<SelectOption> itdiCourses;
   private String[] selectedITDICourses;
 
@@ -91,13 +92,18 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     get {
 
       IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationRR.IATA_Code__c);
-      Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
+      Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c, p.Expedite_Delivery_added_to_IDCard_Price__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
       } else
       {
-        if (listPriceTables[0].Expedite__c != null )
+        if (listPriceTables[0].Expedite__c != null ){
+          if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
+            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+            IsExpediteDelivery = true;
+          }
           return true;
+        }
         return false;
       }
     }
@@ -619,6 +625,9 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 
       if (isValid) {
         IDCardApplicationRR.IDCard_Prefered_Language__c = Language;
+        if(IsExpediteAvailable){
+            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+          }
         update IDCardApplicationRR;
 
 
