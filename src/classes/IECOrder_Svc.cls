@@ -882,7 +882,7 @@ public with sharing class IECOrder_Svc {
         List<Order> quotes = [
             SELECT Id 
             FROM Order 
-            WHERE OwnerId = :createdBy
+            WHERE ( OwnerId = :createdBy OR BillToContactId = :createdBy)
                 AND OrderNumber = :quoteNumber
             LIMIT 1
         ];
