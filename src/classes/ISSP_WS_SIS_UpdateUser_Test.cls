@@ -6,6 +6,7 @@ private class ISSP_WS_SIS_UpdateUser_Test {
 
     @TestSetup
     private static void setup() {
+        ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
         // insert errors in Custom Setting
         list<ISSP_Int_Error__c> listError = new list<ISSP_Int_Error__c>();
         for (Integer i=1; i<=50; i++) {
@@ -49,6 +50,15 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         return inputData;
     }
 
+    private static void checkLogs(Boolean isSuccess) {
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(isSuccess, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_UpdateUser', listLogs[0].Web_Service__c);
+        System.assertEquals('updateSISUser', listLogs[0].Method__c);
+        System.assertEquals('SIS', listLogs[0].System__c);
+    }
+    
     static testMethod void updateUser_noFederationId() {
         ISSP_WS_SIS_UpdateUser.InputData inputData = createInputData();
         
@@ -59,6 +69,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('021', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateUser_noSISMemberID() {
@@ -71,6 +83,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('018', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateUser_noUserType() {
@@ -83,6 +97,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('020', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateUser_noTypeOfService() {
@@ -95,6 +111,13 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('010', response.ErrorCode);
+        
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(false, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_UpdateUser', listLogs[0].Web_Service__c);
+        System.assertEquals('updateSISUser', listLogs[0].Method__c);
+        System.assertEquals(null, listLogs[0].System__c);
     }
     
     static testMethod void updateUser_noRequestType() {
@@ -107,6 +130,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('022', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateSISUser_NoUser() {
@@ -118,6 +143,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('011', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateSISUser_OK() {
@@ -147,6 +174,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(true, response.IsSuccess);
         System.assertEquals(inputData.FederationID, response.FederationID);
+        
+        checkLogs(true);
     }
     
     static testMethod void updateSISUser_SISIdError() {
@@ -176,6 +205,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('024', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateSISUser_InactiveUserError() {
@@ -205,6 +236,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('015', response.ErrorCode);
+        
+        checkLogs(false);
     }
 
 }

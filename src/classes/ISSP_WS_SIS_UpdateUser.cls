@@ -124,6 +124,7 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         // update contact if required
         if (updateContact) {
             try{
+                ISSP_UserTriggerHandler.preventSISIntegration = true;
                 update contact;
             } catch (Exception e){
                 throw new ISSP_WS_SIS_Common.WSException('001', 'Contact update failed; ' + e.getMessage());

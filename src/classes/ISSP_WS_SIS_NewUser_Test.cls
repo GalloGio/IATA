@@ -6,6 +6,7 @@ private class ISSP_WS_SIS_NewUser_Test {
 
     @TestSetup
     private static void setup() {
+        ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
         // insert errors in Custom Setting
         list<ISSP_Int_Error__c> listError = new list<ISSP_Int_Error__c>();
         for (Integer i=1; i<=50; i++) {
@@ -38,7 +39,7 @@ private class ISSP_WS_SIS_NewUser_Test {
                 Value__c = 'portal.iata.org'));
         insert listIsspCs;
     }
-
+    
     public static ISSP_WS_SIS_NewUser.InputData createInputData() {
         ISSP_WS_SIS_NewUser.InputData inputData = new ISSP_WS_SIS_NewUser.InputData();
         inputData.SISMemberID = 'SISID';
@@ -51,6 +52,15 @@ private class ISSP_WS_SIS_NewUser_Test {
         return inputData;
     }
 
+    private static void checkLogs(Boolean isSuccess) {
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(isSuccess, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_NewUser', listLogs[0].Web_Service__c);
+        System.assertEquals('newUser', listLogs[0].Method__c);
+        System.assertEquals('SIS', listLogs[0].System__c);
+    }
+    
     static testMethod void newUser_noSISID() {
         ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
         
@@ -61,6 +71,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('018', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void newUser_noFirstName() {
@@ -73,6 +85,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('019', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void newUser_noLastName() {
@@ -85,6 +99,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('003', response.ErrorCode);
+        
+        checkLogs(false);
     }
 
     static testMethod void newUser_noEmail() {
@@ -97,6 +113,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('002', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void newUser_invalidEmail() {
@@ -109,6 +127,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('006', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void newUser_invalidUserType() {
@@ -121,6 +141,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('020', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void newUser_invalidTypeOfService() {
@@ -133,6 +155,13 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('010', response.ErrorCode);
+        
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(false, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_NewUser', listLogs[0].Web_Service__c);
+        System.assertEquals('newUser', listLogs[0].Method__c);
+        System.assertEquals(null, listLogs[0].System__c);
     }
     
     static testMethod void createSISUser_NoContactOrUser() {
@@ -144,6 +173,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('011', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void createSISUser_NoUser() {
@@ -168,6 +199,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(true, response.IsSuccess);
         System.assertEquals(contact.Id, response.FederationID);
+        
+        checkLogs(true);
     }
     
     static testMethod void createSISUser_ExistingUser() {
@@ -200,6 +233,9 @@ private class ISSP_WS_SIS_NewUser_Test {
         }
         update appRightList;
 
+        //clear logs to catch the right ones after the test
+        delete [SELECT id FROM ISSP_Web_Service_Log__c];
+
         Test.startTest();
         // second call detects exisitng user 
         response = ISSP_WS_SIS_NewUser.newUser(inputData);
@@ -207,6 +243,8 @@ private class ISSP_WS_SIS_NewUser_Test {
         
         System.assertEquals(true, response.IsSuccess);
         System.assertEquals(contact.Id, response.FederationID);
+        
+        checkLogs(true);
     }
 
 }

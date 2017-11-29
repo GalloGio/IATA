@@ -2,10 +2,10 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
 
     public static final set<String> VALID_REQUEST_TYPES = ISSP_WS_SIS_Common.VALID_REQUEST_TYPES;
     public static final map<String,Boolean> MAP_MEMBER_CONVERSION = new map<String,Boolean>{
-        'Live' => true,
-        'Suspended' => true,
-        'Terminated' => false,
-        'Not a member' => false
+        'LIVE' => true,
+        'SUSPENDED' => true,
+        'TERMINATED' => false,
+        'NOT A MEMBER' => false
     };
 
     global class InputData {
@@ -58,7 +58,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         check all fields in the incoming data, returns an exception if error found
     **/
     private static void validateInputData(InputData inputData) {
-        if (String.isBlank(inputData.SISMemberID)) {
+        if (String.isBlank(inputData.SISMemberID) || inputData.SISMemberID.length()>9) {
             throw new ISSP_WS_SIS_Common.WSException('018','');
         }
         if (String.isBlank(inputData.MemberAccountingCode)) {
@@ -73,15 +73,18 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         if (String.isBlank(inputData.IsMembershipSubStatus)) {
             throw new ISSP_WS_SIS_Common.WSException('023','IsMembershipSubStatus');
         }
-        if (!String.isBlank(inputData.ISEntrydate)) {
+        if (inputData.ISMembershipStatus=='Active' ) {
+            if (String.isBlank(inputData.ISEntrydate)) {
+                throw new ISSP_WS_SIS_Common.WSException('023','ISEntrydate');
+            }
             if (strToDate(inputData.ISEntrydate) == null ) {
                 throw new ISSP_WS_SIS_Common.WSException('025','');
             }
         }
-        if (String.isBlank(inputData.ICHMembershipStatus)) {
+        if (inputData.ICHMembershipStatus==null || !MAP_MEMBER_CONVERSION.containsKey(inputData.ICHMembershipStatus.toUpperCase())) {
             throw new ISSP_WS_SIS_Common.WSException('023','ICHMembershipStatus');
         }
-        if (String.isBlank(inputData.ACHMembershipStatus)) {
+        if (inputData.ACHMembershipStatus==null || !MAP_MEMBER_CONVERSION.containsKey(inputData.ACHMembershipStatus.toUpperCase())) {
             throw new ISSP_WS_SIS_Common.WSException('023','ACHMembershipStatus');
         }
         if (inputData.TypeOfService != 'SIS') {
@@ -110,6 +113,9 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         }
         Account account = listAccount[0];
         try {
+            //prevent the callout execution for update account
+            ISSP_SIS_AccountHandler.BLOCK_EXECUTION = true;
+            
             account.EF_SIS_Code__c = inputData.MemberAccountingCode;
             account.EF_SIS_Designator__c = inputData.MemberDesignator;
             account.SIS_Status__c = inputData.ISMembershipStatus;

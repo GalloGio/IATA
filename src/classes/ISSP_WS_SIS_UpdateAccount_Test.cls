@@ -6,6 +6,7 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
 
     @TestSetup
     private static void setup() {
+        ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
         // insert errors in Custom Setting
         list<ISSP_Int_Error__c> listError = new list<ISSP_Int_Error__c>();
         for (Integer i=1; i<=50; i++) {
@@ -47,11 +48,20 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         inputData.ISMembershipStatus = 'Active';
         inputData.IsMembershipSubStatus = 'IATA Office';
         inputData.ISEntryDate = '01-OCT-2004';
-        inputData.ICHMembershipStatus = 'true';
-        inputData.ACHMembershipStatus = 'true';
+        inputData.ICHMembershipStatus = 'Live';
+        inputData.ACHMembershipStatus = 'Live';
         inputData.TypeOfService = 'SIS';
         inputData.RequestType = 'O';
         return inputData;
+    }
+    
+    private static void checkLogs(Boolean isSuccess) {
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(isSuccess, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_UpdateAccount', listLogs[0].Web_Service__c);
+        System.assertEquals('updateSISAccount', listLogs[0].Method__c);
+        System.assertEquals('SIS', listLogs[0].System__c);
     }
 
     static testMethod void updateAccount_noSISMemberID() {
@@ -64,6 +74,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('018', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noAccountingCode() {
@@ -76,6 +88,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noMemberDesignator() {
@@ -88,6 +102,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noStatus() {
@@ -100,6 +116,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noSubstatus() {
@@ -112,6 +130,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_invalidISEntryDate() {
@@ -124,6 +144,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('025', response.ErrorCode);
+        
+        checkLogs(false);
     }
 
     static testMethod void updateAccount_noICH() {
@@ -136,6 +158,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noACH() {
@@ -148,6 +172,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('023', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_noTypeOfService() {
@@ -160,6 +186,13 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('010', response.ErrorCode);
+        
+        list<ISSP_Web_Service_Log__c> listLogs = [SELECT Id, Success__c, Web_Service__c, Method__c, System__c, Error_Message__c FROM ISSP_Web_Service_Log__c];
+        System.assert(listLogs.size()==1, '' + listLogs);
+        System.assertEquals(false, listLogs[0].Success__c, '' + listLogs[0].Error_Message__c);
+        System.assertEquals('ISSP_WS_SIS_UpdateAccount', listLogs[0].Web_Service__c);
+        System.assertEquals('updateSISAccount', listLogs[0].Method__c);
+        System.assertEquals(null, listLogs[0].System__c);
     }
     
     static testMethod void updateAccount_noRequestType() {
@@ -172,6 +205,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('022', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_AccountNotFound() {
@@ -183,6 +218,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(false, response.IsSuccess);
         System.assertEquals('005', response.ErrorCode);
+        
+        checkLogs(false);
     }
     
     static testMethod void updateAccount_OK() {
@@ -199,6 +236,8 @@ private class ISSP_WS_SIS_UpdateAccount_Test {
         
         System.assertEquals(true, response.IsSuccess);
         System.assertEquals(account.SIS_ID__c, response.SISMemberID);
+        
+        checkLogs(true);
     }
 
 }

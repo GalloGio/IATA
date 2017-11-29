@@ -57,11 +57,16 @@ global class ISSP_WS_SIS_Common {
             FROM Portal_Application_Right__c
             WHERE Contact__c = :contact.Id
             AND Portal_Application__c = :SIS_ID_PORTAL_APP];
+            
+        // prevent triggers that make callouts to SIS
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        ISSP_UserTriggerHandler.preventTrigger = true;
 
         if (appRightList.isEmpty()){
             //create new app right
             try {
                 Portal_Application_Right__c appRight = ISSP_WS_Utilities.createApp(SIS_ID_PORTAL_APP, contact.Id);
+
                 insert appRight;
             } catch (Exception e) {
                 throw new WSException('001', 'Application right creation failed ' + e.getMessage());
