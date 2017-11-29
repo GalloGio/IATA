@@ -26115,5 +26115,12 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Search for Contacts String</shortDescription>
         <value>Search for Contacts</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_RHC_Risk_Event_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Event Status</shortDescription>
+        <value>Risk Event Status</value>
+    </labels>
 </CustomLabels>
