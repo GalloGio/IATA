@@ -1,11 +1,13 @@
 <apex:page showHeader="false" applyHtmlTag="false" controller="LiveAgentCustomWindowController" language="{!language}">
-    <html lang="{!language}" style="overflow-x: hidden;width:100%;height: 680px;">
+    <html lang="{!language}" style="overflow-x: hidden;width:100%;height: 100%;">
         <head>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         </head>
     <link rel="shortcut icon" href="{!$Resource.IATAlogo}" type="image/x-icon"/>
     <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/bootstrap.css')}" type="text/css" />
-    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+    
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+    <script src="{!urlfor($Resource.TitleAlert)}" type="text/javascript"/>
 
     <script>
 
@@ -28,6 +30,7 @@
     	var clientMessage = '{!$Label.LVA_ClientMessage}';//'Sent by you at [timeStamp]';
     	var languagesMessages = '{!$Label.LVA_LanguagesMessage}';//I can chat with you in [languages].
         var modalMessage = '{!$Label.LVA_ModalMessage}';//'Leave Chat?';
+        var notificationTimeout = 3000;
     	var liveAgentClientChatHeight;
 
         $j(function() {
@@ -127,12 +130,14 @@
     	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, newagent);
     	liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_TRANSFERRED,newagent);
     
-    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_REQUESTED, shrinkChat);
-    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_SUCCESS, resizeChat);
-    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_FAILURE, resizeChat);
-    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_CANCELED, resizeChat);
+        liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_REQUESTED, shrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_SUCCESS, clearShrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_FAILURE, clearShrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_CANCELED, clearShrinkChat);
     	liveagent.addEventListener(liveagent.chasitor.Events.START_CHASITOR_IDLE_TIMEOUT_WARNING, timeoutShrinkChat);
-    	liveagent.addEventListener(liveagent.chasitor.Events.CLEAR_CHASITOR_IDLE_TIMEOUT, timeoutResizeChat);
+        liveagent.addEventListener(liveagent.chasitor.Events.CLEAR_CHASITOR_IDLE_TIMEOUT, clearTimeoutResizeChat);
+        liveagent.addEventListener(liveagent.chasitor.Events.AGENT_TYPING_UPDATE, scrollOnMessage);
+        liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_MESSAGE, notifyOnNewMessage);
     
         var contactId;
         var buttonlanguage;
@@ -216,23 +221,17 @@
     		
     		function insertLanguages(userLanguages){
 
-                var languagesMap = new Map();
                 var languages = '';
 				if(userLanguages){
                     Object.keys(userLanguages).forEach(key => {
-                        languagesMap.set(key, userLanguages[key]);
-                    });
-                    
-                    for (var [key, value] of languagesMap) {
                         if(!key.includes('{!language}')){
-                        
-                            if(languages.length == 0){
-                                languages = value;
+                        	if(languages.length == 0){
+                                languages = userLanguages[key];
                             } else {
-                                languages += ', ' + value;
+                                languages += ', ' + userLanguages[key];
                             }
-                        }
-                    }
+                    	}
+                    });
                 }
                         
                 if(languages.length>0){
@@ -247,11 +246,12 @@
     		document.getElementById("laSaveButton").style.display = 'block';
     		document.getElementById("laEndButton").style.display = 'block';
             document.getElementById("chatAgent").style.display = 'inline-flex';
+            document.getElementById("footer").style.display = 'inline-flex';
             
-            liveAgentClientChatHeight = document.getElementById("liveAgentClientChat").style.height;
-            
+            liveAgentClientChatHeight = document.getElementById("liveAgentChatLog").style.height;
+                                   
             document.getElementById('fileCancelButton').onclick = function(e){
-            	resizeChat();
+            	clearShrinkChat();
                 SfdcApp.LiveAgent.Chasitor.FileTransfer.cancelFileTransfer(); 
                 return false;
             }
@@ -260,7 +260,7 @@
     function SetHours(stringHours){  
         var d, s;                     //Declare variables.
         d = new Date();               //Create Date object.
-        d.setHours(stringHours.split(':')[0], stringHours.split(':')[1], stringHours.split(':')[2].split(' ')[0]);  //Set hours, minutes, & seconds.
+        d.setHours(stringHours.split(':')[0], stringHours.split(':')[1], stringHours.split(':')[2].split(' ')[0]);  //Set hours, minutes and seconds.
         var hours = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
         var minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
         var am_pm = stringHours.split(':')[2].split(' ')[1];
@@ -276,36 +276,81 @@
     
     var transferAttempt = false;
     function shrinkChat (){
-        if(transferAttempt){
-            document.getElementById("liveAgentChatLog").style.height = "230px";
-        } else {
-        	document.getElementById("liveAgentChatLog").style.height = "238px";
-            transferAttempt = true;
-        }
-        document.getElementById("chatbuttonscontainer").style.marginTop="38px";
+        document.getElementById("liveAgentChatLog").style.height = "calc(100% - 100px)";
+        transferAttempt = true;
     }
     
     function timeoutShrinkChat (){
         if(transferAttempt){
-            document.getElementById("liveAgentChatLog").style.height = "238px";
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 150px)";
+        } else {
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 65px)";
         }
-        document.getElementById("chatbuttonscontainer").style.marginTop="2px";
     }
     
-    function resizeChat (){
-        document.getElementById("liveAgentChatLog").style.height = liveAgentClientChatHeight;
-        document.getElementById("chatbuttonscontainer").style.marginTop="38px";
+    function clearShrinkChat(){
+        document.getElementById("livechatcontainer").style.height = "calc(100% - 310px)";
         transferAttempt = false;
     }
     
-    function timeoutResizeChat(){
+    function clearTimeoutResizeChat(){
         if(transferAttempt){
-            document.getElementById("liveAgentChatLog").style.height = "238px";
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 100px)";
+        } else {
+            document.getElementById("liveAgentChatLog").style.height = liveAgentClientChatHeight;
         }
-        document.getElementById("chatbuttonscontainer").style.marginTop="38px";
     }
     
-    
+    /*Workaround for Chrome*/
+    function scrollOnMessage(){
+        var objDiv = document.getElementById("liveAgentChatLog");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+        
+        function notifyOnNewMessage(){
+            scrollOnMessage();
+            window.blur();
+            window.focus();
+            var message = "New chat message!";
+            $j.titleAlert(message, {
+                requireBlur:false,
+                stopOnFocus:false,
+                duration:4000,
+                interval:700
+            });
+            
+            showDesktopNotification(message);
+        }
+        
+        function showDesktopNotification(message){
+            var notification;
+	    //Validate if the window is on foreground
+            if(!document.hasFocus()){
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support desktop notification");
+                } 
+                // Let's check whether notification permissions have already been granted
+                else if (Notification.permission === "granted") {
+                    // If it's okay let's create a notification
+                    // tag added to reuse the same notification
+                    notification = new Notification(message, {tag: 'notificationTag'});
+                }
+                
+                // Otherwise, we need to ask the user for permission
+                else if (Notification.permission !== "denied") {
+                    Notification.requestPermission(function (permission) {
+                        // If the user accepts, let's create a notification
+                        if (permission === "granted") {
+                            notification = new Notification(message, {tag: 'notificationTag'});
+                        }
+                    });
+                }
+                if(notification){
+                    setTimeout(notification.close.bind(notification), notificationTimeout);
+                }
+            }
+        }
+        
     // FME End
 
     </script>
@@ -323,6 +368,8 @@
         	bottom: 10%;
             border-radius: 0px;
             border: 1px solid #b5b5b5;
+            margin-top: 80%;
+    		margin-left: 50%;
         }
         
         .liveAgentCancelButton:hover { 
@@ -375,19 +422,18 @@
         }
 
         .waitingMessage{
-            height: 510px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
             color: #206aa4;
-            padding-top: 20%;
+            padding-top: 12%;
         }
 
         #liveAgentChatLog {
             border-color: #337ab7;
 		    margin: auto;
 		    width: calc(100% - 8px);
-		    height: 325px;
+		    height: calc(100% - 40px);
 		    overflow-y: auto;
 		    background-color: white;
         }
@@ -495,18 +541,18 @@
             float: left;
             margin-top: 0px;
             margin-right: 25px;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
             margin-left: 15px;
-        	padding-bottom: 30px;
+        	padding-bottom: 5px;
         }
         
         #liveAgentChatLogText .client .timestamp {
             float: right;
         	margin-top: 0px;
             margin-right: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
             margin-left: 25px;
-        	padding-bottom: 30px;
+        	padding-bottom: 5px;
         }
         
         .liveAgentSendButton {
@@ -531,6 +577,15 @@
         	background-size: 75%;
         }
         
+        em {
+            padding-left: 15px;
+            font-size: 14px;
+        }
+        
+        p.bubble {
+            padding-bottom: 0px;
+    		margin-bottom: 0px;
+        }
 
         #fileDragLabel {
             border: 1px solid #337ab7;
@@ -591,14 +646,30 @@
             margin: 5px;
             width: 50px;
         }
+        
+        #liveAgentMessageContainer{
+            background-color: #CD6571;
+            -webkit-animation: pulse 2s infinite alternate;
+            -moz-animation: pulse 2s infinite alternate;
+            -o-animation: pulse 2s infinite alternate;
+            animation: pulse 2s infinite alternate;
+            text-align: center;
+            width: 100%;
+            color: white;
+            font-style: italic;
+            overflow: hidden;
+            display: none;
+            position: absolute;
+            bottom: -75px;
+            z-index: 99999;
+        }
+        
         .footer {
-        	position: relative;
-        	margin-top: 4px;
-            margin-bottom: 2px;
-            margin-left: 8px;
-            margin-right: 8px;
+            display: none;
+            position: relative;
             font-size: 11px;
-        	z-index: -99999;
+            z-index: -99999;
+            top: 55px;
         }
 		
 	    #modalcontainer {
@@ -643,7 +714,7 @@
 	      #headercontainer {
         	display:block;
         	z-index:99999;
-        	width:100%;
+        //width:100%;
         	height:100%;
         	padding-left: 0px;
     		padding-right: 0px;
@@ -652,8 +723,9 @@
           
           #chatbuttonscontainer {
         	display: block;
-        	margin-top: 38px;
-            position: relative;
+        	position: relative;
+            top: 50px;
+            z-index: -99999;
           }
         
     	  #headerbackground{
@@ -663,9 +735,10 @@
             margin: 0 auto;
         	//overflow: overlay;
         	overflow-y: auto;
-            width: 100%;
-    		height: 680px;
+        //width: 400px;
+    		height: 100%;
 		  }
+        
       	  
       	  #chatbuttonsbackground{
         	text-align: center;
@@ -676,8 +749,26 @@
       	  #livechatcontainer{
             position: relative;
             width: 100%;
+            height: calc(100% - 310px);
       	  }
-      	 
+        
+        @media screen and (min-width: 400px) {
+            #headercontainer{
+                max-width: 600px;
+            }
+        }
+        
+        @media screen and (max-height: 480px) and (orientation: portrait) {
+            #livechatcontainer{
+        		height: 62%;
+            }
+        }
+        
+        @media screen and (max-height: 480px) and (orientation: landscape) {
+            #livechatcontainer{
+        		height: 100%;
+            }
+        }
       	  
       	  .buttonEnd {
 			padding: 7px 7px;
@@ -734,9 +825,9 @@
         
 
         .thumbButt img{
-            height:40px !important;
-            width:40px;
-            border:0px;
+            height:50px !important;
+            width: 50px;
+            border: 0px;
             cursor: pointer;
         }
         
@@ -915,8 +1006,7 @@
             #fileSendButton{
             	font-size: 13px;
             	border-radius: 0px;
-            }    
-            
+            }
 			
     </style>
 
@@ -1079,7 +1169,7 @@
                 </div>
             </div>
             
-            <div class="footer">
+            <div id="footer" class="footer col-md-12">
             </div>
             
        </div>
