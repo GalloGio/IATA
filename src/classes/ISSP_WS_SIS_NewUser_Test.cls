@@ -189,6 +189,16 @@ private class ISSP_WS_SIS_NewUser_Test {
         //this call creates a user
         ISSP_WS_SIS_NewUser.ResponseData response = ISSP_WS_SIS_NewUser.newUser(inputData);
         System.assertEquals(true, response.IsSuccess);
+        //this call removes access to SIS
+        List <Portal_Application_Right__c> appRightList = [
+            SELECT Id, Right__c
+            FROM Portal_Application_Right__c
+            WHERE Contact__c = :contact.Id
+            AND Portal_Application__c = :ISSP_WS_SIS_Common.SIS_ID_PORTAL_APP];
+        for (Portal_Application_Right__c right: appRightList) {
+            right.Right__c = 'Access Denied';
+        }
+        update appRightList;
 
         Test.startTest();
         // second call detects exisitng user 

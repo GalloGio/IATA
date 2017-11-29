@@ -1,4 +1,4 @@
-global with sharing class ISSP_WS_SIS_NewUser {
+global without sharing class ISSP_WS_SIS_NewUser {
     
     public static final Id SIS_ID_PORTAL_APP = ISSP_WS_SIS_Common.SIS_ID_PORTAL_APP;
     public static final map<String,String> MAP_USER_TYPES = ISSP_WS_SIS_Common.MAP_USER_TYPES;

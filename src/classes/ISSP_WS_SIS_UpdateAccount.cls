@@ -1,6 +1,12 @@
 global with sharing class ISSP_WS_SIS_UpdateAccount {
 
     public static final set<String> VALID_REQUEST_TYPES = ISSP_WS_SIS_Common.VALID_REQUEST_TYPES;
+    public static final map<String,Boolean> MAP_MEMBER_CONVERSION = new map<String,Boolean>{
+        'Live' => true,
+        'Suspended' => true,
+        'Terminated' => false,
+        'Not a member' => false
+    };
 
     global class InputData {
         WebService String SISMemberID;
@@ -108,15 +114,20 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             account.EF_SIS_Designator__c = inputData.MemberDesignator;
             account.SIS_Status__c = inputData.ISMembershipStatus;
             account.SIS_Sub_Status__c = inputData.IsMembershipSubStatus;
-            //if (inputData.ISEntryDate!=null) account.SIS_Entry_Date__c = strToDate(inputData.ISEntryDate);
-            account.ICH_Member__c = Boolean.ValueOf(inputData.ICHMembershipStatus);
-            account.ACH_Member__c = Boolean.ValueOf(inputData.ACHMembershipStatus);
+            if (inputData.ISEntryDate!=null) account.SIS_Entry_Date__c = strToDate(inputData.ISEntryDate);
+            account.ICH_Member__c = convertMember(inputData.ICHMembershipStatus);
+            account.ACH_Member__c = convertMember(inputData.ACHMembershipStatus);
             update account;
             
         } catch (Exception e) {
             throw new ISSP_WS_SIS_Common.WSException('001',e.getMessage());
         }
         return account;
+    }
+    
+    private static Boolean convertMember(String member) {
+        Boolean result = MAP_MEMBER_CONVERSION.get(member);
+        return result==null? false: result;
     }
     
     /**
