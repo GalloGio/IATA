@@ -36,10 +36,108 @@
             //LVA_CONSOLE_ALERT_MODE_DIALOG
             //LVA_CONSOLE_ALERT_MODE_POPUP
             //LVA_CONSOLE_ALERT_MODE_ALERT
+            //LVA_CONSOLE_ALERT_MODE_NOTIFICATION
             var lvaChatConsoleAlertMode='{!lvaChatConsoleAlertMode}';
 
             var newWindow;//GLOBAL VAR for popup window in order to be able to close it from parent
             var windowContent='';
+
+            //initialize broeser notifications if alert mode is browser notifications
+            if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_NOTIFICATION'){
+                // request permission on page load
+                document.addEventListener('DOMContentLoaded', function () {
+                  if (!Notification) {
+                    alert('Desktop notifications not available in your browser. Try other browser.');
+                    return;
+                  }
+
+                  if (Notification.permission !== "granted")
+                    Notification.requestPermission();
+                });
+            }
+
+
+           /*******************************************************************************************************
+           * @description Generates/create a browser/Javascript Notification (Notification API)
+           *              when selected the mode "LVA_CONSOLE_ALERT_MODE_NOTIFICATION" in configuration
+           *              parameter LVA_CONSOLE_ALERT_MODE
+           *
+           * @param {String} title - Window title that will apears in browser window bar.
+           * @param {String} msgToDisplay - Message string or html to display in popup.
+           * @param {Integer} dismissTime - Time in milliseconds the notification will be displayed until be automaticaly be dismissed
+           *                  if not provided notification message will not be dismissed (user needs to close it manualy).
+           * @param {String} onClickLink - Link to open in browser when clicking in notification window.
+           *
+           * @example
+           * createMyNotification("Notification","text notification",5000, 'http://someadress.com');
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-11-30   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function createNotification(title,messageToDisplay) {
+              // Let's check if the browser supports notifications
+              if (!("Notification" in window)) {
+                alert("This browser does not support system notifications");
+              }
+
+              // Let's check whether notification permissions have already been granted
+              else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                createLVANotification(title, messageToDisplay);
+              }
+              // Otherwise, we need to ask the user for permission
+              else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                  // If the user accepts, let's create a notification
+                  if (permission === "granted") {
+                    createLVANotification(title, messageToDisplay);
+                  }
+                });
+              }
+            }
+
+           /*******************************************************************************************************
+           * @description Generates/create a browser/Javascript Notification (Notification API)
+           *              when selected the mode "LVA_CONSOLE_ALERT_MODE_NOTIFICATION" in configuration
+           *              parameter LVA_CONSOLE_ALERT_MODE
+           *
+           * @param {String} title - Window title that will apears in browser window bar.
+           * @param {String} msgToDisplay - Message string or html to display in popup.
+           * @param {Integer} dismissTime - Time in milliseconds the notification will be displayed until be automaticaly be dismissed
+           *                  if not provided notification message will not be dismissed (user needs to close it manualy).
+           * @param {String} onClickLink - Link to open in browser when clicking in notification window.
+           *
+           * @example
+           * createMyNotification("Notification","text notification",5000, 'http://someadress.com');
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-11-30   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function createLVANotification(title, messageToDisplay, dismissTime, onClickLink){
+                 var n = new Notification(title, {
+                      icon: '{!$Resource.LVA_IconsExclamation}',
+                      body: messageToDisplay,
+                      tag:'LVANotificationsDisplay',
+                      renotify: true
+                    });
+
+                    if (onClickLink=undefined){
+                        n.onclick = function () {
+                          window.open(onClickLink);
+                        };
+                    }
+
+                    //dismiss notification
+                    if (dismissTime!=undefined){
+                        setTimeout(n.close.bind(n), dismissTime);
+                    }
+
+                    return n;
+            }
 
            /*******************************************************************************************************
            * @description Generates html for each pop up box when selected mode "LVA_CONSOLE_ALERT_MODE_POPUP"
@@ -171,7 +269,7 @@
            * Date         Created by                        Description
            * 2017-10-27   paulo.bastos@rightitservices.com  Creation
            ********************************************************************************************************/
-            function popUpChatConsoleAlert(title, msgToDisplay, msgType, isAccumulative){
+            function popUpChatConsoleAlert(title, msgToDisplay, msgType, isAccumulative, msgTxtOnly){
 
               if (msgType=='' || msgType==undefined){
                   msgType='info';
@@ -224,7 +322,11 @@
                 newWindow.focus();
               }
               else if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_ALERT'){
-                alert(msgToDisplay);
+                alert(msgTxtOnly);
+              }
+              else if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_NOTIFICATION'){
+                //console.log('basto1p - htmlToDisplay='+htmlToDisplay);
+                createNotification(title,msgTxtOnly);
               }
               else{ //MODAL MODE
                 //open the tollkit component window
@@ -283,7 +385,9 @@
                     //Call/Generate popup window
                     popUpChatConsoleAlert("{!$Label.LVA_ConsoleStatusChangedPopupTitle}",
                                           "{!$Label.LVA_ConsoleStatusChangedPopupDesc} "+"<b>" + state + "</b>",
-                                          msgType);
+                                          msgType,
+                                          undefined,
+                                          "{!$Label.LVA_ConsoleStatusChangedPopupDesc} "+state);
                     lastStatus = state;
                 }else{
                     lockAlert = false;
@@ -309,7 +413,9 @@
             var eventHandlerChatRequest = function (result) {
                 popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
                                       "{!$Label.LVA_ConsoleNewChatReqDesc}",// "+"<b>" + result.chatKey + "</b>",
-                                       '');
+                                       undefined,
+                                       undefined,
+                                       "{!$Label.LVA_ConsoleNewChatReqDesc}");
             };
 
 

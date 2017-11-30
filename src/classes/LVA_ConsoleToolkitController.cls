@@ -26,6 +26,8 @@ public class LVA_ConsoleToolkitController {
 	public static final String LVA_CONSOLE_ALERT_MODE_DIALOG='LVA_CONSOLE_ALERT_MODE_DIALOG';
 	public static final String LVA_CONSOLE_ALERT_MODE_POPUP='LVA_CONSOLE_ALERT_MODE_POPUP';
 	public static final String LVA_CONSOLE_ALERT_MODE_ALERT='LVA_CONSOLE_ALERT_MODE_ALERT';
+	public static final String LVA_CONSOLE_ALERT_MODE_NOTIFICATION='LVA_CONSOLE_ALERT_MODE_NOTIFICATION';
+
 
 	//List of supervisor profiles attribute
 	private static Set<Id> listSupervisorProfileIds;
