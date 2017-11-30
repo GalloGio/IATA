@@ -110,6 +110,7 @@ public class AMS_OSCARTriggerHandler {
 
 		updateCaseKPIFields();
 		updateCaseInfo();
+        createHoAdminNotifications();
 	}
 
 	private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -1514,6 +1515,68 @@ public class AMS_OSCARTriggerHandler {
 
 		if(!casesToUpdate.isEmpty()) update casesToUpdate;
 	}
+
+    // Create portal notifications for the HO's portal admin when NoC and Change of Bank Details OSCARs submitted by a BR contact are finalized
+    private static void createHoAdminNotifications() {
+        system.debug('createHoAdminNotifications: enter ');
+        set<Id> setInvolvedAcctIds = new set<Id>();
+        list<AMS_OSCAR__c> lstOscarsToNotify = new list<AMS_OSCAR__c>();
+        list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
+
+        for (AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.new) {
+            AMS_OSCAR__c oldOscar = (AMS_OSCAR__c)Trigger.oldMap.get(oscar.Id);
+            if (oscar.Finalization_result__c == AMS_Utils.PASSED && oldOscar.Finalization_result__c != AMS_Utils.PASSED && ( oscar.Process__c == AMS_Utils.BANKACCCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES ) ) {
+                setInvolvedAcctIds.add(oscar.Account__c);
+                lstOscarsToNotify.add(oscar);
+            }
+        }
+
+        if (setInvolvedAcctIds.isEmpty()) return;
+
+        map<Id, Account> mapInvolvedAccountsPerId = new map<Id, Account>([SELECT Id, IATACode__c, Top_Parent__c, Top_Parent__r.IATACode__c FROM Account WHERE Id IN :setInvolvedAcctIds]);
+
+        set<Id> setBRAccountIds = new set<Id>();
+        set<Id> setHOAccountIds = new set<Id>();
+
+        for (Account acc : mapInvolvedAccountsPerId.values()) 
+            if (acc.Top_Parent__c != null) {
+                setBRAccountIds.add(acc.Id);
+                setHOAccountIds.add(acc.Top_Parent__c);
+            }
+
+        if (setBRAccountIds.isEmpty()) return; // if empty it means all involved accounts are HOs so there's no OSCAR from a BR account, so we can stop
+
+        // get HO portal admin contacts - 1 per account
+        map<Id, Contact> mapAdminContactsPerHOId = new map<Id, Contact>();
+        for (Contact con : [SELECT Id, Email, AccountId, User_Portal_Status__c FROM Contact WHERE AccountId IN :setHOAccountIds AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']) {
+            mapAdminContactsPerHOId.put(con.AccountId, con);
+        }
+        
+        try {
+            for (AMS_OSCAR__c oscar : lstOscarsToNotify) {
+                if (setBRAccountIds.contains(oscar.Account__c) && mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c) != null) { // only notify if case is from BR & there is an admin contact on HO
+
+                    Notification__c notification = new Notification__c();
+                    notification.Contact__c = mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c).Id;
+                    notification.Type__c= 'Information';
+                    notification.Notificatin_color__c = '#007FFF';
+                    notification.Alert_Contact_By_Email__c = true;
+                    notification.Expiry_date__c = Datetime.now().addDays(14);
+                    notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' has been finalized';
+                    notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
+                    notification.Message__c+= 'Case number: ' + oscar.Name + '</p>';
+
+                    lstNotificationsToCreate.add(notification);
+                }
+            }
+
+            if (!lstNotificationsToCreate.isEmpty()) 
+                insert lstNotificationsToCreate;
+
+        } catch (Exception e) {
+            system.debug('Add notification ERROR: ' + e.getmessage());
+        }
+    }
 
 	public static String fetchCaseReason(String typeOfChange){
 

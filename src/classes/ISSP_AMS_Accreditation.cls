@@ -7909,7 +7909,7 @@ system.debug('aqui sectorValue ' + sectorValue);
                 notification.Notificatin_color__c = '#007FFF';
                 notification.Alert_Contact_By_Email__c = true;
                 notification.Expiry_date__c = Datetime.now().addDays(14);
-                notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch';
+                notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + con.Account.IATACode__c;
                 notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + con.Account.IATACode__c + '.<br/>';
                 notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
 
