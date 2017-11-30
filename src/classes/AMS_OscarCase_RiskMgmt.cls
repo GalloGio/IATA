@@ -341,7 +341,7 @@ public class AMS_OscarCase_RiskMgmt {
                 }
 
                 // get forms of payment for newgen accounts
-                Map<Id,List<Agency_Authorization__c>> fOPsMap;
+                Map<Id,List<Agency_Authorization__c>> fOPsMap = new Map<Id,List<Agency_Authorization__c>>();
                 if (mapCases.values()[0].Account.ANG_IsNewGenAgency__c)
                     fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
 
