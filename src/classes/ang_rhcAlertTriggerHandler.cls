@@ -29,6 +29,7 @@ public class ang_rhcAlertTriggerHandler {
 
 
 	private map<id,account> raAccMap{get;private set;}
+	private static final String ALL_COUNTRIES_ISOCODE ='WW';
 	
 
 	// ************************************************************
@@ -195,7 +196,8 @@ public class ang_rhcAlertTriggerHandler {
 
 
 			for(ANG_Risk_Alert__c ra: redAlerts){
-				if(rtsConfigMap.get(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c).ANG_Create_Sidra_Lite__c){
+				string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:ALL_COUNTRIES_ISOCODE ;//checks if key exists in map, if not uses default key
+   				if(rtsConfigMap.get(configKey).ANG_Create_Sidra_Lite__c){
 					smapParentCase = new Case(
 						Region__c =	raAccMap.get(ra.id).Region_formula__c,
 						Subject = 'Real Time Sales RED Alert - ' +   raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c + ' - ' + raAccMap.get(ra.id).IATACode__c ,
@@ -323,7 +325,8 @@ public class ang_rhcAlertTriggerHandler {
 					List<Id> caseIds = new List<Id>();
 					List<Id> accountIds = new List<Id>();
 					for (Case sLiteCase : sidraLiteCases) {
-						if(rtsConfigMap.get(accIsoCode.get(sLiteCase.AccountId)).ANG_Remove_Ticketing_Authority__c){
+						string configKey=rtsConfigMap.containsKey(accIsoCode.get(sLiteCase.AccountId))?accIsoCode.get(sLiteCase.AccountId):ALL_COUNTRIES_ISOCODE ;
+   						if(rtsConfigMap.get(configKey).ANG_Remove_Ticketing_Authority__c){
 							caseIds.add(sLiteCase.Id);
 							accountIds.add(sLiteCase.AccountId);
 						}
@@ -469,7 +472,8 @@ public class ang_rhcAlertTriggerHandler {
                     //NEWGEN-2006
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
-                        	if(rtsConfigMap.get(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c).ANG_Send_Email_Agent__c){
+                        	string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:ALL_COUNTRIES_ISOCODE ;
+                        	if(rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
 	                            notifications.add(new Notification__c(
 	                                Contact__c = c.Id,
 		                            Subject__c = Label.RTS_TAR_Notification_Title,
@@ -516,4 +520,6 @@ public class ang_rhcAlertTriggerHandler {
 			this.smap = smap;
 		}
 	}
+
+
 }
