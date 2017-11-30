@@ -199,6 +199,19 @@ global class ANG_RME_Alert_Service {
 			setResponse('Invalid rtsSeverity: "'+req.rtsSeverity+'". Field is case Sensitive. Allowed values are: '+severPLvals, 400);
 			return false;
 		}
+
+		//validate currency
+		Set<String> currencyPLvals = new Set<String>();
+
+		for (Schema.Picklistentry entry: ANG_Risk_Alert__c.getSObjectType().getDescribe().fields.getMap().get('CurrencyIsoCode').getDescribe().getPickListValues()){
+			currencyPLvals.add(entry.getValue());
+		}
+
+		if (!currencyPLvals.contains(req.storedBaseCurrency)){
+			setResponse('Invalid storedBaseCurrency: "'+req.storedBaseCurrency+'". Currency code must have 3 upper case characters.', 400);
+			return false; 
+		}
+
 		return true;
 
 	}
