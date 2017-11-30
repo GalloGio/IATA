@@ -184,7 +184,7 @@ private class ang_rhcAlertTriggerHandler_test {
 	}
 
 	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
-
+		// no configuration for the account country found, so it will use the default one
 		list<IATA_ISO_Country__c> isoCountryList =new list<IATA_ISO_Country__c>();
 
 		IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(
@@ -201,7 +201,7 @@ private class ang_rhcAlertTriggerHandler_test {
         insert isoCountryList ;
 
 		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-    		IATA_ISO_Country__c=country2.id,
+    		IATA_ISO_Country__c=country1.id,
     		ANG_Create_Sidra_Lite__c= true, 
     		ANG_Remove_Ticketing_Authority__c= false,
     		ANG_Send_Email_Agent__c=false ,

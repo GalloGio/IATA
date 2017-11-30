@@ -129,8 +129,10 @@ public class ang_rhcAlertTriggerHandler {
 
 		set<id> accIdSet= new set<id>();
 		for(ANG_Risk_Alert__c ra :triggerNew ){
-			accIdSet.add(ra.ANG_Account__c);
+			if(ra.recordtypeId==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS'))accIdSet.add(ra.ANG_Account__c);
 		}
+
+		if(accIdSet.isEmpty())return;
 
 		List<Id> listIDAccsToRetriveCons = new List<Id>();
 		map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
