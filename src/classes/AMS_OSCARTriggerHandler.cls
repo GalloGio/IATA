@@ -1562,7 +1562,7 @@ public class AMS_OSCARTriggerHandler {
                     notification.Notificatin_color__c = '#007FFF';
                     notification.Alert_Contact_By_Email__c = true;
                     notification.Expiry_date__c = Datetime.now().addDays(14);
-                    notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' has been finalized';
+                    notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' finalized';
                     notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
                     notification.Message__c+= 'Case number: ' + oscar.Name + '</p>';
 
