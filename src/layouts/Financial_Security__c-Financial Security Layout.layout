@@ -43,6 +43,10 @@
                 <behavior>Readonly</behavior>
                 <field>First_Call_Letter_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Minimum_Financial_Security__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -80,6 +84,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Minimumrelease__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Financial_Security_Currency__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

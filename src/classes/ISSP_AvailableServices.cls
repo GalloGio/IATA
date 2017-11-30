@@ -53,7 +53,43 @@ public with sharing class ISSP_AvailableServices{
 
     public String IepStatus {get; set;}
 
-    public List<SelectOption> availablePortalServiceRoles {get; set;}    
+    public List<SelectOption> availablePortalServiceRoles {
+        get{
+
+            if(availableRoles == null){
+                availableRoles = new Map<String,List<String>>();
+
+                for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+
+                    if(availableRoles.get(role.Connected_App__c) == null)
+                        availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
+                    else
+                        availableRoles.get(role.Connected_App__c).add(role.Role__c);
+
+                }
+
+            }
+
+            Set<String> availableRolesLst = availableRoles.keySet();
+
+            if(availablePortalServiceRoles == null)
+                availablePortalServiceRoles = new List<SelectOption>{new SelectOption('', '')};
+
+            for(String roleConnApp: availableRolesLst){
+
+                if(roleConnApp == this.Serv.recordService.Name){
+
+                    for(String roleStr : availableRoles.get(roleConnApp)){
+
+                        availablePortalServiceRoles.add(new SelectOption(roleStr, roleStr));
+
+                    }
+                }
+            }
+
+            return availablePortalServiceRoles;
+
+            } set;}    
 
     public String sortExpression {
      get { return sortExp; }
@@ -87,6 +123,8 @@ public with sharing class ISSP_AvailableServices{
     public void setSortDirection(String value) {  
         sortDirection = value;
     }
+
+    public static Map<String,List<String>> availableRoles;
     
     public ISSP_AvailableServices(){
 
@@ -95,29 +133,26 @@ public with sharing class ISSP_AvailableServices{
         this.redirect = false;
         this.provError = false;
         
+        availableRoles = new Map<String,List<String>>();
+
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
             if(role.Permission_set_SSO__c != null){
                 iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
             }
-        }        
-    
-        //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c from User where id =: UserInfo.getUserId()];
 
-        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;        
 
-        availablePortalServiceRoles = new List<SelectOption>();
-
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'IATA EasyPay (EDENRED)'];
-        
-        availablePortalServiceRoles.add(new SelectOption('', ''));
-        
-        for (Connected_App_Roles__c role : roles) {
-            availablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
+            if(availableRoles.get(role.Connected_App__c) == null)
+                availableRoles.put(role.Connected_App__c , new List<String>{role.Permission_set_SSO__c});
+            else
+                availableRoles.get(role.Connected_App__c).add(role.Permission_set_SSO__c);
 
             if (role.Default_User_Role__c) {
                 this.defaultPortalUserRole = role.Role__c;
             }
-        }         
+        }
+
+        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;
+
     }
     
     public PageReference initialization() {
@@ -624,6 +659,11 @@ public with sharing class ISSP_AvailableServices{
         this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
 
         system.debug('XXX Serv : '+Serv);
+
+        //since you have the serv available ...
+
+        availablePortalServiceRoles = null;
+
         return null ;
     }
 

@@ -345,6 +345,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert FI;
         Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
         insert FS;
+        
+        test.StartTest();
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -365,9 +367,10 @@ private class AMS_OscarCase_RiskMgmt_Test {
             SidraLiteCase4.recordtypeId = SIDRALiteRTId;
             SidraLiteCase4.ParentId = parent.Id;
         insert SidraLiteCase4;
+        
+        system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 2.1 --> Query issued: ' + Limits.getQueries());
 
-        AMS_OscarCase_RiskMgmt.EndRun();
-        test.StartTest();
+        AMS_OscarCase_RiskMgmt.EndRun();        
 
         SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
         SidraLiteCase4.DEF_Approval_Rejection__c = 'Approved';
@@ -388,7 +391,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
         SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
 
-        update SidraLiteCase4;
+        update SidraLiteCase4;        
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries());
 

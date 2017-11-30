@@ -922,6 +922,19 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Power_of_one__c</fullName>
+        <externalId>false</externalId>
+        <formula>1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Power of one</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Pricebook2Id</fullName>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
