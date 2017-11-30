@@ -30,6 +30,7 @@
     	var clientMessage = '{!$Label.LVA_ClientMessage}';//'Sent by you at [timeStamp]';
     	var languagesMessages = '{!$Label.LVA_LanguagesMessage}';//I can chat with you in [languages].
         var modalMessage = '{!$Label.LVA_ModalMessage}';//'Leave Chat?';
+        var message = '{!$Label.LVA_New_Chat_Message}';//'New chat Message!'
         var notificationTimeout = 3000;
     	var liveAgentClientChatHeight;
 
@@ -311,7 +312,7 @@
             scrollOnMessage();
             window.blur();
             window.focus();
-            var message = "New chat message!";
+            
             $j.titleAlert(message, {
                 requireBlur:false,
                 stopOnFocus:false,
@@ -324,7 +325,7 @@
         
         function showDesktopNotification(message){
             var notification;
-	    //Validate if the window is on foreground
+            //Validate if the window is on foreground
             if(!document.hasFocus()){
                 if (!("Notification" in window)) {
                     console.log("This browser does not support desktop notification");
