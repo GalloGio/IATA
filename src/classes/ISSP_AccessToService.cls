@@ -263,6 +263,9 @@ public with sharing class ISSP_AccessToService{
         public Boolean cannotBeManagedByPortalAdmin {get; set;}
         public Boolean isEasyPayService {get; set;}
         public boolean hide {get; set;}
+        public boolean showGrant {get; set;}
+        public boolean showDeny {get; set;}
+        public boolean showIfap {get; set;}
     }
     
     public List<AccServiceWrapper > getAccServiceList(){
@@ -305,7 +308,33 @@ public with sharing class ISSP_AccessToService{
                 thisAccServiceRecord.contactStatus = 'IN';
             } else if (!userContact.containsKey(thisAccService.Contact__c)) {
                 thisAccServiceRecord.contactStatus = 'NO';
-            }    
+            }
+
+            thisAccServiceRecord.showGrant = false;
+            thisAccServiceRecord.showDeny = false;
+            thisAccServiceRecord.showIfap = false;
+
+            if(thisAccServiceRecord.isEasyPayService) {
+                if(thisAccServiceRecord.cannotBeManagedByPortalAdmin && thisAccService.right__c == 'Access Granted') {
+                    thisAccServiceRecord.showDeny = true;
+                }
+            } else {
+                if(!thisAccServiceRecord.cannotBeManagedByPortalAdmin) {                
+                    if(thisAccService.Application_Name__c == 'IFAP') {
+                        thisAccServiceRecord.showIfap = true;
+                        if(thisAccService.right__c == 'Access Requested') {
+                            thisAccServiceRecord.showDeny = true;
+                        }
+                    } else if(thisAccService.right__c == 'Access Denied') {
+                        thisAccServiceRecord.showGrant = true;
+                    } else  if(thisAccService.right__c == 'Access Requested') {
+                        thisAccServiceRecord.showGrant = true;
+                        thisAccServiceRecord.showDeny = true;
+                    } else {
+                        thisAccServiceRecord.showDeny = true;
+                    }
+                }
+            }
 
             thisAccServiceRecord.selected = false;
             thisAccServiceRecord.recordAccService = thisAccService;

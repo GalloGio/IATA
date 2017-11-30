@@ -13,13 +13,18 @@
   <script>
 
     $contactStatus = '';
-    $accountId = '';
     $contactId = '';
-    $contactName = '';
-    $CannotBeManagedByPortalAdmin = '';
-    $isEasyPayService = '';
+    $serviceId = '';
 
-    function showReasonModalDeny() {
+    function showReasonModalDeny(contactStatuslocal, contactIdLocal, serviceIdLocal) {
+      $contactStatus = contactStatuslocal;
+      $contactId = contactIdLocal;
+      $serviceId = serviceIdLocal;
+
+      $('[id$=contactStatus]').val($contactStatus);
+      $('[id$=serviceId]').val($serviceId);
+      $('[id$=contactId]').val($contactId);
+
       $('#theReasonDeny').modal('show');
     }
 
@@ -27,7 +32,16 @@
         $('#theReasonGrant').modal('show');
     }
 
-    function showConfirmModal() {  
+    function showConfirmModal(contactStatuslocal, contactIdLocal, serviceIdLocal) {
+
+      $contactStatus = contactStatuslocal;
+      $contactId = contactIdLocal;
+      $serviceId = serviceIdLocal;
+
+      $('[id$=contactStatus]').val($contactStatus);
+      $('[id$=serviceId]').val($serviceId);
+      $('[id$=contactId]').val($contactId);
+
       if ($contactStatus == 'PA' || $contactStatus == 'NO' || $contactStatus == 'IN') {
         $('#theConfirmModal').modal('show');
         $("[id$=pendingApprovalMsg]").hide();
@@ -75,6 +89,10 @@
       endLoading();
       refreshList();
     }
+
+    function gotoIfap(accountId) {
+      window.location.href = "ISSP_AssignFinancialContact?id=" + accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
+    }    
 
   </script>  
  
@@ -145,282 +163,29 @@
                             <apex:column value="{!o.par.Right__c}" style="text-align: center;" />
                             <apex:column value="{!o.par.ANG_Portal_Service_Role__c}" style="text-align: center;" />                      
                           
-                            <apex:column headerValue="Actions" id="actionId" >
+
+                            <apex:column headerValue="Actions" id="actionId" style="text-align: center; width: 50px;">
                               <apex:outputPanel rendered='{! NOT(o.hide)}'>
-                                <button type="button" class="example2-button" data-state="{!PortalService.ServiceName__c};{!o.par.Right__c};{!o.par.Portal_Application__c};{!o.par.contact__c};{!o.par.Contact__r.User_Portal_Status__c};{!o.contactStatus};{!o.par.Account__c};{!o.par.Contact__r.name};{!o.cannotBeManagedByPortalAdmin};{!o.isEasyPayService}"><span class="glyphicon glyphicon-cog"></span></button>
+                                  <a href="#" class="btn btn-xs btn-success btn-block" style="margin-top: 3px; display:{!IF(o.showGrant,'','none')}"
+                                    onclick="showConfirmModal('{!o.contactStatus}', '{!o.par.contact__c}', '{!o.par.Portal_Application__c}');">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    Grant Access
+                                  </a>
+                                  <a href="#" class="btn btn-xs btn-danger btn-block" style="margin-top: 3px; display:{!IF(o.showDeny,'','none')}"
+                                    onclick="showReasonModalDeny('{!o.contactStatus}', '{!o.par.contact__c}', '{!o.par.Portal_Application__c}');">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    Deny Access
+                                  </a>
+                                  <a href="#" class="btn btn-xs btn-primary btn-block" style="margin-top: 3px; display:{!IF(o.showIfap,'','none')}"
+                                    onclick="gotoIfap('{!o.par.Account__c}');">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                    Assign IFAP Contact
+                                  </a>
                               </apex:outputPanel>
-                            </apex:column>
+                            </apex:column>                            
+
                         </apex:pageBlockTable>
                       </div>
-
-                      <ul id="context-menu" class="dropdown-menu">
-                        <li data-item="grant"><a>{! $Label.ISSP_Grant_Access}</a></li>
-                        <li data-item="deny"><a>{! $Label.ISSP_Deny_Access}</a></li>
-                        <li data-item="ifapAssign"><a>{! $Label.ISSP_Assign_IFAP}</a></li>            
-                      </ul>  
-
-                      <script type="text/javascript">
-
-                        !function($) {
-
-                          'use strict';
-
-                          $.extend($.fn.bootstrapTable.defaults, {
-
-                            // Option defaults
-                            contextMenu: undefined,
-                            contextMenuTrigger: 'right',
-                            contextMenuAutoClickRow: true,
-                            contextMenuButton: undefined,
-                            beforeContextMenuRow: function (e, row, buttonElement) {
-                              // return false here to prevent menu showing
-                            },
-                            // Event default handlers
-                            onContextMenuItem: function (row, $element) {
-                              return false;
-                            },
-                            onContextMenuRow: function (row, $element) {
-                              return false;
-                            }
-                          });
-                
-                        // Methods
-                        $.fn.bootstrapTable.methods.push('showContextMenu');
-
-                        // Events
-                        $.extend($.fn.bootstrapTable.Constructor.EVENTS, {
-                          'contextmenu-item.bs.table': 'onContextMenuItem',
-                          'contextmenu-row.bs.table': 'onContextMenuRow'
-                        });
-
-                        var BootstrapTable = $.fn.bootstrapTable.Constructor,
-                          _initBody = BootstrapTable.prototype.initBody;
-
-                        BootstrapTable.prototype.initBody = function () {
-
-                          // Init Body
-                          _initBody.apply(this, Array.prototype.slice.apply(arguments));
-
-                          // Init Context menu
-                          if (this.options.contextMenu || this.options.contextMenuButton || this.options.beforeContextMenuRow) {
-                            this.initContextMenu();
-                          }
-                        };
-
-                        // Init context menu
-                        BootstrapTable.prototype.initContextMenu = function () {
-                          var that = this;  
-
-                          console.log("on initContextMenu");
-
-                          // Context menu on Button-click
-                          if (typeof that.options.contextMenuButton === 'string') {
-
-                            console.log(that.options.contextMenuButton);
-
-                            that.$body.find('> tr[data-index]').find(that.options.contextMenuButton).off('click.contextmenu').on('click.contextmenu', function (e) {                
-                              var rowData = that.data[$(this).closest('tr[data-index]').data('index')],
-                                  beforeShow = that.options.beforeContextMenuRow.apply(this, [e, rowData, this]);
-
-                              console.log('rowData->' + rowData);
-                              console.log('beforeShow->' + beforeShow);
-
-                              if(beforeShow !== false){
-                                  that.showContextMenu({event: e, buttonElement: this});
-                              }
-                              return false;
-                            });
-                          }
-                        };
-
-                        // Show context menu
-                        BootstrapTable.prototype.showContextMenu = function (params) {
-
-                          console.log('params');
-                          console.log(params);
-                          console.log(params.buttonElement.getAttribute("data-state"));
-                          //alert('1');
-
-                          if(!params || !params.event){ return false; }
-                          if(params && !params.contextMenu && typeof this.options.contextMenu !== 'string'){ return false; }
-
-                          // in the data-state attribute we have the ServiceName;Right;ServiceId
-                          var dataState = params.buttonElement.getAttribute("data-state");
-
-                          var aux = dataState.split(";");
-
-                          console.log('aux->' + aux);
-
-                          var service = aux[0];
-                          var right = aux[1];
-                          var id = aux[2];
-                          $contactId = aux[3];
-                          var ups = aux[4];
-                          $contactStatus = aux[5];
-                          $accountId = aux[6];
-                          $contactName = aux[7];
-                          $CannotBeManagedByPortalAdmin = aux[8];
-                          $isEasyPayService = aux[9];
-
-                          console.log('CannotBeManagedByPortalAdmin-->' + $CannotBeManagedByPortalAdmin);
-                          console.log('isEasyPayService-->' + $isEasyPayService);
-                          console.log('service->' + service);
-                          console.log('right->' + right);
-                          console.log('id->' + id);
-                          console.log('ups->' + ups);
-                          console.log('contactStatus->' + $contactStatus);
-                          console.log('accountId->' + $accountId);
-
-                          // put the service name and id in the hidden input text fields.
-                          $('[id$=serviceId]').val(id);
-                          $('[id$=contactId]').val($contactId);
-                          $('[id$=serviceName]').val(service);
-                          $('[id$=contactStatus]').val($contactStatus);
-
-                          // Hide Show the menu options based in the service name and the right
-
-                          if($isEasyPayService == 'true') {
-                            $('li[data-item="grant"]').hide();
-                            $('li[data-item="deny"]').hide();
-                            $('li[data-item="ifapAssign"]').hide();              
-                            if($CannotBeManagedByPortalAdmin == 'true' && right == 'Access Granted') {
-                              $('li[data-item="deny"]').show();
-                            }
-                          } else {
-                            if($CannotBeManagedByPortalAdmin == 'true') {
-                                $('li[data-item="grant"]').hide();
-                                $('li[data-item="deny"]').hide();
-                                $('li[data-item="ifapAssign"]').hide();
-                            } else {
-                              if(service == 'IFAP') {
-                                  $('li[data-item="grant"]').hide();
-                                  $('li[data-item="deny"]').hide();
-                                  $('li[data-item="ifapAssign"]').show();
-                                  if(right == 'Access Requested') {
-                                    $('li[data-item="deny"]').show();
-                                  }
-                              } else {
-                                if(right == 'Access Denied') {
-                                  $('li[data-item="grant"]').show();
-                                  $('li[data-item="deny"]').hide();
-                                  $('li[data-item="ifapAssign"]').hide();
-                                } else {
-                                  if(right == 'Access Requested') {
-                                    $('li[data-item="grant"]').show();
-                                    $('li[data-item="deny"]').show();
-                                    $('li[data-item="ifapAssign"]').hide();
-                                  } else {
-                                    $('li[data-item="grant"]').hide();
-                                    $('li[data-item="deny"]').show();
-                                    $('li[data-item="ifapAssign"]').hide();
-                                  }
-                                }
-                              }
-                            }
-                          }
-
-                          var that = this,
-                              $menu, screenPosX, screenPosY,
-                              $tr = $(params.event.target).closest('tr[data-index]'),
-                              item = that.data[$tr.data('index')];
-
-
-                          if(params && !params.contextMenu && typeof this.options.contextMenu === 'string'){
-                            screenPosX = params.event.clientX;
-                            screenPosY = params.event.clientY;
-                            $menu = $(this.options.contextMenu);
-
-                            //alert($menu);
-                          }
-                          if(params && params.contextMenu){
-                            screenPosX = params.event.clientX;
-                            screenPosY = params.event.clientY;
-                            $menu = $(params.contextMenu);
-
-                          }
-                          if (params && params.buttonElement) {
-                            screenPosX = params.buttonElement.getBoundingClientRect().left;
-                            screenPosY = params.buttonElement.getBoundingClientRect().bottom;
-                          }
-
-                          function getMenuPosition($menu, screenPos, direction, scrollDir) {
-                            var win = $(window)[direction](),
-                                scroll = $(window)[scrollDir](),
-                                menu = $menu[direction](),
-                                position = screenPos + scroll;
-
-                            console.log('inside getMenuPosition');
-
-                            if (screenPos + menu > win && menu < screenPos)
-                              position -= menu;
-
-                            return position;
-                          }
-
-                          // Bind click on menu item
-                          $menu.find('li').off('click.contextmenu').on('click.contextmenu', function (e) {
-                            var rowData = that.data[$menu.data('index')];
-
-                            console.log('hhj')
-                            console.log(rowData);
-
-                            that.trigger('contextmenu-item', rowData, $(this));
-                          });
-
-                          // Click anywhere to hide the menu
-                          $(document).triggerHandler('click.contextmenu');
-                          $(document).off('click.contextmenu').on('click.contextmenu', function (e) {
-                            // Fixes problem on Mac OSX
-                            if(that.pageX != e.pageX || that.pageY != e.pageY){
-                              $menu.hide();
-                              $(document).off('click.contextmenu');
-                            }
-                          });
-
-                          that.pageX = params.event.pageX;
-                          that.pageY = params.event.pageY;
-
-                          // Show the menu
-                          $menu.data('index', $tr.data('index'))
-                            .appendTo($('body'))
-                            .css({
-                              position: "absolute",
-                              left: getMenuPosition($menu, screenPosX, 'width', 'scrollLeft'),
-                              top: getMenuPosition($menu, screenPosY, 'height', 'scrollTop'),
-                              zIndex: 1100
-                            })
-                            .show();
-
-                          // Trigger events
-                          that.trigger('contextmenu-row', item, $tr);
-                          if(that.options.contextMenuAutoClickRow && that.options.contextMenuTrigger == 'right') {
-                            that.trigger('click-row', item, $tr);
-                          }
-                        };
-                        }(jQuery);    
-                              
-                        $(function() {      
-                          $('[id$=pbt_Services]').bootstrapTable({
-                            contextMenu: '#context-menu',
-                            contextMenuButton: '.example2-button',        
-                            onContextMenuItem: function(row, $el){
-                            sforce.connection.sessionId = '{!$Api.Session_ID}';
-
-                              if($el.data("item") == "grant"){          
-                                showConfirmModal();
-                              }
-                              else if($el.data("item") == "deny"){
-                                showReasonModalDeny();
-                              }
-                              else if($el.data("item") == "ifapAssign"){
-                                window.location.href = "ISSP_AssignFinancialContact?id=" + $accountId + "&MainNav=Services&mid=M4S2&subNav=Access"; //&vContactId=" + $contactId + " &vContactName=" + $contactName;
-                              }
-                            }
-                          });
-                        });      
-                      </script>
-
-
 
                     </apex:outputPanel>
                   
