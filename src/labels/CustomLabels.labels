@@ -21653,6 +21653,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Leave Chat?</value>
     </labels>
     <labels>
+        <fullName>LVA_New_Chat_Message</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_New_Chat_Message</shortDescription>
+        <value>New chat message!</value>
+    </labels>
+    <labels>
         <fullName>LVA_NoAvailableButtons</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
