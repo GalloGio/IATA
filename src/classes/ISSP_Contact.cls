@@ -142,8 +142,34 @@ public class ISSP_Contact{
                 sw.contactStatus = 'IN';
             } else if (!userContact.containsKey(par.Contact__c)) {
                 sw.contactStatus = 'NO';
-            }    
+            } 
 
+            sw.showGrant = false;
+            sw.showDeny = false;
+            sw.showIfap = false;
+
+            if(sw.isEasyPayService) {
+                if(sw.cannotBeManagedByPortalAdmin && par.right__c == 'Access Granted') {
+                    sw.showDeny = true;
+                }
+            } else {
+                if(!sw.cannotBeManagedByPortalAdmin) {                
+                    if(par.Application_Name__c == 'IFAP') {
+                        sw.showIfap = true;
+                        if(par.right__c == 'Access Requested') {
+                            sw.showDeny = true;
+                        }
+                    } else if(par.right__c == 'Access Denied') {
+                        sw.showGrant = true;
+                    } else  if(par.right__c == 'Access Requested') {
+                        sw.showGrant = true;
+                        sw.showDeny = true;
+                    } else {
+                        sw.showDeny = true;
+                    }
+                }
+            }
+               
             appsGrantedList.add(sw);
         }
 
@@ -185,7 +211,7 @@ public class ISSP_Contact{
     **/
     public Pagereference RelocateContact(){
         Pagereference p  = new Pagereference ('/ISSP_RelocateContact?id='+contact.Id + '&mid=M4S1');
-      	p.setredirect(true);
+        p.setredirect(true);
         return p;
     }
     
@@ -206,7 +232,10 @@ public class ISSP_Contact{
         public String contactStatus {get; set;}
         public Boolean cannotBeManagedByPortalAdmin {get; set;}
         public Boolean isEasyPayService {get; set;}
-        public boolean hide {get; set;}        
+        public boolean hide {get; set;}
+        public boolean showGrant {get; set;}
+        public boolean showDeny {get; set;}
+        public boolean showIfap {get; set;}        
     }
 
     public Pagereference denyAccess() {
