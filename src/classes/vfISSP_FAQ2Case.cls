@@ -193,7 +193,7 @@ public without sharing class vfISSP_FAQ2Case
 				isCNSInitialized=true;
                 System.debug('basto1p - isCNS INITIALIZED.');
 			}
-
+//isCNS=true;//basto1p - test only
             System.debug('basto1p - isCNS='+isCNS);
 			return isCNS;
 		}
@@ -280,6 +280,19 @@ public without sharing class vfISSP_FAQ2Case
         }
         set;
     }
+
+    public String weLoveToHelpLabel{
+        get{
+            // there is a bug in sdalesforce: if using the character ' in label the parameter is not replaced
+            String resultVal=String.format(Label.LVA_ReachOutUs, new List<String>{UserInfo.getFirstName()});
+
+            //String resultVal=Label.LVA_ReachOutUs+' '+UserInfo.getName();
+            return resultVal;
+        }
+        set;
+    }
+
+
 	public void livAgentIntroVidCloseAndDontRemenber(){
 		String cookieNameStr=LVA_COOK_INTRO_VIDEO+UserInfo.getUserId()+livAgentIntroVidUrl;
 
@@ -992,6 +1005,14 @@ public without sharing class vfISSP_FAQ2Case
             }
 
             return resVal;
+        }
+        set;
+    }
+
+    public Boolean isComplainLayout{
+        get{
+            System.debug('basto1p - isComplainLayout='+isComplain1);
+            return isComplain1;
         }
         set;
     }
