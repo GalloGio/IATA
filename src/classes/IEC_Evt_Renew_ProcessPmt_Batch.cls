@@ -175,6 +175,9 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 										// we will stop the process
 										if(transactionStatus == 'Approved' && transactionStatus != null){
 
+											// Record the order id and order item that will be submitted to Zuora
+											lst_mapOrderPaidByCreditCard[i].put(oi.OrderId, oi);
+
 											System.debug('susana zPaymentMethod - '+zPaymentMethod);
 											lst_mapOrderId_PaymentMethod[i].put(oi.OrderId, new IECZuoraHelper.PaymentMethod(zPaymentMethod));
 											System.debug('susana lst_mapOrderId_PaymentMethod - '+lst_mapOrderId_PaymentMethod);
