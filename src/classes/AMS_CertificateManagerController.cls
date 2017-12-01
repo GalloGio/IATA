@@ -169,7 +169,7 @@ public class AMS_CertificateManagerController {
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
 
 		Set<String> iataCodesSet = iataCodes.keySet();
-		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE recordtype.developername= \'Iata_Agency\' and IataCode__c IN :iataCodesSet order by iata_iso_country__r.name, IATACode__c');
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE recordtype.developername= \'Iata_Agency\' and IataCode__c IN :iataCodesSet order by iata_iso_country__r.name, Name');
 
 
 		List<Account> warnings = new List<Account>();
