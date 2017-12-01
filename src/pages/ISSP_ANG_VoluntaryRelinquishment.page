@@ -149,9 +149,23 @@
              .btn {
                 background:none;
             }
+
+        .colPanel1 {
+        width:30%;
+        font-weight:bold;
+        padding-bottom:10px
+      }
+        
+      .colPanel2 {
+        width:65%;
+        font-weight:normal !important;
+      }
     </style>
     <script type="text/javascript">
+    
     var operationType = '{!sectorvalue}';
+
+
 
     function gotoStep1(myValue, nextStep) {
         console.log('myValue ' + myValue + ' nextStep ' + nextStep);
@@ -162,7 +176,7 @@
             
                 var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]'); 
                 vOfficeType = $lists.val();
-                var countriesMap = JSON.parse('{!jsonCountriesMap}');                
+                //var countriesMap = JSON.parse('{!jsonCountriesMap}');                
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
                 console.log('no empty voffice '+vOfficeType);
                 isAllowedCountry = 't';
@@ -212,17 +226,26 @@
 
     }
 
-    function togglePageItem2(v, fldId) {
-        var el = document.getElementById(fldId);
-        console.log(v);
-        console.log(fldId);
-        if(v=='HO - All Branches'){
-             el.style.display='block';
-        }else{
-         el.style.display='none';   
+    function showFuturePastDates(){             
+        datePickerYearsAdded = false;                               
+        var futureYearsToAdd = 20;  
+        var pastYearsToAdd = 5;                         
+        if (!datePickerYearsAdded) {
+            var select = document.getElementById('calYearPicker');
+            if (!select) return;
+            select.innerHTML = '';
+            var startYear = new Date().getFullYear() - pastYearsToAdd; ;
+            for (var year = startYear; year < startYear + futureYearsToAdd + 1; year++) {
+                select.options[select.options.length] = new Option(year, year);
+            }
+            datePickerYearsAdded = true;
         }
     }
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    
     </script>
             
      <div class="container">
@@ -243,6 +266,7 @@
                         <apex:form id="step1Form" styleClass="form-horizontal">
                         <apex:pageBlock id="step1Block" mode="edit" >
                             <!--Step Progress bar start -->
+                            
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
                                     {!$Label.ISSP_AMS_Step1_PCI}
@@ -255,7 +279,7 @@
                                 </apex:commandLink>
                                 </div>
                             </div>
-                            <apex:pageMessages ></apex:pageMessages>
+                            <apex:pageMessages id="msg" />
                             <!--Step Progress bar End -->
 
                             <div class="alert alert-warning"  role="alert">                             
@@ -263,57 +287,34 @@
                             </div>
 
                             <!--Multi select picklist Start -->
-                            <apex:outputPanel>
+                            <apex:outputPanel >
                                 <div class="form-group">
                                     <label for="operationtype" class="col-lg-3 control-label">
-                                        {!$Label.ISSP_ANG_WISH_TO_RELINQUISH}             
-
-
+                                        * {!$Label.ISSP_ANG_WISH_TO_RELINQUISH} 
                                     </label>
-                                    <div class="col-lg-9" style="padding-top:7px">                                        
-                                        <apex:outputPanel rendered="{!accList.size=0 }">
-                                            <apex:outputPanel rendered="{!locationType == 'HE'}">
-                                                <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
-                                            </apex:outputPanel>                                            
-                                             
-                                            <apex:outputPanel rendered="{!locationType == 'HO'}">
-                                                <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                    <div class="col-lg-9" style="padding-top:7px">
+                                            <apex:outputPanel rendered="{!!isHierarchy}">
+                                                <apex:outputPanel rendered="{!locationType == 'HO'}">
+                                                    <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                </apex:outputPanel>                                                                                        
+                                                <apex:outputPanel rendered="{!locationType == 'HE'}">
+                                                    <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                </apex:outputPanel>
                                             </apex:outputPanel>
-                                            <br></br><br></br>                                            
-                                            <apex:outputLabel value="{!$Label.ANG_Effective_Date}" />
-                                            <apex:inputField label="{!$Label.ANG_Effective_Date}" value="{!newForm.Effective_Date_Of_Change__c}"/>
-                                        </apex:outputPanel>
 
-                                        <apex:outputPanel rendered="{!accList.size>0}">
-                                            <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
-                                            <apex:selectRadio required="true" id="LocationType" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
-                                                <apex:selectOption itemValue='HO - All Branches' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
-                                                <apex:selectOption itemValue='Selected Branches Only' itemLabel="{!$Label.ISSP_ANG_ONE_OR_MORE_AE}"/>
-                                            </apex:selectRadio> 
-                                            </apex:outputPanel>                                            
-                                            <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
-                                            <apex:selectRadio required="true" id="LocationType2" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');togglePageItem2(this.value, '{!$Component.step1Form.step1Block.dateId}'); ">
-                                                <apex:selectOption itemValue='HO - All Branches' itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
-                                                <apex:selectOption itemValue='Selected Branches Only' itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}"/>
-                                            </apex:selectRadio> 
-                                            </apex:outputPanel>   
-                                            
-                                            <br></br><br></br>        
-                                            <apex:outputPanel id ='dateId' style="display:{!IF(newForm.Scope_of_Change__c =='Entire hierarchy','none','')}">
-                                                <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
-                                                <apex:inputField label="{!$Label.ANG_Effective_Date}" value="{!newForm.Effective_Date_Of_Change__c}"/>
+                                            <apex:outputPanel rendered="{!isHierarchy}">
+                                            <apex:selectRadio required="true" id="LocationType" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
+                                                <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
+                                                <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(isNGaccount==true,$Label.ISSP_ANG_ONE_OR_MORE_AE,$Label.ISSP_ANG_One_or_More)}"/>
+                                            </apex:selectRadio>
                                             </apex:outputPanel>
-                                        </apex:outputPanel>
-
                                     </div>
                                 </div>
                             </apex:outputPanel>                            
-                                                       
-                            <apex:outputPanel id="branchaccountsel" style="display:{!IF(newForm.Scope_of_Change__c=='AE','','none')}">                                
+                            <apex:outputPanel id="branchaccountsel" style="display:{!IF(newForm.Scope_of_Change__c=='Selected Branches Only','','none')}">                                
                                 <div class="form-group">
                                     <label for="approval focus" class="col-lg-3 control-label"></label>
                                     <div class="col-lg-9">
-                                        
                                             <c:MultiselectPicklist leftLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_NoC_Choose_Branch_Account, $Label.ISSP_AMS_NoC_Choose_Associate_Entities)}" 
                                                                     leftOptions="{!RelatedAccount}"
                                                                     rightLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_Selected_Branch_Offices, $Label.ISSP_AMS_Selected_Associate_Entities)}"
@@ -321,20 +322,22 @@
                                                                     size="8"
                                                                     width="300px"
                                                                     btn_up_down="false"
-                                            />
-                                            <br></br>
-                                            <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
-                                                <apex:inputField label="{!$Label.ANG_Effective_Date}" value="{!newForm.Effective_Date_Of_Change__c}"/>
-                                             <br></br><br></br>
-                                                <apex:outputText escape="false" value="{!$Label.ANG_Voluntary_Relinquishment_to_NOC}"/>
-                                            <br></br>
-                                        <apex:outputPanel >
-                                        </apex:outputPanel>
+                                            />                                            
+                                    <br></br>
                                     </div>
                                 </div>
-
                             </apex:outputPanel>
-                            
+                                <div class="form-group">                                    
+                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
+                                        * {!$Label.ANG_Effective_Date}  
+                                    </label>
+                                    <div class="col-lg-9" style="padding-top:7px"> 
+                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
+                                        <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_ANG_Effective_Date_Of_Change}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                        <br></br><br></br>
+                                            <apex:outputText rendered="{!isHierarchy}" escape="false" value="{!$Label.ANG_Voluntary_Relinquishment_to_NOC}"/>
+                                    </div>
+                                </div>
 
                             <!--Multi select picklist End -->
                             
@@ -356,6 +359,7 @@
                         </apex:form>         
                     </div>
                 </div>
+                
             </apex:outputText>
     
 <!--       -->       
@@ -378,18 +382,21 @@
                         </div>                              
                     </div>
                 </apex:form>                     
-                <apex:pageBlock >
-                    <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">
-                        <div class="aplabel">
+                <apex:pageBlock >                
+                    <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">                        
                             <apex:pageBlockSectionItem >
+                            <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%">
                                 <apex:outputText >{!$Label.ISSP_ANG_Iata_Codes_Relinquish}</apex:outputText>
-                                <apex:outputText value="{!agencyCodesConcernedStr}"></apex:outputText>
-                            </apex:pageBlockSectionItem>
-                        </div>
+                                <apex:outputText rendered="{!AND(newform.Scope_of_Change__c == 'HO Only',locationType == 'HE')}" value="{!$Label.ISSP_AMS_NoC_Head_Entity + ' (' + hqAccount.IATACode__c + ')'}"/>
+                                <apex:outputText rendered="{!AND(newform.Scope_of_Change__c == 'HO Only',locationType == 'HO')}" value="{!$Label.ISSP_AMS_NoC_Head_Office + ' (' + hqAccount.IATACode__c + ')'}"/>
+                                <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='Selected Branches Only', newForm.Scope_of_Change__c=='HO - All Branches')}" value="{!IF(newForm.Scope_of_Change__c=='Selected Branches Only',agencyCodesConcernedStr,  $Label.ISSP_ANG_ENTIRE_HIERARCHY)}"/>
+                            </apex:panelGrid>
+                            </apex:pageBlockSectionItem>                        
                     </apex:pageBlockSection>
                 </apex:pageBlock>
-                <apex:form>
-                <apex:pageBlock>
+                 <apex:form id="tCondiForm">
+                <apex:pageMessages />
+                <apex:pageBlock >
                  <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs1}"/>
@@ -397,9 +404,6 @@
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/> 
                 </apex:pageBlockSection> 
                 </apex:pageBlock>
-                </apex:form>
-                <apex:form id="tCondiForm">
-                        <apex:pageMessages />
                         <apex:pageBlock >
                             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                 <apex:actionStatus id="buttonLoadingStep3">
