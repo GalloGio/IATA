@@ -276,16 +276,6 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
         return new PageReference('/ISSP_ANG_VoluntaryRelinquishment?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
-    public PageReference CheckCountryReqments() {
-        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_No_Requirements));
-        return null;
-    }
-
-    public Boolean getnewlabels() {
-        if (isocountry==null) return false;
-        return isocountry.AMS_Accreditation_New_Labels__c;
-    }
-
     /**
 		SAVE METHOD
     **/
