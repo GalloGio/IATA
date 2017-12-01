@@ -412,7 +412,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             List<EBC_Setup__c> controller_email_list = new List<EBC_Setup__c>();           
             controller_email_list = [Select EBC_Admin_CC_Email__c From EBC_Setup__c Limit 1];
             if (controller_email_list.size()>0) controller_email=controller_email_list[0].Id;
-            if (elastic_switch) {
+            if (elastic_switch || isTest) {
                 //Run the Query against the elastic search first then create the Query with first and last Id
                 //Call out to ealstic search
                 EBC_Master_Filter__c masterFilter = [Select Id,
