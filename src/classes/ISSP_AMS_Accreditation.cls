@@ -7903,17 +7903,24 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         if (!adminContactsHO.isEmpty()) {
             try {
-                Notification__c notification = new Notification__c();
-                notification.Contact__c = adminContactsHO[0].Id;
-                notification.Type__c= 'Information';
-                notification.Notificatin_color__c = '#007FFF';
-                notification.Alert_Contact_By_Email__c = true;
-                notification.Expiry_date__c = Datetime.now().addDays(14);
-                notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + con.Account.IATACode__c;
-                notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + con.Account.IATACode__c + '.<br/>';
-                notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
+                list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
 
-                insert notification;
+                for (Contact con : adminContactsHO) {
+                    Notification__c notification = new Notification__c();
+                    notification.Contact__c = adminContactsHO[0].Id;
+                    notification.Type__c= 'Information';
+                    notification.Notificatin_color__c = '#007FFF';
+                    notification.Alert_Contact_By_Email__c = true;
+                    notification.Expiry_date__c = Datetime.now().addDays(14);
+                    notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + con.Account.IATACode__c;
+                    notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + con.Account.IATACode__c + '.<br/>';
+                    notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
+
+                    lstNotificationsToCreate.add(notification);
+                }
+
+                insert lstNotificationsToCreate;
+                
             } catch (Exception e) {
                 system.debug('Add notification ERROR: ' + e.getmessage());
             }

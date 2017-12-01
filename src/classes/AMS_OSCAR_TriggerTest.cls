@@ -931,11 +931,17 @@
         insert new list<Contact>{con, con_adm};
 
         System.debug('con Id: ' + con.Id);
-        
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = child.id,Change_effective_as_of__c = Date.today());
+        oscar.STEP12__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
+        insert oscar;
+
         Case testCase2 = ISSP_ObjectFactory.createNewCase();
             testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase2.Reason1__c = 'Cargo';
             testCase2.Region__c = 'Europe';
+            testCase2.Oscar__c = oscar.Id;
             testCase2.Customer_recovery__c = false;
             testCase2.BounceEmailCounter__c = 0.0;
             testCase2.Case_Language__c = 'English';
@@ -947,10 +953,7 @@
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
         insert testCase2;
 
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = child.id,Change_effective_as_of__c = Date.today());
-        oscar.STEP12__c = 'Passed';
-        oscar.STEP15__c = 'Passed';
-        insert oscar;
+        
 
 
         Test.startTest();

@@ -1520,16 +1520,17 @@ public class AMS_OSCARTriggerHandler {
     private static void createHoAdminNotifications() {
         system.debug('createHoAdminNotifications: enter ');
         set<Id> setInvolvedAcctIds = new set<Id>();
-        list<AMS_OSCAR__c> lstOscarsToNotify = new list<AMS_OSCAR__c>();
+        map<Id, AMS_OSCAR__c> lstOscarsToNotify = new map<Id, AMS_OSCAR__c>();
         list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
 
         for (AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.new) {
             AMS_OSCAR__c oldOscar = (AMS_OSCAR__c)Trigger.oldMap.get(oscar.Id);
             if (oscar.Finalization_result__c == AMS_Utils.PASSED && oldOscar.Finalization_result__c != AMS_Utils.PASSED && ( oscar.Process__c == AMS_Utils.BANKACCCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES ) ) {
                 setInvolvedAcctIds.add(oscar.Account__c);
-                lstOscarsToNotify.add(oscar);
+                lstOscarsToNotify.put(oscar.Id, oscar);
             }
         }
+        system.debug('createHoAdminNotifications: setInvolvedAcctIds :' + setInvolvedAcctIds);
 
         if (setInvolvedAcctIds.isEmpty()) return;
 
@@ -1543,32 +1544,46 @@ public class AMS_OSCARTriggerHandler {
                 setBRAccountIds.add(acc.Id);
                 setHOAccountIds.add(acc.Top_Parent__c);
             }
+        system.debug('createHoAdminNotifications: setBRAccountIds :' + setBRAccountIds);
 
         if (setBRAccountIds.isEmpty()) return; // if empty it means all involved accounts are HOs so there's no OSCAR from a BR account, so we can stop
 
-        // get HO portal admin contacts - 1 per account
-        map<Id, Contact> mapAdminContactsPerHOId = new map<Id, Contact>();
+        // get HO portal admin contacts-list per account
+        map<Id, list<Contact>> mapAdminContactsPerHOId = new map<Id, list<Contact>>();
         for (Contact con : [SELECT Id, Email, AccountId, User_Portal_Status__c FROM Contact WHERE AccountId IN :setHOAccountIds AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']) {
-            mapAdminContactsPerHOId.put(con.AccountId, con);
+            if (mapAdminContactsPerHOId.get(con.AccountId) != null) 
+                mapAdminContactsPerHOId.get(con.AccountId).add(con);
+            else 
+                mapAdminContactsPerHOId.put(con.AccountId, new list<Contact>{con});
+            
+        }
+
+        // get related cases
+        map<Id, Case> mapCasesPerOscarId = new map<Id, Case>();
+        for (Case c : [SELECT Id, CaseNumber, Oscar__c FROM Case WHERE Oscar__c IN :lstOscarsToNotify.keyset()]) {
+            mapCasesPerOscarId.put(c.Oscar__c, c);
         }
         
         try {
-            for (AMS_OSCAR__c oscar : lstOscarsToNotify) {
+            for (AMS_OSCAR__c oscar : lstOscarsToNotify.values()) {
                 if (setBRAccountIds.contains(oscar.Account__c) && mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c) != null) { // only notify if case is from BR & there is an admin contact on HO
+                    for (Contact con : mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c)) {
 
-                    Notification__c notification = new Notification__c();
-                    notification.Contact__c = mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c).Id;
-                    notification.Type__c= 'Information';
-                    notification.Notificatin_color__c = '#007FFF';
-                    notification.Alert_Contact_By_Email__c = true;
-                    notification.Expiry_date__c = Datetime.now().addDays(14);
-                    notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' finalized';
-                    notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
-                    notification.Message__c+= 'Case number: ' + oscar.Name + '</p>';
+                        Notification__c notification = new Notification__c();
+                        notification.Contact__c = con.Id;
+                        notification.Type__c= 'Information';
+                        notification.Notificatin_color__c = '#007FFF';
+                        notification.Alert_Contact_By_Email__c = true;
+                        notification.Expiry_date__c = Datetime.now().addDays(14);
+                        notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' finalized';
+                        notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
+                        notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + mapCasesPerOscarId.get(oscar.Id).Id + '">' + mapCasesPerOscarId.get(oscar.Id).CaseNumber + '</a></p>';
 
-                    lstNotificationsToCreate.add(notification);
+                        lstNotificationsToCreate.add(notification);
+                    }
                 }
             }
+            system.debug('createHoAdminNotifications: lstNotificationsToCreate :' + lstNotificationsToCreate);
 
             if (!lstNotificationsToCreate.isEmpty()) 
                 insert lstNotificationsToCreate;
