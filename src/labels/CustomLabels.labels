@@ -26154,11 +26154,11 @@ title,Title,Name</value>
         <value>You have requested the voluntary relinquishment for the following IATA Codes:</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Portal_Admin2</fullName>
+        <fullName>ISSP_ANG_Portal_Admin</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_ANG_Portal_Admin2</shortDescription>
+        <shortDescription>ISSP_ANG_Portal_Admin</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the Company Administration -&gt; Contacts section</value>
     </labels>
     <labels>
