@@ -26169,4 +26169,39 @@ title,Title,Name</value>
         <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Agency Read Only</shortDescription>
+        <value>Help text for Portal Role Agency Read Only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
+        <value>Help text for Portal Role Sub-wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
+        <value>Help text for Portal Role Master Wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
+        <value>Help text for Portal Role IEP Admin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
+        <value>Help text for Portal Role Ticket Issuer</value>
+    </labels>    
 </CustomLabels>

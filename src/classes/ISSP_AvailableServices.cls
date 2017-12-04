@@ -31,6 +31,7 @@ public with sharing class ISSP_AvailableServices{
     public Boolean redirect {get; set;}
     public Boolean provError {get; set;}
     public Integer failedCount  {get; set;}
+    public Map<String, String> helpTextPortalRoles {get; set;}
 
     Integer count = 0;
 
@@ -53,7 +54,19 @@ public with sharing class ISSP_AvailableServices{
 
     public String IepStatus {get; set;}
 
-    public List<SelectOption> availablePortalServiceRoles {
+    public class SelectOption2 {
+        public String value {get; set;}
+        public String label {get; set;}
+        public String helpText {get; set;}
+
+        public SelectOption2(String value, String label, String helpText) {
+            this.value = value;
+            this.label = label;
+            this.helpText = helpText;
+        }
+    }
+
+    public List<SelectOption2> availablePortalServiceRoles {
         get{
 
             if(availableRoles == null){
@@ -73,8 +86,8 @@ public with sharing class ISSP_AvailableServices{
             Set<String> availableRolesLst = availableRoles.keySet();
 
             if(availablePortalServiceRoles == null) {
-                availablePortalServiceRoles = new List<SelectOption>{new SelectOption('', '')};
-                //availablePortalServiceRoles = new List<SelectOption>();
+                //availablePortalServiceRoles = new List<SelectOption>{new SelectOption('', '')};
+                availablePortalServiceRoles = new List<SelectOption2>();
             }
 
             for(String roleConnApp: availableRolesLst){
@@ -83,7 +96,7 @@ public with sharing class ISSP_AvailableServices{
 
                     for(String roleStr : availableRoles.get(roleConnApp)){
 
-                        availablePortalServiceRoles.add(new SelectOption(roleStr, roleStr));
+                        availablePortalServiceRoles.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
 
                     }
                 }
@@ -91,7 +104,7 @@ public with sharing class ISSP_AvailableServices{
 
             return availablePortalServiceRoles;
 
-            } set;}    
+        } set;}    
 
     public String sortExpression {
      get { return sortExp; }
@@ -130,6 +143,19 @@ public with sharing class ISSP_AvailableServices{
     
     public ISSP_AvailableServices(){
 
+        this.helpTextPortalRoles = new Map<String, String>();
+
+        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+                String aux = role.Role__c.replaceAll(' ','');
+                String aux2 = aux.replaceAll('-','');
+
+                this.helpTextPortalRoles.put(role.Role__c, getCustomLabel('ISSP_ANG_Portal_Role_' + aux2));
+
+            }
+        }
+
+
         this.iepRoles = new Map<String, String>();
 
         this.redirect = false;
@@ -156,6 +182,16 @@ public with sharing class ISSP_AvailableServices{
         IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;
 
     }
+
+    public String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    }    
     
     public PageReference initialization() {
         try {
