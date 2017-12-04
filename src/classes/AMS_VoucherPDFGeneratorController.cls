@@ -29,7 +29,7 @@ public with sharing class AMS_VoucherPDFGeneratorController {
         
             System.debug('AMS_VoucherPDFGeneratorController CPU time is ' + Limits.getCpuTime() + '(1)');
         
-            this.vouchersToPrintList =  [SELECT id, Name, Voucher_Information__r.Year__c, SequenceNumber__c,Voucher_Information__r.Account__r.IATACode__c, Voucher_Information__r.Account__r.Name ,Voucher_Information__r.Account__r.BillingStreet, Voucher_Information__r.Account__r.BillingCity, Voucher_Information__r.Account__r.BillingPostalCode, Voucher_Information__r.Account__r.BillingState, Voucher_Information__r.Account__r.BillingCountry  FROM AMS_Voucher__c WHERE AMS_Voucher_Process_Run__c = :runId and runExecution__c = :runExec];
+            this.vouchersToPrintList =  [SELECT id, Name, Voucher_Information__r.Year__c, SequenceNumber__c,Voucher_Information__r.Account__r.IATACode__c, Voucher_Information__r.Account__r.Name ,Voucher_Information__r.Account__r.BillingStreet, Voucher_Information__r.Account__r.BillingCity, Voucher_Information__r.Account__r.BillingPostalCode, Voucher_Information__r.Account__r.BillingState, Voucher_Information__r.Account__r.BillingCountry  FROM AMS_Voucher__c WHERE AMS_Voucher_Process_Run__c = :runId and runExecution__c = :runExec order by name];
             
             System.debug('AMS_VoucherPDFGeneratorController CPU time is ' + Limits.getCpuTime() + '(2)');
         
