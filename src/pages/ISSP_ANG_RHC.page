@@ -161,7 +161,7 @@
                 RHC SECTION
           -->
 
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}">
+          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; height: 350px;">
             <header class="col-xs-12">
               <div class="section-header">
                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -234,22 +234,22 @@
                 </span>
               </section>
             </apex:outputPanel>
-          </section>
 
-
-          <div class="row" style="display: {!IF(isCashless,'none','block')}">
-            <div class="col-col-xs-12 col-md-8 col-md-offset-2">
-              <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+            <div class="row" style="display: {!IF(isCashless,'none','block')}">
+              <div class="col-col-xs-12 col-md-8 col-md-offset-2">
+                <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+              </div>
             </div>
-          </div>
 
-          <div class="row" style="display: {!IF(isCashless,'none','block')}">
-            <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
-              <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
-              <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
-              <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
-            </div>            
-          </div>
+            <div class="row" style="display: {!IF(isCashless,'none','block')}">
+              <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
+                <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
+                <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
+                <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
+              </div>            
+            </div>
+
+          </section>
 
           <!-- Risk Event History -->
 
@@ -340,7 +340,7 @@
             </body>
           </section>
 
-          <div style="display: {!IF(isCashless,'block','none')};">
+          <div style="display: {!IF(isCashless,'block','none')}; height: 350px;">
             <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           </div>
 
@@ -349,13 +349,13 @@
         <section name="right-side" class="col-md-4 col-sm-12">
           <!-- Available forms of payment-->
 
-          <div style="display: {!IF(isCashless,'none','block')};">
+          <div style="display: {!IF(isCashless,'none','block')}; height: 350px;">
             <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           </div>
 
           <!-- Risk Profile-->
 
-          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px;">
+          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; height: 350px;">
 
             <table class="table" style="width: 100%">
               <tr>
@@ -375,7 +375,8 @@
                     <div>
                       {! accreditationType}
                       <a href="#" style="float: right;"
-                        data-toggle="modal" data-target="#ModalProductComparison" >
+                        data-toggle="modal" data-target="#ModalProductComparison"
+                        title="{!$Label.ISSP_AMS_Compare_Accreditation_Types}">
                         <span class="glyphicon glyphicon-list"></span>
                       </a>                      
                     </div>
