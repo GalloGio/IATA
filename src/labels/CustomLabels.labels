@@ -26130,4 +26130,43 @@ title,Title,Name</value>
         <shortDescription>Generic error message</shortDescription>
         <value>An error has occurred. Please contact support</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_VR</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step1_VR</shortDescription>
+        <value>B. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Click_Here_VR</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Click_Here_VR</shortDescription>
+        <value>Click here to continue with Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_VR_SELECTED_CODES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_VR_SELECTED_CODES</shortDescription>
+        <value>You have requested the voluntary relinquishment for the following IATA Codes:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin2</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the Company Administration -&gt; Contacts section</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
+    </labels>
 </CustomLabels>

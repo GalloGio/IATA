@@ -135,6 +135,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean isEligableForChange {get; set;}
     public boolean isTerminatedAgent {get; set;}
     public boolean isNewHOforAccredAgent {get; set;}
+    public boolean isAuthorizedSignature {get;set;}
 
     public Case newCase {get; set;}
     public Contact con {get; set;}
@@ -246,6 +247,7 @@ public without sharing class ISSP_AMS_Accreditation {
         newAccreditationModels = false;
         namEnabled = false;
         cntIFAPContacts = 0;
+        isAuthorizedSignature = false;
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -290,6 +292,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
         }
+
+        if(con.Authorized_Signatory__c == true)
+            isAuthorizedSignature = true;
 
         system.debug('issp ams con ' + con);
 
@@ -7302,7 +7307,12 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         System.debug('Kerensen2 ISSP_CreateButtonURL_Lst ==>' + ISSP_CreateButtonURL_Lst);
         if (ISSP_CreateButtonURL_Lst != null && ISSP_CreateButtonURL_Lst.size() > 0) {
-            return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c + '&topic=' + ISSP_CreateButtonURL_Lst[0].Topic__c + commParam);
+            if(ISSP_CreateButtonURL_Lst[0].Topic__c == 'VR'){
+                return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c);    
+            }else{
+                return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c + '&topic=' + ISSP_CreateButtonURL_Lst[0].Topic__c + commParam);    
+            }
+            
         } else {
             return null;
         }
