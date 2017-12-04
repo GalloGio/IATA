@@ -643,25 +643,6 @@
                           </div>
 
                         </apex:repeat>
-                      <!--
-                          <div class="radio" style="border-bottom: 1px solid grey">
-                            <label><input type="radio" name="optradio">Option 2</input></label>
-                            <label>bla bla bla bla bla bla bla bla</label> 
-                          </div>
-                          <div class="radio" style="border-bottom: 1px solid grey">
-                            <label><input type="radio" name="optradio">Option 3</input></label>
-                            <label>bla bla bla bla bla bla bla bla</label> 
-                          </div>
-
-                      <apex:selectRadio id="portalRoles" value="{!Serv.portalServiceRole}" layout="pageDirection">
-                          <apex:selectOptions value="{!availablePortalServiceRoles}" style="border-bottom: 1px solid grey;"/>
-                      </apex:selectRadio>
-                      -->
-                      
-                      <!--apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
-                        <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                        <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
-                      </apex:selectList-->
                     </apex:outputPanel>
                   </td>
                 </tr>
