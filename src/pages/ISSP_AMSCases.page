@@ -52,6 +52,17 @@
                         }
                     });
                 }
+ 
+                function proceedToVR() {
+                    if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin'){
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    }else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin'){
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    }
+                    else{
+                        navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
+                    }               
+                }
 
                 function newnAccreditationApplicationNavigateTo() {
                     if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
@@ -161,9 +172,11 @@
                 <td class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}"/></h3></td>
             </tr>
             <tr>
+                signature - {!con.Authorized_Signatory__c}
+                status - {!con.User_Portal_Status__c}
                 <td style="vertical-align:top">
-                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}">
-                        <apex:param assignTo="{!agentCaseType}" value="VR" />
+                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR();return false;">
+                        <!--<apex:param assignTo="{!agentCaseType}" value="VR" />-->
                     </apex:commandLink>
                     <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
                         <a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
