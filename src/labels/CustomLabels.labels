@@ -22041,7 +22041,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_ReachOutUs</shortDescription>
-        <value>We&apos;d love to help</value>
+        <value>We&apos;&apos;d love to help you {0}</value>
     </labels>
     <labels>
         <fullName>LVA_ReturnToChat</fullName>
