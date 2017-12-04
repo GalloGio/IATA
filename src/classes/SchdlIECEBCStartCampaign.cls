@@ -119,7 +119,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             EBC_Campaign_Emails__c o= (EBC_Campaign_Emails__c)i;
             currentId= o.SFDC_Id__c;
             if (o.ID_Card__c!=null) sObj= 'ID_CARD__c';
-            if (o.Add_recepient__c) insert_controller_client_email=true;
+            if (o.Add_recipient__c) insert_controller_client_email=true;
         }
         System.debug('currentId >>>'+currentId);
         Map<String, String> client_agent=new Map<String, String>{
@@ -487,7 +487,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     
                     EBC_Campaign_Emails__c new_email = new EBC_Campaign_Emails__c();
                     new_email.EBC_Campaign__c=campaign.Id;
-                    new_email.Add_recepient__c= (i==0? true:false);
+                    new_email.Add_recipient__c= (i==0? true:false);
                     new_email.Email__c='noreply@iata.com';
                     new_email.SFDC_Id__c=req.listResult.Ids[i];
                     if (isGDP) new_email.GDP_Products_Account_View__c=req.listResult.Ids[i];
@@ -502,7 +502,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 //build the salesforce Query for the Query Locator
                 String OrderBy ='GDP_Products_Account_View__c';
                 if (campaign.Audience__c == 'Agent') OrderBy='ID_Card__c';
-                query = 'Select Id, Add_recepient__c, SFDC_Id__c, ID_Card__c,GDP_Products_Account_View__c From EBC_Campaign_Emails__c Where EBC_Campaign__c=\''+campaign.Id+'\' and Email__c=\'noreply@iata.com\' Order By '+OrderBy;
+                query = 'Select Id, Add_recipient__c, SFDC_Id__c, ID_Card__c,GDP_Products_Account_View__c From EBC_Campaign_Emails__c Where EBC_Campaign__c=\''+campaign.Id+'\' and Email__c=\'noreply@iata.com\' Order By '+OrderBy;
             }
             //temporary
            
