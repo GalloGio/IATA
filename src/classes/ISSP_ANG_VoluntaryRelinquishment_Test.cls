@@ -165,15 +165,15 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 	            newForm.Agency_Codes_Concerned__c = '100';
             insert newForm ;
 
+            Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_VoluntaryRelinquishment')); 
+			System.currentPageReference().getParameters().put('caseId', testCase.Id);
+			System.currentPageReference().getParameters().put('step', '1');
+
 			ISSP_ANG_VoluntaryRelinquishment vr = new ISSP_ANG_VoluntaryRelinquishment();
-			PageReference vrpage = Page.ISSP_ANG_VoluntaryRelinquishment;
-
-			ApexPages.currentPage().getParameters().put('caseId',testCase.Id);
-
 			vr.getRelatedAccount();			
 			vr.save();
 			newForm.Effective_Date_Of_Change__c = System.today();
-			vr.save();			
+			vr.save();				
 			vr.submitForm();	
 		}
 	}
@@ -260,12 +260,15 @@ private class ISSP_ANG_VoluntaryRelinquishment_Test {
 
 			ISSP_ANG_VoluntaryRelinquishment vr = new ISSP_ANG_VoluntaryRelinquishment();
 
-			ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );			
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_VoluntaryRelinquishment')); 
+			System.currentPageReference().getParameters().put('caseId', testCase.Id); 			
+			System.currentPageReference().getParameters().put('step', '1');			
 			
 			vr.fetchCase(testCase.Id);
 			vr.newForm.Agency_Codes_Concerned__c = child.IATACode__c;
 			vr.agencyCodesConcerned = vr.getAgencyCodesConcerned();
 			vr.getRelatedAccount();			
+			newForm.Effective_Date_Of_Change__c = System.today()-1;
 			vr.save();
 			newForm.Effective_Date_Of_Change__c = System.today();
 			vr.cancel();
