@@ -26169,4 +26169,35 @@ title,Title,Name</value>
         <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ENTIRE_HIERARCHY</shortDescription>
+        <value>Entire Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Of_Change</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Of_Change</shortDescription>
+        <value>Please select an Effective Date that is not in the past.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Authorized_Signatory</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Least_One_Branch</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Least_One_Branch</shortDescription>
+        <value>Please select at least one Branch Office</value>
+    </labels>
 </CustomLabels>
