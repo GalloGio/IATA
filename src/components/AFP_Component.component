@@ -25,7 +25,7 @@
   <section name="payment-forms" class="row">
     <header class="col-xs-12" style="margin-bottom: 10px;">
       <div class="section-header">
-        <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Payment.png')}" width="20" height="20"/>
+        <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Payment.png')}"/>
         <!--i class="fa fa-google-wallet" aria-hidden="true"></i--> 
         <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
       </div>
