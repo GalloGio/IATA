@@ -4068,33 +4068,6 @@ private class ISSP_AMS_Accreditation_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
-        AMS_Person__c p1 = new AMS_Person__c(Name='Test1 Person', User__c=newUser.Id);
-        insert p1;
-
-        AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-        insert hierarchy;
-
-        AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = parent.Id, Child_Account__c = child.Id);
-        insert rel1;
-
-        AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist = new  AMS_Accreditation_Country_CheckList__c();
-        AMS_Acc_Checklist.IATA_ISO_Country__c = country.id ;
-        AMS_Acc_Checklist.Operation__c = 'Travel Agent';
-        AMS_Acc_Checklist.License_required__c = false ;
-        AMS_Acc_Checklist.Registration_required__c = false ;
-        AMS_Acc_Checklist.Statement_of_International_Sales__c = false ; 
-        insert AMS_Acc_Checklist;
-
-        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
-        ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
-        ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
-        ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
-        ISSP_AMS_Accreditation_Acc_Req.Requirement_text__c = 'cdd';
-        ISSP_AMS_Accreditation_Acc_Req.Sort_Order__c = 1;
-        ISSP_AMS_Accreditation_Acc_Req.Name = 'TestReq1';
-        insert ISSP_AMS_Accreditation_Acc_Req;
-
         
         System.runAs(newUser)
         {
