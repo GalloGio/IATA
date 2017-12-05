@@ -26207,5 +26207,40 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
         <value>Voluntary Relinquishment</value>
+	</labels>
+    <labels>    
+        <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Agency Read Only</shortDescription>
+        <value>Help text for Portal Role Agency Read Only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
+        <value>Help text for Portal Role Sub-wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
+        <value>Help text for Portal Role Master Wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
+        <value>Help text for Portal Role IEP Admin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
+        <value>Help text for Portal Role Ticket Issuer</value>
     </labels>
 </CustomLabels>

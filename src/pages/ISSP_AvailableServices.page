@@ -40,7 +40,12 @@
         
       if(redirected) return false;
         
-      var appPortalRole = $('[id$="portalRoles"]').val();
+      var appPortalRole = ''; //$('[id$="portalRoles"]').val();
+
+      if($("input[type='radio'].radioBtnClass").is(':checked')) {
+        appPortalRole = $("input[type='radio'].radioBtnClass:checked").val();
+      }
+
       newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService);
     }       
        
@@ -102,11 +107,11 @@
         if (redirect == 'true' && !redirected) {
           hideModal('#ModalNewIepServiceRequest');
             
-          var win = window.open(page, '_blank');
-          if (win) {
+          var win = window.open(page, '_blank');
+          if (win) {
               //Browser has allowed it to be opened
               win.focus();
-          } else {
+          } else {
               //Browser has blocked it
               alert('Please allow popups for this website');            
           }          
@@ -628,18 +633,17 @@
                   <td>
                   </td>
                   <td style="padding-left: 10px; padding-top: 10px">
-                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
-                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
-                    <!--
-                    <apex:selectRadio id="portalRoles" value="{!Serv.portalServiceRole}" layout="pageDirection">
-                        <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                    </apex:selectRadio>
-                    -->
-                    <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
-                      <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                      <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
-                    </apex:selectList>                  
-                  </apex:outputPanel>
+                    <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
+                      <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/>
+                        <apex:repeat value="{!availablePortalServiceRoles}" var="role" id="portalRoles">
+
+                          <div class="radio" style="border-bottom: 1px solid rgb(229, 229, 229);">
+                            <label style="min-width: 35%; font-weight: bold;"><input type="radio" class="radioBtnClass" name="role" value="{!role.value}">{!role.value}</input></label>
+                            <label>{!role.helpText}</label> 
+                          </div>
+
+                        </apex:repeat>
+                    </apex:outputPanel>
                   </td>
                 </tr>
               </table>
