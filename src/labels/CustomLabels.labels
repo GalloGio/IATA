@@ -26243,4 +26243,34 @@ title,Title,Name</value>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
         <value>Help text for Portal Role Ticket Issuer</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_WISH_TO_RELINQUISH</shortDescription>
+        <value>I wish to relinquish:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_choose_what_to_relinquish</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_choose_what_to_relinquish</shortDescription>
+        <value>Please choose what you want to relinquish.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ADMIN_TO_AUTHORIZED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ADMIN_TO_AUTHORIZED</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos; href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ONE_OR_MORE_AE</shortDescription>
+        <value>One or more Associate Entities</value>
+    </labels>
 </CustomLabels>
