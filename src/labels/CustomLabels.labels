@@ -26085,4 +26085,12 @@ title,Title,Name</value>
         <shortDescription>Risk Event Status</shortDescription>
         <value>Risk Event Status</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
+        <value>Click here to compare the accreditation types</value>
+    </labels>    
 </CustomLabels>
