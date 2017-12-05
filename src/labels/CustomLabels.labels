@@ -26296,4 +26296,11 @@ title,Title,Name</value>
         <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
         <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Entity</value>
     </labels>
+    <labels>
+        <fullName>ANG_Effective_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Effective_Date</shortDescription>
+        <value>Effective date:</value>
+    </labels>
 </CustomLabels>
