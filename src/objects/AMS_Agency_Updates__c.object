@@ -96,7 +96,7 @@ null)</formula>
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -185,7 +185,7 @@ null)</formula>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
