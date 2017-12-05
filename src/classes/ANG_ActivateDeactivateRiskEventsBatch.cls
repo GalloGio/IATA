@@ -65,6 +65,8 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
                are.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
             }
         }
+        
+        ANG_AccountTriggerHandler.isExpiration = true;
         update scope;
     }
 
