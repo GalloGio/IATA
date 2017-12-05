@@ -161,7 +161,7 @@
                 RHC SECTION
           -->
 
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; height: 350px;">
+          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
             <header class="col-xs-12">
               <div class="section-header">
                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -340,7 +340,7 @@
             </body>
           </section>
 
-          <div style="display: {!IF(isCashless,'block','none')}; height: 350px;">
+          <div style="display: {!IF(isCashless,'block','none')}; min-height: 350px;">
             <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           </div>
 
@@ -349,13 +349,13 @@
         <section name="right-side" class="col-md-4 col-sm-12">
           <!-- Available forms of payment-->
 
-          <div style="display: {!IF(isCashless,'none','block')}; height: 350px;">
+          <div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
             <c:AFP_Component wrapperClass="{!afpWrapper}"/>
           </div>
 
           <!-- Risk Profile-->
 
-          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; height: 350px;">
+          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
 
             <table class="table" style="width: 100%">
               <tr>
@@ -370,15 +370,16 @@
                   <div class="customTable">
                     <div>
                       <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
-                      <!--apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_Accreditation_ModelTooltip" /-->
+                      <a href="#"
+                        data-toggle="modal" data-target="#ModalProductComparison">
+                        <apex:image value="/img/msg_icons/info16.png"
+                          html-data-html="true" html-data-placement="right"
+                          html-data-toggle="tooltip"
+                          title="{!$Label.ISSP_AMS_Compare_Accreditation_Types_RHC}" />
+                      </a>
                     </div>
                     <div>
                       {! accreditationType}
-                      <a href="#" style="float: right;"
-                        data-toggle="modal" data-target="#ModalProductComparison"
-                        title="{!$Label.ISSP_AMS_Compare_Accreditation_Types}">
-                        <span class="glyphicon glyphicon-list"></span>
-                      </a>                      
                     </div>
                   </div>
                 </td>
