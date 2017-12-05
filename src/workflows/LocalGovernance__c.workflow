@@ -2,8 +2,9 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
         <fullName>Add_INACTIVE_to_name</fullName>
+        <description>Add &quot; - INACTIVE&quot; to the name when inactivated</description>
         <field>Name</field>
-        <formula>Name&amp; &quot;- INACTIVE&quot;</formula>
+        <formula>Name&amp; &quot; - INACTIVE&quot;</formula>
         <name>Add INACTIVE to name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -33,9 +34,9 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Remove_INACTIVE_from_name</fullName>
-        <description>remove &quot;- INACTIVE&quot; from the name</description>
+        <description>remove &quot; - INACTIVE&quot; from the name</description>
         <field>Name</field>
-        <formula>SUBSTITUTE(Name, &quot;- INACTIVE&quot;, &quot;&quot;)</formula>
+        <formula>SUBSTITUTE(Name, &quot; - INACTIVE&quot;, &quot;&quot;)</formula>
         <name>Remove INACTIVE from name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -45,7 +46,7 @@
         <fullName>Set_Industry_Group_Unique_Name</fullName>
         <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
         <field>Unique_Name__c</field>
-        <formula>SUBSTITUTE(Name, &quot;- INACTIVE&quot;, &quot;&quot;)</formula>
+        <formula>SUBSTITUTE(Name, &quot; - INACTIVE&quot;, &quot;&quot;)</formula>
         <name>Set Industry Group Unique Name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
