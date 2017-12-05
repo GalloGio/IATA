@@ -858,7 +858,7 @@ public class ISSP_AvailableServices_Test {
 
             cttr.initialization();
 
-            List<SelectOption> l = cttr.availablePortalServiceRoles;
+            List<ISSP_AvailableServices.SelectOption2> l = cttr.availablePortalServiceRoles;
         }
         Test.stopTest();
     }
@@ -935,7 +935,7 @@ public class ISSP_AvailableServices_Test {
 
             cttr.initialization();
 
-            List<SelectOption> l = cttr.availablePortalServiceRoles;
+            List<ISSP_AvailableServices.SelectOption2> l = cttr.availablePortalServiceRoles;
         }
         Test.stopTest();
     }    
