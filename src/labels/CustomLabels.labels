@@ -26200,4 +26200,12 @@ title,Title,Name</value>
         <shortDescription>ISSP_ANG_Least_One_Branch</shortDescription>
         <value>Please select at least one Branch Office</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_Voluntary_Relinquishment</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
+        <value>Voluntary Relinquishment</value>
+    </labels>
 </CustomLabels>
