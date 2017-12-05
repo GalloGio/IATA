@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
+        <fullName>Add_INACTIVE_to_name</fullName>
+        <field>Name</field>
+        <formula>Name&amp; &quot;- INACTIVE&quot;</formula>
+        <name>Add INACTIVE to name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_recordtype</fullName>
         <description>Change the recordtype from draft to permanent to hide the Approval History on the assigned page layout</description>
         <field>RecordTypeId</field>
@@ -23,10 +32,20 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Remove_INACTIVE_from_name</fullName>
+        <description>remove &quot;- INACTIVE&quot; from the name</description>
+        <field>Name</field>
+        <formula>SUBSTITUTE(Name, &quot;- INACTIVE&quot;, &quot;&quot;)</formula>
+        <name>Remove INACTIVE from name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Set_Industry_Group_Unique_Name</fullName>
         <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
         <field>Unique_Name__c</field>
-        <formula>Name</formula>
+        <formula>SUBSTITUTE(Name, &quot;- INACTIVE&quot;, &quot;&quot;)</formula>
         <name>Set Industry Group Unique Name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -114,8 +133,48 @@ RecordType.Name + &quot; - &quot; + IF( ISBLANK(Country__c), Cluster__r.Name, Co
             <operation>equals</operation>
             <value>Reg/Div Groups,Draft Reg/Div Group</value>
         </criteriaItems>
-        <description>Fill the Unique Name field for industry groups with the (Draft) Reg / Div Group record types</description>
+        <description>Fill the Unique Name field for industry groups with the (Draft) Reg / Div Group record types. Note that &quot;- INACTIVE&quot; is ignored from the name so inactive groups are also considered unique.</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Reg%2FDig Group auto-rename</fullName>
+        <actions>
+            <name>Add_INACTIVE_to_name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>LocalGovernance__c.Active__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>LocalGovernance__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Draft Reg/Div Group,Reg/Div Groups</value>
+        </criteriaItems>
+        <description>Add &quot;- INACTIVE&quot; to the name of and inactivated reg/div group or draft</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Reg%2FDig Group auto-rename back</fullName>
+        <actions>
+            <name>Remove_INACTIVE_from_name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>LocalGovernance__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>LocalGovernance__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Draft Reg/Div Group,Reg/Div Groups</value>
+        </criteriaItems>
+        <description>Remove &quot;- INACTIVE&quot; from the name of an activated reg/div group or draft</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Reg%2FDiv group reporting to changed</fullName>
