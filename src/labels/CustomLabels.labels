@@ -26235,4 +26235,12 @@ title,Title,Name</value>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
         <value>Help text for Portal Role Ticket Issuer</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
+        <value>Click here to compare the accreditation types</value>
+    </labels>    
 </CustomLabels>
