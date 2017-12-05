@@ -178,6 +178,28 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Fees_GoLite_GoStandard__c</fullName>
+        <description>Fees to convert from GoLite to GoStandard.</description>
+        <externalId>false</externalId>
+        <label>GoLite to GoStandard</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Fees_GoStandard_GoLite__c</fullName>
+        <description>Fees to convert from GoStandard to GoLite.</description>
+        <externalId>false</externalId>
+        <label>GoStandard to GoLite</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_HE_AnnualFees_Large_Agents__c</fullName>
         <description>HE: Annual fees for large agents</description>
         <externalId>false</externalId>
@@ -2025,10 +2047,6 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2114,6 +2132,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3534,6 +3556,19 @@ The product will only appear on the Online Store when the date entered in this f
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Power_of_one__c</fullName>
+        <externalId>false</externalId>
+        <formula>1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Power of one</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ProductCode</fullName>
@@ -6822,10 +6857,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -6907,6 +6938,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12801,10 +12836,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Handling Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -12886,6 +12917,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>

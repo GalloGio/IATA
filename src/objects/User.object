@@ -61,6 +61,47 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
+        <description>option to receive the Chatter topic digest either daily or weekly</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Daily or Weekly</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMP_Digest_Topics__c</fullName>
+        <description>A csv list of the topics the user wants an email digest on, for AMP</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Topics</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ANG_Accreditation_Model__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.ANG_Accreditation_Model__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Category__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Contact.Account.Category__c)</formula>
@@ -88,9 +129,9 @@
         <formula>AND( 
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
 OR(
-  ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)  
+ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;) 
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1644,6 +1685,25 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
     </fields>
+    <listViews>
+        <fullName>AI_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>AI</value>
+        </filters>
+        <label>AI Pilot Users</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>ActiveUsersTIESS</fullName>
         <columns>FULL_NAME</columns>

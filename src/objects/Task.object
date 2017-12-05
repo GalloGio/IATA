@@ -134,15 +134,15 @@
             <picklistValues>
                 <fullName>Aborted</fullName>
                 <default>false</default>
-                <closed>false</closed>
+                <closed>true</closed>
             </picklistValues>
             <picklistValues>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
                 <closed>false</closed>
             </picklistValues>
             <picklistValues>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
                 <closed>false</closed>
             </picklistValues>
@@ -435,11 +435,11 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -824,11 +824,11 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1068,11 +1068,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -1324,11 +1324,11 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1588,11 +1588,11 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Track</fullName>
                 <default>false</default>
             </values>
             <values>
