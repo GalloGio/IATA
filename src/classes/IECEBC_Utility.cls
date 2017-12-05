@@ -202,6 +202,8 @@ public class IECEBC_Utility {
           queryWhereClauses.add('{"bool":{"must": [{"terms": {"Agency_Status_Code__c": [4,5,6,7,8,9]}}]}},');
           queryWhereClauses.add('{"bool":{"must": [{"match": {"GDP_Opt_In__c": true}}]}},');
     }
+    queryWhereClauses.add('{"bool": {"must": [{"wildcard": {"' + emailField + '.keyword": "*@*"}}]}},');
+ 
     //not and or
     queryWhereClauses.add('{"bool": {"must_not": [');
     queryWhereClauses.add(' {"bool": {"should": [');
