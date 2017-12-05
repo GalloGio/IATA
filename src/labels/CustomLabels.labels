@@ -419,6 +419,22 @@
         <value>Application Rejection</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_SETUP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_FINALIZATION</shortDescription>
+        <value>Setup Finalization</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_SETUP_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_SETUP_PROCESSING</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -664,6 +680,20 @@
         <value>PCI compliance</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP41</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP41</shortDescription>
+        <value>Setup Processing</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP42</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP42</shortDescription>
+        <value>Setup Finalization</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -803,7 +833,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type</value>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GoLite accreditation type</value>
     </labels>
      <labels>
         <fullName>ANG_ISSP_AFP_CreditCardNoAccess</fullName>
@@ -1426,8 +1456,8 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <fullName>ANG_ISSP_REH_DateIssued</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ANG OSCAR CHANGE DISAPPROVAL FINALIZATION</shortDescription>
-        <value>Disapproval Finalization</value>
+        <shortDescription>ANG ISSP REH DateIssued</shortDescription>
+        <value>Date Issued</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_REH_RiskDescription</fullName>
@@ -14210,11 +14240,39 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>View Country Requirements</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
+        <value>Agency Accreditation Associate Entity Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
         <value>1. IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Must Add Users To Service</shortDescription>
+        <value>At least one contact must be selected</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
@@ -15182,6 +15240,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>Case Closed For More Than 2 Months</shortDescription>
         <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Payment_status</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Payment status</shortDescription>
+        <value>Payment status</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
@@ -26044,38 +26110,137 @@ title,Title,Name</value>
         <value>Your wire transfer payment has been received.</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Email_HE_Cash_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email HE Cash Subject</shortDescription>
-        <value>Agency Accreditation Head Entity GoStandard Draft Application</value>
-    </labels>    
-    <labels>
-        <fullName>ISSP_ANG_Email_HE_Cashless_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
-        <value>Agency Accreditation Head Entity GoLite Draft Application</value>
-    </labels>    
-    <labels>
-        <fullName>ISSP_ANG_Email_AE_Subject</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP ANG Email AE Subject</shortDescription>
-        <value>Agency Accreditation Associate Entity Draft Application</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_MustAddContactsToService</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Must Add Users To Service</shortDescription>
-        <value>At least one contact must be selected</value>
-    </labels>    
-    <labels>
         <fullName>ISSP_ANG_SearchContacts</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Search for Contacts String</shortDescription>
         <value>Search for Contacts</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_RHC_Risk_Event_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Event Status</shortDescription>
+        <value>Risk Event Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_GenericError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic error message</shortDescription>
+        <value>An error has occurred. Please contact support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_VR</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step1_VR</shortDescription>
+        <value>B. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Click_Here_VR</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Click_Here_VR</shortDescription>
+        <value>Click here to continue with Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_VR_SELECTED_CODES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_VR_SELECTED_CODES</shortDescription>
+        <value>You have requested the voluntary relinquishment for the following IATA Codes:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the Company Administration -&gt; Contacts section</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ENTIRE_HIERARCHY</shortDescription>
+        <value>Entire Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Of_Change</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Of_Change</shortDescription>
+        <value>Please select an Effective Date that is not in the past.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Authorized_Signatory</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Least_One_Branch</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Least_One_Branch</shortDescription>
+        <value>Please select at least one Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Voluntary_Relinquishment</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
+        <value>Voluntary Relinquishment</value>
+	</labels>
+    <labels>    
+        <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Agency Read Only</shortDescription>
+        <value>Help text for Portal Role Agency Read Only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
+        <value>Help text for Portal Role Sub-wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
+        <value>Help text for Portal Role Master Wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
+        <value>Help text for Portal Role IEP Admin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
+        <value>Help text for Portal Role Ticket Issuer</value>
+    </labels>
 </CustomLabels>

@@ -1079,13 +1079,13 @@
                 {!IF(newform.Is_change_bank_account_details__c, $Label.ISSP_AMS_StepFinal_ChangeBank, $Label.ISSP_AMS_StepFinal_ChangeOther)}
                </apex:outputPanel>
             <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'FoP Management'}">
-                {!$Label.ISSP_PCI_Case_Submited}
+                {!$Label.ISSP_PCI_Case_Submited}                
                </apex:outputPanel>
            </strong>
-           
-           
-           <br/> <br/> 
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.
+           <br/>
+           <apex:outputlabel >
+           <br/>
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.</apex:outputlabel>
             <br/><br/>
                 <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>

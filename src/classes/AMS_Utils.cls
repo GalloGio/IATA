@@ -88,6 +88,7 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -152,6 +153,7 @@ public without sharing class AMS_Utils {
     public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+    public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
@@ -160,6 +162,7 @@ public without sharing class AMS_Utils {
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
+    public static final String NGVR             = 'VR.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
@@ -234,7 +237,8 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
     public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
-    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';  
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
+    public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';

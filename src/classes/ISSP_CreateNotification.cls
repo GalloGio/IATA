@@ -1,6 +1,6 @@
 public with sharing class ISSP_CreateNotification {
 
-	public static Boolean privetTrigger = false;
+    public static Boolean privetTrigger = false;
 
     public static map<Schema.sObjectType,string> objTypecontactIdMap = new map<Schema.sObjectType,string>{Case.getSObjectType()=>'ContactId',Contact.getSObjectType()=>'Id',Portal_Application_Right__c.getSObjectType()=>'Contact__c'};
     
@@ -49,7 +49,11 @@ public with sharing class ISSP_CreateNotification {
             createNotification(tList);  
     }
     
-    public static void createNotification(list<string> tList){
+    public static void createNotification(List<String> tList) {
+        createNotification(tList, true);
+    }
+
+    public static List<Notification__c> createNotification(list<string> tList, Boolean insertNotifications){
         try{
             map<string,set<string>> tMap = createSetMapFromList(tList,0,1);
             set<string> notificationNameSet = getNotificationNameSet(tMap);
@@ -67,9 +71,9 @@ public with sharing class ISSP_CreateNotification {
             
             list <Notification_template__c> NotificationTemplateList = 
                 [Select n.Subject__c, n.Name, n.Message__c, n.Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                	Expire_in_days__c, CriticalNotification__c,
+                    Expire_in_days__c, CriticalNotification__c,
                     (Select Subject__c, Name, Message__c, Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                	Expire_in_days__c, CriticalNotification__c From Notification_templates__r)
+                    Expire_in_days__c, CriticalNotification__c From Notification_templates__r)
                      From Notification_template__c n  where  Name in:notificationNameSet ];
             for(Notification_template__c nt: NotificationTemplateList){
                 notificationTemplateMap.put(nt.Name,nt);
@@ -85,7 +89,7 @@ public with sharing class ISSP_CreateNotification {
                     if(notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId)) != null)
                     nt = notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId));
                     if (nt.Expire_in_days__c != null){
-                    	newNotificationList.add(
+                        newNotificationList.add(
                             new Notification__c(
                                 contact__c=parentId,
                                 Message__c = nt.Message__c,
@@ -100,7 +104,7 @@ public with sharing class ISSP_CreateNotification {
                     }
                     else
                     {
-                    	newNotificationList.add(
+                        newNotificationList.add(
                             new Notification__c(
                                 contact__c=parentId,
                                 Message__c = nt.Message__c,
@@ -115,10 +119,13 @@ public with sharing class ISSP_CreateNotification {
                 }
             }
             
-            insert newNotificationList;
+            if(insertNotifications) insert newNotificationList;
+
+            return newNotificationList;
            
         }catch(Exception e){
             system.debug('\n\n\n\n Exception : '+e.getMessage()+'\n\n\n\n');
+            return new List<Notification__c>();
         }
         
    }
