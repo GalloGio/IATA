@@ -26303,4 +26303,20 @@ title,Title,Name</value>
         <shortDescription>ANG_Effective_Date</shortDescription>
         <value>Effective date:</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Not_Past</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Not_Past</shortDescription>
+        <value>The Effective Date cannot be in the past.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Iata_Codes_Relinquish</fullName>
+        <categories>PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
+        <value>IATA Codes to relinquish</value>
+    </labels>
 </CustomLabels>
