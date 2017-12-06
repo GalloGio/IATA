@@ -170,7 +170,7 @@
         <columns>Source__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>DataLoader - All Errors</label>
+        <label>All Error Logs</label>
         <language>en_US</language>
     </listViews>
     <listViews>
