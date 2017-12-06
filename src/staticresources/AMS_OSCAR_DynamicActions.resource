@@ -1,4 +1,4 @@
-var dyn_functions = { 
+var dyn_functions = {
     generateIataCode:function (args) { 
         //$body = $("body");
       
@@ -41,15 +41,19 @@ var dyn_functions = {
 
         var ifapPSR;
 
-		if (records.length > 0 && resultExecution[0] == '0') { // IATA Code created
-			var result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
+        if (records.length > 0 && resultExecution[0] == '0') { // IATA Code created
+            if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'P' || records[0].AMS_Online_Accreditation__r.Location_Class__c == 'C'){
+                 var result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
 
-			if(result4 != 'OK'){
-				ifapPSR = 'Grant IFAP service access - Failed.\n(' + result4 +')\n\r';
-			}else{
-				ifapPSR = 'Grant IFAP service access - Success!\n\r';
-			}
-		}
+                if(result4 != 'OK'){
+                    ifapPSR = 'Grant IFAP service access - Failed.\n(' + result4 +')\n\r';
+                }else{
+                    ifapPSR = 'Grant IFAP service access - Success!\n\r';
+                }
+            }else{
+            ifapPSR = '';
+            }
+        }
 
         alert('\n\r ' + resultExecution[1] + ifapPSR);
 
