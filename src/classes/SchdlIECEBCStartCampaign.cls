@@ -106,8 +106,10 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         Set<String> newPreviousBatchEmail = new Set<String>();
         Set<String> currentBatchEmail = new Set<String>();
         List<EBC_Campaign_Emails__c> emails= new List<EBC_Campaign_Emails__c>();
+        List<EBC_Campaign_Emails__c> emails_delete= new List<EBC_Campaign_Emails__c>();
         String token;
         String currentId='';
+        String current_SFDC_Id='';
         Map<String, Map<String, String>> params = new Map<String, Map<String, String>>();
         
         
@@ -117,10 +119,13 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         sObj='GDP_Products_Account_View__c';
         for(sObject i : scope) { 
             EBC_Campaign_Emails__c o= (EBC_Campaign_Emails__c)i;
-            currentId= o.SFDC_Id__c;
+            current_SFDC_Id = o.SFDC_Id__c;
             if (o.ID_Card__c!=null) sObj= 'ID_CARD__c';
             if (o.Add_recipient__c) insert_controller_client_email=true;
+            if (o.ID_Card__c!=null) currentId= String.ValueOf(o.ID_Card__c);
+            if (o.GDP_Products_Account_View__c!=null) currentId= String.ValueOf(o.GDP_Products_Account_View__c);
         }
+        //current_SFDC_Id=currentId;
         System.debug('currentId >>>'+currentId);
         Map<String, String> client_agent=new Map<String, String>{
                     'SFID' => currentId,
@@ -185,27 +190,34 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         if (insert_controller_client_email && controller_email!='' && sObj!='ID_CARD__c') params.put(campaignId + '_' + controller_email, controller_agency); 
         if (insert_controller_client_email && controller_email!='') currentBatchEmail.add(controller_email);
                      
-        emails = [Select Id 
+        emails_delete = [Select Id 
                    From EBC_Campaign_Emails__c 
                    Where EBC_Campaign__c=:campaignId
-                     and Email__c!='noreply@iata.com'
-                     and SFDC_Id__c=:currentId
+                     and Email__c!='ebc-batch-delimitor@ebroadcast.iata.org'
+                     and SFDC_Id__c=:current_SFDC_Id
                  ];
                 
-        delete emails;
+        
         emails.clear();
         
         List<SObject> new_scope = new List<SObject>();
         new_scope = scope;
         String new_es_query = es_query.replace('[x]',currentId).replace('sections', 'extract');
-        Integer TotalIds = req.execute(new_es_query,'list',Test.isRunningTest());
+        Integer TotalIds = 0;
+        try {
+            TotalIds = req.execute(new_es_query,'list',Test.isRunningTest());
+        } catch (Exception e) {
+            TotalIds = req.execute(new_es_query,'list',Test.isRunningTest());
+        }
         
         boolean isTest = Test.isRunningTest();
         String listids = String.join(req.listResult.Ids, '\',\'');
         if (isTest) listids=currentId;
             
         String new_query ='';
-        new_query= 'Select '+ listfields +' From '+ sObj +' Where Id in (\''+listids+'\') Order by Id Limit '+String.ValueOf(TotalIds);
+        String OrderByEmail='Email_Address__c';
+        if (sObj=='ID_CARD__c') OrderByEmail='Email__c';
+        new_query= 'Select '+ listfields +' From '+ sObj +' Where Id in (\''+listids+'\') Order by '+OrderByEmail+' Limit '+String.ValueOf(TotalIds);
         //if (is_testing_mode)  new_query= String.format('Select {0} From {1} Where Id !=null Order by Id Limit {3}', new List<string>{listfields, sObj, '\''+listids+'\'' , String.ValueOf(TotalIds)});
         System.debug('new_query >>>'+new_query);
         if (elastic_switch) new_scope=Database.Query(new_query);
@@ -216,7 +228,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             //for(integer fi=0; fi<listIds.size(); fi++){
             //    if (listIds.get(fi)==i.Id) {foundid=true; break;}
             //}
-            if (i instanceof GDP_Products_Account_View__c) {
+            if (sObj!='ID_CARD__c') {
                 GDP_Products_Account_View__c a = (GDP_Products_Account_View__c)i;
                 newPreviousBatchEmail.add(a.Email_Address__c);
                 
@@ -227,8 +239,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     new_email.Email__c=a.Email_Address__c;
                     new_email.GDP_Products_Account_View__c=a.Id;
                     new_email.ID_Card__c=null;
-                    new_email.SFDC_Id__c=currentId;
+                    new_email.SFDC_Id__c=current_SFDC_Id;
                     emails.add(new_email);
+                    System.debug('current_SFDC_Id >>>'+current_SFDC_Id);
                 }
                 params.put(campaignId + '_' + a.Email_Address__c, new Map<String, String>{
                     'SFID' => a.Id,
@@ -246,7 +259,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 }); 
                 
                 currentBatchEmail.add(a.Email_Address__c);
-            } else if (i instanceof Id_Card__c) {
+            } else{
                 Id_Card__c a = (Id_Card__c)i;
                 newPreviousBatchEmail.add(a.Email__c);
                 if (previousBatchEmail.contains(a.Email__c) || currentBatchEmail.contains(a.Email__c)) continue;
@@ -256,8 +269,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     new_email.Email__c=a.Email__c;
                     new_email.GDP_Products_Account_View__c=null;
                     new_email.ID_Card__c=a.Id;
-                    new_email.SFDC_Id__c=currentId;
+                    new_email.SFDC_Id__c=current_SFDC_Id;
                     emails.add(new_email);
+                    System.debug('current_SFDC_Id >>>'+current_SFDC_Id);
                 }
                 
                 
@@ -279,12 +293,13 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             }
             CurrentId=i.Id;
         }
-
-        previousBatchEmail = newPreviousBatchEmail;
+        if (previousBatchEmail.size()+newPreviousBatchEmail.size()>=100000) previousBatchEmail.clear();
+        previousBatchEmail.addAll(newPreviousBatchEmail);
         
         System.debug(params);
         System.debug('IECEBC_ETEmailSend.sendMassEmail');
         if (params.size() > 0 && is_email_saved) insert emails;
+        if (emails_delete.size()>0 && is_email_saved) delete emails_delete;
         if (params.size() > 0 && is_email_saved==false) {
             numberOfRecipients += params.size();
             
@@ -360,12 +375,13 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                                             Audience__c,
                                             EBC_Design__r.External_Id__c
                                            From EBC_Campaign__c 
-                                           Where (Status__c = 'EMAIL RECOVER' or Status__c = 'APPROVED') 
+                                           Where (Status__c = 'EMAIL DELETE' or Status__c = 'EMAIL RECOVER' or Status__c = 'APPROVED') 
                                              AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)
                                           ];
         
         for(EBC_Campaign__c campaign : campaigns) {
             boolean email_recover = false;
+            boolean email_delete = false;
             String query='';
             String listfields='';
             Boolean is_email_saved=false;
@@ -376,7 +392,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             String client_email='';
             Id campaignId;
             if (campaign.Status__c=='EMAIL RECOVER') email_recover=true;
+            if (campaign.Status__c=='EMAIL DELETE') email_delete=true;
             campaign.Status__c = 'STARTED';
+            if (email_recover) campaign.Status__c = 'DRAFT';
             campaign.Send_Datetime__c = Datetime.now();
             List<String> columns=new List<String>();
             if (campaign.Audience__c == 'Agent') columns = new List<String>{'Id','Email__c','FirstName__c','LastName__c','Agency_Name__c'};
@@ -447,7 +465,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                         ]
                    }
                 */
-                es_query = IECEBC_Utility.ES_getSOQLFromMasterFilter(masterFilter, 'sections', '[x]', '1000');
+                es_query = IECEBC_Utility.ES_getSOQLFromMasterFilter(masterFilter, 'sections', '[x]', '200');
                 System.debug('es_query:'+es_query);
                 String new_query =es_query.replace('[x]','');
                 
@@ -458,13 +476,13 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 TotalIds = req.listResult.Ids.Size();
                 //extract first and last ids from the returned array
                 //create the different section by adding 
-                //delete first old query list of sections where email is equal to noreply@iata.com
+                //delete first old query list of sections where email is equal to ebc-batch-delimitor@ebroadcast.iata.org
                 List<EBC_Campaign_Emails__c> emails= new List<EBC_Campaign_Emails__c>();
                 
                 emails = [Select Id 
                             From EBC_Campaign_Emails__c 
                             Where EBC_Campaign__c=:campaign.Id
-                                and Email__c='noreply@iata.com'
+                                and Email__c='ebc-batch-delimitor@ebroadcast.iata.org'
                           ];
                 
                 delete emails;
@@ -477,10 +495,10 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                
                 if (isTest){
                     List<GDP_Products_Account_View__c> gdp_list =  new List<GDP_Products_Account_View__c>();
-                    gdp_list = [Select Id From GDP_Products_Account_View__c Limit 1];
+                    gdp_list = [Select Id From GDP_Products_Account_View__c Where Email_Address__c!=null Limit 1];
                     if (isGDP) req.listResult.Ids[0]=gdp_list[0].Id;
                     List<ID_Card__c> card_list =  new List<ID_Card__c>();
-                    card_list = [Select Id From ID_Card__c Limit 1];
+                    card_list = [Select Id From ID_Card__c Where Email__c!=null Limit 1];
                     if (!isGDP) req.listResult.Ids[0]=card_list[0].Id;
                 }
                 for(integer i=0; i<TotalIds; i++){
@@ -488,8 +506,8 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     EBC_Campaign_Emails__c new_email = new EBC_Campaign_Emails__c();
                     new_email.EBC_Campaign__c=campaign.Id;
                     new_email.Add_recipient__c= (i==0? true:false);
-                    new_email.Email__c='noreply@iata.com';
-                    new_email.SFDC_Id__c=req.listResult.Ids[i];
+                    new_email.Email__c='ebc-batch-delimitor@ebroadcast.iata.org';
+                    new_email.SFDC_Id__c=String.ValueOf(i);
                     if (isGDP) new_email.GDP_Products_Account_View__c=req.listResult.Ids[i];
                     if (!isGDP) new_email.ID_Card__c=req.listResult.Ids[i];
                     emails.add(new_email);
@@ -502,7 +520,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 //build the salesforce Query for the Query Locator
                 String OrderBy ='GDP_Products_Account_View__c';
                 if (campaign.Audience__c == 'Agent') OrderBy='ID_Card__c';
-                query = 'Select Id, Add_recipient__c, SFDC_Id__c, ID_Card__c,GDP_Products_Account_View__c From EBC_Campaign_Emails__c Where EBC_Campaign__c=\''+campaign.Id+'\' and Email__c=\'noreply@iata.com\' Order By '+OrderBy;
+                query = 'Select Id, Add_recipient__c, SFDC_Id__c, ID_Card__c,GDP_Products_Account_View__c From EBC_Campaign_Emails__c Where EBC_Campaign__c=\''+campaign.Id+'\' and Email__c=\'ebc-batch-delimitor@ebroadcast.iata.org\' Order By '+OrderBy;
             }
             //temporary
            
