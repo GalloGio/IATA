@@ -70,6 +70,41 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Financial_Security_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Reception_Case__r.Financial_Security_Currency__c)</formula>
+        <label>Financial Security Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Minimum_Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <formula>Reception_Case__r.Financial_Security_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Financial Security Amount (Minimum)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_isToUpdateRHC__c</fullName>
+        <description>Technical field to help control the rhc record update on financial security triggerhandler</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) &amp;&amp; ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;)</formula>
+        <label>Update RHC</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Account_Case_BSP_Country__c</fullName>
         <description>Country value that is transmitted to the automatically created renewal case.</description>
         <externalId>false</externalId>
@@ -489,6 +524,10 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 <fullName>Encashment in progress</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Inactive_Addendum</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -632,7 +671,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30), 
 
-IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;) ),
+IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;),ISPICKVAL( Security_Status__c , &quot;Inactive_Addendum&quot;) ),
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Released&quot;,30,30),
 
 IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
@@ -2466,6 +2505,17 @@ NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Amend_FS</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Addendum</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/ANG_FS_AddendumFlow?FSToCloneId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.AccountId__c}</url>
+    </webLinks>
     <webLinks>
         <fullName>Create_PDF_letter</fullName>
         <availability>online</availability>

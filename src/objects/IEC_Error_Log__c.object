@@ -170,7 +170,7 @@
         <columns>Source__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>DataLoader - All Errors</label>
+        <label>All Error Logs</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -185,6 +185,23 @@
         <columns>Extra_Information__c</columns>
         <filterScope>Everything</filterScope>
         <label>DataLoader - Webstar GDS Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>DataLoader_GSS_Errors</fullName>
+        <columns>NAME</columns>
+        <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <label>DataLoader - GSS Errors</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -221,14 +238,9 @@
         <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error,Warning,Info</value>
-        </filters>
-        <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>6/14/2017 12:00 AM</value>
+            <value>TODAY</value>
         </filters>
         <label>Errors by Date</label>
         <language>en_US</language>
@@ -238,8 +250,8 @@
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
         <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
         <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>

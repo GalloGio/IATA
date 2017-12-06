@@ -32,7 +32,6 @@ private class SignaturitEventsBatchTest {
 
     }
 
-    /*
     static testMethod void testWSCall() {
         Tracked_Email__c te = createTrackedEmail();
         insert te;
@@ -41,6 +40,4 @@ private class SignaturitEventsBatchTest {
         WSJavascript.refreshSignaturitEvents(te.id);
         Test.stopTest();
     }
-    */
-
 }

@@ -2491,6 +2491,31 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_Accreditation_Model__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IEP_HE_AccntNum__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IEP_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Financial_Review_Result__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Is_PCI_compliant__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -3429,6 +3454,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo Only Carrier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legacy</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -7633,22 +7662,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Data_Quality_Description__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( Data_Quality_Score__c =100,&quot;All Account Details Captured&quot;, &quot;Missing: &quot;&amp;IF( ISPICKVAL( Status__c,&quot;&quot;),&quot;Status__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-
-&amp;IF( ISPICKVAL( Location_Type__c,&quot;&quot;),&quot;Location_Type__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( ISPICKVAL( Status__c,&quot;&quot;),&quot;Status__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( ISPICKVAL( Location_Class__c,&quot;&quot;),&quot;Location_Class__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(BillingCity) = 0, &quot;BillingCity, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Email__c) = 0, &quot;Email__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Phone) = 0, &quot;Phone, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Fax) = 0, &quot;Fax, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(VAT_Number__c) = 0, &quot;VAT_Number__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Name) = 0, &quot;Name, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(IATACode__c) = 0, &quot;IATACode__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( ISBLANK(IATA_ISO_Country__c), &quot;IATA_ISO_Country__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( LEN(Region_formula__c) = 0, &quot;Region_formula__c, &quot;,&quot;&quot;)&amp;&quot;&quot;
-&amp;IF( ISBLANK(BillingAddress), &quot;BillingAddress, &quot;,&quot;&quot;)
-&amp;IF( ISBLANK(Accreditation_date__c), &quot;Accreditation_date__c, &quot;,&quot;&quot;))</formula>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Account Details Captured&quot;, &quot;Missing: &quot;&amp;IF( ISPICKVAL( Status__c,&quot;&quot;),&quot;Status, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Location_Type__c,&quot;&quot;),&quot;Location Type, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Name) = 0, &quot;Name, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(IATACode__c) != 8, &quot;IATA Code short, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Sector__c,&quot;&quot;),&quot;Sector, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Category__c,&quot;&quot;),&quot;Category, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Reason__c) = 0, &quot;Reason, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Short_Name__c) = 0, &quot;Short Name, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL(Company_Type__c,&quot;&quot;),&quot;Company Type, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),Has_a_Financial_Assessment_Contact__c = FALSE), &quot;Financial Assessment Contact, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),Has_an_Administrator_User_Portal__c = FALSE), &quot;Portal Admin User, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;)), &quot;FA Submis. Deadline, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISBLANK(Accreditation_date__c), &quot;Accreditation Date, &quot;,&quot;&quot;))</formula>
         <label>Data Quality Description</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -7658,20 +7672,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Data_Quality_Score__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(AND(RecordTypeId =&quot;012w0000000QBMW&quot;,ISPICKVAL(Location_Class__c,&quot;P&quot;),OR(ISPICKVAL(Status__c,&quot;Changes processed&quot;),ISPICKVAL(Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Status__c,&quot;Listed&quot;),ISPICKVAL(Status__c,&quot;Review&quot;),ISPICKVAL(Status__c,&quot;Under review&quot;),ISPICKVAL(Status__c,&quot;approved&quot;)),OR(CONTAINS(Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Country_ISO_Code__c,&quot;SG&quot;))),
-
-(IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10) + IF( LEN(BillingCity) = 0, 0,8) + IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,8)
-
- + IF( LEN(Email__c) = 0, 0,6)
-+ IF( LEN(Phone) = 0, 0,4)
-+ IF( LEN(Fax) = 0, 0,4)
-+ IF( LEN(VAT_Number__c) = 0, 0,10)
-+ IF( LEN(IATACode__c) = 0, 0,10)
-+ IF( LEN(Name) = 0, 0,10)
-+ IF( ISBLANK(IATA_ISO_Country__c), 0,10)
-+ IF( ISBLANK(Accreditation_date__c), 0,10)
-+ IF( LEN(Region_formula__c) = 0, 0,6)
-+ IF( ISBLANK(BillingAddress), 0,4)),1)</formula>
+        <formula>IF(AND(RecordTypeId =&quot;012w0000000QBMW&quot;,OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Status__c,&quot;Changes processed&quot;),ISPICKVAL(Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Status__c,&quot;Listed&quot;),ISPICKVAL(Status__c,&quot;Review&quot;),ISPICKVAL(Status__c,&quot;Under review&quot;),ISPICKVAL(Status__c,&quot;approved&quot;)),OR(CONTAINS(Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Country_ISO_Code__c,&quot;SG&quot;))), (IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10) +IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,10) + IF( LEN(IATACode__c) != 8, 0,10) + IF( LEN(Name) = 0, 0,10) + IF( ISBLANK(Accreditation_date__c), 0,10) + IF( ISPICKVAL(Sector__c,&quot;&quot;), 0,10) + IF( ISPICKVAL(Category__c,&quot;&quot;), 0,10) +IF(LEN(Short_Name__c)= 0, 0,5) + IF( ISPICKVAL(Company_Type__c,&quot;&quot;), 0,5) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_a_Financial_Assessment_Contact__c = FALSE,0,5)) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_an_Administrator_User_Portal__c = FALSE,0,5)) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF( ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;), 0,5)) + IF( LEN(Reason__c) = 0, 0,5)),1)</formula>
         <label>Data Quality Score</label>
         <precision>18</precision>
         <required>false</required>
@@ -9454,6 +9455,28 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_PCI_compliant__c</fullName>
+        <description>Determines if an agency is PCI Compliant</description>
+        <externalId>false</externalId>
+        <label>Is PCI compliant</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
@@ -11256,7 +11279,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
-        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; which can&apos;t be used on the sharing rules (multiselect, which was a requirement so the field could be reused).</description>
         <externalId>false</externalId>
         <label>Record Sharing Criteria AUX</label>
         <length>255</length>
@@ -15068,7 +15091,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Airlines AOC expiring in 90 days or less</label>
         <language>en_US</language>
         <sharedTo>
+            <roleAndSubordinatesInternal>Americas_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
             <roleAndSubordinatesInternal>DistributionAirlineManagementHO</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>Distribution_Airline_Coding</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>
     <listViews>
@@ -25455,6 +25480,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -28460,6 +28496,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -31292,6 +31339,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -32240,15 +32298,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34017,6 +34071,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -37608,6 +37673,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -38514,15 +38590,31 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legacy</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40843,6 +40935,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -45417,6 +45520,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -46624,15 +46738,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48244,6 +48354,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -51063,15 +51184,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52647,6 +52764,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -57085,6 +57213,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -59561,6 +59700,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -61968,6 +62118,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64491,6 +64652,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Key_Customer_Reason__c</picklist>
             <values>
                 <fullName>Big Buyer</fullName>
@@ -65748,15 +65920,31 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legacy</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low Cost Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -69662,6 +69850,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -73368,15 +73567,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75242,6 +75437,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -77660,15 +77866,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Hybrid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79709,6 +79911,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -82110,6 +82323,31 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agency_Name</fullName>
+        <active>true</active>
+        <description>prevent users should changing the agencies name</description>
+        <errorConditionFormula>AND
+(
+ISCHANGED(Name),
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR
+(
+$User.Profile_Name__c  =  &apos;System Administrator&apos;,
+$User.Profile_Name__c  =  &apos;System Administrator - automated processes&apos;,
+$User.Profile_Name__c  =  &apos;System administrator - Stakeholders&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver)&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
+$User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
+$User.Profile_Name__c  =  &apos;Developer&apos;,
+$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
@@ -82156,6 +82394,23 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>The CASS Number must have 3 digits</description>
         <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
         <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cannot_change_HO_location_type</fullName>
+        <active>true</active>
+        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+  ISCHANGED(Location_Type__c),
+  OR (
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
+  ),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+  Has_a_Financial_Assessment_Contact__c
+)</errorConditionFormula>
+        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>
@@ -82300,14 +82555,27 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
     <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(
-OR(
-RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
-),
-TEXT(Location_Type__c) = &apos;AE&apos;,
-TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;
+        <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
+
+&quot;Terminated&quot;, &quot;Not accreditated&quot;,&quot;New application pending&quot; and &quot;Not in Operation&quot;, NULL</description>
+        <errorConditionFormula>OR(
+AND( 
+OR( 
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
+), 
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
+NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
+ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
+ISPICKVAL(Status__c, &quot;New application pending&quot;), 
+ISPICKVAL(Status__c, &quot;Not accreditated&quot;), 
+ISPICKVAL(Status__c, &quot;&quot;) 
+)) 
+),AND(
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
 )</errorConditionFormula>
-        <errorMessage>An Associate Entity must have a parent account with location type HE</errorMessage>
+        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
@@ -82794,6 +83062,13 @@ newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
 newmsoagency.Location_Class__c = &quot;M&quot;;
 newmsoagency.Location_Type__c = &quot;HO&quot;;
 newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+if({!Account.IATA_Member__c} == true) { 
+newmsoagency.Location_Category__c = &quot;IC&quot;; 
+} 
+else { 
+newmsoagency.Location_Category__c = &quot;NI&quot;; 
+}
 
 result = sforce.connection.create([newmsoagency]);
 var accId = result[0].id;

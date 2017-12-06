@@ -413,7 +413,6 @@
             <picklistValues>
                 <fullName>ALWG</fullName>
                 <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC</fullName>
@@ -431,12 +430,17 @@
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>CGA</fullName>
+                <fullName>CCC</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CEC</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CGA</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
@@ -465,7 +469,7 @@
                 <default>false</default>
                 <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -859,7 +863,12 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Local_Groups</value>
         </filters>
-        <label>All Local Groups</label>
+        <filters>
+            <field>Active__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Local Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -884,7 +893,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>All Reg / Div Groups</label>
+        <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1293,6 +1302,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
@@ -1328,7 +1341,15 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Industry Stakeholders</fullName>
+                <fullName>Cargo Agents</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agents</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1597,6 +1618,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
@@ -1862,6 +1887,16 @@ Record Type + Group Type + ISO_Country_Name</description>
 )
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_edit</fullName>
+        <active>true</active>
+        <description>Only edit fields if user profile is &apos;Account management team&apos;</description>
+        <errorConditionFormula>and(or(ISCHANGED(Cargo_Passenger__c),ISCHANGED(Country__c), 
+ISCHANGED(Cluster__c),ISCHANGED(Reporting_to__c), 
+ISCHANGED(Local_Governance_type__c),ISCHANGED(Group_Owner__c)), 
+!($User.Profile_Name__c=&apos;Account management team&apos;),RecordType.DeveloperName=&apos;Local_Groups&apos;)</errorConditionFormula>
+        <errorMessage>Only the Account management team can perform the editing</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Deacitvate</fullName>
