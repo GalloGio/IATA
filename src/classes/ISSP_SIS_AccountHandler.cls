@@ -26,8 +26,14 @@ public with sharing class ISSP_SIS_AccountHandler {
                 }
             }
         }
-        if (!listInsertAccountId.isEmpty()) ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
-        if (!listUpdateAccountId.isEmpty()) ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
+        if (!listInsertAccountId.isEmpty()) {
+            ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
+            BLOCK_EXECUTION = true;
+        }
+        if (!listUpdateAccountId.isEmpty()) {
+            ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
+            BLOCK_EXECUTION = true;
+        }
     }
     
     /**
@@ -48,8 +54,14 @@ public with sharing class ISSP_SIS_AccountHandler {
                 }
             }
         }
-        if (!listInsertAccountId.isEmpty()) ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
-        if (!listUpdateAccountId.isEmpty()) ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
+        if (!listInsertAccountId.isEmpty()) {
+            ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
+            BLOCK_EXECUTION = true;
+        }
+        if (!listUpdateAccountId.isEmpty()) {
+            ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
+            BLOCK_EXECUTION = true;
+        }
     }
     
     /**

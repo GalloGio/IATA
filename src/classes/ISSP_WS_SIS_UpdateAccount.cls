@@ -33,9 +33,10 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     **/
     WebService static ResponseData UpdateAccount(InputData inputData) {
         Savepoint sPointContact = Database.setSavepoint();
+        Account account = null;
         try {
             validateInputData(inputData);
-            Account account = updateSISAccount(inputData);
+            account = updateSISAccount(inputData);
             // Return a Success response
             return createResponseSuccess(inputData,account);
 
@@ -43,14 +44,14 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
             // rollback all database changes
             Database.rollback(sPointContact);
             //Return an Error Response
-            return createResponseError(inputData,e);
+            return createResponseError(inputData,e,account);
         } catch(Exception e) {
             // rollback all database changes
             Database.rollback(sPointContact);
             //Return an Error Response
             System.debug(e.getStackTraceString());
             ISSP_WS_SIS_Common.WSException wsException = new ISSP_WS_SIS_Common.WSException('001','Exception not handled');
-            return createResponseError(inputData, wsException);
+            return createResponseError(inputData, wsException, account);
         }
     }
     
@@ -152,8 +153,8 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     /**
         Creates the response object for updateAccount WS when it has an error
     **/
-    private static ResponseData createResponseError(InputData inputData, ISSP_WS_SIS_Common.WSException wsException) {
-        insertErrorLog(inputData, wsException);
+    private static ResponseData createResponseError(InputData inputData, ISSP_WS_SIS_Common.WSException wsException, Account account) {
+        insertErrorLog(inputData, wsException, account);
         ResponseData response = new ResponseData();
         response.IsSuccess = false;
         response.SISMemberID = inputData.SISMemberID;
@@ -166,7 +167,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         Creates and inserts a new log with a Success
     **/
     private static void insertSuccessLog(InputData inputData, Account account) {
-        ISSP_Web_Service_Log__c log = createLog(inputData);
+        ISSP_Web_Service_Log__c log = createLog(inputData, account);
         log.Success__c = true;
         log.Error_Code__c = '';
         log.Error_Message__c = '';
@@ -178,8 +179,8 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     /**
         Creates and inserts a new log with an Error
     **/
-    private static void insertErrorLog(InputData inputData, ISSP_WS_SIS_Common.WSException wsException) {
-        ISSP_Web_Service_Log__c log = createLog(inputData);
+    private static void insertErrorLog(InputData inputData, ISSP_WS_SIS_Common.WSException wsException, Account account) {
+        ISSP_Web_Service_Log__c log = createLog(inputData, account);
         log.Success__c = false;
         log.Error_Code__c = wsException.errorCode;
         log.Error_Message__c = wsException.description;
@@ -208,7 +209,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     /**
         create a basic log object
     **/
-    private static ISSP_Web_Service_Log__c createLog(InputData inputData) {
+    private static ISSP_Web_Service_Log__c createLog(InputData inputData, Account account) {
         ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
         log.Web_Service__c = 'ISSP_WS_SIS_UpdateAccount';
         log.Method__c = 'updateSISAccount';
@@ -226,6 +227,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
         log.Input_Description__c +='TypeOfService' + inputData.TypeOfService + '\n';
         log.Input_Description__c +='RequestType' + inputData.RequestType + '\n';
         log.Finished__c = system.now();
+        log.Account__c = account==null? null: account.Id;
         return log;
     }
 

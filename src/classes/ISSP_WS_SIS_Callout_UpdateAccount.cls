@@ -1,7 +1,7 @@
 public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
 
     public static final list<String> LIST_FIELD_NAMES = new list<String>{
-        'Airline_designator__c','IATACode__c','SIS_Status__c','Name',
+        'IATACode__c','SIS_Status__c','Name',
         'SIS_Sub_Status__c','TradeName__c','VAT_Number_2__c','VAT_Number__c','SIS_ID__c',
         'BillingStreet','BillingState','BillingPostalCode','BillingLongitude','BillingLatitude','BillingCountry','BillingCity'
     };
@@ -60,6 +60,7 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
         public String ErrorCode;
         public String ErrorDescription;
         public String requestString;
+        public Account account;
         
         public ResponseData(Exception e, String requestString){
             this.IsSuccess = false;
@@ -96,9 +97,10 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
             request.IcpPassword = ISSP_WS_SIS_Callout_Common.getPass();
             request.SISMemberID = nvl(account.SIS_ID__c);
             request.MemberCodeNumeric = nvl(account.IATACode__c).toUpperCase();
-            request.MemberCodeAlpha = nvl(account.Airline_designator__c).toUpperCase();
+            request.MemberCodeAlpha = 'XB';
             request.LegalName = nvl(account.Name);
-            request.CommercialName = nvl(account.TradeName__c);
+            String tradeName = nvl(account.TradeName__c);
+            request.CommercialName = tradeName==''? request.LegalName: tradeName;
             request.ISMembershipStatus = nvl(account.SIS_Status__c);
             request.ISMembershipSubStatus = nvl(account.SIS_Sub_Status__c);
             request.RegistrationID = '';
@@ -132,10 +134,12 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
             
             //prepare response
             ResponseData response = new ResponseData(xmlResponse, requestString);
+            response.account = account;
             return response;
 
         } catch (Exception e) {
             ResponseData response = new ResponseData(e, requestString);
+            response.account = account;
             return response;
         }
     }
@@ -145,11 +149,13 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
         newLog.Web_Service__c = 'ISSP_WS_SIS_Callout';
         newLog.Method__c = 'UpdateAccount';
         newLog.System__c = 'SIS';
+        newLog.Login_Ip__c = ISSP_WS_SIS_Common.getLoginIP();
         newLog.Input_Description__c = responseData.requestString;
         newLog.Success__c = responseData.IsSuccess;
         newLog.Error_Code__c = responseData.ErrorCode;
         newLog.Error_Message__c = responseData.ErrorDescription;
         newLog.Finished__c = system.now();
+        newLog.account__c = responseData.account==null? null: responseData.account.Id;
         return newLog;
     }
     

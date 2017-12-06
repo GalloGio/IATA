@@ -28,6 +28,8 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateUser {
         public String ErrorCode;
         public String ErrorDescription;
         public String requestString;
+        public Id userId;
+        public Id contactId;
         
         public ResponseData(Exception e, String requestString){
             this.IsSuccess = false;
@@ -73,10 +75,14 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateUser {
             
             //prepare response
             ResponseData response = new ResponseData(xmlResponse, requestString);
+            response.userId = user==null? null: user.Id;
+            response.contactId = contact==null? null: contact.Id;
             return response;
 
         } catch (Exception e) {
             ResponseData response = new ResponseData(e, requestString);
+            response.userId = user==null? null: user.Id;
+            response.contactId = contact==null? null: contact.Id;
             return response;
         }
     }
@@ -86,11 +92,14 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateUser {
         newLog.Web_Service__c = 'ISSP_WS_SIS_Callout';
         newLog.Method__c = 'UpdateUser';
         newLog.System__c = 'SIS';
+        newLog.Login_Ip__c = ISSP_WS_SIS_Common.getLoginIP();
         newLog.Input_Description__c = responseData.requestString;
         newLog.Success__c = responseData.IsSuccess;
         newLog.Error_Code__c = responseData.ErrorCode;
         newLog.Error_Message__c = responseData.ErrorDescription;
         newLog.Finished__c = system.now();
+        newLog.User__c = responseData.userId;
+        newLog.Contact__c = responseData.contactId;
         return newLog;
     }
     

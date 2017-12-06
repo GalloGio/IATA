@@ -25,6 +25,8 @@ public with sharing class ISSP_WS_SIS_Callout_ActivateUser {
         public String ErrorDescription;
         public String requestString;
         public Boolean activation;
+        public Id userId;
+        public Id contactId;
         
         public ResponseData(Exception e, String requestString, Boolean activation){
             this.IsSuccess = false;
@@ -83,10 +85,14 @@ public with sharing class ISSP_WS_SIS_Callout_ActivateUser {
             
             //prepare response
             ResponseData response = new ResponseData(xmlResponse, requestString, activation);
+            response.userId = user==null? null: user.Id;
+            response.contactId = user==null? null: user.contactId;
             return response;
 
         } catch (Exception e) {
             ResponseData response = new ResponseData(e, requestString, activation);
+            response.userId = user==null? null: user.Id;
+            response.contactId = user==null? null: user.contactId;
             return response;
         }
     }
@@ -96,11 +102,14 @@ public with sharing class ISSP_WS_SIS_Callout_ActivateUser {
         newLog.Web_Service__c = 'ISSP_WS_SIS_Callout';
         newLog.Method__c = responseData.activation? 'ActivateUser': 'DeactivateUser';
         newLog.System__c = 'SIS';
+        newLog.Login_Ip__c = ISSP_WS_SIS_Common.getLoginIP();
         newLog.Input_Description__c = responseData.requestString;
         newLog.Success__c = responseData.IsSuccess;
         newLog.Error_Code__c = responseData.ErrorCode;
         newLog.Error_Message__c = responseData.ErrorDescription;
         newLog.Finished__c = system.now();
+        newLog.User__c = responseData.userId;
+        newLog.Contact__c = responseData.contactId;
         return newLog;
     }
     
