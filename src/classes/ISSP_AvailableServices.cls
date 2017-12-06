@@ -66,41 +66,92 @@ public with sharing class ISSP_AvailableServices{
         }
     }
 
+    public static Map<String,List<String>> availableRoles;
+
     public List<SelectOption2> availablePortalServiceRoles {
         get{
+
+
+            Map<String, Map<Decimal, String>> orderRoles = new Map<String, Map<Decimal, String>>();
 
             if(availableRoles == null){
                 availableRoles = new Map<String,List<String>>();
 
                 for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
 
-                    if(availableRoles.get(role.Connected_App__c) == null)
+                    System.debug('ROLE-->' + role);
+
+                    if(availableRoles.get(role.Connected_App__c) == null) {
                         availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
-                    else
+
+                        Map<Decimal, String> aux = new Map<Decimal, String>();
+                        aux.put(role.Order__c, role.Role__c);
+
+                        orderRoles.put(role.Connected_App__c, aux);
+
+                    } else {                        
                         availableRoles.get(role.Connected_App__c).add(role.Role__c);
 
-                }
+                        Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
+                        aux.put(role.Order__c, role.Role__c);                        
+                    }
 
+                }
             }
+
+            System.debug('orderRoles-->' + orderRoles);
+
+
+            System.debug('Alex->' + availableRoles);
 
             Set<String> availableRolesLst = availableRoles.keySet();
 
-            if(availablePortalServiceRoles == null) {
-                //availablePortalServiceRoles = new List<SelectOption>{new SelectOption('', '')};
-                availablePortalServiceRoles = new List<SelectOption2>();
-            }
+
+            System.debug('ALEX-->' + availableRolesLst);
+
+            //if(availablePortalServiceRoles == null) {
+            List<SelectOption2> availablePortalServiceRolesAux = new List<SelectOption2>();
+            //} else {
+            //    availablePortalServiceRolesAux = availablePortalServiceRoles;
+            //}
+            Set<String> availableRolesSet = new Set<String>();
 
             for(String roleConnApp: availableRolesLst){
 
                 if(roleConnApp == this.Serv.recordService.Name){
 
                     for(String roleStr : availableRoles.get(roleConnApp)){
-
-                        availablePortalServiceRoles.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
-
+                        availableRolesSet.add(roleStr);
+                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
                     }
                 }
             }
+
+
+            if(orderRoles.containsKey(this.Serv.recordService.Name)) {
+
+                availablePortalServiceRolesAux = new List<SelectOption2>();
+
+                Map<Decimal, String> rolesOrderToApply = orderRoles.get(this.Serv.recordService.Name);
+
+                List<Decimal> orders = new List<Decimal>();
+                orders.addAll(rolesOrderToApply.keySet());
+                orders.sort();
+
+                for(Decimal o : orders) {
+                    String roleStr = rolesOrderToApply.get(o);
+                    if(availableRolesSet.contains(roleStr)) {
+                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
+
+                    }
+                }
+
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+
+            } else {
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+            }
+
 
             return availablePortalServiceRoles;
 
@@ -137,9 +188,7 @@ public with sharing class ISSP_AvailableServices{
     
     public void setSortDirection(String value) {  
         sortDirection = value;
-    }
-
-    public static Map<String,List<String>> availableRoles;
+    }    
     
     public ISSP_AvailableServices(){
 
