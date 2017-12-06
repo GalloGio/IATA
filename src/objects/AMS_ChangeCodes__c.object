@@ -13,6 +13,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Accreditation_Model__c</fullName>
+        <description>Accreditation Model</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Accreditation Model</inlineHelpText>
+        <label>Accreditation Model</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Apply_to_hierarchy__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
