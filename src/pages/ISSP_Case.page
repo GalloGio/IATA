@@ -685,13 +685,15 @@
 
                                             <apex:outputLink value="/ISSP_ANG_PCI?caseId={!newCase.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!newCase.Reason1__c=='FoP Management'}">{!$Label.ISSP_ANG_Click_Here_PCI}</apex:outputLink>
 
+                                            <apex:outputLink value="/ISSP_ANG_VoluntaryRelinquishment?caseId={!newCase.Id}&step=1" rendered="{!newCase.Reason1__c=='CLO - Closure'}">{!$Label.ISSP_ANG_Click_Here_VR}</apex:outputLink>
+
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
 
 
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
-                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management')}">
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure')}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">
