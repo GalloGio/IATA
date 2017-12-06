@@ -765,4 +765,12 @@ OR(
 )</errorConditionFormula>
         <errorMessage>Please inform the location class and threshold</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>RTS_Notification_Severity_not_empty</fullName>
+        <active>true</active>
+        <description>RTS Notification- RTS Severity must be selected for RTS Risk alert notification records</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;RTS_Risk_Alert_Notification&apos; &amp;&amp; ISPICKVAL(ANG_RTS_Severity__c,&apos;&apos;)</errorConditionFormula>
+        <errorDisplayField>ANG_RTS_Severity__c</errorDisplayField>
+        <errorMessage>RTS Severity not selected. Please select one</errorMessage>
+    </validationRules>
 </CustomObject>
