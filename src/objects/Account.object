@@ -2491,7 +2491,7 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-		<displayedFields>
+        <displayedFields>
             <field>ANG_Accreditation_Model__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>

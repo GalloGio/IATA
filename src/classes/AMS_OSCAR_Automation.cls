@@ -673,7 +673,7 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step1_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO || oscar.Process__c == AMS_Utils.NGCHANGES))
+            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES))
                 oscar.addError('Application Finalization cannot be granted if the Approval step does not equals PASSED');
             else if(oscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
                 oscar.addError('Cannot set application finalization to passed because manager approval is not authorized.');
@@ -1190,7 +1190,75 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.addError('Cannot set risk event to passed because manager approval is not authorized.');
 
             if (oscar != null) {
+			
                 res = True;
+            }
+
+            return res;
+        }
+    }
+	
+    public class AMS_OSCAR_Step41_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Failed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step41_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_succeeded.processWork');
+
+            Boolean res = False;
+
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Passed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_succeeded.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Passed';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Failed';
+
+                res = true;
             }
 
             return res;

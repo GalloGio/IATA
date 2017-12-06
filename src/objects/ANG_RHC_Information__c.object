@@ -115,6 +115,15 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_Consumed_RHC_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Consumed RHC Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_Enable_Calculation__c</fullName>
         <description>Reports the account status. Used to prevent queries on the RHC trigger.</description>
         <externalId>false</externalId>
@@ -229,6 +238,26 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Last_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>RME Amount Last Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Provisional__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisional RME Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_RME_Amount__c</fullName>
