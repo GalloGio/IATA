@@ -79,8 +79,6 @@ public with sharing class ISSP_AvailableServices{
 
                 for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
 
-                    System.debug('ROLE-->' + role);
-
                     if(availableRoles.get(role.Connected_App__c) == null) {
                         availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
 
@@ -99,15 +97,8 @@ public with sharing class ISSP_AvailableServices{
                 }
             }
 
-            System.debug('orderRoles-->' + orderRoles);
-
-
-            System.debug('Alex->' + availableRoles);
-
             Set<String> availableRolesLst = availableRoles.keySet();
 
-
-            System.debug('ALEX-->' + availableRolesLst);
 
             //if(availablePortalServiceRoles == null) {
             List<SelectOption2> availablePortalServiceRolesAux = new List<SelectOption2>();
