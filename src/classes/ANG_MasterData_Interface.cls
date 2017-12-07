@@ -20,7 +20,7 @@ global class ANG_MasterData_Interface{
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
-                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c, Guaranteed_amount__c,
+                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c, Guaranteed_amount__c, CurrencyIsoCode,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r) //RHC Information
@@ -176,7 +176,7 @@ global class ANG_MasterData_Interface{
                 this.phone = acc.phone;
                 this.portalServiceName = acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name;
                 this.Region = acc.IATA_ISO_Country__r.Region__c;
-                this.guaranteedAmount = string.valueOf(acc.Guaranteed_amount__c);
+                this.guaranteedAmount = string.valueOf(acc.CurrencyIsoCode + ' ' +acc.Guaranteed_amount__c);
 
                 this.RelinquishmentCode =acc.Reason__c!=null?acc.Reason__c.split('-').get(0).leftPad(2,'0'):acc.Reason__c;
                 this.RemittanceFrequency = acc.Remittance_frequency__c;
