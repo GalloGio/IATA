@@ -110,6 +110,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.IATA_ISO_Country__c = country.Id;
 		att.ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP;
 		att.ANG_Percentage__c = '50%';
+		att.ANG_Create_Process_Case__c = true;
 		att.ANG_EmailTemplate_Legacy__c = 'emailTemplate';
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
@@ -129,6 +130,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		test.StartTest();
 		insert ara;
+
+		String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+		System.assertEquals(1, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'There should one Process Case Created');
+		
 		test.StopTest();
 
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c limit 1].get(0).ANG_email_sent__c,'Email was not sent');

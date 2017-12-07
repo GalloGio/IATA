@@ -74,9 +74,11 @@ public with sharing class ANG_Risk_Helper{
 	//Case - CaseArea__c
 	public static final String CASE_AREA_RISK_MANAGEMENT_PROCESS = 'Risk Management Process';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+	public static final String CASE_AREA_CUSTOMER_SERVICE = 'Customer Service';
 
 	//Case - Reason1__c
 	public static final String CASE_REASON_FINANCIAL_SECURITY_UPDATE = 'Financial Security Update';
+	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';    

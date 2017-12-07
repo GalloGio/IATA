@@ -33,7 +33,8 @@ public class ANG_RHCAlertTriggerHandler{
 		System.debug(loggingLevel.Debug, '____ [cls ANG_RHCAlertTriggerHandler - sendAlertNotification] Method Started');
 
 		//fecth AMS Country Specifc Attributes for the accounts/countries involved
-		Map<Id, Id> accounts = new Map<Id, Id>();
+		Map<Id, Account> accounts = new Map<Id, Account>();
+		Map<Id, Id> countries = new Map<Id, Id>();
 		for(ANG_Risk_Alert__c a : triggerNew) accounts.put(a.ANG_Account__c, null);
 
 		Map<String, AMS_Country_Specific_Attribute__c> configs = new Map<String, AMS_Country_Specific_Attribute__c>();
@@ -53,12 +54,19 @@ public class ANG_RHCAlertTriggerHandler{
 											WHERE RecordTypeId = :ANG_RHCHelper.RECTYPE_RHCATTRIBUTE)
 										, (SELECT 
 											Id
+											, Name
+											, Short_Name__c
+											, IATACode__c
+											, ANG_IsNewGenAgency__c
+											, Region_formula__c
+											, BillingCountry
 											FROM Accounts_ISO_Country__r
 											WHERE Id IN :accounts.keySet())
 									FROM IATA_ISO_Country__c 
 									WHERE Id IN (SELECT IATA_ISO_Country__c FROM Account WHERE Id IN :accounts.keySet())]){
 			for(Account a : c.Accounts_ISO_Country__r){
-				accounts.put(a.Id, c.Id);
+				accounts.put(a.Id, a);
+				countries.put(a.Id, c.Id);
 				if(c.ANG_Enable_NewGen__c) newGenAccounts.add(a.Id);
 				else legacyAccounts.add(a.Id);
 			}
@@ -73,7 +81,7 @@ public class ANG_RHCAlertTriggerHandler{
 		Set<String> notificationTemplates = new Set<String>();
 
 		for(ANG_Risk_Alert__c a : triggerNew){
-			String key = accounts.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+			String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
 			if(configs.containsKey(key)){
 				AMS_Country_Specific_Attribute__c config = configs.get(key);
 
@@ -125,33 +133,59 @@ public class ANG_RHCAlertTriggerHandler{
 
 		Map<Id, Id> contactAccounts = new Map<Id, Id>();
 		List<ANG_RHCHelper.Email> mailList = new List<ANG_RHCHelper.Email>();
+		List<Case> processCases = new List<Case>();
 		List<String> notificationTargets = new List<String>();
 		Set<Id> notifiedAlerts = new Set<Id>();
 		for(ANG_Risk_Alert__c a : alertsToNotify.keySet()){
 			AMS_Country_Specific_Attribute__c config = alertsToNotify.get(a);
 
-			if(portalAdmins.containsKey(a.ANG_Account__c)){
+			if(portalAdmins.containsKey(a.ANG_Account__c) && !String.isEmpty(config.ANG_EmailTemplate_Legacy__c)){
 				for(Id contact : portalAdmins.get(a.ANG_Account__c)){
-					if(!String.isEmpty(config.ANG_EmailTemplate_Legacy__c)){
-						notifiedAlerts.add(a.Id);
-						mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_Legacy__c)));
-					}
+					notifiedAlerts.add(a.Id);
+					mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_Legacy__c)));
 				}
 			}
 
 			String accountId = String.valueOf(a.ANG_Account__c).substring(0,15);
-			if(rhcContacts.containsKey(accountId))
-			for(Id contact : rhcContacts.get(accountId)){
-				contactAccounts.put(contact, a.ANG_Account__c);
+			if(rhcContacts.containsKey(accountId) && (!String.isEmpty(config.ANG_EmailTemplate_NG__c) || !String.isEmpty(config.ANG_PortalNotificationTemplate__c))){
+				for(Id contact : rhcContacts.get(accountId)){
+					contactAccounts.put(contact, a.ANG_Account__c);
 
-				if(!String.isEmpty(config.ANG_EmailTemplate_NG__c)){
-					notifiedAlerts.add(a.Id);
-					mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_NG__c)));
+					if(!String.isEmpty(config.ANG_EmailTemplate_NG__c)){
+						notifiedAlerts.add(a.Id);
+						mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_NG__c)));
+					}
+					if(!String.isEmpty(config.ANG_PortalNotificationTemplate__c)) notificationTargets.add(contact + ':' + config.ANG_PortalNotificationTemplate__c);
 				}
-				if(!String.isEmpty(config.ANG_PortalNotificationTemplate__c)) notificationTargets.add(contact + ':' + config.ANG_PortalNotificationTemplate__c);
+			}
+
+			String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+			Database.DMLOptions dmlOpts = new Database.DMLOptions();
+			dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+
+			if(config.ANG_Create_Process_Case__c){
+				Account acc = accounts.get(a.ANG_Account__c);
+
+				Case c = new Case();
+				c.RecordTypeId = processRecorType;
+				c.AccountId = acc.Id;
+				c.ContactId = rhcContacts.containsKey(accountId) ? new List<Id>(rhcContacts.get(accountId))[0] : null;
+				c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - RHC 75';
+				c.Region__c = acc.Region_formula__c;
+				c.BSPCountry__c = acc.BillingCountry;
+				c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
+				c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_CUSTOMER_SERVICE; 
+				c.Reason1__c = ANG_Risk_Helper.CASE_REASON_RHC_75;
+				c.Visible_on_ISS_Portal__c = false;
+
+				//make sure that the default assignment rule is used
+				c.setOptions(dmlOpts);
+
+				processCases.add(c);
 			}
 		}
 
+		if(!processCases.isEmpty()) insert processCases;
 		if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));
 
 		if(!notificationTargets.isEmpty()){
