@@ -190,11 +190,14 @@ public with sharing class ISSP_AvailableServices{
                 String aux = role.Role__c.replaceAll(' ','');
                 String aux2 = aux.replaceAll('-','');
 
-                this.helpTextPortalRoles.put(role.Role__c, getCustomLabel('ISSP_ANG_Portal_Role_' + aux2));
+                String helpText = getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+
+                if(helpText == 'NONE') helpText = '';
+
+                this.helpTextPortalRoles.put(role.Role__c, helpText);
 
             }
         }
-
 
         this.iepRoles = new Map<String, String>();
 
@@ -480,6 +483,7 @@ public with sharing class ISSP_AvailableServices{
         public boolean addUsersEnable {get; set;}
         public boolean accountNotOpenError {get; set;}
         public String lineErrorMessage {get; set;}
+        public String modalStyle {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin, Boolean isAuthorisedSignatory){
             this.Status = getServiceStatus(inRecord);
@@ -487,6 +491,8 @@ public with sharing class ISSP_AvailableServices{
             this.recordService = inRecord;   
             this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
             this.lineErrorMessage = '';
+
+            this.modalStyle = 'modal-dialog';
 
             if(this.isEasyPayService) {
                 this.addUsersEnable = isAdmin;
@@ -508,6 +514,7 @@ public with sharing class ISSP_AvailableServices{
                 this.useDefaultRole = false;
                 if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
                     this.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                    this.modalStyle = 'modal-dialog modal-lg';
                 } else {
                     this.btnLabel = System.Label.ISSP_New_Service_Request;
                 }
