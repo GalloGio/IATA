@@ -10,6 +10,7 @@ public class ANG_RHCHelper {
 	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
 	public static final String RECTYPE_RISKALERT_RHC = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert');
 	public static final String RECTYPE_RISKALERT_RTS = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS');
+	public static final String RECTYPE_RHCATTRIBUTE = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RHC_Risk_Alert');
 
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
@@ -79,26 +80,66 @@ public class ANG_RHCHelper {
 			}
 		}
 	}
-	@future
-	public static void sendMailUpdateRiskAlert(String contactId,String rhcId,String templateId,String riskAlertId){
+
+	public class Email {
+		Id targetId;
+		Id whatId;
+		Id templateId;
+
+		public Email(Id targetId, Id whatId, Id templateId){
+			this.targetId = targetId;
+			this.whatId = whatId;
+			this.templateId = templateId;
+		}
+	}
+
+	
+
+	public static void sendMailUpdate(List<Email> messages) {
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+
+		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+
+		for(Email m : messages){
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-       	mail.setTargetObjectId(contactId);//contact
-       	mail.setWhatId(rhcId);//account
-        mail.setTemplateId(templateID);
+			mail.setTargetObjectId(m.targetId);
+			mail.setWhatId(m.whatId);
+			mail.setTemplateId(m.templateId);
         mail.setOrgWideEmailAddressId ([select Id from OrgWideEmailAddress where address ='noreply@iata.org'].id);
-		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>{mail};
+
+			if (!owea.isEmpty()) mail.setOrgWideEmailAddressId(owea[0].Id);
+			else{
+				mail.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+				mail.setReplyTo(ENV.Reply_Email);
+			} 
+
+			emails.add(mail);
+		}
+		
 		try{
-			if(!Test.isRunningTest())Messaging.SendEmailResult[] resultList=Messaging.sendEmail(emails); 
+			if(!Test.isRunningTest()) Messaging.sendEmail(emails); 
 		}catch(Exception  e){
-			system.debug('Failed to send email to users');
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_RHCHelper - sendMailUpdate] Failed to send email to users - '+e.getMessage());
+		}
+	}
+
+	public class RiskAlertMailService implements Queueable {
+
+		private List<Email> mails;
+		private Set<Id> alertIds;
+
+		public RiskAlertMailService(List<Email> mails, Set<Id> alertIds){
+			this.mails = mails;
+			this.alertIds = alertIds;
 		}
 
+		public void execute(QueueableContext context) {
+			sendMailUpdate(mails);
 
-		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c();
-		ara.id=riskAlertId;
-		ara.ANG_email_sent__c= true;
+			List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>();
+			for(Id alertId : alertIds) alerts.add(new ANG_Risk_Alert__c(Id = alertId, ANG_email_sent__c = true));
 
-		upsert ara;
-
+			update alerts;
+		}
 	}
 }
