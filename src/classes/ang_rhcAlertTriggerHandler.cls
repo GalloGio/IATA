@@ -6,6 +6,8 @@ public class ANG_RHCAlertTriggerHandler{
 	public Map<Id, ANG_Risk_Alert__c> newMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.newMap;
 	public Map<Id, ANG_Risk_Alert__c> oldMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.oldMap;
 
+	public static final String DEFAULT_CODE = 'WW';
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -43,6 +45,7 @@ public class ANG_RHCAlertTriggerHandler{
 		for(IATA_ISO_Country__c c : [SELECT
 										Id
 										, ANG_Enable_NewGen__c
+										, ISO_Code__c
 										, (SELECT 
 											ANG_Direction__c
 											, ANG_Percentage__c
@@ -62,15 +65,14 @@ public class ANG_RHCAlertTriggerHandler{
 											, BillingCountry
 											FROM Accounts_ISO_Country__r
 											WHERE Id IN :accounts.keySet())
-									FROM IATA_ISO_Country__c 
-									WHERE Id IN (SELECT IATA_ISO_Country__c FROM Account WHERE Id IN :accounts.keySet())]){
+									FROM IATA_ISO_Country__c]){
 			for(Account a : c.Accounts_ISO_Country__r){
 				accounts.put(a.Id, a);
 				countries.put(a.Id, c.Id);
 				if(c.ANG_Enable_NewGen__c) newGenAccounts.add(a.Id);
 				else legacyAccounts.add(a.Id);
 			}
-			for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r) configs.put(c.Id + att.ANG_Direction__c + att.ANG_Percentage__c, att);
+			for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r) configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);
 		}
 
 		if(configs.isEmpty()) return; //no configurations set, no need to check further
@@ -82,6 +84,8 @@ public class ANG_RHCAlertTriggerHandler{
 
 		for(ANG_Risk_Alert__c a : triggerNew){
 			String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+			if(!configs.containsKey(key)) key = DEFAULT_CODE + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+			
 			if(configs.containsKey(key)){
 				AMS_Country_Specific_Attribute__c config = configs.get(key);
 
