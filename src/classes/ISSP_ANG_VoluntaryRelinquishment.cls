@@ -300,8 +300,7 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Reason1__c = AMS_UTILS.CASE_REASON_VR_CLOSURE;
         newCase.Status = 'Draft';
-        newCase.Visible_on_ISS_Portal__c = true;        
-        newCase.Description = Label.ANG_VR_SELECTED_CODES;	
+        newCase.Visible_on_ISS_Portal__c = true;                
         newCase.Subject = 'Closure ' + con.Account.Name;
 
         if (con.Account.Top_Parent__c == null) { 
@@ -371,6 +370,9 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
         
         if(newForm.Scope_of_Change__c == 'HO - All Branches')
         	newCase.Description = Label.ISSP_ANG_ENTIRE_HIERARCHY;
+
+        if(newForm.Scope_of_Change__c == 'HO Only')
+            newCase.Description = Label.ANG_VR_SELECTED_CODES + con.Account.IATACode__c;
 
         if(newForm.Effective_Date_Of_Change__c == null || newForm.Effective_Date_Of_Change__c < System.today()){
         	ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (Label.ISSP_ANG_Effective_Date_Of_Change)));
