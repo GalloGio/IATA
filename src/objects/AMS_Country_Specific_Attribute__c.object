@@ -59,7 +59,7 @@
         <fullName>ANG_Create_Sidra_Lite__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Create Sidra Lite</label>
+        <label>Create Sidra Lite and Parent Case</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

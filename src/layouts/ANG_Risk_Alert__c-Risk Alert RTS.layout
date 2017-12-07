@@ -23,10 +23,6 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Severity__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Threshold_Level__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
