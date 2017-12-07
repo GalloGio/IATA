@@ -72,6 +72,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     IsCroppingToolDisplayed = false;
     IsViewerDisplayed = false;
     lastNameHasChanged = false;
+    IsExpediteDelivery = false;
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
@@ -247,18 +248,13 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     get {
 
       IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationNR.IATA_Code__c);
-      Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c, p.Expedite_Delivery_added_to_IDCard_Price__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
+      Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
       } else
       {
-        if (listPriceTables[0].Expedite__c != null ){
-          if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
-            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
-            IsExpediteDelivery = true;
-          }
+        if (listPriceTables[0].Expedite__c != null )         
           return true;
-        }
         return false;
       }
     }
@@ -272,9 +268,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
-      } else
+      }else  if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
+          IsExpediteDelivery = true;
+      }
         return listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c;
-
     }
   }
 
@@ -712,7 +709,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
         if (isValid) {
           IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
-          if(IsExpediteAvailable){
+          if(IsExpediteDelivery){
             IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
           }
           update IDCardApplicationNR;
