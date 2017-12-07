@@ -38,7 +38,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         });
     };   
 
-    var recaptcha1;     
+   /* var recaptcha1;     
       var recaptcha2;       
       function myCallBack() {       
         recaptcha1 = grecaptcha.render('recaptcha1', {      
@@ -76,7 +76,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             $(this).toggleClass("activeLoginWCodes"); return false;
         });
     }); 
-
+*/
 
    
 
@@ -192,10 +192,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </script>
     <c:IDCardToolsComponent />
-    <apex:outputpanel id="reloadCaptcha">       
+   <!-- <apex:outputpanel id="reloadCaptcha">       
       <script src="https://www.google.com/recaptcha/api.js?hl={!language}&onload=myCallBack&render=explicit"  async="true" defer="true"></script>       
       <script type="text/javascript"> myReset(); </script>      
-    </apex:outputpanel>
+    </apex:outputpanel>-->
 
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="idcardForm">
@@ -271,8 +271,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             
                             <div id="PINFOCAPTCHA">       
                             
-                            </div>-->
-                                        <div id="recaptcha1" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                            </div>
+                                        <div id="recaptcha1" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>-->
+                                        <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                                 <div>
+                                  <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
+                                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" lang="{!lang}"/>
+                                 </apex:panelGrid>                
+                                </div>
+                              </div>
 
                              <hr class="Thin" />
                 

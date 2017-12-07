@@ -9,6 +9,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     public String idCardQuery {get;set;}
     public String idCardAppQuery {get;set;}
     public ID_Card_Application__c [] pendingIdCardsAppV2 {get;set;}
+    public String whichcountry {get;set;}
  
     public String DOB {get; set;}
 
@@ -732,6 +733,42 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                 ret =  hdrs.get('X-Salesforce-SIP');
             return ret;
         }
+    }
+
+    public void findLocation(){
+
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
+        String ipinfo_token = cs.value__c;
+        String ipAddress = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+
+        String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(IP_LOOKUP_URL);
+        req.setMethod('GET');
+        req.setTimeout(2000);
+        HttpResponse res;
+        try{
+            res = h.send(req);
+            JSONParser parser = JSON.createParser(res.getBody());
+            system.debug('message:' + String.valueOf(parser));
+            while (parser.nextToken() != null) {
+                system.debug('field name:' + JSONToken.FIELD_NAME);
+                system.debug('value:' + parser.getText());
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) &&
+                    (parser.getText() == 'country')) {
+                    parser.nextToken();
+                    system.debug('COUNTRY:' + parser.getText());
+                    whichcountry = parser.getText();
+                }
+            }
+
+
+        }catch(Exception e){
+
+        }
+
+
     }
 
 }
