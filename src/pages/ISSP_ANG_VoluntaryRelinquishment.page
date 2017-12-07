@@ -175,8 +175,7 @@
             }
             
                 var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]'); 
-                vOfficeType = $lists.val();
-                //var countriesMap = JSON.parse('{!jsonCountriesMap}');                
+                vOfficeType = $lists.val();                               
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
                 console.log('no empty voffice '+vOfficeType);
                 isAllowedCountry = 't';

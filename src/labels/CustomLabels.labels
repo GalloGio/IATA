@@ -16566,6 +16566,30 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for creating your draft Notice of Change form.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_PCI</shortDescription>
+        <value>Thank you for creating your draft proof of PCI compliance online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_VR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_VR</shortDescription>
+        <value>Thank you for creating your draft Voluntary Relinquishment online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PROOF_OF_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
+        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PCI_Case_Submited</fullName>
         <categories>ISSP, PCI</categories>
         <language>en_US</language>

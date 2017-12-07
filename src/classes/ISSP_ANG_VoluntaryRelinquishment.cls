@@ -437,6 +437,7 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
         String typeOfProcess = AMS_Utils.NGVR;
         ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
 
+        amsAccreditation.sendConfirmationEmail(newCase);
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
     	
     	return null;
