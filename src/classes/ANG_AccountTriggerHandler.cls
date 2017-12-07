@@ -171,14 +171,16 @@ public class ANG_AccountTriggerHandler {
 
 		Map<String, String> mailTargets = new Map<String, String>(); //key: contact => value: account
 		List<String> notificationTargets = new List<String>();
+		List<ANG_RHCHelper.Email> emails = new List<ANG_RHCHelper.Email>();
 		for(Id accountId : contactsPerAccount.keySet()){
 			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 				mailTargets.put(contactId, accountId);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
 				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
 			}
 		}
 
-		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(mailTargets, emailTemplates[0].Id);
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(emails);
 
 		List<Notification__c> notifications = new List<Notification__c>();
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
@@ -288,42 +290,42 @@ public class ANG_AccountTriggerHandler {
 		for(Account acc : accounts){
 			AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
-	    	stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
-	    	stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
-	    	stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
-	    	stgArea.Accept_terms_and_conditions__c           = true;
-	    	stgArea.Account_Name__c                          = acc.Name;
-	    	stgArea.Billing_State__c                         = acc.BillingState;
-	    	stgArea.Branch_Office_City__c                    = acc.BillingCity;
-	    	stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
-	    	stgArea.Branch_Office_Email__c                   = acc.Email__c;
-	    	stgArea.Branch_Office_FAX__c                     = acc.Fax;
-	    	stgArea.Branch_Office_Phone__c                   = acc.Phone;
-	    	stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
-	    	stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
-	    	stgArea.CASS_Number__c                           = acc.CASS_Number__c;
-	    	stgArea.IATACode__c                              = acc.IATACode__c;
-	    	stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
-	    	stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
-	    	stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
-	    	stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
-	    	stgArea.Location_Class__c                        = acc.Location_Class__c;
-	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
-	    	stgArea.Mobile__c                                = acc.Mobile__c;
-	    	stgArea.Operation__c                             = acc.Operation__c;
-	    	stgArea.Remittance_frequency__c                  = remitFreq;
-	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
-	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
-	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
-	    	stgArea.Shipping_State__c                        = acc.ShippingState;
-	    	stgArea.Shipping_Street__c                       = acc.ShippingStreet;
-	    	stgArea.Short_Name__c                            = acc.Short_Name__c;
-	    	stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
-	    	stgArea.Submitted_to_IATA__c                     = true;
-	    	stgArea.Trade_Name__c                            = acc.TradeName__c;
-	    	stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
-	    	stgArea.Website__c                               = acc.Website;
-	    	stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
+			stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
+			stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
+			stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
+			stgArea.Accept_terms_and_conditions__c           = true;
+			stgArea.Account_Name__c                          = acc.Name;
+			stgArea.Billing_State__c                         = acc.BillingState;
+			stgArea.Branch_Office_City__c                    = acc.BillingCity;
+			stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
+			stgArea.Branch_Office_Email__c                   = acc.Email__c;
+			stgArea.Branch_Office_FAX__c                     = acc.Fax;
+			stgArea.Branch_Office_Phone__c                   = acc.Phone;
+			stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
+			stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
+			stgArea.CASS_Number__c                           = acc.CASS_Number__c;
+			stgArea.IATACode__c                              = acc.IATACode__c;
+			stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
+			stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
+			stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
+			stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
+			stgArea.Location_Class__c                        = acc.Location_Class__c;
+			stgArea.Location_Type__c                         = acc.Location_Type__c;
+			stgArea.Mobile__c                                = acc.Mobile__c;
+			stgArea.Operation__c                             = acc.Operation__c;
+			stgArea.Remittance_frequency__c                  = remitFreq;
+			stgArea.Shipping_City__c                         = acc.ShippingCity;
+			stgArea.Shipping_Country__c                      = acc.ShippingCountry;
+			stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
+			stgArea.Shipping_State__c                        = acc.ShippingState;
+			stgArea.Shipping_Street__c                       = acc.ShippingStreet;
+			stgArea.Short_Name__c                            = acc.Short_Name__c;
+			stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
+			stgArea.Submitted_to_IATA__c                     = true;
+			stgArea.Trade_Name__c                            = acc.TradeName__c;
+			stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
+			stgArea.Website__c                               = acc.Website;
+			stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
 
 			stgAreas.add(stgArea);
 			objects.get(acc.Id).stagingArea = stgArea;
