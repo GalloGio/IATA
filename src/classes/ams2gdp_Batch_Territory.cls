@@ -11,9 +11,12 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 	public Boolean throwException;
 	Set<String> locationsSet;
 	Set<String> statusSet;
+	public Boolean isManual;
 
-	public void init(Boolean runNext, List<String> ids)
+
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
+		isManual = manual==null ? false : manual;
 		processNextBatch = runNext;
 		batchName = 'Job 3: GSA Territory';
 		extraIds = ids; 
@@ -66,7 +69,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
@@ -93,21 +96,21 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		);
 	}
 
-	global ams2gdp_Batch_Territory(Boolean runNext, List<String> extra)
+	global ams2gdp_Batch_Territory(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext,extra);
+		init(runNext,extra,manual);
 	}
 
-	global ams2gdp_Batch_Territory(Boolean runNext)
+	global ams2gdp_Batch_Territory(Boolean runNext, Boolean manual)
 	{
-		init(runNext, null);
+		init(runNext,null, manual);
 	}
 
 	
 	global ams2gdp_Batch_Territory() 
 	{
 		//-- Not Next batch to run by default
-		init(false, null);
+		init(false, null, null);
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) 
@@ -173,18 +176,8 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 	
 	global void finish(Database.BatchableContext BC) 
 	{
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Account2(true));	
-
-		//-- Update Last Sync Info 
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName, 
-			Last_Sync_Start_Date__c=syncStartedDate, 
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c; 
-
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account2(true, isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification 
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records); 	
 	}

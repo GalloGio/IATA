@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Acca_Portal_User</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Acca Portal User</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <criteriaItems>
+            <field>DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>IBSPs,IBSPs-D,IBSP1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DPC Service Request,Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>DPC_Accelya_Maestro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>DPC Accelya Maestro</label>

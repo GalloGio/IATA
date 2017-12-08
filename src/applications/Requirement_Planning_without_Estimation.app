@@ -7,6 +7,5 @@
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>Test_Scripts__c</tab>
-    <tab>standard-GoogleDocs</tab>
     <tab>Operational_Improvements__c</tab>
 </CustomApplication>

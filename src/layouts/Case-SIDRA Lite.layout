@@ -26,7 +26,16 @@
                 <field>SIDRA_logo__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>AMS_Change_Code_Notification</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -675,6 +684,22 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
+        <label>Forecast Risk Properties</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_RiskForecastPropertiesPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
@@ -851,6 +876,14 @@
         <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>OSCAR__c</fields>
+        <fields>HOId__c</fields>
+        <fields>AMS_IATAcode__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

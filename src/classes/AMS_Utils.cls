@@ -68,6 +68,17 @@ public without sharing class AMS_Utils {
         private set;
     }
 
+    //20-06-2017 - AMSU-93
+    public static Map<String, String> JsonSpecialChars{
+        get {
+            if(JsonSpecialChars == null){
+                JsonSpecialChars = AMS_Utils.loadJsonSpecialCharsFile();
+            }
+            return JsonSpecialChars;
+        }
+        private set;
+    }
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -77,6 +88,7 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -110,7 +122,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
-    public static final String OSCAR_CLOSED = 'Closed (Closed)';
+    public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
@@ -119,6 +131,7 @@ public without sharing class AMS_Utils {
     public static final String HE = 'HE';
     public static final String AE = 'AE';
 
+    public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -140,6 +153,7 @@ public without sharing class AMS_Utils {
     public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+    public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
@@ -149,6 +163,10 @@ public without sharing class AMS_Utils {
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+    public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
+                                                                                    ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
+
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -213,13 +231,13 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
-    public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_REASON_BR_IP = 'New BR / IP';  
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
     public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
-    public static final String CATEGORY_COURIER = 'Courier';
+    public static final String CATEGORY_COURIER = 'Courier';    
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -234,7 +252,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
-    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
@@ -246,6 +264,10 @@ public without sharing class AMS_Utils {
     public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
 
     public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
+
+    public static final String ARC_TRAVEL_AGENT_USA_ONLY = 'ARC Travel Agent (USA Only)';
+    public static final String IATAN_PASSENGER_SALES_AGENT_USA_ONLY = 'IATAN Passenger Sales Agent (USA Only)';
+    public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
 
     //Account - Location_Class__c
@@ -268,8 +290,16 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
     public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
-    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
-    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);    
+    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH); 
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH};   
+
+    public static final String OPEN = 'Open';
+    public static final String NO_IEP_ACCOUNT = 'No IEP Account';
+
+    public static final String CC = 'CC';
+    public static final String CA = 'CA';
+    public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
 
     static {
         refreshCache();
@@ -1134,7 +1164,7 @@ public without sharing class AMS_Utils {
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
                 Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
-                (SELECT Id FROM RHC_Informations__r)
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1202,6 +1232,10 @@ public without sharing class AMS_Utils {
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
+                if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
+                    acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                }
+
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
@@ -1221,7 +1255,7 @@ public without sharing class AMS_Utils {
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
-            //if(!createRHCInfo.isEmpty()) ANG_Risk_Helper.createRHCInfo(createRHCInfo, false);
+            if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
             return changes;
 
@@ -1235,7 +1269,7 @@ public without sharing class AMS_Utils {
         
     }
 
-    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+    public static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
 
         if(oscarProcess == NEWHELITE){
 
@@ -2248,7 +2282,136 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
     }
 
+    //FM 22-05-2017 - AMSU-1 - split reason comming form account in order to be able to populate the Applied change code "reason code" and "reason description"
+    //Returns: List<String> with 2 entries:
+    // 1st position : Reason code, if exists... othewise is empty
+    // 2nd position : Reason Description
+    // also could be null if the value passed is null or empty
+    public static List<String> splitAccReason(String sReason){
 
+        List<String> lRes = new List<String>();
+
+        String reason_Code = '';
+        String reason_Description = '';
+        
+        //check parameter for null or empty value
+        if(sReason == null || sReason.equalsIgnoreCase('')){
+            return null;
+        }else 
+        //Check for char '-' in order to see if we can split by code and description
+        if(sReason.indexOf('-') >= 0 && sReason.indexOf('-') <= 4){
+
+            reason_Code = sReason.substringBefore('-');
+            reason_Description = sReason.substringAfter('-');
+
+            //Check if 1st part of the split is numeric in order to get the code
+            if(reason_Code.isNumeric()){
+                lRes.add(reason_Code);
+                lRes.add(reason_Description);
+            }else{
+                lRes.add('');
+                lRes.add(sReason);
+            }
+
+        }else{
+            //no splitting was possible, so we only fill the description
+            lRes.add('');
+            lRes.add(sReason);
+        }
+        
+        return lRes;
+    }
+
+	//20-06-2017 - Change AMSU-93 - special chars replacement
+    public static String cleanSpecialChars(String s){
+
+        String sRes = '';
+
+        try{
+            
+            //Apply try catch{} return same string in case of error
+
+            if(s == null){
+                 return '';
+            }
+
+             if(s != null || !s.equalsIgnoreCase('')){
+
+                Map<String, String> mSpecialChars = JsonSpecialChars;
+
+                //String regex = '[^a-zA-Z0-9]';
+                //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
+                //String regex = '[^a-zA-Z\\d\\!@#\\$%&;\'"\\-{}()\\[\\]?:_. ,+\\*\\\\/]';
+                String regex = AMS_SAP_Settings__c.getOrgDefaults().RegEx_Special_Chars__c;
+
+                String specialCharsToEscape = AMS_SAP_Settings__c.getOrgDefaults().Special_Chars_to_Escape_List__c;
+                
+                //System.debug('specialCharsToEscape: ' + specialCharsToEscape); 
+                
+                sRes = s;
+
+                Matcher m = Pattern.compile(regex).matcher(s);
+
+                //System.debug('m: ' + m);
+                //System.debug('m.groupCount(): ' + m.groupCount() );
+
+                //Pattern p = Pattern.compile('regex'); 
+                //Matcher mo = p.matcher('string'); 
+                while (m.find()) { 
+                    
+                    //System.debug('m.group: ' + m.group()); 
+                    if(mSpecialChars.containsKey( m.group() )) {
+                        //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) ); 
+                        //System.debug('contains by value: ' + m.group() + ' by ' + specialCharsToEscape.contains(m.group()) ); 
+                        //if(m.group() == '|'){
+                        if(specialCharsToEscape.contains(m.group())){
+                            sRes = sRes.replaceAll('\\'+m.group(), mSpecialChars.get(m.group()));
+                        }else{
+                            sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
+                        }
+                    }else{
+                        //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') ); 
+                        //sRes = sRes.replaceAll(m.group(), '_');
+                        sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
+                        //System.debug('sRes1: ' + sRes);
+                    }
+ 
+                }
+            }
+            System.debug('sRes: ' + sRes);
+
+        }catch(Exception e){
+            System.debug('Exception occurred: ' + e); 
+            sRes = s;
+        }
+
+        return sRes;
+
+    }    
+    
+
+    public static Map<String, String> loadJsonSpecialCharsFile(){
+        /*
+         *  LOAD JSON TO MAP
+         */
+        StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = 'AMS_SPECIAL_CHARS_MAP'];
+
+        String JSONContent = EncodingUtil.urlDecode(jsonFile.Body.toString(), 'UTF-8');
+        
+        Map<String, Object> m = (Map<String, Object>)JSON.deserializeUntyped(JSONContent);
+
+        Map<String, String> mRes = new Map<String, String>();
+        //System.debug('m: ' + m);
+
+        for (String key : m.keySet()) {
+            String value = (String)m.get(key);
+            //System.debug('key: '+ key + ' || value: ' + value);
+            mRes.put(key, (String)m.get(key));
+        }
+        return mRes;
+        //return null;
+    }
+    
 
     public class Utility_RowIterator implements Iterator<String>, Iterable<String>
     {

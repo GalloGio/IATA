@@ -69,6 +69,21 @@
 							</td>
 						</tr>
 					</table>
+					<p></p>
+					<table style="width:60%;padding: 0px;border: 1px solid #dddddd;border-spacing: 0px;">
+						<tr style="background-color: #dddddd;">
+							<th style="background-color: #dddddd;padding: 8px"><apex:outputLabel >Risk Events will be added to agents based in {!selectedCountryName}</apex:outputLabel></th>
+						</tr>
+						<tr>
+							<td>   
+								<apex:pageblockTable value="{!OverviewRiskEventTable}" var="tbl" headerClass="hidden" style="border:1px;" frame="vsides">
+									<apex:column value="{!tbl.messageText}" style="border:1px ridge #dddddd;"/>
+									<apex:column value="{!tbl.count}" style="border:1px ridge #dddddd;" />
+								</apex:pageBlockTable>
+							</td>
+						</tr>
+					</table>
+
 				</apex:outputPanel>
 
 			</apex:pageblocksection>   

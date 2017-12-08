@@ -104,7 +104,7 @@
         <label>Portal Service Role</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -513,7 +513,8 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-Name
+&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
+Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
         <label>PortalServiceTranslatedName</label>

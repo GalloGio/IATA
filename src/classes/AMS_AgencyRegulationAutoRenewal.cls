@@ -95,7 +95,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
         Map<String, Id> countryTemplatesCATA = DGRemailTemplates('CATA');
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress]; // in order to test we must use any other email since agencymanagement@iata.org doesn't exist on preprod
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
 			Contact comCasecontact;
@@ -148,11 +149,13 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveDGR, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
 
 					system.debug('creating renewal for DGR');
-
+					
 					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification otherwise we need to query the existing one
 					AMS_OSCAR__c oscar = null;
 					if(is90DaysNotif){
 						oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
+						agReg.OSCAR__c = oscar.Id;
+						update agReg;
 					}else{
 						String sContactName = agReg.First_Name__c + ' ' +agReg.Last_Name__c;
 						
@@ -168,9 +171,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification
 					if(is90DaysNotif){
-					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
+						renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
+					}
 				}
-			}
 			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
 				system.debug('creating renewal for CATA');
@@ -329,14 +332,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
         theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
-        
         update theOscar;
 
         convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
 
         return theOscar;
     }
-
 
     public static void convertExistingAgencyRegulationsToAccContact(Id stagingId, List<AMS_Agency_Regulation__c> regulations){
 
@@ -363,6 +364,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
             ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
             ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
             ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
+            ac.Registration_number__c = reg.Registration_Number__c; //AMSU-14
 
             accToInsert.add(ac);
 
@@ -382,11 +384,14 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         if(recipents == null)
         {
         	templateToIATA = true;
+
         	//getTemplate
         	tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
+        	
         	//get region
         	List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
         	String region = oscars.get(0).Region__c;
+
         	//get contact from IATA by custom setting
         	List<IATA_Contacts_by_Region__c> customSettingValues = IATA_Contacts_by_Region__c.getall().values();
         	List<String> emailsToSend = new List<String>();
@@ -395,6 +400,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(cR.Region__c == region)
 					emailsToSend.add(cR.Contact_Email__c);
 			}
+        	
         	//put the contacts in recipents list
         	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend];
         	System.debug('IATA recipents list: ' + recipents);
@@ -411,9 +417,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             for(Contact recipient: recipents){
 
-            	//FM 07-07-2017 - AMSU-14 - changed the test for the DGR in order to allow it to send the notification to multiple contacts
-                //if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
-                if(isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
+                if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
 
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.saveAsActivity = true;
@@ -427,6 +431,24 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     
                     mail.setWhatId(oscarId);
                    
+                    mail.setOrgWideEmailAddressId(owea.Id);
+
+                    mailsToSend.add(mail);
+
+                //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
+                //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
+                }else if(isDGR){
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.saveAsActivity = true;
+                    mail.setToAddresses(new List<String>{recipient.Email});
+                    if(templateToIATA){
+                    	mail.setTemplateId(tempIata.get(0).Id);
+                    } else {
+                    	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                    }
+                    mail.setTargetObjectId(recipient.Id);
+                    
+                    mail.setWhatId(oscarId);
                     mail.setOrgWideEmailAddressId(owea.Id);
 
                     mailsToSend.add(mail);

@@ -179,7 +179,7 @@ public class AMS_ChangeCodesHelper {
 
         List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
 
-        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
+        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts) && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
                 update accountsToUpdateList;
         }
@@ -198,7 +198,7 @@ public class AMS_ChangeCodesHelper {
         return accountsToUpdateList;
     }
 
-   
+
 /** 
      Create Change Codes History
     */
@@ -329,7 +329,7 @@ public class AMS_ChangeCodesHelper {
         
         if(oscar != null){
 
-            if( aacNEW.Change_Code__c == 'NEW' ){
+            if( aacNEW.Change_Code__c == 'NEW' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning){
                 oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
@@ -417,20 +417,24 @@ public class AMS_ChangeCodesHelper {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null
-                    && !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
-                    (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
-                    ) {
+                if (accToUpdateStatus != null) {
+
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
-                    changeCodes.add(changeCode);
+                    
+                    if(changeCode != null) {
 
-                    /*if (changeCode.status != null) {
-                        system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
-                        accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
-                    }*/
+                        changeCodes.add(changeCode);
 
-                    accts.add(accToUpdateStatus);
-                    oscars.add(oscar);
+                        /*if (changeCode.status != null) {
+                            system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
+                            accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
+                        }*/
+
+                        accts.add(accToUpdateStatus);
+                        oscars.add(oscar);
+
+                    }
+
                 }
             }
 
@@ -585,7 +589,7 @@ public class AMS_ChangeCodesHelper {
             string sValue = null;
                 sValue = (string)NewAccountValues.get(sFieldToCheck);
 
-            if(sValue==null)     return false;
+            if(sValue==null)	 return false;
             setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
             if(setValues.contains(sValue.toUpperCase()))
                 return true;

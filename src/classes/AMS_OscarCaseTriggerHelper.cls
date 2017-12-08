@@ -115,7 +115,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> oscarCases = new List<Case>();
 
          for(Case c : triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) { // &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){ --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
@@ -426,7 +426,7 @@ public class AMS_OscarCaseTriggerHelper {
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c, Account__r.ANG_Accreditation_Model__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             
@@ -444,7 +444,10 @@ public class AMS_OscarCaseTriggerHelper {
             String newCaseSubject = null;
             
             if(c.reason1__c != null)
-                newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+                if(oscars.get(c.Oscar__c).Account__r.Location_Type__c == AMS_Utils.AE)
+                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+                else
+                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;

@@ -1,5 +1,10 @@
 public class AMS_OSCAR_ProcessViewerController {
     
+    private static final String CLASS_BLACK = '';
+    private static final String CLASS_RED = 'red';
+    private static final String CLASS_GREEN = 'green';
+    private static final String CLASS_BLUE = 'blue';
+
     public AMS_OSCAR__c oscar { 
         get{ 
             if(this.oscar == null)
@@ -17,6 +22,8 @@ public class AMS_OSCAR_ProcessViewerController {
     public AMS_OSCAR_JSON accreditationProcesses {get;set;}
     public Map<String, AMS_OSCAR_JSON.Process> process {get;set;}
  
+    public Map<String,String> flowColors {get;set;}
+    public Map<String,Boolean> collapsibleMap {get;set;}
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
     public Map<String,Boolean> ddBlock {get;set;}
@@ -24,12 +31,14 @@ public class AMS_OSCAR_ProcessViewerController {
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
 
+    private static Set<String> analystProfiles = new Set<String>{'FDS Hub Analyst ARM'};
+
     public Boolean showRequiredOverlay{
         get{
             if(this.oscar.Account__c == null)
                 return false;
             // NG Processes specific conditions
-            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (
                     oscar != null
                     && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
@@ -43,7 +52,8 @@ public class AMS_OSCAR_ProcessViewerController {
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
-
+                && (!(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.Account__r.ANG_IsNewGenAgency__c))
+                && oscar.Process__c != AMS_Utils.IEPBANKACCOUNTSETUP
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -54,8 +64,18 @@ public class AMS_OSCAR_ProcessViewerController {
             return (
                 oscar != null
                 && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
+		&& !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
                 //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
+    public Boolean isNewGenHEProcess{
+        get{
+            return (
+                oscar != null
+                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             );
         }
     }
@@ -84,6 +104,17 @@ public class AMS_OSCAR_ProcessViewerController {
             };
         }
     } 
+
+    public Boolean isAnalystProfile{
+        get{
+            List<Profile> analystProfileLst = [select id from profile where Name IN :analystProfiles];
+            Set<Id> analystProfileIds = new Set<Id>();
+            for(Profile p :analystProfileLst)
+                analystProfileIds.add(p.Id);
+                
+            return analystProfileIds.contains(UserInfo.getProfileId());
+        }
+    }
 
     private Boolean isStepBlocked(String stepApiName){
         return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
@@ -193,8 +224,12 @@ public class AMS_OSCAR_ProcessViewerController {
      *  Get the status of all the steps in the Process
      */
     public void getStatus(AMS_OSCAR_JSON.Process process){
-        
-        for(AMS_OSCAR_JSON.Flow flow: process.flows)
+        Boolean firstExpanded = false;
+
+        for(AMS_OSCAR_JSON.Flow flow: process.flows) {
+            flowColors.put(process.name + flow.name, CLASS_GREEN);
+            collapsibleMap.put(process.name + flow.name, true);
+
             for(AMS_OSCAR_JSON.Step step: flow.steps){
                 
                 String stepApiName = step.name + '__c';
@@ -207,7 +242,23 @@ public class AMS_OSCAR_ProcessViewerController {
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
                 ddBlock.put(flow.name, isStepBlocked(stepApiName));
+
+                if (stepValue == AMS_Utils.FAILED) {
+                    flowColors.put(process.name + flow.name, CLASS_RED);
+                } else if (stepValue == AMS_Utils.IN_PROGRESS && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLUE);
+                } else if (stepValue == 'Not Started' && flowColors.get(process.name + flow.name) != CLASS_RED) {
+                    flowColors.put(process.name + flow.name, CLASS_BLACK);
+                }
+
+                if (!firstExpanded && (String.isBlank(stepValue) || stepValue == 'Not Started' || stepValue == AMS_Utils.IN_PROGRESS)) {
+                    collapsibleMap.put(process.name + flow.name, false);
+                    firstExpanded = true;
+                }
+
             }
+
+        }
     }
     
     public List<SelectOption> getPicklistValues(Schema.DescribeFieldResult fr){
@@ -311,7 +362,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
@@ -369,6 +420,8 @@ public class AMS_OSCAR_ProcessViewerController {
         
         stepFieldsData = new Map<String,StepFieldsDataWrapper>();
 
+        flowColors = new Map<String,String>();
+        collapsibleMap = new Map<String,Boolean>();
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
         ddBlock = new Map<String,Boolean>();

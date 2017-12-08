@@ -67,7 +67,6 @@ public with sharing class ISSP_ContactList {
 	}
     
     public ISSP_ContactList(){
-    	 
     }
     
     public PageReference initialization() {
@@ -625,5 +624,71 @@ public with sharing class ISSP_ContactList {
 			return pr;
 		}
 		return null;
+    }
+    
+    public List<contactWrapper> getFilteredContactList() {
+        string paramSelectedList = ApexPages.currentPage().getParameters().get('selectedList');
+        if (paramSelectedList!=null) {
+            this.selectedList = paramSelectedList;
+        }
+        return getContactList();
+    }
+
+    public String getCSVHeader() {
+        return EncodingUtil.convertFromHex('EFBBBF').toString();
+    }
+    
+    public String getCSVContent() {
+        // get field info
+        list<String> listFieldLabels = new list<String>();
+        list<String> listFieldPaths = new list<String>();
+        for(Schema.FieldSetMember f : getFields()) {
+            if (f.getFieldPath() == 'Airline_Contact_Type__c') {
+                // do not add
+            } else if (f.getFieldPath() == 'Services__c') {
+                // do not add
+            } else {
+                listFieldLabels.add(f.getLabel());
+                listFieldPaths.add(f.getFieldPath());
+            }
+        }
+        if (isAdmin) {
+            listFieldLabels.add('Last Login');
+            listFieldPaths.add('LastLoginDate');
+        }
+        
+        //prepare out string
+        String out = getCSVHeader();
+        out+= '"' + String.join(listFieldLabels,'","') + '"\n';
+        setCon.setPageSize(1000);
+        for (contactWrapper wrapper: getFilteredContactList()) {
+            list<String> listFieldValues = wrapperToListValues(wrapper, listFieldPaths);
+            out+= '"' + String.join(listFieldValues,'","') + '"\n';
+        }
+        return out;
+    }
+    
+    public list<String> wrapperToListValues(contactWrapper wrapper, list<String> listFieldPaths) {
+        list<String> listFieldValues = new list<String>();
+        for (String fieldPath: listFieldPaths) {
+            try {
+                if (fieldPath == 'ISSP_Contact_Name__c') {
+                    listFieldValues.add(tostr(wrapper.recordContact.Name));
+                } else if (fieldPath == 'ISSP_Account_Portal_Link__c') {
+                    listFieldValues.add(tostr(wrapper.recordContact.Account.Name));
+                } else if (fieldPath == 'LastLoginDate') {
+                    listFieldValues.add(tostr(wrapper.user.LastLoginDate));
+                } else {
+                    listFieldValues.add(tostr(wrapper.recordContact.get(fieldPath)));
+                }
+            } catch (Exception e) {
+                listFieldValues.add('');
+            }
+        }
+        return listFieldValues;
+    }
+    
+    public static String tostr(Object obj) {
+        return obj==null? '': String.valueOf(obj).replaceAll('"','\'');
     }
 }

@@ -185,10 +185,10 @@ public class AMS_AgencyChangesTest {
 		
 		Test.startTest();
 		
-		system.debug('theOscar: ' + theOscar);
 		system.debug('theOSCAR: ' + theOSCAR);
 		// If I pass the sanity check (STEP 6) a change code CAD should be generated for both HO1
 		theOSCAR.STEP6__c = AMS_Utils.PASSED;
+
 		update theOSCAR;
 		
 		List<Agency_Applied_Change_code__c> changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
@@ -200,6 +200,7 @@ public class AMS_AgencyChangesTest {
 		
 		
 		// If I finalize the change (STEP 2) no more change codes schould be generated
+		theOscar.STEP12__c = AMS_Utils.PASSED;
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
 		theOSCAR.STEP15__c = AMS_Utils.PASSED;
         theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
@@ -227,10 +228,6 @@ public class AMS_AgencyChangesTest {
 		//system.assertEquals('1111112',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR2 to the new head office (BR1)');
 		//system.assertEquals('1111113',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR3 to the new head office (BR1)');
 		
-		// If I pass the sanity check (STEP 6) a change code CAD should be generated for both HO1
-		theOSCAR.STEP4__c = 'Passed';
-		update theOSCAR;
-
 		Test.stopTest();
 	}
 	
@@ -277,6 +274,7 @@ public class AMS_AgencyChangesTest {
 		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR3');
 		
 		// If I finalize the change (STEP 2) a change code CHF should be generated for all the agencies involved (HO1, BR1, BR2, BR3)
+		theOscar.STEP12__c = AMS_Utils.PASSED;
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
 		theOSCAR.STEP15__c = 'Passed';
         theOSCAR.RPM_Approval__c = 'Authorize Approval';
