@@ -146,6 +146,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Response__c</fullName>
+        <externalId>false</externalId>
+        <label>Response</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Started__c</fullName>
         <externalId>false</externalId>
         <formula>CreatedDate</formula>
@@ -327,7 +336,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>7/21/2017 12:00 AM</value>
+            <value>11/17/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>

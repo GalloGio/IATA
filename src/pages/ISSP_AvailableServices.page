@@ -212,6 +212,7 @@
           
        
             <apex:repeat value="{!fields}" var="f">
+
                   <apex:column >
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" reRender="pbt_Services">{!f.label}
@@ -220,20 +221,16 @@
                          <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
                        </apex:commandLink>
                     </apex:facet>
-                     
-                   
-                     <apex:outputpanel rendered="{!IF(f.label!='Service' && f.label!='Servicio'&& f.label!='???' && f.label!='??' && f.label!='Servi�o' && f.label!='????' && f.label!='Servizio' && f.label!='??????'&&f.label!='Layanan'&&f.label!='D?ch v?'&&f.label!='??????',true,false)}"> <!-- && f.label!='Account Name' -->
+         
+                    <apex:outputpanel rendered="{! OR(f.FieldPath == 'Service_Description__c', f.FieldPath == 'Application_icon__c')}">                    
                         <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" />
                     </apex:outputpanel>
-                    
-         
-                   <apex:outputpanel rendered="{!IF(f.label=='Service'||f.label=='Servicio'||f.label=='???' ||f.label=='??' ||f.label=='Servi�o' ||f.label=='????' ||f.label=='Servizio' ||f.label=='??????' ||f.label=='Layanan' ||f.label=='D?ch v?' ||f.label=='??????',true,false)}"> 
-                        
+                          
+                    <apex:outputpanel rendered="{!f.FieldPath == 'Name'}">
                      <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
-                    
-                    
+
                   </apex:column>
             </apex:repeat>
             <apex:column headerValue="{!$Label.ISSP_Status}">

@@ -313,7 +313,6 @@ AdditionalTo__c, IF(ISBLANK(AdditionalTo__c), ToContact__r.Email, ToContact__r.E
      || ISCHANGED(Html_Body__c)
      || ISCHANGED(IsHtml__c)
      || ISCHANGED(Signaturit_Certificate_Ids__c)
-     || (ISCHANGED(Status__c) &amp;&amp; PRIORVALUE(Status__c) &lt;&gt; &apos;Queued&apos;)
      || ISCHANGED(Subject__c)
      || ISCHANGED(ToContact__c)
      || (ISCHANGED( Signaturit_Id__c )

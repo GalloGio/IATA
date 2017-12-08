@@ -11805,7 +11805,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,   RecordType.DeveloperName = &quot;CasesAmericas&quot;,  RecordType.DeveloperName = &quot;CasesEurope&quot;,  RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,   RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,   RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,   RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,  RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,  RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,  RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,   RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,   RecordType.DeveloperName =&quot;ID_Card_Application&quot;) ,  OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14260,7 +14260,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER approved - email to R%26S new</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Update_AIMS_DEF__c</field>
             <operation>notEqual</operation>
@@ -14299,6 +14299,44 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <timeLength>-1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>IDFS_SIDRA_TER approved - email to R%26S v3</fullName>
+        <actions>
+            <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>R_S_feedback_pending</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Update_AIMS_TER__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.REI_ApprovalRejectin__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>SIDRA</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER00_Automate Date%2FTime TER Approval%2FRejection</fullName>
@@ -14993,7 +15031,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16 AND 18) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15078,6 +15116,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>IEP Bank account setup</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>

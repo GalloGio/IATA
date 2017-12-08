@@ -144,15 +144,45 @@ private class vfIECCAC_tst {
             
             gdpAccActiveCASS2.Related_Accreditation_Class__c = oAccreditation2.Id;
             update gdpAccActiveCASS2;
+
+            createCACandGADEntry();
+
         }
         catch (Exception ex) {
             System.debug('SALV - Init - Exception :' + ex.getMessage());
         }
-        
-        
+
         System.debug('Unit Test: Finish: Init');
     }
     
+    // ====================================================================
+    // creates a registry in tha custom setting CAC_and_GAD_Settings__c
+    // output: CAC_and_GAD_Settings__c
+    // used by testAnonymousSearch
+    private static void createCACandGADEntry(){
+        Boolean exists = false;
+
+        //fetch the existing entries for this custom setting
+        for(CAC_and_GAD_Settings__c cs : CAC_and_GAD_Settings__c.getAll().values()){
+            //check if already exists one named Excluded Values
+            if(!cs.Name.equals('Excluded Values')){
+                exists = true;
+            }
+
+        }
+
+        //If does not exist an Excluded Values custom setting creates it
+        if(!exists){
+            CAC_and_GAD_Settings__c CacGadSettings = new CAC_and_GAD_Settings__c();
+            CacGadSettings.Name = 'Excluded Values';
+            CacGadSettings.Excluded_CAC_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z';
+            CacGadSettings.Excluded_GAD_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z;C;X';
+
+            insert CacGadSettings;
+        }
+
+    }
+
     static testMethod void TestCAC() {
         System.debug('Unit Test: Start: TestCAC');
 

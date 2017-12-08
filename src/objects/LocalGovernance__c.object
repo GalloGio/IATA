@@ -413,7 +413,6 @@
             <picklistValues>
                 <fullName>ALWG</fullName>
                 <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC</fullName>
@@ -431,12 +430,17 @@
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>CGA</fullName>
+                <fullName>CCC</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CEC</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CGA</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
@@ -465,7 +469,7 @@
                 <default>false</default>
                 <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -500,11 +504,11 @@
         <label>Open to</label>
         <picklist>
             <picklistValues>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -513,6 +517,26 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Industry Stakeholders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agency Associations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency Associations</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -734,7 +758,7 @@
     <fields>
         <fullName>Restricted_of_Participants__c</fullName>
         <externalId>false</externalId>
-        <label>Restricted # of Participants</label>
+        <label>Restricted Number of Participants</label>
         <picklist>
             <picklistValues>
                 <fullName>Yes</fullName>
@@ -777,6 +801,54 @@ Record Type + Group Type + ISO_Country_Name</description>
     </fields>
     <label>Industry Group</label>
     <listViews>
+        <fullName>Inactive_Local_Groups</fullName>
+        <columns>NAME</columns>
+        <columns>Cargo_Passenger__c</columns>
+        <columns>Local_Governance_type__c</columns>
+        <columns>Region__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Country__c</columns>
+        <columns>Group_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>LocalGovernance__c.Local_Groups</value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>All Inactive Local Groups</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Inactive_Reg_Div_Groups</fullName>
+        <columns>NAME</columns>
+        <columns>Group_Owner_Text__c</columns>
+        <columns>Reporting_to__c</columns>
+        <columns>AM_Under__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>LocalGovernance__c.Reg_Div_Groups</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notEqual</operation>
+            <value>Annual General Meeting of IATA Members,Director General</value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>All Inactive Reg / Div Groups</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Local_Groups</fullName>
         <columns>NAME</columns>
         <columns>Cargo_Passenger__c</columns>
@@ -791,7 +863,12 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Local_Groups</value>
         </filters>
-        <label>All Local Groups</label>
+        <filters>
+            <field>Active__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Local Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -811,7 +888,12 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>notEqual</operation>
             <value>Annual General Meeting of IATA Members,Director General</value>
         </filters>
-        <label>All Reg / Div Groups</label>
+        <filters>
+            <field>Active__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -960,7 +1042,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -968,7 +1050,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1220,6 +1302,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
@@ -1251,19 +1337,31 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>Cargo Agency Associations</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Industry Stakeholders</fullName>
+                <fullName>Cargo Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>General Sales Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Strategic Partners</fullName>
+                <fullName>IATA Member Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1520,6 +1618,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
@@ -1551,7 +1653,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1559,7 +1661,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1740,7 +1842,22 @@ Record Type + Group Type + ISO_Country_Name</description>
     ISCHANGED(Local_Governance_type__c),
     ISCHANGED(Group_Owner__c),
     ISCHANGED(Country__c),
-    ISCHANGED(Cluster__c)
+    ISCHANGED(Cluster__c),
+
+    ISCHANGED(Name),
+    ISCHANGED(Division__c),
+    ISCHANGED(Abbreviation__c),
+    ISCHANGED(Region__c),
+    ISCHANGED(Reporting_to__c),
+    ISCHANGED(Group_Owner_Text__c),
+    ISCHANGED(Restricted_of_Participants__c),
+    ISCHANGED(Maximum_Number_of_Participiants__c),
+    ISCHANGED(Open_to__c),
+    ISCHANGED(Frequency_of_Face_to_Face_Meetings__c),
+    ISCHANGED(Mission__c),
+    ISCHANGED(Frequency_of_Meetings__c),
+    ISCHANGED(Latest_Successes__c),
+    ISCHANGED(What_is_Group_Working_on_Now__c)
   )
 )</errorConditionFormula>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>

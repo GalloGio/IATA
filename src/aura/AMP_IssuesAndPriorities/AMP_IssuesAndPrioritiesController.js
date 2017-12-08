@@ -2,6 +2,7 @@
     doInit: function(component, event, helper) {
         helper.fetchIssues(component);
         helper.getCanEdit(component);
+        helper.getReportId(component);
     },
     refreshIssues : function(component, event, helper) {
         helper.refreshIssues(component);
@@ -68,7 +69,6 @@
                 component.set("v.issues", issues);
 
                 if(isNewLine) {
-
                     var issuesBackup = component.get("v.issuesBackup");
                     issuesBackup.push(issue);
                     component.set("v.issuesBackup", issuesBackup);
@@ -128,5 +128,11 @@
             });
             $A.enqueueAction(action);
         }
+    },
+    showPopup : function(component, event, helper) {
+        component.set("v.showPopup", true);
+    },
+    hidePopup : function(component, event, helper) {
+        component.set("v.showPopup", false);
     }
 })

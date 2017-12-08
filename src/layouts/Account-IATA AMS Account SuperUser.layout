@@ -52,9 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -100,6 +97,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Link_agent_name__c</field>
             </layoutItems>
             <layoutItems>
@@ -133,6 +134,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GDP_Opt_In__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_PCI_compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -244,6 +253,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -657,8 +670,8 @@
         <fields>Percentage__c</fields>
         <fields>Termination_Date__c</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Termination_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -722,10 +735,20 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_RHC_Amount_Simulation__c</fields>
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -791,6 +814,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Airline_Code__c</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>OSCAR__c</fields>
@@ -831,6 +855,7 @@
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Integration_System__c</fields>
         <fields>NAME</fields>
         <fields>Change_Code__c</fields>
         <fields>CREATED_DATE</fields>

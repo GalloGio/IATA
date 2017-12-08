@@ -62,7 +62,26 @@
     <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( NOT(ISBLANK(Representing__c )), Representing__r.Name ,  Head_Quartier__r.Name )</formula>
+        <formula>IF( NOT(ISBLANK(Representing__c )), 
+    Representing__r.Name , 
+    IF(NOT(ISBLANK(Head_Quartier__c )),
+        Head_Quartier__r.Name ,
+        IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, 
+            Contact__r.Account.Name,
+            IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;,
+                Contact__r.Account.Parent.Name,
+                IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+                    IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+                        Contact__r.Account.Parent.Name,
+                        Contact__r.Account.Name),
+                    Contact__r.AccountId
+                )
+            )
+        )
+        
+    )
+
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account</label>
         <required>false</required>
@@ -326,7 +345,7 @@ Contact__r.Account.Name
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters, IATA Country Office, Operator, Agency, Airline Branch, General Sales Agent Headquarters, Others, Standard Account</value>
+                <value>Airline Headquarters, IATA Country Office, Operator, Agency, General Sales Agent Headquarters, Others, Standard Account</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

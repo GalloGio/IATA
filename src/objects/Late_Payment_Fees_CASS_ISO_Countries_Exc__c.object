@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Used in GenerateLateRemittanceCSVController.cls
+
+This is for filter the result in REPORT 1 and REPORT 2 in this page GenerateLateRemittanceCSV
+
+For Cases CASS and Account Category &apos;IATA Cargo Agent&apos; we exclude all countries in this Custom setting</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Late Payment Fees CASS ISO Countries Exc</label>
+    <visibility>Public</visibility>
+</CustomObject>

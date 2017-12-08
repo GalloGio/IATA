@@ -3,6 +3,8 @@ public with sharing class IEC_CreditCard_DTO
 	public String 	zId { get; set; }
 	public Boolean 	isDefault{get;set;}
 	public Boolean 	isExpired{get;set;}
+	public Integer  numberOfDays{get;set;}
+	public Date 	creditCardDate { get; set; }
 	public String 	name { get; set; }
 	public String 	creditCardType { get; set; }
 	public String 	creditCardMaskNumber { get; set; }
@@ -45,7 +47,9 @@ public with sharing class IEC_CreditCard_DTO
 		accountId 				= (String)	zCreditCard.getValue('AccountId');
 
 		isDefault 				= (zId == (String)zAccount.getValue('DefaultPaymentMethodId'));
-		isExpired 				= (Date.today() > Date.newInstance(expirationYear, expirationMonth, 1));	
+		creditCardDate			= Date.newInstance(expirationYear, expirationMonth, 1);
+		numberOfDays 			= Date.daysInMonth(creditCardDate.year(), creditCardDate.month());
+		isExpired 				= (Date.today() > Date.newInstance(expirationYear, expirationMonth, numberOfDays));	
 	}
 
 	public Zuora.zObject toZObjectForUpdate() {
