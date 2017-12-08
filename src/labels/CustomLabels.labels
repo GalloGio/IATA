@@ -11107,6 +11107,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Agency Codes - Proof of PCI Compliance</value>
     </labels>
     <labels>
+        <fullName>ISSP_PCI_Agency_Codes_VR</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Agency_Codes_VR</shortDescription>
+        <value>Agency Codes - Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -16596,6 +16604,14 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
         <value>Thank you for submiting the request for Credit Card form of Payment.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_VR_Case_Submited</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_VR_Case_Submited</shortDescription>
+        <value>Thank you for submiting the request for Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
@@ -26319,6 +26335,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
         <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC_Legacy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC_Legacy</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Office</value>
     </labels>
     <labels>
         <fullName>ANG_Effective_Date</fullName>

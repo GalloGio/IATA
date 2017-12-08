@@ -334,7 +334,10 @@
                                         <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
                                         <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_ANG_Effective_Date_Of_Change}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                         <br></br><br></br>
-                                            <apex:outputText rendered="{!isHierarchy}" escape="false" value="{!$Label.ANG_Voluntary_Relinquishment_to_NOC}"/>
+                                        <apex:outputPanel rendered="{!isHierarchy}">    
+                                                <apex:outputText escape="false" value="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ANG_Voluntary_Relinquishment_to_NOC_Legacy, $Label.ANG_Voluntary_Relinquishment_to_NOC)}" />
+                                        </apex:outputPanel>
+                                        
                                     </div>
                                 </div>
 
@@ -382,7 +385,7 @@
                     </div>
                 </apex:form>                     
                 <apex:pageBlock >                
-                    <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance}" columns="1" collapsible="false">                        
+                    <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_VR}" columns="1" collapsible="false">                        
                             <apex:pageBlockSectionItem >
                             <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%">
                                 <apex:outputText >{!$Label.ISSP_ANG_Iata_Codes_Relinquish}</apex:outputText>
