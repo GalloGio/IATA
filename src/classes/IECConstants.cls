@@ -13,6 +13,7 @@ global class IECConstants {
   public static final String ORDER_STATUS_CHECK = 'Check';
   public static final String ORDER_STATUS_PENDING_PAYMENT = 'Pending Payment';
   public static final String ORDER_STATUS_PAYMENT_FAILURE = 'Payment Failure';
+  public static final String ORDER_STATUS_INVOICED = 'Invoiced';
 
   public static final String ORDER_TYPE_QUOTE = 'Quote';
   public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
