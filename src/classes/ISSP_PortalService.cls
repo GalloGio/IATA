@@ -14,7 +14,7 @@ public with sharing class ISSP_PortalService{
     
         string psId = Apexpages.currentPage().getParameters().get('id');
 
-        PortalService_List =new List<Portal_Applications__c >([select id , Name, ServiceName__c ,Service_Description__c ,Application_icon__c,
+        PortalService_List =new List<Portal_Applications__c >([select id , Name, ServiceName__c ,Service_Description__c ,Application_icon__c, Service_Description_Label__c, 
                                                                Cannot_be_managed_by_portal_admin__c
                                                    From Portal_Applications__c 
                                                    Where Id =: psId ]);
@@ -23,7 +23,7 @@ public with sharing class ISSP_PortalService{
             PortalService = PortalService_List [0];
         }
         
-        appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.Portal_Application__r.Service_Description__c,
+        appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.Portal_Application__r.Service_Description__c, p.Portal_Application__r.Service_Description_Label__c, 
                                                                 p.Portal_Application__r.Requestable__c,
                                                                 p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
                                                                 p.Right__c, p.Portal_Application__r.Application_icon_URL__c,
