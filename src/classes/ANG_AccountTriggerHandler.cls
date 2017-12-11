@@ -174,14 +174,16 @@ public class ANG_AccountTriggerHandler {
 
 		Map<String, String> mailTargets = new Map<String, String>(); //key: contact => value: account
 		List<String> notificationTargets = new List<String>();
+		List<ANG_RHCHelper.Email> emails = new List<ANG_RHCHelper.Email>();
 		for(Id accountId : contactsPerAccount.keySet()){
 			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 				mailTargets.put(contactId, accountId);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
 				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
 			}
 		}
 
-		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(mailTargets, emailTemplates[0].Id);
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(emails);
 
 		List<Notification__c> notifications = new List<Notification__c>();
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){

@@ -1,4 +1,4 @@
-var dyn_functions = {
+var dyn_functions = { 
     generateIataCode:function (args) { 
         //$body = $("body");
       
@@ -253,6 +253,35 @@ var dyn_functions = {
         };
 
         sforce.console.getEnclosingPrimaryTabId(openSubtab);
+    
+    },
+    createSIDRALite:function (arg) {
+        var result;
+        result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
+        
+        // error
+        if (result[0].substring(0, 6) == 'ERROR:') {
+            alert(result);
+        } 
+        else {
+            
+            var caseId = result[0];
+
+            var changeTab = function(result){
+                if(result.success == true){
+                    //sforce.console.focusPrimaryTabById(caseId);
+                    alert('SIDRA Lite Case created successfully.');
+                }
+            };
+
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {               
+                sforce.console.openSubtab(result.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);  
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+        }
     
     },
     SIDRALiteAction:function (arg) {

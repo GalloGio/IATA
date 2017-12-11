@@ -708,9 +708,9 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
         }
 
-        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
             amsOfficeType = AMS_Utils.HO;
-        } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
+        } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             amsOfficeType = 'Branch';
         }
 
@@ -2959,8 +2959,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Submitted_to_IATA__c = TRUE;
             upsert newForm;
 
-            if(newCase.Status == 'Draft') //Change queue for drafts being submitted; Open - EDMC cases stay with current owner
-                newCase.ownerid = getRegionalQueue();
+            // AMSU-110 assign Case via assignment rules
+            //if(newCase.Status == 'Draft') //Change queue for drafts being submitted; Open - EDMC cases stay with current owner
+            //    newCase.ownerid = getRegionalQueue();
             
             newCase.Status = 'Open';
             newCase.Dossier_reception_date__c = datetime.now().date();
@@ -2975,8 +2976,12 @@ public without sharing class ISSP_AMS_Accreditation {
             //However, remove on Submit to IATA if same as acount of user i..e. Case Account, as it is not required
             if(newCase.Account_Concerned__c == newCase.AccountId)
                 newCase.Account_Concerned__c = null;
-              
-            update newCase;
+            
+            // AMSU-110 assign Case via assignment rules -> re-trigger assignment rules on update
+            //update newCase;
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+            Database.update(newCase, dmo);
 
             //***********
 

@@ -1,4 +1,4 @@
-{
+{ 
   "AMS_OSCAR_JSON": {
     "Processes": [
       {
@@ -4536,7 +4536,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Head Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
@@ -5054,7 +5054,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Head Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
@@ -5433,7 +5433,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Associate Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }

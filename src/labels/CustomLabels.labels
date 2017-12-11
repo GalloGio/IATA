@@ -11107,6 +11107,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Agency Codes - Proof of PCI Compliance</value>
     </labels>
     <labels>
+        <fullName>ISSP_PCI_Agency_Codes_VR</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Agency_Codes_VR</shortDescription>
+        <value>Agency Codes - Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -16566,12 +16574,44 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for creating your draft Notice of Change form.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_PCI</shortDescription>
+        <value>Thank you for creating your draft proof of PCI compliance online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_VR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_VR</shortDescription>
+        <value>Thank you for creating your draft Voluntary Relinquishment online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PROOF_OF_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
+        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PCI_Case_Submited</fullName>
         <categories>ISSP, PCI</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
         <value>Thank you for submiting the request for Credit Card form of Payment.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_VR_Case_Submited</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_VR_Case_Submited</shortDescription>
+        <value>Thank you for submiting the request for Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
@@ -26213,34 +26253,117 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Agency Read Only</shortDescription>
-        <value>Help text for Portal Role Agency Read Only</value>
+        <value>NONE</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>Help text for Portal Role Sub-wallet Manager</value>
+        <value>&lt;ul&gt;&lt;li&gt;Can make purchases and Withdrawals from the Wallets you are associated with;&lt;/li&gt;&lt;li&gt;Can associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>Help text for Portal Role Master Wallet Manager</value>
+        <value>&lt;ul&gt;&lt;li&gt;Permission to make purchases and Withdrawals from the Master Wallet (if granted such permission) and any Sub-wallet with which you are associated;&lt;/li&gt;&lt;li&gt;To associate individual users with the IEP Account and particular Sub-wallets (and to assign role of Sub-Wallet Manager or Ticket Issuer)&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>Help text for Portal Role IEP Admin</value>
+        <value>&lt;ul&gt;&lt;li&gt;Permission to use the Master Wallet, any Sub-wallet, to establish new Sub-wallets and close existing Sub-wallets;&lt;/li&gt;&lt;li&gt;Make changes to Account Profile (including your Settings and Users Tab). Can also Cancel the IEP Account;&lt;/li&gt;&lt;li&gt;Transfer amounts between your Master Wallet and Sub-wallets, to associate individual users with the IEP Account and particular Sub-wallets (and to determine which category such individual users shall be in);&lt;/li&gt;&lt;li&gt;Make purchases or Withdrawals from your Master Wallet or any Sub-wallets&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
-        <value>Help text for Portal Role Ticket Issuer</value>
+        <value>&lt;ul&gt;&lt;li&gt;Permission to make purchases from Master Wallet (if granted permission) or any Sub-wallet with which you are associated.&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_WISH_TO_RELINQUISH</shortDescription>
+        <value>I wish to relinquish:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_choose_what_to_relinquish</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_choose_what_to_relinquish</shortDescription>
+        <value>Please choose what you want to relinquish.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ADMIN_TO_AUTHORIZED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ADMIN_TO_AUTHORIZED</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos; href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ONE_OR_MORE_AE</shortDescription>
+        <value>One or more Associate Entities</value>
+    </labels>
+    <labels>    
+        <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
+        <value>Click here to compare the accreditation types</value>
+    </labels>
+            <labels>
+        <fullName>ISSP_ANG_One_or_More</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_One_or_More</shortDescription>
+        <value>One or more Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC_Legacy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC_Legacy</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Effective_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Effective_Date</shortDescription>
+        <value>Effective date:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Not_Past</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Not_Past</shortDescription>
+        <value>The Effective Date cannot be in the past.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Iata_Codes_Relinquish</fullName>
+        <categories>PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
+        <value>IATA Codes to relinquish</value>
     </labels>
 </CustomLabels>
