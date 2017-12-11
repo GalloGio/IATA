@@ -23,7 +23,7 @@
                              
                              <div class="row">
                                             <label class="lbl lbl col-lg-3">{!$Label.ISSP_Portal_Service_Details}:</label>
-                                           <p class="col-lg-6"><apex:outputLabel escape="false" value="{!PortalService.Service_Description__c}" /></p>
+                                           <p class="col-lg-6"><apex:outputLabel escape="false" value="{!IF( ISBLANK($Label[PortalService.Service_Description_Label__c]), PortalService.Service_Description__c, $Label[PortalService.Service_Description_Label__c])}" /></p>
                                 
                               </div> <!-- end row -->
                      </div><!-- end col-lg-10 -->
