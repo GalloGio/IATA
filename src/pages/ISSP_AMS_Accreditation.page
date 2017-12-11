@@ -1081,6 +1081,9 @@
             <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'FoP Management'}">
                 {!$Label.ISSP_PCI_Case_Submited}                
                </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'CLO - Closure'}">
+                {!$Label.ISSP_VR_Case_Submited}
+            </apex:outputPanel>
            </strong>
            <br/>
            <apex:outputlabel >

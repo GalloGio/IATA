@@ -63,9 +63,7 @@ public with sharing class ISSP_ANG_PCI {
         isNewCase = false;
         isParentAccount = false;
         stepNumber = '';
-
         getContact();
-        getCountriesMap();
 
         newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;      
         isoCountry = amsAccreditation.fetchISOCountry(newCase.IFAP_Country_ISO__c);
@@ -251,7 +249,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Reason1__c = AMS_UTILS.CASE_REASON_FOR_MANAGEMENT;
         newCase.Status = 'Draft';
-        newCase.Visible_on_ISS_Portal__c = true;
+        newCase.Visible_on_ISS_Portal__c = true;        
 
         if(agencyCodesConcerned.size() > 0){
         	branchAccount = [SELECT Id, Name, IATACode__c FROM Account WHERE IATACode__c = :agencyCodesConcerned[0].getValue() LIMIT 1];	
@@ -281,7 +279,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
 	        first = false;
 	    }
         newForm.Agency_Codes_Concerned__c = agencyCodes;
-
+        newCase.Description = Label.ISSP_ANG_PROOF_OF_PCI + newForm.Agency_Codes_Concerned__c;
         upsert newCase;
 
         newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('PCI Compliance').RecordTypeId;
@@ -346,6 +344,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         String typeOfProcess = AMS_Utils.NGFOP;
         system.debug('case ' + newCase + ' newCase.Account_Concerned__c ' + newCase.Account_Concerned__c + ' newForm.Id ' + newForm.Id + 'typeOfProcess ' + typeOfProcess);
         ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, typeOfProcess, newCase.Id);
+        
+        amsAccreditation.sendConfirmationEmail(newCase);
 
         return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
     	
@@ -363,47 +363,6 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         } else {
             return new Pagereference(retURL);
         }
-    }
-
-    public void getCountriesMap() {
-        List<IATA_ISO_Country__c> isoList;
-
-        isoList = [SELECT Name, Id, ISO_Code__c, Travel_Branch_Country__c, Travel_HO_Country__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, Branches_abroad_not_allowed__c
-                   FROM IATA_ISO_Country__c
-                   WHERE Case_BSP_Country__c != null
-                   AND Case_BSP_Country__c != ''
-                   ORDER BY Name];        
-
-        Map<String, String> mapCountriesList = new Map<String, String>();
-        List<String> notAllowedCountries = new List<String>();
-        Integer idx = 0;
-        for (IATA_ISO_Country__c iso : isoList) { 
-            if (idx == 0) {
-                mapCountriesList.put('Cargo_Agent-New BR / IP', iso.ISO_Code__c + ':' + iso.Cargo_Branch_Country__c);
-                mapCountriesList.put('Cargo_Agent-New HO', iso.ISO_Code__c + ':' + iso.Cargo_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New BR / IP', iso.ISO_Code__c + ':' + iso.Travel_Branch_Country__c);
-                mapCountriesList.put('Travel_Agent-New BR Abroad', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HO', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HE standard', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HE lite', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New AE', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c); //NEWGEN - 552
-            } else {
-                mapCountriesList.put('Cargo_Agent-New BR / IP', mapCountriesList.get('Cargo_Agent-New BR / IP') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_Branch_Country__c);
-                mapCountriesList.put('Cargo_Agent-New HO', mapCountriesList.get('Cargo_Agent-New HO') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New BR / IP', mapCountriesList.get('Travel_Agent-New BR / IP') + ',' + iso.ISO_Code__c + ':' + iso.Travel_Branch_Country__c);
-                mapCountriesList.put('Travel_Agent-New BR Abroad', mapCountriesList.get('Travel_Agent-New BR Abroad') + ',' + iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HO', mapCountriesList.get('Travel_Agent-New HO') + ',' + iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HE standard', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New HE lite', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
-                mapCountriesList.put('Travel_Agent-New AE', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);//NEWGEN - 552
-            }
-            ++idx;
-            if (iso.Branches_abroad_not_allowed__c)
-                notAllowedCountries.add(iso.ISO_Code__c);
-        }
-
-        jsonCountriesMap = JSON.serialize(mapCountriesList);
-        jsonCountriesNotAllowedList = JSON.serialize(notAllowedCountries);
     }
 
 

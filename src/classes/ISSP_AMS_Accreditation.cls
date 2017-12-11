@@ -708,9 +708,9 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
         }
 
-        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
             amsOfficeType = AMS_Utils.HO;
-        } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
+        } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             amsOfficeType = 'Branch';
         }
 
