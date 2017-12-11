@@ -2638,7 +2638,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Download_Pdf</shortDescription>
-        <value>Download as PDF.</value>
+        <value>Download as PDF</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Due_Date</fullName>
@@ -10051,11 +10051,278 @@ IFG Customer Services</value>
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_GSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_GSA</shortDescription>
+        <value>GSA Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_MSO</shortDescription>
+        <value>MSO Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Status</shortDescription>
+        <value>Account Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Status</shortDescription>
+        <value>Agent Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Terminated</shortDescription>
+        <value>Terminated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</shortDescription>
+        <value>Agent Termination Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_of_Appointment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_of_Appointment</shortDescription>
+        <value>Agent Accreditation Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Download_CSV</shortDescription>
+        <value>Download as CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Edit_MSO_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Edit_MSO_Details</shortDescription>
+        <value>Edit Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</shortDescription>
+        <value>Exclude Terminated Agents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</shortDescription>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Description</shortDescription>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
         <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Title</shortDescription>
+        <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_IATA_Code</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</shortDescription>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</shortDescription>
+        <value>Terminate MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Title</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Next</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Previous</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Request_New_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Request_New_MSO</shortDescription>
+        <value>Request New MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Search_Placeholder</shortDescription>
+        <value>Search by Office name, Country or IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Street_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Street_Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Territories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Territories</shortDescription>
+        <value>Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
+        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
+        <value>Please review your application details before submitting to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Billing_State_ErrMsg</shortDescription>
+        <value>Billing State: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Country_ErrMsg</shortDescription>
+        <value>Country concerned: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Legal_Status</shortDescription>
+        <value>Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Office_Email</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Office_Email</shortDescription>
+        <value>Office Email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
+        <value>A new MSO account has been successfully generated with the following IATA Code: </value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_StepFinal_Thanks</shortDescription>
+        <value>Thank you for submitting your request for a new MSO.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -10162,6 +10429,62 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Month_September</shortDescription>
         <value>September</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
+        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
+        <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
+        <value>Thank you for submitting your request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
+        <value>Request to Update the MSO Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
@@ -10286,6 +10609,13 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS New HO details</shortDescription>
         <value>New Head Office address details</value>
+    </labels>
+    <labels>
+    	<fullName>ISSP_AMS_New_MSO_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
+        <value>Application for a new MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
