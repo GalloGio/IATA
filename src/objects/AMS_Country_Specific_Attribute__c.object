@@ -58,6 +58,7 @@
     <fields>
         <fullName>ANG_Create_Sidra_Lite__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Controls the sidra lite/ SMAP case and Change code creation action on RTS</description>
         <externalId>false</externalId>
         <label>Create Sidra Lite and Parent Case</label>
         <trackTrending>false</trackTrending>
@@ -90,6 +91,7 @@
     <fields>
         <fullName>ANG_Remove_Ticketing_Authority__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Controls the removing Ticketing authorization action on RTS</description>
         <externalId>false</externalId>
         <label>Remove Ticketing Authority</label>
         <trackTrending>false</trackTrending>
@@ -98,6 +100,7 @@
     <fields>
         <fullName>ANG_Send_Email_Agent__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Controls the email notification to the agents action on RTS</description>
         <externalId>false</externalId>
         <label>Send Email To Agent</label>
         <trackTrending>false</trackTrending>
