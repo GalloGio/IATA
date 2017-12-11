@@ -66,41 +66,83 @@ public with sharing class ISSP_AvailableServices{
         }
     }
 
+    public static Map<String,List<String>> availableRoles;
+
     public List<SelectOption2> availablePortalServiceRoles {
         get{
+
+
+            Map<String, Map<Decimal, String>> orderRoles = new Map<String, Map<Decimal, String>>();
 
             if(availableRoles == null){
                 availableRoles = new Map<String,List<String>>();
 
                 for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
 
-                    if(availableRoles.get(role.Connected_App__c) == null)
+                    if(availableRoles.get(role.Connected_App__c) == null) {
                         availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
-                    else
+
+                        Map<Decimal, String> aux = new Map<Decimal, String>();
+                        aux.put(role.Order__c, role.Role__c);
+
+                        orderRoles.put(role.Connected_App__c, aux);
+
+                    } else {                        
                         availableRoles.get(role.Connected_App__c).add(role.Role__c);
 
-                }
+                        Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
+                        aux.put(role.Order__c, role.Role__c);                        
+                    }
 
+                }
             }
 
             Set<String> availableRolesLst = availableRoles.keySet();
 
-            if(availablePortalServiceRoles == null) {
-                //availablePortalServiceRoles = new List<SelectOption>{new SelectOption('', '')};
-                availablePortalServiceRoles = new List<SelectOption2>();
-            }
+
+            //if(availablePortalServiceRoles == null) {
+            List<SelectOption2> availablePortalServiceRolesAux = new List<SelectOption2>();
+            //} else {
+            //    availablePortalServiceRolesAux = availablePortalServiceRoles;
+            //}
+            Set<String> availableRolesSet = new Set<String>();
 
             for(String roleConnApp: availableRolesLst){
 
                 if(roleConnApp == this.Serv.recordService.Name){
 
                     for(String roleStr : availableRoles.get(roleConnApp)){
-
-                        availablePortalServiceRoles.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
-
+                        availableRolesSet.add(roleStr);
+                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
                     }
                 }
             }
+
+
+            if(orderRoles.containsKey(this.Serv.recordService.Name)) {
+
+                availablePortalServiceRolesAux = new List<SelectOption2>();
+
+                Map<Decimal, String> rolesOrderToApply = orderRoles.get(this.Serv.recordService.Name);
+
+                List<Decimal> orders = new List<Decimal>();
+                orders.addAll(rolesOrderToApply.keySet());
+                orders.sort();
+
+                for(Decimal o : orders) {
+                    String roleStr = rolesOrderToApply.get(o);
+                    if(availableRolesSet.contains(roleStr)) {
+                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
+
+                    }
+                }
+
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+
+            } else {
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+            }
+
 
             return availablePortalServiceRoles;
 
@@ -137,9 +179,7 @@ public with sharing class ISSP_AvailableServices{
     
     public void setSortDirection(String value) {  
         sortDirection = value;
-    }
-
-    public static Map<String,List<String>> availableRoles;
+    }    
     
     public ISSP_AvailableServices(){
 
@@ -150,11 +190,14 @@ public with sharing class ISSP_AvailableServices{
                 String aux = role.Role__c.replaceAll(' ','');
                 String aux2 = aux.replaceAll('-','');
 
-                this.helpTextPortalRoles.put(role.Role__c, getCustomLabel('ISSP_ANG_Portal_Role_' + aux2));
+                String helpText = getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+
+                if(helpText == 'NONE') helpText = '';
+
+                this.helpTextPortalRoles.put(role.Role__c, helpText);
 
             }
         }
-
 
         this.iepRoles = new Map<String, String>();
 
@@ -440,6 +483,7 @@ public with sharing class ISSP_AvailableServices{
         public boolean addUsersEnable {get; set;}
         public boolean accountNotOpenError {get; set;}
         public String lineErrorMessage {get; set;}
+        public String modalStyle {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin, Boolean isAuthorisedSignatory){
             this.Status = getServiceStatus(inRecord);
@@ -447,6 +491,8 @@ public with sharing class ISSP_AvailableServices{
             this.recordService = inRecord;   
             this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
             this.lineErrorMessage = '';
+
+            this.modalStyle = 'modal-dialog';
 
             if(this.isEasyPayService) {
                 this.addUsersEnable = isAdmin;
@@ -468,6 +514,7 @@ public with sharing class ISSP_AvailableServices{
                 this.useDefaultRole = false;
                 if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
                     this.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                    this.modalStyle = 'modal-dialog modal-lg';
                 } else {
                     this.btnLabel = System.Label.ISSP_New_Service_Request;
                 }

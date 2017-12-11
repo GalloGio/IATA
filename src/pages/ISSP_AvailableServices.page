@@ -543,7 +543,8 @@
     <!---------------------------------------------------------------------->
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
+      <!--apex:outputPanel layout="block" styleClass="modal-dialog modal-lg" id="myModalContent"--> 
+      <apex:outputPanel layout="block" styleClass="{!Serv.modalStyle}" id="myModalContent"> 
         <div class="modal-content"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -639,9 +640,8 @@
 
                           <div class="radio" style="border-bottom: 1px solid rgb(229, 229, 229); padding-top: 5px;">
                             <label style="min-width: 35%; font-weight: bold;"><input type="radio" class="radioBtnClass" name="role" value="{!role.value}">{!role.value}</input></label>
-                            <label>{!role.helpText}</label> 
-                          </div>
-
+                            <apex:outputText value="{!role.helpText}" escape="false"></apex:outputText>
+                          </div>                          
                         </apex:repeat>
                     </apex:outputPanel>
                   </td>
