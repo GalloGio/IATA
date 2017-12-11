@@ -35,6 +35,8 @@
     var $serviceName = '';
     var $serviceId = '';
     var $accountId = '';
+    var $accountNotOpenError = '';
+    var $lineErrorMessage = '';
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
@@ -244,6 +246,8 @@
         $serviceName = aux[0];
         $serviceId = aux[1];
         $accountId = aux[2];
+        $accountNotOpenError = aux[3];
+        $lineErrorMessage = aux[4];
 
         console.log('$serviceName->' + $serviceName);
         console.log('$serviceId->' + $serviceId);
@@ -415,22 +419,13 @@
           contextMenu: '#context-menu',
           contextMenuButton: '.example2-button',        
           onContextMenuItem: function(row, $el){
-            /*
-            sforce.connection.sessionId = '{!$Api.Session_ID}';
-            var string = row[3].substring("Id=");          
-            var linkId = string.substring(string.indexOf("('")+2,string.indexOf("')"));          
-            
-            var qr = sforce.connection.query('SELECT id,name FROM Portal_Applications__c where id in (\''+linkId+ '\')');
-            records = qr.getArray("records");
-              
-            for (var i=0; i< records.length; i++) {
-                var record = records[i];
-                var servName = record.Name;              
-            }
-            */
               
             if($el.data("item") == "add") {
-              window.location.href = "/ISSP_EditPortalServiceAccess?Id=" + $serviceId + "&op=Edit&PSId=" + $serviceId + "&PSname=" + $serviceName;
+              if($accountNotOpenError == 'true') {
+                errorMessageModal($lineErrorMessage);
+              } else {
+                window.location.href = "/ISSP_EditPortalServiceAccess?Id=" + $serviceId + "&op=Edit&PSId=" + $serviceId + "&PSname=" + $serviceName;
+              }
             } else if($el.data("item") == "view") {
               window.location.href = "/ISSP_PortalService?Id=" + $serviceId;
             } else if ($el.data("item") == "ifapAssign") {
@@ -480,7 +475,7 @@
 
             <apex:column headerValue="Actions" id="actionId" rendered="{!AdminOrNot}">
               <apex:outputPanel rendered="{!item.addUsersEnable}">
-                <button type="button" class="example2-button" data-state="{!item.recordService.ServiceName__c};{!item.recordService.id};{!currentPortalUser.contact.AccountId}"><span class="glyphicon glyphicon-cog"></span></button>
+                <button type="button" class="example2-button" data-state="{!item.recordService.ServiceName__c};{!item.recordService.id};{!currentPortalUser.contact.AccountId};{!item.accountNotOpenError};{!item.lineErrorMessage}"><span class="glyphicon glyphicon-cog"></span></button>
               </apex:outputPanel>
             </apex:column>
           <!--elliot 19 juin-->  
