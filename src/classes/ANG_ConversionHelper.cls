@@ -768,13 +768,15 @@ global with sharing class ANG_ConversionHelper {
 
     private static void createCorrectionChangeCodes(Set<Account> accountsToApply){
 
-    	//create correction change code definition
-    	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+        Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
-        changeCode.name = 'COR';
-        changeCode.memoText = 'Correction';
-        changeCode.publishedOnEBulletin = false;
-        changeCode.status  = null;
+		List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c, Account__c FROM Agency_Applied_Change_code__c WHERE Account__c in :accountsToApply AND Active__c = TRUE];                    
+
+		for(Agency_Applied_Change_code__c aacc : accountActiveChangeCode){
+
+			mapAACCAccounts.put(aacc.Account__c,aacc);
+
+		}
 
         //prepare data structures to feed into change code generator
         List<Account> accts = new List<Account>();
@@ -782,7 +784,24 @@ global with sharing class ANG_ConversionHelper {
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR_JSON.ChangeCode> corChangeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
 
+		AMS_OSCAR_JSON.ChangeCode changeCode;
+
         for(Account acc: accountsToApply){
+
+			//create correction change code definition
+	    	changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+	        changeCode.name = 'COR';
+	        changeCode.memoText = 'Correction';
+	        changeCode.publishedOnEBulletin = false;
+	        changeCode.status  = null;
+
+			if(mapAACCAccounts.get(acc.Id) != null){
+			    changeCode.reasonCode = mapAACCAccounts.get(acc.Id).Reason_Code__c;
+			    changeCode.reasonDesc = mapAACCAccounts.get(acc.Id).Reason_Description__c;
+			    changeCode.status = AMS_Utils.getIATANumericStatus(mapAACCAccounts.get(acc.Id).Account__r.Status__c);
+			}
+
         	accts.add(acc);
         	corChangeCodes.add(changeCode);
         	oscars.add(null);
