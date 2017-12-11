@@ -9,19 +9,23 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ANG_Account__c</field>
+                <field>IATA_ISO_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>ANG_RTS_Severity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Agent_Sales__c</field>
+                <field>ANG_Create_Sidra_Lite__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_EventId__c</field>
+                <field>ANG_Remove_Ticketing_Authority__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Severity__c</field>
+                <field>ANG_Send_Email_Agent__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -43,7 +47,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0E000000Ivxn</masterLabel>
+        <masterLabel>00h7E000000Ojpn</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
