@@ -1128,6 +1128,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <controllingFieldValues>Approved</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>ACCREDITED-MEET-STANDARDS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Approved</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>ADMINISTRATIVE OFFICES</fullName>
                 <default>false</default>
                 <controllingFieldValues>Listed</controllingFieldValues>
@@ -1680,6 +1685,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             <picklist>Reason_Description__c</picklist>
             <values>
                 <fullName>ACCREDITED - MEETS CRITERIA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCREDITED-MEET-STANDARDS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2308,6 +2317,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             <picklist>Reason_Description__c</picklist>
             <values>
                 <fullName>ACCREDITED - MEETS CRITERIA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCREDITED-MEET-STANDARDS</fullName>
                 <default>false</default>
             </values>
             <values>
