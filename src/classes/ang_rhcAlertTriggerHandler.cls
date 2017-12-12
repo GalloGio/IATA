@@ -213,7 +213,7 @@ public class ang_rhcAlertTriggerHandler {
 						Suspension_Date__c = Date.today()
 					);
 					if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
-						System.debug("## This Account doesn't require SMAP case to have date Next_Remittance_Date__c, Start_Date_of_Sales_Period__c and End_Date_of_Sales_Period__c fields to be populated.");
+						System.debug("## This Account doesn't require SMAP case to have Next_Remittance_Date__c, Start_Date_of_Sales_Period__c and End_Date_of_Sales_Period__c date fields to be populated.");
 					}else{
 						smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
 						smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
