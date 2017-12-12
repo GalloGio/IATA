@@ -26366,4 +26366,18 @@ title,Title,Name</value>
         <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
         <value>IATA Codes to relinquish</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>Cost tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
+        <value>Annual fees for 2018</value>
+    </labels>    
 </CustomLabels>
