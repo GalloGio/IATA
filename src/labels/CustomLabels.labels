@@ -10051,6 +10051,41 @@ IFG Customer Services</value>
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
+        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
+        <value>Please review your application details before submitting to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Billing_State_ErrMsg</shortDescription>
+        <value>Billing State: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Country_ErrMsg</shortDescription>
+        <value>Country concerned: You must enter a value</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Account_Name_GSA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10261,39 +10296,11 @@ IFG Customer Services</value>
         <value>Territories</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
+        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
-        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Application_Review</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
-        <value>Please review your application details before submitting to IATA.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
-        <value>Identification of Office Location</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Billing_State_ErrMsg</shortDescription>
-        <value>Billing State: You must enter a value</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Country_ErrMsg</shortDescription>
-        <value>Country concerned: You must enter a value</value>
+        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
+        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
@@ -10315,7 +10322,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
-        <value>A new MSO account has been successfully generated with the following IATA Code: </value>
+        <value>A new MSO account has been successfully generated with the following IATA Code:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
@@ -10323,6 +10330,55 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_StepFinal_Thanks</shortDescription>
         <value>Thank you for submitting your request for a new MSO.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
+        <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
+        <value>Thank you for submitting your request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
+        <value>Request to Update the MSO Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -10429,62 +10485,6 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Month_September</shortDescription>
         <value>September</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
-        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
-        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
-        <value>Request to Terminate the MSO</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
-        <value>We have successfully terminated the MSO account with the IATA Code</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
-        <value>Thank you for submitting your request.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
-        <value>Request to Update the MSO Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
-        <value>Identification of Office Location</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
-        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
@@ -10611,7 +10611,7 @@ For each section below either:&lt;br/&gt;
         <value>New Head Office address details</value>
     </labels>
     <labels>
-    	<fullName>ISSP_AMS_New_MSO_Application</fullName>
+        <fullName>ISSP_AMS_New_MSO_Application</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
