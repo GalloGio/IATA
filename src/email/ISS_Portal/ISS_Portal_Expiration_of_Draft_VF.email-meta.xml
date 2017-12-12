@@ -13,4 +13,5 @@
     <style>none</style>
     <subject>New comment on case n°</subject>
     <type>visualforce</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>
