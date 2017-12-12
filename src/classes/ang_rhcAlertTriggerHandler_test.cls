@@ -16,8 +16,9 @@ private class ang_rhcAlertTriggerHandler_test {
         
 
   // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', BSP_Country_free_text__c = 'FR');
-        insert country;
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', BSP_Country_free_text__c = 'FR');        
+		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = 'WW');
+        insert new list<IATA_ISO_Country__c> {country,defCountry};
         
         Account a = new Account(
         	name='acc1',
@@ -186,27 +187,18 @@ private class ang_rhcAlertTriggerHandler_test {
 
 	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
 		// no configuration for the account country found, so it will use the default one
-		list<IATA_ISO_Country__c> isoCountryList =new list<IATA_ISO_Country__c>();
-
-		IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(
-			Name = 'All Countries', 
-			ISO_Code__c = 'WW'
-		);
-		isoCountryList.add(country1);
-
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(
+		IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
 			Name = 'Portugal', 
 			ISO_Code__c = 'PT'
 		);
-		isoCountryList.add(country2);
-        insert isoCountryList ;
+        insert country2 ;
 
 		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-    		IATA_ISO_Country__c=country1.id,
-    		ANG_RTS_Severity__c='Red',
+    		IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
     		ANG_Create_Sidra_Lite__c= true, 
     		ANG_Remove_Ticketing_Authority__c= false,
     		ANG_Send_Email_Agent__c=false ,
+    		ANG_RTS_Severity__c='Red',
     		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
     	);
 
@@ -223,7 +215,7 @@ private class ang_rhcAlertTriggerHandler_test {
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );
         insert a;     
-
+		test.StartTest();
         AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
 		insert iss;
 		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
@@ -241,11 +233,10 @@ private class ang_rhcAlertTriggerHandler_test {
 			ang_Severity__c='Red',
 			ANG_Account__c = a.Id
 		);
-
-
-		test.StartTest();
-			insert ra;
-		test.StopTest();
+		
+        insert ra;
+		
+        test.StopTest();
 		List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
 		System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
 	}
