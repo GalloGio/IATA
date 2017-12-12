@@ -150,7 +150,7 @@ public class ang_rhcAlertTriggerHandler {
 		Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
 
 		for(Account acc :[
-			SELECT id,Name, IATACode__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
+			SELECT id,Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
 					IATA_ISO_Country__r.ISO_Code__c, Region_formula__c,
         
 		(SELECT ID,Name,ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
@@ -201,7 +201,7 @@ public class ang_rhcAlertTriggerHandler {
 				string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:ALL_COUNTRIES_ISOCODE ;//checks if key exists in map, if not uses default key
    				if(rtsConfigMap.get(configKey).ANG_Create_Sidra_Lite__c){
 					smapParentCase = new Case(
-						Region__c =	raAccMap.get(ra.id).Region_formula__c,
+						Region__c = raAccMap.get(ra.id).Region_formula__c,
 						Subject = 'Real Time Sales RED Alert - ' +   raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c + ' - ' + raAccMap.get(ra.id).IATACode__c ,
 						AccountId = ra.ANG_Account__c,
 						Status = 'Accepted',
@@ -210,11 +210,15 @@ public class ang_rhcAlertTriggerHandler {
 						BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
 						Decision__c = 'Prejudiced Collection of Funds',
 						RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
-						Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c,
-						Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c,
-						End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c,
-						Suspension_Date__c=  Date.today()
+						Suspension_Date__c = Date.today()
 					);
+					if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
+						System.debug("## This Account doesn't require SMAP case to have Next_Remittance_Date__c, Start_Date_of_Sales_Period__c and End_Date_of_Sales_Period__c date fields to be populated.");
+					}else{
+						smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
+						smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
+						smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
+					}
 
 					smapParentCase.setOptions(dmlOpts);
 					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
@@ -246,7 +250,13 @@ public class ang_rhcAlertTriggerHandler {
 			if(!smapParentCases.isEmpty()){
 				//insert smapParentCases --> all or none = false;
 	            //need to store result to later interate the correct ones and then atribute the sidra case to the Alert  
-				Database.SaveResult[] resultInsSMAPcases = Database.insert(smapParentCases, false);
+				List<Database.SaveResult> resultInsSMAPcases;
+				
+				try{
+					resultInsSMAPcases = Database.insert(smapParentCases, false);
+				}catch(Exception e){
+					System.debug('## Case not created: '+e);
+				}
 
 		        for(Case parentCase :smapParentCases){
 		            mapCaseRiskAlert.put(parentCase.Id,parentCase);            
