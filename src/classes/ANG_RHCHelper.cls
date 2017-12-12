@@ -101,11 +101,12 @@ public class ANG_RHCHelper {
 		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
 
 		for(Email m : messages){
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RHCHelper - sendMailUpdate] message parameters - '+m);
+
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setTargetObjectId(m.targetId);
 			mail.setWhatId(m.whatId);
 			mail.setTemplateId(m.templateId);
-        mail.setOrgWideEmailAddressId ([select Id from OrgWideEmailAddress where address ='noreply@iata.org'].id);
 
 			if (!owea.isEmpty()) mail.setOrgWideEmailAddressId(owea[0].Id);
 			else{
@@ -118,7 +119,7 @@ public class ANG_RHCHelper {
 		
 		try{
 			if(!Test.isRunningTest()) Messaging.sendEmail(emails); 
-		}catch(Exception  e){
+		}catch(Exception e){
 			System.debug(loggingLevel.ERROR, '____ [cls ANG_RHCHelper - sendMailUpdate] Failed to send email to users - '+e.getMessage());
 		}
 	}
