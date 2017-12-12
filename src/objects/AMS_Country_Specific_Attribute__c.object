@@ -135,7 +135,7 @@
         <description>Secure country/class uniqueness (workflow on creation/update)</description>
         <externalId>false</externalId>
         <label>Country Class Check</label>
-        <length>25</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
