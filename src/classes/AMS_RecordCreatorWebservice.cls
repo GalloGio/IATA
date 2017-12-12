@@ -343,7 +343,10 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
+        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
+
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
