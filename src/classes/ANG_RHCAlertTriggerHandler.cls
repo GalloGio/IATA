@@ -4,7 +4,7 @@ public class ANG_RHCAlertTriggerHandler{
 	public List<ANG_Risk_Alert__c> triggerOld = (List<ANG_Risk_Alert__c>) Trigger.old;
 
 	public Map<Id, ANG_Risk_Alert__c> newMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.newMap;
-	public Map<Id, ANG_Risk_Alert__c> oldMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.oldMap;	
+	public Map<Id, ANG_Risk_Alert__c> oldMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.oldMap;
 
 	public static final String DEFAULT_CODE = 'WW';
 
@@ -102,8 +102,8 @@ public class ANG_RHCAlertTriggerHandler{
 		
 		Map<String, Id> emailTemplates = new Map<String, Id>();
 		if(!emailTemplateNames.isEmpty()){
-			for(EmailTemplate e : [SELECT Id, Name FROM EmailTemplate WHERE Name IN :emailTemplateNames AND isActive = true]){
-				emailTemplates.put(e.Name, e.Id);
+			for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
+				emailTemplates.put(e.DeveloperName, e.Id);
 			}
 		}
 
