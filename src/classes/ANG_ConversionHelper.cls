@@ -548,7 +548,7 @@ global with sharing class ANG_ConversionHelper {
 
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
 
-		ANG_RHCHelper.createRHCInfo(topParents, true);
+		//ANG_RHCHelper.createRHCInfo(topParents, true); as per NEWGEN-2487
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;

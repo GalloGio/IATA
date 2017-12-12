@@ -14,7 +14,7 @@ public class ANG_RHCHelper {
 
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
-
+	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
