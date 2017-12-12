@@ -102,8 +102,8 @@ public class ANG_RHCAlertTriggerHandler{
 		
 		Map<String, Id> emailTemplates = new Map<String, Id>();
 		if(!emailTemplateNames.isEmpty()){
-			for(EmailTemplate e : [SELECT Id, Name FROM EmailTemplate WHERE Name IN :emailTemplateNames AND isActive = true]){
-				emailTemplates.put(e.Name, e.Id);
+			for(EmailTemplate e : [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateNames AND isActive = true]){
+				emailTemplates.put(e.DeveloperName, e.Id);
 			}
 		}
 
