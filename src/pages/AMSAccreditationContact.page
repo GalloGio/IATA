@@ -72,7 +72,21 @@
                 pageLoad();
             }
             setTabTitle();
+            checkCorrection(); //FM AMSU-1
         }
+
+        //FM AMSU-1
+        function checkCorrection(){
+            if({!isCorrection} && !({!isAllHierarchySelected})){
+                
+                alert('Only able to manage Owners when the hierarchy is all selected!');
+                //cancelServer();
+                var saveBtn = document.getElementById('saveButton');
+                saveBtn.disabled = true;
+                saveServer();
+            }
+            
+        } 
     </script>
     <script>
         function saveServerJs()
