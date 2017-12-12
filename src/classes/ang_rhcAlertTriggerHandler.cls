@@ -220,7 +220,7 @@ public class ang_rhcAlertTriggerHandler {
 						smapParentCase.Suspension_Date__c=  Date.today();
 					}
 
-                   	smapParentCase.setOptions(dmlOpts);
+					smapParentCase.setOptions(dmlOpts);
 					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
 					//we'll get the portal approved admin or if none the ifap contact 
