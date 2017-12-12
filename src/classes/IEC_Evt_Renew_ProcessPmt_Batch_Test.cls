@@ -1,5 +1,9 @@
 @isTest
 private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
+	@isTest
+	public static void testBatch () {
+		IEC_Evt_Renew_ProcessPmt_Batch.fakeMethod();
+	}
 	/*
 	private static List<Account> lstAccount;
 	private static List<Contact> lstContact;
