@@ -301,6 +301,12 @@ global without sharing class AMS_RecordCreatorWebservice {
             fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
         }
 
+        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
+        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
+
+        if(processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)
+            accreditationObj = fetchAccreditationObject(accreditationId);
+
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
@@ -342,9 +348,6 @@ global without sharing class AMS_RecordCreatorWebservice {
         }
         
         insert oscar;
-
-        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
-        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
 
         if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
@@ -433,7 +436,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
-        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only' || accreditationObj.SAAM_Case__r.Reason1__c != 'FOP Management')
+        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
             return;
 
         if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){
