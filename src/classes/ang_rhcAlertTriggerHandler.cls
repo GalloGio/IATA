@@ -201,24 +201,24 @@ public class ang_rhcAlertTriggerHandler {
 				string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:ALL_COUNTRIES_ISOCODE ;//checks if key exists in map, if not uses default key
    				if(rtsConfigMap.get(configKey).ANG_Create_Sidra_Lite__c){
 					smapParentCase = new Case(
-                       Region__c = raAccMap.get(ra.id).Region_formula__c,
-                       Subject = 'Real Time Sales RED Alert - ' +   raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c + ' - ' + raAccMap.get(ra.id).IATACode__c ,
-                       AccountId = ra.ANG_Account__c,
-                       Status = 'Accepted',
-                       BSP_CASS__c = 'BSP',
-                       Origin = 'Risk Monitoring Engine',
-                       BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
-                       Decision__c = 'Prejudiced Collection of Funds',
-                       RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process')
-                    );
-                    if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
-                    	system.debug("##SAMP not supose to have calendar");
-                    }else{
-                    	smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
-                    	smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
-                    	smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
-                    	smapParentCase.Suspension_Date__c=  Date.today();
-                   	}
+						Region__c = raAccMap.get(ra.id).Region_formula__c,
+						Subject = 'Real Time Sales RED Alert - ' +   raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c + ' - ' + raAccMap.get(ra.id).IATACode__c ,
+						AccountId = ra.ANG_Account__c,
+						Status = 'Accepted',
+						BSP_CASS__c = 'BSP',
+						Origin = 'Risk Monitoring Engine',
+						BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
+						Decision__c = 'Prejudiced Collection of Funds',
+						RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process')
+					);
+					if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
+						system.debug("##SAMP not supose to have calendar");
+					}else{
+						smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
+						smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
+						smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
+						smapParentCase.Suspension_Date__c=  Date.today();
+					}
 
                    	smapParentCase.setOptions(dmlOpts);
 					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
