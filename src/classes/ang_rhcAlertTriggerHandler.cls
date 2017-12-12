@@ -210,19 +210,17 @@ public class ang_rhcAlertTriggerHandler {
                        BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
                        Decision__c = 'Prejudiced Collection of Funds',
                        RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process')
-                         
-                   );
-                    
-                   if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
-                    system.debug("##SAMP not supose to have calendar");
-                   }else{
-                       smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
-                       smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
-                       smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
-                       smapParentCase.Suspension_Date__c=  Date.today();
-                   }
+                    );
+                    if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
+                    	system.debug("##SAMP not supose to have calendar");
+                    }else{
+                    	smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
+                    	smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
+                    	smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
+                    	smapParentCase.Suspension_Date__c=  Date.today();
+                   	}
 
-					smapParentCase.setOptions(dmlOpts);
+                   	smapParentCase.setOptions(dmlOpts);
 					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
 
 					//we'll get the portal approved admin or if none the ifap contact 
@@ -253,11 +251,11 @@ public class ang_rhcAlertTriggerHandler {
 				//insert smapParentCases --> all or none = false;
 	            //need to store result to later interate the correct ones and then atribute the sidra case to the Alert  
 				List<Database.SaveResult> resultInsSMAPcases;
-                try{
-                    resultInsSMAPcases = Database.insert(smapParentCases, false);
-                }catch(Exception e){
-                    System.debug('## Case not created: '+e);
-                }
+				try{
+					resultInsSMAPcases = Database.insert(smapParentCases, false);
+				}catch(Exception e){
+					System.debug('## Case not created: '+e);
+				}
 
 		        for(Case parentCase :smapParentCases){
 		            mapCaseRiskAlert.put(parentCase.Id,parentCase);            
