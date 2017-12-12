@@ -10617,7 +10617,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <operation>equals</operation>
             <value>GVA HO,HQ</value>
         </filters>
-        <label>EXE2014 - GVA</label>
+        <label>EXE - GVA</label>
         <language>en_US</language>
     </listViews>
     <listViews>

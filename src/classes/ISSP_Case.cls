@@ -108,6 +108,8 @@ public without sharing class ISSP_Case {
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 
+    public ANG_ProgressBarHelper progressBarHelper{get; set;}
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
@@ -476,7 +478,7 @@ public without sharing class ISSP_Case {
             /*06/08/2014 Merge of 2 RTs ISS Portal PwC Edit + ISS Portal PwC => ISS Portal PwC - Gavriel
             if(newCase.RecordType.name=='ISS Portal PwC Edit'){ isPWCCase = true; }*/
 
-            if (newCase.RecordType.Name == 'ISS Portal PwC') {
+            if (newCase.RecordType.Name == 'ISS Portal PwC' ||  newCase.RecordType.Name == 'ISS Portal PwC for IATA user') {
                 isISSPortalPwCCase = true;
                 isPWCCase = true;
             }
@@ -529,7 +531,25 @@ public without sharing class ISSP_Case {
 
         //basto1p
         statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
+
+        Map<String, String> objectsIds = new Map<String, String>();
+        objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
+        objectsIds.put('CASE', newCase.id); 
+
+        progressBarHelper = new ANG_ProgressBarHelper(newCase.Oscar__r.Process__c, objectsIds);
+
+        for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
+            if (node.titleTranslatable != null && node.titleTranslatable != '') {
+                node.title = getCustomLabel(node.titleTranslatable);
+            }
+        }
     }
+
+    private String getCustomLabel(String labelName) {
+        Component.Apex.OutputText output = new Component.Apex.OutputText();
+        output.expressions.value = '{!$Label.' + labelName + '}';
+        return string.valueOf(output.value);
+    }    
 
 
     //basto1p
