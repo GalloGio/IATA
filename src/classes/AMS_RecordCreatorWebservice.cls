@@ -435,7 +435,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
-        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only' || accreditationObj.SAAM_Case__r.Reason1__c != 'FOP Management')
+        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
             return;
 
         if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){
