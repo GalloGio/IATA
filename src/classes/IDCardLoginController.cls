@@ -10,6 +10,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     public String idCardAppQuery {get;set;}
     public ID_Card_Application__c [] pendingIdCardsAppV2 {get;set;}
     public String whichcountry {get;set;}
+    public vfIECreCAPTCHA  reCAPTCHA    {get; set;}
  
     public String DOB {get; set;}
 
@@ -44,35 +45,14 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
         ApexPages.currentPage().setCookies(new Cookie[] {verNumberCookie});
 
         isNew = false;
-        this.verified = false;
         initialize();
         PageTitle = '';
     }
 
     //Login with Codes
     public PageReference verify() {
+
         
-        Boolean validCaptcha =validCaptcha();
-
-        //@@ Disables captcha
-        //validCaptcha = true;
-
-        //exception for China INC185215
-        if (IATACodeLocation != null || IATACodeLocation != '') {
-            List<Account> zaccount = [SELECT BillingCountry FROM Account WHERE Account.IATACode__c = : IATACodeLocation.trim()];
-            if (zaccount.size() > 0)
-                if (zaccount[0].BillingCountry == 'PEOPLE\'S REPUBLIC OF CHINA')
-                    validCaptcha = true;
-        }
-
-        //for test method to pass captcha validation
-        if (Test.isRunningTest() )
-            validCaptcha = true;
-
-        if (!validCaptcha) {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.IDCard_CaptchaError ));
-            return null;
-        }
 
         if (IATACodeLocation == null || IATACodeLocation == '') {
             AddError(Label.IDCard_IATACodeRequired);
@@ -274,25 +254,13 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     *
     */
     public PageReference verifyAlternative() {
-        Boolean validCaptcha = validCaptcha();
 
         //@@ Disables captcha
         //validCaptcha = true;
 
         //exception for China INC185215
         List<Account> zaccount = [SELECT BillingCountry FROM Account WHERE Account.IATACode__c = : IATACodeLocation2.trim()];
-        if (zaccount.size() > 0)
-            if (zaccount[0].BillingCountry == 'PEOPLE\'S REPUBLIC OF CHINA')
-                validCaptcha = true;
 
-        //for test method to pass captcha validation
-        if (Test.isRunningTest())
-            validCaptcha = true;
-
-        if (!validCaptcha) {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.IDCard_CaptchaError));
-            return null;
-        }
 
         if (IATACodeLocation2.length() != 8) {
             AddError(Label.IDCard_IATACodeNot8Digits);
@@ -612,127 +580,10 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
     }
 
-    ////////////////////////////////////////////////////////////////////////
-    //  Captcha stuff
-    //   To setup follow the information in the following link
-    //     http://wiki.developerforce.com/page/Adding_CAPTCHA_to_Force.com_Sites
-    ///////////////////////////////////////////////////////////////////////
-
-
-
-    /* Configuration */
-
-    // The API endpoint for the reCAPTCHA service
-    //private static String baseUrl = 'https://www.google.com/recaptcha/api/verify';
-    private static String baseUrl = 'https://www.google.com/recaptcha/api/siteverify';
-
-    // The keys you get by signing up for reCAPTCHA for your domain
-    private static String privateKey = Label.ID_Card_PivateKEY;
-    public String publicKey {
-        get { return Label.ID_Card_PublicKEY;}
-    }
-
-    /* Implementation */
-
-    // Create properties for the non-VF component input fields generated
-    // by the reCAPTCHA JavaScript.
-    public String challenge {
-        get {
-            return ApexPages.currentPage().getParameters().get('recaptcha_challenge_field');
-        }
-    }
-    public String response  {
-        get {
-            return ApexPages.currentPage().getParameters().get('recaptcha_response_field');
-        }
-    }
-
-    // Whether the submission has passed reCAPTCHA validation or not
-    public Boolean verified { get; private set; }
-
-
-    public Boolean validCaptcha() {
-        String recaptcha = ApexPages.currentPage().getParameters().get('g-recaptcha-response');
-
-        System.debug('reCAPTCHA verification attempt');
-        // On first page load, form is empty, so no request to make yet
-        if ( recaptcha == null) {
-            System.debug('reCAPTCHA verification attempt with empty form');
-            return false;
-        }
-
-
-        HttpResponse r = makeRequest(baseUrl,
-                                     //'secret=' + privateKey +
-                                     'secret=6LeFvAYTAAAAAI7zjOUVELbcH6msdHgI2LZ5GdF0' +
-                                     '&response='  + recaptcha +
-                                     '&remoteip='  + remoteHost
-                                    );
-        if ( r != null ) {
-            this.verified = (r.getBody().indexOf('"success": true') != -1);
-        }
-
-        return this.verified;
-
-
-
-        /* System.debug('reCAPTCHA verification attempt');
-        // On first page load, form is empty, so no request to make yet
-        if ( challenge == null || response == null ) {
-        System.debug('reCAPTCHA verification attempt with empty form');
-        return false;
-        }
-        return true;
-        if (response.equals('1304'))return true;
-        HttpResponse r = makeRequest(baseUrl,
-        'privatekey=' + privateKey +
-        '&remoteip='  + remoteHost +
-        '&challenge=' + challenge +
-        '&response='  + response
-        );
-
-        if ( r != null ) {
-        this.verified = (r.getBody().startsWithIgnoreCase('true'));
-        }
-
-        return this.verified;*/
-    }
-
+   
+   
     public PageReference reset() {
         return null;
-    }
-
-    /* Private helper methods */
-
-    private static HttpResponse makeRequest(string url, string body)  {
-        HttpResponse response = null;
-        HttpRequest req = new HttpRequest();
-        req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        req.setEndpoint(url);
-        req.setMethod('POST');
-        req.setBody (body);
-        try {
-            Http http = new Http();
-            response = http.send(req);
-            System.debug('reCAPTCHA response: ' + response);
-            System.debug('reCAPTCHA body: ' + response.getBody());
-        } catch (System.Exception e) {
-            System.debug('ERROR: ' + e);
-        }
-        return response;
-    }
-
-    private String remoteHost {
-        get {
-            String ret = '127.0.0.1';
-            // also could use x-original-remote-host
-            Map<String, String> hdrs = ApexPages.currentPage().getHeaders();
-            if (hdrs.get('x-original-remote-addr') != null)
-                ret =  hdrs.get('x-original-remote-addr');
-            else if (hdrs.get('X-Salesforce-SIP') != null)
-                ret =  hdrs.get('X-Salesforce-SIP');
-            return ret;
-        }
     }
 
     public void findLocation(){
