@@ -3036,7 +3036,8 @@ public class AMS_OSCARTriggerHandler {
 
 	                    	AMS_OSCAR_JSON.ChangeCode auxChangeCode = changeCode.clone();
 	                    	Account acct_reason = accounts.get(forAccount.Id);
-	                    	List<String> lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
+                            List<String> lRes = new List<String>();
+                            if(acct_reason.Reason__c != null) lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
 	                    	System.debug('accounts: ' + accounts );
 	                    	System.debug('acct_reason.Reason__c: ' + acct_reason.Reason__c + '|| lRes: ' + lRes);
 	                    	if(lRes != null){
