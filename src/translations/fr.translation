@@ -8741,6 +8741,14 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10444,6 +10452,14 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>Suivant</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11836,6 +11852,122 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>Agent hors ligne</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>Agent en ligne</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>Poser une question</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous appeler</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Créneaux horaires de disponibilité :</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>Aucun téléphone disponible pour le pays sélectionné.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez utiliser le numéro suivant pour parler à un représentant de l’IATA :</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Chatter avec nous</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Terminer le chat</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>En fonction de vos critères, d’autres utilisateurs ont trouvé les réponses suivantes utiles :</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>Fermer, déjà vu</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Fermer, rappeler la prochaine fois</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Bienvenue sur la page d’assistance du portail clients de l’IATA !</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>Je peux également chatter avec vous en [languages].</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Quitter le chat ?</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat non disponible</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat non disponible</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous aimerions beaucoup vous aider</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Retourner au chat</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Enregistrer le chat</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Choisissez votre moyen de communication préféré :</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>Faire un compliment</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>Parler d’un problème</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11924,7 +12056,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Vous pouvez enregistrer la transcription de cette session de chat à l’aide du bouton « Enregistrer le chat ». La transcription intégrale de cette session sera également disponible dans le portail clients.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11936,7 +12068,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Tapez votre message ici</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11988,11 +12120,11 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>L’un de nos représentants sera bientôt disponible. Vous êtes le client n° &lt;queuenumber&gt;. Votre temps d’attente est d’environ &lt;queueminutes&gt; minute(s). Si vous êtes pressé(e), vous pouvez également poser votre question sur notre portail clients. Vous obtiendrez une réponse rapidement. Si votre problème est urgent, vous pouvez sélectionner l’option « Nous appeler ».</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>Le chat va bientôt commencer.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>

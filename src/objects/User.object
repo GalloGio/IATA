@@ -934,6 +934,61 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>LVA_Language_Skills__c</fullName>
+        <description>Agent&apos;s languages to display on Live Agent Chat</description>
+        <externalId>false</externalId>
+        <label>Spoken Languages</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>en_US</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>es</fullName>
+                    <default>false</default>
+                    <label>Español</label>
+                </value>
+                <value>
+                    <fullName>fr</fullName>
+                    <default>false</default>
+                    <label>Français</label>
+                </value>
+                <value>
+                    <fullName>it</fullName>
+                    <default>false</default>
+                    <label>Italiano</label>
+                </value>
+                <value>
+                    <fullName>pt_BR</fullName>
+                    <default>false</default>
+                    <label>Português</label>
+                </value>
+                <value>
+                    <fullName>ja</fullName>
+                    <default>false</default>
+                    <label>日本語</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LVA_Show_photo_on_chat__c</fullName>
+        <description>Show photo on chat</description>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show photo on chat</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>License_Cost_Center__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The IATA cost center that is paying for your Salesforce.com license.</inlineHelpText>

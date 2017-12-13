@@ -8699,6 +8699,14 @@ and
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
         <name>ISSP_DDS_BTN_OPTOIN</name>
     </customLabels>
@@ -10397,6 +10405,14 @@ and
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
+    </customLabels>
+    <customLabels>
         <label>التالي</label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
@@ -11783,6 +11799,122 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label>الوكيل غير متصل</label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label>الوكيل متصل</label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>طرح سؤال</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>الاتصال بنا</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>الفترة المتاحة:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يتوفر رقم هاتف للدولة المحددة.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنكم استخدام الرقم التالي للتحدث إلى أحد مندوبي &quot;أياتا&quot; (IATA):</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>تحدثوا إلينا</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>إنهاء المحادثة</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>بناءً على معاييركم، وجد مستخدمون آخرون الإجابات التالية مفيدة:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>إغلاق، تمت المشاهدة بالفعل</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>إغلاق، وتذكير في المرة المقبلة</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>أهلاً بكم في صفحة دعم عملاء &quot;إياتا&quot; (IATA)!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>أستطيع كذلك التحدث إليكم ب [languages]</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>مغادرة المحادثة؟</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>المحادثة غير متاحة</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>المحادثة غير متاحة</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>يسرنا تقديم المساعدة</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى المحادثة</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>حفظ المحادثة</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>اختيار قناتكم المفضّلة</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>مشاركة ثناء</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>الإفصاح عن مشكلة</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11871,7 +12003,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>يمكنكم حفظ نص جلسة هذه المحادثة بالنقر على &quot;حفظ المحادثة&quot;. ستتوفر نسخة كاملة كذلك من هذه الجلسة في بوابة العملاء.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11883,7 +12015,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>يُرجى كتابة الرسالة هنا</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11935,11 +12067,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>أحد مندوبينا سيكون معكم قريباً. أنتم العميل رقم &lt;queuenumber&gt; في قائمة الانتظار. فترة انتظاركم &lt;queueminutes&gt; دقيقة/دقائق تقريباً. إذا كان الأمر عاجلاً، يمكنكم إرسال سؤالكم على شكل حالة من خلال بوابة العملاء. سوف تتلقون رداً سريعاً. إذا كان الأمر طارئاً، يمكنكم تحديد خيار &quot;الاتصال بنا&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>المحادثة جاهزة للبدء.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
