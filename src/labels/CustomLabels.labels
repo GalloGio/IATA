@@ -56,7 +56,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
-        <value>A new change code has been generated:</value>
+        <value>One or more new change codes have been generated:</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
