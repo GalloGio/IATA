@@ -218,12 +218,12 @@ private class ANG_RiskEventGeneratorTest {
 			ANG_AccountId__c = a.Id
 			, ANG_Risk_Type__c = [SELECT Id FROM ANG_Risk_Event_Type__c].Id
 			, ANG_Issued_date__c = Date.newInstance(2016, 10, 15)
+			, ANG_Expiration_Date__c =system.today()
 		);
 
+
 		Test.startTest();
-
-		new ANG_RiskEventGenerator(new List<ANG_Agency_Risk_Event__c>{re}).loadInitialInformations();
-
+		insert re;
 		Test.stopTest();
 
 		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Expiration_Date__c, ANG_HE_AccountId__c FROM ANG_Agency_Risk_Event__c];
