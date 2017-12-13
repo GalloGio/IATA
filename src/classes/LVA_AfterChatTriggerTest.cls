@@ -8,7 +8,7 @@ public class LVA_AfterChatTriggerTest {
         List<LiveChatTranscript> lct = new List<LiveChatTranscript>();
         Set<Id> caseIds = new Set<Id>();
         
-        user objUser = new user(lastname='b', email='aa@mail.com',username='aa@mail.com',License_Cost_Center__c = 'ISE006CH01', TimeZoneSidKey = 'GMT', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US',LocaleSidKey  ='en_US',alias='guest',profileid=[select id from profile where name = 'IDFS Americas - Hub Staff' limit 1][0].id);
+        user objUser = new user(lastname='LVA_TEST_TRIGGER_USER', email='LVA_TEST_TRIGGER_USER@mail.com',username='LVA_TEST_TRIGGER_USER@mail.com',License_Cost_Center__c = 'ISE006CH01', TimeZoneSidKey = 'GMT', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US',LocaleSidKey  ='en_US',alias='guest',profileid=[select id from profile where name = 'IDFS Americas - Hub Staff' limit 1][0].id);
         insert objUser;
         system.runAs(objUser){
             Account a = new Account();
@@ -95,7 +95,7 @@ public class LVA_AfterChatTriggerTest {
         List<Id> caseIds = new List<Id>();
         
         test.startTest();
-            User objUser = new user(lastname='b', email='aa@mail.com',username='aa@mail.com',License_Cost_Center__c = 'ISE006CH01', TimeZoneSidKey = 'GMT', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US',LocaleSidKey  ='en_US',alias='guest',profileid=[select id from profile where name = 'IDFS Americas - Hub Staff' limit 1][0].id);
+            User objUser = new user(lastname='LVA_TEST_TRIGGER_USER', email='LVA_TEST_TRIGGER_USER@mail.com',username='LVA_TEST_TRIGGER_USER@mail.com',License_Cost_Center__c = 'ISE006CH01', TimeZoneSidKey = 'GMT', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US',LocaleSidKey  ='en_US',alias='guest',profileid=[select id from profile where name = 'IDFS Americas - Hub Staff' limit 1][0].id);
             insert objUser;
             System.runAs(objUser){
                 Account a = new Account();
