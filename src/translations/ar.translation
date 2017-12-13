@@ -11635,7 +11635,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsNoConfigAvailable</name>
     </customLabels>
     <customLabels>
-        <label>يمكنكم استخدام الرقم التالي للتحدث إلى أحد مندوبي &quot;إياتا&quot; (IATA):</label>
+        <label>يمكنكم استخدام الرقم التالي للتحدث إلى أحد مندوبي &quot;أياتا&quot; (IATA):</label>
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
@@ -11667,7 +11667,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_EndChat</name>
     </customLabels>
     <customLabels>
-        <label>بناءً على معاييركم، وجد مستخدمون آخرون الإجابات التالية أنها مفيدة:</label>
+        <label>بناءً على معاييركم، وجد مستخدمون آخرون الإجابات التالية مفيدة:</label>
         <name>LVA_FAQsHeader</name>
     </customLabels>
     <customLabels>
@@ -11683,7 +11683,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_IntroductionVideo</name>
     </customLabels>
     <customLabels>
-        <label>أستطيع كذلك التحدث إليكم في [languages].</label>
+        <label>أستطيع كذلك التحدث إليكم ب [Languages]</label>
         <name>LVA_LanguagesMessage</name>
     </customLabels>
     <customLabels>
@@ -11715,7 +11715,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_SaveChat</name>
     </customLabels>
     <customLabels>
-        <label>اختيار قناتكم المفضّلة:</label>
+        <label>اختيار قناتكم المفضّلة</label>
         <name>LVA_SelectPreferredChannel</name>
     </customLabels>
     <customLabels>
@@ -11815,7 +11815,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label>يمكنكم حفظ نص جلسة هذه المحادثة باستخدام زر &quot;حفظ المحادثة&quot;. ستتوفر نسخة كاملة كذلك من هذه الجلسة في بوابة العملاء.</label>
+        <label>يمكنكم حفظ نص جلسة هذه المحادثة بالنقر على &quot;حفظ المحادثة&quot;. ستتوفر نسخة كاملة كذلك من هذه الجلسة في بوابة العملاء.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11879,7 +11879,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label>أحد مندوبينا سيكون معكم قريباً. أنتم العميل رقم &lt;queuenumber&gt; في قائمة  الانتظار. فترة انتظاركم &lt;queueminutes&gt; دقيقة/دقائق تقريباً. إذا كان الأمر عاجلاً، فيمكن أن ترفعوا سؤالكم في صورة حالة من خلال بوابة العملاء. سوف تتلقون رداً سريعاً. إذا كان الأمر طارئاً، يمكنكم تحديد خيار &quot;الاتصال بنا&quot;.</label>
+        <label>أحد مندوبينا سيكون معكم قريباً. أنتم العميل رقم &lt;queuenumber&gt; في قائمة الانتظار. فترة انتظاركم &lt;queueminutes&gt; دقيقة/دقائق تقريباً. إذا كان الأمر عاجلاً، يمكنكم إرسال سؤالكم على شكل حالة من خلال بوابة العملاء. سوف تتلقون رداً سريعاً. إذا كان الأمر طارئاً، يمكنكم تحديد خيار &quot;الاتصال بنا&quot;.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
