@@ -4,18 +4,22 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">09:00h - 17:00H / Working days</value>
+        <value xsi:type="xsd:string">09:00 to 17:00 / Working days</value>
+    </values>
+    <values>
+        <field>Business_Hours_Name__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>IsoCountry__c</field>
-        <value xsi:type="xsd:string">en</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>PhoneNumber__c</field>
-        <value xsi:type="xsd:string">966 666 666</value>
+        <value xsi:type="xsd:string">966 666 444</value>
     </values>
     <values>
         <field>Sector__c</field>
-        <value xsi:type="xsd:string">Airline</value>
+        <value xsi:type="xsd:string">Travel Agent</value>
     </values>
 </CustomMetadata>

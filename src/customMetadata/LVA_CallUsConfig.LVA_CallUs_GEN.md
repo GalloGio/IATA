@@ -4,7 +4,11 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">09:00h - 15:00h / working days</value>
+        <value xsi:type="xsd:string">09:00 to 15:00 / Working days</value>
+    </values>
+    <values>
+        <field>Business_Hours_Name__c</field>
+        <value xsi:type="xsd:string">Default</value>
     </values>
     <values>
         <field>IsoCountry__c</field>

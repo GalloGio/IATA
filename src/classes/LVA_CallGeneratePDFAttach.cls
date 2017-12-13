@@ -18,7 +18,7 @@ global without sharing class LVA_CallGeneratePDFAttach {
                 }
                 
                 //attachments.add(attachPDF(lct.Id, Blob.toPDF(lct.body), lct.caseId, lct.Case.Subject));
-                attachments.add(attachPDF(lct.Id, reportPdf, lct.caseId, lct.Case.Subject));
+                attachments.add(attachPDF(reportPdf, lct.caseId, lct.Case.Subject));
                 
             }
         }catch(Exception e){
@@ -31,7 +31,7 @@ global without sharing class LVA_CallGeneratePDFAttach {
         }
     }
     
-    public static Attachment attachPDF(Id lctId, Blob reportPdf, Id caseId, String Subject){
+    public static Attachment attachPDF(Blob reportPdf, Id caseId, String Subject){
         Attachment attachmentPdf = new Attachment();
         try{
             

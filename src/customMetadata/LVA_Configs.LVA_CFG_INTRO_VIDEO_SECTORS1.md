@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Travel Agent</value>
+        <value xsi:type="xsd:string">Airline</value>
     </values>
 </CustomMetadata>

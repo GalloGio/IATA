@@ -19,13 +19,6 @@ public with sharing class LVA_AfterChatTriggerHandler {
                     CaseComment cc = CreateCaseComment(lct.SupervisorTranscriptBody, lct.CaseId);
                     ccs.add(cc);
                 }
-                
-                if(!String.isEmpty(lct.Body)){
-                    //Attachment att = CreateCaseAttachment(lct.Body, lct.CaseId, mapCaseThread);
-                    //Attachment att = CreateCaseAttachment(lct.Id, lct.Body, lct.CaseId, mapCaseThread);
-                    //atts.add(att);
-                    hasTranscriptBody = true;
-                }
             }
         }
         

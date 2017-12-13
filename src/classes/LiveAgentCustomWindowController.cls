@@ -1,7 +1,9 @@
 public without sharing  class LiveAgentCustomWindowController {
-    
+    public static final String LVA_DEFAULT_CHAT_IMAGE = 'LVA_DEFAULT_CHAT_IMAGE';
+    public static final String DEFAULT_IMAGE = '/profilephoto/005/T';
+
     private Set<String> rtlLanguages = new Set<String>{'ar'};
-        
+
         public String language{
             get{
                 if (language == null){
@@ -23,7 +25,7 @@ public without sharing  class LiveAgentCustomWindowController {
             }
             set;
         }
-    
+
     public boolean isRTL{
         get{
             if(rtlLanguages.contains(language)) {
@@ -33,26 +35,26 @@ public without sharing  class LiveAgentCustomWindowController {
         }
         set;
     }
-    
+
     public String defaultChatImg{
         get{
-            String resourceName = vfISSP_FAQ2Case.getLivAgConfig('LVA_DEFAULT_CHAT_IMAGE');
+            String resourceName = vfISSP_FAQ2Case.getLivAgConfig(LVA_DEFAULT_CHAT_IMAGE);
             // Fetching the resource
             List<StaticResource> resourceList= [SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName];
-            
+
             // Checking if the result is returned or not
             if(resourceList.size() == 1){
                 // Getting namespace
                 String namespace = resourceList[0].NamespacePrefix;
                 // Resource URL
-                return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName; 
+                return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName;
             }else{
-                return '/profilephoto/005/T';
+                return DEFAULT_IMAGE;
             }
         }
         set;
     }
-    
+
     public LiveAgentButtonSettings__c getCSetting(String key) {
         LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
         try{
@@ -62,11 +64,11 @@ public without sharing  class LiveAgentCustomWindowController {
         }
         return labs;
     }
-    
+
     public LiveAgentCustomWindowController (){
     }
-    
-    
+
+
     @RemoteAction
     public static user getPhoto(String userId)
     {
@@ -78,7 +80,7 @@ public without sharing  class LiveAgentCustomWindowController {
             return null;
         }
     }
-    
+
     @RemoteAction
     public static Map<String, String> getLanguages(String userId){
         try{
@@ -87,7 +89,7 @@ public without sharing  class LiveAgentCustomWindowController {
             if(userLanguageSkills != null){
                 String [] splitedUserLanguageSkills = userLanguageSkills.split(';');
                 Schema.DescribeFieldResult field = User.LVA_Language_Skills__c.getDescribe();
-                
+
                 for (Schema.PicklistEntry entry : field.getPicklistValues()){
                     for(String languageSkill : splitedUserLanguageSkills){
                         if(entry.getValue() == languageSkill){
@@ -96,7 +98,7 @@ public without sharing  class LiveAgentCustomWindowController {
                     }
                 }
             }
-            
+
             return languageIsoMap;
         }catch(Exception e){
             return null;

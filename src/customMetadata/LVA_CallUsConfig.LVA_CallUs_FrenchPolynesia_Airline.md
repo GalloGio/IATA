@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">09:00 to 17:00; Monday to Friday</value>
     </values>
     <values>
+        <field>Business_Hours_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>IsoCountry__c</field>
         <value xsi:type="xsd:string">PF</value>
     </values>

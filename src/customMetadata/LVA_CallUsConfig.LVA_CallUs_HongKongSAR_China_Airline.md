@@ -4,7 +4,11 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">09:00 to 17:00; Monday to Friday</value>
+        <value xsi:type="xsd:string">09:00 to 17:00; Monday to Fridays</value>
+    </values>
+    <values>
+        <field>Business_Hours_Name__c</field>
+        <value xsi:type="xsd:string">N.Asia - Hong Kong (SAR), China</value>
     </values>
     <values>
         <field>IsoCountry__c</field>
