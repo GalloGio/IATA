@@ -2891,8 +2891,10 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-                    //Remove TERMINATED Accounts from list
-                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
+                    List<Account> accountsToCheck = [SELECT Id, Status__c, Reason__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]; 
+                    
+                    for(Account acc: accountsToCheck){
+                    	//Remove TERMINATED Accounts from list
                         if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
@@ -2953,11 +2955,24 @@ public class AMS_OSCARTriggerHandler {
 							for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
 								if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
 									accountIds.add(relationship.Parent_Account__c);
-									accounts.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
+									accounts.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c, Reason__c = relationship.Parent_Account__r.Reason__c));
 								}
 								if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
 									accountIds.add(relationship.Child_Account__c);
-									accounts.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
+									accounts.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c, Reason__c = relationship.Child_Account__r.Reason__c));
+								}
+							}
+						}
+
+                        System.debug('isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships): ' + isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships) );
+                        System.debug('accountsToCheck: ' + accountsToCheck );
+                        //if nothing from the cycle above we still need to input at least the existing accounts retrieve before
+                        if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
+                            for(Account acc: accountsToCheck){
+                                if(acc.Id != updatedOscar.Account__c && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
+                                    accounts.put(acc.Id, acc);
+                                }else if(acc.Id == updatedOscar.Account__c){
+                                    accounts.put(acc.Id, acc);
 								}
 							}
 						}

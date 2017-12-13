@@ -34,7 +34,8 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Parent_Account__r.Status__c, 
+												Child_Account__r.Reason__c, Parent_Account__r.Reason__c //FM AMSU-1
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
