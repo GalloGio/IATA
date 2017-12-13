@@ -19177,7 +19177,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Portal_BackgroundImage</shortDescription>
-        <value>http://longwallpapers.com/Desktop-Wallpaper/sky-wallpaper-hd-resolution-For-Desktop-Wallpaper.jpg</value>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_BackgroundImage_size</fullName>
