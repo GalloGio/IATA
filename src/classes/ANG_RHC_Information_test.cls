@@ -89,6 +89,27 @@ public class ANG_RHC_Information_test{
         );
         insert fs;
 
+        
+        AMS_ChangeCodes__c ccPca= new AMS_ChangeCodes__c(
+            Name = 'PCA',
+            Integration_RecId__c='2',
+            Change_Code__c='PCA',
+            Reason_Code__c='',
+            Reason_Code_Description__c='description',
+            Account_status_change__c=''        
+        );
+        
+         AMS_ChangeCodes__c ccPcr= new AMS_ChangeCodes__c(
+            Name ='PCR',
+            Change_Code__c='PCR',
+            Integration_RecId__c='1',
+            Reason_Code__c='',
+            Reason_Code_Description__c='description',
+            Account_status_change__c=''        
+        );
+        
+        insert new list<AMS_ChangeCodes__c>{ccPcr,ccPca};
+
 	}
 
 	TestMethod static void insertNewFSRecordAndUpdatedRHC(){
