@@ -11683,7 +11683,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_IntroductionVideo</name>
     </customLabels>
     <customLabels>
-        <label>أستطيع كذلك التحدث إليكم ب [Languages]</label>
+        <label>أستطيع كذلك التحدث إليكم ب [languages]</label>
         <name>LVA_LanguagesMessage</name>
     </customLabels>
     <customLabels>
