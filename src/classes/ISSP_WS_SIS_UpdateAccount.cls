@@ -133,7 +133,7 @@ global with sharing class ISSP_WS_SIS_UpdateAccount {
     }
     
     private static Boolean convertMember(String member) {
-        Boolean result = MAP_MEMBER_CONVERSION.get(member);
+        Boolean result = MAP_MEMBER_CONVERSION.get(member.toUpperCase());
         return result==null? false: result;
     }
     
