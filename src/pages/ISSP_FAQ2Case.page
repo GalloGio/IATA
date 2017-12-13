@@ -94,14 +94,23 @@
         padding-right: 0;
     }
     .buttons1LiveAgentRow{
+        padding-top:5px !important;
+        padding-bottom:5px !important;
         background-color: #F8F8F8;
         cursor: pointer;
     }
+
+
     .butOver{
         background-color: #F8F8F8;
     }
     .butPointer{
         cursor: pointer;
+    }
+
+    .lvaButton:hover{
+        cursor: pointer;
+        background-color: #e6f2ff;
     }
 
     .iataBlue{
@@ -130,14 +139,23 @@
         height:30px;
         width:30px;
     }
-    .pageSectionHeader{
-        /* padding-top:15px; */
+    .pageSectionHeaderPadding{
         padding-bottom:15px;
+    }
+    .pageSectionHeader{
         text-align:center !important;
+        vertical-align:middle !important;
         font-weight: bold !important;
         font-size:16px !important;
         color: rgb(48,115,173) !important;
     }
+    .control-label{
+        vertical-align:middle !important;
+        font-weight: bold !important;
+        font-size:16px !important;
+        color: rgb(48,115,173) !important;
+    }
+
     .faqsBackground{
         background-color: #F8F8F8;/* rgb(241,239,226); */
     }
@@ -280,14 +298,6 @@
         $('#butCompliment').addClass( "lvaActive" );
     }
 
-    function overEfect(butId){
-        if (butId!='butChat'){
-            $('#'+butId).addClass( "butPointer" );
-        }
-
-        $('#'+butId).addClass( "butOver" );
-    }
-
     //////////////////////////////////////
     // Buttons section 2
     /////////////////////////////////////
@@ -295,31 +305,6 @@
         //$('#modalCallUs').modal('toggle');
         $('#modalCallUs').modal('show');
         //$('#modalCallUs').modal('hide');
-    }
-    function overEfectCleanAllButSec2(){
-
-        if ( $( '#butCallUs' ).length ) {
-            $('#butCallUs').removeClass( "butOver butPointer" );
-        }
-        if ( $( '#butCancel' ).length ) {
-            $('#butCancel').removeClass( "butOver butPointer" );
-        }
-        if ( $( '#butChat' ).length ) {
-            $('#butChat').removeClass( "butOver butPointer" );
-        }
-
-
-        if ( $( '#butContactUs' ).length ) {
-            $('#butContactUs').removeClass( "butOver butPointer" );
-        }
-
-        if ( $( '#butSubmit' ).length ) {
-            $('#butSubmit').removeClass( "butOver butPointer" );
-        }
-
-        if ( $( '#butSaveAttach' ).length ) {
-            $('#butSaveAttach').removeClass( "butOver butPointer" );
-        }
     }
 
     ////////////////////////////////////////////////
@@ -363,7 +348,7 @@
                       <div class="modal-body">
                           <p>
                               <apex:iframe src="" id="introVideoIFrame"
-                                           width="570px" height="350px" scrolling="false" frameBorder="false"/>
+                                           width="100%" height="350px" scrolling="false" frameBorder="false"/>
                           </p>
                       </div>
                       <div class="modal-footer">
@@ -405,6 +390,11 @@
                 $('#introVideoIFrame').attr('src', '');
               }
 
+              /*
+              values for config parameter LVA_CFG_INTRO_VIDEO_MODE
+                LVA_INTRO_VIDEO_MODE_POP_UP
+                LVA_INTRO_VIDEO_MODE_DIALOG
+              */
               function openIntroVideo(){
                 if (livAgentIntroVidMode=='LVA_INTRO_VIDEO_MODE_POP_UP'){
                     introVideoPopUp();
@@ -416,7 +406,7 @@
               }
           </script>
       <apex:outputPanel id="introVideo"
-                        rendered="{! IF(isIntroVideoAlreadyShowed==true ,false ,true)}">
+                        rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),livAgentIntroVidIsAllowed)}">
           <script>
             openIntroVideo();
           </script>
@@ -438,10 +428,12 @@
 <div class="row">
     <div class="col-xs-12 bannerLoveGradientContainer">
         <div class="bannerLoveGradient">
-            {!$Label.LVA_ReachOutUs}
-            <span class="imgMovieBut butPointer" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
-                <apex:image height="18px" onclick="openIntroVideo();" url="{!$Resource.LVA_IconsMovie}"/>
-            </span>
+            {!weLoveToHelpLabel}
+            <!--
+            <apex:outputText value="{!$Label.LVA_ReachOutUs}" >
+                <apex:param value="{!loggUserName}" />
+            </apex:outputText>
+            -->
         </div>
     </div>
 </div>
@@ -456,7 +448,7 @@
           <div class="row">
               <div class="col-sm-2"></div>
               <div class="col-sm-8 ">
-                  <div id="butGeneral" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaActive"
+                  <div id="butGeneral" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton lvaActive"
                        title="{!$Label.ISSP_General_enquiries}"
                        onclick="GeneralQueueMethod();selectGeneralBut();return false;">
                       <div class = "thumbButt1">
@@ -464,7 +456,7 @@
                       </div>
                       <div class="pageSectionHeader">{!$Label.LVA_AskQuestion}</div>
                   </div>
-                  <div id="butCompliment" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow"
+                  <div id="butCompliment" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton"
                        title="{!$Label.ISSP_Compliments}"
                        onclick="ComplimentGeneralQueueMethod();selectComplimentBut();return false;">
                       <div class = "thumbButt1">
@@ -472,7 +464,7 @@
                       </div>
                       <div class="pageSectionHeader">{!$Label.LVA_ShareACompliment}</div>
                   </div>
-                  <div id="butComplaint" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow"
+                  <div id="butComplaint" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton"
                        title="{!$Label.ISSP_Complaints}"
                        onclick="ComplaintMethod();selectComplaintBut();return false;">
                           <div class = "thumbButt1">
@@ -863,146 +855,183 @@
                                     </div>
                                 </div>
 
-                                <!-- ************************** -->
-                                <!-- CREATE CASE OR SUBMIT CASE -->
-                                <!-- ************************** -->
-                                 <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                newCase.IFAP_Country_ISO__c != null)}">
-                                     <div class="col-xs-12 pageSectionHeader">
-                                        {!$Label.LVA_SelectPreferredChannel}
-                                    </div>
+                                <!--*****************************************************-->
+                                <!-- CREATE CASE OR SUBMIT CASE WHEN IS COMPLAIN         -->
+                                <!--*****************************************************-->
+                                 <!-- If not show chat buttons and call us button fill the columns space with empty sapce -->
+                                 <apex:outputPanel layout="none" rendered="{! AND(isComplainLayout==true,
+                                                                                newCase.IFAP_Country_ISO__c != null,
+                                                                                currentButtonsToShow == 'CancelAndCreateACase') }">
+                                     <div class="col-md-4"></div>
+                                     <div class="col-md-4">
+                                         <div class = "col-md-12 removeMargin text-center lvaButton"
+                                              onclick="controllerCreate();"
+                                              title="{!$Label.ISSP_F2CCreate}">
+                                             <div class = "thumbButt" >
+                                                 <apex:image url="{!$Resource.LVA_IconsMail}"/>
+                                             </div>
+                                             <div class = "caption text-center">
+                                                 <h4>{!$Label.ISSP_F2CCreate}</h4>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4"></div>
                                  </apex:outputPanel>
-                                <row>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-sm-12 col-md-3">
-                                        <!-- CancelAndCreateACase - CREATE CASE BUTT -->
-                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                        newCase.IFAP_Country_ISO__c != null)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butContactUs"
-                                                 onclick="controllerCreate();"
-                                                 onmouseover="overEfect('butContactUs');" onmouseleave="overEfectCleanAllButSec2();"
-                                                 title="{!$Label.ISSP_F2CCreate}">
-                                                <div class = "thumbButt" id="butThuContactUs">
-                                                    <apex:image url="{!$Resource.LVA_IconsMail}"/>
-                                                </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.ISSP_F2CCreate}</h4>
-                                                </div>
-                                            </div>
+
+                                 <!-- **************************************************** -->
+                                 <!-- CREATE CASE OR SUBMIT CASE WHEN IS NOT COMPLAIN      -->
+                                 <!--***************************************************** -->
+                                <apex:outputPanel layout="none" rendered="{! OR(isComplainLayout!=true,
+                                                                                 currentButtonsToShow != 'CancelAndCreateACase') }">
+
+                                    <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                newCase.IFAP_Country_ISO__c != null)}">
+                                        <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
+                                            {!$Label.LVA_SelectPreferredChannel}
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <row>
+                                        <div class="col-md-1"></div>
+
+
+                                        <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                        <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
+                                            <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                        <!-- Submit&Attach - SUBMIT BUTT -->
-                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butSubmit"
-                                                 onclick="controllerSave();"
-                                                 onmouseover="overEfect('butSubmit');" onmouseleave="overEfectCleanAllButSec2();"
-                                                 title="{!$Label.ISSP_Submit}" >
-                                                <div class = "thumbButt" id="butThuSubmit">
-                                                    <apex:image url="{!$Resource.LVA_IconsOk}"/>
+                                        <div class="col-sm-12 col-md-3">
+                                            <!-- CancelAndCreateACase - CREATE CASE BUTT -->
+                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null)}">
+                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butContactUs"
+                                                     onclick="controllerCreate();"
+                                                     title="{!$Label.ISSP_F2CCreate}">
+                                                    <div class = "thumbButt" id="butThuContactUs">
+                                                        <apex:image url="{!$Resource.LVA_IconsMail}"/>
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <h4>{!$Label.ISSP_F2CCreate}</h4>
+                                                    </div>
                                                 </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.ISSP_Submit}</h4>
+                                            </apex:outputPanel>
+
+                                            <!-- Submit&Attach - SUBMIT BUTT -->
+                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butSubmit"
+                                                     onclick="controllerSave();"
+                                                     title="{!$Label.ISSP_Submit}" >
+                                                    <div class = "thumbButt" id="butThuSubmit">
+                                                        <apex:image url="{!$Resource.LVA_IconsOk}"/>
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <h4>{!$Label.ISSP_Submit}</h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                    </div>
+                                            </apex:outputPanel>
+                                        </div>
 
 
-                                    <!-- ************************** -->
-                                    <!-- CHAT OR ATTACH BUTTONS     -->
-                                    <!-- ************************** -->
-                                    <div class="col-sm-12 col-md-4">
-                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                    newCase.IFAP_Country_ISO__c != null)}">
-                                            <!-- Chat Buttons -->
-                                            <div class = "col-md-12 removeMargin text-center" id="butChat"
-                                                 onmouseover="overEfect('butChat');" onmouseleave="overEfectCleanAllButSec2();">
-                                                <div class = "thumbButt" id="butThuChat">
-                                                    <apex:image url="{!$Resource.LVA_IconsChat}"
-                                                                title="{!$Label.LVA_ChatWithUs}" />
-                                                </div>
-                                                <div class = "caption text-center">
-                                                    <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
-                                                        <h4>{!$Label.LVA_ChatWithUs}</h4>
-                                                    </apex:outputPanel>
-                                                    <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
-                                                        <h4>{!$Label.LVA_NoAvailableButtons}</h4>
-                                                    </apex:outputPanel>
-                                                    <apex:outputPanel rendered="{!isCNS}">
-                                                        <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
-                                                    </apex:outputPanel>
-
+                                        <!-- ************************** -->
+                                        <!-- CHAT OR ATTACH BUTTONS     -->
+                                        <!-- ************************** -->
+                                        <apex:outputPanel layout="none" rendered="{! OR(IF(showChatButtons==true, true, false), currentButtonsToShow != 'CancelAndCreateACase')}">
+                                            <div class="col-sm-12 col-md-4">
+                                                <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null)}">
                                                     <!-- Chat Buttons -->
-                                                    <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
-                                                        <div id="liveAgentIframes" class="row text-center">
-                                                            <apex:outputPanel rendered="{!showButton}">
-                                                                <!-- basto1p passing live agent new buttons -->
-                                                                <apex:repeat value="{!csButtonsList}" var="butCat">
-                                                                    <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
-                                                                                 width="26px" height="35px" scrolling="false" frameBorder="false"/>
-                                                                </apex:repeat>
+                                                    <div class = "col-md-12 removeMargin text-center lvaButton" id="butChat" >
+                                                        <div class = "thumbButt" id="butThuChat">
+                                                            <apex:image url="{!$Resource.LVA_IconsChat}"
+                                                                        title="{!$Label.LVA_ChatWithUs}" />
+                                                        </div>
+                                                        <div class = "caption text-center">
+                                                            <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
+                                                                <h4>{!$Label.LVA_ChatWithUs}</h4>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
+                                                                <h4>{!$Label.LVA_NoAvailableButtons}</h4>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!isCNS}">
+                                                                <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
+                                                            </apex:outputPanel>
+
+                                                            <!-- Chat Buttons -->
+                                                            <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
+                                                                <div id="liveAgentIframes" class="row text-center">
+                                                                    <apex:outputPanel rendered="{!showButton}">
+                                                                        <!-- basto1p passing live agent new buttons -->
+                                                                        <apex:repeat value="{!csButtonsList}" var="butCat">
+                                                                            <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
+                                                                                         width="26px" height="35px" scrolling="false" frameBorder="false"/>
+                                                                        </apex:repeat>
+                                                                    </apex:outputPanel>
+                                                                </div>
                                                             </apex:outputPanel>
                                                         </div>
-                                                    </apex:outputPanel>
-                                                </div>
+                                                    </div>
+                                                </apex:outputPanel>
+
+                                                <!-- Submit&Attach - ATTACH FILE BUTTON -->
+                                                <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                    <div class = "col-md-12 removeMargin text-center lvaButton" id="butSaveAttach"
+                                                         onclick="controllerSaveAttach();"
+                                                         title="{!$Label.ISSP_SubmitAttach}" >
+                                                        <div class = "thumbButt" id="butThuSaveAtach">
+                                                            <apex:image url="{!$Resource.LVA_IconsAttach}"/>
+                                                        </div>
+                                                        <div class = "caption text-center">
+                                                            <h4>{!$Label.ISSP_SubmitAttach}</h4>
+                                                        </div>
+                                                    </div>
+                                                </apex:outputPanel>
                                             </div>
                                         </apex:outputPanel>
 
-                                        <!-- Submit&Attach - ATTACH FILE BUTTON -->
-                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butSaveAttach"
-                                                 onclick="controllerSaveAttach();"
-                                                 onmouseover="overEfect('butSaveAttach');" onmouseleave="overEfectCleanAllButSec2();"
-                                                 title="{!$Label.ISSP_SubmitAttach}" >
-                                                <div class = "thumbButt" id="butThuSaveAtach">
-                                                    <apex:image url="{!$Resource.LVA_IconsAttach}"/>
+                                        <!-- ************************** -->
+                                        <!-- CALL US OR CANCEL BUTTON   -->
+                                        <!-- ************************** -->
+                                        <div class = "col-sm-12 col-md-3 ">
+                                            <!-- CancelAndCreateACase - CALL US BUTTON -->
+                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                        newCase.IFAP_Country_ISO__c != null)}">
+                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butCallUs"
+                                                     onclick="popupCallUs(); return false;"
+                                                     title="{!$Label.LVA_CallUs}" >
+                                                    <div class = "thumbButt" id="butThuCallUs">
+                                                        <apex:image url="{!$Resource.LVA_IconsPhone}"/>
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <h4>{!$Label.LVA_CallUs}</h4>
+                                                    </div>
                                                 </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.ISSP_SubmitAttach}</h4>
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                    </div>
+                                            </apex:outputPanel>
 
-                                    <!-- ************************** -->
-                                    <!-- CALL US OR CANCEL BUTTON   -->
-                                    <!-- ************************** -->
-                                    <div class = "col-sm-12 col-md-3 ">
-                                        <!-- CancelAndCreateACase - CALL US BUTTON -->
-                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                    newCase.IFAP_Country_ISO__c != null)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butCallUs"
-                                                 onclick="popupCallUs(); return false;"
-                                                 onmouseover="overEfect('butCallUs');" onmouseleave="overEfectCleanAllButSec2();"
-                                                 title="{!$Label.LVA_CallUs}" >
-                                                <div class = "thumbButt" id="butThuCallUs">
-                                                    <apex:image url="{!$Resource.LVA_IconsPhone}"/>
+                                            <!--  Cancel buttom -->
+                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butCancel"
+                                                     onclick="controllerCancel();"
+                                                     title="{!$Label.ISSP_Cancel}" >
+                                                    <div class = "thumbButt" id="butThuCancel">
+                                                        <apex:image url="{!$Resource.LVA_IconsCancel}"/>
+                                                    </div>
+                                                    <div class = "caption text-center">
+                                                        <h4>{!$Label.ISSP_Cancel}</h4>
+                                                    </div>
                                                 </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.LVA_CallUs}</h4>
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
+                                            </apex:outputPanel>
 
-                                        <!--  Cancel buttom -->
-                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                            <div class = "col-md-12 removeMargin text-center" id="butCancel"
-                                                 onclick="controllerCancel();"
-                                                 onmouseover="overEfect('butCancel');" onmouseleave="overEfectCleanAllButSec2();"
-                                                                title="{!$Label.ISSP_Cancel}" >
-                                                <div class = "thumbButt" id="butThuCancel">
-                                                    <apex:image url="{!$Resource.LVA_IconsCancel}"/>
-                                                </div>
-                                                <div class = "caption text-center">
-                                                    <h4>{!$Label.ISSP_Cancel}</h4>
-                                                </div>
-                                            </div>
+                                        </div>
+
+                                        <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                        <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}}">
+                                            <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                    </div>
-                                    <div class="col-md-1"></div>
+                                        <div class="col-md-1"></div>
 
-                                </row>
+                                    </row>
+                                </apex:outputPanel>
                             </apex:outputPanel>
 
 
@@ -1101,7 +1130,7 @@
 <!---------------------------------------------------------------------------->
         <div class="col-xs-8"  id="Answers" >
             <div class="row">
-                <div class="col-xs-12 pageSectionHeader">
+                <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
                     {!$Label.LVA_FAQsHeader}
                 </div>
             </div>
@@ -1124,7 +1153,6 @@
                                     Loading...
                             </apex:facet>
                         </apex:actionStatus>
-
                         <ul>
                             <apex:repeat value="{!articleViewLines}" var="articleViewLine" >
                                 <!-- <li class="artical-holder-il"> -->
@@ -1164,6 +1192,23 @@
       </div>
       </apex:outputpanel>
       </apex:outputpanel>
+
+      <div class="row">
+          <div class="col-xs-12" height="10px">&nbsp;</div>
+      </div>
+
+	<apex:outputPanel id="introVideo2" rendered="{! IF(livAgentIntroVidIsAllowed==true ,true ,false)}">
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4 pageSectionHeader pageSectionHeaderPadding lvaButton">
+                <span class="imgMovieBut thumbButt" onclick="openIntroVideo();" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
+                    <apex:image url="{!$Resource.LVA_IconsMovie}"/><br/>
+                    {!$Label.LVA_IntroductionVideo}
+                </span>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
+    </apex:outputpanel>
     <!------------------------------------------------------------------------------------>
 <!--------------------------- Lock Screen while Processing  ---------------------------->
 <!------------------------------------------------------------------------------------>

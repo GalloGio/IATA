@@ -1295,6 +1295,13 @@ private class Faq2CaseTest {
             controller.getButtonNameFromConfigAndAddToList(LAbtnSettings.Name,splitButtomCategories[0]);
             controller.isAllowedCode(LAbtnSettings.Name);
             system.assertEquals(false,controller.isAllowedCode(LAbtnSettings.Name));
+            
+            Boolean isVidAllowed = controller.livAgentIntroVidIsAllowed;
+            system.assertEquals(true, isVidAllowed);
+            
+            Boolean isToShowFAQs = controller.isToShowFAQs;
+            system.assertEquals(true, isToShowFAQs);
+            
             controller.save();
             
             controller.cancel();

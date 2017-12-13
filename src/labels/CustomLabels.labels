@@ -19507,7 +19507,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Portal_BackgroundImage</shortDescription>
-        <value>http://longwallpapers.com/Desktop-Wallpaper/sky-wallpaper-hd-resolution-For-Desktop-Wallpaper.jpg</value>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_BackgroundImage_size</fullName>
@@ -22334,6 +22334,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Leave Chat?</value>
     </labels>
     <labels>
+        <fullName>LVA_New_Chat_Message</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_New_Chat_Message</shortDescription>
+        <value>New chat message!</value>
+    </labels>
+    <labels>
         <fullName>LVA_NoAvailableButtons</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
@@ -22363,7 +22371,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_ReachOutUs</shortDescription>
-        <value>We&apos;d love to help</value>
+        <value>We&apos;&apos;d love to help you {0}</value>
     </labels>
     <labels>
         <fullName>LVA_ReturnToChat</fullName>
