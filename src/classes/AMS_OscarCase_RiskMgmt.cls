@@ -61,7 +61,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 		System.debug('List of lsConfNEWGEN is:' + lsConfNEWGEN);
 
-		if(!lsConfAMS.isEmpty() && !lsConfNEWGEN.isEmpty()){
+		if(!lsConfAMS.isEmpty() || !lsConfNEWGEN.isEmpty()){
 
 			System.debug('[AMS_OscarCase_RiskMgmt] : Entering CreateRiskChangeCode STEP1');
 
