@@ -125,7 +125,7 @@
                       renotify: true
                     });
 
-                    if (onClickLink=undefined){
+                    if (onClickLink!=undefined){
                         n.onclick = function () {
                           window.open(onClickLink);
                         };
