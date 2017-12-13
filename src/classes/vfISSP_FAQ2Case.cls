@@ -55,7 +55,7 @@ public without sharing class vfISSP_FAQ2Case
     //basto1p - live agent v2 cookies prefixs
     public static final String LVA_COOK_INTRO_VIDEO='LVA_COOK_INTRO_VIDEO';
 
-
+	public LiveAgentButtonSettings__c butttonToShow {get; set;}
 
 
     //specific buttons
