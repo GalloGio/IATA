@@ -5275,11 +5275,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6991,11 +6991,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7755,11 +7755,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8519,11 +8519,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9284,11 +9284,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10060,11 +10060,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10836,11 +10836,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11612,11 +11612,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12387,11 +12387,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13277,11 +13277,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14052,11 +14052,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14828,11 +14828,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15768,11 +15768,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16677,11 +16677,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17564,11 +17564,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18476,23 +18476,23 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <label>PCI Compliance</label>
         <picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
-				<values>
-					<fullName>No</fullName>
-					<default>false</default>
-				</values>
-				<values>
-					<fullName>Yes</fullName>
-					<default>false</default>
-				</values>
+                <values>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                </values>
+                <values>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                </values>
          </picklistValues>
          <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18922,11 +18922,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19870,11 +19870,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20634,11 +20634,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21513,11 +21513,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22277,11 +22277,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23214,11 +23214,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
-                <fullName>GoLite</fullName>
+                <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GoStandard</fullName>
+                <fullName>Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

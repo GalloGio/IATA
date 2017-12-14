@@ -197,7 +197,7 @@ private class ANG_AccountHierarchySelectionTest {
 	static testMethod void test_controller() {
 
 		Account HE = [SELECT Id FROM Account WHERE Name = 'Main HE Account HE'];
-		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c FROM AMS_OSCAR__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1];
 
 		Test.startTest();
 
