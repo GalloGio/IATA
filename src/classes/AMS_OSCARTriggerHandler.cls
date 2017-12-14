@@ -2970,9 +2970,11 @@ public class AMS_OSCARTriggerHandler {
                         if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
                             for(Account acc: accountsToCheck){
                                 if(acc.Id != updatedOscar.Account__c && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
-                                    accounts.put(acc.Id, acc);
+                                    //accounts.put(acc.Id, acc);
+                                    accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
                                 }else if(acc.Id == updatedOscar.Account__c){
-                                    accounts.put(acc.Id, acc);
+                                    //accounts.put(acc.Id, acc);
+                                    accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
 								}
 							}
 						}
@@ -2988,7 +2990,10 @@ public class AMS_OSCARTriggerHandler {
 								agenciesAffected.add(pd.Account__c);
 								agenciesAffectedWithHO.add(pd.Account__c);
 							}
+						}else{
+                            agenciesAffected.add(updatedOscar.Account__c);
 						}
+                        System.debug('agenciesAffected: 1 -' + agenciesAffected );
 
 						//Checks if all Hierarchy was Selected
 						Boolean isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(updatedOscar.Account__c), accounts);
@@ -2999,7 +3004,12 @@ public class AMS_OSCARTriggerHandler {
 							sType_of_change = 'CorrectionPerLocation';
 						}
 
+                        System.debug('updatedOscar: 1 -' + updatedOscar );
 				        Id hierarchyHO = AMS_HierarchyHelper.getHierarchyHO(accountHierarchyRelationships.get(updatedOscar.Account__c));
+
+                        if(hierarchyHO == null &&  AMS_Utils.LocationTypeAllHOTypes.contains(updatedOscar.Location_Type__c) ){
+                            hierarchyHO = updatedOscar.Account__c;
+                        }
 
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -3046,16 +3056,22 @@ public class AMS_OSCARTriggerHandler {
 	                    List<AMS_OSCAR_JSON.ChangeCode> lChangeCode = new List<AMS_OSCAR_JSON.ChangeCode>();
 	                    List<AMS_OSCAR__c> lOscars = new List<AMS_OSCAR__c>();
 
+                        System.debug('accounts: ' + accounts );
+                        System.debug('accts: ' + accts );
+                                
+
 	                    //Go throught all account
 	                    for(Account forAccount : accts){
+
+                            System.debug('forAccount: ' + forAccount );
 
 	                    	AMS_OSCAR_JSON.ChangeCode auxChangeCode = changeCode.clone();
 	                    	Account acct_reason = accounts.get(forAccount.Id);
                             List<String> lRes = new List<String>();
                             if(acct_reason.Reason__c != null) lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
-	                    	System.debug('accounts: ' + accounts );
+	                    	
 	                    	System.debug('acct_reason.Reason__c: ' + acct_reason.Reason__c + '|| lRes: ' + lRes);
-	                    	if(lRes != null){
+	                    	if(lRes != null && lRes.size() > 0){
 		                    	auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
 		                        auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
 	                        }
@@ -3075,15 +3091,20 @@ public class AMS_OSCARTriggerHandler {
 
 	                    	Account acct_reason = accounts.get(acctHO.Id);
 	                    	List<String> lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
-	                    	if(lRes != null){
+	                    	if(lRes != null && lRes.size() > 0){
 		                    	changeCodeHO.reasonCode = lRes.get(0);
 		                        changeCodeHO.reasonDesc = lRes.get(1);
 	                    	}
 	                    	AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCodeHO}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acctHO}, true);
                     	}
+	                    System.debug('agenciesAffected: 2 -' + agenciesAffected );
+	                    System.debug('accounts:' + accounts );
 	                    
 	                    accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyCorrections(updatedOscar, agenciesAffected, sType_of_change, accounts, oscarOnlineAccreditation));
 						
+                        System.debug('accountsToUpdate: ' + accountsToUpdate );
+
+
 						set<Account> accountToupdateSet = new set<Account>();
 						for(Id acctId : accountsToUpdate.keySet())
 						{
@@ -3114,7 +3135,7 @@ public class AMS_OSCARTriggerHandler {
 							}
 
 						}
-
+                        System.debug('accountToupdateSet: ' + accountToupdateSet );
 						update new List<Account>(accountToupdateSet);
 
                     }
