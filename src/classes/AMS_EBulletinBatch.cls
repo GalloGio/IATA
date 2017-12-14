@@ -177,7 +177,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//
 
 		//check if the respective email is bounced
-		if(profBouncedMap.get(eBprof.Id))
+		if(profBouncedMap.get(eBprof.Id) == null || profBouncedMap.get(eBprof.Id))
 			return null;
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
