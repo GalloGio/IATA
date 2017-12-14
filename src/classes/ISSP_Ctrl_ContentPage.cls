@@ -14,9 +14,12 @@ public class ISSP_Ctrl_ContentPage
 
   // the soql without the order and limit
   private String soql {get;set;}
+public ApexPages.StandardSetController setCon {get;set;}
 
   // the collection of contacts to display
-  public List<ContentVersion> ContentVersions {get;set;}
+  public List<ContentVersion> getContentVersions() {
+    return (List<ContentVersion>) setCon.getRecords();
+  } 
 
   public String csHost {get;set;}
 
@@ -172,7 +175,8 @@ public class ISSP_Ctrl_ContentPage
 
 
     system.debug('susana soql ' + soql);
-    ContentVersions = sortContentVersions(Database.query(soql));
+    ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(Database.query(soql));
+    //ContentVersions = sortContentVersions(;
     system.debug('susana ContentVersions : ' + ContentVersions);
 
     allCountriesList = getPicklistValues('ContentVersion', 'Country_of_publication__c');
