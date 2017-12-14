@@ -147,7 +147,7 @@
         <fullName>ANG_AE_Fees_Additional_Locations__c</fullName>
         <description>N/A. Placeholder</description>
         <externalId>false</externalId>
-        <label>Any Additional Locations</label>
+        <label>Additional Locations/Codes Beyond 25</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -169,7 +169,7 @@
         <fullName>ANG_AE_Fees_Next_15_Locations__c</fullName>
         <description>AE: Annual fees for Next 15 locations</description>
         <externalId>false</externalId>
-        <label>Next 15 locations</label>
+        <label>11-25 Locations/Codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -213,7 +213,7 @@
         <fullName>ANG_HE_AnnualFees_Large_Agents__c</fullName>
         <description>HE: Annual fees for large agents</description>
         <externalId>false</externalId>
-        <label>Large agents</label>
+        <label>Large Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -224,7 +224,7 @@
         <fullName>ANG_HE_AnnualFees_Medium_Agents__c</fullName>
         <description>HE: Annual fees for medium agents</description>
         <externalId>false</externalId>
-        <label>Medium agents</label>
+        <label>Medium Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
