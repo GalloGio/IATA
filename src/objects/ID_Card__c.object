@@ -431,7 +431,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Expedite</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

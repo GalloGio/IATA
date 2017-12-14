@@ -980,7 +980,7 @@
         <externalId>false</externalId>
         <label>* Valid until</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
