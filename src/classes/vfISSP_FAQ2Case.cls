@@ -409,7 +409,10 @@ public without sharing class vfISSP_FAQ2Case
 
         System.debug('basto1p - isToShowFAQs.currentUserCountry='+currentUserCountry);
         System.debug('basto1p - isToShowFAQs.UserInfo.getLocale()=='+UserInfo.getLocale());
-        if(listCountriesFAQsNotAvailable!=null&&
+        if (String.isBlank(currentUserCountry)){
+            resVal=false;
+        }
+        else if(listCountriesFAQsNotAvailable!=null&&
                 listCountriesFAQsNotAvailable.containsIgnoreCase(currentUserCountry)){
             resVal=false;
         }
