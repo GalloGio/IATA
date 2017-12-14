@@ -285,4 +285,11 @@
     <pluralLabel>Price Tables</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Expedite_Delivery</fullName>
+        <active>true</active>
+        <description>Only one expedite delivery option can be selected</description>
+        <errorConditionFormula>AND(!ISBLANK(Expedite__c),Expedite_Delivery_added_to_IDCard_Price__c = TRUE)</errorConditionFormula>
+        <errorMessage>It&apos;s not possible to have values in both fields (ID Card Fee , Expedite Delivery added to IDCard Price). Please select only one.</errorMessage>
+    </validationRules>
 </CustomObject>
