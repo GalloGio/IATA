@@ -1,8 +1,13 @@
-<apex:page showHeader="false" controller="LiveAgentCustomWindowController" language="{!language}">
-
+<apex:page showHeader="false" applyHtmlTag="false" controller="LiveAgentCustomWindowController" language="{!language}">
+    <html lang="{!language}" style="overflow-x: hidden;width:100%;height: 100%;">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        </head>
     <link rel="shortcut icon" href="{!$Resource.IATAlogo}" type="image/x-icon"/>
-
-    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+    <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/bootstrap.css')}" type="text/css" />
+    
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+    <script src="{!urlfor($Resource.TitleAlert)}" type="text/javascript"/>
 
     <script>
 
@@ -14,11 +19,20 @@
 
 
         $j(function(){
-          $j("#liveAgentChatInput").attr("placeholder","{!$Label.LiveAgentPlaceHolder}");
-
+            $j("#liveAgentChatInput").attr("placeholder","{!$Label.LiveAgentPlaceHolder}");
         })
 
         var interval;
+    	var imgSrc;
+        var agentImg;
+    	var senderName;
+    	var operatorMessage = '{!$Label.LVA_OperatorMessage}';//'Sent by [senderName] at [timeStamp]';
+    	var clientMessage = '{!$Label.LVA_ClientMessage}';//'Sent by you at [timeStamp]';
+    	var languagesMessages = '{!$Label.LVA_LanguagesMessage}';//I can chat with you in [languages].
+        var modalMessage = '{!$Label.LVA_ModalMessage}';//'Leave Chat?';
+        var message = '{!$Label.LVA_New_Chat_Message}';//'New chat Message!'
+        var notificationTimeout = 3000;
+    	var liveAgentClientChatHeight;
 
         $j(function() {
             $j("span.liveAgentQueuePosition").hide();
@@ -38,13 +52,17 @@
             var $chatStarted = $j("div#liveAgentChatLogText").has("span").length;
 
             if($currentPos != $queuePos){
+                var btContactUs = '<div id="butContactUs" class="buttons" onclick="CreateCaseInParent();" title="{!$Label.ISSP_F2CCreate}"><div class="thumbButt" id="butThuContactUs"><img src="{!$Resource.LVA_IconsMail}"/></div><div class="caption text-center"><h5>{!$Label.ISSP_F2CCreate}</h5></div></div>';
+                var btCallUs = '<div id="butCallUs" class="buttons" onclick="CallUsInParent();" title="{!$Label.LVA_CallUs}"><div class="thumbButt" id="butThuCallUs"><img src="{!$Resource.LVA_IconsPhone}"/></div><div class="caption text-center"><h5>{!$Label.LVA_CallUs}</h5></div></div>'
+                var buttons = '<br/><br/><div id="btnDiv" class="btnDiv">' + btContactUs + btCallUs + '</div>';
                 if($currentPos > 0){
                     $j("div.waitingMessage").html("{!JSENCODE($Label.LiveAgentWaitingMessageChat)}".replace('<queuenumber>',$currentPos).replace('<queueminutes>',$waitTime));
+                    $j("div.waitingMessage").html($j("div.waitingMessage").html() + buttons);
                 }else if($currentPos != null){
                     $j("div.waitingMessage").html('{!$Label.LiveAgentWaitingMessageReady}');
+                    $j("div.waitingMessage").html($j("div.waitingMessage").html() + buttons);
                 }
-
-
+                
                 $queuePos = $currentPos;
             }
 
@@ -54,52 +72,313 @@
                 $j("div.footer").html('{!$Label.LiveAgentFootNote}');
             }
         }
+    
+      function CreateCaseInParent() {
+          if(base_opener.parent.controllerCreate){
+              base_opener.parent.controllerCreate();
+          }
+          window.close();
+      }
+    
+      function CallUsInParent() {
+          if(base_opener.parent.popupCallUs){
+              base_opener.parent.popupCallUs();
+          }
+          window.close();
+      }
+    
+    function get_base_opener(current_window) {
+        if (current_window.opener) {
+            return get_base_opener(current_window.opener);
+        }
+            
+        return current_window;
+    }
+    var base_opener = get_base_opener(window);
+    window.resizeTo(416, 747);
+    window.focus();
+    
+    function overEffect(butId){
+        if (butId!='butChat'){
+            $j('#'+butId).addClass( "butPointer" );
+        }
+    }
+        
+        // FME Start
+        function laEndChat(){
+        	SfdcApp.LiveAgent.Chasitor.endChat();
+        }
+        
+	    function showmodal(){
+	        document.getElementById('modalcontainer').style.display = "block";
+	        document.getElementById('headercontainer').style.display = "none";	//FME 29-10-2017
+	        document.getElementById('modalmessage').innerHTML = modalMessage;
+	        document.getElementById('modalbox').style.display = "block";
+	        console.log('##### Show');
+	    }
+	        
+        function hidemodal(){
+        	document.getElementById('modalcontainer').style.display = "none";
+        	document.getElementById('headercontainer').style.display = "block";	 //FME 29-10-2017
+        	console.log('##### Hide');
+    	}
+    	
+    	function savechat(){
+    		SfdcApp.LiveAgent.Chasitor.saveChat();
+    	}
+    	
+    	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, showhidebuttons);
+    	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, newagent);
+    	liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_TRANSFERRED,newagent);
+    
+        liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_REQUESTED, shrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_SUCCESS, clearShrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_FAILURE, clearShrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.FILE_TRANSFER_CANCELED, clearShrinkChat);
+    	liveagent.addEventListener(liveagent.chasitor.Events.START_CHASITOR_IDLE_TIMEOUT_WARNING, timeoutShrinkChat);
+        liveagent.addEventListener(liveagent.chasitor.Events.CLEAR_CHASITOR_IDLE_TIMEOUT, clearTimeoutResizeChat);
+        liveagent.addEventListener(liveagent.chasitor.Events.AGENT_TYPING_UPDATE, scrollOnMessage);
+        liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_MESSAGE, notifyOnNewMessage);
+    
+        var contactId;
+        var buttonlanguage;
+        function newagent() {           
+            var newagentId;
+            newagentId = liveagent.chasitor.getDetails().agent.userId;
+            if (newagentId != null ){
+                document.getElementById("photo-container").style.display = 'block';
+                getAgentDetails(null, newagentId);
+                getAgentLanguage(newagentId);
+                $j("div.waitingMessage").hide();
+            }
+        }
+                
+        function getAgentDetails(elem, userId){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.LiveAgentCustomWindowController.getPhoto}', 
+                userId,
+                function(result, event){
+                    if (event.status) {
+                        agentImg = result.LVA_Show_photo_on_chat__c ? result.SmallPhotoUrl : '{!defaultChatImg}';
+                        
+                        if(elem!=null){
+                            insertChatImage(elem,agentImg);
+                        } else {
+                            insertImage(agentImg);
+                            insertInfo(result.Name, result.Title);
+                        }
+                        
+                    } else if (event.type === 'exception') {
+                        console.log('exception');
+                    } else {
+                        console.log('else');
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+        
+    	function getAgentLanguage(userId){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.LiveAgentCustomWindowController.getLanguages}', 
+                userId, 
+                function(result, event){
+                    if (event.status) {
+                        insertLanguages(result);
+                        
+                    } else if (event.type === 'exception') {
+                        console.log('exception');
+                    } else {
+                        console.log('else');
+                    }
+                }, 
+                {escape: true}
+                );
+            }
+        
+            function insertImage(src){
+                var imagetag = document.getElementById('agentphoto');
+                imagetag.setAttribute("src", src);
+            }
+    
+    		function insertChatImage(elem, src){
+                var imagetag = document.createElement("img");
+                imagetag.setAttribute("src", src);
+                imagetag.setAttribute("class", 'image');
+                imagetag.setAttribute("id", 'image');
+                
+                var spantag = document.createElement("span.image");
+                spantag.appendChild(imagetag);
+                
+                elem.insertBefore(spantag, elem.firstChild);
+                
+            }
+            
+            function insertInfo(Name, Title){
+                document.getElementById('agent-info-name').innerHTML = Name;
+                document.getElementById('agent-info-job').innerHTML = Title?Title:'&nbsp;';
+            }
+    
+    		
+    		function insertLanguages(userLanguages){
+
+                var languages = '';
+				if(userLanguages){
+                    Object.keys(userLanguages).forEach(key => {
+                        if(!key.includes('{!language}')){
+                        	if(languages.length == 0){
+                                languages = userLanguages[key];
+                            } else {
+                                languages += ', ' + userLanguages[key];
+                            }
+                    	}
+                    });
+                }
+                        
+                if(languages.length>0){
+                   	document.getElementById('agent-languages').innerHTML = languagesMessages.replace('[languages]', languages);
+                } else {
+                    document.getElementById('agent-languages').innerHTML = '&nbsp;'
+                }
+            }
+    
+    	function showhidebuttons(){
+    		document.getElementById("chatbuttonscontainer").style.display = 'block';
+    		document.getElementById("laSaveButton").style.display = 'block';
+    		document.getElementById("laEndButton").style.display = 'block';
+            document.getElementById("chatAgent").style.display = 'inline-flex';
+            document.getElementById("footer").style.display = 'inline-flex';
+            
+            liveAgentClientChatHeight = document.getElementById("liveAgentChatLog").style.height;
+                                   
+            document.getElementById('fileCancelButton').onclick = function(e){
+            	clearShrinkChat();
+                SfdcApp.LiveAgent.Chasitor.FileTransfer.cancelFileTransfer(); 
+                return false;
+            }
+    	}
+    
+    function SetHours(stringHours){  
+        var d, s;                     //Declare variables.
+        d = new Date();               //Create Date object.
+        d.setHours(stringHours.split(':')[0], stringHours.split(':')[1], stringHours.split(':')[2].split(' ')[0]);  //Set hours, minutes and seconds.
+        var hours = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
+        var minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
+        var am_pm = stringHours.split(':')[2].split(' ')[1];
+        s = hours + ':' + minutes + ' ' + am_pm;
+        return(s);                    //Return new date setting.
+    } 
+    
+    function htmlEncode(value){
+        // Create a in-memory div, set its inner text (which jQuery automatically encodes)
+        // Then grab the encoded contents back out. The div never exists on the page.
+        return $j('<div/>').text(value).html();
+    }
+    
+    var transferAttempt = false;
+    function shrinkChat (){
+        document.getElementById("liveAgentChatLog").style.height = "calc(100% - 100px)";
+        transferAttempt = true;
+    }
+    
+    function timeoutShrinkChat (){
+        if(transferAttempt){
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 150px)";
+        } else {
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 65px)";
+        }
+    }
+    
+    function clearShrinkChat(){
+        document.getElementById("livechatcontainer").style.height = "calc(100% - 310px)";
+        transferAttempt = false;
+    }
+    
+    function clearTimeoutResizeChat(){
+        if(transferAttempt){
+            document.getElementById("liveAgentChatLog").style.height = "calc(100% - 100px)";
+        } else {
+            document.getElementById("liveAgentChatLog").style.height = liveAgentClientChatHeight;
+        }
+    }
+    
+    /*Workaround for Chrome*/
+    function scrollOnMessage(){
+        var objDiv = document.getElementById("liveAgentChatLog");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+        
+        function notifyOnNewMessage(){
+            scrollOnMessage();
+            window.blur();
+            window.focus();
+            
+            $j.titleAlert(message, {
+                requireBlur:false,
+                stopOnFocus:false,
+                duration:4000,
+                interval:700
+            });
+            
+            showDesktopNotification(message);
+        }
+        
+        function showDesktopNotification(message){
+            var notification;
+            //Validate if the window is on foreground
+            if(!document.hasFocus()){
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support desktop notification");
+                } 
+                // Let's check whether notification permissions have already been granted
+                else if (Notification.permission === "granted") {
+                    // If it's okay let's create a notification
+                    // tag added to reuse the same notification
+                    notification = new Notification(message, {tag: 'notificationTag'});
+                }
+                
+                // Otherwise, we need to ask the user for permission
+                else if (Notification.permission !== "denied") {
+                    Notification.requestPermission(function (permission) {
+                        // If the user accepts, let's create a notification
+                        if (permission === "granted") {
+                            notification = new Notification(message, {tag: 'notificationTag'});
+                        }
+                    });
+                }
+                if(notification){
+                    setTimeout(notification.close.bind(notification), notificationTimeout);
+                }
+            }
+        }
+        
+    // FME End
 
     </script>
 
     <style>
-        .liveAgentEndButton {
-            border: none;
-            color: white;
-            background: #d9534f;
-            margin: 5px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 50px;
-            height: 45px;
-        }
-        #liveAgentSaveButton {
-            border: none;
-            color: white;
-            background: #5cb85c;
-            margin: 5px;
-            position: absolute;
-            right: 55px;
-            top: 0;
-            width: 50px;
-            height: 45px;
-        }
+    
         .liveAgentCancelButton{
-            border: none;
-            color: white;
-            background: #d9534f;
+            padding: 7px 7px;
+            background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
             margin: 5px;
+            width: 180px;
             position: absolute;
-            right: 0;
-            top: 0;
-            width: 50px;
-            height: 45px;
+            font-size: 12px;
+            right: 5%;
+        	bottom: 10%;
+            border-radius: 0px;
+            border: 1px solid #b5b5b5;
+            margin-top: 80%;
+    		margin-left: 50%;
         }
-
-        .liveAgentFileCancelButton{
-            border: none;
-            color: white;
-            background: #d9534f;
-            margin: 5px;
-            width: 50px;
-        }
-
+        
+        .liveAgentCancelButton:hover { 
+    			background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
+    			color: #a71919;
+    			border: 1px solid #a71919;
+		 }
+        
         .liveAgentFileSendButton{
             border: none;
             color: white;
@@ -108,42 +387,205 @@
             width: 50px;
         }
 
-        .liveAgentSendButton {
-            border: none;
-            color: white;
-            background: rgb(66, 139, 202);
-            margin: 5px;
-            width: 50px;
-        }
-
         .liveAgentChatInput {
-            width: calc(100% - 22px);
+            width: calc(100% - 90px);
             border-color: #337ab7;
-            border-radius: 4px;
-            margin: 5px;
             padding: 6px;
             font-size: 13px;
+            border-radius: 0px;
+        	margin-top: 5px;
+    		margin-left: 5px;
         }
+        
+        .liveAgentMessage {
+            background-color: #CD6571;
+            -webkit-animation: pulse 2s infinite alternate;
+            -moz-animation: pulse 2s infinite alternate;
+            -o-animation: pulse 2s infinite alternate;
+            animation: pulse 2s infinite alternate;
+            text-align: center;
+            width: 100%;
+            color: white;
+            font-style: italic;
+            overflow: hidden;
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 40px;
+            z-index: 99999;
+        }
+        
+    
 
         #liveAgentChatLogText {
-          font-size: 13px;
+            font-size: 13px;
+        	padding-top: 10px;
         }
 
         .waitingMessage{
-            height: 100%;
-            width:  100%;
+            width: 100%;
             margin: 0 auto;
             text-align: center;
+            color: #206aa4;
+            padding-top: 12%;
         }
 
         #liveAgentChatLog {
             border-color: #337ab7;
-            border-radius: 4px;
-            margin: 5px;
-            width: calc(100% - 22px);
-            padding: 6px;
-            height: 240px;
-						overflow-y: auto;
+		    margin: auto;
+		    width: calc(100% - 8px);
+		    height: calc(100% - 40px);
+		    overflow-y: auto;
+		    background-color: white;
+        }
+        
+        #liveAgentChatLogText .client{
+            float:right;
+            clear:both;
+    	}
+        
+        #liveAgentChatLogText .name{
+            display:none;
+        }
+        
+        #liveAgentChatLogText .operator,#liveAgentChatLogTyping,#liveAgentChatLogText .system{
+            float:left;
+            clear:both;
+        }
+                
+        #liveAgentChatLogText .messageText{
+            position: relative;
+            max-width: 250px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            padding: 10px;
+            line-height:22px;
+        	color:white;
+            display: block;
+        	/*margin: 13px 25px;*/
+        	
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        	margin-bottom: 5px;
+        }
+        
+        #liveAgentChatLogText .operator .messageText{
+            background: #0b3f75;
+        	word-wrap: break-word;
+        	margin-right: 25px;
+        	        	
+            border-top-left-radius: 0px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        #liveAgentChatLogText .client .messageText{
+           	background: #438bcb;
+        	word-wrap: break-word;
+        	margin-left: 25px;
+        	margin-right: 0px;
+        
+        	
+            border-top-left-radius: 4px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+    	}
+        
+        #liveAgentChatLogText .image{
+            position: relative;
+            z-index: 999;
+            height: 34px;
+            border-radius: 25px;
+        }
+        
+        #liveAgentChatLogText .operator .image{
+            left:0;
+        	float: left;
+        	clear:both;
+        }
+    
+        #liveAgentChatLogText .client .image{
+            right:0;
+        	float: right;
+        	clear:both;
+        }
+        
+        #liveAgentChatLogText .operator .arrow-left {
+            width: 0;
+            height: 0;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #073f76;
+            display: inline-flex;
+            position: relative;
+            margin-left: 5px;
+        }
+        
+        
+       	#liveAgentChatLogText .client .arrow-right {
+            width: 0;
+            height: 0;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #448bcb;
+            display: inline-flex;
+            position: relative;
+        }
+            
+        .img-responsive{
+            margin: 0 30px;
+        }
+        
+        #liveAgentChatLogText .operator .timestamp {
+            float: left;
+            margin-top: 0px;
+            margin-right: 25px;
+            margin-bottom: 15px;
+            margin-left: 15px;
+        	padding-bottom: 5px;
+        }
+        
+        #liveAgentChatLogText .client .timestamp {
+            float: right;
+        	margin-top: 0px;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            margin-left: 25px;
+        	padding-bottom: 5px;
+        }
+        
+        .liveAgentSendButton {
+        	border: none;
+        	color: transparent;
+            margin-left: 10px;
+        	width: 50px;
+            height: 50px;
+        	background: transparent url({!$Resource.LVA_SEND_BUTTON}) no-repeat;
+            background-position: center;
+    		background-size: 75%;
+        }
+        
+        .liveAgentSendButton:hover{
+        	border: none;
+        	color: transparent;
+        	width: 50px;
+            height: 50px;
+            margin-left: 10px;
+        	background: transparent url({!$Resource.LVA_SEND_BUTTON_HOVER}) no-repeat;
+           	background-position: center;
+        	background-size: 75%;
+        }
+        
+        em {
+            padding-left: 15px;
+            font-size: 14px;
+        }
+        
+        p.bubble {
+            padding-bottom: 0px;
+    		margin-bottom: 0px;
         }
 
         #fileDragLabel {
@@ -152,8 +594,10 @@
             margin:5px;
             height: 50px;
             display: inline-block;
-            width: calc(100% - 20px);
+            width: calc(100% - 23px);
             padding: 5px;
+            border-radius: 0px;
+        	background-color: #0b3f75;
         }
 
         #fileDragLink {
@@ -179,7 +623,21 @@
         }
 
         .liveAgentAlert {
-            margin: 5px;
+            background-color: #CD6571;
+            -webkit-animation: pulse 2s infinite alternate;
+            -moz-animation: pulse 2s infinite alternate;
+            -o-animation: pulse 2s infinite alternate;
+            animation: pulse 2s infinite alternate;
+            text-align: center;
+            width: 100%;
+            color: white;
+            font-style: italic;
+            overflow: hidden;
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 40px;
+            z-index: 99999;
         }
 
         .liveAgentAlert button{
@@ -189,30 +647,562 @@
             margin: 5px;
             width: 50px;
         }
-        .footer {
+        
+        #liveAgentMessageContainer{
+            background-color: #CD6571;
+            -webkit-animation: pulse 2s infinite alternate;
+            -moz-animation: pulse 2s infinite alternate;
+            -o-animation: pulse 2s infinite alternate;
+            animation: pulse 2s infinite alternate;
+            text-align: center;
+            width: 100%;
+            color: white;
+            font-style: italic;
+            overflow: hidden;
+            display: none;
             position: absolute;
-            bottom: 0px;
-            margin-bottom: 3px;
-            margin-left: 8px;
-            margin-right: 8px;
-            font-size: 9px;
+            bottom: -75px;
+            z-index: 99999;
+        }
+        
+        .footer {
+            display: none;
+            position: relative;
+            font-size: 11px;
+            z-index: -99999;
+            top: 55px;
+        }
+		
+	    #modalcontainer {
+	        display:none;
+	        z-index:99999;
+	        width:100%;
+	        height:100%;
+    		padding-left: 0px;
+    		padding-right: 0px;
+    		color: rgb(10, 62, 117);
+	    }
+	        
+	    #modalbackground {
+	        //position: fixed;
+	        display:block;
+	        //min-width:100vw;
+	        min-height:100vh;
+	        //opacity: 0.5;
+	        //background-color:rgba(200, 200, 200, 0.5);
+	        max-width: 410px;
+    		max-height: max-content;
+    		margin: 0 auto;
+    		overflow-y: auto;
+	        }
+	          
+	      #modalbox{
+	          display:block;
+	          //background-color:white;
+	          background-color: #f8f8f8;
+	          opacity: 1;
+	          width:80%;
+	          height:60%;
+	          margin-top:35%;
+	          //margin-right:10%;
+	          //margin-left:10%;
+	          margin-left: auto;
+	          margin-right: auto;
+	          padding: 10px;
+	          color: #0a3e75;
+	      }
+	      
+	      #headercontainer {
+        	display:block;
+        	z-index:99999;
+        //width:100%;
+        	height:100%;
+        	padding-left: 0px;
+    		padding-right: 0px;
+            color: #0a3e75;
+          }
+          
+          #chatbuttonscontainer {
+        	display: block;
+        	position: relative;
+            top: 50px;
+            z-index: 99999;
+          }
+        
+    	  #headerbackground{
+        //max-width: 410px;
+        //    max-height: max-content;
+            //float: none;
+            margin: 0 auto;
+        	//overflow: overlay;
+        	overflow-y: auto;
+        //width: 400px;
+    		height: 100%;
+		  }
+        
+      	  
+      	  #chatbuttonsbackground{
+        	text-align: center;
+        	position: relative;
+        	width: 100%;
+      	  }
+      	  
+      	  #livechatcontainer{
+            position: relative;
+            width: 100%;
+            height: calc(100% - 310px);
+      	  }
+        
+        @media screen and (min-width: 400px) {
+            #headercontainer{
+                max-width: 600px;
+            }
+        }
+        
+        @media screen and (max-height: 480px) and (orientation: portrait) {
+            #livechatcontainer{
+        		height: 62%;
+            }
+        }
+        
+        @media screen and (max-height: 480px) and (orientation: landscape) {
+            #livechatcontainer{
+        		height: 100%;
+            }
+        }
+      	  
+      	  .buttonEnd {
+			padding: 7px 7px;
+            background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
+            background: #f8f8f8;
+            margin: auto;
+            font-size: 13px;
+            width: 90%;
+            border-radius: 0px;
+            border: 1px solid #3273ad;
+            color: #3273ad;
+          }
+          
+          .buttonEnd:hover { 
+    			//background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
+    			color: #a71919;
+    			border: 1px solid #a71919;
+		  }
+		   
+		  .buttonSave {
+		  	padding: 7px 7px;
+            background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
+            background: #f8f8f8;
+            margin: auto;
+            font-size: 13px;
+            width: 90%;
+            border-radius: 0px;
+            border: 1px solid #3273ad;
+            color: #3273ad;
+          }
+          
+          .buttonSave:hover { 
+    			//background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
+    			color: #32ab1e;
+    			border: 1px solid #32ab1e;
+		  }
+		   
+		  .savebutton, .endbutton{
+				width: 49%;
+    			display: inline-block;
+    			text-align: center;
+    			margin: auto;
+    		}
+
+        .btnDiv{
+            display: inline-block;
+    		padding: 5px;
         }
 
-    </style>
-    <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
-    <liveAgent:clientChat >
-				<liveAgent:clientChatSaveButton />
-        <liveAgent:clientChatEndButton />
-        <liveAgent:clientChatAlertMessage />
-        <liveAgent:clientChatStatusMessage />
-        <div class="waitingMessage"></div>
-        <liveAgent:clientChatLog />
-				<liveagent:clientChatCancelButton />
-        <liveagent:clientChatInput />
-        <liveAgent:clientChatSendButton />
-        <liveAgent:clientChatFileTransfer />
-        <liveAgent:clientChatQueuePosition />
-    </liveAgent:clientChat>
-    <div class="footer"></div>
+        .buttons{
+            display: inline-block;
+            padding: 5px;
+        }
+        
 
+        .thumbButt img{
+            height:50px !important;
+            width: 50px;
+            border: 0px;
+            cursor: pointer;
+        }
+        
+         caption {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            color: #777;
+            text-align: left
+            cursor: pointer;
+        }
+        
+        h5 {
+            color: rgb(32, 107, 164);
+            cursor: pointer;
+        /*font-weight: 500;*/
+        }
+
+			#laSaveButton{
+				display:none;
+			}
+			
+			#laEndButton{
+				display:none;
+			}
+			
+			#chatbuttonscontainer{
+				display:none;
+			}
+			
+			#headerImage, #headerImageEnd{
+			    width: 100%;
+			    height: 85px;
+			    margin: auto;
+        		display: inline-flex;
+				position: relative;
+			}
+        
+        	#divImage, #divImageEnd{
+                padding: 10px;
+                background-color: white;
+                z-index: 1;
+                position: absolute;
+                display: inline-flex;
+                /* padding-top: 10px; */
+                margin-top: 5px;
+                margin-left: 5px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        	}
+		
+			#livechat, #livechatEnd{
+                width: 100%;
+                color: #fff;
+                text-decoration-color: white;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 20px;
+                text-align: center;
+                font-weight: bold;
+                background-color: #0a3e75;
+                position: absolute;
+                margin-top: 20px;
+                padding-left: 100px;
+    		}
+    			
+    		#liveAgentClientChatSettings{
+    			height: 100%;
+    		}
+    		
+    		#liveAgentClientChat{
+    			height: 100%;
+    		}
+    		
+    		#liveAgentChatElement{
+    			height: 75%;
+    		}
+    		
+    		#liveAgentChatInput{
+    			height: 50px;
+    		}
+        
+        	#liveAgentChatLogAlertMessage{
+        		font-size: 12px;
+        		position: relative;
+        	}
+			
+			#photo-container{
+				display:none;
+				width: 65px;
+				height: 65px;
+			}
+			
+			.photocontainer {
+                border-radius: 50%;
+                position: relative;
+                overflow: hidden;
+        		display: inline-flex;
+
+            }
+            
+            #agentphoto{
+                display: block;           
+                min-width: 100%;
+                min-height: 100%;
+                width: 65px;
+                height: 65px;
+            }
+            
+            #chatAgent{
+        		display: none;
+        //height: max-content;
+            	line-height: 1.2;
+                padding-bottom: 10px;
+                padding-left: 5px;
+            	position: relative;
+            	width: 100%;
+        		margin-top: 14px;
+            }
+          
+        .panel-heading {
+        	
+        	padding-bottom: 0px;
+        	padding-left: 0px;
+        	padding-right: 0px;
+        }
+        
+        #chatContainer{
+        	padding: 0px;
+        	padding-top: 5px;
+        }
+        
+        	a {
+                color: white;
+            }
+            /* mouse over link */
+            a:hover {
+                color: grey;
+            }
+            
+            /* selected link */
+            a:active {
+                color: grey;
+            }
+            
+        
+            #agent-info{
+        //text-align: left;
+                padding-left: 10px;
+                color: #3273ad;
+                height: fit-content;
+        //display: inline-table;
+                padding-top: 5px;
+            width: calc(100% - 80px);
+            }
+            
+            #agent-info-name{
+				font-size: 15px;
+				font-weight: bold;
+            }
+            
+            #agent-info-job{
+				font-weight: bold;
+				font-style: italic;
+        		font-size: 12px;
+            }
+        
+        	#agent-languages{
+        		font-size: 11px;
+            	height: fit-content;
+            }
+            
+            #fileCancelButton{
+            	font-size: 13px;
+            	border-radius: 0px;
+    			margin-left: 12px;
+			}
+            #fileSendButton{
+            	font-size: 13px;
+            	border-radius: 0px;
+            }
+			
+    </style>
+
+
+	<body style="height:100%">
+    <!--<body onload=" resizeTo(400,680);">-->
+    <div id="headercontainer" class="container">
+        <div id="headerbackground" class="row">
+            <div id="headerImage">
+                
+                <div id="divImage">
+                    <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
+                </div>
+                <div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>
+            </div>
+            <!-- <button id="liveAgentEndButton" type="button" class="liveAgentEndButton" onclick="showmodal();">End Chat</button> -->
+            <div class="waitingMessage"></div>
+            <div id="chatAgent">
+                <div id="photo-container" class="photocontainer">
+                    <img id="agentphoto" src=""/>
+                </div>
+                <div id="agent-info" style="{!if(isRTL, 'margin-right:10px;', 'margin-left:0px;text-align:left')}">
+                    <span id="agent-info-name"></span>
+                    <br/>
+                    <span id="agent-info-job"></span>
+                    <br/>
+                    <span id="agent-languages"></span>
+                </div>
+            </div>
+            
+            <div id="livechatcontainer">
+                
+                <liveAgent:clientChat >
+                    <!-- <liveAgent:clientChatSaveButton /> -->
+                    <!-- <liveAgent:clientChatEndButton /> -->
+                    <liveAgent:clientChatAlertMessage />
+                    <liveAgent:clientChatStatusMessage />
+                    <liveAgent:clientChatLog showTimeStamp="true" combineMessagesText="true" />
+                    <liveagent:clientChatCancelButton />
+                    <liveagent:clientChatInput />
+                    <liveAgent:clientChatSendButton />
+                    <liveAgent:clientChatFileTransfer />
+                    <liveAgent:clientChatQueuePosition />
+                    <liveAgent:clientChatLogAlertMessage id="liveAgentChatLogAlertMessage" /><!--autoResizeElementId="liveAgentClientChat"-->
+                    
+                </liveAgent:clientChat>
+                <script>
+                
+                // select the target node
+                var target = document.getElementById('liveAgentChatLogText');
+                // configuration of the observer:
+                var config = { attributes: false, childList: true, subtree: true, characterData: false };
+                var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                
+                // create an observer instance
+                var observer = new MutationObserver(setImages);
+                function setImages(mutations, observer){
+                    var mutation = mutations[0];
+                    var node = mutation.target.lastChild;
+                    
+                    var msgMutation;
+                    for(var i=0; i<mutations.length; i++){
+                        if(mutations[i] && mutations[i].target && mutations[i].target.className=='bubble'){
+                            msgMutation = mutations[i];
+                        }
+                    }
+                    
+                    if(msgMutation && msgMutation.target.lastChild.innerHTML.includes('www.')){
+                        var url;
+                        var strToReplace;
+                        var c = msgMutation.target.lastChild.innerText.split(' ');
+                        var expression = /(([A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-]*)?\??(?:[\-\+=&;%@\.\w]*)#?(?:[\.\!\/\\\w]*))?)/;
+                        var regex = new RegExp(expression);
+                        
+                        for(d=0;d<c.length;d++){
+                            if(c[d].indexOf('www.') === 0 && c[d].match(regex) && (!c[d].includes('http://') && !c[d].includes('https://'))){
+                                strToReplace = c[d].replace(/(\r\n|\n|\r)/gm,"");
+                                url='<a target="_blank" href="https://' + strToReplace + '">' + strToReplace + '</a>';
+                            }
+                        }
+                        if(url){
+                            msgMutation.target.lastChild.innerHTML = msgMutation.target.lastChild.innerHTML.replace(htmlEncode(strToReplace), url);
+                       }
+                        
+                    }
+                    
+                    if(node.nodeName == 'DIV' && (node.className == 'operator' || node.className == 'client')){
+                        var timeStamp = SetHours($j(node.lastChild).html());
+                        
+                        var textNode;
+                        for(var i = 0; i<node.children.length; i++){
+                            if(node.children[i].className=='bubble'){
+                                //textNode = node.children[i];
+                                if(node.children[i].children[1] && node.children[i].children[1].nodeName=='SPAN'){
+                                    textNode = node.children[i].children[1];
+                                }
+                            }
+                        }
+                                                
+                        var arrow;
+                        if(node.className == 'operator'){
+                            arrow = '<div class="arrow-left"></div>';
+                            if({!isRTL}){
+                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>';
+                            } else {
+                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>';
+                            }
+                        } else {
+                            arrow = '<div class="arrow-right"></div>';
+                            if({!isRTL}){
+                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>' ;
+                            } else {
+                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>' ;
+                            }
+                        }
+                        
+                        
+                        
+                        /*if(node.className == 'operator'){
+                        	
+                            <div style="display: inline-flex;"><span class="messageText">Hello!<br>My name is Kalina and I'm here to help.</span></div>
+                            
+                            //imgSrc = agentImg;
+                            senderName = liveagent.chasitor.getDetails().agent.agentName;
+                            //$j(node.lastChild).html(operatorMessage.replace('[senderName]',senderName).replace('[timeStamp]', timeStamp));
+                        }else if(node.className == 'client'){
+                            //imgSrc ='https://'+window.location.host+'/profilephoto/005/T';
+                            $j(node.lastChild).html(clientMessage.replace('[timeStamp]', timeStamp));
+                        }*/
+                        $j(node.lastChild).html(timeStamp);
+                        
+                        /*if(imgSrc){
+                            insertChatImage(node,imgSrc);
+                        }else{
+                            getAgentDetails(node, liveagent.chasitor.getDetails().agent.userId);
+                        }*/
+                        
+                        observer.disconnect();
+                        observer.observe(target, config);
+                    }                    
+                }
+                // pass in the target node, as well as the observer options
+                observer.observe(target, config);
+                
+                // later, you can stop observing
+                //observer.disconnect();
+                
+                </script>
+                
+            </div>
+            
+            <div id ="chatbuttonscontainer">
+                <div id="chatbuttonsbackground">
+                    <div class="savebutton">
+                        <button id="laSaveButton" type="button" class="buttonSave" onclick="savechat();">{!$Label.LVA_SaveChat}</button>
+                    </div>
+                    <div class="endbutton">
+                        <button id="laEndButton" type="button" class="buttonEnd" onclick="showmodal();">{!$Label.LVA_EndChat}</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="footer" class="footer col-md-12">
+            </div>
+            
+       </div>
+    </div> 
+    
+    
+    <!-- FME Start -->
+    <div id="modalcontainer" class="container">
+        <div id="modalbackground" class="row">
+        	 <div id="headerImageEnd">
+                
+                <div id="divImageEnd">
+                    <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
+                </div>
+                <div id="livechatEnd">LIVE CHAT</div>
+            </div>
+            <div id="modalbox">
+                <p id="modalmessage"></p>
+                <div class="endchatbuttons">
+                    <div class="savebutton">
+                        <button id="laModalCancelButton" type="button" class="buttonSave" onclick="hidemodal();">{!$Label.LVA_ReturnToChat}</button>
+                    </div>
+                    <div class="endbutton">
+                        <button id="laModalEndButton" type="button" class="buttonEnd" onclick="laEndChat();">{!$Label.LVA_EndChat}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- FME End -->
+	</body>
+    </html>
 </apex:page>
