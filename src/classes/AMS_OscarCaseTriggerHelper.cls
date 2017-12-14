@@ -444,13 +444,10 @@ public class AMS_OscarCaseTriggerHelper {
             String newCaseSubject = null;
             
             if(c.reason1__c != null)
-                if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c){
+                if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
                     newCaseSubject = c.reason1__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
-                }
-                if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP){
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP)
                     newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
-                }
-                //when the case is created HE's dont have accreditation type filled in yet so we need to check the oscar process
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHELITE)
                     newCaseSubject = 'New Head Entity - GoLite - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHESTANDARD)
