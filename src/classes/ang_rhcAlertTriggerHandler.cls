@@ -212,13 +212,18 @@ public class ang_rhcAlertTriggerHandler {
 						RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
 						Suspension_Date__c = Date.today()
 					);
+					// smap date fields population
 					if( (!raAccMap.get(ra.id).ANG_IsNewGenAgency__c && (raAccMap.get(ra.id).location_class__c  == 'P' || raAccMap.get(ra.id).location_class__c  == 'D')) && !mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
-						System.debug('## This Account doesn't require SMAP case to have Next_Remittance_Date__c, Start_Date_of_Sales_Period__c and End_Date_of_Sales_Period__c date fields to be populated.');
-					}else{
+						System.debug('## This Account doesn\'t require SMAP case to have Next_Remittance_Date__c, Start_Date_of_Sales_Period__c and End_Date_of_Sales_Period__c date fields to be populated.');
+					}else if(mapAccountOpCalendar.containsKey(ra.ANG_Account__c)){
 						smapParentCase.Next_Remittance_Date__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_Day__c;
 						smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
 						smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
-					}
+					}else {
+                        System.debug('## Creating Red Alert Only - No case is created');
+                        // We are not creating any case - just the alert
+                        continue;                      
+                    }
 
 					smapParentCase.setOptions(dmlOpts);
 					wrapperList.add(new RiskAlertParentCaseWrapper(ra.Id, smapParentCase));
@@ -255,6 +260,7 @@ public class ang_rhcAlertTriggerHandler {
 				try{
 					resultInsSMAPcases = Database.insert(smapParentCases, false);
 				}catch(Exception e){
+					// Should not happen but just in case it does we make sure risk alert creation is not rolled back
 					System.debug('## Case not created: '+e);
 				}
 
