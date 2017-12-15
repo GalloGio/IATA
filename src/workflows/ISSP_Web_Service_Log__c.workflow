@@ -2,11 +2,10 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ISSP_WS_SIS_error_email_alert</fullName>
-        <ccEmails>sishelp@iata.org</ccEmails>
+        <ccEmails>sisopsuat@iata.org</ccEmails>
         <description>ISSP WS SIS error email alert</description>
         <protected>false</protected>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISSP_SIS_Integration/ISSP_WS_SIS_send_error_alert</template>
     </alerts>
     <rules>
