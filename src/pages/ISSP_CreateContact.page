@@ -106,9 +106,8 @@
               </div>
               
               <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
-                <div class="form-group" id="Function">
-  
-                  <span class="rec multiSelectFunction">
+                <div id="Function">
+                  <span class="multiSelectFunction">
                       <label for="inJobFunction"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>
                       <apex:inputField id="inJobFunction" styleclass="form-control" value="{!con.Membership_Function__c}"/>
                     <div class="hiddenerror" style="display: none;">
@@ -214,9 +213,12 @@
               }
           )
 
-          //check if the selecte has choosen Job Functions
+          //check if the select has choosen Job Functions
           if($j("[id$='inJobFunction_selected']").text() != ""){
-            $j('#Function').removeClass('has-error'); 
+            $j('#Function').removeClass('has-error');
+          }else{
+            flag = false;
+            $j('#Function').addClass('has-error');
           }
 
           return flag;
@@ -225,59 +227,59 @@
 
         function validateInputs(){
 
-          var mandatoryFieldsOK = validateMandatoryFields();
-          if(!mandatoryFieldsOK){
-            return mandatoryFieldsOK;
-          }else{
-            //Save dial code and country values into hidden fields
-            try {
-              var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
-              var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']").intlTelInput("getSelectedCountryData");
-              var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']").intlTelInput("getSelectedCountryData");
+          //Save dial code and country values into hidden fields
+          try {
+            var natphone = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+            var natmobile = $j("input[name='{!$Component.newContact.businessmobileinput}']").intlTelInput("getSelectedCountryData");
+            var natfax = $j("input[name='{!$Component.newContact.businessfaxinput}']").intlTelInput("getSelectedCountryData");
 
-              var input1 = $j("input[name='{!$Component.newContact.businessphoneinput}']");
-              var final1 = '+' + input1.intlTelInput("getSelectedCountryData").dialCode;
-              var number1 = input1.intlTelInput("getNumber");
-              number1 = number1.replace(final1,"");
-              number1 = number1.replace("+1","");
-              final1 = final1 + number1;
-              // var temp1 = document.getElementById('j_id0:j_id43:newContact:phone1');
-              var temp1 = document.getElementById('{!$Component.newContact.phone1}');
-              temp1.value = final1;
-              //alert("Final 1: " + final1);
+            var input1 = $j("input[name='{!$Component.newContact.businessphoneinput}']");
+            var final1 = '+' + input1.intlTelInput("getSelectedCountryData").dialCode;
+            var number1 = input1.intlTelInput("getNumber");
+            number1 = number1.replace(final1,"");
+            number1 = number1.replace("+1","");
+            final1 = final1 + number1;
+            // var temp1 = document.getElementById('j_id0:j_id43:newContact:phone1');
+            var temp1 = document.getElementById('{!$Component.newContact.phone1}');
+            temp1.value = final1;
+            //alert("Final 1: " + final1);
 
-              var input2 = $j("input[name='{!$Component.newContact.businessmobileinput}']");
-              var final2 = '+' + input2.intlTelInput("getSelectedCountryData").dialCode;
-              var number2 = input2.intlTelInput("getNumber");
-              if (number2 != "") {
-                  number2 = number2.replace(final2,"");
-                  number2 = number2.replace("+1","");
-                  final2 = final2 + number2;
-                  // var temp2 = document.getElementById('j_id0:j_id43:newContact:phone2');
-                  var temp2 = document.getElementById('{!$Component.newContact.phone2}');
-                  temp2.value = final2;
-                  //alert("Final 2: " + final2);
-              }
-    
-              var input3 = $j("input[name='{!$Component.newContact.businessfaxinput}']");
-              var final3 = '+' + input3.intlTelInput("getSelectedCountryData").dialCode;
-              var number3 = input3.intlTelInput("getNumber");
-              if (number3 != "") {
-                  number3 = number3.replace(final3,"");
-                  number3 = number3.replace("+1","");
-                  final3 = final3 + number3;
-                  // var temp3 = document.getElementById('j_id0:j_id43:newContact:phone3');
-                  var temp3 = document.getElementById('{!$Component.newContact.phone3}');
-                  temp3.value = final3;
-                  //alert("Final 3: " + final3);
-                }
-            }catch(e) {
-              console.log(e);
+            var input2 = $j("input[name='{!$Component.newContact.businessmobileinput}']");
+            var final2 = '+' + input2.intlTelInput("getSelectedCountryData").dialCode;
+            var number2 = input2.intlTelInput("getNumber");
+            if (number2 != "") {
+                number2 = number2.replace(final2,"");
+                number2 = number2.replace("+1","");
+                final2 = final2 + number2;
+                // var temp2 = document.getElementById('j_id0:j_id43:newContact:phone2');
+                var temp2 = document.getElementById('{!$Component.newContact.phone2}');
+                temp2.value = final2;
+                //alert("Final 2: " + final2);
             }
-
+  
+            var input3 = $j("input[name='{!$Component.newContact.businessfaxinput}']");
+            var final3 = '+' + input3.intlTelInput("getSelectedCountryData").dialCode;
+            var number3 = input3.intlTelInput("getNumber");
+            if (number3 != "") {
+                number3 = number3.replace(final3,"");
+                number3 = number3.replace("+1","");
+                final3 = final3 + number3;
+                // var temp3 = document.getElementById('j_id0:j_id43:newContact:phone3');
+                var temp3 = document.getElementById('{!$Component.newContact.phone3}');
+                temp3.value = final3;
+                //alert("Final 3: " + final3);
+              }
+          }catch(e) {
+            console.log(e);
           }
+
+          //validate mandatory input fields
+          var isMandatoryFieldsOK = validateMandatoryFields();
+          return isMandatoryFieldsOK;
+
         }
-    </script>    
+    </script>  
+
     <input type="hidden" name="geoCode" id="geoCode" value=""/>
     <script>
 
@@ -386,9 +388,6 @@
         //natfax.intlTelInput("setCountry", coun3);
 
     }
-
-
-
 
 </script>
 
