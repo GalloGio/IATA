@@ -5,7 +5,8 @@ private class ISSP_SIS_AccountHandlerTest {
     private static void loadData() {
         ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
         list<IATA_ISO_Country__c> listCountries = new list<IATA_ISO_Country__c>{
-            new IATA_ISO_Country__c(Name='Spain', ISO_Code__c='SP')
+            new IATA_ISO_Country__c(Name='Spain', ISO_Code__c='SP'),
+            new IATA_ISO_Country__c(Name='Jordan', ISO_Code__c='JO')
         };
         insert listCountries;
         
@@ -135,5 +136,68 @@ private class ISSP_SIS_AccountHandlerTest {
         System.assertEquals('SIS', listLogs[0].System__c);
         Account result = [SELECT SIS_ID__c FROM Account WHERE id = :account.Id];
         System.assertEquals(testSISID, result.SIS_ID__c);
+    }
+    
+    
+    static void loadCS_SISAccount() {
+        list<ISSP_SIS_Account_Status__c> listCS = new list<ISSP_SIS_Account_Status__c>{
+            new ISSP_SIS_Account_Status__c(
+                Name='1',
+                Recordtype__c='IATA_Agency',
+                Status__c='Approved',
+                Country_ISO_Codes__c='SP',
+                SIS_Status__c='Active',
+                SIS_Substatus__c='TOU'
+            ),
+            new ISSP_SIS_Account_Status__c(
+                Name='2',
+                Recordtype__c='IATA_Agency',
+                Status__c='Approved',
+                Country_ISO_Codes__c='All',
+                SIS_Status__c='TERMINATED',
+                SIS_Substatus__c='TERMINATED'
+            )
+        };
+        insert listCS;
+    }
+    
+    static testMethod void test_beforeInsert_UpdateSISStatus() {
+        loadCS_SISAccount();
+        IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
+        Account account = new Account(
+            Name = 'test',
+            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
+            Status__c = 'Approved',
+            IATA_ISO_Country__c = country.Id
+        );
+        ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
+        
+        Test.startTest();
+        insert account;
+        Test.stopTest();
+        
+        Account result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
+        System.assertEquals('Active', result.SIS_Status__c);
+        System.assertEquals('TOU', result.SIS_Sub_Status__c);
+    }
+    
+    static testMethod void test_beforeUpdate_UpdateSISStatus() {
+        loadCS_SISAccount();
+        IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='JO'];
+        Account account = new Account(
+            Name = 'test',
+            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
+            Status__c = 'Approved',
+            IATA_ISO_Country__c = country.Id
+        );
+        ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
+        
+        Test.startTest();
+        insert account;
+        Test.stopTest();
+        
+        Account result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
+        System.assertEquals('TERMINATED', result.SIS_Status__c);
+        System.assertEquals('TERMINATED', result.SIS_Sub_Status__c);
     }
 }

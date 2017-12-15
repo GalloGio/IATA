@@ -8,6 +8,36 @@ public with sharing class ISSP_SIS_AccountHandler {
     public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
     public static Boolean BLOCK_EXECUTION = false;
+    
+    public static map<String,list<ISSP_SIS_Account_Status__c>> MAP_SIS_ACCOUNT_STATUS = null;
+    /**
+        Get the map with the custom setting 'ISSP_SIS_Account_Status__c' or creates it if not initialized
+    **/
+    public static map<String,list<ISSP_SIS_Account_Status__c>> getMapSISAccountStatus() {
+        //initialize map only once
+        if (MAP_SIS_ACCOUNT_STATUS == null) {
+            MAP_SIS_ACCOUNT_STATUS = new map<String,list<ISSP_SIS_Account_Status__c>>();
+            Map<String,Id> mapAccountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
+            for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
+                String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c;
+                list<ISSP_SIS_Account_Status__c> listSettings = MAP_SIS_ACCOUNT_STATUS.get(key);
+                if (listSettings==null) {
+                    listSettings = new list<ISSP_SIS_Account_Status__c>();
+                }
+                listSettings.add(setting);
+                MAP_SIS_ACCOUNT_STATUS.put(key, listSettings);
+            }
+        }
+        return MAP_SIS_ACCOUNT_STATUS;
+    }
+
+    /**
+        BEFORE INSERT
+    **/
+    public static void beforeInsert(list<Account> listAccount) {
+        if (BLOCK_EXECUTION) return;
+        updateSISStatusFields(listAccount);
+    }
 
     /**
         AFTER INSERT
@@ -41,6 +71,8 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
+        updateSISStatusFields(mapNews, mapOlds);
+        
         if (!ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED) return;
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
@@ -99,5 +131,72 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
         }
         return false;
+    }
+
+    /**
+        Populate SIS status and substatus fields bases in the custom setting 'ISSP_SIS_Account_Status__c'
+    **/
+    //for update select only when change Recordtype, status__c or Country
+    private static void updateSISStatusFields(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
+        list<Account> listAccount = new list<Account>();
+        for (Account accountNew: mapNews.values()) {
+            Account accountOld = mapOlds.get(accountNew.Id);
+            if (accountNew.RecordTypeId!=accountOld.RecordtypeId ||
+                accountNew.Status__c!=accountOld.Status__c ||
+                accountNew.IATA_ISO_Country__c!=accountOld.IATA_ISO_Country__c
+            ) {
+                listAccount.add(accountNew);
+            }
+        }
+        updateSISStatusFields(listAccount);
+    }    
+    // for insert
+    private static void updateSISStatusFields(list<Account> listAccount) {
+        //get countries map
+        set<Id> setCountryId = new set<Id>();
+        for (Account account: listAccount) {
+            setCountryId.add(account.IATA_ISO_Country__c);
+        }
+        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(
+            [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE id IN :setCountryId]
+        );
+        
+        for (Account account: listAccount) {
+            // include country objetct in the account
+            account.IATA_ISO_Country__r = mapCountries.get(account.IATA_ISO_Country__c);
+            
+            if (String.isBlank(account.SIS_Status__c) || String.isBlank(account.SIS_Sub_Status__c) ) {
+                ISSP_SIS_Account_Status__c setting = findCustomSettingSISStatus(account);
+                if (setting!=null) {
+                    account.SIS_Status__c = setting.SIS_Status__c;
+                    account.SIS_Sub_Status__c = setting.SIS_Substatus__c;
+                }
+            }
+        }
+    }
+    
+    /**
+        Search in the map setting the one that matches the recordtype, status and country
+    **/
+    private static ISSP_SIS_Account_Status__c findCustomSettingSISStatus(Account account) {
+        //find  custom setting
+        map<String,list<ISSP_SIS_Account_Status__c>> mapSettings = getMapSISAccountStatus();
+        // get list of possible Setting for a specific recordtype and status
+        String key = account.RecordtypeId + ' ' + account.Status__c;
+        list<ISSP_SIS_Account_Status__c> listSettings = mapSettings.get(key);
+        if (listSettings==null) return null;
+        ISSP_SIS_Account_Status__c allCountriesSettings = null;
+        // if a list of possible settings is found select the one that includes the account country
+        for (ISSP_SIS_Account_Status__c setting: listSettings) {
+            if (setting.Country_ISO_Codes__c.equalsIgnoreCase('All')) {
+                allCountriesSettings = setting;
+            } else {
+                if (setting.Country_ISO_Codes__c.contains(account.IATA_ISO_Country__r.ISO_Code__c)) {
+                    return setting;
+                }
+            }
+        }
+        // if no country is found use the setting with the keyword 'All'
+        return allCountriesSettings;
     }
 }

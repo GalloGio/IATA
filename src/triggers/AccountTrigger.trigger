@@ -64,6 +64,9 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     system.debug('old..'+Trigger.old);
     ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
     //SIS Integration trigger
+    if(Trigger.isBefore && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.beforeInsert(Trigger.new);
+    } 
     if(Trigger.isAfter && Trigger.isInsert){
         ISSP_SIS_AccountHandler.afterInsert(Trigger.new);
     }
