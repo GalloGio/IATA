@@ -204,9 +204,7 @@
                     $("#NewCasePopUp").modal('show');
                 
                 function validateNewUser(){
-                  //var type = $("select[id*='TypeSelect']").val();
                   var flag = true;
-                  //$('#recFields').hide();
                   $('.rec').each(function (){
                           $(this).parents('.form-group').removeClass('has-error');
                           if(!$(this).val()){
@@ -216,9 +214,6 @@
                           
                       }
                   )
-                  /*if(flag == false){
-                    $('#recFields').show();
-                  }*/
                     
                   return flag;
                     
