@@ -41,10 +41,25 @@ public with sharing class AMS_Change_Code_Notification_Controller {
             if (!lstRecentChangeCodes.isEmpty()) {
                 String codes = '';
 
+                map<String, Integer> mapCountPerChangeCode = new map<String, Integer>();
+                for (Agency_Applied_Change_code__c cc : lstRecentChangeCodes) 
+                    if (mapCountPerChangeCode.get(cc.Change_Code__c) != null)
+                        mapCountPerChangeCode.put(cc.Change_Code__c, mapCountPerChangeCode.get(cc.Change_Code__c) + 1);
+                    else
+                        mapCountPerChangeCode.put(cc.Change_Code__c, 1);
+                
                 for (Agency_Applied_Change_code__c cc : lstRecentChangeCodes) {
-                    // create the link to the newly applied code: std hyper link for normal interface, javascript for console (the oscar is supposed to only be open in console mode)
-                    codes += (codes == '' ? '' : ', ') + '<a href="' + (isOscar ? 'javascript:srcUp(\'' : '') + '/' + cc.Id + (isOscar ? '\');' : '') + '"' + (isOscar ? '' : ' target="_blank" ') + '>' + cc.Change_Code__c + '</a>';
+                    if (mapCountPerChangeCode.get(cc.Change_Code__c) == 1) {
+                        // create the link to the newly applied code: std hyper link for normal interface, javascript for console (the oscar is supposed to only be open in console mode)
+                        codes += (codes == '' ? ' ' : ', ') + '<a href="' + (isOscar ? 'javascript:srcUp(\'' : '') + '/' + cc.Id + (isOscar ? '\');' : '') + '"' + (isOscar ? '' : ' target="_blank" ') + '>' + cc.Change_Code__c + '</a>';
+                    } else if(mapCountPerChangeCode.get(cc.Change_Code__c) != null){
+                        codes += (codes == '' ? ' ' : ', ') + mapCountPerChangeCode.get(cc.Change_Code__c) + ' x ' + cc.Change_Code__c;
+                        // prevent from being displayed again next time the script iterates over the same change code in the list
+                        mapCountPerChangeCode.put(cc.Change_Code__c, null);
+                    }
                 }
+
+
 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, Label.AMS_New_Change_Code_Notification + codes));
             }

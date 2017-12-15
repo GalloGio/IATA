@@ -117,6 +117,10 @@
                 <behavior>Edit</behavior>
                 <field>AIMS_Updated_by__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Created_Date_To_Show__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

@@ -3027,6 +3027,11 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Pre-Send Confirm: ' + isNoticeOfChange);
             sendConfirmationEmail(newCase);
 
+            // AMSU-39 if NoC from BR then create notification for HO portal admin
+            if (isNoticeOfChange && amsOfficeType != AMS_Utils.HO && amsOfficeType != AMS_Utils.HE) {
+                createHoAdminNotifications();
+            }
+
             if (isNoticeOfChange)
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
 
@@ -7432,7 +7437,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205
-        ID lAccountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
+        ID lAccountConcerned = ( (newForm.Scope_of_Change__c == 'Selected Branches Only' && newCase.Account_Concerned__c != null) ? newCase.Account_Concerned__c : vHQAccountId );
         if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
             List<AMS_Accreditation_Contact__c> prevAndCurrOwnersList = new List<AMS_Accreditation_Contact__c>();
             for (AMS_Accreditation_Contact__c lCont: countAccreditationContact) {
@@ -7894,6 +7899,38 @@ system.debug('aqui sectorValue ' + sectorValue);
             return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
         } else {
             return accreditationModel;
+        }
+    }
+
+    private void createHoAdminNotifications() {
+        // get HO portal admin contact
+        List<Contact> adminContactsHO = new List<Contact>([SELECT Id, Email, AccountId, Account.IATACode__c, User_Portal_Status__c FROM Contact WHERE AccountId = :con.Account.Top_Parent__c AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']);
+
+        if (!adminContactsHO.isEmpty()) {
+            try {
+                list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
+
+                for (Contact loopCon : adminContactsHO) {
+                    Notification__c notification = new Notification__c();
+                    notification.Contact__c = loopCon.Id;
+                    notification.Type__c= 'Information';
+                    notification.Notificatin_color__c = '#007FFF';
+                    notification.Alert_Contact_By_Email__c = true;
+                    notification.Expiry_date__c = Datetime.now().addDays(14);
+                    notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + loopCon.Account.IATACode__c;
+                    notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + loopCon.Account.IATACode__c + '.<br/>';
+                    notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
+
+                    lstNotificationsToCreate.add(notification);
+                }
+
+                insert lstNotificationsToCreate;
+
+            } catch (Exception e) {
+                system.debug('Add notification ERROR: ' + e.getmessage());
+            }
+        } else {
+            system.debug('Add notification ERROR: no portal admins found on HO account');
         }
     }
 }

@@ -151,7 +151,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>60698691</value>
+            <value>9601961</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -168,8 +168,8 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record__c</field>
-            <operation>equals</operation>
-            <value>3530728</value>
+            <operation>contains</operation>
+            <value>9521159</value>
         </filters>
         <label>AMS - Error</label>
         <language>en_US</language>
@@ -256,7 +256,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>11/23/2017 12:00 AM</value>
+            <value>10/16/2017 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

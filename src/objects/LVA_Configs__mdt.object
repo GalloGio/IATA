@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Generic metadata for live agent all needed configurations</description>
+    <fields>
+        <fullName>ValueLong__c</fullName>
+        <description>Field to be used only when configuration value is greater that 255 chars</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>ValueLong</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Value__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Value</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>LVA_Configs</label>
+    <pluralLabel>LVA_Configs</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
