@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Tracks the single usage (clicks for CAC and GAD). A process will then take all the daily usage and sum it in another object for reporting purposes</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -174,45 +171,55 @@
         <externalId>false</externalId>
         <inlineHelpText>Application related to the usage tracking (matches the Products Category)</inlineHelpText>
         <label>Related Application Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CACFREE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACPRO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACSWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACEWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ASL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CACFREE</fullName>
+                    <default>false</default>
+                    <label>CACFREE</label>
+                </value>
+                <value>
+                    <fullName>CACPRO</fullName>
+                    <default>false</default>
+                    <label>CACPRO</label>
+                </value>
+                <value>
+                    <fullName>GAD</fullName>
+                    <default>false</default>
+                    <label>GAD</label>
+                </value>
+                <value>
+                    <fullName>CACSWS</fullName>
+                    <default>false</default>
+                    <label>CACSWS</label>
+                </value>
+                <value>
+                    <fullName>CACEWS</fullName>
+                    <default>false</default>
+                    <label>CACEWS</label>
+                </value>
+                <value>
+                    <fullName>CAL</fullName>
+                    <default>false</default>
+                    <label>CAL</label>
+                </value>
+                <value>
+                    <fullName>PAL</fullName>
+                    <default>false</default>
+                    <label>PAL</label>
+                </value>
+                <value>
+                    <fullName>ASL</fullName>
+                    <default>false</default>
+                    <label>ASL</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_Subscription_History__c</fullName>
@@ -235,21 +242,25 @@
         <externalId>false</externalId>
         <inlineHelpText>For CAC and GAD, result of the search</inlineHelpText>
         <label>Search Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Valid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Invalid</fullName>
+                    <default>false</default>
+                    <label>Invalid</label>
+                </value>
+                <value>
+                    <fullName>Valid</fullName>
+                    <default>false</default>
+                    <label>Valid</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Search_Target__c</fullName>
@@ -257,21 +268,25 @@
         <externalId>false</externalId>
         <inlineHelpText>For CAC and GAD, what the user searched for</inlineHelpText>
         <label>Search Target</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agent</fullName>
+                    <default>false</default>
+                    <label>Agent</label>
+                </value>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>IEC Usage Tracker Live</label>
     <listViews>
@@ -297,4 +312,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>
