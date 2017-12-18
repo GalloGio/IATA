@@ -22,6 +22,8 @@ public with sharing class ISSP_PortalService{
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalService() {
+
+        this.canAddUsers = false;
     
         pollerOn = false;
 
@@ -59,7 +61,7 @@ public with sharing class ISSP_PortalService{
                                                                 p.Contact__r.LastName, p.Contact__r.Account.Name,
                                                                 p.ANG_Portal_Service_Role__c,
                                                                 p.Contact__r.User_Portal_Status__c,
-                                                                p.Contact__c, p.Account__c
+                                                                p.Account__c
                                                                 From Portal_Application_Right__c p 
                                                                 where p.Portal_Application__c=: psId 
                                                                 and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested')
