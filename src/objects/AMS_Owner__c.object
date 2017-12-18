@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -89,28 +86,34 @@
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Webstar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS</fullName>
+                    <default>false</default>
+                    <label>AIMS</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>Webstar</fullName>
+                    <default>false</default>
+                    <label>Webstar</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Person__c</fullName>
@@ -133,4 +136,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>
