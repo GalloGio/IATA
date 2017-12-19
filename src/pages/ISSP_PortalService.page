@@ -90,8 +90,11 @@
       refreshList();
     }
 
-    function gotoIfap(accountId) {
-      window.location.href = "ISSP_AssignFinancialContact?id=" + accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
+    function gotoIfap(accountId, contactId, name, status) {
+      if(status == 'Access Requested' || status == 'Access Denied')
+        window.location.href = "ISSP_AssignFinancialContact?id=" + accountId + "&MainNav=Services&mid=M4S2&subNav=Access&vContactId=" + contactId + '&vContactName=' + name;
+      else
+        window.location.href = "ISSP_AssignFinancialContact?id=" + accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
     }    
 
   </script>  
@@ -143,7 +146,7 @@
                       <center> 
                         <apex:commandButton action="{!RedirectToServiceAccess}" styleclass="btn btn-sm btn-primary"
                           value="{!$Label.ISSP_Add_User_to_this_service}" 
-                          rendered="{!!PortalService.Cannot_be_managed_by_portal_admin__c}"/>
+                          rendered="{! canAddUsers}"/>
                       </center>                     
                     </h3>
                     <apex:outputPanel id="CustomList">
@@ -177,7 +180,7 @@
                                     Deny Access
                                   </a>
                                   <a href="#" class="btn btn-xs btn-primary btn-block" style="margin-top: 3px; display:{!IF(o.showIfap,'','none')}"
-                                    onclick="gotoIfap('{!o.par.Account__c}');">
+                                    onclick="gotoIfap('{!o.par.Account__c}', '{!o.par.Contact__c}', '{!o.par.Contact__r.Name}', '{!o.par.Right__c}');">
                                     <span class="glyphicon glyphicon-comment"></span>
                                     Assign IFAP Contact
                                   </a>

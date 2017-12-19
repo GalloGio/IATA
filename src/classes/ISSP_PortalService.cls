@@ -15,12 +15,15 @@ public with sharing class ISSP_PortalService{
     public String serviceName {get;set;} 
     public String contactId {get;set;}
     public String psId {get;set;}
+    public boolean canAddUsers {get; set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalService() {
+
+        this.canAddUsers = false;
     
         pollerOn = false;
 
@@ -33,6 +36,8 @@ public with sharing class ISSP_PortalService{
                                                    
         if(PortalService_List != null && PortalService_List .size() > 0){
             PortalService = PortalService_List [0];
+
+            this.canAddUsers = (PortalService.Cannot_be_managed_by_portal_admin__c == false && PortalService.ServiceName__c != 'IFAP');
         }
     }
 
@@ -76,18 +81,18 @@ public with sharing class ISSP_PortalService{
 
         isEasyPay = false;
         if(!auxServicesList.isEmpty()) {
-            isEasyPay = auxServicesList[0].Application_Name__c.startsWith('IATA EasyPay');            
-        }
+            isEasyPay = auxServicesList[0].Application_Name__c.startsWith('IATA EasyPay');
+        }        
 
         for(Portal_Application_Right__c par : auxServicesList) {
             ServiceWrapper sw = new ServiceWrapper();
-            sw.par = par;
+            sw.par = par;             
 
             String contactStatus = par.Contact__r.User_Portal_Status__c;
 
             sw.cannotBeManagedByPortalAdmin = par.Portal_Application__r.Cannot_be_managed_by_portal_admin__c;
             sw.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c);
-
+        
             sw.hide = ((sw.isEasyPayService && !sw.cannotBeManagedByPortalAdmin) ||
                        (sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin && par.right__c != 'Access Granted') ||
                        (!sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin)
@@ -141,7 +146,7 @@ public with sharing class ISSP_PortalService{
         public boolean hide {get; set;}
         public boolean showGrant {get; set;}
         public boolean showDeny {get; set;}
-        public boolean showIfap {get; set;}
+        public boolean showIfap {get; set;}        
     }
     
     public PageReference RedirectToServiceAccess(){ 
