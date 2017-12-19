@@ -101,8 +101,13 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
             request.LegalName = nvl(account.Name);
             String tradeName = nvl(account.TradeName__c);
             request.CommercialName = tradeName==''? request.LegalName: tradeName;
-            request.ISMembershipStatus = nvl(account.SIS_Status__c);
-            request.ISMembershipSubStatus = nvl(account.SIS_Sub_Status__c);
+            if (account.Status__c == 'Terminated') {
+                request.ISMembershipStatus = 'TERMINATED';
+                request.ISMembershipSubStatus = 'TERMINATED';
+            } else {
+                request.ISMembershipStatus = nvl(account.SIS_Status__c);
+                request.ISMembershipSubStatus = nvl(account.SIS_Sub_Status__c);
+            }
             request.RegistrationID = '';
             request.TaxVatRegistrationNumber = nvl(account.VAT_Number__c);
             request.AddTaxVatRegistrationNumber = nvl(account.VAT_Number_2__c);

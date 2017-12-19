@@ -135,7 +135,36 @@ public class ISSP_WS_SIS_Callout_Common_Test {
         insert account;
         
         account = Database.query(
-            'SELECT Id, Country_ISO_Code__c, Airline_designator__c, IATACode__c, SIS_Status__c, Name,'
+            'SELECT Id, Country_ISO_Code__c, Airline_designator__c, IATACode__c, SIS_Status__c, Name, Status__c, '
+            + ' SIS_Sub_Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, BillingAddress, BillingStreet, BillingState, BillingCity,'
+            + ' BillingPostalCode, BillingLongitude, BillingLatitude, BillingCountry, SIS_ID__c'
+            +' FROM Account WHERE id = \'' + account.Id + '\'');
+        
+        Test.startTest();
+        ISSP_WS_SIS_Callout_UpdateAccount.ResponseData response = ISSP_WS_SIS_Callout_UpdateAccount.UpdateAccount(account);
+        ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_UpdateAccount.createLog(response);
+        Test.stopTest();
+        
+        System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+        System.assertEquals('UpdateAccount', log.Method__c);
+        System.assertEquals(true, log.Success__c, 'log: ' + log);
+    }
+    
+    static testMethod void test_UpdateAccount_Terminated_OK() {
+        ISSP_WS_SIS_Callout_UpdateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+        Account account = new Account(
+            Name = 'test',
+            BillingStreet = 'Street',
+            BillingCity = 'City',
+            BillingState = 'State',
+            BillingPostalCode = '8888',
+            SIS_ID__c = '123456',
+            Status__c = 'Terminated'
+        );
+        insert account;
+        
+        account = Database.query(
+            'SELECT Id, Country_ISO_Code__c, Airline_designator__c, IATACode__c, SIS_Status__c, Name, Status__c, '
             + ' SIS_Sub_Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, BillingAddress, BillingStreet, BillingState, BillingCity,'
             + ' BillingPostalCode, BillingLongitude, BillingLatitude, BillingCountry, SIS_ID__c'
             +' FROM Account WHERE id = \'' + account.Id + '\'');
