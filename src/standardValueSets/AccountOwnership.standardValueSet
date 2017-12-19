@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Corporation - Sole Proprietorship</fullName>
+        <default>false</default>
+        <label>Corporation - Sole Proprietorship</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Partnership</fullName>
+        <default>false</default>
+        <label>Partnership</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Limited Partnership</fullName>
+        <default>false</default>
+        <label>Limited Partnership</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Limited Liability Company (LLC)</fullName>
+        <default>false</default>
+        <label>Limited Liability Company (LLC)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Corporation - For-Profit</fullName>
+        <default>false</default>
+        <label>Corporation - For-Profit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Corporation - Not-For-Profit</fullName>
+        <default>false</default>
+        <label>Corporation - Not-For-Profit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cooperative</fullName>
+        <default>false</default>
+        <label>Cooperative</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non-Corporate / Individuals</fullName>
+        <default>false</default>
+        <label>Non-Corporate / Individuals</label>
+    </standardValue>
+</StandardValueSet>
