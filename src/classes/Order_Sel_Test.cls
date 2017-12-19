@@ -71,8 +71,8 @@ private class Order_Sel_Test {
 
 			order = orderSel.getPenddingOrder(user.Id);
 
-			order = orderSel.initializeOrder(account, contact);
-			order = orderSel.initializeOrder(account, contact, true);
+			order = orderSel.initializeOrder(account, contact, user.Id);
+			order = orderSel.initializeOrder(account, contact, user.Id, true);
 
 			orderSel.cleanOrderItems(orderId);
 			orderIdSet = orderSel.findOrders4SAP(orderList, orderList);
@@ -136,8 +136,8 @@ private class Order_Sel_Test {
 
 			order = orderSel.getPenddingOrder(user.Id);
 
-			order = orderSel.initializeOrder(account, contact);
-			order = orderSel.initializeOrder(account, contact, true);
+			order = orderSel.initializeOrder(account, contact, user.Id);
+			order = orderSel.initializeOrder(account, contact, user.Id, true);
 
 			order = orderSel.getQuoteDetails(null);
 			order = Order_Sel.getQuoteDetail(null, null);

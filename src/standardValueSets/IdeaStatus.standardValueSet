@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>New</fullName>
+        <color>#FFFF66</color>
+        <default>true</default>
+        <label>New</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Under review</fullName>
+        <color>#78C953</color>
+        <default>false</default>
+        <label>Under review</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Implemented !</fullName>
+        <color>#0B6FCE</color>
+        <default>false</default>
+        <label>Implemented !</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Implementable</fullName>
+        <color>#660000</color>
+        <default>false</default>
+        <label>Not Implementable</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated - On Hold</fullName>
+        <default>false</default>
+        <label>Escalated - On Hold</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Merged</fullName>
+        <default>false</default>
+        <label>Merged</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ACR In progress</fullName>
+        <default>false</default>
+        <label>ACR In progress</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ACR Released</fullName>
+        <default>false</default>
+        <label>ACR Released</label>
+    </standardValue>
+</StandardValueSet>

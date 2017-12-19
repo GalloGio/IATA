@@ -459,7 +459,8 @@
                     </apex:facet>
          
                     <apex:outputpanel rendered="{! OR(f.FieldPath == 'Service_Description__c', f.FieldPath == 'Application_icon__c')}">                    
-                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" />
+                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" rendered="{! f.fieldPath != 'Service_Description__c'}" />
+                        <apex:outputText value="{! IF( ISBLANK($Label[item.recordService['Service_Description_Label__c']]), item.recordService[f.fieldPath], $Label[item.recordService['Service_Description_Label__c']]) }" escape="false" rendered="{! f.fieldPath == 'Service_Description__c'}" />
                     </apex:outputpanel>
                           
                     <apex:outputpanel rendered="{!f.FieldPath == 'Name'}">

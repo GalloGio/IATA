@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -160,12 +157,15 @@
     <fields>
         <fullName>ANG_Event_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Event Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Event_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
@@ -384,7 +384,7 @@ Id
         <active>true</active>
         <label>Risk Event</label>
         <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
+            <picklist>ANG_Event_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
@@ -478,4 +478,5 @@ PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
 ) &gt; 1</errorConditionFormula>
         <errorMessage>Please, fill only one of the source fields</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
