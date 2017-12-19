@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -128,4 +125,5 @@
         <errorConditionFormula>ISPICKVAL(IFAP_Reassessment__r.Related_Case__r.Status, &apos;Reassessment Request Approved&apos;) || ISPICKVAL(IFAP_Reassessment__r.Related_Case__r.Status, &apos;Reassessment Requested&apos;)</errorConditionFormula>
         <errorMessage>A Reassessment Accounting Issue cannot be created/updated when the case status is Reassessment Request Approved or Reassessment Requested</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

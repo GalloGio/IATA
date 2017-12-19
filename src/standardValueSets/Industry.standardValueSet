@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Academic</fullName>
+        <default>false</default>
+        <label>Academic</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Accomodation</fullName>
+        <default>false</default>
+        <label>Accomodation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Aerospace/Defence</fullName>
+        <default>false</default>
+        <label>Aerospace/Defence</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Aircraft Maintenance</fullName>
+        <default>false</default>
+        <label>Aircraft Maintenance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline</fullName>
+        <default>false</default>
+        <label>Airline</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline - Cargo Only</fullName>
+        <default>false</default>
+        <label>Airline - Cargo Only</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline Suppliers</fullName>
+        <default>false</default>
+        <label>Airline Suppliers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Air Navigation</fullName>
+        <default>false</default>
+        <label>Air Navigation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airport</fullName>
+        <default>false</default>
+        <label>Airport</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airport (Operators and Owners)</fullName>
+        <default>false</default>
+        <label>Airport (Operators and Owners)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Air Traffic Control</fullName>
+        <default>false</default>
+        <label>Air Traffic Control</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Analyst</fullName>
+        <default>false</default>
+        <label>Analyst</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Associations, Alliances and NGOs</fullName>
+        <default>false</default>
+        <label>Associations, Alliances and NGOs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cargo Agent</fullName>
+        <default>false</default>
+        <label>Cargo Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Car Rentals</fullName>
+        <default>false</default>
+        <label>Car Rentals</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Consulting</fullName>
+        <default>false</default>
+        <label>Consulting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cruise Lines</fullName>
+        <default>false</default>
+        <label>Cruise Lines</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Education</fullName>
+        <default>false</default>
+        <label>Education</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Engineering</fullName>
+        <default>false</default>
+        <label>Engineering</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Entertainment Industry</fullName>
+        <default>false</default>
+        <label>Entertainment Industry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Equipment Manufacturers</fullName>
+        <default>false</default>
+        <label>Equipment Manufacturers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial</fullName>
+        <default>false</default>
+        <label>Financial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Institutions</fullName>
+        <default>false</default>
+        <label>Financial Institutions</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Freight Forwarding</fullName>
+        <default>false</default>
+        <label>Freight Forwarding</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fuel and Energy</fullName>
+        <default>false</default>
+        <label>Fuel and Energy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDS Global Distribution System</fullName>
+        <default>false</default>
+        <label>GDS Global Distribution System</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Public</fullName>
+        <default>false</default>
+        <label>General Public</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Sales Agent</fullName>
+        <default>false</default>
+        <label>General Sales Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Global Media</fullName>
+        <default>false</default>
+        <label>Global Media</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Government / Policy Maker</fullName>
+        <default>false</default>
+        <label>Government / Policy Maker</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Governmental Institutions</fullName>
+        <default>false</default>
+        <label>Governmental Institutions</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Government and Regulatory</fullName>
+        <default>false</default>
+        <label>Government and Regulatory</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ground Handling</fullName>
+        <default>false</default>
+        <label>Ground Handling</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Hotels and Resorts</fullName>
+        <default>false</default>
+        <label>Hotels and Resorts</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA</fullName>
+        <default>false</default>
+        <label>IATA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Industrial Equipment and Manufacturing</fullName>
+        <default>false</default>
+        <label>Industrial Equipment and Manufacturing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Industry Association &amp; Alliances</fullName>
+        <default>false</default>
+        <label>Industry Association &amp; Alliances</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Industry Associations</fullName>
+        <default>false</default>
+        <label>Industry Associations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Industry Provider</fullName>
+        <default>false</default>
+        <label>Industry Provider</label>
+    </standardValue>
+    <standardValue>
+        <fullName>In-Flight Services</fullName>
+        <default>false</default>
+        <label>In-Flight Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Information &amp; Communications Technology</fullName>
+        <default>false</default>
+        <label>Information &amp; Communications Technology</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Insurance</fullName>
+        <default>false</default>
+        <label>Insurance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>International Air Transport</fullName>
+        <default>false</default>
+        <label>International Air Transport</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IT Sector</fullName>
+        <default>false</default>
+        <label>IT Sector</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Legal</fullName>
+        <default>false</default>
+        <label>Legal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Library - Bookstore</fullName>
+        <default>false</default>
+        <label>Library - Bookstore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Marketing</fullName>
+        <default>false</default>
+        <label>Marketing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Marketing, Communications and PR</fullName>
+        <default>false</default>
+        <label>Marketing, Communications and PR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Media or Publishing</fullName>
+        <default>false</default>
+        <label>Media or Publishing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publishing and Media</fullName>
+        <default>false</default>
+        <label>Publishing and Media</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Railway</fullName>
+        <default>false</default>
+        <label>Railway</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Research and Academic Training</fullName>
+        <default>false</default>
+        <label>Research and Academic Training</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Security</fullName>
+        <default>false</default>
+        <label>Security</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Specialized Media</fullName>
+        <default>false</default>
+        <label>Specialized Media</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tourism</fullName>
+        <default>false</default>
+        <label>Tourism</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tour Operator</fullName>
+        <default>false</default>
+        <label>Tour Operator</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Transportation</fullName>
+        <default>false</default>
+        <label>Transportation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Transportation - Other</fullName>
+        <default>false</default>
+        <label>Transportation - Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Travel Agent</fullName>
+        <default>false</default>
+        <label>Travel Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Travel and Tourism</fullName>
+        <default>false</default>
+        <label>Travel and Tourism</label>
+    </standardValue>
+</StandardValueSet>
