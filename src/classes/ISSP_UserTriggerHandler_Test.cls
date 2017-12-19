@@ -101,4 +101,34 @@ private class ISSP_UserTriggerHandler_Test {
         System.assertEquals('SIS', listLogs[0].System__c);
     }
 
+    static testMethod void test_alertSISContactsChangingAccount() {
+        System.assert([SELECT Id, Name FROM EmailTemplate
+            WHERE Name IN ('ISSP WS SIS send alert on Account change', 'ISSP WS SIS send alert on Account change Error')].size()==2);
+        
+        Account acc1 = ISSP_ObjectFactory.createNewAccount();
+        Account acc2 = ISSP_ObjectFactory.createNewAccount();
+        list<Account> listAccount = new list<Account>{acc1,acc2};
+        insert listAccount;
+
+        // create contact
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.Email = 'test2@test.test';
+        contact.AccountId = acc1.Id;
+        insert contact;
+        
+        // and grant access to SIS
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS'); 
+        insert app;
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
+        insert appRight;
+        
+        Test.StartTest();
+        ISSP_UserTriggerHandler.alertSISContactsChangingAccount(new set<Id>{contact.Id});
+        //contact.AccountId = acc2.Id;
+        //update contact;
+        Test.StopTest();
+        
+        appRight = [Select Id, Right__c FROM Portal_Application_Right__c WHERE Id=:appRight.Id];
+        System.assertEquals('Access Denied',appRight.Right__c);
+    }
 }
