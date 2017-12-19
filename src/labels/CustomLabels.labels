@@ -26260,21 +26260,21 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Can make purchases and Withdrawals from the Wallets you are associated with;&lt;/li&gt;&lt;li&gt;Can associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Make purchases asd withdrawals from the wallets you are associated with;&lt;/li&gt;&lt;li&gt;Permission to associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role.&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Permission to make purchases and Withdrawals from the Master Wallet (if granted such permission) and any Sub-wallet with which you are associated;&lt;/li&gt;&lt;li&gt;To associate individual users with the IEP Account and particular Sub-wallets (and to assign role of Sub-Wallet Manager or Ticket Issuer)&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Make purchases and withdrawals from the Master Wallet if granted permission, and any Sub-wallets you are associated with;&lt;/li&gt;&lt;li&gt;Associate individual users with the IEP Account and particular Sub-wallets (and assign role of Sub-Wallet Manager or Ticket Issuer).&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Permission to use the Master Wallet, any Sub-wallet, to establish new Sub-wallets and close existing Sub-wallets;&lt;/li&gt;&lt;li&gt;Make changes to Account Profile (including your Settings and Users Tab). Can also Cancel the IEP Account;&lt;/li&gt;&lt;li&gt;Transfer amounts between your Master Wallet and Sub-wallets, to associate individual users with the IEP Account and particular Sub-wallets (and to determine which category such individual users shall be in);&lt;/li&gt;&lt;li&gt;Make purchases or Withdrawals from your Master Wallet or any Sub-wallets&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Permission to use the Master Wallet and any Sub-wallet, to establish new and close Sub-wallets;&lt;/li&gt;&lt;li&gt;Make changes to Account Profile (including your Settings and Users Tab). Can also Cancel the IEP Account;&lt;/li&gt;&lt;li&gt;Transfer amounts between your Master Wallet and Sub-Wallets, to assocate individual users with the IEP Account and particular Sub-wallets (and to determine which category such individual users shall be in);&lt;/li&gt;&lt;li&gt;Make purchases ow withdrawals from your Master Wallet or any Sub-wallets.&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
