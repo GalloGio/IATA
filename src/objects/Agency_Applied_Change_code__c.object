@@ -290,344 +290,6 @@
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
-<<<<<<< HEAD
-        <picklist>
-            <picklistValues>
-                <fullName>AFN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHJ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CMF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CSF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DFE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DFW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DOM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FIN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FOP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FPR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FPY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IAF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LRA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LRD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LRR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LSW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MCH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MEP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NCA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NCW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NEP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NEW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NFS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NOT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NTW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PCA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PCN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PCR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RCM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RCR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>REC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>REI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>REW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RNC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RPY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RRC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RTE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RTR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RVW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SDR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SRM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>STR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TCH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VRR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VRW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WCP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
-=======
->>>>>>> 272d78e79c120201976579cb60d9ca3063e25508
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -635,6 +297,11 @@
         <valueSet>
             <valueSetDefinition>
                 <sorted>true</sorted>
+				<value>
+                    <fullName>AFN</fullName>
+                    <default>false</default>
+                    <label>AFN</label>
+                </value>
                 <value>
                     <fullName>BSF</fullName>
                     <default>false</default>
@@ -655,10 +322,20 @@
                     <default>false</default>
                     <label>CAS</label>
                 </value>
+				<value>
+                    <fullName>CCA</fullName>
+                    <default>false</default>
+                    <label>CCA</label>
+                </value>
                 <value>
                     <fullName>CCF</fullName>
                     <default>false</default>
                     <label>CCF</label>
+                </value>
+				<value>
+                    <fullName>CCR</fullName>
+                    <default>false</default>
+                    <label>CCR</label>
                 </value>
                 <value>
                     <fullName>CHC</fullName>
@@ -795,10 +472,25 @@
                     <default>false</default>
                     <label>FIN</label>
                 </value>
+				<value>
+                    <fullName>FOP</fullName>
+                    <default>false</default>
+                    <label>FOP</label>
+                </value>
+				<value>
+                    <fullName>FPR</fullName>
+                    <default>false</default>
+                    <label>FPR</label>
+                </value>
                 <value>
                     <fullName>FPY</fullName>
                     <default>false</default>
                     <label>FPY</label>
+                </value>
+				<value>
+                    <fullName>IAF</fullName>
+                    <default>false</default>
+                    <label>IAF</label>
                 </value>
                 <value>
                     <fullName>IRR</fullName>
@@ -830,6 +522,16 @@
                     <default>false</default>
                     <label>LRR</label>
                 </value>
+				<value>
+                    <fullName>LSP</fullName>
+                    <default>false</default>
+                    <label>LSP</label>
+                </value>
+				<value>
+                    <fullName>LSW</fullName>
+                    <default>false</default>
+                    <label>LSW</label>
+                </value>
                 <value>
                     <fullName>MCH</fullName>
                     <default>false</default>
@@ -850,6 +552,11 @@
                     <default>false</default>
                     <label>NCA</label>
                 </value>
+				<value>
+                    <fullName>NCW</fullName>
+                    <default>false</default>
+                    <label>NCW</label>
+                </value>
                 <value>
                     <fullName>NEP</fullName>
                     <default>false</default>
@@ -859,6 +566,11 @@
                     <fullName>NEW</fullName>
                     <default>false</default>
                     <label>NEW</label>
+                </value>
+				<value>
+                    <fullName>NFS</fullName>
+                    <default>false</default>
+                    <label>NFS</label>
                 </value>
                 <value>
                     <fullName>NOT</fullName>
@@ -874,6 +586,21 @@
                     <fullName>NWD</fullName>
                     <default>false</default>
                     <label>NWD</label>
+                </value>
+				<value>
+                    <fullName>PCA</fullName>
+                    <default>false</default>
+                    <label>PCA</label>
+                </value>
+				<value>
+                    <fullName>PCN</fullName>
+                    <default>false</default>
+                    <label>PCN</label>
+                </value>
+				<value>
+                    <fullName>PCR</fullName>
+                    <default>false</default>
+                    <label>PCR</label>
                 </value>
                 <value>
                     <fullName>RCM</fullName>
@@ -894,6 +621,16 @@
                     <fullName>REI</fullName>
                     <default>false</default>
                     <label>REI</label>
+                </value>
+				<value>
+                    <fullName>REW</fullName>
+                    <default>false</default>
+                    <label>REW</label>
+                </value>
+				<value>
+                    <fullName>RNC</fullName>
+                    <default>false</default>
+                    <label>RNC</label>
                 </value>
                 <value>
                     <fullName>RPY</fullName>
@@ -969,6 +706,11 @@
                     <fullName>VRW</fullName>
                     <default>false</default>
                     <label>VRW</label>
+                </value>
+				<value>
+                    <fullName>WCP</fullName>
+                    <default>false</default>
+                    <label>WCP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
