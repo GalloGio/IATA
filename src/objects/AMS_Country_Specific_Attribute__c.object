@@ -66,21 +66,25 @@
         <description>The direction to match with the Risk Alert inserted. Risk Alert must match Percentage and Direction to trigger actions</description>
         <externalId>false</externalId>
         <label>Direction</label>
-        <picklist>
-            <picklistValues>
-                <fullName>UP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DOWN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+				<value>
+                    <fullName>UP</fullName>
+                    <default>false</default>
+                    <label>UP</label>
+                </value>
+                <value>
+                    <fullName>DOWN</fullName>
+                    <default>false</default>
+                    <label>DOWN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_EmailTemplate_Legacy__c</fullName>
