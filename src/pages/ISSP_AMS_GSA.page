@@ -1,7 +1,7 @@
 <apex:page controller="ISSP_AMS_MSO_Controller"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" renderAs="{!strRenderAs}" action="{!checkIfUserHasAccessToService}">
 <html>
 
-<c:ISSP_Header  rendered="{!strRenderAs<>'PDF'}"/>
+<c:ISSP_Header rendered="{!strRenderAs<>'PDF'}"/>
 
 <head>
 	<script type="text/javascript">
@@ -191,7 +191,7 @@
 <body>
 	<div class="container">
 
-		<c:ISSP_CustomNavigation  rendered="{!strRenderAs<>'PDF'}"/>
+		<c:ISSP_CustomNavigation rendered="{!strRenderAs<>'PDF'}"/>
 
 		<apex:form >
 		<apex:actionFunction name="handleSearchAF" rerender="tablePanel, downloadButtons" action="{!refreshMsoGsaList}"/>
@@ -233,29 +233,29 @@
 							<tr>
 								<th>
 									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='IATACode__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
 									</apex:commandLink>
 								</th>
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name_GSA}
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
-								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Territories}</apex:commandLink></th>
+								<th><apex:commandLink >{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
+								<th><apex:commandLink >{!$Label.ISSP_AMS_MSO_GSA_Territories}</apex:commandLink></th>
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_City}
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCity',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingCity" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Country}
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
-										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingCountry" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
@@ -321,7 +321,7 @@
 			
 		</apex:form>
 
-		<c:ISSP_CustomFooter  rendered="{!strRenderAs<>'PDF'}"/>
+		<c:ISSP_CustomFooter rendered="{!strRenderAs<>'PDF'}"/>
 
 	</div>
 </body>
