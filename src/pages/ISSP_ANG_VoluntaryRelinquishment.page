@@ -266,16 +266,15 @@
                         <apex:pageBlock id="step1Block" mode="edit" >
                             <!--Step Progress bar start -->
                             
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                            <div class="progress">         
+                                <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                                     {!$Label.ISSP_AMS_Step1_PCI}
                                 </div>
-                                
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%}">
+                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                                     <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_ANG_Step1_VR}" id="Next3">
 
-                                    <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
-                                </apex:commandLink>
+                                        <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                                        </apex:commandLink>
                                 </div>
                             </div>
                             <apex:pageMessages id="msg" />
