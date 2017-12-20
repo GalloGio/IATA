@@ -307,6 +307,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c){
             accreditationObj = fetchAccreditationObject(accreditationId);
             oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
+            oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
         }
 
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
