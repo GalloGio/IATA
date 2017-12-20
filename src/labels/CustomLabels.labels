@@ -26862,7 +26862,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Make purchases asd withdrawals from the wallets you are associated with;&lt;/li&gt;&lt;li&gt;Permission to associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role.&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Make purchases and withdrawals from the wallets you are associated with;&lt;/li&gt;&lt;li&gt;Permission to associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role.&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
