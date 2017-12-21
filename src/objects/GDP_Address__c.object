@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -300,16 +297,21 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <fields>
         <fullName>Address_State_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-				OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
-                                                        IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
-						 IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
-    IATA_ISO_State__r.Name,
-				NULL
+        <formula>IF( 
+And( 
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
+!OR(IATA_ISO_State__r.Name=&apos;BR57&apos;, 
+IATA_ISO_State__r.Name=&apos;MX86&apos;, 
+IATA_ISO_State__r.Name=&apos;VE95&apos;) 
+), 
+IATA_ISO_State__r.Name, 
+NULL 
 )</formula>
         <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
         <label>Address State Name</label>
@@ -336,25 +338,30 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Location</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Location</fullName>
+                    <default>true</default>
+                    <label>Location</label>
+                </value>
+                <value>
+                    <fullName>Mailing</fullName>
+                    <default>false</default>
+                    <label>Mailing</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Address__c</fullName>
@@ -590,4 +597,5 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

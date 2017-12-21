@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -70,24 +67,29 @@
         <fullName>Record_Type_for_Product__c</fullName>
         <externalId>false</externalId>
         <label>Record Type for Product</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Publication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unclassified</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Publication</fullName>
+                    <default>false</default>
+                    <label>Publication</label>
+                </value>
+                <value>
+                    <fullName>GDP</fullName>
+                    <default>false</default>
+                    <label>GDP</label>
+                </value>
+                <value>
+                    <fullName>Unclassified</fullName>
+                    <default>false</default>
+                    <label>Unclassified</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sales_Channel__c</fullName>
@@ -130,4 +132,5 @@
         <errorConditionFormula>AND(ISBLANK(Division__c), ISBLANK(Sales_Channel__c))</errorConditionFormula>
         <errorMessage>Division or Sales Channel or both must be specified</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

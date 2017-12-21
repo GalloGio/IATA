@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>CSS team projects/enhancements</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -62,45 +59,55 @@
         <externalId>false</externalId>
         <inlineHelpText>Area that project, enhancement is related to</inlineHelpText>
         <label>Area_name</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Customer Portal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDP/Products</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Knowledge Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mass-Communication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Others</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce Architecture Recommendations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce Enhancements</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce Projects</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Customer Portal</fullName>
+                    <default>false</default>
+                    <label>Customer Portal</label>
+                </value>
+                <value>
+                    <fullName>GDP/Products</fullName>
+                    <default>false</default>
+                    <label>GDP/Products</label>
+                </value>
+                <value>
+                    <fullName>Knowledge Management</fullName>
+                    <default>false</default>
+                    <label>Knowledge Management</label>
+                </value>
+                <value>
+                    <fullName>Mass-Communication</fullName>
+                    <default>false</default>
+                    <label>Mass-Communication</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+                <value>
+                    <fullName>Salesforce Architecture Recommendations</fullName>
+                    <default>false</default>
+                    <label>Salesforce Architecture Recommendations</label>
+                </value>
+                <value>
+                    <fullName>Salesforce Enhancements</fullName>
+                    <default>false</default>
+                    <label>Salesforce Enhancements</label>
+                </value>
+                <value>
+                    <fullName>Salesforce Projects</fullName>
+                    <default>false</default>
+                    <label>Salesforce Projects</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BRD_in_place__c</fullName>
@@ -130,33 +137,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Team Member name</inlineHelpText>
         <label>CSS Team Member</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Gabriel Oueidat</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Jefferson Simoes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Manuel Garcia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Snjezana Ivancan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Young Park</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Gabriel Oueidat</fullName>
+                    <default>false</default>
+                    <label>Gabriel Oueidat</label>
+                </value>
+                <value>
+                    <fullName>Jefferson Simoes</fullName>
+                    <default>false</default>
+                    <label>Jefferson Simoes</label>
+                </value>
+                <value>
+                    <fullName>Manuel Garcia</fullName>
+                    <default>false</default>
+                    <label>Manuel Garcia</label>
+                </value>
+                <value>
+                    <fullName>Snjezana Ivancan</fullName>
+                    <default>false</default>
+                    <label>Snjezana Ivancan</label>
+                </value>
+                <value>
+                    <fullName>Young Park</fullName>
+                    <default>false</default>
+                    <label>Young Park</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ITS_Contacts__c</fullName>
@@ -219,37 +233,45 @@
         <externalId>false</externalId>
         <inlineHelpText>Project/enhancement status</inlineHelpText>
         <label>Item Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finished</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finished partially</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not started yet</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>Finished</fullName>
+                    <default>false</default>
+                    <label>Finished</label>
+                </value>
+                <value>
+                    <fullName>Finished partially</fullName>
+                    <default>false</default>
+                    <label>Finished partially</label>
+                </value>
+                <value>
+                    <fullName>In progress</fullName>
+                    <default>false</default>
+                    <label>In progress</label>
+                </value>
+                <value>
+                    <fullName>Not started yet</fullName>
+                    <default>false</default>
+                    <label>Not started yet</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Item_name__c</fullName>
@@ -257,204 +279,358 @@
         <externalId>false</externalId>
         <inlineHelpText>Project/enhancement name</inlineHelpText>
         <label>Item_name</label>
-        <picklist>
-            <controllingField>Area_name__c</controllingField>
-            <picklistValues>
-                <fullName>Knowledge Management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Knowledge Management</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mass-Communication</fullName>
-                <default>false</default>
-                <controllingFieldValues>Mass-Communication</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Portal (SSO) POC phase</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Portal</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Portal - additional languages</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Portal</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce Governance</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Account &amp; Contact Structure</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounts and Contacts Clean</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tool for tracking the impact of changes in Salesforce</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security &amp; SSP</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Storage issues</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New users/profiles/roles/permissions</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Case field clean-up and potential move of fields to new objects</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Real time KPIs in SF and Performance management</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce DPC alignment (BSP, CASS)</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Salesforce-SAP connection</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Enhanced Monthly Report</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Country Manager Client Scorecard</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIDRA eDefault</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eBulletin project</fullName>
-                <default>false</default>
-                <controllingFieldValues>Mass-Communication</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chatter for Local Offices and Governance</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Auto assignment of cases</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project 100% communications through Salesforce</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SEDA implementation</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SF attachments</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Participation</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IFAP</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Enhanced Complaint</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIDRA cases tracking for recurrent small amounts</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Auto selection of “from” address when email is sent from a case</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Flagging account with last SIDRA case created</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Surveys sent tracking at contact level</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAAM Cases – Change Request Proof of Concept</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Multiple communication within SF</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eFAX through Salesforce</fullName>
-                <default>false</default>
-                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>External web form/Creation of case for Airline Participation</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Portal</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FormAssembly to replace Customer Portal</fullName>
-                <default>false</default>
-                <controllingFieldValues>Customer Portal</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Others</fullName>
-                <default>false</default>
-                <controllingFieldValues>Others</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDP/Products</fullName>
-                <default>false</default>
-                <controllingFieldValues>GDP/Products</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Area_name__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Knowledge Management</fullName>
+                    <default>false</default>
+                    <label>Knowledge Management</label>
+                </value>
+                <value>
+                    <fullName>Mass-Communication</fullName>
+                    <default>false</default>
+                    <label>Mass-Communication</label>
+                </value>
+                <value>
+                    <fullName>Customer Portal (SSO) POC phase</fullName>
+                    <default>false</default>
+                    <label>Customer Portal (SSO) POC phase</label>
+                </value>
+                <value>
+                    <fullName>Customer Portal - additional languages</fullName>
+                    <default>false</default>
+                    <label>Customer Portal - additional languages</label>
+                </value>
+                <value>
+                    <fullName>Salesforce Governance</fullName>
+                    <default>false</default>
+                    <label>Salesforce Governance</label>
+                </value>
+                <value>
+                    <fullName>New Account &amp; Contact Structure</fullName>
+                    <default>false</default>
+                    <label>New Account &amp; Contact Structure</label>
+                </value>
+                <value>
+                    <fullName>Accounts and Contacts Clean</fullName>
+                    <default>false</default>
+                    <label>Accounts and Contacts Clean</label>
+                </value>
+                <value>
+                    <fullName>Tool for tracking the impact of changes in Salesforce</fullName>
+                    <default>false</default>
+                    <label>Tool for tracking the impact of changes in Salesforce</label>
+                </value>
+                <value>
+                    <fullName>Security &amp; SSP</fullName>
+                    <default>false</default>
+                    <label>Security &amp; SSP</label>
+                </value>
+                <value>
+                    <fullName>Storage issues</fullName>
+                    <default>false</default>
+                    <label>Storage issues</label>
+                </value>
+                <value>
+                    <fullName>New users/profiles/roles/permissions</fullName>
+                    <default>false</default>
+                    <label>New users/profiles/roles/permissions</label>
+                </value>
+                <value>
+                    <fullName>Case field clean-up and potential move of fields to new objects</fullName>
+                    <default>false</default>
+                    <label>Case field clean-up and potential move of fields to new objects</label>
+                </value>
+                <value>
+                    <fullName>Real time KPIs in SF and Performance management</fullName>
+                    <default>false</default>
+                    <label>Real time KPIs in SF and Performance management</label>
+                </value>
+                <value>
+                    <fullName>Salesforce DPC alignment (BSP, CASS)</fullName>
+                    <default>false</default>
+                    <label>Salesforce DPC alignment (BSP, CASS)</label>
+                </value>
+                <value>
+                    <fullName>Salesforce-SAP connection</fullName>
+                    <default>false</default>
+                    <label>Salesforce-SAP connection</label>
+                </value>
+                <value>
+                    <fullName>Enhanced Monthly Report</fullName>
+                    <default>false</default>
+                    <label>Enhanced Monthly Report</label>
+                </value>
+                <value>
+                    <fullName>Country Manager Client Scorecard</fullName>
+                    <default>false</default>
+                    <label>Country Manager Client Scorecard</label>
+                </value>
+                <value>
+                    <fullName>SIDRA eDefault</fullName>
+                    <default>false</default>
+                    <label>SIDRA eDefault</label>
+                </value>
+                <value>
+                    <fullName>eBulletin project</fullName>
+                    <default>false</default>
+                    <label>eBulletin project</label>
+                </value>
+                <value>
+                    <fullName>Chatter for Local Offices and Governance</fullName>
+                    <default>false</default>
+                    <label>Chatter for Local Offices and Governance</label>
+                </value>
+                <value>
+                    <fullName>Auto assignment of cases</fullName>
+                    <default>false</default>
+                    <label>Auto assignment of cases</label>
+                </value>
+                <value>
+                    <fullName>Project 100% communications through Salesforce</fullName>
+                    <default>false</default>
+                    <label>Project 100% communications through Salesforce</label>
+                </value>
+                <value>
+                    <fullName>SEDA implementation</fullName>
+                    <default>false</default>
+                    <label>SEDA implementation</label>
+                </value>
+                <value>
+                    <fullName>SF attachments</fullName>
+                    <default>false</default>
+                    <label>SF attachments</label>
+                </value>
+                <value>
+                    <fullName>Airline Participation</fullName>
+                    <default>false</default>
+                    <label>Airline Participation</label>
+                </value>
+                <value>
+                    <fullName>IFAP</fullName>
+                    <default>false</default>
+                    <label>IFAP</label>
+                </value>
+                <value>
+                    <fullName>Enhanced Complaint</fullName>
+                    <default>false</default>
+                    <label>Enhanced Complaint</label>
+                </value>
+                <value>
+                    <fullName>SIDRA cases tracking for recurrent small amounts</fullName>
+                    <default>false</default>
+                    <label>SIDRA cases tracking for recurrent small amounts</label>
+                </value>
+                <value>
+                    <fullName>Auto selection of “from” address when email is sent from a case</fullName>
+                    <default>false</default>
+                    <label>Auto selection of “from” address when email is sent from a case</label>
+                </value>
+                <value>
+                    <fullName>Flagging account with last SIDRA case created</fullName>
+                    <default>false</default>
+                    <label>Flagging account with last SIDRA case created</label>
+                </value>
+                <value>
+                    <fullName>Surveys sent tracking at contact level</fullName>
+                    <default>false</default>
+                    <label>Surveys sent tracking at contact level</label>
+                </value>
+                <value>
+                    <fullName>SAAM Cases – Change Request Proof of Concept</fullName>
+                    <default>false</default>
+                    <label>SAAM Cases – Change Request Proof of Concept</label>
+                </value>
+                <value>
+                    <fullName>Multiple communication within SF</fullName>
+                    <default>false</default>
+                    <label>Multiple communication within SF</label>
+                </value>
+                <value>
+                    <fullName>eFAX through Salesforce</fullName>
+                    <default>false</default>
+                    <label>eFAX through Salesforce</label>
+                </value>
+                <value>
+                    <fullName>External web form/Creation of case for Airline Participation</fullName>
+                    <default>false</default>
+                    <label>External web form/Creation of case for Airline Participation</label>
+                </value>
+                <value>
+                    <fullName>FormAssembly to replace Customer Portal</fullName>
+                    <default>false</default>
+                    <label>FormAssembly to replace Customer Portal</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+                <value>
+                    <fullName>GDP/Products</fullName>
+                    <default>false</default>
+                    <label>GDP/Products</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Customer Portal</controllingFieldValue>
+                <valueName>Customer Portal (SSO) POC phase</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Portal</controllingFieldValue>
+                <valueName>Customer Portal - additional languages</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Portal</controllingFieldValue>
+                <valueName>External web form/Creation of case for Airline Participation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customer Portal</controllingFieldValue>
+                <valueName>FormAssembly to replace Customer Portal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>GDP/Products</controllingFieldValue>
+                <valueName>GDP/Products</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Knowledge Management</controllingFieldValue>
+                <valueName>Knowledge Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Mass-Communication</controllingFieldValue>
+                <valueName>Mass-Communication</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Mass-Communication</controllingFieldValue>
+                <valueName>eBulletin project</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Others</controllingFieldValue>
+                <valueName>Others</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>New Account &amp; Contact Structure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Accounts and Contacts Clean</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Tool for tracking the impact of changes in Salesforce</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Security &amp; SSP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Storage issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>New users/profiles/roles/permissions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Case field clean-up and potential move of fields to new objects</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Architecture Recommendations</controllingFieldValue>
+                <valueName>Real time KPIs in SF and Performance management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Salesforce Governance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Salesforce DPC alignment (BSP, CASS)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Salesforce-SAP connection</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Enhanced Monthly Report</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Country Manager Client Scorecard</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>SIDRA eDefault</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Chatter for Local Offices and Governance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Auto assignment of cases</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Project 100% communications through Salesforce</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>SEDA implementation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>SF attachments</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Projects</controllingFieldValue>
+                <valueName>Airline Participation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>IFAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>Enhanced Complaint</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>SIDRA cases tracking for recurrent small amounts</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>Auto selection of “from” address when email is sent from a case</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>Flagging account with last SIDRA case created</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>Surveys sent tracking at contact level</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>SAAM Cases – Change Request Proof of Concept</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>Multiple communication within SF</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Salesforce Enhancements</controllingFieldValue>
+                <valueName>eFAX through Salesforce</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status_comment__c</fullName>
@@ -493,4 +669,5 @@
     <pluralLabel>CSS Tracking</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

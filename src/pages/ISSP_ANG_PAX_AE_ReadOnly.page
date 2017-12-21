@@ -44,10 +44,9 @@
         <apex:facet name="header">
           <apex:outputpanel >
             {!$Label.ISSP_ANG_STEP_1_Identi_Appro_Req_AE}
-            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" />
+            <!--apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" /-->
           </apex:outputpanel>
         </apex:facet>
-
 
         <apex:pageblocksectionitem >
           <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
@@ -57,6 +56,16 @@
           <apex:outputLabel value="{!$ObjectType.Account.fields.TradeName__c.Label}" />
           <apex:outputField value="{!hqAccount.TradeName__c}" />
         </apex:pageBlockSectionItem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+          <apex:outputtext value="{!amsLocationTypeLabelHq}" />
+        </apex:pageblocksectionitem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="" />
+          <apex:outputtext value="" />
+        </apex:pageblocksectionitem>        
 
         <apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AN_Step1_AE_Full_Address}">
           <apex:param value="{!hqAccount.BillingStreet}" />
@@ -78,6 +87,7 @@
         <apex:outputtext ></apex:outputtext>
         <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}" />
 
+
       </apex:pageBlockSection>
 
       <!-- ****************************************************************************** -->
@@ -91,8 +101,19 @@
             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" />
           </apex:outputpanel>
         </apex:facet>
+
         <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!newForm.Account_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="{!$Label.ANG_ISSP_AccreditationTypeTitle}" />
+          <apex:outputtext value="{!amsLocationTypeLabel}" />
+        </apex:pageblocksectionitem>
+
+        <apex:pageblocksectionitem >
+          <apex:outputlabel value="" />
+          <apex:outputtext value="" />
+        </apex:pageblocksectionitem>        
 
         <apex:outputField styleClass="LegalStatusLabel" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputtext ></apex:outputtext>
@@ -154,7 +175,7 @@
 		<apex:pageBlockSection columns="1" rendered="{!List_AgencyContacts.size > 0}" collapsible="false"> 
 		    <apex:facet name="header">
 		        <apex:outputpanel >
-		            {!$Label.ISSP_AMS_Step3_4_People_SubTitle}
+		            {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1}
 		        </apex:outputpanel>
 		    </apex:facet>                                    
 		    <apex:pageBlockTable styleClass="summary-table" value="{!List_AgencyContacts}" var="agencycon" >
@@ -227,7 +248,7 @@
 		<apex:pageBlockSection columns="1" rendered="{!List_AgencyCompanies.size > 0}">
 		    <apex:facet name="header">
 		        <apex:outputpanel >
-		            {!$Label.ISSP_AMS_Step3_4_Companies_SubTitle}
+		            {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_2}
 		        </apex:outputpanel>
 		    </apex:facet>                      
 		    <apex:pageBlockTable styleClass="summary-table" value="{!List_AgencyCompanies}" var="agencycon" >
@@ -256,6 +277,7 @@
         <apex:facet name="header">
           <apex:outputpanel >
             {!$Label.ISSP_Secu_of_Elect_Tickets}
+            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;"/>
           </apex:outputpanel>
         </apex:facet>
         <apex:outputText value="{!$Label.ISSP_AMS_Step3_5_Event_of_inspection}" escape="false" />
@@ -283,8 +305,20 @@
             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
         </apex:outputText>         
         <apex:pageBlockSection columns="1" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-            <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
-            <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+          <apex:outputPanel >
+            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}"/>
+            <apex:outputPanel>
+              <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
+              <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+            </apex:outputPanel>
+          </apex:outputPanel>
+          <apex:outputPanel>
+            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}"/>            
+            <apex:outputPanel>
+              <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+              <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
+            </apex:outputPanel>
+          </apex:outputPanel>
         </apex:pageBlockSection>                    
 
         <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}"/>

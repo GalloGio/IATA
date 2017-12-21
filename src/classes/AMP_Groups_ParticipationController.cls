@@ -19,7 +19,7 @@ public with sharing class AMP_Groups_ParticipationController {
       list<Participant__c> tmpList =
         [SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Participant_Type__c,
                 Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c,
-                Contact__r.Email,
+                Contact__r.Email,Hidden_Account_Id__c,
         Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Local_Governance__r.Group_Owner_Text__c, Local_Governance__r.AM_Under__r.Name,
         Representing__c
         FROM Participant__c
@@ -27,7 +27,11 @@ public with sharing class AMP_Groups_ParticipationController {
         AND Local_Governance__r.Active__c = true
         AND Local_Governance__r.AM_Under__c <> null
         ORDER BY Local_Governance__r.AM_Under__r.Name, Local_Governance__r.Name, Participant_Type__c];
-      return tmpList;
+    // for case sensitivity
+        List<Participant__c> filteredList = new List<Participant__c>();
+        for(Participant__c p : tmpList) {if(accountIdmin.equals(p.Hidden_Account_Id__c)  || accountIdmin.equals(p.Representing__c)) filteredList.add(p);}
+
+        return filteredList;
     }
 
     public static list<ParticipantWrapper> getParticipantWrappers(Id accountId) {

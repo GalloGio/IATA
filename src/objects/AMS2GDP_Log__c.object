@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This Object will contain the records with issues durring the differents synchronixzation batches</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -143,21 +140,6 @@
         <label>TODAY&apos;S Logs</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>mgoAll_Logs_with_Details</fullName>
-        <columns>NAME</columns>
-        <columns>Job_Name__c</columns>
-        <columns>Message__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>NAME</field>
-            <operation>equals</operation>
-            <value>LOG-00379,LOG-00380,LOG-00381</value>
-        </filters>
-        <label>. All Logs with Details</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <displayFormat>LOG-{00000}</displayFormat>
         <label>AMS2GDP Log Number</label>
@@ -166,4 +148,5 @@
     <pluralLabel>AMS2GDP Logs</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
