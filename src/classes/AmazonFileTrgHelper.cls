@@ -242,4 +242,83 @@ public class AmazonFileTrgHelper {
         }
     }
 
+        //FM 06-11-2017 - AMSU28 - add "submitted" state to OSCAR record when agents attach something to the case
+    public static void validateAttachmentIsCase_DGR_Certification(List<AmazonFile__c> attachments)
+    {
+        System.debug('Attachment_Svc - validateAttachmentIsCase_DGR_Certification');
+        List<Case> auxCases = new List<Case>();
+        List<AMS_OSCAR__c> updOscar = new List<AMS_OSCAR__c>();
+        Set<Id> caseIds = new Set<Id>();
+        Set<Id> oscarIds = new Set<Id>();
+
+        System.debug('attachments: ' + attachments);
+
+        for(AmazonFile__c attach : attachments)
+        {
+            if(attach.Case__c != null)
+            {
+                caseIds.add(attach.Case__c);
+            }
+        }
+
+        if(caseIds != null && caseIds.size() > 0){
+            auxCases = [Select OSCAR__c from Case where id in :caseIds and OSCAR__c <> null];
+        }
+
+        for(Case auxCase : auxCases)
+        {
+            if(auxCase.OSCAR__c.getSobjectType() == AMS_OSCAR__c.SobjectType)
+            {
+                oscarIds.add(auxCase.OSCAR__c);
+            }
+        }
+        System.debug('oscarIds: ' + oscarIds);
+        List<AMS_OSCAR__c> lOSCAR = [Select Id, Status__c from AMS_OSCAR__c 
+                                            where id in :oscarIds 
+                                            AND Process__c = :AMS_Utils.CERTIFICATION 
+                                            AND Status__c in ('Accepted_Future Date','Renewal not completed')];
+
+        System.debug('lOSCAR: ' + lOSCAR);
+
+        List<AmazonFile__c> lAuxAttach = [SELECT case__r.OSCAR__c,Name FROM AmazonFile__c WHERE Case__r.OSCAR__c in :oscarIds];
+        Map<ID, Integer> mAuxAttach = new Map<ID, Integer>();
+
+        //Populate Map with the number of attachments that exist in the OSCARs      
+        for(AmazonFile__c attch : lAuxAttach){
+            if(!mAuxAttach.containsKey(attch.Case__r.OSCAR__c)){
+                mAuxAttach.put(attch.Case__r.OSCAR__c, 1);
+            }else{
+                Integer i = mAuxAttach.get(attch.Case__r.OSCAR__c) + 1;
+                mAuxAttach.put(attch.Case__r.OSCAR__c, i);
+            }
+        }       
+
+        System.debug('mAuxAttach: ' + mAuxAttach);
+
+        for(AMS_OSCAR__c auxOscar : lOSCAR){
+            if(auxOscar != null){
+
+                //Check for other attachments
+                Integer attachSize = 0;
+                if(mAuxAttach.containsKey(auxOscar.Id)){
+                    attachSize = mAuxAttach.get(auxOscar.Id);
+                }
+                
+                System.debug('attachSize: ' + attachSize);
+                //only set the status on the 1st attachment loaded
+                if(attachSize == 1){
+                    
+                    auxOscar.Status__c = 'Submitted';
+                    
+                    updOscar.add(auxOscar);
+                }
+            }
+        }
+
+        System.debug('updOscar: ' + updOscar);
+        //if anny update the status of the cases
+        update updOscar;
+    }
+
+
 }
