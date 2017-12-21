@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>LVA_CFG_INTRO_VIDEO_URL1</label>
+    <label>Cancellation / Refund</label>
     <protected>false</protected>
     <values>
-        <field>ValueLong__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>Value__c</field>
-        <value xsi:type="xsd:string">https://www.youtube.com/embed/bohppGp_khU</value>
+        <field>SubTopic__c</field>
+        <value xsi:type="xsd:string">Payment_Process_Issues</value>
     </values>
 </CustomMetadata>
