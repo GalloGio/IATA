@@ -6357,7 +6357,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_type__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
