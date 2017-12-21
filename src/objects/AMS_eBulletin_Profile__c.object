@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>AMS eBulletin Profile</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -191,17 +188,20 @@
         <externalId>false</externalId>
         <inlineHelpText>Countries</inlineHelpText>
         <label>Countries - Not Used</label>
-        <picklist>
-            <picklistValues>
-                <fullName>-- Select Countries --</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>-- Select Countries --</fullName>
+                    <default>false</default>
+                    <label>-- Select Countries --</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -210,22 +210,26 @@
         <externalId>false</externalId>
         <inlineHelpText>Daily Frequency</inlineHelpText>
         <label>Daily Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Once a day</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5 times a day</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Once a day</fullName>
+                    <default>true</default>
+                    <label>Once a day</label>
+                </value>
+                <value>
+                    <fullName>5 times a day</fullName>
+                    <default>false</default>
+                    <label>5 times a day</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Last_NotificationBatch_Run__c</fullName>
@@ -340,17 +344,20 @@
         <fullName>TimeZone__c</fullName>
         <externalId>false</externalId>
         <label>TimeZone</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>User__c</fullName>
@@ -615,4 +622,5 @@ Program_Domestic__c == false
 )</errorConditionFormula>
         <errorMessage>WEEKLY Bulletin - Please select a Program</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

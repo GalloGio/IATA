@@ -196,6 +196,7 @@ private class Faq2CaseTest {
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
+
         insert parent;
         System.debug('parent Id: ' + parent.Id);
 
@@ -208,12 +209,14 @@ private class Faq2CaseTest {
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
- 
+        
+
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
+        system.debug('rrrrrrrrrr  ' + con.Owner.UserRoleId);
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -993,7 +996,8 @@ private class Faq2CaseTest {
 		  controller.CheckNewCaseRecordType();
 		  controller.GenerateTopicHelpText();
 		  controller.GeneratesubTopicHelpText();
-		  Set<String> stString = controller.topicsToShowButton;
+
+		  //Set<String> stString = controller.topicsToShowButton;
 		  Boolean b = controller.showButton;
 		  Boolean b2 = controller.isAllowedCode('test');
 		//   Boolean b3 = controller.isAllowedSector('test');
@@ -1052,40 +1056,41 @@ private class Faq2CaseTest {
             controller.topic = '2';
             //controller.refreshAirlineList();
             controller.setRecordType();
-		  controller.create();
-		  	  controller.back();
-		  controller.refreshTopicPickList();
-		  controller.refreshSubTopicPickList();
-		  controller.subtopic = ENV.SelectOptionDefaultValue;
-		  controller.refreshSubTopicPickList();
-		  controller.createSatisfiedRecord();
-		  controller.GeneralQueueMethod();
-		  controller.CheckNewCaseRecordType();
-		  controller.GenerateTopicHelpText();
-		  controller.GeneratesubTopicHelpText();
-		  Set<String> stString = controller.topicsToShowButton;
-		  Boolean b = controller.showButton;
-		  Boolean b2 = controller.isAllowedCode('test');
-		//   Boolean b3 = controller.isAllowedSector('test');
-		  PageReference pr = controller.getSelectArtical();
-		  PageReference pr2 = controller.create1();
-		  PageReference pr3 = controller.ComplimentGeneralQueueMethod();
-		  Boolean b4 = controller.isArticalSelected;
-		//   controller.refreshAirlineList();
+            controller.create();
+            controller.back();
+            controller.refreshTopicPickList();
+            controller.refreshSubTopicPickList();
+            controller.subtopic = ENV.SelectOptionDefaultValue;
+            controller.refreshSubTopicPickList();
+            controller.createSatisfiedRecord();
+            controller.GeneralQueueMethod();
+            controller.CheckNewCaseRecordType();
+            controller.GenerateTopicHelpText();
+            controller.GeneratesubTopicHelpText();
 
-		  controller.isCompliment1 = true;
-		  Case newCase = controller.newCase;
-		  newCase.IFAP_Country_ISO__c ='t1';
-		  newCase.Subject = 'test';
-		  newCase.Description = 'test';
-		  controller.topic = '0';
-		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-          setCCOthersEmail(controller,'fake@email.com');
-          controller.saveAttach();
-          setCCOthersEmail(controller,'Test@test11.com');
-          controller.saveAttach();
-		}
-		Test.stopTest();
+            //Set<String> stString = controller.topicsToShowButton;
+            Boolean b = controller.showButton;
+            Boolean b2 = controller.isAllowedCode('test');
+            //   Boolean b3 = controller.isAllowedSector('test');
+            PageReference pr = controller.getSelectArtical();
+            PageReference pr2 = controller.create1();
+            PageReference pr3 = controller.ComplimentGeneralQueueMethod();
+            Boolean b4 = controller.isArticalSelected;
+            //   controller.refreshAirlineList();
+            
+            controller.isCompliment1 = true;
+            Case newCase = controller.newCase;
+            newCase.IFAP_Country_ISO__c ='t1';
+            newCase.Subject = 'test';
+            newCase.Description = 'test';
+            controller.topic = '0';
+            controller.subtopic = 'CGO_Bank_Guarantees__c';
+            setCCOthersEmail(controller,'fake@email.com');
+            controller.saveAttach();
+            setCCOthersEmail(controller,'Test@test11.com');
+            controller.saveAttach();
+        }
+        Test.stopTest();
     }
     
     static testMethod void testAllowedSector() {
@@ -1097,7 +1102,7 @@ private class Faq2CaseTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Spain', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
         insert country;
-
+        
         String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
         con.AccountId= testAccount.Id;
         con.Email = 'Test@test11.com';
@@ -1109,7 +1114,7 @@ private class Faq2CaseTest {
         con.OwnerId = newUser.Id;
         update con;
 
-        Test.startTest();
+        /*Test.startTest();
         System.runAs(newUser) {
             vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
             Boolean result1 = controller.isAllowedSector(null);
@@ -1118,7 +1123,7 @@ private class Faq2CaseTest {
             Boolean result2 = controller.isAllowedSector('AirlineEnglish');
             System.assertEquals (true, result2);
         }
-        Test.stopTest();
+        Test.stopTest();*/
     }
 
     private static Integer getIndex(clsDataCategoryContainer cont) {
@@ -1154,7 +1159,7 @@ private class Faq2CaseTest {
             LastName= 'last',
             AccountId = account1.id);
         insert contact;
-
+        
         vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
         
         Test.StartTest();
@@ -1173,107 +1178,144 @@ private class Faq2CaseTest {
         ctrl.initIATACodeList(account5.id);
         Test.StopTest();
     }
-
-    private static void setCCOthersEmail(vfISSP_FAQ2Case controller, String email) {
-      for (vfISSP_FAQ2Case.sectionRecordWrapper section : controller.fullList) {
-          for (vfISSP_FAQ2Case.fieldRecordWrapper thisField : section.fieldList) {
-              if (thisField.fieldType == 'ccothers') {
-                  thisField.fieldValueEntered = email;
-              }
-          }
-      }
-    }
     
-    static testMethod void testFaq2Case010() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
-		Account testAccount = new Account(
-			name= 'testAccount',
-			CNS_Account__c = true,
-			Sector__c ='Airline',
-			RecordTypeId = agencyRecordTypeId
-		);
-		insert testAccount;
+    
+    static testMethod void testLiveAgentConfList(){
+        //Custom settings 1
+        LiveAgent_Countries_Per_Button__c LAcountriesPB = new LiveAgent_Countries_Per_Button__c();
+        LAcountriesPB.Button_Name__c = 'AirlinePortugueseEurope';
+        LAcountriesPB.Country__c = 'Albania';
+        LAcountriesPB.Iso_Code__c = 'AL';
+        LAcountriesPB.Region__c = 'Europe';
+        LAcountriesPB.Sector__c = '';
+        LAcountriesPB.Name = 'AirlinePortugueseEurope';
+        insert LAcountriesPB;
         
+        //Custom settings 2
+        LiveAgentButtonSettings__c  LAbtnSettings = new LiveAgentButtonSettings__c();
+        LAbtnSettings.ButtonId__c= '5739E00000000R0QAI';
+        LAbtnSettings.DeploymentId__c='572w0000000CdgF';
+        LAbtnSettings.Language__c='pt';
+        LAbtnSettings.Region__c='Europe';
+        LAbtnSettings.Sectors__c='Airline';
+        LAbtnSettings.Name='AirlinePortugueseEurope';
+        insert LAbtnSettings;
+        
+        //Custom settings 3
+        ISSP_FAQ2CaseLiveAgentTopics__c LAtopics =  new ISSP_FAQ2CaseLiveAgentTopics__c();
+        LAtopics.value__c='AIRLINE_General_Information__c';
+        //LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_4_EMERGENCY,BUT_CAT_ALL,BUT_CAT_1_PORTAL,BUT_CAT_2_COUNTRY,BUT_CAT_3_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_EMERGENCY,BUT_CAT_ALL,BUT_CAT_PORTAL,BUT_CAT_COUNTRY,BUT_CAT_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.Name = '23';
+        insert LAtopics;
+        List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
+        
+        //ISO Country        
+        IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
+        isoC.name = 'Portugal';
+        isoC.ISO_Code__c = 'PT';
+        isoC.Case_BSP_Country__c = 'Portugal';
+        isoC.Region__c = 'Europe';
+        insert isoC;
+        system.debug('isoCisoC ' + isoC);
+        
+        //Account
+        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Account testAccount = new Account(
+            name= 'testAccount',
+            RecordTypeId = agencyRecordTypeId,
+            IATAcode__c = '047',
+            IATA_ISO_Country__r = isoC
+        );
+        insert testAccount;
+        system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);   
+        
+        //Contact
         Contact con = ISSP_ObjectFactory.createNewContact();
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'United States', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'Europe');
-		insert country;
-
-		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
-		
-		//Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id, Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
-		//insert c;
-		
         con.AccountId= testAccount.Id;
-		con.Email = 'Test@test11.com';
-		con.CNS_Contact__c = true;
+        con.Email = 'fake@email.com';
+        con.CNS_Contact__c = true;
         insert con;
+        system.debug('con zzzzzz ' + con);
         
-        System.debug('con Id: ' + con.Id);
-        
+        //User
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
+        system.debug('newUser zzzzzz ' + newUser);
         
-        LiveAgentButtonSettings__c liveagent = new LiveAgentButtonSettings__c(
-            Name = 'AirlineEnglish',
-            Sectors__c = 'Airline',
-            Language__c = 'en',
-            DeploymentId__c = '572000000000000',
-            ButtonId__c = '573000000000000'
-        );
-        insert liveagent;
+        //One time showing the Video
+        Boolean amIseeingThisAgain;
         
         
-        Test.startTest();
-        System.runAs(newUser)
-        {
-		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
-		  controller.pageLoad();
-		  controller.topic = '2';
-		  //controller.refreshAirlineList();
-		  controller.setRecordType();
-		  controller.create();
-		  	  controller.back();
-		  controller.refreshTopicPickList();
-		  controller.refreshSubTopicPickList();
-		  controller.subtopic = ENV.SelectOptionDefaultValue;
-		  controller.refreshSubTopicPickList();
-		  controller.createSatisfiedRecord();
-		  controller.GeneralQueueMethod();
-		  controller.CheckNewCaseRecordType();
-		  controller.GenerateTopicHelpText();
-		  controller.GeneratesubTopicHelpText();
-		  Set<String> stString = controller.topicsToShowButton;
-		  Boolean b = controller.showButton;
-		  Boolean b2 = controller.isAllowedCode('test');
-		//   Boolean b3 = controller.isAllowedSector('test');
-		  PageReference pr = controller.getSelectArtical();
-		  PageReference pr2 = controller.create1();
-		  PageReference pr3 = controller.ComplimentGeneralQueueMethod();
-		  Boolean b4 = controller.isArticalSelected;
-		//   controller.refreshAirlineList();
+        //Run Test
+        Test.StartTest();
+        System.runAs(newUser){
+            
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            String agentvidMode = controller.livAgentIntroVidMode;
+            amIseeingThisAgain = controller.isIntrovideoAlreadyShowed;
+            system.assertEquals(false, amIseeingThisAgain);
+            controller.livAgentIntroVidCloseAndDontRemenber();
+            amIseeingThisAgain = controller.isIntrovideoAlreadyShowed;
+            system.assertEquals(true,amIseeingThisAgain);
+            
+            
+            controller.IwishtoComplain();
+            controller.topic = '0';
+            controller.subtopic = 'Fees__c';
+            controller.setRecordType();
+            controller.create();
+            controller.refreshTopicPickList();
+            controller.refreshSubTopicPickList();
+            controller.Sector = 'Airline';
+            controller.isAgencyUser = true;
+            
+            Case newCases = controller.newCase;
+            newCases.IFAP_Country_ISO__c ='PT';
+            newCases.Subject = 'testMeSub';
+            newCases.Description = 'testMeDesc';            
+            
+            controller.getTopicsToShowButtonFromACategory(splitButtomCategories[1]);
+            
+            Boolean showButton = controller.showButton;
+            system.assertEquals(false,showButton);
+            
+            controller.setLiveAgentButtonsNames();
+            controller.getButtonNameFromConfigAndAddToList(LAbtnSettings.Name,splitButtomCategories[1]);
+            controller.isAllowedCode(LAbtnSettings.Name);
+            system.assertEquals(true,controller.isAllowedCode(LAbtnSettings.Name));
 
-		  controller.isCompliment1 = true;
-		  Case newCase = controller.newCase;
-		  Case newCase1 = controller.newCase1;
-		  newCase.IFAP_Country_ISO__c ='t1';
-		  //controller.newCase1.IFAP_Country_ISO__c ='t1';
-		  //controller.copyCountryISO();
-		  
-		  newCase.Subject = 'test';
-		  newCase.Description = 'test';
-		  controller.topic = '0';
-		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-		  controller.newCase.IFAP_Country_ISO__c ='t1';
-          setCCOthersEmail(controller,'fake@email.com');
-          Boolean sb = controller.showButton;
-          //controller.save();
-          setCCOthersEmail(controller,'Test@test11.com');
-          controller.save();
-		}
-		Test.stopTest();
+            
+            controller.getTopicsToShowButtonFromACategory(splitButtomCategories[0]);
+            LAbtnSettings.Name='Emergency';
+            update LAbtnSettings;
+            controller.setLiveAgentButtonsNames();
+            controller.getButtonNameFromConfigAndAddToList(LAbtnSettings.Name,splitButtomCategories[0]);
+            controller.isAllowedCode(LAbtnSettings.Name);
+            system.assertEquals(false,controller.isAllowedCode(LAbtnSettings.Name));
+            
+            Boolean isVidAllowed = controller.livAgentIntroVidIsAllowed;
+            system.assertEquals(true, isVidAllowed);
+            
+            Boolean isToShowFAQs = controller.isToShowFAQs;
+            system.assertEquals(true, isToShowFAQs);
+            
+            controller.save();
+            
+            controller.cancel();
+        }
+        Test.StopTest();
     }
     
-    
-}
+    private static void setCCOthersEmail(vfISSP_FAQ2Case controller, String email) {
+        for (vfISSP_FAQ2Case.sectionRecordWrapper section : controller.fullList) {
+            for (vfISSP_FAQ2Case.fieldRecordWrapper thisField : section.fieldList) {
+                if (thisField.fieldType == 'ccothers') {
+                    thisField.fieldValueEntered = email;
+                }
+            }
+      }
+    }
+ }

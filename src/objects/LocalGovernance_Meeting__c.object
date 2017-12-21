@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -54,6 +50,7 @@
     <description>Used for IDFS ISS to manage their APJC Meetings (linked with the APJC object)</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -229,4 +226,5 @@ ISCHANGED(VMFR__c)
 )</errorConditionFormula>
         <errorMessage>It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

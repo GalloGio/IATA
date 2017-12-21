@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Open</fullName>
+        <default>true</default>
+        <label>Open</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Active</fullName>
+        <default>false</default>
+        <label>Active</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Contacted</fullName>
+        <default>false</default>
+        <label>Contacted</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Inactive</fullName>
+        <default>false</default>
+        <label>Inactive</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>New Lead</fullName>
+        <default>false</default>
+        <label>New Lead</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Verified by SP team</fullName>
+        <default>false</default>
+        <label>Verified by SP team</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Contacted/Assessed</fullName>
+        <default>false</default>
+        <label>Contacted/Assessed</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Qualification</fullName>
+        <default>false</default>
+        <label>Qualification</label>
+        <converted>true</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Aborted</fullName>
+        <default>false</default>
+        <label>Aborted</label>
+        <converted>false</converted>
+    </standardValue>
+    <standardValue>
+        <fullName>Lost</fullName>
+        <default>false</default>
+        <label>Lost</label>
+        <converted>false</converted>
+    </standardValue>
+</StandardValueSet>

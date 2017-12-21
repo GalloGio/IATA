@@ -457,13 +457,17 @@ public without sharing class Order_Sel extends Selector{
         return (orders.isEmpty()) ? null : orders[0];
     }
 
-
-    public Order initializeOrder(Account a, Contact c)
+    public Order initializeOrder(Account a, Contact c, Id ownerId)
     {
-        return initializeOrder(a, c, true); 
+        return initializeOrder(a, c, ownerId, true); 
     }
-    
+
     public Order initializeOrder(Account a, Contact c, Boolean doInsert)
+    {
+        return initializeOrder(a, c, null, doInsert); 
+    }
+
+    public Order initializeOrder(Account a, Contact c, Id ownerId, Boolean doInsert)
     {
         Pricebook_Sel pricebookSelector = new Pricebook_Sel();  
         Pricebook2 stdPriceBook = pricebookSelector.getStandardPriceBook();
@@ -519,7 +523,8 @@ public without sharing class Order_Sel extends Selector{
             ShipToContact_Name__c   = c.Name,
             ShipToContact_Salutation__c = c.Salutation,
             ShipToContact_First_Name__c = c.FirstName,
-            ShipToContact_Last_Name__c  = c.LastName/*,
+            ShipToContact_Last_Name__c  = c.LastName,
+            OwnerId = ownerId/*,
             ShipToContact_Phone__c  = c.Phone,
             ShipToContact_Email__c  = c.Email*/
         );

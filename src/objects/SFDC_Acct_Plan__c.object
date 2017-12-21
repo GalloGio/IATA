@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Overall goals, objectives, and challenges for penetrating an account.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -80,20 +77,24 @@
         <fullName>Account_Type__c</fullName>
         <externalId>false</externalId>
         <label>Account Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Existing Customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Existing Customer</fullName>
+                    <default>false</default>
+                    <label>Existing Customer</label>
+                </value>
+                <value>
+                    <fullName>New Customer</fullName>
+                    <default>false</default>
+                    <label>New Customer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -203,63 +204,77 @@
         <fullName>Plan_Status__c</fullName>
         <externalId>false</externalId>
         <label>Plan Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Review</fullName>
+                    <default>false</default>
+                    <label>Review</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Planning_Year__c</fullName>
         <externalId>false</externalId>
         <label>Planning Year</label>
-        <picklist>
-            <picklistValues>
-                <fullName>FY2005</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FY2006</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FY2007</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FY2008</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FY2009</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FY2010</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>FY2005</fullName>
+                    <default>false</default>
+                    <label>FY2005</label>
+                </value>
+                <value>
+                    <fullName>FY2006</fullName>
+                    <default>false</default>
+                    <label>FY2006</label>
+                </value>
+                <value>
+                    <fullName>FY2007</fullName>
+                    <default>false</default>
+                    <label>FY2007</label>
+                </value>
+                <value>
+                    <fullName>FY2008</fullName>
+                    <default>false</default>
+                    <label>FY2008</label>
+                </value>
+                <value>
+                    <fullName>FY2009</fullName>
+                    <default>false</default>
+                    <label>FY2009</label>
+                </value>
+                <value>
+                    <fullName>FY2010</fullName>
+                    <default>false</default>
+                    <label>FY2010</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Potential_Barriers__c</fullName>
@@ -328,4 +343,5 @@
         <searchResultsAdditionalFields>OWNER.ALIAS</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
