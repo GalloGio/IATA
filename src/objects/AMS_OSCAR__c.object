@@ -27706,7 +27706,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Types_of_Change</picklist>
+            <picklist>ANG_Type_Of_Change__c</picklist>
             <values>
                 <fullName>Accreditation type</fullName>
                 <default>false</default>
