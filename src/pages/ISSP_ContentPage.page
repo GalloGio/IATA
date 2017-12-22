@@ -203,7 +203,7 @@
             });
          
             
-            $('#searchInput_').keyup(function(){
+            $('#searchInput_').keyup(function(){ //remove
                   table.search($(this).val()).draw();
             });
             
@@ -228,11 +228,11 @@
     <body>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-             
+             <apex:form id="mainFrm">
 
 
 
-            <apex:form id="mainFrm">
+            
                 <apex:pagemessages id="errors" />
                 <div class="row">
                     <div class="col-md-12">
@@ -259,31 +259,133 @@
                             
 
                                  <apex:outputpanel id="opp_results" rendered="{!communityName!='CNS'}">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
+                                        <div class="col-md-12">
+                                            <div class="form-group">  
+                                             <apex:inputText id="searchInput_" value="{!search}" styleClass ="form-control"/>
+                                            </div>
                                         </div>
-                                     </div>
-                                    <div class="col-md-3" id="leftFilter">
-                                      <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass="resetButton btn btn-danger btn-block" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
-                                     </div>
+                                        <div class="col-md-3" id="leftFilter">
+                                            Filter by Document Category
+                                            <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
+                                            {!selectedValCat}
+                                                <apex:selectOptions value="{!allDocumentCategoryList}"/>
+                                            </apex:selectList>
+                                            Filter by Country of Publication    
+                                            <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
+                                            {!selectedValPub}
+                                                <apex:selectOptions value="{!allCountriesList}"/>
+                                            </apex:selectList>
+                                          <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass=" btn btn-danger" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
+                                          <apex:commandButton value="Apply Filter" action="{!Init}" styleClass="btn btn-success" reRender="docstable,resulttable,totalPages" />
+                                         </div>      
+                                    <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="docstable,resulttable,totalPages"/>                          
                                      <div class="col-md-9" id="resulttable">
                                         <div class="panel panel-default">
                                             <!---------------------DOCUMENTS TABLE------------------------->
                                             <!--<apex:pageblock mode="edit" id="results">-->
-                                                <!--<apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive"> -->                                                
-                                                   <apex:dataList id="docstable" value="{!ContentVersions}" var="ver" styleclass="docsTable table-hover table table-condensed table-responsive">  
+                                                <!--<apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive"> -->  
+                                                              
+                                                <apex:pageblock mode="edit" id="results">                                              
+                                                   <apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table table-hover  table-condensed table-responsive">  
                                                     <!----------------------TITLE COLUMN------------------------>
                                                        {!ver}
+                                                    <apex:column rendered="{!if(ver.FileType=='LINK','false','true')}">
+                                                        <apex:facet name="header">{!$Label.ISSP_Title}</apex:facet>
+                                                        <a href="{!csHost}/sfc/servlet.shepherd/version/download/{!ver.id}" target="_document">{!ver.title}</a>
+                                                    </apex:column>
                                                        
-                                                   
+                                                    <apex:column rendered="{!if(ver.FileType=='LINK','true','false')}">
+                                                        <apex:facet name="header">{!$Label.ISSP_Title}</apex:facet>
+                                                        <a href="{!ver.ContentUrl}" target="_Blank">{!ver.title}</a>
+                                                    </apex:column>
                                                     
-                                               </apex:dataList>        
-                
-                                               <!-- </apex:pageblocktable>-->
-                                            <!--</apex:pageblock>--> <!--end documents table -->
+                                                    <!----------------------DESCRIPTION COLUMN------------------------>
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>
+                                                        {!ver.Description}
+                                                    </apex:column>
+
+                                                    <!----------------------COUNTRY OF PUBLICATION COLUMN------------------------>
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_Country_of_Publication}</apex:facet> <span class="countrylist">{!ver.Country_of_publication__c}</span>
+                                                        <!--<apex:actionSupport onComplete="countriesSeparateByComma({!ver.Country_of_publication__c}); "/> -->
+                                                    </apex:column> 
+                                                    
+                                                    <!-----------------------LANGUAGE COLUMN----------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.IFAP_Language}</apex:facet>
+                                                        {!ver.Language__c}
+                                                    </apex:column>
+
+                                                    <!---------------------FILE SIZE COLUMN------------------------->
+                                                    <!--
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_File_Size}</apex:facet>
+                                                        {!ROUND(ver.ContentSize/1000,0)} KB
+                                                    </apex:column>
+                                                    -->
+                                                    <!---------------------TAGS COLUMN------------------------->
+                                                    <!--
+                                                    <apex:column headerValue="{!$Label.ISSP_Tags}">
+                                                        <apex:outputfield value="{!ver.TagCsv}"/>
+                                                    </apex:column>
+                                                    -->
+                                                    <!------------------------FILE TYPE COLUMN---------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_File_Type}</apex:facet>
+                                                        {!ver.FileType}
+                                                    </apex:column>
+
+                                                    <!------------------------COUNTRY VISIBILITY COLUMN---------------------->
+                                                    <!--
+                                                    <apex:column headerValue="Country Visibilty">
+                                                        <apex:outputfield value="{!ver.Country_visibilty__c}" />
+                                                    </apex:column>
+                                                    -->
+                                                    <!------------------------DOCUMENT CATEGORY COLUMN---------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_Document_Category}</apex:facet>
+                                                        {!ver.Document_Category__c}
+                                                    </apex:column>     
+                                               </apex:pageblocktable>
+                                              <!-- <div id="totalPages">
+                                                   Showing {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  of {!setCon.ResultSize } entries
+                                                   <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+                                                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                                    </apex:selectList>
+                                               </div> -->
+                                               <div class="bottomNav" id="pageSize">
+                                                <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+                                                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                                    </apex:selectList>
+                                                    <div class="paginator">
+                                                        <span class="left">
+                                                            <span id="pageZ" class="selectorTarget" >
+                                                                {!currentPageNumber} - {!IF(setCon.HasNext,((currentPageNumber) * setCon.PageSize)+11,setCon.ResultSize)}  of {!setCon.ResultSize }
+                                                            </span>
+                                                        </span>
+                                                      </div>
+                                                    </div>                                               
+                                               <apex:panelGrid columns="8">                      
+                                                
+                                                  <apex:commandLink styleClass="paginate_button active" action="{!previous}" reRender="docstable,resulttable,pageSize, pageZ">Previous</apex:commandlink>
+                                                  <apex:repeat  value="{!pageNumberButtons}" var="pageN">
+                                                    <apex:commandButton action="{!navigateToPage}" value="{!pageN}"  reRender="docstable,resulttable,pageSize,pageNumber,pageZ">
+                                                          <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
+                                                    </apex:commandButton>
+                                                </apex:repeat>
+                                                 <apex:commandLink styleClass="paginate_button active" action="{!next}" reRender="docstable,resulttable,pageSize,pageNumber,pageZ">Next</apex:commandlink>
+
+                                               </apex:panelGrid>
+                                               <span id='pageNumber' class="right">{!$Label.ISSP_Page}
+                                                   {!currentPageNumber}
+                                                   {!$Label.ISSP_of} {!CEILING(setCon.ResultSize/size)}
+
+                                            </span>
+                                            </apex:pageblock>
                                      </div>
                                    </div> <!--end row -->
+                                   
                                 </apex:outputpanel>
                             
                                 <div class="row"> 
