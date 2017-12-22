@@ -154,7 +154,7 @@ private class ISSP_SIS_AccountHandlerTest {
                 Recordtype__c='IATA_Agency',
                 Status__c='Approved',
                 Country_ISO_Codes__c='All',
-                SIS_Status__c='TERMINATED',
+                SIS_Status__c='Terminated',
                 SIS_Substatus__c='TERMINATED'
             )
         };
@@ -197,7 +197,7 @@ private class ISSP_SIS_AccountHandlerTest {
         Test.stopTest();
         
         Account result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
-        System.assertEquals('TERMINATED', result.SIS_Status__c);
+        System.assertEquals('Terminated', result.SIS_Status__c);
         System.assertEquals('TERMINATED', result.SIS_Sub_Status__c);
     }
 }
