@@ -307,6 +307,10 @@
             <recipient>lavergheta@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>luolu@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>StrategicPartnerships/MACS_NewLeadAlert</template>
