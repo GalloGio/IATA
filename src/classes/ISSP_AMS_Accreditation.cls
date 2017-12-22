@@ -74,6 +74,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public string txtHelpFinContact {get; set;}
     public string txtHelpPortalAdmin {get; set;}
     public string txtHelpGrossSales {get; set;}
+    public string txtHelpTrainedStaffOrganization {get; set;} //FM - AMSU-20
+    public string txtHelpTrainedStaffReference {get; set;} //FM - AMSU-20
 
     //Labels to come up in user's portal language (and not lang set on VF page)
     public string txtLocalAgencyDetailsTitle {get; set;}
@@ -6898,6 +6900,27 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 txtHelpGrossSales = (String)hlp.get(fldName);
             } else {
                 txtHelpGrossSales = (String)hlp.get(fldName);
+            }
+        }
+
+        
+        //FM 03/11/2017 - AMSU-20
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('TRAINED_STAFF_ORGANIZATION');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpTrainedStaffOrganization = (String)hlp.get(fldName);
+            } else {
+                txtHelpTrainedStaffOrganization = (String)hlp.get(fldName);
+            }
+        }
+
+        //FM 03/11/2017 - AMSU-20
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('TRAINED_STAFF_REFERENCE');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpTrainedStaffReference = (String)hlp.get(fldName);
+            } else {
+                txtHelpTrainedStaffReference = (String)hlp.get(fldName);
             }
         }
 
