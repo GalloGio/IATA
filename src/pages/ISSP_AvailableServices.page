@@ -37,6 +37,9 @@
     var $accountId = '';
     var $accountNotOpenError = '';
     var $lineErrorMessage = '';
+    var $contactId = '';
+    var $contactName = '';
+    var $status = '';
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
@@ -248,6 +251,9 @@
         $accountId = aux[2];
         $accountNotOpenError = aux[3];
         $lineErrorMessage = aux[4];
+        $contactId = aux[5];
+        $contactName = aux[6];
+        $status = aux[7];
 
         console.log('$serviceName->' + $serviceName);
         console.log('$serviceId->' + $serviceId);
@@ -429,7 +435,10 @@
             } else if($el.data("item") == "view") {
               window.location.href = "/ISSP_PortalService?Id=" + $serviceId;
             } else if ($el.data("item") == "ifapAssign") {
-              window.location.href = "ISSP_AssignFinancialContact?id=" + $accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
+              if($status == 'Access Requested' || $status == 'Access Denied')
+                window.location.href = "ISSP_AssignFinancialContact?id=" + $accountId + "&MainNav=Services&mid=M4S2&subNav=Access&vContactId=" + $contactId + '&vContactName=' + $contactName;
+              else
+                window.location.href = "ISSP_AssignFinancialContact?id=" + $accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
             }
           }
         });
@@ -450,7 +459,8 @@
                     </apex:facet>
          
                     <apex:outputpanel rendered="{! OR(f.FieldPath == 'Service_Description__c', f.FieldPath == 'Application_icon__c')}">                    
-                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" />
+                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" rendered="{! f.fieldPath != 'Service_Description__c'}" />
+                        <apex:outputText value="{! IF( ISBLANK($Label[item.recordService['Service_Description_Label__c']]), item.recordService[f.fieldPath], $Label[item.recordService['Service_Description_Label__c']]) }" escape="false" rendered="{! f.fieldPath == 'Service_Description__c'}" />
                     </apex:outputpanel>
                           
                     <apex:outputpanel rendered="{!f.FieldPath == 'Name'}">
@@ -475,7 +485,7 @@
 
             <apex:column headerValue="Actions" id="actionId" rendered="{!AdminOrNot}">
               <apex:outputPanel rendered="{!item.addUsersEnable}">
-                <button type="button" class="example2-button" data-state="{!item.recordService.ServiceName__c};{!item.recordService.id};{!currentPortalUser.contact.AccountId};{!item.accountNotOpenError};{!item.lineErrorMessage}"><span class="glyphicon glyphicon-cog"></span></button>
+                <button type="button" class="example2-button" data-state="{!item.recordService.ServiceName__c};{!item.recordService.id};{!currentPortalUser.contact.AccountId};{!item.accountNotOpenError};{!item.lineErrorMessage};{!currentPortalUser.ContactId};{!currentPortalUser.Contact.name};{!item.status}"><span class="glyphicon glyphicon-cog"></span></button>
               </apex:outputPanel>
             </apex:column>
           <!--elliot 19 juin-->  

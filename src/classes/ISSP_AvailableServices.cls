@@ -41,7 +41,7 @@ public with sharing class ISSP_AvailableServices{
     public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
-                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId,
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId, contact.name,
                                     contact.account.ANG_IEP_Status_FF__c,ContactId,
                                     languagelocalekey,ProfileId  
                                     from User where id =: UserInfo.getUserId()];
@@ -455,7 +455,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -529,7 +529,8 @@ public with sharing class ISSP_AvailableServices{
                                                                                                     p.Right__c, p.IsSCIMIFG__c, p.Portal_Application__r.Application_icon_URL__c,
                                                                                                     p.Portal_Application__r.Name, p.Portal_Application__c,
                                                                                                     p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,Technical_Provisioning_Status__c, //Mconde
-                                                                                                    p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
+                                                                                                    p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c, 
+                                                                                                    p.Portal_Application__r.Service_Description_Label__c
                                                                                                    From Portal_Application_Right__c p 
                                                                                                    where p.Contact__c =: currentPortalUser.ContactId and 
                                                                                                          p.Portal_Application__c =: inService.Id and
@@ -568,7 +569,8 @@ public with sharing class ISSP_AvailableServices{
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
-                                                        Portal_Application__r.Service_Description__c
+                                                        Portal_Application__r.Service_Description__c,
+                                                        Portal_Application__r.Service_Description_Label__c
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
                                                         AND Right__c = 'Access Granted'];
@@ -605,6 +607,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
                                                         Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        Service_Description_Label__c, 
                                                         ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){

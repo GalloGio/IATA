@@ -1,35 +1,115 @@
+/*
+***************************************************************************************************************************************************** 
+* Visualforce Page Name:    ClientRelationships.page    
+* Apex class Name:          CLiveAgentButtonFAQ2CaseController.cls
+* Test Class:               
+* Description:              Apex controller related with CLiveAgentButtonFAQ2Case page to show live agent chat buttons
+* Author:                   
+* Date:                     
+* 
+* Changes control (When, Why, Who, What):
+*       ------------------------------------------------------------------------------------------------------------------------------------------
+*           Version date:          Case:                 Author:                                 Description:
+*       ------------------------------------------------------------------------------------------------------------------------------------------
+*           07-09-2017									 Right IT Services						 Live Agent V2 Project
+*
+*****************************************************************************************************************************************************
+*/
+
+	//
+    //  Method name :   
+    //  @description:   
+    //  @param      :   
+    //  @return     :   
+    //
 public with sharing class LiveAgentButtonFAQ2CaseController {
 
+	//
+	//	Variables passed by the URL
+	//
     public String selectedTopics {
         get{
             return ApexPages.currentPage().getParameters().get('selTopics');
         }
         set;
     }
+    
     public String topicLabel {
-        get{
-            return ApexPages.currentPage().getParameters().get('topiclbl');
-        }
-        set;
+    get{
+        return ApexPages.currentPage().getParameters().get('topiclbl');
     }
+    set;
+}
+
     public String subTopicLabel{
         get{
+        	
+        	
             return ApexPages.currentPage().getParameters().get('subtopiclbl');
         }
         set;
     }
+
+    public String topicId {
+        get{
+        	string topicId = ApexPages.currentPage().getParameters().get('topicId');
+        	topicId = topicId.replace('__c','');
+        	topicId = topicId.replace('_',' ');
+            return topicId;
+        }
+        set;
+    }
+   
+
+    public String subTopicId{
+        get{
+        	String subtopic = ApexPages.currentPage().getParameters().get('subTopicId');
+        	subtopic = subtopic.replace('__c','');
+        	subtopic = subtopic.replace('_',' ');
+            return subtopic;
+        }
+        set;
+    }
+    
     public String csButton{
         get{
             return ApexPages.currentPage().getParameters().get('csButton');
         }
         set;
     }
+    public String csButtonAbreviation{
+        get{
+            String retVal='Button Not Found';
+            LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
+            try{
+                labs = LiveAgentButtonSettings__c.getAll().get(csButton);
+                System.debug('basto1p - csButtonAbreviation csButton='+csButton+'; labs='+labs);
+                retVal=labs.Language__c.trim().left(2).toUpperCase();
+            }catch(Exception e){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+            }
+            System.debug('basto1p - csButtonAbreviation retVal='+retVal);
+            return retVal;
+        }
+        set;
+    }
+
     public String countryConcerned{
         get{
             return ApexPages.currentPage().getParameters().get('concernedCountry');
         }
         set;
     }
+    public String csButtonCategory{
+        get{
+            String csButtonCategoryAux=ApexPages.currentPage().getParameters().get('csButtonCategory');
+            System.debug('basto1p - csButtonCategory csButtonCategoryAux='+csButtonCategoryAux);
+            return csButtonCategoryAux;
+        }
+        set;
+    }
+
+    
     public LiveAgentButtonSettings__c liveAgentBtn {
         get{
             LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
@@ -41,6 +121,7 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             return labs ;
         }
     }
+    
     public String buttonLanguage{
         get{
             try{
@@ -52,6 +133,7 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         }
         set;
     }
+    
     public Contact userContact {
         get{
             if (userContact == null){
@@ -93,7 +175,9 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
 
     public IATA_ISO_Country__c country{
         get{
-            if (country == null){
+            system.debug('basto1p countryConcerned='+countryConcerned);
+
+            if (country == null && !String.isBlank(countryConcerned)){
                 country = [SELECT Id, Name, ISO_Code__c, Region__c
                             FROM IATA_ISO_Country__c
                             WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND ISO_Code__c = :countryConcerned
@@ -123,7 +207,97 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             return null;
         }
     }
+    
+    
+    /*******************************************************************************************************
+    * @description: constructor
+    *
+    * @param:
+    *
+    * @return:
+    *
+    * @example
+    * this.isAllowedCode('AirlineEnglishptEurope');
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                                 Description
+    * ????-??-??   ???????                                    Creation
+    * 2017-09-11   francisco.estanqueiro@rightitservices.com  Update for live agent v2 (get all buttons names)
+    ********************************************************************************************************/
     public LiveAgentButtonFAQ2CaseController() {
+    	
+    	String allButtonsAux = ApexPages.currentPage().getParameters().get('csButtonsListJson');			//FME
+    	System.debug('#### FME #### all button '+allButtonsAux);									//FME
+
+        AllButtons =(Map<String,vfISSP_FAQ2Case.ButtonsInfoType>)JSON.deserialize(
+                                    allButtonsAux,
+                                    Map<String, vfISSP_FAQ2Case.ButtonsInfoType>.class);
+        System.debug('basto1p -  LiveAgentButtonFAQ2CaseController.AllButtons='+AllButtons);
+    }
+    
+    
+    //
+    // AllBiuttons - to keep the buttons
+    //
+    Map<String,vfISSP_FAQ2Case.ButtonsInfoType> AllButtons = new Map<String,vfISSP_FAQ2Case.ButtonsInfoType>();
+    
+    Public Integer NumberOfButtons {
+    	get{
+    		return Allbuttons.size();
+    	}
+    	set;
+    }
+    
+    
+    //basto1p - live agent v2
+    public Boolean isEmergency {
+    	 get{
+             Boolean result;
+
+             result=(csButtonCategory == vfISSP_FAQ2Case.BUT_CAT_EMERGENCY);
+
+             System.debug('basto1p - isEmergency.result='+result);
+
+             return result;
+        }
+        set;
+    }
+    
+    public LiveAgentButtonSettings__c liveAgentBtnEng {
+        get{
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_ENGLISH);
+        }
+    }
+
+    public LiveAgentButtonSettings__c liveAgentBtnCountry {
+        get{
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
+        }
+    }
+
+    public LiveAgentButtonSettings__c liveAgentBtnPortal {
+        get{
+            return getButSettingsFromButCategory(vfISSP_FAQ2Case.BUT_CAT_PORTAL);
+        }
+    }
+
+    public LiveAgentButtonSettings__c getButSettingsFromButCategory(String butCategory){
+        LiveAgentButtonSettings__c buttonSettings = new LiveAgentButtonSettings__c();
+
+        try{
+            System.debug('basto1p - getButSettingsFromButCategory GET butCategory='+butCategory);
+            if (allButtons.containsKey(butCategory)){
+                buttonSettings = LiveAgentButtonSettings__c.getAll().get(allButtons.get(butCategory).Name);
+            }
+            System.debug('basto1p - getButSettingsFromButCategory.buttonSettings='+buttonSettings);
+
+        }catch(Exception e){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+        }
+
+        return buttonSettings;
 
     }
+    
 }

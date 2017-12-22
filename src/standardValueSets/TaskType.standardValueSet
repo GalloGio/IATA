@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Call</fullName>
+        <default>false</default>
+        <label>Call</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Meeting</fullName>
+        <default>false</default>
+        <label>Meeting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>DG Brief</fullName>
+        <default>false</default>
+        <label>DG Brief</label>
+    </standardValue>
+    <standardValue>
+        <fullName>90-Day Rolling Plan</fullName>
+        <default>false</default>
+        <label>90-Day Rolling Plan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Create Field / Picklist Value</fullName>
+        <default>false</default>
+        <label>Create Field / Picklist Value</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Edit Field / Picklist Values</fullName>
+        <default>false</default>
+        <label>Edit Field / Picklist Values</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Edit Page Layout</fullName>
+        <default>false</default>
+        <label>Edit Page Layout</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Edit Report Content</fullName>
+        <default>false</default>
+        <label>Edit Report Content</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Edit Dashboard</fullName>
+        <default>false</default>
+        <label>Edit Dashboard</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Delete Record</fullName>
+        <default>false</default>
+        <label>Delete Record</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send Email</fullName>
+        <default>false</default>
+        <label>Send Email</label>
+    </standardValue>
+</StandardValueSet>

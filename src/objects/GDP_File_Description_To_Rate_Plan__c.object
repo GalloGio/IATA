@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Junction object between GDP_File_Description and zqu_Product_Rate_Plan</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -130,4 +127,5 @@ It will be populated automatically by workflow as  zqu_Product_Rate_Plan.Id + &a
     <pluralLabel>GDP File Description To Rate Plans</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Junction Object Between IATA ISO Country and GDP Area Definintion</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -85,20 +82,24 @@
         <fullName>Method__c</fullName>
         <externalId>false</externalId>
         <label>Method</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Include</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Exclude</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Include</fullName>
+                    <default>true</default>
+                    <label>Include</label>
+                </value>
+                <value>
+                    <fullName>Exclude</fullName>
+                    <default>false</default>
+                    <label>Exclude</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>GDP Area Country</label>
     <nameField>
@@ -109,4 +110,5 @@
     <pluralLabel>GDP Area Countries</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
