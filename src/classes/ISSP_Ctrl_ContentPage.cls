@@ -50,8 +50,6 @@ public class ISSP_Ctrl_ContentPage
 
   //Constructor
   public ISSP_Ctrl_ContentPage(){
-    pageList = new List<Integer>();
-    currentPageNumber = 1;
     size=10;
         paginationSizeOptions = new List<SelectOption>();
         paginationSizeOptions.add(new SelectOption('10','10'));
@@ -65,7 +63,8 @@ public class ISSP_Ctrl_ContentPage
   }
 
   //Initialize Variables and Parameters
-  public void Init(){    
+  public void Init(){
+    currentPageNumber = 1;    
     List<ContentWorkspaceDoc> ContentWorkspaceDoc_Lst;
 
     List<ContentWorkspaceDoc> PublicDocs_list;
@@ -365,6 +364,7 @@ public class ISSP_Ctrl_ContentPage
     {
         Integer pageNum = setCon.getPageNumber();
         currentPageNumber = pageNum+1;
+        system.debug('##RN next: ' + currentPageNumber);
         setCon.next();
     }
 
@@ -425,6 +425,7 @@ public class ISSP_Ctrl_ContentPage
 
      //Changes the size of pagination
     public PageReference refreshPageSize() {
+         currentPageNumber = 1; 
          setCon.setPageSize(size);
          return null;
     }
@@ -438,6 +439,8 @@ public class ISSP_Ctrl_ContentPage
     }
 
     public List<Integer> getPageNumberButtons(){      
+    system.debug('##RN getPageNumberButtons');
+    pageList = new List<Integer>();     
         for(Integer i=1; i<getTotalPages()+1;i++){
             pageList.add(i);
         }
