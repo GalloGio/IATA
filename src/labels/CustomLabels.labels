@@ -56,7 +56,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_New_Change_Code_Notification</shortDescription>
-        <value>A new change code has been generated:</value>
+        <value>One or more new change codes have been generated:</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
@@ -2680,7 +2680,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Download_Pdf</shortDescription>
-        <value>Download as PDF.</value>
+        <value>Download as PDF</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Due_Date</fullName>
@@ -10101,11 +10101,334 @@ IFG Customer Services</value>
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Alternatively</shortDescription>
+        <value>Alternatively enter the location reference you wish to assign to this new MSO account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
+        <value>Please review your application details before submitting to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Section_2</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Billing_State_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Billing_State_ErrMsg</shortDescription>
+        <value>Billing State: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Country_ErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Country_ErrMsg</shortDescription>
+        <value>Country concerned: You must enter a value</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_GSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_GSA</shortDescription>
+        <value>GSA Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_MSO</shortDescription>
+        <value>MSO Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Status</shortDescription>
+        <value>Account Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Status</shortDescription>
+        <value>Agent Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Terminated</shortDescription>
+        <value>Terminated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</shortDescription>
+        <value>Agent Termination Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_of_Appointment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_of_Appointment</shortDescription>
+        <value>Agent Accreditation Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Download_CSV</shortDescription>
+        <value>Download as CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Edit_MSO_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Edit_MSO_Details</shortDescription>
+        <value>Edit Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</shortDescription>
+        <value>Exclude Terminated Agents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</shortDescription>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Description</shortDescription>
+        <value>This service enables you to easily access information on active and terminated GSA appointments under your airline.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
         <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Title</shortDescription>
+        <value>GSA Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_IATA_Code</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</shortDescription>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
+        <value>This service enables you to easily access information on active and terminated MSO accounts under your airline, request new MSO accounts and terminate/correct existing MSO accounts.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</shortDescription>
+        <value>Terminate MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Title</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Next</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Previous</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Request_New_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Request_New_MSO</shortDescription>
+        <value>Request New MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Search_Placeholder</shortDescription>
+        <value>Search by Office name, Country or IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Street_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Street_Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Territories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Territories</shortDescription>
+        <value>Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Invalid_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Invalid_Request</shortDescription>
+        <value>This is an invalid request: MSO account or type of request information missing. Please go back and try again.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Legal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Legal_Status</shortDescription>
+        <value>Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Office_Email</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Office_Email</shortDescription>
+        <value>Office Email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Request_Successfull</shortDescription>
+        <value>A new MSO account has been successfully generated with the following IATA Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_StepFinal_Thanks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_StepFinal_Thanks</shortDescription>
+        <value>Thank you for submitting your request for a new MSO.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Confirmation_Text</shortDescription>
+        <value>This will generate a voluntary relinquishment of the selected MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request</shortDescription>
+        <value>Request to Terminate the MSO</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Termination_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Termination_Request_Successfull</shortDescription>
+        <value>We have successfully terminated the MSO account with the IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Thank_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Thank_You</shortDescription>
+        <value>Thank you for submitting your request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request</shortDescription>
+        <value>Request to Update the MSO Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Section1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Section1</shortDescription>
+        <value>Identification of Office Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Update_Request_Successfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Update_Request_Successfull</shortDescription>
+        <value>The requested changes have been successfully applied to the MSO account with IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -10336,6 +10659,13 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS New HO details</shortDescription>
         <value>New Head Office address details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_New_MSO_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
+        <value>Application for a new MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
@@ -15943,6 +16273,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>The Current password field is mandatory.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CustomFooter_Big</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CustomFooter_Big</shortDescription>
+        <value>Our mission is to represent, lead and serve the airline industry.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CustomFooter_Small</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CustomFooter_Small</shortDescription>
+        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -16108,7 +16454,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLY Reports for Agency related changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
@@ -19354,6 +19700,22 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Portal Application Rights</value>
     </labels>
     <labels>
+        <fullName>ISSP_Portal_BackgroundImage</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Portal_BackgroundImage</shortDescription>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_BackgroundImage_size</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Portal_BackgroundImage_size</shortDescription>
+        <value>200%</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Portal_Next</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -22010,6 +22372,246 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>30</value>
     </labels>
     <labels>
+        <fullName>LVA_AgentOffline</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AgentOffline</shortDescription>
+        <value>Agent offline</value>
+    </labels>
+    <labels>
+        <fullName>LVA_AgentOnline</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AgentOnline</shortDescription>
+        <value>Agent online</value>
+    </labels>
+    <labels>
+        <fullName>LVA_AskQuestion</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_AskQuestion</shortDescription>
+        <value>Ask a Question</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUs</shortDescription>
+        <value>Call Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsAvailableHours</shortDescription>
+        <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsNoConfigAvailable</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsNoConfigAvailable</shortDescription>
+        <value>No Phone Available for selected Country.</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsThruPhoneNum</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
+        <value>Contact Us through Phone Number:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ChatWithUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ChatWithUs</shortDescription>
+        <value>Chat with Us</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ClientMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ClientMessage</shortDescription>
+        <value>Sent by you at [timeStamp]</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleNewChatReqDesc</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleNewChatReqDesc</shortDescription>
+        <value>There’s a new Chat Request incoming</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleNewChatReqTitle</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleNewChatReqTitle</shortDescription>
+        <value>ATTENTION: New Chat Request</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupDesc</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupDesc</shortDescription>
+        <value>Your status has recently changed to:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ConsoleStatusChangedPopupTitle</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ConsoleStatusChangedPopupTitle</shortDescription>
+        <value>Chat Agent Status Changed</value>
+    </labels>
+    <labels>
+        <fullName>LVA_EndChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_EndChat</shortDescription>
+        <value>End Chat</value>
+    </labels>
+    <labels>
+        <fullName>LVA_FAQsHeader</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_FAQsHeader</shortDescription>
+        <value>Based on your criteria, other users found following answers helpful:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroVidCloseDontShowNext</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroVidCloseDontShowNext</shortDescription>
+        <value>Close, already seen</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroVidCloseShowNext</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroVidCloseShowNext</shortDescription>
+        <value>Close, remind next time</value>
+    </labels>
+    <labels>
+        <fullName>LVA_IntroductionVideo</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_IntroductionVideo</shortDescription>
+        <value>Introduction Video</value>
+    </labels>
+    <labels>
+        <fullName>LVA_LanguagesMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_LanguagesMessage</shortDescription>
+        <value>I can chat with you in [languages].</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ModalMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ModalMessage</shortDescription>
+        <value>Leave Chat?</value>
+    </labels>
+    <labels>
+        <fullName>LVA_New_Chat_Message</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_New_Chat_Message</shortDescription>
+        <value>New chat message!</value>
+    </labels>
+    <labels>
+        <fullName>LVA_NoAvailableButtons</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_NoAvailableButtons</shortDescription>
+        <value>Chat Buttons not available for selected topic/subtopic</value>
+    </labels>
+    <labels>
+        <fullName>LVA_NoAvailableButtonsForCNS</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_NoAvailableButtonsForCNS</shortDescription>
+        <value>Chat Buttons not available</value>
+    </labels>
+    <labels>
+        <fullName>LVA_OperatorMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_OperatorMessage</shortDescription>
+        <value>Sent by [senderName] at [timeStamp]</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ReachOutUs</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ReachOutUs</shortDescription>
+        <value>We&apos;&apos;d love to help you</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ReturnToChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ReturnToChat</shortDescription>
+        <value>Return to Chat</value>
+    </labels>
+    <labels>
+        <fullName>LVA_SaveChat</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_SaveChat</shortDescription>
+        <value>Save Chat</value>
+    </labels>
+    <labels>
+        <fullName>LVA_SelectPreferredChannel</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_SelectPreferredChannel</shortDescription>
+        <value>Select your preferred channel:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ShareACompliment</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ShareACompliment</shortDescription>
+        <value>Share a compliment</value>
+    </labels>
+    <labels>
+        <fullName>LVA_VoiceAConcern</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_VoiceAConcern</shortDescription>
+        <value>Voice a concern</value>
+    </labels>
+    <labels>
         <fullName>Label_For_Missing_Product_Category</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22312,7 +22914,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentFootNote</shortDescription>
-        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
+        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button. Full transcript of this chat sessions will be available in your account in our Customer Portal.</value>
     </labels>
     <labels>
         <fullName>LiveAgentNEW</fullName>
@@ -22334,7 +22936,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentPlaceHolder</shortDescription>
-        <value>Type in your message here</value>
+        <value>Type in your message here and press Enter to send</value>
     </labels>
     <labels>
         <fullName>LiveAgentPostChatChannelQuestion</fullName>
@@ -26260,21 +26862,21 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Can make purchases and Withdrawals from the Wallets you are associated with;&lt;/li&gt;&lt;li&gt;Can associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Make purchases and withdrawals from the wallets you are associated with;&lt;/li&gt;&lt;li&gt;Permission to associate individual users with the IEP Account, and particular Sub-wallets, with a Ticket Issuer role.&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Permission to make purchases and Withdrawals from the Master Wallet (if granted such permission) and any Sub-wallet with which you are associated;&lt;/li&gt;&lt;li&gt;To associate individual users with the IEP Account and particular Sub-wallets (and to assign role of Sub-Wallet Manager or Ticket Issuer)&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Make purchases and withdrawals from the Master Wallet if granted permission, and any Sub-wallets you are associated with;&lt;/li&gt;&lt;li&gt;Associate individual users with the IEP Account and particular Sub-wallets (and assign role of Sub-Wallet Manager or Ticket Issuer).&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Permission to use the Master Wallet, any Sub-wallet, to establish new Sub-wallets and close existing Sub-wallets;&lt;/li&gt;&lt;li&gt;Make changes to Account Profile (including your Settings and Users Tab). Can also Cancel the IEP Account;&lt;/li&gt;&lt;li&gt;Transfer amounts between your Master Wallet and Sub-wallets, to associate individual users with the IEP Account and particular Sub-wallets (and to determine which category such individual users shall be in);&lt;/li&gt;&lt;li&gt;Make purchases or Withdrawals from your Master Wallet or any Sub-wallets&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Permission to use the Master Wallet and any Sub-wallet, to establish new and close Sub-wallets;&lt;/li&gt;&lt;li&gt;Make changes to Account Profile (including your Settings and Users Tab). Can also Cancel the IEP Account;&lt;/li&gt;&lt;li&gt;Transfer amounts between your Master Wallet and Sub-Wallets, to assocate individual users with the IEP Account and particular Sub-wallets (and to determine which category such individual users shall be in);&lt;/li&gt;&lt;li&gt;Make purchases ow withdrawals from your Master Wallet or any Sub-wallets.&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
@@ -26366,4 +26968,18 @@ title,Title,Name</value>
         <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
         <value>IATA Codes to relinquish</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>Cost tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
+        <value>Annual fees for 2018</value>
+    </labels>    
 </CustomLabels>

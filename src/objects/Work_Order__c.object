@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object is used for creating Work Orders for InvoiceWorks.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -102,37 +99,45 @@
         <fullName>Air_France_Project__c</fullName>
         <externalId>false</externalId>
         <label>Air France Project</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CARAIB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GENEX IN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GENEX OUT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ALL Power Supplier</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ALL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CARAIB</fullName>
+                    <default>false</default>
+                    <label>CARAIB</label>
+                </value>
+                <value>
+                    <fullName>GENEX IN</fullName>
+                    <default>false</default>
+                    <label>GENEX IN</label>
+                </value>
+                <value>
+                    <fullName>GENEX OUT</fullName>
+                    <default>false</default>
+                    <label>GENEX OUT</label>
+                </value>
+                <value>
+                    <fullName>PAX</fullName>
+                    <default>false</default>
+                    <label>PAX</label>
+                </value>
+                <value>
+                    <fullName>ALL Power Supplier</fullName>
+                    <default>false</default>
+                    <label>ALL Power Supplier</label>
+                </value>
+                <value>
+                    <fullName>ALL</fullName>
+                    <default>false</default>
+                    <label>ALL</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
@@ -181,45 +186,55 @@
         <fullName>Customer_Contract_Status__c</fullName>
         <externalId>false</externalId>
         <label>Customer Contract Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Terms &amp; Conditions under Review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Terms &amp; Conditions Agreed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCF Submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCF Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Signed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Executed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On Hold</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
+                    <fullName>Terms &amp; Conditions under Review</fullName>
+                    <default>false</default>
+                    <label>Terms &amp; Conditions under Review</label>
+                </value>
+                <value>
+                    <fullName>Terms &amp; Conditions Agreed</fullName>
+                    <default>false</default>
+                    <label>Terms &amp; Conditions Agreed</label>
+                </value>
+                <value>
+                    <fullName>CCF Submitted</fullName>
+                    <default>false</default>
+                    <label>CCF Submitted</label>
+                </value>
+                <value>
+                    <fullName>CCF Approved</fullName>
+                    <default>false</default>
+                    <label>CCF Approved</label>
+                </value>
+                <value>
+                    <fullName>Customer Signed</fullName>
+                    <default>false</default>
+                    <label>Customer Signed</label>
+                </value>
+                <value>
+                    <fullName>Executed</fullName>
+                    <default>false</default>
+                    <label>Executed</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Customer_Contract_Value__c</fullName>
@@ -236,21 +251,25 @@
         <fullName>Customer_Price_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Customer Price Currency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>EUR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>USD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Customer_Price__c</fullName>
@@ -326,29 +345,35 @@
         <fullName>Funding__c</fullName>
         <externalId>false</externalId>
         <label>Funding</label>
-        <picklist>
-            <picklistValues>
-                <fullName>To Be Determined</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>End User</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Service Provider</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>To Be Determined</fullName>
+                    <default>false</default>
+                    <label>To Be Determined</label>
+                </value>
+                <value>
+                    <fullName>End User</fullName>
+                    <default>false</default>
+                    <label>End User</label>
+                </value>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>Service Provider</fullName>
+                    <default>false</default>
+                    <label>Service Provider</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Hours__c</fullName>
@@ -366,21 +391,25 @@
         <fullName>IATA_Cost_Center__c</fullName>
         <externalId>false</externalId>
         <label>IATA Cost Center</label>
-        <picklist>
-            <picklistValues>
-                <fullName>PM0192CA01</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IIS001CA01</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>PM0192CA01</fullName>
+                    <default>false</default>
+                    <label>PM0192CA01</label>
+                </value>
+                <value>
+                    <fullName>IIS001CA01</fullName>
+                    <default>false</default>
+                    <label>IIS001CA01</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IATA_Owner__c</fullName>
@@ -794,25 +823,30 @@ IF(AND(text(SLA_Complexity_Category__c)=&quot;3&quot;, SLA_Additional_Fixing_day
 2 - compex customer-specific configuration
 3 - simple change request</inlineHelpText>
         <label>Complexity Category</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SLA_Final_Funct_Req_received__c</fullName>
@@ -998,21 +1032,25 @@ this field should NOT be updated manually, it is updated by the SLA calculation 
         <fullName>SLA_Subject_to_SLA__c</fullName>
         <externalId>false</externalId>
         <label>Subject to SLA</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>true</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SLA_UAT_Date_in_WO__c</fullName>
@@ -1031,21 +1069,25 @@ this field should NOT be updated manually, it is updated by the SLA calculation 
         <externalId>false</externalId>
         <inlineHelpText>As per IATA-BPS contract, test scripts and implementation documentation  should be sent to IATA 3 days before Actual UAT start.</inlineHelpText>
         <label>UAT Doc. Received 3 days (SLA3)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SLA_UAT_Iterations__c</fullName>
@@ -1132,41 +1174,50 @@ this field is updated by the SLA calculation script on a regular basis</inlineHe
         <fullName>Service_Provider__c</fullName>
         <externalId>false</externalId>
         <label>Service Provider</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ATOS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>b-process / Ariba</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deskom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Diversified</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>iPayables</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recall</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ATOS</fullName>
+                    <default>false</default>
+                    <label>ATOS</label>
+                </value>
+                <value>
+                    <fullName>b-process / Ariba</fullName>
+                    <default>false</default>
+                    <label>b-process / Ariba</label>
+                </value>
+                <value>
+                    <fullName>Deskom</fullName>
+                    <default>false</default>
+                    <label>Deskom</label>
+                </value>
+                <value>
+                    <fullName>Diversified</fullName>
+                    <default>false</default>
+                    <label>Diversified</label>
+                </value>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>iPayables</fullName>
+                    <default>false</default>
+                    <label>iPayables</label>
+                </value>
+                <value>
+                    <fullName>Recall</fullName>
+                    <default>false</default>
+                    <label>Recall</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status_Prior_to_Hold__c</fullName>
@@ -1183,85 +1234,105 @@ this field is updated by the SLA calculation script on a regular basis</inlineHe
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1 - Compiling Business Requirements, IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2 - Compiling Technical Requirements, Dev</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2.5 - Pending IATA SA review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3 - Pending Quote / QQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4 - Pending Technical Approval (spec, Q)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5 - Pending Cust. Change Order Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6 - Pending IATA Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7 - Pending Schedule</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8 - Scheduled / Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9a - Pending IATA Acceptance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9b - Pending Customer Acceptance test</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9c - Pending Development team</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9d - Test Failed, pending fix</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9e - Pending release into Prod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9f - Released into Prod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10 - Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>11 - On Hold</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>12 - Cancelled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 - Compiling Business Requirements, IATA</fullName>
+                    <default>false</default>
+                    <label>1 - Compiling Business Requirements, IATA</label>
+                </value>
+                <value>
+                    <fullName>2 - Compiling Technical Requirements, Dev</fullName>
+                    <default>false</default>
+                    <label>2 - Compiling Technical Requirements, Dev</label>
+                </value>
+                <value>
+                    <fullName>2.5 - Pending IATA SA review</fullName>
+                    <default>false</default>
+                    <label>2.5 - Pending IATA SA review</label>
+                </value>
+                <value>
+                    <fullName>3 - Pending Quote / QQ</fullName>
+                    <default>false</default>
+                    <label>3 - Pending Quote / QQ</label>
+                </value>
+                <value>
+                    <fullName>4 - Pending Technical Approval (spec, Q)</fullName>
+                    <default>false</default>
+                    <label>4 - Pending Technical Approval (spec, Q)</label>
+                </value>
+                <value>
+                    <fullName>5 - Pending Cust. Change Order Approval</fullName>
+                    <default>false</default>
+                    <label>5 - Pending Cust. Change Order Approval</label>
+                </value>
+                <value>
+                    <fullName>6 - Pending IATA Approval</fullName>
+                    <default>false</default>
+                    <label>6 - Pending IATA Approval</label>
+                </value>
+                <value>
+                    <fullName>7 - Pending Schedule</fullName>
+                    <default>false</default>
+                    <label>7 - Pending Schedule</label>
+                </value>
+                <value>
+                    <fullName>8 - Scheduled / Development</fullName>
+                    <default>false</default>
+                    <label>8 - Scheduled / Development</label>
+                </value>
+                <value>
+                    <fullName>9a - Pending IATA Acceptance</fullName>
+                    <default>false</default>
+                    <label>9a - Pending IATA Acceptance</label>
+                </value>
+                <value>
+                    <fullName>9b - Pending Customer Acceptance test</fullName>
+                    <default>false</default>
+                    <label>9b - Pending Customer Acceptance test</label>
+                </value>
+                <value>
+                    <fullName>9c - Pending Development team</fullName>
+                    <default>false</default>
+                    <label>9c - Pending Development team</label>
+                </value>
+                <value>
+                    <fullName>9d - Test Failed, pending fix</fullName>
+                    <default>false</default>
+                    <label>9d - Test Failed, pending fix</label>
+                </value>
+                <value>
+                    <fullName>9e - Pending release into Prod</fullName>
+                    <default>false</default>
+                    <label>9e - Pending release into Prod</label>
+                </value>
+                <value>
+                    <fullName>9f - Released into Prod</fullName>
+                    <default>false</default>
+                    <label>9f - Released into Prod</label>
+                </value>
+                <value>
+                    <fullName>10 - Completed</fullName>
+                    <default>false</default>
+                    <label>10 - Completed</label>
+                </value>
+                <value>
+                    <fullName>11 - On Hold</fullName>
+                    <default>false</default>
+                    <label>11 - On Hold</label>
+                </value>
+                <value>
+                    <fullName>12 - Cancelled</fullName>
+                    <default>false</default>
+                    <label>12 - Cancelled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sub_Contractor_Owner__c</fullName>
@@ -1281,65 +1352,78 @@ this field is updated by the SLA calculation script on a regular basis</inlineHe
         <externalId>false</externalId>
         <inlineHelpText>As per IATA-BPS contract, confirmation of UAT start day should be sent 3 days before it is scheduled according to delivery plan.</inlineHelpText>
         <label>UAT 3 days&apos; notification  (SLA4.1)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Value_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Value Currency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>EUR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>USD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Value_Type__c</fullName>
         <externalId>false</externalId>
         <label>Value Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IATA Estimate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vendor&apos;s raw estimate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vendors&apos; quote</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Estimate</fullName>
+                    <default>false</default>
+                    <label>IATA Estimate</label>
+                </value>
+                <value>
+                    <fullName>Vendor&apos;s raw estimate</fullName>
+                    <default>false</default>
+                    <label>Vendor&apos;s raw estimate</label>
+                </value>
+                <value>
+                    <fullName>Vendors&apos; quote</fullName>
+                    <default>false</default>
+                    <label>Vendors&apos; quote</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Value__c</fullName>
@@ -1360,33 +1444,40 @@ this field is updated by the SLA calculation script on a regular basis</inlineHe
         <externalId>false</externalId>
         <inlineHelpText>This value is defining the bucket where this WO should be allocated in planning.</inlineHelpText>
         <label>WO Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1. Standard Solution – evolution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2. Ad-hoc customer request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3. New customer onboarding to St. Solution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4. New non-standard customer onboarding to St. Solution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5. Migration project</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1. Standard Solution – evolution</fullName>
+                    <default>false</default>
+                    <label>1. Standard Solution – evolution</label>
+                </value>
+                <value>
+                    <fullName>2. Ad-hoc customer request</fullName>
+                    <default>false</default>
+                    <label>2. Ad-hoc customer request</label>
+                </value>
+                <value>
+                    <fullName>3. New customer onboarding to St. Solution</fullName>
+                    <default>false</default>
+                    <label>3. New customer onboarding to St. Solution</label>
+                </value>
+                <value>
+                    <fullName>4. New non-standard customer onboarding to St. Solution</fullName>
+                    <default>false</default>
+                    <label>4. New non-standard customer onboarding to St. Solution</label>
+                </value>
+                <value>
+                    <fullName>5. Migration project</fullName>
+                    <default>false</default>
+                    <label>5. Migration project</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Work Order</label>
     <listViews>
@@ -1607,4 +1698,5 @@ this field is updated by the SLA calculation script on a regular basis</inlineHe
         <customTabListAdditionalFields>Scheduling_Priority__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

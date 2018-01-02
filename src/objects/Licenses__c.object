@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -136,4 +133,5 @@ Case( Business_Unit__r.Name,
 )</errorConditionFormula>
         <errorMessage>You must start the name of the record with the Business Unit it&apos;s associated with, e.g. IDFS Africa, or Corporate Services.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

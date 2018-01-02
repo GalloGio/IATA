@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -212,190 +209,235 @@
         <fullName>BLND_Skill_Certification__c</fullName>
         <externalId>false</externalId>
         <label>Skill Certification</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cisco Certified Internetwork Expert</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified Lotus Professional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified Lotus Specialist</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified Novell Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified Novell Engineer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified Solaris Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Microsoft Certified Database Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Microsoft Certified Professional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Microsoft Certified Solutions Developer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Microsoft Certified Systems Engineer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Novell Certified Internet Professional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Oracle Certified Professional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project Management Professional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cisco Certified Internetwork Expert</fullName>
+                    <default>false</default>
+                    <label>Cisco Certified Internetwork Expert</label>
+                </value>
+                <value>
+                    <fullName>Certified Lotus Professional</fullName>
+                    <default>false</default>
+                    <label>Certified Lotus Professional</label>
+                </value>
+                <value>
+                    <fullName>Certified Lotus Specialist</fullName>
+                    <default>false</default>
+                    <label>Certified Lotus Specialist</label>
+                </value>
+                <value>
+                    <fullName>Certified Novell Administrator</fullName>
+                    <default>false</default>
+                    <label>Certified Novell Administrator</label>
+                </value>
+                <value>
+                    <fullName>Certified Novell Engineer</fullName>
+                    <default>false</default>
+                    <label>Certified Novell Engineer</label>
+                </value>
+                <value>
+                    <fullName>Certified Solaris Administrator</fullName>
+                    <default>false</default>
+                    <label>Certified Solaris Administrator</label>
+                </value>
+                <value>
+                    <fullName>Microsoft Certified Database Administrator</fullName>
+                    <default>false</default>
+                    <label>Microsoft Certified Database Administrator</label>
+                </value>
+                <value>
+                    <fullName>Microsoft Certified Professional</fullName>
+                    <default>false</default>
+                    <label>Microsoft Certified Professional</label>
+                </value>
+                <value>
+                    <fullName>Microsoft Certified Solutions Developer</fullName>
+                    <default>false</default>
+                    <label>Microsoft Certified Solutions Developer</label>
+                </value>
+                <value>
+                    <fullName>Microsoft Certified Systems Engineer</fullName>
+                    <default>false</default>
+                    <label>Microsoft Certified Systems Engineer</label>
+                </value>
+                <value>
+                    <fullName>Novell Certified Internet Professional</fullName>
+                    <default>false</default>
+                    <label>Novell Certified Internet Professional</label>
+                </value>
+                <value>
+                    <fullName>Oracle Certified Professional</fullName>
+                    <default>false</default>
+                    <label>Oracle Certified Professional</label>
+                </value>
+                <value>
+                    <fullName>Project Management Professional</fullName>
+                    <default>false</default>
+                    <label>Project Management Professional</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Skill_Level__c</fullName>
         <externalId>false</externalId>
         <label>Skill Level</label>
-        <picklist>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Beginner</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intermediate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Advanced</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Expert</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
+                    <fullName>Beginner</fullName>
+                    <default>false</default>
+                    <label>Beginner</label>
+                </value>
+                <value>
+                    <fullName>Intermediate</fullName>
+                    <default>false</default>
+                    <label>Intermediate</label>
+                </value>
+                <value>
+                    <fullName>Advanced</fullName>
+                    <default>false</default>
+                    <label>Advanced</label>
+                </value>
+                <value>
+                    <fullName>Expert</fullName>
+                    <default>false</default>
+                    <label>Expert</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Skill_Set__c</fullName>
         <externalId>false</externalId>
         <label>Skill Set</label>
-        <picklist>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Auditor</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Analyst</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Consultant</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Relations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Database Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Developer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lead Developer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Engineer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lead Engineer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Network Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project Manager</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Senior Consultant</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Senior Database Administrator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Senior Developer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Task Manager</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical Architect</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical Lead</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Web Master</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical Writer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>QA Engineer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
+                    <fullName>Auditor</fullName>
+                    <default>false</default>
+                    <label>Auditor</label>
+                </value>
+                <value>
+                    <fullName>Business Analyst</fullName>
+                    <default>false</default>
+                    <label>Business Analyst</label>
+                </value>
+                <value>
+                    <fullName>Consultant</fullName>
+                    <default>false</default>
+                    <label>Consultant</label>
+                </value>
+                <value>
+                    <fullName>Customer Relations</fullName>
+                    <default>false</default>
+                    <label>Customer Relations</label>
+                </value>
+                <value>
+                    <fullName>Database Administrator</fullName>
+                    <default>false</default>
+                    <label>Database Administrator</label>
+                </value>
+                <value>
+                    <fullName>Developer</fullName>
+                    <default>false</default>
+                    <label>Developer</label>
+                </value>
+                <value>
+                    <fullName>Lead Developer</fullName>
+                    <default>false</default>
+                    <label>Lead Developer</label>
+                </value>
+                <value>
+                    <fullName>Engineer</fullName>
+                    <default>false</default>
+                    <label>Engineer</label>
+                </value>
+                <value>
+                    <fullName>Lead Engineer</fullName>
+                    <default>false</default>
+                    <label>Lead Engineer</label>
+                </value>
+                <value>
+                    <fullName>Network Administrator</fullName>
+                    <default>false</default>
+                    <label>Network Administrator</label>
+                </value>
+                <value>
+                    <fullName>Project Manager</fullName>
+                    <default>false</default>
+                    <label>Project Manager</label>
+                </value>
+                <value>
+                    <fullName>Senior Consultant</fullName>
+                    <default>false</default>
+                    <label>Senior Consultant</label>
+                </value>
+                <value>
+                    <fullName>Senior Database Administrator</fullName>
+                    <default>false</default>
+                    <label>Senior Database Administrator</label>
+                </value>
+                <value>
+                    <fullName>Senior Developer</fullName>
+                    <default>false</default>
+                    <label>Senior Developer</label>
+                </value>
+                <value>
+                    <fullName>Task Manager</fullName>
+                    <default>false</default>
+                    <label>Task Manager</label>
+                </value>
+                <value>
+                    <fullName>Technical Architect</fullName>
+                    <default>false</default>
+                    <label>Technical Architect</label>
+                </value>
+                <value>
+                    <fullName>Technical Lead</fullName>
+                    <default>false</default>
+                    <label>Technical Lead</label>
+                </value>
+                <value>
+                    <fullName>Web Master</fullName>
+                    <default>false</default>
+                    <label>Web Master</label>
+                </value>
+                <value>
+                    <fullName>Technical Writer</fullName>
+                    <default>false</default>
+                    <label>Technical Writer</label>
+                </value>
+                <value>
+                    <fullName>QA Engineer</fullName>
+                    <default>false</default>
+                    <label>QA Engineer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Version__c</fullName>
@@ -416,4 +458,5 @@
     <pluralLabel>DreamTeam Resources</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

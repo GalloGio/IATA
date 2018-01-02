@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used to save advanced search filters by customers so they can reuse them (for now only for GAD)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -60,47 +57,57 @@
         <fullName>Agency_Name_Search_Condition__c</fullName>
         <externalId>false</externalId>
         <label>Agency Name Search Condition</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Trading Name</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal Name</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Both</fullName>
-                <default>true</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Trading Name</fullName>
+                    <default>false</default>
+                    <label>Trading Name</label>
+                </value>
+                <value>
+                    <fullName>Legal Name</fullName>
+                    <default>false</default>
+                    <label>Legal Name</label>
+                </value>
+                <value>
+                    <fullName>Both</fullName>
+                    <default>true</default>
+                    <label>Both</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Agency_Name_Search_Type__c</fullName>
         <externalId>false</externalId>
         <label>Agency Name Search Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Exact match</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Starts with</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contains</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Exact match</fullName>
+                    <default>true</default>
+                    <label>Exact match</label>
+                </value>
+                <value>
+                    <fullName>Starts with</fullName>
+                    <default>false</default>
+                    <label>Starts with</label>
+                </value>
+                <value>
+                    <fullName>Contains</fullName>
+                    <default>false</default>
+                    <label>Contains</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Agency_Name__c</fullName>
@@ -125,51 +132,62 @@
         <fullName>Area_of_Activity__c</fullName>
         <externalId>false</externalId>
         <label>Area of Activity</label>
-        <picklist>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Sales Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>General Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>true</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>Travel Agency</fullName>
+                    <default>false</default>
+                    <label>Travel Agency</label>
+                </value>
+                <value>
+                    <fullName>Airline Sales Office</fullName>
+                    <default>false</default>
+                    <label>Airline Sales Office</label>
+                </value>
+                <value>
+                    <fullName>General Sales Agent</fullName>
+                    <default>false</default>
+                    <label>General Sales Agent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>City_Search_Type__c</fullName>
         <externalId>false</externalId>
         <label>City Search Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Exact match</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Starts with</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contains</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Exact match</fullName>
+                    <default>true</default>
+                    <label>Exact match</label>
+                </value>
+                <value>
+                    <fullName>Starts with</fullName>
+                    <default>false</default>
+                    <label>Starts with</label>
+                </value>
+                <value>
+                    <fullName>Contains</fullName>
+                    <default>false</default>
+                    <label>Contains</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>City__c</fullName>
@@ -206,59 +224,72 @@
         <fullName>Filter_Type__c</fullName>
         <externalId>false</externalId>
         <label>Filter Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Advanced</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Basic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Advanced</fullName>
+                    <default>true</default>
+                    <label>Advanced</label>
+                </value>
+                <value>
+                    <fullName>Basic</fullName>
+                    <default>false</default>
+                    <label>Basic</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Hierarchy__c</fullName>
         <externalId>false</externalId>
         <label>Hierarchy</label>
-        <picklist>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Administrative Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Branch Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>European STP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Head Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Specific Sales Activity</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Satellite Ticket Printer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>true</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>Administrative Office</fullName>
+                    <default>false</default>
+                    <label>Administrative Office</label>
+                </value>
+                <value>
+                    <fullName>Branch Office</fullName>
+                    <default>false</default>
+                    <label>Branch Office</label>
+                </value>
+                <value>
+                    <fullName>European STP</fullName>
+                    <default>false</default>
+                    <label>European STP</label>
+                </value>
+                <value>
+                    <fullName>Head Office</fullName>
+                    <default>false</default>
+                    <label>Head Office</label>
+                </value>
+                <value>
+                    <fullName>Specific Sales Activity</fullName>
+                    <default>false</default>
+                    <label>Specific Sales Activity</label>
+                </value>
+                <value>
+                    <fullName>Satellite Ticket Printer</fullName>
+                    <default>false</default>
+                    <label>Satellite Ticket Printer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -331,24 +362,29 @@
         <fullName>Zip_Code_Search_Type__c</fullName>
         <externalId>false</externalId>
         <label>Zip Code Search Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Exact match</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Starts with</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contains</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Exact match</fullName>
+                    <default>true</default>
+                    <label>Exact match</label>
+                </value>
+                <value>
+                    <fullName>Starts with</fullName>
+                    <default>false</default>
+                    <label>Starts with</label>
+                </value>
+                <value>
+                    <fullName>Contains</fullName>
+                    <default>false</default>
+                    <label>Contains</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zip_Code__c</fullName>
@@ -380,4 +416,5 @@
     <pluralLabel>IEC Application Filters</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
