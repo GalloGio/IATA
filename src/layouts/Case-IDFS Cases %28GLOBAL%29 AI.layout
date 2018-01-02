@@ -215,6 +215,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
             </layoutItems>
             <layoutItems>

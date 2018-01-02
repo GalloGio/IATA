@@ -307,6 +307,10 @@
             <recipient>lavergheta@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>luolu@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>StrategicPartnerships/MACS_NewLeadAlert</template>
@@ -1287,21 +1291,5 @@ ISPICKVAL(Status,&quot;2. Qualified Prospect&quot;))</formula>
         <protected>false</protected>
         <status>Not Started</status>
         <subject>Share access to this lead with Charlyne Man</subject>
-    </tasks>
-    <tasks>
-        <fullName>ShareaccesstothisopportunitywithCargoISGABIspecialist</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>He has been notified about this opportunity and is looking forward to working with you. 
-
-1. From the Opportunity, scroll to &apos;Sales team&apos;. Click &apos;Add&apos;
-2. Add user &apos;Casey, Matthieu&apos;. Set access to &apos;read/write&apos;
-3. Team role: &apos;Cargo&apos; or &apos;GABI specialist&apos;</description>
-        <dueDateOffset>1</dueDateOffset>
-        <notifyAssignee>true</notifyAssignee>
-        <offsetFromField>Lead.ConvertedDate</offsetFromField>
-        <priority>High</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>Share access to this opportunity with Cargo IS/GABI specialist</subject>
     </tasks>
 </Workflow>
