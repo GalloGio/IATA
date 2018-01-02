@@ -2,6 +2,8 @@ public without sharing class AMS_Utils {
 
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
+    //public static Boolean isNewGenProcess = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -2523,6 +2525,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
+	
+	/**
+	Method to help the transformation of accrediation types to display on ebulletin
+	*/
+	public static String transformAccreditationType(String accredType) {
+
+		String result = accredType;
+
+		if (result == null)
+			return null;
+
+		if (result.containsIgnoreCase('Cashless'))
+			result = result.replace('Cashless', 'GoLite');
+		if (result.containsIgnoreCase('Cash'))
+			result = result.replace('Cash', 'GoStandard');
+		if (result.containsIgnoreCase('Multicountry'))
+			result = result.replace('Multicountry', 'GoGlobal');
+
+		return result;
+
+	}
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 

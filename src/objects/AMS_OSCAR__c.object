@@ -2583,6 +2583,17 @@ Format: YYYY</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_NewGen__c</fullName>
+        <description>Created to avoid extra queries on the code.</description>
+        <externalId>false</externalId>
+        <formula>Account__r.ANG_IsNewGenAgency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is NewGen</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_PCI_compliant__c</fullName>
         <description>Determines if an agency is PCI Compliant</description>
         <externalId>false</externalId>
