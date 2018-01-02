@@ -532,7 +532,7 @@ global class ANG_OscarProcessHelper {
 		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
     	*/
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
 		
 		try{
@@ -605,7 +605,7 @@ global class ANG_OscarProcessHelper {
 			- If "Restore credit card and if the Account has PCI Compliant = "Yes" then set Status = "Active" on  Agency Authorization having Form of Payment ID = CC
     	*/
 
-    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
 		try{
 
