@@ -1733,12 +1733,13 @@ public with sharing class AMS_XML_Generator {
 /*  NEWGEN-801 */
 
 
-            Dom.Xmlnode nodeAT = agencyNode.addChildElement('accreditation_types', null, null);
+            //Dom.Xmlnode nodeAT = agencyNode.addChildElement('accreditation_types', null, null);
             List<String> lAT = agency.ANG_Accreditation_Model__c == null ? new List<String>() : agency.ANG_Accreditation_Model__c.split(';');
 
             if(!lAT.isEmpty()){
                 for (String at : lAT) {
-                    getElementNode(nodeAT, 'accreditation_type', at);
+                    //getElementNode(nodeAT, 'accreditation_type', at);
+                    getElementNode(agencyNode, 'accreditation_type', at);
                 }
             }
 
