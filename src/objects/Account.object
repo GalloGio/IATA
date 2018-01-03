@@ -7222,11 +7222,6 @@ V - Co-operative</inlineHelpText>
                     <label>IATA Employee (commercial purposes)</label>
                 </value>
                 <value>
-                    <fullName>IATA Training &amp; Development Institute</fullName>
-                    <default>false</default>
-                    <label>IATA Training &amp; Development Institute</label>
-                </value>
-                <value>
                     <fullName>Service Providers</fullName>
                     <default>false</default>
                     <label>Service Providers</label>
@@ -26660,10 +26655,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -29590,10 +29581,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32588,10 +32575,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -35174,10 +35157,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39001,10 +38980,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -42077,10 +42052,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46714,10 +46685,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -49460,10 +49427,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65809,10 +65772,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -69632,10 +69591,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76580,10 +76535,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Member Airline</fullName>
                 <default>false</default>
             </values>
@@ -80911,10 +80862,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
                 <default>false</default>
             </values>
             <values>
