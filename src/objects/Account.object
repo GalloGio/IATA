@@ -10354,7 +10354,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Invoicing_and_Collection__c</fullName>
         <description>Links to the report showing the account&apos;s Invoicing and collection cases.</description>
         <externalId>false</externalId>
-        <formula>HYPERLINK(&apos;/&apos; + $Label.Account_Invoicing_Collection_Cases_Report_ID + &apos;?pv1=&apos; + Name + &apos;&amp;pv2=&apos; +  Id , &apos;View cases&apos;)</formula>
+        <formula>HYPERLINK(&apos;/&apos; + $Label.Account_Invoicing_Collection_Cases_Report_ID + &apos;?pv1=&apos; +  Id , &apos;View cases&apos;)</formula>
         <label>Invoicing and Collection</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
