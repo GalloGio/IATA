@@ -242,7 +242,7 @@ public class AmazonFileTrgHelper {
         }
     }
 
-	//FM 06-11-2017 - AMSU28 - add "submitted" state to OSCAR record when agents attach something to the case
+        //FM 06-11-2017 - AMSU28 - add "submitted" state to OSCAR record when agents attach something to the case
     public static void validateAttachmentIsCase_DGR_Certification(List<AmazonFile__c> attachments)
     {
         System.debug('Attachment_Svc - validateAttachmentIsCase_DGR_Certification');
