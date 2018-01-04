@@ -242,10 +242,6 @@
         <columns>IATA_Package__c</columns>
         <columns>Can_Pay_by_Cheque__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Expedite__c</field>
-            <operation>notEqual</operation>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
