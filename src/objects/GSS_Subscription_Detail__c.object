@@ -571,9 +571,9 @@
         <columns>File_Name_Suffix_Option__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>OWNER.FIRST_NAME</field>
+            <field>NAME</field>
             <operation>equals</operation>
-            <value>Sabrina</value>
+            <value>A-S00006481</value>
         </filters>
         <label>Created By Sabrina</label>
         <language>en_US</language>
