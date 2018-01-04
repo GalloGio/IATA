@@ -413,6 +413,27 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>ZZZ_Deliveries_With_No_Link_to_Z_Sub</fullName>
+        <columns>NAME</columns>
+        <columns>GSS_Subscription_Detail__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subscription__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>ZZZ: Deliveries With No Link to Z-Sub</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZZ_Search_by_GSS_Subscription_Detail</fullName>
         <columns>NAME</columns>
         <columns>GSS_Subscription_Detail__c</columns>
@@ -429,7 +450,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00011935,A-S00011936</value>
+            <value>A-S00006481</value>
         </filters>
         <label>ZZ: Search by GSS Subscription Detail</label>
         <language>en_US</language>
