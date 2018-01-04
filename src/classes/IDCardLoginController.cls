@@ -53,14 +53,17 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     //Login with Codes
     public PageReference verify() {
         if (!Test.isRunningTest())  findLocation();
-        Boolean validCaptcha =validCaptcha();
+        Boolean validCaptcha;
 
         //@@ Disables captcha
         //validCaptcha = true;
 
         //exception for China //RN-INC356501
-        if (whichcountry == 'CN')
+        if (whichcountry == 'CN'){
             validCaptcha = true;
+        }else{
+            validCaptcha =validCaptcha();
+        }
 
         //for test method to pass captcha validation
         if (Test.isRunningTest() )
@@ -271,15 +274,18 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     *
     */
     public PageReference verifyAlternative() {
-        Boolean validCaptcha = validCaptcha();
+        Boolean validCaptcha;
          if (!Test.isRunningTest())  findLocation();
 
         //@@ Disables captcha
         //validCaptcha = true;
 
         //exception for China //RN-INC356501
-        if (whichcountry == 'CN')
+        if (whichcountry == 'CN'){
             validCaptcha = true;
+        }else{
+            validCaptcha =validCaptcha();
+        }
 
         //for test method to pass captcha validation
         if (Test.isRunningTest())
