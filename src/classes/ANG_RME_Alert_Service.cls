@@ -26,6 +26,8 @@ global class ANG_RME_Alert_Service {
 		global String description;
 		global String iataCode;
 
+		private RHCMessage res;
+
 		global RequestResult(){
 			isSuccess = true;
 		}
@@ -97,97 +99,106 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	private static void saveAlert(RHCMessage req, ANG_RHC_Information__c rhcInfo) {
+	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();
 		alert.ANG_Account__c = rhcInfo.ANG_AccountId__c;
 		alert.ANG_RHC_Information__c = rhcInfo.Id;
-		alert.ANG_EventId__c = req.eventId;
-		alert.ANG_Threshold_Level__c = req.thresholdLevel;
-		alert.ANG_Direction__c = req.direction;
-		alert.ANG_RME_Last_Update__c = req.eventTime;
+		alert.ANG_EventId__c = message.eventId;
+		alert.ANG_Threshold_Level__c = message.thresholdLevel;
+		alert.ANG_Direction__c = message.direction;
+		alert.ANG_RME_Last_Update__c = message.eventTime;
 		insert alert;
 
 		setResponse(null, 202);
 	}
 
-	private static void updateRHC(RHCMessage req, ANG_RHC_Information__c rhcInfo) {
-		rhcInfo.ANG_ConsumedRHC__c = req.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = req.consumedRHCPercentage;
-		rhcInfo.ANG_ConsumedRHC_Last_Update__c = req.eventTime.date();
+	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
+		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
 		setResponse(null, 202);
 	}
 
-	global class BalanceResult {
-		webservice Boolean isSuccess;
-		webservice String description;
-		webservice String iataCode;
+	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
+	webservice static RequestResult requestBalanceUpdate(String accountId){
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+
+		doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+
+		if(result.isSuccess) updateRHC(result.res, acc.RHC_Informations__r[0]);
+
+		return result;
 	}
 
-	//webservice called by salesforce (javascript button and portal) to request an update
-	webservice static BalanceResult requestBalanceUpdate(String accountId){
-
+	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
+	webservice static RequestResult requestProvisionalRHC(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] acc - ' + acc);
 
-		BalanceResult result = new BalanceResult();
-		result.isSuccess = true;
-		result.iataCode = acc.IATACode__c;
+		doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
+
+		if(result.isSuccess){
+			ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+			rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.storedRHCValue;
+			rhcInfo.ANG_Provisional_RHC_Last_Update__c = result.res.eventTime.date();
+			update rhcInfo;
+		}
+
+		return result;
+	}
+
+	private static void doRequest(String iataCode, String mappingName){
+
+		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
+
+		result.iataCode = iataCode;
 
 		//do callout
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
-		req.setMethod('POST');
+		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
-		req.setEndpoint('callout:ANG_Mulesoft_032?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
-
-		Map<String, Object> payload = new Map<String, Object>();
-		payload.put('eventId', acc.IATACode__c+String.valueOf(System.now().getTime()));
-		payload.put('eventType', 'requestBalanceUpdate');
-		payload.put('eventTime', System.now());
-		payload.put('schemaVersion', 1);
-		payload.put('iataCode', acc.IATACode__c);
-
-		req.setBody(JSON.serialize(payload));
+		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] req - ' + req);
+
+		//start log
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		log.Web_Service__c = 'Mulesoft/Future Space';
+		log.Method__c = req.getMethod();
+		log.Input_Description__c = 'GET Request\nEndpoint:'+req.getEndpoint();
 
 		//parse result
 		HttpResponse res;
 
 		try {
-			if(Test.isRunningTest()) res = new Http().send(req);
-			//temporary stuff
-			else{
-				RHCMessage rhc = new RHCMessage();
-				rhc.iataCode = result.iataCode;
-				rhc.eventTime = System.now();
-				rhc.consumedRHCAmount = 5000;
-				rhc.consumedRHCPercentage = 0.5;
-				res = new HttpResponse();
-				res.setBody(JSON.serialize(rhc));
-				res.setStatusCode(200);
-			}
-			// end temporary stuff
+			res = new Http().send(req);
+
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] res - ' + res);
+			log.Input_Description__c += '\n\nResponse:\n'+res.toString();
 
 			if(res.getStatusCode() >= 200 && res.getStatusCode() < 300){
-				/**
-				TODO: Define response structure
-				*/
-
-				updateRHC((RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class), acc.RHC_Informations__r[0]);
+				result.res = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
 			}else{
 				result.isSuccess = false;
 				result.description = res.getBody();
+
+				log.Error_Code__c = String.valueOf(res.getStatusCode());
 			}
 		} catch(Exception e) {
 			result.isSuccess = false;
 			result.description = e.getMessage();
+
+			log.Error_Code__c = 'Unexpected Error';
 		}
 
+		log.Success__c = result.isSuccess;
+		if(!log.Success__c) log.Error_Message__c = result.description;
+		
+		insert log;
 
-		//return
-		return result;
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] log - ' + log);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] result - ' + result);
 	}
 }
