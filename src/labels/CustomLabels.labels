@@ -1283,7 +1283,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature1</shortDescription>
-        <value>Feature 1</value>
+        <value>Credit Card</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -1299,7 +1299,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2</shortDescription>
-        <value>Feature 2</value>
+        <value>IATA EasyPay</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature2Tooltip</fullName>
@@ -1315,7 +1315,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature3</shortDescription>
-        <value>Feature 3</value>
+        <value>Cash</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3Tooltip</fullName>
@@ -1331,7 +1331,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature4</shortDescription>
-        <value>Feature 4</value>
+        <value>Credit Limit</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature4Tooltip</fullName>
@@ -1347,7 +1347,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature5</shortDescription>
-        <value>Feature 5</value>
+        <value>Yearly Financial Assessment</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature5Tooltip</fullName>
@@ -1356,6 +1356,86 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature5Tooltip</shortDescription>
         <value>Feature 5 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature6</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature6</shortDescription>
+        <value>Quarterly Assessment of Parent</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature6Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature6Tooltip</shortDescription>
+        <value>Feature 6 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature7</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature7</shortDescription>
+        <value>Chargeback Insurance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature7Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature7Tooltip</shortDescription>
+        <value>Feature 7 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature8</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature8</shortDescription>
+        <value>Financial Security / Default Insurance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature8Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature8Tooltip</shortDescription>
+        <value>Feature 8 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature9</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature9</shortDescription>
+        <value>Parent Guarantee Incorporated into PSAA</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature9Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature9Tooltip</shortDescription>
+        <value>Feature 9 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature10</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature10</shortDescription>
+        <value>Feature 10</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature10Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
+        <value>Feature 10 Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle1</fullName>
@@ -1397,6 +1477,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
         <value>GoLite</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductMulticountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductMulticountry</shortDescription>
+        <value>Multicountry</value>
+    </labels>    
     <labels>
         <fullName>ANG_ISSP_ProgressBarNode1</fullName>
         <categories>ISSP</categories>
