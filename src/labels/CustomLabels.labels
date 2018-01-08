@@ -1139,11 +1139,11 @@
         <value>Your branch is located in a different country than your Head Office. We regret to inform you that IATA Easypay service is not available for your office at this stage. Please contact IATA Customer Support if you need any further information.</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</fullName>
+        <fullName>n</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -1153,7 +1153,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Entity&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Entity&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
     &lt;br/&gt;
     &lt;br/&gt;
     Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -1163,10 +1163,24 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</shortDescription>
+        <value>In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</shortDescription>
+        <value>As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -> Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>

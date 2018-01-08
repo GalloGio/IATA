@@ -287,17 +287,29 @@ public with sharing class ISSP_AvailableServices{
                 // If the IEP status is not open and is an admin and the account is HO or HE 
                 if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open') {
                     isIEPAccountEnable = true;                
-                } else if(isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
+                } else if( 
+                            isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
                                      (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
                     isIEPAccountEnable = true;
                 }
 
+                String msgComplement;
+                if(isAdmin) {
+                    msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator;
+                } else {
+                    msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active;
+                }
+
+                String aux;
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 } else if (contAcc.Account.Location_Type__c == 'AO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'AO') {
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 }
 
                 if (!isIEPAccountEnable) {
