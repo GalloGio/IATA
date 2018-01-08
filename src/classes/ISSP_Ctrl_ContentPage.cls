@@ -20,7 +20,6 @@ public class ISSP_Ctrl_ContentPage
   public String search {get;set;}
   public String selectedValCat {get;set;}
   public String selectedValPub {get;set;}
-  public Integer test{get;set;}
 
   public List<ContentVersion> getContentVersions() {      
       return (List<ContentVersion>) setCon.getRecords();
@@ -210,15 +209,11 @@ public class ISSP_Ctrl_ContentPage
 
 
     system.debug('susana soql ' + soql);
-    List<ContentVersion> test = Database.query(soql);
-      system.debug('##RN: ' + test.size());     
     setCon = new ApexPages.StandardSetController(sortContentVersions(Database.query(soql)));
     system.debug('##RN: ' + Database.query(soql));
  //   system.debug('##RN setCon.getRecords(): ' + setCon.getRecords().size);
     //ContentVersions = sortContentVersions(;
     system.debug('susana ContentVersions : ' + getContentVersions());
-
-    system.debug('##RN COnt ver size order: ' + sortContentVersions(test).size());
 
     allCountriesList = getPicklistValues('ContentVersion', 'Country_of_publication__c');
     allLanguagesList = getPicklistValues('ContentVersion', 'Language__c');

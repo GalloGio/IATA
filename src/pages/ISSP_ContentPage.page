@@ -30,19 +30,19 @@
         }
 
         .paginationButt{
-                padding: 0.5em 1em;
-            min-width: 1.5em;
-                box-sizing: border-box;
-            position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: #337ab7;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd transparent;
-    border-radius: 2px;
+         margin-left: -1px;
+        }
+
+        .paginate_button{
+           color: #000000;
+           text-decoration: none;
+        }
+
+        .buttons{
+            float: right;
+            display: block;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
       
         
@@ -370,22 +370,28 @@
                                                     <apex:selectOptions value="{!paginationSizeOptions}"/>
                                                     </apex:selectList>
                                                </div> -->
-                                               <div class="bottomNav" id="pageSize">
-                                                <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
-                                                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                            <div class="bottomNav" style="margin-left: 10px" id="pageSize">
+                                                    <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+                                                        <apex:selectOptions value="{!paginationSizeOptions}"/>
                                                     </apex:selectList>
-                                                    <div class="paginator">
+                                                    <!--<div class="paginator">
                                                         <span class="left selectorTarget">
                                                             <apex:outputText id="pageZ">
                                                                Showing {!((currentPageNumber-1) * size)+1} to {!IF(setCon.HasNext,(currentPageNumber) * size,setCon.ResultSize)}  of {!setCon.ResultSize } entries
                                                             </apex:outputText>
                                                         </span>
-                                                      </div>
-                                                </div>                                               
-                                               <apex:panelGrid id="buttons" columns="8">                      
+                                                    </div>-->
+                                               
+                                                    <apex:outputText id='pageNumber' style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
+                                                   {!currentPageNumber}
+                                                   {!$Label.ISSP_of} {!pageNumberButtons.size}
+                                                    </apex:outputText>    
+                                                                     
+                                               <apex:panelGrid id="buttons" columns="8" styleClass="buttons" >                      
                                                 
-                                                  <apex:commandLink styleClass="paginate_button active" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Previous</apex:commandlink>
-                                                  <apex:repeat  value="{!pageNumberButtons}" var="pageN">
+                                                <apex:commandLink styleClass="paginate_button" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Previous</apex:commandlink>
+
+                                                <apex:repeat  value="{!pageNumberButtons}" var="pageN">
                                                     <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!OR(AND(pageN<5, currentPageNumber<=5),pageN==1)}">
                                                           <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>
@@ -402,15 +408,13 @@
                                                     <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size)}">
                                                               <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>
-
                                                 </apex:repeat>
-                                                 <apex:commandLink styleClass="paginate_button active" action="{!next}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Next</apex:commandlink>
-                                               </apex:panelGrid>
-                                               <apex:outputText id='pageNumber' >{!$Label.ISSP_Page}
-                                                   {!currentPageNumber}
-                                                   {!$Label.ISSP_of} {!pageNumberButtons.size}
 
-                                            </apex:outputText>
+                                                 <apex:commandLink styleClass="paginate_button" action="{!next}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Next</apex:commandlink>
+                                               </apex:panelGrid>  
+                                               <br style="clear: both;" /> 
+                                                </div>
+                                                                                     
                                             </apex:pageblock>
                                      </div>
                                    </div> <!--end row -->
