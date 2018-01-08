@@ -352,14 +352,14 @@
     <listViews>
         <fullName>Field_Details_GSS_Member_TXT</fullName>
         <columns>NAME</columns>
-        <columns>API_Object_Name__c</columns>
         <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
         <columns>Filter_Field_Value__c</columns>
         <columns>Size__c</columns>
         <columns>Position__c</columns>
-        <columns>Visible__c</columns>
         <columns>Target__c</columns>
+        <columns>Visible__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -475,6 +475,11 @@
             <field>GDP_File_Description__c</field>
             <operation>equals</operation>
             <value>Reference - GSS Member</value>
+        </filters>
+        <filters>
+            <field>API_Object_Name__c</field>
+            <operation>equals</operation>
+            <value>GDP_Products_Account_View__c</value>
         </filters>
         <label>Field Tracking - GSS Member - TXT</label>
         <language>en_US</language>
