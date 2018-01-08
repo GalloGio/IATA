@@ -727,6 +727,11 @@ background-color:#428bca;
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
+                </a>
+        </li>
         <!-- * FM 31-07-2017 - AMSU-26 -->
         <li>
     <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
