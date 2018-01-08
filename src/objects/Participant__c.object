@@ -89,6 +89,7 @@
     </fields>
     <fields>
         <fullName>Cargo_Passenger__c</fullName>
+        <description>Cargo/Passenger field value in the related Industry Group</description>
         <externalId>false</externalId>
         <formula>TEXT(Local_Governance__r.Cargo_Passenger__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -158,6 +159,7 @@
     </fields>
     <fields>
         <fullName>Email__c</fullName>
+        <description>Email field value in the related Contact</description>
         <externalId>false</externalId>
         <formula>Contact__r.Email</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -381,6 +383,7 @@ Contact__r.Account.Name
     </fields>
     <fields>
         <fullName>Phone__c</fullName>
+        <description>Phone field value in the related Industry Group</description>
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -393,6 +396,7 @@ Contact__r.Account.Name
     </fields>
     <fields>
         <fullName>Region__c</fullName>
+        <description>Region field value in the related Industry Group</description>
         <externalId>false</externalId>
         <formula>TEXT(Local_Governance__r.Region__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
