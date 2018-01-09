@@ -350,7 +350,7 @@
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
-        <description>It&apos; s not possible to change anything if the participant is related to a local group inactive</description>
+        <description>It&apos; s not possible to change anything if the participant is related to an inactive group</description>
         <errorConditionFormula>AND(
  Local_Governance__r.Active__c = false,
  
@@ -358,10 +358,11 @@
   ISNEW(),
   ISCHANGED(Contact__c),
   ISCHANGED(Local_Governance__c ),
-  ISCHANGED(Participant_Type__c )
+  ISCHANGED(Participant_Type__c ),
+  ISCHANGED(Representing__c)
  )
 )</errorConditionFormula>
-        <errorMessage>It&apos; s not possible to insert a new pariticipant or change  the existing one if the participant is related to an inactive local group.</errorMessage>
+        <errorMessage>It&apos; s not possible to insert a new participant or change  the existing one if the participant is related to an inactive group.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Cant_add_before_approval</fullName>
