@@ -34,6 +34,7 @@ public without sharing class ISSP_APProcess {
     public string strAreaType{ get; set; } //AP Joining or Change
     public string strChangeType{ get; set; } //AP Joining or Change
     public string strLoB { get; set; } //Line of Business, BSP or CASS
+    public string dupLoB { get; set; } //INC300017
  
     public string strParentMembershipStatus {get; set;}
     public string strParentLegalName {get; set;}
@@ -70,7 +71,16 @@ public without sharing class ISSP_APProcess {
     
     public List<citySelection> cityList{get;set;}//TF
     public List<citySelection> cityListWithValue{get;set;}//TF
-    
+
+    public String strOT{get;set;}
+    public String strOperationTypeAux{get;set;}
+
+    public List<GST_Information__c> list_GSTNumber{get;set;}
+    public Boolean displayPopup{get;set;}
+    public String editGSTNumberId{get;set;}
+    public GST_Information__c newGSTInfo{get;set;}
+    public Boolean allGSTFieldsFilled{get;set;}
+
     public ISSP_APProcess(){        
         //Set the Variables default values
         isNewCase = true;
@@ -85,10 +95,15 @@ public without sharing class ISSP_APProcess {
         allfieldsfilled = true;
         isMandatory = false;
         isGSSAUser = false; //AS R03-SP03
+        displayPopup = false;
         
         newForm = new AP_Process_Form__c();
         newCase = new Case();
         countryRequirement = new AP_Country_Requierment__c();
+        
+        list_GSTNumber = new List<GST_Information__c>();
+        newGSTInfo = new GST_Information__c();
+        allGSTFieldsFilled = false;
         
         //Verify User Profile (AS R03-SP03)
         Id profileId=userinfo.getProfileId();
@@ -174,6 +189,7 @@ public without sharing class ISSP_APProcess {
             
             isNewCase = false;
             strOperationType = newCase.Verification__c;
+            strOperationTypeAux = strOperationType;
             strAreaType = newCase.CaseArea__c;
             strChangeType = newCase.Reason1__c;
             
@@ -381,6 +397,7 @@ public without sharing class ISSP_APProcess {
         if (newForms.size()>0)
         {
             newForm = newForms[0];
+            list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
         }
     }
     
@@ -523,6 +540,7 @@ public without sharing class ISSP_APProcess {
             strLoB = 'CASS';
         }
         
+        SYSTEM.DEBUG('SAVE - strOperationType: ' + strOperationType);
         SYSTEM.DEBUG('SAVE - LOB: ' + strLoB);
         SYSTEM.DEBUG('SAVE - Country ISO Code: ' + apcountryisocode);
             
@@ -698,7 +716,7 @@ public without sharing class ISSP_APProcess {
             if (strType=='CASS Import') {
                 strReason='CASS Import via GHA' + strReasonMembership;
             } else {
-                strReason='CASS via GSSA' + strReasonMembership;    
+                strReason='CASS Export via GSSA' + strReasonMembership;    
             }
             isCASS = true;
             strLoB = 'CASS';
@@ -753,6 +771,11 @@ public without sharing class ISSP_APProcess {
         
         try{
             newForm.Submitted_to_IATA__c = TRUE;
+            if(strAreaType == 'Airline Joining') {               
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;   
+            } else {
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+            }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
             if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
@@ -796,12 +819,23 @@ public without sharing class ISSP_APProcess {
         List <AP_Country_Requierment__c> isoListJoining;
         List <Services_Rendered__c> isoListChange;
         
-        strLoB = Apexpages.currentPage().getParameters().get('strLoB');
+        strOperationType = Apexpages.currentPage().getParameters().get('strOT');
+        strLOB = null;
+        if(strOperationType != null) {
+            strOperationTypeAux = strOperationType;
+            getLoB(strOperationType);
+        } else if (strOperationTypeAux != null) {
+            strOperationType = strOperationTypeAux;
+            getLoB(strOperationType);
+        }
         
         SYSTEM.DEBUG('Area Type: ' + strAreaType);
         SYSTEM.DEBUG('Operation Type: ' + strOperationType);
         SYSTEM.DEBUG('LoB: ' + strLoB);
         
+        if(strLOB != null) //INC300017
+            dupLoB = strLOB;
+
         if(strAreaType=='Airline Joining') {
           if(strLoB=='CASS' || (isGSSAUser & category <> 'IBCS consolidator')) {
              isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
@@ -812,9 +846,9 @@ public without sharing class ISSP_APProcess {
           }
         } else {  //AP Change process, so based country list on Services Rendered
             if(!isGSSAUser) {
-              if(strLoB=='CASS') {
+              if(strLOB=='CASS' || dupLoB == 'CASS') {
                isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='CASS Participation' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c LIKE '%CASS%' AND Services_Rendered_Status__c='Active'
                              ORDER BY ISO_Country_formula__c];   
             } else {
                isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
@@ -825,7 +859,7 @@ public without sharing class ISSP_APProcess {
                 System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
                 
         isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
                              ORDER BY ISO_Country_formula__c];                   
             }    
         }
@@ -836,10 +870,10 @@ public without sharing class ISSP_APProcess {
         options.add(new SelectOption('', '--None--'));
          if(strAreaType=='Airline Joining') {
             for(AP_Country_Requierment__c iso : isoListJoining){
-                    if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){
+            //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
                       sISOCode.add(iso.Country__r.ISO_Code__c);
                         options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-                    }
+            //        }
             }
             } else {
               for(Services_Rendered__c iso : isoListChange){
@@ -957,12 +991,12 @@ public without sharing class ISSP_APProcess {
             if(gssaCountryISOCode != null) {
               existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
                             FROM Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
                              ORDER BY Services_Rendered_to_Airline__r.Name];    
             } else {
                 existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
                             FROM Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
                              ORDER BY Services_Rendered_to_Airline__r.Name];
             }
                        
@@ -1286,6 +1320,65 @@ public without sharing class ISSP_APProcess {
         emails.add(mail);
         
         Messaging.sendEmail(emails);
+    }
+
+    public void editGSTNumber()
+    {        
+        String editGSTNumberId = Apexpages.currentPage().getParameters().get('recordIdEdit');
+        newGSTInfo = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE Id =: editGSTNumberId LIMIT 1];
+        displayPopup = true;
+    }
+
+    public void delGSTNumber()
+    {
+        String delGSTNumberId = Apexpages.currentPage().getParameters().get('recordIdDel');
+        GST_Information__c info = [SELECT Id FROM GST_Information__c WHERE Id =: delGSTNumberId LIMIT 1];
+        if(info != null){
+            delete info;
+            list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
+        }
+    }
+    
+    public void closePopup() {        
+        displayPopup = false;
+        newGSTInfo = new GST_Information__c();
+
+    }     
+    public void showNewGSTNumberFields() {
+        system.debug('SS## list_GSTNumber: ' + list_GSTNumber);        
+        displayPopup = true;    
+    }
+
+    public void addGSTInfo() {        
+        
+        List<GST_Information__c> list_GSTNumberAux = new List<GST_Information__c>();
+        if(newGSTInfo.AP_Process_Form__c == null){
+            newGSTInfo.AP_Process_Form__c = newForm.Id;
+        }
+
+        list_GSTNumberAux.add(newGSTInfo);    
+        
+        upsert list_GSTNumberAux;
+
+        list_GSTNumber = [SELECT Id, AP_Process_Form__c, India_Local_VAT_Number__c, India_Local_VAT_Street__c, India_Local_VAT_City__c, India_Local_VAT_State_Name__c, India_Local_VAT_State_Code__c FROM GST_Information__c WHERE AP_Process_Form__c =: newForm.Id];
+
+        displayPopup = false;
+        newGSTInfo = new GST_Information__c();
+        allGSTFieldsFilled = false;
+    }
+
+    public void checkAllFieldGST() {
+        
+        if(newGSTInfo.India_Local_VAT_Number__c != '' &&
+            newGSTInfo.India_Local_VAT_Street__c != '' && 
+            newGSTInfo.India_Local_VAT_City__c != '' &&
+            newGSTInfo.India_Local_VAT_State_Name__c != '' &&
+            newGSTInfo.India_Local_VAT_State_Code__c != '') {
+
+            allGSTFieldsFilled = true;
+        } else {
+            allGSTFieldsFilled = false;
+        }
     }
             
 }

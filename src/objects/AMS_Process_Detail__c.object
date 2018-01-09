@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -78,16 +75,40 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Hierarchy Account Selections</relationshipLabel>
+        <relationshipName>Hierarchy_Account_Selections</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>HOId__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Account__r.Parent.ParentId)), Account__r.Parent.ParentId,
+IF(NOT(ISBLANK(Account__r.ParentId)),Account__r.ParentId,
+Account__c))</formula>
+        <label>HOId</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OSCAR__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>OSCAR</label>
         <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipLabel>Hierarchy Account Selections</relationshipLabel>
         <relationshipName>AMS_Process_Detail</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <label>Hierarchy Account Selection</label>
     <nameField>
@@ -101,8 +122,14 @@
         <active>true</active>
         <label>Agency Involved</label>
     </recordTypes>
+    <recordTypes>
+        <fullName>CaseRelatedAgencies</fullName>
+        <active>true</active>
+        <description>Used for agencies</description>
+        <label>CaseRelatedAgencies</label>
+    </recordTypes>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>AMS_BlockInsertOscarAccount</fullName>
         <active>true</active>
@@ -110,6 +137,7 @@
         <errorConditionFormula>Account__r.Id = OSCAR__r.Account__r.Id</errorConditionFormula>
         <errorMessage>The account related to the OSCAR cannot be inserted on this list</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Add_all_hierarchy</fullName>
         <availability>online</availability>

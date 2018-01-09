@@ -53,6 +53,17 @@ public with sharing class SidraLiteUtil{
         return TYPE_ACCOUNT_CARGO.contains(account.Type);
         //return account.type=='IATA Cargo Agent' || account.type=='CASS Associate';
     }
+    
+    /**
+        Return true if account is only CASS
+    **/
+    public static final set<String> TYPE_ACCOUNT_CASS = new set<String>{'CASS Associate'};
+    public static Boolean isCASS(Account account) {
+        if (account==null) {
+            throw new SidraLiteException('There is no related Account');
+        }
+        return TYPE_ACCOUNT_CASS.contains(account.Type);
+    }
 
     /**
         Return true if account is TIDS Agent
@@ -82,11 +93,12 @@ public with sharing class SidraLiteUtil{
     /**
         Return true if input account is active
     **/
+    public static final set<String> ACCOUNT_INACTIVE_STATUS = new set<String>{'Cash basis/no commission', 'Cash basis/with commission'};
     public static Boolean isAccountActive(Account account) {
         if (account==null) {
             throw new SidraLiteException('There is no related Account');
         }
-        return account != null && account.Status__c!='Cash basis/no commission';
+        return account != null && !ACCOUNT_INACTIVE_STATUS.contains(account.Status__c);
     }
 
     /**
@@ -101,13 +113,13 @@ public with sharing class SidraLiteUtil{
         find email template for given case based on custom setting SidraLiteEmailTemplates__c
     **/
     public static String getEmailTemplate(Case cse, String actionType) {
-
+        String searchCountry = '%' + cse.BSPCountry__c + '%';
         list<SidraLiteEmailTemplates__c> listTemplates = [
             SELECT Id, Name, SidraLiteAction__c, SidraLiteReason__c, Country__c,Region__c, TypeOfCustomer__c, EmailTemplate__c
             FROM SidraLiteEmailTemplates__c
             WHERE SidraLiteAction__c = :actionType
             AND SidraLiteReason__c = :cse.SIDRA_Lite_Reason__c
-            AND Country__c IN (:cse.BSPCountry__c, 'All Region')
+            AND ( Country__c = 'All Region' OR Country__c like :searchCountry )
             AND Region__c = :cse.Region__c
             AND TypeOfCustomer__c = :cse.account.Type];
 
@@ -120,8 +132,10 @@ public with sharing class SidraLiteUtil{
             return listTemplates[0].EmailTemplate__c;
         }
         for (SidraLiteEmailTemplates__c customTemplate: listTemplates) {
-            if (customTemplate.Country__c == cse.BSPCountry__c) {
-                return customTemplate.EmailTemplate__c;
+            for (String country: customTemplate.Country__c.split(';')) {
+                if (country == cse.BSPCountry__c) {
+                    return customTemplate.EmailTemplate__c;
+                }
             }
         }
         return listTemplates[0].EmailTemplate__c;
@@ -131,13 +145,13 @@ public with sharing class SidraLiteUtil{
         find merge template for given case based on custom setting SidraLiteCongaTemplates__c
     **/
     public static String getMergeTemplate(Case cse, String actionType) {
-
+        String searchCountry = '%' + cse.BSPCountry__c + '%';
         list<SidraLiteCongaTemplates__c> listTemplates = [
             SELECT Id, Name, SidraLiteAction__c, SidraLiteReason__c, Country__c,Region__c, TypeOfCustomer__c, EmailTemplate__c
             FROM SidraLiteCongaTemplates__c
             WHERE SidraLiteAction__c = :actionType
             AND SidraLiteReason__c = :cse.SIDRA_Lite_Reason__c
-            AND Country__c IN (:cse.BSPCountry__c, 'All Region')
+            AND ( Country__c = 'All Region' OR Country__c like :searchCountry )
             AND Region__c = :cse.Region__c
             AND TypeOfCustomer__c = :cse.account.Type];
 
@@ -150,12 +164,43 @@ public with sharing class SidraLiteUtil{
             return listTemplates[0].EmailTemplate__c;
         }
         for (SidraLiteCongaTemplates__c customTemplate: listTemplates) {
-            if (customTemplate.Country__c == cse.BSPCountry__c) {
-                return customTemplate.EmailTemplate__c;
+            for (String country: customTemplate.Country__c.split(';')) {
+                if (country == cse.BSPCountry__c) {
+                    return customTemplate.EmailTemplate__c;
+                }
             }
         }
         return listTemplates[0].EmailTemplate__c;
     }
 
+    /**
+        All SIDRA and SIDRA Lite cases related to the account's input case are searched
+        if most recent case is the same as the input Sidra Lite case the return true
+        WARNING: this method contains a query and should never been called in a trigger or a loop
+    **/
+    public static Boolean isLastSidraCase(Case sidraLiteCase) {
+        list<Case> listCases = [
+            SELECT id
+            FROM Case
+            WHERE AccountId = :sidraLiteCase.AccountId
+            AND RecordtypeId IN (:SidraLiteManager.RECORDTYPE_SIDRA_LITE,:SidraLiteManager.RECORDTYPE_SIDRA)
+            AND DEF_Approval_Rejection__c = 'Approved'
+            AND DEF_Withdrawal_Approval_Rejection__c != 'Approved'
+            AND Update_AIMS_DEF__c != NULL
+            ORDER BY Update_AIMS_DEF__c desc
+            LIMIT 1];
+
+        return !listCases.isEmpty() && listCases.get(0).id == sidraLiteCase.Id;
+    }
+
+    /**
+        In Sidra Lite process has been added an exception, if certain conditions are met in Sidra Lite case
+        the process will not proceed as usual, only the parent case will be updated.
+        This method tests the Sidra Lite case and returns true if this special condition is met
+    **/
+    public static final set<String> REASONS_TO_AVOID_CHILD_UPDATE = new set<String>{'Non-payment','Technical Default'};
+    public static Boolean SidraLiteCaseMustNotBeUpdated(Case sidraLiteCase) {
+        return (sidraLiteCase.Reason_for_Default__c != null && REASONS_TO_AVOID_CHILD_UPDATE.contains(sidraLiteCase.Reason_for_Default__c));
+    }
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Excluded_CAC_Location_Classes__c</fullName>
+        <description>Excluded codes for CAC Agency class</description>
+        <externalId>false</externalId>
+        <label>Excluded CAC Location Classes</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Excluded_GAD_Location_Classes__c</fullName>
+        <description>Excluded codes for CAC Agency class</description>
+        <externalId>false</externalId>
+        <label>Excluded GAD Location Classes</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CAC and GAD Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

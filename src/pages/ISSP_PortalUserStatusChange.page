@@ -1,6 +1,6 @@
 <apex:page standardController="contact" extensions="ISSP_PortalUserStatusChange" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
      <style>
          .requiredText {
@@ -56,7 +56,7 @@
 	</script>
 
  	<div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         
         <div class="alert alert-danger" style="display:{!if(errorMessages.size == null,'none','')}">
 	        <strong>{!$Label.ISSP_Error}</strong>
@@ -118,7 +118,7 @@
 		</apex:form>
             
 	</div><!-- panel -->
- <c:ISSP_CustomFooter />
+ <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- container -->
 </body>
 </html>

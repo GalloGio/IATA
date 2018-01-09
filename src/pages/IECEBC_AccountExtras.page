@@ -16,7 +16,7 @@
 		</apex:define>
 		<apex:define name="pageContent">
 			<!-- Start of Page Content -->
-			<main class="main-content manage-account">
+			<main class="main-content">
 				<div class="inner-wrapper">
 					<h1 class="page-title">Account Details</h1>
 					 
@@ -37,9 +37,17 @@
 						
 							<div class="tab-pane is-open" id="pane-3">
 								<div class="row row-payment">
-									<div class="columns main-container campaign-cost">
+									<section class="columns main-container campaign-cost">
 										<apex:form id="addOnPurchasedForm">
 											<h2 class="heading-2 strong">Current add ons</h2>
+                                            <apex:outputText rendered="{!isOneAddonLeftToBeSold}">
+                                                <h2 class="heading-2">None subscribed</h2>
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!isAllAddonSold}">
+                                                <h2 class="heading-2 strong">All add ons purchased</h2>
+                                            </apex:outputText>
+                                            
 											<ul class="list addon-list">
 												<apex:repeat id="addOnPurchasedOptionRepeat" value="{!productRatePlanWrapperAddonCurrentList}" var="prpPurchased">
 													<li class="list-item">
@@ -68,9 +76,10 @@
 											<apex:actionFunction action="{!selectRatePlanAddon}" name="updateAddonSelection" rerender="paymentConfirmationForm,paymentConfirmationOutputPanel">
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
-											
+											<!--
 											<h2 class="heading-2 strong">Get add ons</h2>
 											<p class="description light">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+											-->
 											<ul class="list addon-list js-checkbox-list">
 												<apex:repeat id="addOnSelectionOptionRepeat" value="{!productRatePlanWrapperAddonOptionList}" var="prpOption">
 													<li class="list-item">
@@ -101,12 +110,12 @@
 											</ul>
 										</apex:form>
 									
-									</div>
+									</section>
 									
 									<!-- payment confirmation section on the right side-->
-									<div class="columns sub-container payment-confirmation" id="paymentconfirmation">
-										<div class="is-sticky-confirmation">
-											<div class="wrapper">
+									<section class="columns sub-container payment-confirmation" id="paymentconfirmation">
+										<div class="is-sticky-confirmation" style="">
+											<!--<div class="wrapper">-->
 												<apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
 													<h2 class="section-title">Payment Confirmation</h2>
 													<apex:outputPanel id="paymentConfirmationOutputPanel">
@@ -125,8 +134,9 @@
 																		</tr>
 																	</apex:outputPanel>
 																	<apex:repeat id="purchaseItemRepeat" value="{!productRatePlanWrapperAddonNewPurchaseList}" var="purchaseItem">
-																		<tr class="item no-space">
+																		<tr class="item">
 																			<th>
+                                                                                
 																				<strong> {!purchaseItem.name}</strong>
 																				<!--
 																				{!purchaseItem.description}
@@ -149,19 +159,18 @@
 																	</tr>
 																</tbody>
 															</table>
-														</div>
-														
+														</div>														
 														<div class="footer-actions">
 															<ul class="list actions sectionActions">
                                                                 <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountExtras)}';" styleClass="text-link"  value="Cancel" /></li>
-																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 															</ul>
 														</div>
     												</apex:outputPanel>
 												</apex:form>
-											</div>
+											<!--</div>-->
 										</div>
-									</div>
+									</section>
 								</div>
 							</div>
 							
@@ -171,6 +180,7 @@
 				</div>
 				
 			</main>
+            
 			<!-- End of Page Content -->
 		</apex:define>
 	</apex:composition>

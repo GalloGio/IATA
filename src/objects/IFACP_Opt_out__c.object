@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>FDS OPS / used to track opt out request from Airlines for the agents or markets in the context of new Cargo program.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agent_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>HO of the agency account the airline is opting out from</description>
+        <externalId>false</externalId>
+        <label>Agent Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Account must be a cargo agent (sector Cargo Agent, record type Agency)</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Agency</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.Sector__c</field>
+                <operation>equals</operation>
+                <value>Cargo Agent</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>IFACP Opt outs</relationshipLabel>
+        <relationshipName>IFACP_Opt_outs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Agent_Code__c</fullName>
+        <description>Agent IATA code from agenct account</description>
+        <externalId>false</externalId>
+        <formula>Agent_Account__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Agent IATA code from agenct account</inlineHelpText>
+        <label>Agent Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <description>tracks the airline prefix code</description>
+        <externalId>false</externalId>
+        <formula>Airline__r.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>tracks the airline prefix code</inlineHelpText>
+        <label>Airline Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Country_account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>used to track the opt out of an airline in a market</description>
+        <externalId>false</externalId>
+        <label>Airline Country account</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Account must be an Airline HQ or BR record type</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters, Airline Branch</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>IFACP Opt outs (Airline Country account)</relationshipLabel>
+        <relationshipName>IFACP_Opt_outs2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Airline HQ account opting out</description>
+        <externalId>false</externalId>
+        <label>Airline HQ</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>IFACP Opt outs (Airline)</relationshipLabel>
+        <relationshipName>IFACP_Opt_outs1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Agent_Account__c)), Agent_Account__r.IATA_ISO_Country__r.ISO_Code__c, Airline_Country_account__r.IATA_ISO_Country__r.ISO_Code__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>either the country of the agent account or the airline country account (when opted out from a country)</inlineHelpText>
+        <label>Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IFACP_Opt_out_Active__c</fullName>
+        <externalId>false</externalId>
+        <formula>isnull(Opt_Out_End_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFACP Opt out Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Opt_Out_End_Date__c</fullName>
+        <description>tracks the end of the opt out, or withdrawal</description>
+        <externalId>false</externalId>
+        <label>Opt Out End Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Opt_Out_Start_date__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <description>tracks the start of the opt out</description>
+        <externalId>false</externalId>
+        <label>Opt Out Start date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>IFACP Opt out</label>
+    <nameField>
+        <displayFormat>IOU - {000000}</displayFormat>
+        <label>IFACP Opt out Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>IFACP Opt outs</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Airline_Operation_Opt_Out</fullName>
+        <active>true</active>
+        <description>used to track the opt out of an airline from a specific market</description>
+        <label>Airline Operation Opt Out</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Individual_FF_Opt_Out</fullName>
+        <active>true</active>
+        <description>used to track individual Airline - FF opt outs</description>
+        <label>Individual FF Opt Out</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Agent_account_is_required</fullName>
+        <active>true</active>
+        <description>when the record type is individual FF opt out, the airline country account has to be empty, and the agent accounts needs to be filled in.</description>
+        <errorConditionFormula>AND(RecordType.Name = &quot;Individual FF Opt out&quot;, OR(ISBLANK(Agent_Account__c),NOT(ISBLANK(Airline_Country_account__c))))</errorConditionFormula>
+        <errorMessage>when the record type is individual FF opt out, the airline country account has to be empty, and the agent accounts needs to be filled in.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_country_account_is_required</fullName>
+        <active>true</active>
+        <description>when the record type is airline operation opt out, the airline country account has to be filled in, and the agent accounts needs to be empty.</description>
+        <errorConditionFormula>AND(RecordType.Name = &quot;Airline Operation Opt Out&quot; , or(NOT(ISBLANK(Agent_Account__c)),ISBLANK(Airline_Country_account__c)))</errorConditionFormula>
+        <errorMessage>when the record type is airline operation opt out, the airline country account has to be filled in, and the agent accounts needs to be empty.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -75,7 +75,7 @@
     <body>
     
         <div class="header">
-            <div><apex:image width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+            <div><apex:image width="100%" value="{!IF(newlabels,URLFOR($Resource.AP_PDF_Header_FIATA),if(communityName=='CNS', URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header)))}"/></div> <!-- CNS UPDATE -->
         </div>
           
          <center>
@@ -104,7 +104,7 @@
                         "$Label.ISSP_AMS_Month_None")}&nbsp;{!YEAR(TODAY())}
                      </td>
                     <td width="33%" align="center">
-                        <a href="http://www.iata.org">www.iata.org</a>
+                        <a href="{!IF(communityName=='CNS', 'http://www.cnsc.net', 'http://www.iata.org')}"> {!IF(communityName=='CNS', 'www.cnsc.net', 'www.iata.org')}</a> <!-- CNS UPDATE -->
                     </td>
                     <td width="33%" align="right">
                         {!$Label.ISSP_Page} <span class="pagenumber"/> {!$Label.ISSP_of} <span class="pagecount"/>

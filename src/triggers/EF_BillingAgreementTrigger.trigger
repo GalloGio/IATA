@@ -25,6 +25,9 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             {
                 EF_BillingAgreementHandler.handleWithApprovalContractInserts(Trigger.new);
                 EF_BillingAgreementHandler.setClientFromRelatedContract(Trigger.new);
+                
+                // for new billing agreements, E&F Status must be set to false as there can be no Active material line item related
+                EF_BillingAgreementHandler.deactivateBillingAgreement(Trigger.new);
             } else
             {
                 List<EF_Billing_Agreement__c> toUpdateList = new List<EF_Billing_Agreement__c>();
@@ -44,6 +47,10 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                 // EF_BillingAgreementHandler.handleWithApprovalContractUpdates(Trigger.newMap, Trigger.oldMap);
                 EF_BillingAgreementHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
                 EF_BillingAgreementHandler.revertSkipApprovalIfNecessary(Trigger.new, Trigger.oldMap);
+                
+                // for updated billing agreements, E&F Status must be checked and prevented to be set to Active if no related Active material line item is found
+                EF_BillingAgreementHandler.checkIfBillingAgreementDeactivationRequired(Trigger.newMap);
+                
             }
         } else if (Trigger.isAfter && !Trigger.isDelete)
         {

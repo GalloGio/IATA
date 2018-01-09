@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -56,6 +52,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -119,22 +116,32 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Valid_for_GDP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for GDP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>GDP Reference Table</label>
     <listViews>
-        <fullName>AIMSSTATUS</fullName>
+        <fullName>AIRSYS_GDS</fullName>
         <columns>NAME</columns>
-        <columns>Code__c</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
         <columns>System__c</columns>
         <columns>System_ID__c</columns>
         <columns>Table__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>System_ID__c</field>
             <operation>startsWith</operation>
-            <value>AIMSSTATUS</value>
+            <value>AIRSYS</value>
         </filters>
-        <label>AIMSSTATUS</label>
+        <label>AIRSYS (GDS)</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -172,6 +179,24 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Agency_Principal_Destination</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APDEST</value>
+        </filters>
+        <label>Agency Principal Destination</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Airport_table</fullName>
         <columns>NAME</columns>
         <columns>Code__c</columns>
@@ -197,16 +222,106 @@
         <columns>Code__c</columns>
         <columns>System_ID__c</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>Valid_for_GDP__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Status_Table</fullName>
+        <fullName>Caterory_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>LOCCAT</value>
+        </filters>
+        <label>Category Table</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Class_Table</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>ORGCLASS</value>
+        </filters>
+        <label>Class Table</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>LOCTYP</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>LOCTYP</value>
+        </filters>
+        <label>LOCTYP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ORGABB</fullName>
+        <columns>NAME</columns>
+        <columns>Code__c</columns>
+        <columns>Definition__c</columns>
+        <columns>System__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>Table__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System_ID__c</field>
+            <operation>startsWith</operation>
+            <value>ORGABB</value>
+        </filters>
+        <label>ORGABB</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Preferred_Language_Table</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>PREFLANG</value>
+        </filters>
+        <label>Preferred Language Table</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Status_Table</fullName>
+        <columns>NAME</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>System_ID__c</columns>
         <filterScope>Everything</filterScope>
@@ -241,4 +356,5 @@
         <searchResultsAdditionalFields>Definition__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

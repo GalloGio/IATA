@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>AMS Address</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -117,41 +114,50 @@
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Primary</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Shipping</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Old</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registred</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Primary</fullName>
+                    <default>false</default>
+                    <label>Primary</label>
+                </value>
+                <value>
+                    <fullName>Shipping</fullName>
+                    <default>false</default>
+                    <label>Shipping</label>
+                </value>
+                <value>
+                    <fullName>Billing</fullName>
+                    <default>true</default>
+                    <label>Billing</label>
+                </value>
+                <value>
+                    <fullName>Old</fullName>
+                    <default>false</default>
+                    <label>Old</label>
+                </value>
+                <value>
+                    <fullName>Mailing</fullName>
+                    <default>false</default>
+                    <label>Mailing</label>
+                </value>
+                <value>
+                    <fullName>Sales Office</fullName>
+                    <default>false</default>
+                    <label>Sales Office</label>
+                </value>
+                <value>
+                    <fullName>Registred</fullName>
+                    <default>false</default>
+                    <label>Registred</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -200,6 +206,32 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Details Captured&quot;, &quot;Missing: &quot; &amp;IF( LEN(Account__r.BillingStreet) = 0, &quot;Street, &quot;,&quot;&quot;)&amp;&quot;&quot;
+&amp;IF(AND(OR(ISPICKVAL(Account__r.Location_Type__c,&quot;BR&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;SA&quot;)),LEN(Account__r.Phone)= 0), &quot;Telephone(BR location), &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Account__r.Location_Type__c,&quot;BR&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;SA&quot;)),LEN(Account__r.Email__c)= 0), &quot;Email(BR location), &quot;,&quot;&quot;)&amp;&quot;&quot; 
+&amp;IF( LEN(Account__r.IATA_ISO_Country__c) = 0, &quot;Country, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.Iso_State__c) = 0, &quot;ISO State, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(Account__r.Country_ISO_Code__c != &quot;HK&quot;,LEN(Account__r.BillingPostalCode) = 0), &quot;Postal Code, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(Account__r.Country_ISO_Code__c != &quot;SG&quot;),(Account__r.Country_ISO_Code__c != &quot;HK&quot;),LEN(Account__r.VAT_Number__c) = 0),&quot;VAT Number, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Account__r.BillingCity) = 0, &quot;City, &quot;,&quot;&quot;)&amp;&quot;&quot;)</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,OR(ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;))), (IF(LEN(Account__r.BillingStreet)= 0, 0,15)+IF(OR(ISPICKVAL(Account__r.Location_Type__c,&quot;HO&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AO&quot;)),15,IF(LEN(Account__r.Phone)= 0,0,15))+IF(OR(ISPICKVAL(Account__r.Location_Type__c,&quot;HO&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AO&quot;)),15,IF(LEN(Account__r.Email__c)= 0,0,15)) +IF(LEN(Account__r.IATA_ISO_Country__c)= 0, 0,10) +IF(LEN(Account__r.Iso_State__c)= 0, 0,15) +IF(CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),10,IF(LEN(Account__r.BillingPostalCode) = 0, 0,10)) +IF(OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;),(CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;))),10,IF(LEN(Account__r.VAT_Number__c) = 0, 0,10)) +IF(LEN(Account__r.BillingCity)= 0, 0,10)),1)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -271,29 +303,35 @@
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Webstar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS</fullName>
+                    <default>false</default>
+                    <label>AIMS</label>
+                </value>
+                <value>
+                    <fullName>Webstar</fullName>
+                    <default>false</default>
+                    <label>Webstar</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Mobile_Int__c</fullName>
@@ -344,69 +382,85 @@
         <externalId>false</externalId>
         <inlineHelpText>AO=Admin. Off;BR=Branch Off;CS=Cargo Sales Off;EB=ERSP Branch;EP=ERSP Parent;ES=European STP;ET=ERSP linked to TID;HO=Head off;SA=Specific Sales Activity;SE=Special Event;SP=Service Provider;ST=Satellite Ticket Printer;TD=Ticket Delivery Off;WH=Warehouse</inlineHelpText>
         <label>Site type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ET</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ST</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AO</fullName>
+                    <default>false</default>
+                    <label>AO</label>
+                </value>
+                <value>
+                    <fullName>BR</fullName>
+                    <default>false</default>
+                    <label>BR</label>
+                </value>
+                <value>
+                    <fullName>CS</fullName>
+                    <default>false</default>
+                    <label>CS</label>
+                </value>
+                <value>
+                    <fullName>EB</fullName>
+                    <default>false</default>
+                    <label>EB</label>
+                </value>
+                <value>
+                    <fullName>EP</fullName>
+                    <default>false</default>
+                    <label>EP</label>
+                </value>
+                <value>
+                    <fullName>ES</fullName>
+                    <default>false</default>
+                    <label>ES</label>
+                </value>
+                <value>
+                    <fullName>ET</fullName>
+                    <default>false</default>
+                    <label>ET</label>
+                </value>
+                <value>
+                    <fullName>HO</fullName>
+                    <default>false</default>
+                    <label>HO</label>
+                </value>
+                <value>
+                    <fullName>SA</fullName>
+                    <default>false</default>
+                    <label>SA</label>
+                </value>
+                <value>
+                    <fullName>SE</fullName>
+                    <default>false</default>
+                    <label>SE</label>
+                </value>
+                <value>
+                    <fullName>SP</fullName>
+                    <default>false</default>
+                    <label>SP</label>
+                </value>
+                <value>
+                    <fullName>ST</fullName>
+                    <default>false</default>
+                    <label>ST</label>
+                </value>
+                <value>
+                    <fullName>TD</fullName>
+                    <default>false</default>
+                    <label>TD</label>
+                </value>
+                <value>
+                    <fullName>WH</fullName>
+                    <default>false</default>
+                    <label>WH</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>State__c</fullName>
@@ -489,4 +543,5 @@
     <pluralLabel>Addresses (AMS)</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

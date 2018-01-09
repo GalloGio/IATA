@@ -33,7 +33,7 @@
                     <apex:outputField value="{!mat.mmli.EF_Relationship__c}"/>
                 </apex:column>
                 <!-- <apex:column headerValue="Billing Agreement">
-                    <apex:outputText value="{!mat.mmli.EF_Relationship__r.Billing_Agreement_Name__c}"/>
+                    <apex:outputText value="{!mat.mmli.EF_Relationship__r.BillingAgreement_Name__c}"/>
                 </apex:column> -->
                 <apex:column headerValue="Material Line Item">
            			<apex:outputField value="{!mat.mmli.Name}"/>

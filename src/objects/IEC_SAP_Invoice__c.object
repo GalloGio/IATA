@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -67,6 +64,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Bill_To_Contact_SAP_Partner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order__r.BillToContact_Partner_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bill To Contact SAP Partner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Bill_To__c</fullName>
@@ -371,6 +380,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>IEC SAP Invoices</relationshipLabel>
+        <relationshipName>IEC_SAP_Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>PO_Date__c</fullName>
         <externalId>false</externalId>
         <label>PO Date</label>
@@ -462,6 +484,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Related_Orders__c</fullName>
+        <externalId>false</externalId>
+        <label>Related Orders</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>SAP_Bill_To_Number__c</fullName>
@@ -608,49 +639,60 @@
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sent to SAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAP Payment Confirmation Received</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Zuora Ready</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sent to Zuora</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Validation Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAP Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Zuora Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pre Go-Live</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>true</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Sent to SAP</fullName>
+                    <default>false</default>
+                    <label>Sent to SAP</label>
+                </value>
+                <value>
+                    <fullName>SAP Payment Confirmation Received</fullName>
+                    <default>false</default>
+                    <label>SAP Payment Confirmation Received</label>
+                </value>
+                <value>
+                    <fullName>Zuora Ready</fullName>
+                    <default>false</default>
+                    <label>Zuora Ready</label>
+                </value>
+                <value>
+                    <fullName>Sent to Zuora</fullName>
+                    <default>false</default>
+                    <label>Sent to Zuora</label>
+                </value>
+                <value>
+                    <fullName>Validation Error</fullName>
+                    <default>false</default>
+                    <label>Validation Error</label>
+                </value>
+                <value>
+                    <fullName>SAP Error</fullName>
+                    <default>false</default>
+                    <label>SAP Error</label>
+                </value>
+                <value>
+                    <fullName>Zuora Error</fullName>
+                    <default>false</default>
+                    <label>Zuora Error</label>
+                </value>
+                <value>
+                    <fullName>Pre Go-Live</fullName>
+                    <default>false</default>
+                    <label>Pre Go-Live</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subscription_Order_Id__c</fullName>
@@ -807,7 +849,7 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <columns>Ready_for_SAP__c</columns>
         <columns>Error_Message__c</columns>
         <columns>LAST_UPDATE</columns>
-        <columns>Billing_Country_ISO_Code__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -1055,6 +1097,36 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Td</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Order__c</columns>
+        <columns>Status__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Bill_To__c</columns>
+        <columns>SAP_Bill_To_Number__c</columns>
+        <columns>Account__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Order__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Skipped</value>
+        </filters>
+        <label>TD</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Validation_Error</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
@@ -1130,4 +1202,5 @@ This is to avoid sending negative invoice items to SAP</inlineHelpText>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

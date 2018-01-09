@@ -25,10 +25,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -207,16 +203,6 @@ E&amp;F CRM Project</description>
         <type>AutoNumber</type>
     </fields>
     <fields>
-        <fullName>Contract_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Contract Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Contract_Notes__c</fullName>
         <description>This field is a text area where the contract owner can add contract-related information.</description>
         <externalId>false</externalId>
@@ -242,20 +228,24 @@ E&amp;F CRM Project</description>
         <fullName>Contract_Renewal__c</fullName>
         <externalId>false</externalId>
         <label>Contract Renewal</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Auto</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Auto</fullName>
+                    <default>false</default>
+                    <label>Auto</label>
+                </value>
+                <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
@@ -263,7 +253,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_End_Date__c</fullName>
-        <description>This field represents the end date of the contract’s current cycle.</description>
+        <description>This field represents the end date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
@@ -272,7 +262,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_Start_Date__c</fullName>
-        <description>This field represents the starting date of the contract’s current cycle.</description>
+        <description>This field represents the starting date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
@@ -306,6 +296,28 @@ E&amp;F CRM Project</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Contract Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( TEXT(MONTH( StartDate ))) = 0, &quot;Contract Start Date, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(  TEXT(ContractTerm)) = 0, &quot;Contract Term, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( BillingCity ) = 0, &quot;Complete Contract Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( CustomerSignedId ) = 0, &quot;Customer Signature, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL(  OwnerExpirationNotice ,&quot;&quot;), &quot;Owner Expiration Notice&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN(TEXT(MONTH(StartDate)))=0, 0,20) + IF( LEN(TEXT( ContractTerm ))=0, 0,20) + IF( LEN( BillingCity ) = 0, 0,20) + IF( LEN( CustomerSignedId) = 0, 0,20) + IF( ISPICKVAL(  OwnerExpirationNotice ,&quot;&quot;), 0,20)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -313,29 +325,41 @@ E&amp;F CRM Project</description>
         <fullName>Dunning_Procedure__c</fullName>
         <externalId>false</externalId>
         <label>Dunning Procedure</label>
-        <picklist>
-            <picklistValues>
-                <fullName>EF01</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EF02</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EF03</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>005</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>EF01</fullName>
+                    <default>false</default>
+                    <label>EF01</label>
+                </value>
+                <value>
+                    <fullName>EF02</fullName>
+                    <default>false</default>
+                    <label>EF02</label>
+                </value>
+                <value>
+                    <fullName>EF03</fullName>
+                    <default>false</default>
+                    <label>EF03</label>
+                </value>
+                <value>
+                    <fullName>0005</fullName>
+                    <default>false</default>
+                    <label>0005</label>
+                </value>
+                <value>
+                    <fullName>005</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>005</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Admin_Fee__c</fullName>
@@ -350,11 +374,14 @@ E&amp;F CRM Project</description>
     <fields>
         <fullName>EF_Allow_Billing_Agreements__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Allow_Billing_Agreements</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Approver_Email__c</fullName>
@@ -369,79 +396,108 @@ E&amp;F CRM Project</description>
         <fullName>EF_BSP_Periods__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F BSP Periods</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Billing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Billing_Frequency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Frequency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Client_SIS_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Account.EF_SIS_Designator__c+ &apos; &apos; + Account.EF_SIS_Code__c</formula>
-        <label>E&amp;F Client SIS Code</label>
+        <formula>Account.EF_SIS_Code__c</formula>
+        <label>E&amp;F Client SIS Accounting Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Client_SIS_Designator__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_SIS_Designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client SIS Designator</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -483,11 +539,14 @@ E&amp;F CRM Project</description>
     <fields>
         <fullName>EF_Data_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Data Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -536,29 +595,35 @@ E&amp;F CRM Project</description>
         <fullName>EF_ICH_Period__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F ICH Period</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -566,41 +631,51 @@ E&amp;F CRM Project</description>
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>E&amp;F Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                    <label>Recalled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Payment_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -635,41 +710,51 @@ E&amp;F CRM Project</description>
     <fields>
         <fullName>EF_Payment_Terms__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Terms</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Reporting_Frequency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Frequency</valueSetName>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Reporting_Level__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Reporting Level</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Account</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sub Account</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Account</fullName>
+                    <default>false</default>
+                    <label>Account</label>
+                </value>
+                <value>
+                    <fullName>Sub Account</fullName>
+                    <default>false</default>
+                    <label>Sub Account</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -713,11 +798,14 @@ E&amp;F CRM Project</description>
         <fullName>EF_Status__c</fullName>
         <description>Status for E&amp;F. will be changed automatically when an account is inactivated for E&amp;F, and can be changed manually too.</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Submitter_Email__c</fullName>
@@ -789,32 +877,39 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>E&amp;F Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                    <label>Recalled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -855,32 +950,39 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <fullName>Payment_Terms__c</fullName>
         <externalId>false</externalId>
         <label>Payment Terms</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Immediate Payment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Clearing House</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Net 30 Days</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Net 60 Days</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Net 90 Days</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Immediate Payment</fullName>
+                    <default>false</default>
+                    <label>Immediate Payment</label>
+                </value>
+                <value>
+                    <fullName>Clearing House</fullName>
+                    <default>false</default>
+                    <label>Clearing House</label>
+                </value>
+                <value>
+                    <fullName>Net 30 Days</fullName>
+                    <default>false</default>
+                    <label>Net 30 Days</label>
+                </value>
+                <value>
+                    <fullName>Net 60 Days</fullName>
+                    <default>false</default>
+                    <label>Net 60 Days</label>
+                </value>
+                <value>
+                    <fullName>Net 90 Days</fullName>
+                    <default>false</default>
+                    <label>Net 90 Days</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Placement__c</fullName>
@@ -891,6 +993,19 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Power_of_one__c</fullName>
+        <externalId>false</externalId>
+        <formula>1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Power of one</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -968,36 +1083,44 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <fullName>Renewal_Status__c</fullName>
         <externalId>false</externalId>
         <label>Renewal Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Renewed as-is</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Replaced by a new contract</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not renewed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renewal process started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Replaces a previous contract</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Renewed as-is</fullName>
+                    <default>false</default>
+                    <label>Renewed as-is</label>
+                </value>
+                <value>
+                    <fullName>Replaced by a new contract</fullName>
+                    <default>false</default>
+                    <label>Replaced by a new contract</label>
+                </value>
+                <value>
+                    <fullName>Not renewed</fullName>
+                    <default>false</default>
+                    <label>Not renewed</label>
+                </value>
+                <value>
+                    <fullName>Renewal process started</fullName>
+                    <default>false</default>
+                    <label>Renewal process started</label>
+                </value>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                    <label>Canceled</label>
+                </value>
+                <value>
+                    <fullName>Replaces a previous contract</fullName>
+                    <default>false</default>
+                    <label>Replaces a previous contract</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Renewal_under_Sales_Responsibility__c</fullName>
@@ -1063,22 +1186,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     </fields>
     <fields>
         <fullName>Status</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Approval Process</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Activated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1116,52 +1223,74 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <fullName>Third_Party__c</fullName>
         <externalId>false</externalId>
         <label>Third Party</label>
-        <picklist>
-            <controllingField>Third_Party_Involved__c</controllingField>
-            <picklistValues>
-                <fullName>Flight Scape</fullName>
-                <default>false</default>
-                <controllingFieldValues>checked</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airports Council International</fullName>
-                <default>false</default>
-                <controllingFieldValues>checked</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Berlitz</fullName>
-                <default>false</default>
-                <controllingFieldValues>checked</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accomodations Plus International</fullName>
-                <default>false</default>
-                <controllingFieldValues>checked</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Third_Party_Involved__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Flight Scape</fullName>
+                    <default>false</default>
+                    <label>Flight Scape</label>
+                </value>
+                <value>
+                    <fullName>Airports Council International</fullName>
+                    <default>false</default>
+                    <label>Airports Council International</label>
+                </value>
+                <value>
+                    <fullName>Berlitz</fullName>
+                    <default>false</default>
+                    <label>Berlitz</label>
+                </value>
+                <value>
+                    <fullName>Accomodations Plus International</fullName>
+                    <default>false</default>
+                    <label>Accomodations Plus International</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>Flight Scape</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>Airports Council International</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>Berlitz</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>Accomodations Plus International</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Revenue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Expense</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Revenue</fullName>
+                    <default>false</default>
+                    <label>Revenue</label>
+                </value>
+                <value>
+                    <fullName>Expense</fullName>
+                    <default>false</default>
+                    <label>Expense</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <listViews>
         <fullName>AllActivatedContracts</fullName>
@@ -1212,6 +1341,27 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <language>en_US</language>
         <sharedTo>
             <role>CorporateServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Contracts</fullName>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>CONTRACT.NAME</columns>
+        <columns>EF_Status__c</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>EF_Client_SIS_Designator__c</columns>
+        <columns>EF_Client_SIS_Code__c</columns>
+        <columns>EF_Group_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Contract.EF_Client_Agreement</value>
+        </filters>
+        <label>E&amp;F Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>
     <listViews>
@@ -1348,7 +1498,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Frequency</picklist>
+            <picklist>EF_Billing_Frequency__c</picklist>
             <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
@@ -1382,6 +1532,25 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Reporting_Frequency__c</picklist>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1483,7 +1652,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <picklistValues>
             <picklist>Dunning_Procedure__c</picklist>
             <values>
-                <fullName>005</fullName>
+                <fullName>0005</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1500,7 +1669,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Allow_Billing_Agreements</picklist>
+            <picklist>EF_Allow_Billing_Agreements__c</picklist>
             <values>
                 <fullName>Allowed</fullName>
                 <default>false</default>
@@ -1558,7 +1727,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Currency</picklist>
+            <picklist>EF_Billing_Currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
                 <default>false</default>
@@ -2273,7 +2442,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Frequency</picklist>
+            <picklist>EF_Billing_Frequency__c</picklist>
             <values>
                 <fullName>2x%2FWeek</fullName>
                 <default>false</default>
@@ -2292,6 +2461,721 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Data_Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AFN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ALL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ANG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AOA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BAM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BRL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BTN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DJF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EGP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ETB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FKP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GEL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GHS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GNF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GTQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HRK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HTG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HUF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IQD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KGS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KMF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KPW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MWK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NIO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PEN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PGK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PLN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PYG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RON</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RWF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SLL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SVC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SZL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TJS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TMT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UAH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VUV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XOF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XXX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZWL</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2338,34 +3222,722 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Payment_Method</picklist>
+            <picklist>EF_Payment_Currency__c</picklist>
             <values>
-                <fullName>Bank transfer</fullName>
+                <fullName>AED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Credit Card</fullName>
+                <fullName>AFN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ICCS payments</fullName>
+                <fullName>ALL</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ICH</fullName>
+                <fullName>AMD</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SPCR %2F SPDR</fullName>
+                <fullName>ANG</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Virtual Account Payment</fullName>
+                <fullName>AOA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BAM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BRL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BTN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DJF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EGP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ETB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FKP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GEL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GHS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GNF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GTQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HRK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HTG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HUF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IQD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KGS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KMF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KPW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MWK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NIO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PEN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PGK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PLN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PYG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RON</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RWF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SLL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SVC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SZL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TJS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TMT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UAH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VUV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XOF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XXX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZWL</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Payment_Terms</picklist>
+            <picklist>EF_Payment_Terms__c</picklist>
             <values>
                 <fullName>07 days after invoice date</fullName>
                 <default>false</default>
@@ -2392,6 +3964,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Reporting_Frequency__c</picklist>
+            <values>
+                <fullName>2x%2FWeek</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Reporting_Level__c</picklist>
             <values>
                 <fullName>Account</fullName>
@@ -2403,7 +3998,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Status</picklist>
+            <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
@@ -2592,7 +4187,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Frequency</picklist>
+            <picklist>EF_Billing_Frequency__c</picklist>
             <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
@@ -2626,6 +4221,25 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Reporting_Frequency__c</picklist>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2769,7 +4383,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Frequency</picklist>
+            <picklist>EF_Billing_Frequency__c</picklist>
             <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
@@ -2803,6 +4417,25 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Reporting_Frequency__c</picklist>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

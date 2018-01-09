@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used in the implementation of the airline suspension process.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -160,24 +157,29 @@
         <description>Flag that indicates whether the child suspension cases have been generated (used to prevent them from being generated multiple times).</description>
         <externalId>false</externalId>
         <label>ChildSuspensionCasesGenerated</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Generated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>true</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Generated</fullName>
+                    <default>false</default>
+                    <label>Generated</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Child_Case_Description__c</fullName>
@@ -189,6 +191,19 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Chronology_of_event_days__c</fullName>
+        <externalId>false</externalId>
+        <formula>round(Confirmation_of_the_Event__c - Occurence_of_Event__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Chronology of event (days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Comments__c</fullName>
@@ -237,418 +252,587 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>GDS_1_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 1 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_2_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24)) +
+(((((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 2 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_3_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 3 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_4_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 4 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_5_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 5 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>GDS_Name_2__c</fullName>
         <externalId>false</externalId>
         <label>GDS Name 2</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIUSYS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEUTCHES REISEBURO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FARELOGIX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELPORT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS (Amadeus)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTINTERACTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ELAL CARMEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELSKY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ABACUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E-SAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESIBER/IBERIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGRA (Inactive)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFINI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>false</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>SABRE</fullName>
+                    <default>false</default>
+                    <label>SABRE</label>
+                </value>
+                <value>
+                    <fullName>KIUSYS</fullName>
+                    <default>false</default>
+                    <label>KIUSYS</label>
+                </value>
+                <value>
+                    <fullName>DEUTCHES REISEBURO</fullName>
+                    <default>false</default>
+                    <label>DEUTCHES REISEBURO</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>FARELOGIX</fullName>
+                    <default>false</default>
+                    <label>FARELOGIX</label>
+                </value>
+                <value>
+                    <fullName>AXESS</fullName>
+                    <default>false</default>
+                    <label>AXESS</label>
+                </value>
+                <value>
+                    <fullName>TRAVELPORT</fullName>
+                    <default>false</default>
+                    <label>TRAVELPORT</label>
+                </value>
+                <value>
+                    <fullName>TOPAS (Amadeus)</fullName>
+                    <default>false</default>
+                    <label>TOPAS (Amadeus)</label>
+                </value>
+                <value>
+                    <fullName>TTINTERACTIVE</fullName>
+                    <default>false</default>
+                    <label>TTINTERACTIVE</label>
+                </value>
+                <value>
+                    <fullName>ELAL CARMEL</fullName>
+                    <default>false</default>
+                    <label>ELAL CARMEL</label>
+                </value>
+                <value>
+                    <fullName>TRAVELSKY</fullName>
+                    <default>false</default>
+                    <label>TRAVELSKY</label>
+                </value>
+                <value>
+                    <fullName>ABACUS</fullName>
+                    <default>false</default>
+                    <label>ABACUS</label>
+                </value>
+                <value>
+                    <fullName>E-SAV</fullName>
+                    <default>false</default>
+                    <label>E-SAV</label>
+                </value>
+                <value>
+                    <fullName>RESIBER/IBERIA</fullName>
+                    <default>false</default>
+                    <label>RESIBER/IBERIA</label>
+                </value>
+                <value>
+                    <fullName>AGRA (Inactive)</fullName>
+                    <default>false</default>
+                    <label>AGRA (Inactive)</label>
+                </value>
+                <value>
+                    <fullName>INFINI</fullName>
+                    <default>false</default>
+                    <label>INFINI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GDS_Name_3__c</fullName>
         <externalId>false</externalId>
         <label>GDS Name 3</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIUSYS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEUTCHES REISEBURO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FARELOGIX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELPORT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS (Amadeus)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTINTERACTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ELAL CARMEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELSKY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ABACUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E-SAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESIBER/IBERIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGRA (Inactive)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFINI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>false</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>SABRE</fullName>
+                    <default>false</default>
+                    <label>SABRE</label>
+                </value>
+                <value>
+                    <fullName>KIUSYS</fullName>
+                    <default>false</default>
+                    <label>KIUSYS</label>
+                </value>
+                <value>
+                    <fullName>DEUTCHES REISEBURO</fullName>
+                    <default>false</default>
+                    <label>DEUTCHES REISEBURO</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>FARELOGIX</fullName>
+                    <default>false</default>
+                    <label>FARELOGIX</label>
+                </value>
+                <value>
+                    <fullName>AXESS</fullName>
+                    <default>false</default>
+                    <label>AXESS</label>
+                </value>
+                <value>
+                    <fullName>TRAVELPORT</fullName>
+                    <default>false</default>
+                    <label>TRAVELPORT</label>
+                </value>
+                <value>
+                    <fullName>TOPAS (Amadeus)</fullName>
+                    <default>false</default>
+                    <label>TOPAS (Amadeus)</label>
+                </value>
+                <value>
+                    <fullName>TTINTERACTIVE</fullName>
+                    <default>false</default>
+                    <label>TTINTERACTIVE</label>
+                </value>
+                <value>
+                    <fullName>ELAL CARMEL</fullName>
+                    <default>false</default>
+                    <label>ELAL CARMEL</label>
+                </value>
+                <value>
+                    <fullName>TRAVELSKY</fullName>
+                    <default>false</default>
+                    <label>TRAVELSKY</label>
+                </value>
+                <value>
+                    <fullName>ABACUS</fullName>
+                    <default>false</default>
+                    <label>ABACUS</label>
+                </value>
+                <value>
+                    <fullName>E-SAV</fullName>
+                    <default>false</default>
+                    <label>E-SAV</label>
+                </value>
+                <value>
+                    <fullName>RESIBER/IBERIA</fullName>
+                    <default>false</default>
+                    <label>RESIBER/IBERIA</label>
+                </value>
+                <value>
+                    <fullName>AGRA (Inactive)</fullName>
+                    <default>false</default>
+                    <label>AGRA (Inactive)</label>
+                </value>
+                <value>
+                    <fullName>INFINI</fullName>
+                    <default>false</default>
+                    <label>INFINI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GDS_Name_4__c</fullName>
         <externalId>false</externalId>
         <label>GDS Name 4</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIUSYS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEUTCHES REISEBURO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FARELOGIX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELPORT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS (Amadeus)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTINTERACTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ELAL CARMEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELSKY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ABACUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E-SAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESIBER/IBERIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGRA (Inactive)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFINI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>false</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>SABRE</fullName>
+                    <default>false</default>
+                    <label>SABRE</label>
+                </value>
+                <value>
+                    <fullName>KIUSYS</fullName>
+                    <default>false</default>
+                    <label>KIUSYS</label>
+                </value>
+                <value>
+                    <fullName>DEUTCHES REISEBURO</fullName>
+                    <default>false</default>
+                    <label>DEUTCHES REISEBURO</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>FARELOGIX</fullName>
+                    <default>false</default>
+                    <label>FARELOGIX</label>
+                </value>
+                <value>
+                    <fullName>AXESS</fullName>
+                    <default>false</default>
+                    <label>AXESS</label>
+                </value>
+                <value>
+                    <fullName>TRAVELPORT</fullName>
+                    <default>false</default>
+                    <label>TRAVELPORT</label>
+                </value>
+                <value>
+                    <fullName>TOPAS (Amadeus)</fullName>
+                    <default>false</default>
+                    <label>TOPAS (Amadeus)</label>
+                </value>
+                <value>
+                    <fullName>TTINTERACTIVE</fullName>
+                    <default>false</default>
+                    <label>TTINTERACTIVE</label>
+                </value>
+                <value>
+                    <fullName>ELAL CARMEL</fullName>
+                    <default>false</default>
+                    <label>ELAL CARMEL</label>
+                </value>
+                <value>
+                    <fullName>TRAVELSKY</fullName>
+                    <default>false</default>
+                    <label>TRAVELSKY</label>
+                </value>
+                <value>
+                    <fullName>ABACUS</fullName>
+                    <default>false</default>
+                    <label>ABACUS</label>
+                </value>
+                <value>
+                    <fullName>E-SAV</fullName>
+                    <default>false</default>
+                    <label>E-SAV</label>
+                </value>
+                <value>
+                    <fullName>RESIBER/IBERIA</fullName>
+                    <default>false</default>
+                    <label>RESIBER/IBERIA</label>
+                </value>
+                <value>
+                    <fullName>AGRA (Inactive)</fullName>
+                    <default>false</default>
+                    <label>AGRA (Inactive)</label>
+                </value>
+                <value>
+                    <fullName>INFINI</fullName>
+                    <default>false</default>
+                    <label>INFINI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GDS_Name_5__c</fullName>
         <externalId>false</externalId>
         <label>GDS Name 5</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIUSYS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEUTCHES REISEBURO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FARELOGIX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELPORT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS (Amadeus)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTINTERACTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ELAL CARMEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELSKY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ABACUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E-SAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESIBER/IBERIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGRA (Inactive)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFINI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>false</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>SABRE</fullName>
+                    <default>false</default>
+                    <label>SABRE</label>
+                </value>
+                <value>
+                    <fullName>KIUSYS</fullName>
+                    <default>false</default>
+                    <label>KIUSYS</label>
+                </value>
+                <value>
+                    <fullName>DEUTCHES REISEBURO</fullName>
+                    <default>false</default>
+                    <label>DEUTCHES REISEBURO</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>FARELOGIX</fullName>
+                    <default>false</default>
+                    <label>FARELOGIX</label>
+                </value>
+                <value>
+                    <fullName>AXESS</fullName>
+                    <default>false</default>
+                    <label>AXESS</label>
+                </value>
+                <value>
+                    <fullName>TRAVELPORT</fullName>
+                    <default>false</default>
+                    <label>TRAVELPORT</label>
+                </value>
+                <value>
+                    <fullName>TOPAS (Amadeus)</fullName>
+                    <default>false</default>
+                    <label>TOPAS (Amadeus)</label>
+                </value>
+                <value>
+                    <fullName>TTINTERACTIVE</fullName>
+                    <default>false</default>
+                    <label>TTINTERACTIVE</label>
+                </value>
+                <value>
+                    <fullName>ELAL CARMEL</fullName>
+                    <default>false</default>
+                    <label>ELAL CARMEL</label>
+                </value>
+                <value>
+                    <fullName>TRAVELSKY</fullName>
+                    <default>false</default>
+                    <label>TRAVELSKY</label>
+                </value>
+                <value>
+                    <fullName>ABACUS</fullName>
+                    <default>false</default>
+                    <label>ABACUS</label>
+                </value>
+                <value>
+                    <fullName>E-SAV</fullName>
+                    <default>false</default>
+                    <label>E-SAV</label>
+                </value>
+                <value>
+                    <fullName>RESIBER/IBERIA</fullName>
+                    <default>false</default>
+                    <label>RESIBER/IBERIA</label>
+                </value>
+                <value>
+                    <fullName>AGRA (Inactive)</fullName>
+                    <default>false</default>
+                    <label>AGRA (Inactive)</label>
+                </value>
+                <value>
+                    <fullName>INFINI</fullName>
+                    <default>false</default>
+                    <label>INFINI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GDS_Name__c</fullName>
         <externalId>false</externalId>
         <label>GDS Name 1</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SABRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIUSYS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEUTCHES REISEBURO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SITA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FARELOGIX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AXESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELPORT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOPAS (Amadeus)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTINTERACTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ELAL CARMEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TRAVELSKY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ABACUS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E-SAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RESIBER/IBERIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AGRA (Inactive)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>INFINI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>false</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>SABRE</fullName>
+                    <default>false</default>
+                    <label>SABRE</label>
+                </value>
+                <value>
+                    <fullName>KIUSYS</fullName>
+                    <default>false</default>
+                    <label>KIUSYS</label>
+                </value>
+                <value>
+                    <fullName>DEUTCHES REISEBURO</fullName>
+                    <default>false</default>
+                    <label>DEUTCHES REISEBURO</label>
+                </value>
+                <value>
+                    <fullName>SITA</fullName>
+                    <default>false</default>
+                    <label>SITA</label>
+                </value>
+                <value>
+                    <fullName>FARELOGIX</fullName>
+                    <default>false</default>
+                    <label>FARELOGIX</label>
+                </value>
+                <value>
+                    <fullName>AXESS</fullName>
+                    <default>false</default>
+                    <label>AXESS</label>
+                </value>
+                <value>
+                    <fullName>TRAVELPORT</fullName>
+                    <default>false</default>
+                    <label>TRAVELPORT</label>
+                </value>
+                <value>
+                    <fullName>TOPAS (Amadeus)</fullName>
+                    <default>false</default>
+                    <label>TOPAS (Amadeus)</label>
+                </value>
+                <value>
+                    <fullName>TTINTERACTIVE</fullName>
+                    <default>false</default>
+                    <label>TTINTERACTIVE</label>
+                </value>
+                <value>
+                    <fullName>ELAL CARMEL</fullName>
+                    <default>false</default>
+                    <label>ELAL CARMEL</label>
+                </value>
+                <value>
+                    <fullName>TRAVELSKY</fullName>
+                    <default>false</default>
+                    <label>TRAVELSKY</label>
+                </value>
+                <value>
+                    <fullName>ABACUS</fullName>
+                    <default>false</default>
+                    <label>ABACUS</label>
+                </value>
+                <value>
+                    <fullName>E-SAV</fullName>
+                    <default>false</default>
+                    <label>E-SAV</label>
+                </value>
+                <value>
+                    <fullName>RESIBER/IBERIA</fullName>
+                    <default>false</default>
+                    <label>RESIBER/IBERIA</label>
+                </value>
+                <value>
+                    <fullName>AGRA (Inactive)</fullName>
+                    <default>false</default>
+                    <label>AGRA (Inactive)</label>
+                </value>
+                <value>
+                    <fullName>INFINI</fullName>
+                    <default>false</default>
+                    <label>INFINI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>HQ_Reqion_SVP_Agree__c</fullName>
         <externalId>false</externalId>
         <label>RVP Agree</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IATA_member__c</fullName>
@@ -710,20 +894,24 @@
         <fullName>ICH_participant__c</fullName>
         <externalId>false</externalId>
         <label>ICH Member</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Net_amount_due__c</fullName>
@@ -740,60 +928,74 @@
         <fullName>Number_of_months_on_reported_period__c</fullName>
         <externalId>false</externalId>
         <label>Number of months on reported period</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>11</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>12</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>true</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Occurence_of_Event__c</fullName>
@@ -804,91 +1006,130 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Overall_GDS_confirm_within_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+OR
+(GDS_1_Confirmation_time__c &gt; 3,
+GDS_2_Confirmation_time__c &gt; 3,
+GDS_3_Confirmation_time__c &gt; 3,
+GDS_4_Confirmation_time__c &gt; 3,
+GDS_5_Confirmation_time__c &gt; 3),0,1)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overall GDS confirm within time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Participates_in_IATA_Governance_Groups__c</fullName>
         <externalId>false</externalId>
         <label>Participates in IATA Governance Groups</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IATA Board of Governors</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Committee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Audit Committee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAConf</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAConf</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PSG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CPG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Board of Governors</fullName>
+                    <default>false</default>
+                    <label>IATA Board of Governors</label>
+                </value>
+                <value>
+                    <fullName>Financial Committee</fullName>
+                    <default>false</default>
+                    <label>Financial Committee</label>
+                </value>
+                <value>
+                    <fullName>Audit Committee</fullName>
+                    <default>false</default>
+                    <label>Audit Committee</label>
+                </value>
+                <value>
+                    <fullName>PAConf</fullName>
+                    <default>false</default>
+                    <label>PAConf</label>
+                </value>
+                <value>
+                    <fullName>CAConf</fullName>
+                    <default>false</default>
+                    <label>CAConf</label>
+                </value>
+                <value>
+                    <fullName>PSG</fullName>
+                    <default>false</default>
+                    <label>PSG</label>
+                </value>
+                <value>
+                    <fullName>CPG</fullName>
+                    <default>false</default>
+                    <label>CPG</label>
+                </value>
+                <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Reason_for_Suspension__c</fullName>
         <externalId>false</externalId>
         <label>Reason for Suspension</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Bankruptcy or Reorganization</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ceased Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AOC withdrawn</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operational Embargo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Debt to IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Negative Settlement Balance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Code Recall</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bankruptcy or Reorganization</fullName>
+                    <default>false</default>
+                    <label>Bankruptcy or Reorganization</label>
+                </value>
+                <value>
+                    <fullName>Ceased Operations</fullName>
+                    <default>false</default>
+                    <label>Ceased Operations</label>
+                </value>
+                <value>
+                    <fullName>AOC withdrawn</fullName>
+                    <default>false</default>
+                    <label>AOC withdrawn</label>
+                </value>
+                <value>
+                    <fullName>Operational Embargo</fullName>
+                    <default>false</default>
+                    <label>Operational Embargo</label>
+                </value>
+                <value>
+                    <fullName>Debt to IATA</fullName>
+                    <default>false</default>
+                    <label>Debt to IATA</label>
+                </value>
+                <value>
+                    <fullName>Negative Settlement Balance</fullName>
+                    <default>false</default>
+                    <label>Negative Settlement Balance</label>
+                </value>
+                <value>
+                    <fullName>Airline Code Recall</fullName>
+                    <default>false</default>
+                    <label>Airline Code Recall</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Receipt_Confirmation_from_GDS_2__c</fullName>
@@ -968,24 +1209,29 @@
         <fullName>SH_Alert_Received_24hrs_after_Event__c</fullName>
         <externalId>false</externalId>
         <label>SH Alert Received 24hrs after Event</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SVP_Agreement_Rejection_Date__c</fullName>
@@ -1018,20 +1264,24 @@
         <fullName>Settle_Directly_To__c</fullName>
         <externalId>false</externalId>
         <label>Settle Directly To</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Statement_of_Account_Date__c</fullName>
@@ -1079,6 +1329,32 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Suspension_time_spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Round(Case__r.ClosedDate - SVP_FDS_Approval__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Suspension time spent (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suspension_time_spent_with_AP_Days__c</fullName>
+        <externalId>false</externalId>
+        <formula>round(Confirmation_BSPlink_CASSlink_suspension__c - Suspension_Instructions_Sent_to_AP_Team__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Suspension time spent with AP (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Total_amount_due__c</fullName>
         <description>Total amount due by the airline, estimated in USD.</description>
         <externalId>false</externalId>
@@ -1114,20 +1390,24 @@
         <fullName>Weblink_participant__c</fullName>
         <externalId>false</externalId>
         <label>Weblink participant</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>X2_weeks_average_net_cash_settlement__c</fullName>
@@ -1196,4 +1476,5 @@
 )</errorConditionFormula>
         <errorMessage>Please select the SVP Agreement / Rejection Date.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -1,5 +1,5 @@
 public class  EmailMessageWrapper{
- 
+
 
 public string  FromAddress    {get;set;}
 public string ToAddress     {get;set;}
@@ -22,26 +22,41 @@ public Map<String, String>ParameterBodyMap    {get;set;}
      this.Body = body;
      this.ParameterBodyMap = mapBodyParams;
  }
- 
- public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName) {
- 	sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null);
- }
- 
- public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId) {
-     
- //throw new TransformationException(' ' + listEmailMessageWrapper  + '   '+ emailTemplateNameDeveloperName);
 
+ public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String community) {
+ 	sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, community);
+ }
+
+ public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId, String community) {
+
+ //throw new TransformationException(' ' + listEmailMessageWrapper  + '   '+ emailTemplateNameDeveloperName);
+    if(community == null) community = '';
      List<Messaging.SendEmailResult> listEmailResult = null;
      List<Messaging.Singleemailmessage> listSingleEmailMessages = new List<Messaging.Singleemailmessage>();
      EmailTemplate emailTemplate = [SELECT Id, Subject, HtmlValue, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateNameDeveloperName ];
+     Map <Id, OrgWideEmailAddress> orgAddressMap = new Map <Id, OrgWideEmailAddress> ([SELECT Id, Address FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org' or Address = 'cns_noreply@cnsc.us']);
+     Map <String, Id> orgAddressByEmail = new Map <String, Id> ();
+     for(OrgWideEmailAddress oea: orgAddressMap.values()){
+        orgAddressByEmail.put(oea.Address, oea.Id);
+     }
+
      for (EmailMessageWrapper emailMessageWrapper : listEmailMessageWrapper) {
          Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-         List <OrgWideEmailAddress> addressList = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply'];
-         if (!addressList.isEmpty()){
-            mail.setOrgWideEmailAddressId(addressList[0].Id);
+
+         if (!orgAddressMap.isEmpty()){
+            if(community.contains('CNS') ){
+                mail.setOrgWideEmailAddressId(orgAddressByEmail.get('cns_noreply@cnsc.us'));
+            }else{
+                mail.setOrgWideEmailAddressId(orgAddressByEmail.get('noreply@iata.org'));
+            }
+
          }
          else{
+            if(community.contains('CNS') ){
+                mail.setSenderDisplayName('CNS noreply');
+            }else{
             mail.setSenderDisplayName('IATA no reply');
+            }
             if(emailMessageWrapper.FromAddress != null && emailMessageWrapper.FromAddress.length() > 0)
                 mail.setReplyTo(emailMessageWrapper.FromAddress);
          }
@@ -88,5 +103,5 @@ public Map<String, String>ParameterBodyMap    {get;set;}
 
           //throw new TransformationException(' ' + listEmailResult  + '   '+ emailTemplateNameDeveloperName);
  }
- 
+
  }

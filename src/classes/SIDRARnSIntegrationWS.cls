@@ -15,7 +15,7 @@ global class SIDRARnSIntegrationWS {
             String theCurrency, String ShortPaymentAmount, String BillingAmount, String CollectedAmount,
             String OutstandingAmount, String IATACharges, String DisputedAmount, String ExternalID,
             String ProposeIrregularity, String ApproveIrregularity, String IrregularityType, String Reason
-            , String LatePaymentDate) {
+            , String LatePaymentDate, String GDIPremium, String AgencyFees) {
 
         try {
             if (ValidateMandatoryFields(IATACountry, BSPCass, IATACode, GroupSingleAgent, Subject,
@@ -78,6 +78,8 @@ global class SIDRARnSIntegrationWS {
                                 theCase.Collected_amount__c = Double.valueOf(CollectedAmount);
                                 theCase.Outstanding_Amount__c = Double.valueOf(OutstandingAmount);
                                 theCase.IATA_Charges__c = Double.valueOf(IATACharges);
+                                theCase.GDI_Premium__c = Double.valueOf(GDIPremium);
+                                theCase.Agency_Fees__c = Double.valueOf(AgencyFees);
 
                                 // Request from the business: SF "External ID" field should contain the same thing than the subject
                                 // The field called External ID created by: Michael Herrero in 2007 is not designed to contains the IRIS Case number another field was created to contains the IRIS Case ID
@@ -160,7 +162,8 @@ global class SIDRARnSIntegrationWS {
     }
 
     webservice static string UpdateCase(string CaseNumber, string ShortPaymentAmount, string BillingAmount, string CollectedAmount,
-                                        string OutstandingAmount, string IATACharges, string DisputedAmount, string LatePaymentDate) {
+                                        string OutstandingAmount, string IATACharges, string DisputedAmount, string LatePaymentDate,
+                                        String GDIPremium, String AgencyFees) {
 
         try {
             // Find the case and update it
@@ -181,6 +184,12 @@ global class SIDRARnSIntegrationWS {
 
                     if (IATACharges <> '') theCase.IATA_Charges__c = double.valueOf(IATACharges);
                     else return GetXmlResponse(STATUSFAIL, '', 'IATA Charges cannot be null', '');
+
+                    if (GDIPremium <> '') theCase.GDI_Premium__c = double.valueOf(GDIPremium);
+                    else return GetXmlResponse(STATUSFAIL, '', 'GDI Premium cannot be null', '');
+
+                    if (AgencyFees <> '') theCase.Agency_Fees__c = double.valueOf(AgencyFees);
+                    else return GetXmlResponse(STATUSFAIL, '', 'Agency Fees cannot be null', '');
 
                     if (LatePaymentDate<>null)
                         if (LatePaymentDate<>'')
@@ -330,11 +339,13 @@ global class SIDRARnSIntegrationWS {
             }
             Account account = listAccount.get(0);
 
-            String statementName = account.Site + Period.trim() + Operation.trim();
+            String statementName = Client.trim() + Period.trim() + Operation.trim();
             list<Account_Statement__c> listStatement = [
                 Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
                 from Account_Statement__c
-                Where Name = :statementName
+                Where Account__c = :account.Id
+                And Period__c = :Period
+                And Operation__c = :Operation
             ];
 
             Account_Statement__c statement = listStatement.isEmpty()? null: listStatement.get(0);

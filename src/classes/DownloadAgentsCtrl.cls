@@ -1,6 +1,6 @@
 public with sharing class DownloadAgentsCtrl {
     
-
+    public Date sixMonthsAgo = date.today().addMonths(-6);
     public string casesQuery {get;set;}
     public list<cContact> displayList {get;set;}
     private set<id> listAgentIdWithClosedCase {get;set;}
@@ -108,7 +108,8 @@ public with sharing class DownloadAgentsCtrl {
             else if (exclOpenCases.equals('false'))
                 soql += ' and (Account.Has_Financial_Review_Open_Cases__c = true or Account.Has_Financial_Review_Open_Cases__c = false)';
 
-            
+            soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+
    
             // run the query again
             runQuery();
@@ -128,6 +129,7 @@ public with sharing class DownloadAgentsCtrl {
             // test
             searchAgentsWithClosedCase();
                
+                        system.debug('query for donwload here: ' + soql);
 
              for (Contact cont : Database.query(soql)){
 

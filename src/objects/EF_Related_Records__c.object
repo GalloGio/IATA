@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,9 +46,10 @@
     <description>E&amp;F CRM Project needs to store simple information, therefore this &quot;Dummy&quot; object is created to store that information under different record types to fulfill different needs.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -189,21 +186,25 @@
         <description>Used to define if is an Airport or an FIR.</description>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>FIR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>FIR</fullName>
+                    <default>false</default>
+                    <label>FIR</label>
+                </value>
+                <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>E&amp;F Related Records</label>
     <listViews>
@@ -235,7 +236,7 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>FIR_Codes</fullName>
+        <fullName>Location_Codes</fullName>
         <columns>NAME</columns>
         <columns>FIR_Code_Name__c</columns>
         <columns>Type__c</columns>
@@ -243,14 +244,9 @@
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
-            <value>EF_Related_Records__c.FIR_Code</value>
+            <value>EF_Related_Records__c.Location_Code</value>
         </filters>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>FIR</value>
-        </filters>
-        <label>FIR Codes</label>
+        <label>Location Codes</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -340,11 +336,14 @@
     </recordTypes>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FIR_Code_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Location_Code_Details__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
         <searchResultsAdditionalFields>FIR_Code_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Location_Code_Details__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

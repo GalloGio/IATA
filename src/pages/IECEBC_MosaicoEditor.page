@@ -33,7 +33,7 @@
                 <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.fileupload-validate.js')}"></script>
                 <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/knockout-jqueryui.min.js')}"></script>
                 <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/tinymce.min.js')}"></script>
-                <script src="{!URLFOR($Resource.Mosaico, '/dist/mosaico.min.js')}?v=0.14"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/mosaico.min.js')}?v=0.15"></script>
                 <script>
                 var globalViewModel;
                 tinymce.PluginManager.add('iataMergeField', function(editor, url) {
@@ -200,6 +200,74 @@
                             testCmd.execute = function() {
                                 testCmd.enabled(false);
                                 
+                                sforce.apex.execute("vfIECEBC_MosaicoEditor","dailyCount", {
+                                    templateId: '{!template.Id}'
+                                }, {
+                                    onSuccess: function(result){
+                                        if (parseInt(result[0]) > 10) {
+                                        	viewModel.notifier.error(viewModel.t('Daily limit of 10 test emails for this design/template has been reached.'));
+                                            return ;
+                                        }
+                                        
+                                        var email = window.prompt(viewModel.t("Total test emails sent today: " + (result[0] - 1) + "/10\n\nNote: Test emails will only reflect saved changes\n\n Enter test email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
+                                        
+                                        if (email != null) {
+                                            viewModel.notifier.options.onShown = function() {
+                                                viewModel.notifier.options.onShown = null;
+                                                
+                                                
+                                                try {
+                                                    
+                                                    sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
+                                                        templateId: '{!template.Id}',
+                                                        email: email
+                                                    });
+                                                    
+                                                    viewModel.notifier.clear();
+                                                    viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                                } catch(e) {
+                                                    //vfIECEBC_Template.ResourceNotReady_Exception
+                                                    console.log(e);
+                                                    
+                                                    viewModel.notifier.clear();
+                                                    
+                                                    if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
+                                                        viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
+                                                        console.log(e);
+                                                    } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('EmptyTemplate_Exception') != -1) {
+                                                        viewModel.notifier.error(viewModel.t('Please save your design before sending a test email'));
+                                                        console.log(e);
+                                                    } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceMissing_Exception') != -1) {
+                                                        viewModel.notifier.error(viewModel.t('Some of the images has been deleted. Please repleace them by existing resources.'));
+                                                        console.log(e);
+                                                    } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('RejectedSubscriber_Exception') != -1) {
+                                                        viewModel.notifier.error(viewModel.t('Email Address has been rejected'));
+                                                        console.log(e);
+                                                    } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('DailyLimitReached_Exception') != -1) {
+                                                        viewModel.notifier.error(viewModel.t('Daily limit of 10 test emails for this design/template has been reached.'));
+                                                        console.log(e);
+                                                    } else {
+                                                        viewModel.notifier.error(viewModel.t('Unknown error!'));
+                                                        console.log(e);
+                                                    }
+                                                }
+                                                
+                                            }
+                                            
+                                            viewModel.notifier.info(viewModel.t("Please wait while sending a test email..."), null, {timeOut: null});
+                                        }
+                                        
+                                        
+                                        testCmd.enabled(true);
+                                    },
+                                    onFailure: function(error){
+                                        console.log(error);
+                                        viewModel.notifier.error(viewModel.t("Unable to get the daily count."));
+                                        
+                                        testCmd.enabled(true);
+                                    }
+                                });
+                                /*
                                 var email = window.prompt(viewModel.t("Total test emails sent today: {!dailyCount}/10\n\nNote: Test emails will only reflect saved changes\n\n Enter test email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
                                 
                                 if (email != null) {
@@ -248,7 +316,7 @@
                                 }
                                     
                                 
-                                testCmd.enabled(true);
+                                testCmd.enabled(true);*/
                             };
                             
                             viewModel.test = testCmd;
@@ -294,8 +362,15 @@
                         #showGallery,
                         [for="showGallery"],
                         .fa-picture-o { display: none !important; }
+                        /*draggable image ui-draggable ui-draggable-handle ui-draggable-dragging*/
                     </style>
                 </apex:outputText>
+                    <style>
+                        .ui-draggable-dragging.image img { max-width: 150px; max-height: 150px; }
+                        #toolimages {
+                        	overflow-y: auto !important;
+                        }
+                    </style>
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/mosaico-material.min.css')}?v=0.10" />
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/vendor/notoregular/stylesheet.css')}" />
             </head>

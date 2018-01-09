@@ -1,0 +1,34 @@
+<apex:page standardController="Country_Profile_History__c" showHeader="false" sidebar="false">
+	
+	<apex:includeScript value="{! $Resource.jQuery191}"/>
+	<apex:includeScript value="{! $Resource.Diff_match_patch}"/>
+
+	<script type="text/javascript" language="JavaScript">
+		var dmp = new diff_match_patch();
+
+		$(function() {
+			  var text1 = document.getElementById('oldContent').value;
+			  var text2 = document.getElementById('newContent').value;
+			  dmp.Diff_Timeout = 2; // 2 seconds
+			  dmp.Diff_EditCost = 4; // chunks of min 4 characters
+
+			  var d = dmp.diff_main(text1, text2);
+
+			  dmp.diff_cleanupEfficiency(d);
+			  
+			  var ds = dmp.diff_prettyHtml(d);
+			  document.getElementById('outputdiv').innerHTML = ds;
+		});
+	</script>
+
+
+
+	<textarea id="oldContent" style="display:none;" >{!Country_Profile_History__c.OldValue__c}</textarea>
+
+	<textarea id="newContent" style="display:none;" >{!Country_Profile_History__c.NewValue__c}</textarea>
+
+
+	<div id="outputdiv"></div>
+
+
+</apex:page>

@@ -1,9 +1,9 @@
 <apex:page controller="ISSP_AccessToService" tabStyle="Contact" action="{!initialization}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
  <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
     
@@ -69,8 +69,8 @@
                 <apex:facet name="header" >
                     {!$Label.ISSP_My_Contact_Action}
                 </apex:facet> 
-                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',false,true)}">{!$Label.ISSP_Edit}</apex:outputLink> 
-                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',true,false)}">{!$Label.ISSP_Edit}</apex:outputLink> 
+                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',false,true)}">{!$Label.ISSP_Edit}</apex:outputLink> 
+                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',true,false)}">{!$Label.ISSP_Edit}</apex:outputLink> 
             </apex:column>
             
             <apex:repeat value="{!fields}" var="f">
@@ -88,15 +88,15 @@
                     </apex:outputpanel>
                     
                     <apex:outputpanel rendered="{!IF(f.label=='Portal Application Right Name',true,false)}"> 
-                     <apex:outputLink value="/apex/ISSP_PortalServiceAccess?Id={!item.recordAccService.Id}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_PortalServiceAccess?Id={!item.recordAccService.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
                     </apex:outputpanel>
                     
                     <apex:outputpanel rendered="{!IF(f.label=='Contact',true,false)}"> 
-                     <apex:outputLink value="/apex/ISSP_Contact?&mid=M4S1&Id={!item.recordAccService.Contact__c}" target="_self">{!item.recordAccService.Contact__r.name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Contact?&mid=M4S1&Id={!item.recordAccService.Contact__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.Contact__r.name}</apex:outputLink>
                     </apex:outputpanel>
                      
                     <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Application__c',true,false)}">
-                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!item.recordAccService.Portal_Application__c}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
+                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!item.recordAccService.Portal_Application__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
                     </apex:outputpanel>
                   </apex:column>
             </apex:repeat>
@@ -155,7 +155,7 @@
     <!---------------------------------------------------------------------->
 
 
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
     </body>
     </html>

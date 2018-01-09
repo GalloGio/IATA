@@ -130,7 +130,9 @@ private class DIPdetailsTest {
         dip = [SELECT Id, GPO_Approver_Name__c, Legal_Approver_Name__c FROM DIP_Details__c WHERE Case__c =: cs.Id];
         system.assertEquals(UserInfo.getUserId(),dip.Legal_Approver_Name__c);
         
-        
+        delete dip;
+        undelete dip;
+
         test.stopTest();
         
     }

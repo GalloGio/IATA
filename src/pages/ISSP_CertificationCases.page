@@ -1,0 +1,276 @@
+<apex:page controller="ISSP_CertificationCases"  action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+ <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+
+ 	<apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
+     
+  <div class="container">
+  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
+    <apex:form id="caseListForm">
+
+    <apex:actionFunction name="next" action="{!next}" rerender="Cases" />
+    <apex:actionFunction name="previous" action="{!previous}" rerender="Cases" />
+    <apex:actionFunction name="first" action="{!first}" rerender="Cases" />
+    <apex:actionFunction name="last" action="{!last}" rerender="Cases" />
+    <apex:actionFunction name="refresh" action="{!refresh}" rerender="caseListForm" />
+    <apex:actionFunction name="handleSearchAF" rerender="Cases" action="{!refresh}"/><!-- FM 04-10-2017 - new search functionality -->
+    <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
+    <apex:inputHidden value="{!selectedPageSize}" id="selectedPageSize"/>
+
+    
+    <apex:pageMessages />
+    
+    <!--page-description-->
+        
+      <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+         Trained Staff Certification <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+        <small> Trained Staff Certification Description</small></h4>
+      
+      <style>
+        .search-right{
+          float:right;
+        }
+        .right_paginator{
+          display: inline-block;
+          width: 50%;
+        }
+      </style>    
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <select class="form-control selector" id="testSelect" onchange="$('[id$=selectedItemHidden]').val($(this).val());refresh();">
+            <apex:repeat value="{!ListViewNameList}" var="csName" id="theRepea1">
+              <option value="{!csName}">{!$Label[certificationCasesListViewMap[csName].Label_API_name__c]}</option>
+            </apex:repeat>
+          </select>
+        </div>
+        <div class="col-md-5 search-right">
+          <apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="Search by First and Last name, City, IATA Code or Type of Certificate" onkeyup="handleSearchChange();"/>&nbsp;
+        </div>
+      </div>
+    <script>
+        $('#testSelect').val( '{!selectedList}' );
+        $('#selectorPageSize').val( '{!selectedPageSize}' );
+        $(document).ready(function(){
+            $('[data-toggle="tooltip2"]').tooltip(); 
+        });
+
+        //FM 04-10-2017 - new search functionality
+        function handleSearchChange(){
+          handleSearchAF();
+        }
+    </script>
+    
+         <apex:pageBlock id="Cases" >   
+         
+        <!--<apex:pageBlockButtons location="top">--> 
+        <div class="row">
+        <div class="{!if(OR(isPWCProfile, isDPCUser),"col-md-3","")}">
+          <!--    <apex:commandButton onClick="javascript:window.location.replace('/ISSP_Case?retURL=%2Fapex%2FISSP_CaseList%3Fsfdc.tabName%3D01r110000004VIt');return false;"
+                value="{!$Label.ISSP_NewCase}" rendered="{!OR(isPWCProfile, isDPCUser)}" StyleClass="btn_iata_primary  btn-block " />
+               
+            <apex:commandButton onClick="javascript:window.location.replace('/ISSP_FAQ2Case?retURL=%2Fapex%2FISSP_CaseList%3Fsfdc.tabName%3D01r110000004VIt');return false;"
+                value="{!$Label.LAQ_ContactUs}" rendered="{!AND(!isPWCProfile, !isDPCUser)}" StyleClass="btn_iata_primary  btn-block" />
+                 -->
+        </div>
+       
+        </div><!--end row -->
+        <!--</apex:pageBlockButtons>-->
+        
+<hr />
+        <style>
+          .panel-primary{
+            min-height:0px;
+          }
+        </style>
+
+        <apex:outputPanel rendered="{!IF(listCasesSize = 0,true,false)}">
+          <div class="toprow"  id="RecentCasesFail">
+            <div class="panel panel-primary">
+              <div class="panel-heading head_panel_green">
+                <h3 class="panel-title"></h3>
+              </div>
+              <div class="panel-body brandtext text-center">
+                  No Records Found
+              </div>
+            </div>
+          </div>
+        </apex:outputPanel>
+                
+
+        <apex:repeat value="{!listCases}" var="data" rendered="{!IF( listCasesSize > 0,true,false)}">
+
+          
+          <div class="toprow"  id="RecentCases">
+            <div class="panel panel-primary">
+              <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">Location Type: <b>{!listCases[data][0].Account__r.Location_Type__c} </b>
+                      &nbsp;&nbsp;&nbsp;City: <b>{!listCases[data][0].Account__r.BillingCity}</b>
+                      &nbsp;&nbsp;&nbsp;IATA Code: <b>{!listCases[data][0].Account__r.IATACode__c}</b></h3>
+              </div>
+
+              
+
+              <apex:pageBlockTable value="{!listCases[data]}" var="item" styleClass="table-hover table table-condensed table-responsive" >
+                <apex:repeat value="{!fields}" var="f">
+                  <apex:column rendered="{!IF(f.label!='IATA Code' && f.label!='Location Type' && f.label!='Billing City',true,false)}">
+                    <apex:facet name="header">
+                       <apex:commandLink action="{!refresh}" >
+                        {!IF(f.FieldPath == 'ContactId', $Label.ISSP_ContactName, IF(f.FieldPath == 'Country_concerned_by_the_query__c', $Label.ISSP_CountryConcerned, IF(f.FieldPath == 'OSCAR__r.Oscar_Communication_Case_Id__c', 'Case',f.label)))}
+                   
+                         <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='ASC')}">&#9650;</apex:outputPanel>
+                         <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='DESC')}">&#9660;</apex:outputPanel>
+                         <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
+                        
+                       </apex:commandLink>
+                    </apex:facet>
+                     <apex:outputpanel rendered="{!IF(f.label!='IATA Code' && f.label!='Location Type' && f.label!='Billing City' && f.label!='Account ID' && f.label!='Contact ID' && f.label!='Case Number' && f.label!='Expiry Date' && f.label!='Oscar Communication Case Id',true,false)}"> <!-- && f.label!='Account Name' -->
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                     </apex:outputpanel>
+
+                      
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && item.Expiry_Date__c <> null && (item.Expiry_Date__c-90) <= TODAY(),true,false)}" style="color: red;"> <!-- && f.label!='Expiry Date' -->
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                        <apex:image rendered="{!NOT(item.Expired__c)}" value="/img/msg_icons/info16.png" style="margin-left:3px;" title="Expiring in less than {!IF(item.Expiry_Date__c <> null && item.Expiry_Date__c-30 <= TODAY(),'30',IF(item.Expiry_Date__c <> null && item.Expiry_Date__c-60 <= TODAY(),'60','90'))} days" html-data-html="false" html-data-placement="right" html-data-toggle="tooltip2" />
+                     </apex:outputpanel>
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && item.Expiry_Date__c <> null && (item.Expiry_Date__c-90) > TODAY(),true,false)}"> <!-- && f.label!='Expiry Date' -->
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                     </apex:outputpanel>
+
+                     <apex:outputpanel rendered="{!IF(f.label=='Oscar Communication Case Id',true,false)}" > 
+                     <apex:outputLink value="/apex/ISSP_Case?caseId={!item.OSCAR__r.Oscar_Communication_Case_Id__c}&mid=M4S6" target="_self">{!IF(item.OSCAR__r.Oscar_Communication_Case_Id__c == null, '', 'view case')}</apex:outputLink>
+                     </apex:outputpanel>
+
+                     <apex:outputpanel rendered="{!IF(f.label=='Account ID',true,false)}"> 
+                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.Account__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Account__r.name}</apex:outputLink>
+                     </apex:outputpanel>
+                    
+                     
+                  </apex:column>
+                </apex:repeat>
+                
+              </apex:pageBlockTable>
+            </div>
+          </div>
+          
+        </apex:repeat>
+
+        <!--apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
+           
+            <apex:repeat value="{!fields}" var="f">
+                  <apex:column >
+                    <apex:facet name="header">
+                       <apex:commandLink action="{!refresh}" >{!IF(f.FieldPath == 'ContactId', $Label.ISSP_ContactName, IF(f.FieldPath == 'Country_concerned_by_the_query__c', $Label.ISSP_CountryConcerned, IF(f.FieldPath == 'OSCAR__r.Oscar_Communication_Case_Id__c', 'Case',f.label)))}
+                   
+                         <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='ASC')}">&#9650;</apex:outputPanel>
+                         <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='DESC')}">&#9660;</apex:outputPanel>
+                         <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
+                        
+                       </apex:commandLink>
+                    </apex:facet>
+                     <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.label!='Contact ID' && f.label!='Case Number' && f.label!='Expiry Date' && f.label!='Oscar Communication Case Id',true,false)}"> 
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                     </apex:outputpanel>
+
+                      
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && (item.Expiry_Date__c-90) <= TODAY(),true,false)}" style="color: red;"> 
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                        <apex:image rendered="{!NOT(item.Expired__c)}" value="/img/msg_icons/info16.png" style="margin-left:3px;" title="Expiring in less than {!IF(item.Expiry_Date__c-30 <= TODAY(),'30',IF(item.Expiry_Date__c-60 <= TODAY(),'60','90'))} days" html-data-html="false" html-data-placement="right" html-data-toggle="tooltip2" />
+                     </apex:outputpanel>
+                     <apex:outputpanel rendered="{!IF(f.label=='Expiry Date' && (item.Expiry_Date__c-90) > TODAY(),true,false)}"> 
+                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                     </apex:outputpanel>
+
+                     <apex:outputpanel rendered="{!IF(f.label=='Oscar Communication Case Id',true,false)}" > 
+                     <apex:outputLink value="/apex/ISSP_Case?caseId={!item.OSCAR__r.Oscar_Communication_Case_Id__c}&mid=M4S6" target="_self">{!IF(item.OSCAR__r.Oscar_Communication_Case_Id__c == null, '', 'view case')}</apex:outputLink>
+                     </apex:outputpanel>
+
+                     <apex:outputpanel rendered="{!IF(f.label=='Account ID',true,false)}"> 
+                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.Account__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Account__r.name}</apex:outputLink>
+                     </apex:outputpanel>
+                    
+                     
+                  </apex:column>
+            </apex:repeat>
+            
+        </apex:pageBlockTable-->
+         
+        <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
+           <div class="paginator center">
+              <span >
+                <span class="selectorTarget" >
+                  {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  {!$Label.ISSP_of} {!setCon.ResultSize }
+                </span>
+                
+              </span>
+
+              <span  >
+                  
+                  <select class="selector" id="selectorPageSize" onchange="$('[id$=selectedPageSize]').val($(this).val());refresh();">
+                    <option value="10" title="Display 10 records per page" selected="{!IF(selectedPageSize!=null && selectedPageSize = 10,'Selected','')}">10</option>
+                    <option value="25" title="Display 25 records per page" selected="{!IF(selectedPageSize!=null && selectedPageSize = 25,'Selected','')}">25</option>
+                    <option value="50" title="Display 50 records per page" selected="{!IF(selectedPageSize!=null && selectedPageSize = 50,'Selected','')}">50</option>
+                    <option value="100" title="Display 100 records per page" selected="{!IF(selectedPageSize!=null && selectedPageSize = 100,'Selected','')}">100</option>
+                    <option value="200" title="Display 200 records per page" selected="{!IF(selectedPageSize!=null && selectedPageSize = 200,'Selected','')}">200</option>
+                  </select>
+                  
+                  <script>
+                    var el = document.getElementById('selectorPageSize');
+
+                    //el.multiple = true;
+                    selecterValue = {!selectedPageSize};
+
+                    for (var i = 0; i < el.childNodes.length; i++) {
+                      if(el.childNodes[i].value == selecterValue){
+                        el.childNodes[i].selected = true;
+                      }
+                    }
+                  </script>
+                </span>
+          <span class="prevNextLinks">
+          
+           <span class="prevNext"  style="display:{!IF(setCon.HasPrevious,'none','')}">
+            <img src="/s.gif" class="firstoff" alt="First Page"/>
+           </span>
+           <span style="display:{!IF(setCon.HasPrevious,'','none')}">
+               <a href="javascript:first()" class="prevNext"><img src="/s.gif" title="First Page" alt="First Page" class="first"/></a>
+           </span>
+           
+           <span class="prevOff" style="display:{!IF(setCon.HasPrevious,'none','')}">
+               <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}
+            </span>
+            <span style="display:{!IF(setCon.HasPrevious,'','none')}">
+                <a href="javascript:previous()" class="prevNext"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>{!$Label.ISSP_Previous}</a>
+            </span>
+            
+           <span class="nextOff" style="display:{!IF(setCon.HasNext,'none','')}">{!$Label.ISSP_Next}
+               <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            </span>
+            <span style="display:{!IF(setCon.HasNext,'','none')}">
+                <a href="javascript:next()" class="prevNext">{!$Label.ISSP_Next}<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+            </span>
+            
+           <span class="prevNext" style="display:{!IF(setCon.HasNext,'none','')}">
+                <img src="/s.gif" class="lastoff" alt="Last Page"/>
+           </span>
+           <span class="prevNext" style="display:{!IF(setCon.HasNext,'','none')}">
+               <a href="javascript:last()"><img src="/s.gif" title="Last Page" alt="Last Page" class="last"/></a>
+           </span>
+           </span>
+           <span class="right_paginator">{!$Label.ISSP_Page}
+               {!setCon.PageNumber}
+               {!$Label.ISSP_of} {!CEILING(noOfRecords/size)}
+        
+        </span>
+   </div>
+   <div class="clearingBox"></div>
+</div>
+    </apex:pageBlock> 
+   
+ </apex:form>
+ <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div><!-- end container-->
+     </body>
+    </html>
+</apex:page>

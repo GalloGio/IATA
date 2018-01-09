@@ -39,7 +39,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Services_Rendered_Account__c</field>
+                <field>E2CP__AdditionalCC__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -105,7 +105,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

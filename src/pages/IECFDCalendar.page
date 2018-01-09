@@ -92,11 +92,13 @@
                                                             <label class="summaryLabel"><span>First delivery of the month</span></label>
                                                         </div>
                                                         <div class="row" >                                                            
-                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 1st and the 10th of the month)</span></label>
+                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 3rd and the 10th of the month)</span></label>
                                                         </div>
                                                         <apex:selectRadio layout="lineDirection" styleClass="monthly" value="{!sBiMonthlyOption1}" disabled="{!bViewMode}">
+                                                            <!--
                                                             <apex:selectOption itemValue="1" itemLabel="1st"/>
                                                             <apex:selectOption itemValue="2" itemLabel="2nd"/>
+                                                            -->
                                                             <apex:selectOption itemValue="3" itemLabel="3rd"/>
                                                             <apex:selectOption itemValue="4" itemLabel="4th"/>
                                                             <apex:selectOption itemValue="5" itemLabel="5th"/>
@@ -110,11 +112,13 @@
                                                             <label class="summaryLabel"><span>Second delivery of the month</span></label>                                                            
                                                         </div>
                                                         <div class="row">
-                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 15th and the 25th of the month)</span></label>
+                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 17th and the 25th of the month)</span></label>
                                                         </div>
                                                         <apex:selectRadio layout="lineDirection" styleClass="monthly" value="{!sBiMonthlyOption2}" disabled="{!bViewMode}">
+                                                            <!--
                                                             <apex:selectOption itemValue="15" itemLabel="15th"/>
                                                             <apex:selectOption itemValue="16" itemLabel="16th"/>
+                                                            -->
                                                             <apex:selectOption itemValue="17" itemLabel="17th"/>
                                                             <apex:selectOption itemValue="18" itemLabel="18th"/>
                                                             <apex:selectOption itemValue="19" itemLabel="19th"/>
@@ -128,11 +132,13 @@
                                                     </apex:outputPanel>
                                                     <apex:outputPanel id="panelMonthly" layout="none" rendered="{!oGSSDetail.GDP_File_Description__r.Frequency__c == 'Monthly'}" >
                                                         <div class="row">
-                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 1st and the 10th of the month)</span></label>
+                                                            <label class="summaryLabel"><span>Select the day you want to receive your files (between the 3rd and the 10th of the month)</span></label>
                                                         </div>
                                                         <apex:selectRadio layout="lineDirection" styleClass="monthly" value="{!sMonthlyOption}" disabled="{!bViewMode}">
+                                                            <!--
                                                             <apex:selectOption itemValue="1" itemLabel="1st"/>
                                                             <apex:selectOption itemValue="2" itemLabel="2nd"/>
+                                                            -->
                                                             <apex:selectOption itemValue="3" itemLabel="3rd"/>
                                                             <apex:selectOption itemValue="4" itemLabel="4th"/>
                                                             <apex:selectOption itemValue="5" itemLabel="5th"/>

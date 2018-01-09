@@ -8,10 +8,18 @@ public with sharing class TopicAssignmentHelper {
 		// get the list of allowed topics
 		set<String> setAccountChatterTopics = new set<String>();
 		String strAcceptedValues = '';
+		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
+		
+		//sort topics by name
+		List<String> topicstr = new List<String>();
+		for (AMP_Account_Topics__c at : topics){
+			topicstr.add(at.Name);
+		}
+		topicstr.sort();
 
-		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
-			setAccountChatterTopics.add(at.Name);
-			strAcceptedValues += (strAcceptedValues == '' ? '' : ', ') + at.Name;
+		for (String at : topicstr) {
+			setAccountChatterTopics.add(at);
+			strAcceptedValues += (strAcceptedValues == '' ? '' : '; ') + at;
 		}
 
 		// only continue if a set of valid topics have been defined; otherwise we would be raising errors for every single topic

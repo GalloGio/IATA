@@ -42,7 +42,7 @@
                 <apex:pageBlockSection columns="2" id="SectionTwo" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_2_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            {!CASE(amsOfficeType,'HO', IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title), IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right" rendered="{!amsOfficeType == 'HO'}"/>
 							<!---
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1-For-Branch" style="float:right" rendered="{!amsOfficeType != 'HO'}"/>
@@ -87,7 +87,7 @@
                 <apex:pageBlockSection columns="2" id="SectionTwoForBranch" rendered="{!amsOfficeType != 'HO'}" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+                            {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                         </apex:outputpanel>                       
                     </apex:facet>

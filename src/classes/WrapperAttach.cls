@@ -186,10 +186,12 @@ global class WrapperAttach implements Comparable {
                 return null;
             }
 
+            AmazonFile__c aFile = this.fileAmazon.amazonfile.clone(false, true);
+            aFile.Full_Name_Unique__c = destFileName;
+            aFile.Case__c = sobjectId;
+
             AmazonFile cloned = this.fileAmazon.clone();
-            cloned.amazonFile.Id = null;
-            cloned.amazonFile.Full_Name_Unique__c = destFileName;
-            cloned.amazonFile.Case__c = sobjectId;
+            cloned.amazonFile = aFile;
             return cloned;
         }
         return null;

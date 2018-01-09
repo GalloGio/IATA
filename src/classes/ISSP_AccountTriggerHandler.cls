@@ -49,7 +49,7 @@ public with sharing class ISSP_AccountTriggerHandler
         	   newAccountsIds.add(accId);
         }
 
-        if (newAccountsIds.size()>0)
+        if (newAccountsIds.size() > 0 && !System.isBatch())
         	ISSP_WS_KAVI.createOrUpdateKaviAccountsFuture(newAccountsIds);
 
 		sendAccountNotifications(oldAccountMap, newAccountMap);

@@ -53,7 +53,7 @@
 
             </aura:if>
         </td>
-        <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true"/></td>
+        <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true" maxlength = "80"/></td>
         <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5"/></td>
         <td class="allignTop">
             <ui:inputSelect aura:id="statusList" class="slds-select required" >

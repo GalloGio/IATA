@@ -1424,6 +1424,8 @@ public with sharing class IECSubscriptionManager {
      */
     public static List<Zuora__ZInvoice__c> getSortedInvoicesByBillingAccount(String sBillingAccountID, Boolean bIncludeICHInvoices, String sSortByColumn, String sSortDirection) {
         try {
+             //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
+             String dtInvoiceCutoffDate = (Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
              String sQuery;
              
              if (bIncludeICHInvoices)
@@ -1432,6 +1434,7 @@ public with sharing class IECSubscriptionManager {
                     '   , z.Zuora__DueDate__c, z.Zuora__Description__c, z.Zuora__Balance__c, z.Zuora__Balance2__c' +
                     ' FROM Zuora__ZInvoice__c z' +
                     ' WHERE z.Zuora__BillingAccount__c = \'' + sBillingAccountId + '\'' +
+                    '   AND CreatedDate < ' + dtInvoiceCutoffDate + 'T00:00:00.000Z' +   //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
                     ' ORDER BY z.' + sSortByColumn + ' ' + sSortDirection;
              else
                 sQuery =
@@ -1440,6 +1443,7 @@ public with sharing class IECSubscriptionManager {
                     ' FROM Zuora__ZInvoice__c z' +
                     ' WHERE z.Zuora__BillingAccount__c = \'' + sBillingAccountId + '\'' +
                     '   AND z.Id in (SELECT Zuora__Invoice__c FROM Zuora__PaymentInvoice__c)' +
+                    '   AND CreatedDate < ' + dtInvoiceCutoffDate + 'T00:00:00.000Z' +   //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
                     ' ORDER BY z.' + sSortByColumn + ' ' + sSortDirection;
                 
              return database.query(sQuery);
@@ -1469,7 +1473,8 @@ public with sharing class IECSubscriptionManager {
              List<Zuora__Payment__c> lstPayments = 
                 [SELECT Zuora__Status__c, Zuora__ReferenceId__c, Zuora__PaymentMethod__c, Zuora__GatewayStatus__c, Zuora__GatewayResponse__c
                  , Zuora__GatewayResponseCode__c, Zuora__EffectiveDate__c, Zuora__CreatedDate__c, Zuora__CancelledOn__c, Zuora__AppliedInvoiceAmount__c
-                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c,
+                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c
+                 , Order__c,
                  (SELECT Zuora__Payment__r.Zuora__PaymentMethod__c, Zuora__Payment__r.Zuora__InvoiceNumber__c
                     , Zuora__Payment__r.Zuora__CreatedDate__c, Zuora__Payment__r.Zuora__Amount__c, Zuora__Payment__c
                     , Zuora__Payment__r.Id, Zuora__Payment__r.Name, Zuora__Invoice__c, Zuora__Invoice__r.Name, Name 
@@ -1912,8 +1917,12 @@ public with sharing class IECSubscriptionManager {
         try {
             List<Zuora__Subscription__c> subscriptions = null;
             //*** (Thai 2016-10-06) added to remove shipping & tax subscription
-            List<String> lstExcludedCharge = new List<String>{ Utility.getTextSetting('Zuora shipping Charge id')
-                                                             , Utility.getTextSetting('Zuora tax Charge id')};
+            //List<String> lstExcludedCharge = new List<String>{ Utility.getTextSetting('Zuora shipping Charge id')
+            //                                                 , Utility.getTextSetting('Zuora tax Charge id')};
+            //*** (Thai 2016-11-03) added to filter only hierarchy products
+            List<Id> lstHierProductId = new List<Id>();
+            for (Product_Information__c p : [select Related_Product__c from Product_Information__c where Related_Product__c != null])
+                lstHierProductId.add(p.Related_Product__c);
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
@@ -1923,7 +1932,8 @@ public with sharing class IECSubscriptionManager {
                                 , (Select Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                     , Zuora__Type__c, Zuora__BillingPeriod__c,Zuora__Subscription__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                                     From Zuora__Subscription_Product_Charges__r
-                                    where Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludedCharge)   //*** (Thai 2016-10-06) added to remove shipping & tax subscription
+                                    //where Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludedCharge   //*** (Thai 2016-10-06) added to remove shipping & tax subscription
+                                    where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :lstHierProductId)   //*** (Thai 2016-11-03) added to filter only hierarchy products
                                 , Product_Rate_Plan_Information__r.Is_Triable__c
                                 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
                                 , Product_Rate_Plan_Information__r.Related_Product_Information__c
@@ -2037,13 +2047,22 @@ public with sharing class IECSubscriptionManager {
     public static List<Zuora__Subscription__c> getInactiveSubscriptionsByBillingAccount(Id idBillingAccount) {
         try {
             List<Zuora__Subscription__c> subscriptions = null;
+            //*** (Thai 2016-11-07) added to filter only hierarchy products
+            List<Id> lstHierProductId = new List<Id>();
+            for (Product_Information__c p : [select Related_Product__c from Product_Information__c where Related_Product__c != null])
+                lstHierProductId.add(p.Related_Product__c);
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, 
                                 Zuora__TermSettingType__c,
                                 Zuora__ContractAcceptanceDate__c,Product_Rate_Plan_Information__r.Related_Product_Information__c,Product_Rate_Plan_Information__r.Related_Product_Information__r.Product_Audience__c,
                                 Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c, Product_Rate_Plan_Information__c,OrderItemId__c,  
-                                (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                                //*** (Thai 2016-11-07) modify to filter only hierarchy products
+                                //(Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                                (Select  Zuora__ProductName__c, Zuora__RatePlanName__c
+                                 From Zuora__Subscription_Product_Charges__r
+                                 where Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :lstHierProductId
+                                 LIMIT 1)
                                 , Product_Rate_Plan_Information__r.Is_Triable__c
                                 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
                                 , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name
@@ -2058,8 +2077,14 @@ public with sharing class IECSubscriptionManager {
                                 ORDER by CreatedDate desc]; 
             }
 
-            if (subscriptions != null && subscriptions.size() > 0) 
+            if (subscriptions != null && subscriptions.size() > 0) {
+                //*** (Thai 2016-11-07) added to remove subscriptions not belong to hierarchy products -> subscription without any charge
+                if (!Test.isRunningTest())
+                    for (Integer i1 = subscriptions.size() - 1; i1 >= 0; i1--)
+                        if (subscriptions[i1].Zuora__Subscription_Product_Charges__r.size() == 0)
+                            subscriptions.remove(i1);
                 return subscriptions;
+            }
         }
         catch(Exception ex) {
             throw new IECApplicationException('Could not retrieve inactive subscriptions: ' + ex.getMessage());
@@ -2072,10 +2097,14 @@ public with sharing class IECSubscriptionManager {
     //Query to get the link between Subscription and Invoice 
     public static Invoice_Item__c getInvoiceItemBySFSubscriptionName(String subscriptionNumber) {
         try {
+            //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
+            Date dtInvoiceCutoffDate = Date.valueOf(Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
+            
             List<Invoice_Item__c> lstInvoiceItem = 
                 [SELECT Invoice__c
                 FROM Invoice_Item__c
                 WHERE Subscription_Number__c = :subscriptionNumber
+                  AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
                 ORDER BY CreatedDate DESC LIMIT 1];
 
             if (!lstInvoiceItem.isEmpty()) 
@@ -2092,11 +2121,15 @@ public with sharing class IECSubscriptionManager {
     //Query to get the link between Subscription and Invoice 
     public static Map<String,Invoice_Item__c> getInvoiceItemBySFSubscriptionName(set<String> subscriptionNumbers) {
         try {
+            //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
+            Date dtInvoiceCutoffDate = Date.valueOf(Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
+            
             Map<String,Invoice_Item__c> invoiceItemBySFSubscriptionName = new Map<String,Invoice_Item__c>();
             List<Invoice_Item__c> lstInvoiceItem = 
                 [SELECT Invoice__c, Subscription_Number__c 
                 FROM Invoice_Item__c
                 WHERE Subscription_Number__c in :subscriptionNumbers
+                  AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
                 ORDER BY CreatedDate DESC];
 
             if (!lstInvoiceItem.isEmpty()){
@@ -2118,12 +2151,15 @@ public with sharing class IECSubscriptionManager {
     //Query SF for an Invoice based on its Id
     public static Zuora__ZInvoice__c getInvoiceById (Id idInvoice) {
         try {
+            //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
+            Date dtInvoiceCutoffDate = Date.valueOf(Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
+            
             List<Zuora__ZInvoice__c> invoices =
                 [SELECT Name, Id, Zuora__Zuora_Id__c
                     , (SELECT Name, Id, Zuora__Invoice__c, Zuora__PaymentMethod__c, Zuora__Amount__c
                         FROM Zuora__Payments__r) 
                 FROM Zuora__ZInvoice__c
-                WHERE Id = :idInvoice]; 
+                WHERE Id = :idInvoice AND CreatedDate < :dtInvoiceCutoffDate];   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
 
             if (invoices != null && invoices.size() > 0) 
                 return invoices.get(0);
@@ -2139,13 +2175,16 @@ public with sharing class IECSubscriptionManager {
     //Query SF for an Invoice based on its Ids
     public static Map<Id,Zuora__ZInvoice__c> getInvoiceById (set<Id> idInvoices) {
         try {
+            //*** (Thai 2016-11-07) added to filter applicable Zuora invoices
+            Date dtInvoiceCutoffDate = Date.valueOf(Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
+            
             Map<Id,Zuora__ZInvoice__c> invoiceById = new Map<Id,Zuora__ZInvoice__c>();
             List<Zuora__ZInvoice__c> invoices =
                 [SELECT Name, Id, Zuora__Zuora_Id__c
                     , (SELECT Name, Id, Zuora__Invoice__c, Zuora__PaymentMethod__c, Zuora__Amount__c
                         FROM Zuora__Payments__r) 
                 FROM Zuora__ZInvoice__c
-                WHERE Id in :idInvoices]; 
+                WHERE Id in :idInvoices AND CreatedDate < :dtInvoiceCutoffDate];   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
 
             if (invoices != null && invoices.size() > 0){
                 for(Zuora__ZInvoice__c invoice : invoices){

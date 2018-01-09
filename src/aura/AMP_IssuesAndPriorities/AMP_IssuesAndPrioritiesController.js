@@ -41,7 +41,7 @@
         var newIssue = JSON.parse(JSON.stringify(component.get("v.newIssue")));
         // console.log(JSON.stringify(issues));
         // console.log(newIssue);
-        issues.push(newIssue);
+        issues.unshift(newIssue);
         // console.log(JSON.stringify(issues));
         // console.log(issues);
         component.set("v.issues", issues);

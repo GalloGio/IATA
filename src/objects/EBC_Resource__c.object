@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Hold the customer resource used in EBroadcast product</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -170,11 +167,36 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
         <columns>Image_Size__c</columns>
         <columns>Image_Type__c</columns>
-        <columns>Billing_Account__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Image_URL__c</columns>
+        <columns>Thumbnail_URL__c</columns>
+        <columns>Is_Ready__c</columns>
+        <columns>Height__c</columns>
+        <columns>Width__c</columns>
+        <columns>Size_KBytes__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>By_Billing_Account</fullName>
+        <columns>Billing_Account__c</columns>
+        <columns>NAME</columns>
+        <columns>Image_Type__c</columns>
+        <columns>Image_URL__c</columns>
+        <columns>Thumbnail_URL__c</columns>
+        <columns>Is_Ready__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billing_Account__c</field>
+            <operation>equals</operation>
+            <value>AccesRail Inc.</value>
+        </filters>
+        <label>By Billing Account</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -184,4 +206,5 @@
     <pluralLabel>EBC Resources</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

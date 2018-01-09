@@ -4,6 +4,8 @@ global class AMS_OSCAR_Attachments {
     private Case cse;
 
     public Boolean isAdminUser {get; set;}
+    public Boolean isReadOnly {get; set;}
+    public Boolean isEmbedded {get; set;}
 
     public Id caseId{
         get{
@@ -61,11 +63,21 @@ global class AMS_OSCAR_Attachments {
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
-        
+        // CB - 6 APR 2017 - AMS Enhancements AMSU-2
+        cse = [Select Id, Status, ParentId, Parent.RecordType.Name from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+
+        AMS_OSCAR__c oscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id = :sObjId];
+        // for child cases in banck account details changes OSCARs show the attachments on the parent case (the HO case)
+        if (cse.ParentId != null && cse.Parent.RecordType.Name == 'OSCAR Communication' && oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null) {
+            cse = [SELECT Id, Status FROM Case WHERE Id = :cse.ParentId];
+        }
+
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+
+        isReadOnly = ApexPages.currentPage().getParameters().get('readOnly') == 'true' ? true : false;
+        isEmbedded = ApexPages.currentPage().getParameters().get('isEmbedded') == 'true' ? true : false;
     }
 
     /*
@@ -89,6 +101,12 @@ global class AMS_OSCAR_Attachments {
     */
     @RemoteAction
     global static string getExpiringLink(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+
+    webService static string getExpiringLinkWS(string fileName ) {
         Integer secondsValid = 300;
         String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
         return link;
@@ -220,12 +238,47 @@ global class AMS_OSCAR_Attachments {
     @RemoteAction
     global static list<FileDef> getAllExpiringLink(String objectId) {
         list<FileDef> listFileDef = new list<FileDef>();
-        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId, true)) {
             FileDef filedef = new FileDef();
             filedef.name = attach.name;
-            filedef.url = getExpiringLink(attach.fullName);
-            filedef.data = '';
-            listFileDef.add(filedef);
+            if (attach.fileType == 'Amazon') {
+                filedef.url = getExpiringLink(attach.fullName);
+                filedef.data='';
+                listFileDef.add(filedef);
+            }
+            if (attach.fileType == 'Salesforce') {
+                filedef.url='';
+                filedef.data= EncodingUtil.base64Encode(attach.fileAttachment.Body);
+                listFileDef.add(filedef);
+            }
+        }
+        return listFileDef;
+    }
+    
+    /**
+        get a list of files with valid links to download them from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getSelectedExpiringLink(String objectId, String[] attachmentIds) {
+        set<String> setAttachmentIds = new set<String>();
+        setAttachmentIds.addAll(attachmentIds);
+        
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId, true)) {
+            if(setAttachmentIds.contains(attach.Id)) {
+                FileDef filedef = new FileDef();
+                filedef.name = attach.name;
+                if (attach.fileType == 'Amazon') {
+                    filedef.url = getExpiringLink(attach.fullName);
+                    filedef.data='';
+                    listFileDef.add(filedef);
+                }
+                if (attach.fileType == 'Salesforce') {
+                    filedef.url='';
+                    filedef.data= EncodingUtil.base64Encode(attach.fileAttachment.Body);
+                    listFileDef.add(filedef);
+                }
+            }
         }
         return listFileDef;
     }

@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" 
+                access="global" controller="UserProvisioningRequestController">
+    <aura:attribute name="logs" type="List" />
+    <aura:attribute name="record" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+        
+    <table class="slds-table slds-table--bordered">
+        <thead>
+            <tr class="slds-text-heading--label">
+                <th scope="col"><span class="slds-truncate">Created Date</span></th>
+                <th scope="col"><span class="slds-truncate">Details</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.logs}" var="log">
+                <tr>
+                    <td><ui:outputDateTime value="{!log.CreatedDate}"/></td>
+                    <td class="slds-cell-wrap">{!log.Details}</td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

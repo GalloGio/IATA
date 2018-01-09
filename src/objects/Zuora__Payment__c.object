@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Zuora Payment object.  A payment is the money that customers send to pay for charges related to their subscriptions. 
+The Payment object holds all of the information about an individual payment, including the payment amount and to which invoices the payment is applied.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Bypass_Trigger_Logic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>When set to true, the trigger logic is bypassed for the object. On commit the field will be always set to false.</inlineHelpText>
+        <label>Bypass Trigger Logic?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ICH_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Payment_Method__c = &apos;ICH&apos;, Zuora__BillingAccount__r.ICHCode__c, &apos;&apos;)</formula>
+        <label>ICH Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Order for which this payment is related to. Set on Payment After Insert/Update.</inlineHelpText>
+        <label>Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>Payments</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Method__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Zuora__PaymentMethod__c = &apos;Other&apos;, &apos;ICH&apos;, Zuora__PaymentMethod__c)</formula>
+        <label>Payment Method</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SISInvoiceNumber__c</fullName>
+        <externalId>false</externalId>
+        <label>SIS Invoice Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The CRM Account that this payment is related to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The CRM Account that this payment is related to.</inlineHelpText>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payments</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__AccountingCode__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The accounting code for the payment. Accounting codes group transactions that contain similar accounting attributes.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The accounting code for the payment. Accounting codes group transactions that contain similar accounting attributes.</inlineHelpText>
+        <label>Accounting Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The amount of the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of the payment.</inlineHelpText>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__AppliedCreditBalanceAmount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The amount of the payment to apply to a credit balance.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of the payment to apply to a credit balance.</inlineHelpText>
+        <label>Applied Credit Balance Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__AppliedInvoiceAmount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The amount of the payment to apply to an invoice.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of the payment to apply to an invoice.</inlineHelpText>
+        <label>Applied Invoice Amount</label>
+        <summarizedField>Zuora__PaymentInvoice__c.Zuora__ApplyAmount__c</summarizedField>
+        <summaryForeignKey>Zuora__PaymentInvoice__c.Zuora__Payment__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__AuthTransactionId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The authorization transaction ID from the payment gateway. Use this field for electronic payments, such as credit cards.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The authorization transaction ID from the payment gateway. Use this field for electronic payments, such as credit cards.</inlineHelpText>
+        <label>Auth Transaction ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__BankIdentificationNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The first six digits of the credit card or debit card used for the payment, when applicable.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The first six digits of the credit card or debit card used for the payment, when applicable.</inlineHelpText>
+        <label>Bank Identification Number</label>
+        <length>6</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__BillingAccount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The billing account that the payment is for.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The billing account that the payment is for.</inlineHelpText>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>Payments</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Zuora__CancelledOn__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment was canceled.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment was canceled.</inlineHelpText>
+        <label>Cancelled On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__Comment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The comment about the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The comment about the payment</inlineHelpText>
+        <label>Comment</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Zuora__CreatedById__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Zuora user who created the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Zuora user who created the payment.</inlineHelpText>
+        <label>Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__CreatedDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment was created in Zuora system.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment was created in Zuora system.</inlineHelpText>
+        <label>Created Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__EXT_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>External Id For Payment object,   Represents a Zuora Payment object Id</description>
+        <externalId>true</externalId>
+        <label>Unique External Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__EffectiveDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment takes effect.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment takes effect.</inlineHelpText>
+        <label>Effective Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__External_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The payment ID in Zuora system.</description>
+        <externalId>true</externalId>
+        <label>External ID(Deprecated)</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__GatewayOrderId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The ID of the gateway order, which is the merchant-specified natural key value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The ID of the gateway order, which is the merchant-specified natural key value.</inlineHelpText>
+        <label>Gateway Order ID</label>
+        <length>70</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__GatewayResponseCode__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The code returned from the payment gateway for the payment. This code is gateway-dependent.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The code returned from the payment gateway for the payment. This code is gateway-dependent.</inlineHelpText>
+        <label>Gateway Response Code</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__GatewayResponse__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The message returned from the payment gateway for the payment. This message is gateway-dependent.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The message returned from the payment gateway for the payment. This message is gateway-dependent.</inlineHelpText>
+        <label>Gateway Response</label>
+        <length>512</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Zuora__GatewayStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The status of the payment in the gateway.</description>
+        <externalId>false</externalId>
+        <label>Gateway State</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MarkedForSubmission</fullName>
+                    <default>false</default>
+                    <label>MarkedForSubmission</label>
+                </value>
+                <value>
+                    <fullName>Submitted</fullName>
+                    <default>false</default>
+                    <label>Submitted</label>
+                </value>
+                <value>
+                    <fullName>Settled</fullName>
+                    <default>false</default>
+                    <label>Settled</label>
+                </value>
+                <value>
+                    <fullName>NotSubmitted</fullName>
+                    <default>false</default>
+                    <label>NotSubmitted</label>
+                </value>
+                <value>
+                    <fullName>FailedToSettle</fullName>
+                    <default>false</default>
+                    <label>FailedToSettle</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Zuora__InvoiceNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The unique identification number for the invoice that the payment is applied to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The unique identification number for the invoice that the payment is applied to.</inlineHelpText>
+        <label>Invoice Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The invoice that the payment is applied to.</description>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Zuora__ZInvoice__c</referenceTo>
+        <relationshipLabel>Payments</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__MarkedForSubmissionOn__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when a payment was marked and waiting for batch submission to the payment process. Use this field for the Spectrum gateway only.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when a payment was marked and waiting for batch submission to the payment process. Use this field for the Spectrum gateway only.</inlineHelpText>
+        <label>Marked For Submission On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__PaymentMethod__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The display name of the payment method used for the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The display name of the payment method used for the payment.</inlineHelpText>
+        <label>Payment Method</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__PaymentNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PaymentNumber</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__ReferenceId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The transaction ID returned by the payment gateway. Use this field to reconcile payments between your gateway and Z-Payments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The transaction ID returned by the payment gateway. Use this field to reconcile payments between your gateway and Z-Payments.</inlineHelpText>
+        <label>Reference ID</label>
+        <length>60</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__RefundedAmount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The amount of the payment that is refunded. This field is null if no refund is made against the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of the payment that is refunded. This field is null if no refund is made against the payment.</inlineHelpText>
+        <label>Refund Amount</label>
+        <summarizedField>Zuora__PaymentInvoice__c.Zuora__RefundAmount__c</summarizedField>
+        <summaryForeignKey>Zuora__PaymentInvoice__c.Zuora__Payment__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__SecondPaymentReferenceId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The transaction ID returned by the payment gateway if there is an additional transaction for the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The transaction ID returned by the payment gateway if there is an additional transaction for the payment.</inlineHelpText>
+        <label>Second Payment Reference ID</label>
+        <length>60</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__SettledOn__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment was settled in the payment processor.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment was settled in the payment processor.</inlineHelpText>
+        <label>Settled On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__SoftDescriptorPhone__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A payment gateway-specific field that maps to Zuora for the gateways, Orbital and Verifi</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A payment gateway-specific field that maps to Zuora for the gateways, Orbital and Verifi</inlineHelpText>
+        <label>Soft Descriptor Phone</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__SoftDescriptor__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A payment gateway-specific field that maps to Zuora for the gateways, Orbital and Verifi.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A payment gateway-specific field that maps to Zuora for the gateways, Orbital and Verifi.</inlineHelpText>
+        <label>Soft Descriptor</label>
+        <length>35</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The status of the payment in the Zuora system. The value depends on the type of payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The status of the payment in the Zuora system. The value depends on the type of payment.</inlineHelpText>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                    <label>Canceled</label>
+                </value>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+                <value>
+                    <fullName>Processing</fullName>
+                    <default>false</default>
+                    <label>Processing</label>
+                </value>
+                <value>
+                    <fullName>Processed</fullName>
+                    <default>false</default>
+                    <label>Processed</label>
+                </value>
+                <value>
+                    <fullName>Posted</fullName>
+                    <default>false</default>
+                    <label>Posted</label>
+                </value>
+                <value>
+                    <fullName>Voided</fullName>
+                    <default>false</default>
+                    <label>Voided</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Zuora__SubmittedOn__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment was submitted.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment was submitted.</inlineHelpText>
+        <label>Submitted On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__TransferedToAccounting__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates if the payment was transferred to an external accounting system.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the payment was transferred to an external accounting system.</inlineHelpText>
+        <label>Transferred to Accounting</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+                <value>
+                    <fullName>Ignore</fullName>
+                    <default>false</default>
+                    <label>Ignore</label>
+                </value>
+                <value>
+                    <fullName>Processing</fullName>
+                    <default>false</default>
+                    <label>Processing</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Zuora__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates if the payment is external or electronic.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the payment is external or electronic.</inlineHelpText>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electronic</fullName>
+                    <default>false</default>
+                    <label>Electronic</label>
+                </value>
+                <value>
+                    <fullName>External</fullName>
+                    <default>false</default>
+                    <label>External</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Zuora__UpdatedById__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Zuora user who last updated the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Zuora user who last updated the payment.</inlineHelpText>
+        <label>Updated By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora__UpdatedDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment was last updated in Zuora system.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment was last updated in Zuora system.</inlineHelpText>
+        <label>Updated Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Payment</label>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora__Account__c</columns>
+        <columns>Zuora__Amount__c</columns>
+        <columns>Zuora__BillingAccount__c</columns>
+        <columns>Bypass_Trigger_Logic__c</columns>
+        <columns>Order__c</columns>
+        <columns>Zuora__ReferenceId__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Detailed</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora__Account__c</columns>
+        <columns>Zuora__Amount__c</columns>
+        <columns>Zuora__AuthTransactionId__c</columns>
+        <columns>Zuora__BillingAccount__c</columns>
+        <columns>Zuora__GatewayOrderId__c</columns>
+        <columns>Zuora__GatewayResponse__c</columns>
+        <columns>Zuora__GatewayResponseCode__c</columns>
+        <columns>Zuora__GatewayStatus__c</columns>
+        <columns>Zuora__PaymentMethod__c</columns>
+        <columns>Zuora__ReferenceId__c</columns>
+        <columns>Zuora__SecondPaymentReferenceId__c</columns>
+        <columns>Zuora__Status__c</columns>
+        <columns>Zuora__Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Detailed</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Electronic</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora__Account__c</columns>
+        <columns>Order__c</columns>
+        <columns>Zuora__Amount__c</columns>
+        <columns>Zuora__AuthTransactionId__c</columns>
+        <columns>Zuora__BillingAccount__c</columns>
+        <columns>Zuora__GatewayOrderId__c</columns>
+        <columns>Zuora__GatewayResponse__c</columns>
+        <columns>Zuora__GatewayResponseCode__c</columns>
+        <columns>Zuora__GatewayStatus__c</columns>
+        <columns>Zuora__PaymentMethod__c</columns>
+        <columns>Zuora__ReferenceId__c</columns>
+        <columns>Zuora__SecondPaymentReferenceId__c</columns>
+        <columns>Zuora__Status__c</columns>
+        <columns>Zuora__Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Zuora__Type__c</field>
+            <operation>equals</operation>
+            <value>Electronic</value>
+        </filters>
+        <label>All Electronic</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Payment Number</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Payments</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

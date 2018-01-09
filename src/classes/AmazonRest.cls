@@ -87,7 +87,7 @@ public  class AmazonRest {
             req.setHeader('Date',timestamp);
             req.setHeader('x-amz-copy-source','/' + sourceCredentials.bucket + '/' + sourceEncoded);
             
-            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTSTRING ;
+            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTRESULT ;
             
             return status.equals('OK');
         }

@@ -1,0 +1,79 @@
+<apex:page controller="ISSP_AMS_EBulletin"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           language="{!displayLanguage}"
+           action="{!checkRedirect}"
+           >
+<html>
+        <style>
+            .moveup {
+                position: relative;
+                bottom: 160px;
+            }
+            .movetableup {
+                position: relative;
+                bottom: 246px;
+            }
+        </style>
+        <c:ISSP_Header ></c:ISSP_Header>    
+        <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script type="text/javascript">
+                var $j = jQuery.noConflict();
+   
+                $j(function () {
+                    $j('[data-toggle="tooltip"]').tooltip();
+                })
+        </script>
+    
+    <div class="container">   
+        <c:ISSP_CustomNavigation />
+    <div>
+        <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
+    </div>
+    <div style="padding-top:16px;padding-left:60px">
+        <h3>{!$Label.ISSP_AMS_eBulletin_Title}</h3>
+        <!-- <apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro}" escape="false"/> -->
+    </div>
+    <div style="padding-left:138px">
+       <apex:form rendered="{!isocountry.EBulletin_enabled__c}">
+        <table width="100%">
+            <tr>
+                <td colspan="2" style="width:45%;font-size:125%;padding-top:60px;padding-bottom:60px"><apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Description}"/></td>
+            </tr>
+            	<tr>
+                    <td><apex:outputText style="font-weight:600;font-size:115%" value="{!$Label.ISSP_AMS_eBulletin_Instructions}" /></td>
+                    <td><apex:outputText style="font-weight:600;font-size:115%" value="{!$Label.ISSP_AMS_eBulletin_Selection_Download}" /></td>
+            	</tr>
+                <tr>
+                    <td style="padding-top:0px">
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;
+                        <apex:outputText style="font-size:110%" escape="false" value="{!$Label.ISSP_AMS_eBulletin_home_lbl4} {!$Label.ISSP_AMS_eBulletin_Title}"/>?
+                        <!-- <div style="padding-left:16px">{!$Label.ISSP_AMS_eBulletin_home_lbl1}&nbsp;<apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" target="_blank">{!$Label.ISSP_AMS_eBulletin_home_lbl2}</apex:outputLink>.</div> -->
+
+                        <div style="padding-left:16px">{!$Label.ISSP_AMS_eBulletin_home_lbl1}&nbsp;<apex:outputLink value="{!userGuideLink}" target="_blank">{!$Label.ISSP_AMS_eBulletin_home_lbl2}</apex:outputLink>.</div>
+                        
+                    </td>
+                    <td style="padding-top:12px">
+                        <apex:outputText escape="false" style="font-size:110%" value="{!$Label.ISSP_AMS_eBulletin_home_lbl3}"/><br/>
+                        <input type="button" class="btn btn_iata_primary" onClick="window.location.assign('/ISSP_AMS_EBulletin');return false;" value="{!$Label.ISSP_AMS_eBulletin_home_btn}"/>
+                    </td>
+            </tr>
+        </table>
+     
+   </apex:form>
+        <apex:outputPanel layout="block" style="padding-top:100px" rendered="{!NOT(isocountry.EBulletin_enabled__c)}">
+        <apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Unavailable}"/>
+        </apex:outputPanel>
+   </div>
+    
+    <c:ISSP_CustomFooter />
+</div><!-- end container-->
+        
+  </body>  
+</html>
+</apex:page>

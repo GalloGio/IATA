@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Represents the Product Information in Salesforce, this Product level is configurable and linked to a parent (Product Category) and can have multiple Rate Plan information as Children</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -75,36 +72,44 @@
         <fullName>Product_Audience__c</fullName>
         <externalId>false</externalId>
         <label>Product Audience</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Default</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Employee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Member</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non Member</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Default</fullName>
+                    <default>false</default>
+                    <label>Default</label>
+                </value>
+                <value>
+                    <fullName>Member</fullName>
+                    <default>false</default>
+                    <label>Member</label>
+                </value>
+                <value>
+                    <fullName>IATA Employee</fullName>
+                    <default>false</default>
+                    <label>IATA Employee</label>
+                </value>
+                <value>
+                    <fullName>Strategic Member</fullName>
+                    <default>false</default>
+                    <label>Strategic Member</label>
+                </value>
+                <value>
+                    <fullName>Member Airline</fullName>
+                    <default>false</default>
+                    <label>Member Airline</label>
+                </value>
+                <value>
+                    <fullName>Non Member</fullName>
+                    <default>false</default>
+                    <label>Non Member</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_Product_Category__c</fullName>
@@ -139,8 +144,25 @@
         <columns>Product_Audience__c</columns>
         <columns>Related_Product__c</columns>
         <columns>Related_Product_Category__c</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Audience_Default</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Audience__c</columns>
+        <columns>Related_Product__c</columns>
+        <columns>Related_Product_Category__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Audience__c</field>
+            <operation>equals</operation>
+            <value>Default</value>
+        </filters>
+        <label>Audience_Default</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -184,4 +206,5 @@
         <errorConditionFormula>Has_Most_Popular_Counter__c &gt;1</errorConditionFormula>
         <errorMessage>You cannot have more than one Rate Plan as of Most Popular</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

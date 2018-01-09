@@ -31,7 +31,7 @@ private class AMP_ChatterBroadcastToolControllerTest {
         	ctrl.selectWholeRegion = true;
         	ctrl.strRegion = 'Europe';
 
-        	ctrl.message = 'test broadcast #Cargo';
+        	ctrl.message = '#Cargo test broadcast';
 
         	ctrl.BroadcastMessage();
 

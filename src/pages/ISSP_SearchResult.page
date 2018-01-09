@@ -1,6 +1,6 @@
 <apex:page showHeader="false" sidebar="false" controller="ISSP_SearchResultCO" action="{!searchGet}"  standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
-        <c:ISSP_Header ></c:ISSP_Header>
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <body>
             <style>
     .search-title {
@@ -65,7 +65,7 @@
     } 
 </script>
             <div class="container">
-                <c:ISSP_CustomNavigation />
+                <c:ISSP_CustomNavigation communityName="{!communityName}"/>
                 <div class="panel panel-primary">
                     <div class="panel-heading head_panel_green">
                         <h3 class="panel-title">{!$Label.ISSP_Search_Result}</h3>
@@ -82,7 +82,7 @@
                                         <h4 class="blueback">
                     {!viewItem.objectLabel}
                  </h4>
-                                        <table id="{!viewItem.objectName}" class="result-table table">
+                                        <table id="{!viewItem.objectName}" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -101,17 +101,34 @@
                                                 <apex:repeat value="{!viewItem.theObjectList}" var="objectItem" >
                                                     <tr>
                                                         <td>
-                                                            <apex:outputLink value="/ISSP_Case?caseId={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '500'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
-                                                            <apex:outputLink value="/ISSP_Contact?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '003'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
-                                                            <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Case?caseId={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '500'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Contact?id={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '003'}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
                                                         </td>
                                                         <apex:repeat value="{!viewItem.fieldNameList}" var="fieldName"  >
+
+                                                            <!-- basto1p -->
+                                                            <apex:outputpanel rendered="{!IF(fieldName.fieldPath=='Portal_Case_Status__c',true,false)}">
+                                                                <td>
+                                                                    <apex:outputfield value="{!objectItem[fieldName]}"
+                                                                                      rendered="{!IF(mapFieldsValue!=null && mapFieldsValue['Status'+objectItem['Status']]=='NO_FIELD_MAP',true,false)}"/>
+                                                                    <apex:outputpanel rendered="{!IF(mapFieldsValue!=null && mapFieldsValue['Status'+objectItem['Status']]!='NO_FIELD_MAP',true,false)}">
+                                                                        {!mapFieldsValue['Status'+objectItem['Status']]}
+                                                                    </apex:outputpanel>
+                                                                </td>
+                                                            </apex:outputpanel>
+
                                                         	<apex:outputPanel rendered="{!fieldName.fieldPath = 'ContactId'}" layout="none" >
                                                                 <td>
-                                                                	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}" >{!objectItem['Contact.Name']}</apex:outputLink>
+                                                                	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!objectItem['Contact.Name']}</apex:outputLink>
                                                                 </td>
                                                             </apex:outputPanel>
-                                                            <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId', fieldName.fieldPath != 'Id', UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName), UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
+                                                            <!-- basto1p -->
+                                                            <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId',
+                                                                                            fieldName.fieldPath != 'Portal_Case_Status__c',
+                                                                                            fieldName.fieldPath != 'Id',
+                                                                                            UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName),
+                                                                                            UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
                                                                 <td>
                                                                     <apex:outputField value="{!objectItem[fieldName]}" />
                                                                 </td>
@@ -127,8 +144,8 @@
                         </apex:form>
                     </div>
                 </div>
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
             </div>
-            <c:ISSP_CustomFooter />
         </body>
     </html>
 </apex:page>

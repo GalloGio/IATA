@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Defines the topics that should trigger the chat button in IATA portal</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>LVA_ButtomCategories__c</fullName>
+        <description>To be able to filter allowed topics according with button category. This can be a list of categories separated by coma. Can be used the value BUT_CAT_ALL to force to apply to all categories.</description>
+        <externalId>false</externalId>
+        <label>LVA_ButtomCategories</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>value__c</fullName>
+        <externalId>false</externalId>
+        <label>value</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>ISSP FAQ2CaseLiveAgentTopics</label>
+    <visibility>Public</visibility>
+</CustomObject>

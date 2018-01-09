@@ -66,6 +66,10 @@
                 <behavior>Readonly</behavior>
                 <field>Days_to_Expire__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>In_BCP_Scope__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

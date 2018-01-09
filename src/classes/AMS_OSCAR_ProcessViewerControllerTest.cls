@@ -16,7 +16,10 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 	}
     
     @isTest static void test_ProcessViewer() {
-        AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP8__c, STEP9__c, STEP10__c, STEP2__c, STEP6__c, STEP11__c, STEP15__c FROM AMS_OSCAR__c limit 1];
+	
+        Boolean result;
+        String stringResult;
+        AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP8__c, STEP9__c, STEP10__c, STEP2__c, STEP6__c, STEP11__c, STEP15__c,Step34__c, Step35__c FROM AMS_OSCAR__c limit 1];
 
         System.assertEquals('Not Started', oscar.STEP8__c);
         System.assertEquals('Not Started', oscar.STEP9__c);
@@ -46,6 +49,14 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         //ApexPages.StandardController sc = new ApexPages.StandardController(oscar);
         AMS_OSCAR_ProcessViewerController controller = new AMS_OSCAR_ProcessViewerController();
         
+        Boolean isNotNewGenProcessValue = controller.isNotNewGenProcess;
+
+        result = controller.showRequiredOverlay;
+        stringResult = controller.getEffectiveDate();
+        result = controller.getIsAgencyChange();
+        result = controller.isNewGenHEProcess;
+        result = controller.isAnalystProfile;
+
         Test.stopTest();
     }
 

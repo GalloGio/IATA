@@ -102,9 +102,10 @@ public  class AccountTriggerHelper {
 
 
 
-      for (RecordType rT : [SELECT Id, developername FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName IN: developerNames]) {
-        developerNamePerRecordTypeIds.put(rT.id, rT.developername);
-        recordTypeIds.add(rT.id);
+      for (String rTName : developerNames) {
+        ID rT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get(rtName) ;
+        developerNamePerRecordTypeIds.put(rT, rTname);
+        recordTypeIds.add(rT);
       }
 
       integer i = 0;

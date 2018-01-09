@@ -191,11 +191,12 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		try {
 			for(Task t : lsMilestones) {
 				if(t.Id == idTaskConcerned) {
-					tmpTask = t;
+					tmpTask = t;					
 					break;
 				}
 			}
 
+			tmpTask.Subject = tmpTask.Subject__c;
 			upsert tmpTask;
 			isTaskEditMode = false;
 			lsMilestones = getTasks(objectiveId);
@@ -299,8 +300,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		lsObjectives =
 			[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
 							Details__c, AM_Level_of_importance__c,
-							Status__c, Deadline__c,
-							(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
+							Status__c, Deadline__c, Account__c,
+							(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,Subject__c,
 											AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
 							FROM Tasks
 							ORDER BY CreatedDate DESC)
@@ -332,6 +333,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	@AuraEnabled
 	public static List<Task> getTasksByAccount(Id accountId) {
+				System.Debug('started from here?');
+
 		List<Task> lsTasks = new List<Task>();
 		if(accountId != null) {
 			List<Objective__c> activities =  getObjectives(accountId);
@@ -342,11 +345,11 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 			lsTasks =
 				[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
-						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c,
+						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c, Subject__c,
 						WhatId
 				FROM Task
 				WHERE WhatId IN :lsActivityIds
-				ORDER BY CreatedDate DESC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;
@@ -358,10 +361,10 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		if(objectiveId != null) {
 			lsTasks =
 				[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
-						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
+						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c, Subject__c
 				FROM Task
 				WHERE WhatId = :objectiveId
-				ORDER BY CreatedDate DESC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;

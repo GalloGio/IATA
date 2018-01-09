@@ -79,6 +79,14 @@ public class NewParticipantByEmailCtrlTest {
 
 
     static testmethod void testLocalGroups(){
+	String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US', ProfileId = p.Id,
+			TimeZoneSidKey='America/Los_Angeles',
+			UserName=uniqueUserName, License_Cost_Center__c = 'ISF005CH01');
+         System.runAs(u) {
         prepareData();
         Test.startTest();
 
@@ -154,7 +162,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
         // Now a new participant should be created
         parts = [SELECT ID FROM Participant__c];
         //system.assertEquals(1, parts.size());
-
+        
         ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
         ctrl = new NewParticipantByEmailCtrl(
             new ApexPages.StandardController(
@@ -179,7 +187,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
 
         parts = [SELECT ID FROM Participant__c];
         system.assertEquals(2, parts.size());
-
+		
 
         // try again to insert an email shared by 2 contacts and choose one of them who is incomplete
         ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
@@ -203,6 +211,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
             [SELECT Id, Account.RecordTypeId, Account.Top_Parent__c, Account.ParentId
             FROM Contact WHERE Email='others@test.com' LIMIT 1];
         NewParticipantByEmailCtrl.calculateMainAccount(testContact);
+		}
     }
 
 

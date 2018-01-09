@@ -53,7 +53,7 @@
         <description>Share the Divisional, Regional, Area and Account objectives to the account managers in read-only mode, for the needs of the Account Management project.</description>
         <label>Share Objectives to Account Managers</label>
         <sharedTo>
-            <group>Account_Managers</group>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
@@ -70,6 +70,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerArgentina</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Argentina_Paraguay_and_Uruguay</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Argentina, Paraguay and Uruguay</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Argentina_Paraguay_and_Uruguay_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Argentina_Paraguay_and_Uruguay_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -161,6 +172,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_Caribbean</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Caribbean</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Caribbean_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Caribbean_BKP</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Central_America</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Central America</label>
@@ -169,6 +191,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerCentralAmerica</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Central_Europe</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Central Europe</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Central_Europe_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Central_Europe_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -271,6 +304,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_Eastern_Europe</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Eastern Europe</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Eastern_Europe_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Eastern_Europe_BKP</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Ecuador</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Ecuador</label>
@@ -347,6 +391,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerGulfArea</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Hong_Kong_Macau</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Hong Kong &amp; Macau</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Hong_Kong_Macau</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Hong_Kong_Macau</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -427,6 +482,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Kazakhstan, Kyrgyzstan, Uzbekistan and Tajikistan</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan_BKP</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Korea</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Korea</label>
@@ -435,6 +501,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerKorea</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_LK_MY_BD_MV_BN</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management LK,MY,BD,MV,BN</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AsiaPacificHubLeader</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>AsiaPacificHubLeader</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -559,6 +636,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_Peru_and_Bolivia</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Peru and Bolivia</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Peru_and_Bolivia_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Peru_and_Bolivia_BKP</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Philippines</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Philippines</label>
@@ -669,6 +757,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_South_West_Pacific</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management South West Pacific</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_South_West_Pacific_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_South_West_Pacific_BKP</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Southern_Africa</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Southern Africa</label>
@@ -677,6 +776,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerSouthernAfrica</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Southern_Europe</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Southern Europe</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Southern_Europe_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Southern_Europe_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -710,6 +820,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerSwitzerlandLiecht</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_TR_TM_AZ</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management TR,TM,AZ</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_TR_TM_AZ_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_TR_TM_AZ_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -757,6 +878,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_USA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management USA</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_USA</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_USA</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Ukraine</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Ukraine</label>
@@ -765,6 +897,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerUkraine</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Ukraine_Georgia_and_Armenia</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Ukraine, Georgia and Armenia</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Ukraine_Georgia_and_Armenia_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Ukraine_Georgia_and_Armenia_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -779,6 +922,17 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_United_States</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management United States</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_United_States</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_United_States</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Venezuela</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Venezuela</label>
@@ -787,6 +941,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerVenezuela</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_Venezuela_and_Cuba</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management Venezuela and Cuba</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_Venezuela_and_Cuba_BKP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_Venezuela_and_Cuba_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

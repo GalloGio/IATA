@@ -268,7 +268,7 @@ public class AMS_IataCodeRangesLoaderCtrl2{
               mail.setToAddresses(receivers) ;           
               mail.setPlainTextBody(sb.getStringValue());
               emails.add( mail);
-              Messaging.sendEmail(emails);    
+              if(!Test.isRunningTest()) Messaging.sendEmail(emails);    
         }    
         ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.INFO,'Systems has loaded '+newIataCodeRanges.size()+' ranges');
         ApexPages.addMessage(errorMessage); 

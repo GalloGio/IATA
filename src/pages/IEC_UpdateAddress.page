@@ -44,6 +44,9 @@
                             <div class="account-messagePanel">
                                 <apex:outputPanel id="errorMessage">
                                     <div class="alert {!IF(hasError, 'error', 'success')}" style="display:{!IF(OR(hasError, hasConfirm), '', 'none')}">
+                                    	<apex:outputPanel layout="none" rendered="{!hasError}">
+                                    		<strong>{!$Label.ISSP_Error} </strong>
+                                    	</apex:outputPanel>
                                         <apex:pageMessages escape="no"/>
                                     </div>            
                                 </apex:outputPanel> 
@@ -59,18 +62,21 @@
                                     </apex:facet>
                                 </apex:actionStatus>
 
-                                <apex:outputPanel id="billToAddress" layout="block" styleClass="row" >
+                                <apex:outputPanel id="billToAddress" layout="block" styleClass="row" rendered="{! !stopProcess}" >
                                     <div class="columns small-12 medium-6">     <!-- first column - begin -->
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label text">{!labels['lblStreet']}</span>
-                                                <input type="text" id="billToStreet" name="billToStreet" value="{!dtoBillToAddress.street1}" maxlength="100" class="user-input text" onchange="validate('billToStreet')" onkeypress="autocompleteAddress('billToStreet')" />
+                                                <input type="text" id="billToStreet" name="billToStreet" value="{!dtoBillToAddress.street1}" maxlength="70" onblur="j('#tooLong_billingStreet').hide();" onkeyup="validateStreetSize(this, 'billing', 70);" class="user-input text" onchange="validate('billToStreet')" onkeypress="autocompleteAddress('billToStreet')" />
                                                 <apex:actionFunction name="getBillToAutoCompleteAddress" action="{!getBillToAutoCompleteAddress}" status="billToRunningStatus" rerender="billToAddress" >
                                                     <apex:param name="fullAddress" assignTo="{!autocompleteFullAddress}" value="" />
                                                 </apex:actionFunction>
                                             </label>
                                             <div id="required_billToStreet" class="input-aid">
                                                 <p>{!labels['msgNoStreet']}</p>
+                                            </div>
+                                            <div id="tooLong_billingStreet" class="input-aid">
+                                            	<p>{!$Label.IEC_LimitCharacters}</p>
                                             </div>
                                         </div>
 
@@ -126,7 +132,7 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label">{!labels['lblEmail']}</span>
-                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
+                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" disabled="{!dtoBillToAddress.email != ''}" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
                                             </label>
                                             <div id="required_billToEmail" class="input-aid">
                                                 <p>{!labels['msgNoEmail']}</p>
@@ -160,14 +166,20 @@
                             <!-- buttons for billing address -->
                             <div class="footer-actions">
                                 <ul class="list actions text-right">
-                                    <li><apex:commandLink styleClass="text-link" action="{!cancelBillToAddress}" value="{!labels['btnCancel']}" status="billToRunningStatus" reRender="errorMessage,billToAddress" /></li>
-                                    <li><apex:commandButton styleClass="button wide" value="{!labels['btnSave']}" action="{!saveBillToAddress}" reRender="errorMessage" oncomplete="$(window).scrollTop(0);" /></li>
+                                    <li><apex:commandLink styleClass="text-link" action="{!cancelBillToAddress}" value="{!labels['btnCancel']}" status="billToRunningStatus" reRender="errorMessage,billToAddress" rendered="{! !stopProcess}" /></li>
+                                    <li><apex:commandButton styleClass="button wide" value="{!labels['btnSave']}" action="{!saveBillToAddress}" status="billToRunningStatus" reRender="errorMessage" oncomplete="$(window).scrollTop(0);" rendered="{! !stopProcess}" /></li>
                                 </ul>
                             </div>
                             
                             
                             <section class="group-container shipping-address">
-                                <h2 class="group-title">{!labels['lblSectionShipTo']}</h2>
+                                <h2 class="group-title">
+                                	{!labels['lblSectionShipTo']}                                	
+                                	<div>
+                                        <span style="font-size: 1.6rem;" align="right" class="optional">{!$Label.English_Alphabet}</span>
+                                    </div>
+                                </h2>
+                                
 
                                 <apex:actionStatus id="shipToRunningStatus">
                                     <apex:facet name="start">
@@ -175,7 +187,7 @@
                                     </apex:facet>
                                 </apex:actionStatus>
 
-                                <div class="field-group select default choose-address">
+                                <div class="field-group select default choose-address" style="{! IF(stopProcess, 'display:none', '')}">
                                     <div class="custom-user-input select">
                                         <i class="icon chevron-down"></i>
                                         <apex:selectList id="shipToAddressName" value="{!currentShipToLocationId}" multiselect="false" size="1" styleClass="user-input select" >
@@ -184,9 +196,10 @@
                                         </apex:selectList>
                                     </div>
                                     <apex:commandLink styleClass="text-link" action="{!prepareNewShipToAddress}" value="{!labels['btnAdd']}" status="shipToRunningStatus" reRender="errorMessage,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" />
+                                    
                                 </div>
 
-                                <apex:outputPanel id="shipToIsDefaultGroup">
+                                <apex:outputPanel id="shipToIsDefaultGroup" rendered="{! !stopProcess}">
                                     <div class="field-group checkbox pageAddress:formAddress:shipToIsDefault">
                                         <div class="checkbox-box">
                                             <div class="custom-user-input checkbox">
@@ -198,7 +211,7 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel id="shipToAddress" layout="block" styleClass="row" >
+                                <apex:outputPanel id="shipToAddress" layout="block" styleClass="row" rendered="{! !stopProcess}" >
                                     <div class="columns small-12 medium-6">     <!-- first column - begin -->
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
@@ -213,13 +226,19 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label text">{!labels['lblStreet']}</span>
-                                                <input type="text" id="shipToStreet" name="shipToStreet" value="{!dtoShipToAddress.street1}" maxlength="100" class="user-input text" onchange="validate('shipToStreet')" onkeypress="autocompleteAddress('shipToStreet')" />
+                                                <input type="text" id="shipToStreet" name="shipToStreet" value="{!dtoShipToAddress.street1}" onblur="j('#tooLong_shippingStreet').hide();j('#poBox_shippingStreet').hide();" maxlength="70" class="user-input text" onchange="validate('shipToStreet')" onkeyup="validateStreetSize(this, 'shipping', 70); validatePoBox(this);" onkeypress="autocompleteAddress('shipToStreet')" />
                                                 <apex:actionFunction name="getShipToAutoCompleteAddress" action="{!getShipToAutoCompleteAddress}" status="shipToRunningStatus" rerender="shipToAddress" >
                                                     <apex:param name="fullAddress" assignTo="{!autocompleteFullAddress}" value="" />
                                                 </apex:actionFunction>
                                             </label>
                                             <div id="required_shipToStreet" class="input-aid">
                                                 <p>{!labels['msgNoStreet']}</p>
+                                            </div>
+                                            <div id="tooLong_shippingStreet" class="input-aid">
+                                            	<p>{!$Label.IEC_LimitCharacters}</p>
+                                            </div>
+                                            <div id="poBox_shippingStreet" class="input-aid">
+                                            	<p>{!$Label.IEC_PO_BOX_MSG}</p>
                                             </div>
                                         </div>
 
@@ -316,9 +335,9 @@
                             <!-- buttons for shipping address -->
                             <apex:outputPanel id="shipToButtonSection" layout="block" styleClass="footer-actions" >
                                 <ul class="list actions text-right">
-                                    <li><apex:commandLink styleClass="text-link" action="{!cancelShipToAddress}" value="{!labels['btnCancel']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" /></li>
+                                    <li><apex:commandLink styleClass="text-link" action="{!cancelShipToAddress}" value="{!labels['btnCancel']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" rendered="{! !stopProcess}" /></li>
                                     <li><apex:commandLink styleClass="button secondary wide" action="{!deleteShipToAddress}" value="{!labels['btnDelete']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" rendered="{!showShipToDelete == true && isDefaultShipTo != true}" onclick="if (!confirm('{! msgConfirmDelete}')) {return};" oncomplete="$(window).scrollTop(0);" /></li>
-                                    <li><apex:commandButton styleClass="button wide" action="{!saveShipToAddress}" value="{!labels['btnSave']}" status="shipToRunningStatus" oncomplete="$(window).scrollTop(0);" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToButtonSection"/></li>
+                                    <li><apex:commandButton styleClass="button wide" action="{!saveShipToAddress}" value="{!labels['btnSave']}" status="shipToRunningStatus" oncomplete="$(window).scrollTop(0);" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToButtonSection" rendered="{! !stopProcess}" /></li>
                                 </ul>
                             </apex:outputPanel>
 
@@ -344,6 +363,25 @@
         <script src="{!URLFOR($Resource.jQueryUI, 'jquery-ui.min.js')}"></script>   <!-- need for autocomplete -->
         <script type="text/javascript">
             var j = jQuery.noConflict();
+            
+            /* TC 2017-05-17 */
+            function validateStreetSize(element, type, limit) {
+            	if(element.value.length + 1 > limit) {
+            		j('#tooLong_'+type+'Street').show();
+            	} else {
+            		j('#tooLong_'+type+'Street').hide();
+            	}
+            }
+            
+            function validatePoBox(element) {
+            	var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
+            	if(element.value.match(pattern)) {
+            		j('#poBox_shippingStreet').show();
+            	} else {
+            		j('#poBox_shippingStreet').hide();
+            	}
+            }            
+            /* end */
             
             //*** validate input
             var validate = function(fieldName) {

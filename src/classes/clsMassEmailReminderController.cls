@@ -102,12 +102,17 @@ public class clsMassEmailReminderController {
 
     public PageReference MassSendEmail() {
        
-         MassEmail();
+         MassEmail(false);
+        return null;
+    }
+
+    public PageReference MassSendTrackedEmail() {
+		MassEmail(true);
         return null;
     }
 
 //Send EMails to selected Cases.
-  private void MassEmail(){
+  private void MassEmail(Boolean trackedEmail){
   
     Boolean isRequiredFieldsAreOK  = true;
   
@@ -151,13 +156,14 @@ public class clsMassEmailReminderController {
           }
           else{
              
-                List<Case> cases = [Select c.Mass_Email_Send__c,c.EmailTemplate__c,c.FS_Reminder_EmailTemplate__c,c.Reminder_EmailTemplate__c,c.FS_Mass_Email_Send__c From Case c Where c.Id IN :selectedID];
-         		
-         		system.debug('Cases size: ' + cases.size());
+                List<Case> cases = [Select c.Mass_Email_Send__c,c.EmailTemplate__c,c.FS_Reminder_EmailTemplate__c,c.Reminder_EmailTemplate__c,c.FS_Mass_Email_Send__c, c.ContactId From Case c Where c.Id IN :selectedID];
+                
+                system.debug('Cases size: ' + cases.size());
               //updates case Mass_Email_Send__c to true so that the workflow will send an email     
                clsMassEmailReminderBatch cBatch = new clsMassEmailReminderBatch();
                cBatch.caseList = cases;
                cBatch.type = type;
+               cBatch.trackedEmail = trackedEmail;
                cBatch.emailTemplate = caseParam.EmailTemplate__c ;//Reminder_EmailTemplate__c or FS_Reminder is changed in batch
                ID batchprocessid = Database.executeBatch(cBatch,5);
                
@@ -274,8 +280,10 @@ public class clsMassEmailReminderController {
         else
             soql = 'Select c.CaseNumber,c.Status,c.ID, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, Account.Name, Account.IATACode__c, Account.Status__c, Account.Type,Account.Location_Type__c,Account.BillingCountry,Contact.Name, Contact.Email  FROM Case c  where c.BatchNumber__c = \''+batchNumber+'\'  and c.Status like \'Financial Security Requested\'  '; 
 
-        System.debug('***  '+soql);  
+        System.debug('***  '+soql);
         runQuery();
+    
+        batchCountry = [select Country__c from BatchNumber__c where Id = :batchNumber].Country__c;
     
         return null;
     }
@@ -488,6 +496,10 @@ public class clsMassEmailReminderController {
         }
     }
 
+
+public String batchCountry {
+    get;set;
+}
 
 public Case CaseParameter
     {

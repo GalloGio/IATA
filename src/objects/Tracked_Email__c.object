@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,24 @@
     <description>It represents an email sent using Signaturit platform</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AdditionalTo__c</fullName>
+        <externalId>false</externalId>
+        <label>AdditionalTo</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>BccAddress__c</fullName>
         <externalId>false</externalId>
@@ -104,6 +112,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(ToContact__c),
+AdditionalTo__c, IF(ISBLANK(AdditionalTo__c), ToContact__r.Email, ToContact__r.Email + &apos;;&apos; + AdditionalTo__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>FromAddress__c</fullName>
         <externalId>false</externalId>
         <label>From Address</label>
@@ -125,14 +146,55 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Has_Attachment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Has Attachment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Html_Body_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/apex/TrackedEmailHtmlBody?Id=&quot; + Id, &quot;Click here to view HTML version&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Html Body</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Html_Body__c</fullName>
         <externalId>false</externalId>
         <label>Html Body</label>
-        <length>32768</length>
+        <length>131072</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>IsHtml__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsHtml</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Signaturit_Certificate_Ids__c</fullName>
@@ -184,7 +246,7 @@
         <fullName>TextBody__c</fullName>
         <externalId>false</externalId>
         <label>Body</label>
-        <length>32768</length>
+        <length>131072</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -204,6 +266,21 @@
         <type>Lookup</type>
     </fields>
     <label>Tracked Email</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Subject__c</columns>
+        <columns>ToContact__c</columns>
+        <columns>AdditionalTo__c</columns>
+        <columns>CcAddress__c</columns>
+        <columns>BccAddress__c</columns>
+        <columns>Signaturit_Id__c</columns>
+        <columns>Signaturit_Certificate_Ids__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>TE-{00000000}</displayFormat>
         <label>Tracked Email Number</label>
@@ -213,6 +290,74 @@
     <pluralLabel>Tracked Emails</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Signaturit_Id_updatable_if_null</fullName>
+        <active>true</active>
+        <description>User with the Can_send_a_tracked_email permission can&apos;t update any field, except the Signaturit Id if it is currently null</description>
+        <errorConditionFormula>$Profile.Name &lt;&gt; &apos;System Administrator&apos;
+&amp;&amp; $Permission.Can_send_a_tracked_email 
+&amp;&amp; NOT(ISNEW())
+&amp;&amp; (
+     ISCHANGED(AdditionalTo__c)
+     || ISCHANGED(BccAddress__c)
+     || ISCHANGED(TextBody__c)
+     || ISCHANGED(Case__c)
+     || ISCHANGED(CcAddress__c)
+     || ISCHANGED(EmailMessage__c)
+     || ISCHANGED(FromAddress__c)
+     || ISCHANGED(FromName__c)
+     || ISCHANGED(Has_Attachment__c)
+     || ISCHANGED(Html_Body__c)
+     || ISCHANGED(IsHtml__c)
+     || ISCHANGED(Signaturit_Certificate_Ids__c)
+     || ISCHANGED(Subject__c)
+     || ISCHANGED(ToContact__c)
+     || (ISCHANGED( Signaturit_Id__c )
+         &amp;&amp; NOT( ISBLANK(PRIORVALUE(Signaturit_Id__c)))
+        )
+   )</errorConditionFormula>
+        <errorMessage>Tracked emails can&apos;t be updated</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Status_updatable_with_Signaturit_profile</fullName>
+        <active>true</active>
+        <description>User with the Signaturit profile can update only the Status field</description>
+        <errorConditionFormula>$Profile.Name = &apos;Signaturit&apos; 
+&amp;&amp; ( 
+ISCHANGED(AdditionalTo__c) 
+|| ISCHANGED(BccAddress__c) 
+|| ISCHANGED(TextBody__c) 
+|| ISCHANGED(Case__c) 
+|| ISCHANGED(CcAddress__c) 
+|| ISCHANGED(EmailMessage__c) 
+|| ISCHANGED(FromAddress__c) 
+|| ISCHANGED(FromName__c) 
+|| ISCHANGED(Has_Attachment__c) 
+|| ISCHANGED(Html_Body__c) 
+|| ISCHANGED(IsHtml__c) 
+|| ISCHANGED(Signaturit_Certificate_Ids__c) 
+|| ISCHANGED(Subject__c) 
+|| ISCHANGED(ToContact__c) 
+|| ISCHANGED( Signaturit_Id__c ) 
+)</errorConditionFormula>
+        <errorMessage>Tracked emails can&apos;t be updated</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Forward</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Forward</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if({!$Permission.Can_send_a_tracked_email}){
+window.location = &quot;/apex/sendsingletrackedemail?originalEmail={!Tracked_Email__c.Id}&amp;action=Forward&amp;retURL={!Tracked_Email__c.CaseId__c}&quot;;
+}
+else{
+alert(&quot;You don&apos;t have access to this tracked email feature, please contact the administrator for more details.&quot;);
+}</url>
+    </webLinks>
     <webLinks>
         <fullName>Refresh_Events</fullName>
         <availability>online</availability>
@@ -226,5 +371,35 @@
 
 var result = sforce.apex.execute(&quot;WSJavascript&quot;,&quot;refreshSignaturitEvents &quot;,{signaturitid:&quot;{!Tracked_Email__c.Id}&quot;});
 window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Reply</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Reply</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if({!$Permission.Can_send_a_tracked_email}){
+window.location = &quot;/apex/sendsingletrackedemail?originalEmail={!Tracked_Email__c.Id}&amp;action=ReplyTo&amp;retURL={!Tracked_Email__c.CaseId__c}&quot;;
+}
+else{
+alert(&quot;You don&apos;t have access to this tracked email feature, please contact the administrator for more details.&quot;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Reply_To_All</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Reply To All</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if({!$Permission.Can_send_a_tracked_email}){
+window.location = &quot;/apex/sendsingletrackedemail?originalEmail={!Tracked_Email__c.Id}&amp;action=ReplyToAll&amp;retURL={!Tracked_Email__c.CaseId__c}&quot;;
+}
+else{
+alert(&quot;You don&apos;t have access to this tracked email feature, please contact the administrator for more details.&quot;);
+}</url>
     </webLinks>
 </CustomObject>

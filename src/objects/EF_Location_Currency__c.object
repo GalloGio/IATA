@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,6 +47,7 @@
 It contains a currency to make the correspondance between contract + location + currency.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -95,20 +92,26 @@ It contains a currency to make the correspondance between contract + location + 
         <fullName>EF_Billing_Currency__c</fullName>
         <description>E&amp;F Billing Currency</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Submitter_Email__c</fullName>
@@ -157,11 +160,14 @@ It contains a currency to make the correspondance between contract + location + 
         <fullName>Manager_Approval__c</fullName>
         <description>Helper field for E&amp;F approval processing functionality.</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Manager_Approval</globalPicklist>
         <label>Manager Approval</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Manager_Approval</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Requested_Changes__c</fullName>
@@ -192,6 +198,16 @@ It contains a currency to make the correspondance between contract + location + 
         <type>Checkbox</type>
     </fields>
     <label>E&amp;F Location Currency</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contract__c</columns>
+        <columns>Location_ID__c</columns>
+        <columns>EF_Billing_Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>Loc-{00000000}</displayFormat>
         <label>E&amp;F Location Currency Name</label>
@@ -204,4 +220,5 @@ It contains a currency to make the correspondance between contract + location + 
         <lookupDialogsAdditionalFields>Contract__c</lookupDialogsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

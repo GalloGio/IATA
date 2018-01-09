@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -46,10 +42,11 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <description>A case status in which the &quot;clock should stop,&quot; i.e. time calculated in business hours should not be added to the &quot;Time With Support&quot; field.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -60,24 +57,29 @@
         <fullName>Status_Bucket__c</fullName>
         <externalId>false</externalId>
         <label>Status Bucket</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Escalated Internally</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>With Customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Escalated Externally</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escalated Internally</fullName>
+                    <default>false</default>
+                    <label>Escalated Internally</label>
+                </value>
+                <value>
+                    <fullName>With Customer</fullName>
+                    <default>false</default>
+                    <label>With Customer</label>
+                </value>
+                <value>
+                    <fullName>Escalated Externally</fullName>
+                    <default>false</default>
+                    <label>Escalated Externally</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Stop Status</label>
     <listViews>
@@ -102,4 +104,5 @@
     <pluralLabel>Stop Statuses</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

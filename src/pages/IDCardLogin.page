@@ -8,6 +8,12 @@
 <script src="https://www.google.com/recaptcha/api.js?hl={!language}&onload=myCallBack&render=explicit"  async="true" defer="true"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
 
+
+<script src="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"></script>
+<script src="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"></script>
+<script src="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"></script>
+<apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
 </head>
     
 <body>
@@ -25,7 +31,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 <script>
-
+ 
     String.prototype.capitalize = function(){
             return this.toLowerCase().replace( /\b\w/g, function (m) {
             return m.toUpperCase();
@@ -167,6 +173,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = name;
     }
 
+    j$ = jQuery.noConflict(); 
+    function blockme() {
+       j$.blockUI({ message: '<h1 style = color:black> {!$Label.IDCard_Loading_Message} </h1>',
+            css: {           
+               border: 'none',
+               padding: '15px',               
+               '-webkit-border-radius': '10px',
+               '-moz-border-radius': '10px',
+               opacity: .5,
+               color: '#fff'
+            }
+     }); 
+   }
+
+   
+      
+
 </script>
     <c:IDCardToolsComponent />
     <apex:outputpanel id="reloadCaptcha">       
@@ -200,17 +223,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="background" style="height: 900px;">
                 
             <center>
-                <apex:actionStatus id="saveStatus">
-                    <apex:facet name="start">
-                        <h1 style="color:white">
-                            <img src="{!URLFOR($Resource.LoadStatus)}" />
-                        </h1>
-                    </apex:facet>
-                    <apex:facet name="stop">
-                        <br/>
-                    </apex:facet>
-    
-                </apex:actionStatus>
              <!-------------------------------------------------------------------------------->
                 <div id="PInfo"  class="LogMenuPanel">
                     <!--<h1>--><apex:outputLabel value="{!$Label.IDCard_LoginWithPInfo}" escape="false" style="color:white" /><!--</h1>-->                                 
@@ -260,8 +272,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <div id="PINFOCAPTCHA">       
                             
                             </div>-->
+                            <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                                <div>
                                         <div id="recaptcha1" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
-
+                                </div>
+                            </div>
                              <hr class="Thin" />
                 
                 
@@ -270,11 +285,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             
                             <apex:pageBlockButtons location="bottom">
                                 <apex:commandLink action="{!verifyAlternative}" id="btnVerify2" 
-                                    rerender="Msgs2,reloadCaptcha" styleClass="btn-BlueButtonWAR"  status="saveStatus">
+                                    rerender="Msgs2,reloadCaptcha" styleClass="btn-BlueButtonWAR" onclick="blockme();" oncomplete="j$.unblockUI();" >
                                     <span>{!$Label.IDCard_Verify}</span>
                                 </apex:commandLink>
                                 <!--<apex:commandButton action="{!verifyAlternative}"
-                                    onclick="javascript:refreshCAPTCHA();"
+                                    onclick="javascript:refreshCAPTCHA();" oncomplete="j$.unblockUI();"
                                     value="{!$Label.IDCard_Verify}" id="btnVerify2"     rerender="Msgs2" 
                                     style="width:100px; margin-left:-170px; margin-top: 170px;" status="saveStatus" />-->
                             </apex:pageBlockButtons>
@@ -319,39 +334,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             
                             </apex:pageBlockSection>
                             <hr class="Thin" />
-
-                            
-                            <!-- 
-                             <div id="CODEINFOCAPTCHA"> 
-                             
-                             
-                                      <div id="Captcha_Submenu" class="submenu"   style="  height:138px; margin-left: -75px; margin-top: 34px;">
-                                        <div id="Captcha_Submenu_Panel" class="LogSubMenuPanel_captcha">
-                                            <div style="margin-left:170px;">   
-                                                <div id="captchaEnter" title="Form Submission Validation">
-                                                    <script type="text/javascript"  src="https://www.google.com/recaptcha/api/challenge?k={!publicKey}"></script>
-                                                    <noscript>
-                                                        <iframe src="https://www.google.com/recaptcha/api/noscript?k={!publicKey}"  height="00" width="00" frameborder="0"></iframe>
-                                                        <br />
-                                                        <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-                                                        <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
-                                                    </noscript>
-                                                    <div id="validationResultDiv"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                             
-                            
-                             </div>
-                             -->
-                             <div id="recaptcha2" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                            <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                                <div>
+                                    <div id="recaptcha2" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                                </div>
+                            </div>
                          <hr class="Thin" />
                             
                             <apex:pageBlockButtons location="bottom">
 
                                 <apex:commandLink action="{!verify}" id="btnVerify" 
-                                     rerender="Msgs,reloadCaptcha" styleClass="btn-BlueButtonWAR"  status="saveStatus" >
+                                     rerender="Msgs,reloadCaptcha" styleClass="btn-BlueButtonWAR" onclick="blockme();"  oncomplete="j$.unblockUI();">
                                     <span>{!$Label.IDCard_Verify}</span></apex:commandLink>
                                 <!--<apex:commandButton action="{!verify}"  onclick="javascript:refreshCAPTCHA();"  value="{!$Label.IDCard_Verify}" id="btnVerify"
                                 rerender="Msgs" style="width:100px ; margin-left:-170px; margin-top: 180px;" status="saveStatus" />-->

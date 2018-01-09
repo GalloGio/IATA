@@ -107,6 +107,10 @@
                 <behavior>Edit</behavior>
                 <field>Contract_Expiry_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Block_alerts_on_updates__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -174,7 +178,11 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -60,7 +57,7 @@
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>Managed Agencies</relationshipLabel>
+        <relationshipLabel>ID Card Key Account – Managed Agency</relationshipLabel>
         <relationshipName>Managed_Agencies</relationshipName>
         <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -74,7 +71,7 @@
         <inlineHelpText>Contact</inlineHelpText>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
-        <relationshipLabel>Managed Agencies</relationshipLabel>
+        <relationshipLabel>ID Card Key Account – Managed Agency</relationshipLabel>
         <relationshipName>Managed_Agencies</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -99,4 +96,5 @@
     <pluralLabel>Managed Agencies</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

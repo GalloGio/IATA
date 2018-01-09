@@ -1,0 +1,7 @@
+<apex:page standardController="Case" extensions="AMS_Case_Popup_ctrl">
+	<script type="text/javascript">
+		if('{!sMsgToDisplay}' != ''){
+			window.alert('{!sMsgToDisplay}');
+		}
+	</script> 
+</apex:page>

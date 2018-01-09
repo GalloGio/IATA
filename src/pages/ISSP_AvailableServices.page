@@ -6,28 +6,132 @@
      <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
     <!-- end elliot 19 juin -->
  <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
+     
+    var redirected = false;
+    var requested = 0
 
-    function newAppReq(appId,appName){
-        $('#ModalNewServiceRequest').modal('toggle');
-        ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}',newAppReqCallback);
-        //closeDialog();
-        //location.reload(true);
-        //refresh(); 
+    function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
+        
+      if(redirected) return false;
+        
+      var appPortalRole = $('[id$="portalRoles"]').val();
+      newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService);
+    }       
+       
+    function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){       
+      if(redirected) return false;        
+        
+      var doInsert;
+      if (isEasyPayService == 'false') {
+        doInsert = 2;
+      } else {          
+        if (appPortalRole == '' && flagUseDefaultRole == "true") {
+          doInsert = 1;  
+        } else {
+          if (appPortalRole == '' && flagUseDefaultRole == "false") {
+            doInsert = 0;  
+          } else {
+            doInsert = 1;  
+          }
+        }
       }
+
+      if (doInsert == 0) {
+          document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
+      } else {
+          requested = 1;
+          if (appPortalRole != 'SKIP') {
+              closeDialog();
+          }
+          if(isEasyPayService && flagUseDefaultRole == "true") {
+            showModal('#ModalNewIepServiceRequest');
+          } else {
+            showModal('#ModalNewServiceRequest');
+          }
+                    
+          if (doInsert == 1) {
+            if(appPortalRole == null  || appPortalRole == undefined) {
+              appPortalRole = '';
+            }                            
+            ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
+          } else {
+            ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
+          }         
+      }
+
+      //closeDialog();
+      //location.reload(true);
+      //refresh(); 
+    }
 
     function newAppReqCallback(res){
       
     }
-    
+
+    function onCompleteUserProvisioning(redirect, page, provError) {
+      if(provError == 'true' && requested == 1) {
+        hideModal('#ModalNewIepServiceRequest');
+        errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
+      } else {
+        if (redirect == 'true' && !redirected) {
+          hideModal('#ModalNewIepServiceRequest');
+            
+          var win = window.open(page, '_blank');
+          if (win) {
+              //Browser has allowed it to be opened
+              win.focus();
+          } else {
+              //Browser has blocked it
+              alert('Please allow popups for this website');            
+          }          
+          redirected = true;          
+        }
+      }
+    }
+
+    function showModal(modalName) {
+      if (! $(modalName).is(":visible")) {
+        $(modalName).modal('show');  
+      }
+    }
+
+    function hideModal(modalName) {
+      if ($(modalName).is(":visible")) {
+        $(modalName).modal('hide');  
+      }
+    }    
+
+    function refreshPage() {
+      var currentTime = new Date().getTime();
+
+      while (currentTime + 2000 >= new Date().getTime()){  }
+
+      location.reload(true);      
+    }
 
     function doRequest(servId) {
-         paraFunction(servId);
+      if(redirected) {
+          location.reload(true);
+          return false;        
+      }        
+      //obj.style.display = "none";        
+      //obj.style.visibility = "hidden";
+      paraFunction(servId);
     }
-    
+
+    function errorMessageModal(errorMsg) {
+      $('[id$="errorMessage"]').text(errorMsg);
+      showModal('#ModalErrorMessage');
+    }
+
+    function errorMessageModalClose() {
+      location.reload(true);
+    }
+
     function dopopup(){
          $('#Hiddenbtn').trigger( "click" );
     }
@@ -77,13 +181,15 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Services" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
-    <apex:actionFunction name="paraFunction" action="{!doRequest}"  reRender="contactListForm,Services,myModal,ModalNewServiceRequest" oncomplete="javascript:dopopup();">      
+    <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
+
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
 
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
     <!-- <apex:pageMessages /> -->
-    
+
+    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}', '{!provError}');"/>
     
     <img src="/s.gif" alt="Service" class="pageTitleIcon" title="Service"/>
     <!--
@@ -106,6 +212,7 @@
           
        
             <apex:repeat value="{!fields}" var="f">
+
                   <apex:column >
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" reRender="pbt_Services">{!f.label}
@@ -114,28 +221,26 @@
                          <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
                        </apex:commandLink>
                     </apex:facet>
-                     
-                   
-                     <apex:outputpanel rendered="{!IF(f.label!='Service' && f.label!='Servicio'&& f.label!='???' && f.label!='??' && f.label!='Servi�o' && f.label!='????' && f.label!='Servizio' && f.label!='??????'&&f.label!='Layanan'&&f.label!='D?ch v?'&&f.label!='??????',true,false)}"> <!-- && f.label!='Account Name' -->
-                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" />
-                    </apex:outputpanel>
-                    
          
-                   <apex:outputpanel rendered="{!IF(f.label=='Service'||f.label=='Servicio'||f.label=='???' ||f.label=='??' ||f.label=='Servi�o' ||f.label=='????' ||f.label=='Servizio' ||f.label=='??????' ||f.label=='Layanan' ||f.label=='D?ch v?' ||f.label=='??????',true,false)}"> 
-                        
-                     <apex:outputLink value="{!item.recordService.Application_URL__c}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
+                    <apex:outputpanel rendered="{! OR(f.FieldPath == 'Service_Description__c', f.FieldPath == 'Application_icon__c')}">                    
+                        <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" rendered="{! f.fieldPath != 'Service_Description__c'}" />
+                        <apex:outputText value="{! IF( ISBLANK($Label[item.recordService['Service_Description_Label__c']]), item.recordService[f.fieldPath], $Label[item.recordService['Service_Description_Label__c']]) }" escape="false" rendered="{! f.fieldPath == 'Service_Description__c'}" />
+                    </apex:outputpanel>
+                          
+                    <apex:outputpanel rendered="{!f.FieldPath == 'Name'}">
+                     <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
-                    
-                    
+
                   </apex:column>
             </apex:repeat>
             <apex:column headerValue="{!$Label.ISSP_Status}">
-                  <apex:outputtext value="{!CASE(item.Status, 'Access Granted', $Label.ISSP_Access_Granted, 'Access Denied', $Label.ISSP_Access_Denied, $Label.ISSP_Access_Requested)}" rendered="{!IF(item.Status != null , true,false)}"/>
+                  <apex:outputtext value="{!CASE(item.Status, 'Access Under Provisioning', $Label.ISSP_Access_Under_Provisioning, 'Access Granted', $Label.ISSP_Access_Granted, 'Access Denied', $Label.ISSP_Access_Denied, $Label.ISSP_Access_Requested)}" rendered="{!IF(item.Status != null , true,false)}"/>
 
                   <a onclick="doRequest('{!item.recordService.Id}')"   class="pull-right btn_iata_success btn btn-block"  
                   style="display:{!IF(item.Status == null || item.Status =='' , '','none')}">
-                  {!$label.ISSP_New_Service_Request}
+                  <!--{!$label.ISSP_New_Service_Request}-->
+                  {!item.btnLabel}
                   </a>
 
                   <a id="Hiddenbtn" data-toggle="modal" href="#myModal"
@@ -145,13 +250,15 @@
           <!--elliot 19 juin-->  
            
             <apex:column style="text-align: center; display: {!AdminOrNot}">
-                <apex:outputPanel rendered="{!!item.recordService.Cannot_be_managed_by_portal_admin__c}">
+                <apex:outputPanel rendered="{!item.addUsersEnable}">
+                                
+                    <apex:outputLink rendered="{! not item.accountNotOpenError}" styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
+
+                    <apex:outputLabel rendered="{! item.accountNotOpenError}" styleClass="btn btn_iata_primary" onclick="errorMessageModal('{!item.lineErrorMessage}')" >{!$Label.ISSP_Add_User_to_this_service}</apex:outputLabel>
+
+                </apex:outputPanel>
+            </apex:column>
                 
-                
-                <apex:outputLink styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
-           
-                    </apex:outputPanel>
-                </apex:column>
              <!-- end elliot 19 juin -->
         </apex:pageBlockTable>
          
@@ -159,7 +266,7 @@
            <div class="paginator">
               <span class="left">
                  <span class="selectorTarget" >
-                    {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  {!$Label.ISSP_of} {!setCon.ResultSize }
+                    {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,noOfRecords)}  {!$Label.ISSP_of} {!noOfRecords }
              </span>
           </span>
           <span class="prevNextLinks">
@@ -205,7 +312,7 @@
     <!---------------------------------------------------------------------->
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog"> 
+      <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
         <div class="modal-content"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -219,21 +326,92 @@
                   <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
                       <p><apex:outputText value="{!er}" escape="false" /></p>
                   </apex:repeat>
-                </div>  
+                </div>
+                
+                <div class="alert alert-danger" id="portalRoleErrorMessage" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_PortalRoleErrorMessage} </strong>
+                </div>
+                
               </apex:outputPanel>
-            <ul class="external_links clearfix nav">
 
-                <li> 
+              <table>
+
+                <tr><td> 
                   <span class="appfocus">
                     <a  id="appReq{!Serv.recordService.Id}"  title="">
                       <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" />
                     </a>
                   </span>
-                  <span>
+                  </td>
+                  <!--span>
                       <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!Serv.recordService.Name}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                  </span-->
+                  <td style="padding-left: 10px">
+                  <span>
+                      <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
+                          <apex:outputLabel escape = "false" value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
+
+                        <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                      </apex:outputPanel>
+                      
+                      <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
+
+                          <!--apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}" /-->
+                          <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_EasyPayLegalConfirmation}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable && Serv.useDefaultRole}"/>
+
+                          <apex:outputPanel rendered="{! NOT Serv.useDefaultRole}">
+                            <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_1}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>                                              
+                          </apex:outputPanel>  
+
+                          <apex:outputLabel escape = "false" value="{!modalErrorMessage}" rendered="{!!Serv.recordService.Confirm_Box__c && isModalErrorMessageEnable}" />
+
+                      <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+
+                      </apex:outputPanel>  
                   </span>
-                </li>
+                    </td>
+                </tr>
+
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">                    
+                      <span>
+                        <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_2}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
+                      </span>
+                    </apex:outputPanel>
+                  </td>
+                </tr>                      
+
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">
+                      <span>
+                        <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_3}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
+                        <b><a href="{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link}">{!$Label.ISSP_Email_Here}</a>.</b>
+                  </span>
+                    </apex:outputPanel>                      
+                  </td>
+                </tr>                      
+
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
+                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
+                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
+                    <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
+                      <apex:selectOptions value="{!availablePortalServiceRoles}"/>
+                      <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
+                    </apex:selectList>                  
+                  </apex:outputPanel>
+                  </td>
+                </tr>
+              </table>
 
                 <script> 
                   if('{!JSENCODE(Serv.recordService.Description__c)}'!=''){ 
@@ -242,7 +420,6 @@
                   }
                 </script>
 
-            </ul>
 
               <apex:outputPanel rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}"> 
                 <div class="checkbox">
@@ -268,35 +445,46 @@
           </div>
 
           <div class="modal-footer">
-              <div class="row">
+            <div class="row">
                   
               <div class="col-md-6">
+
+                <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
+                  value="{!$Label.ISSP_Confirm}" 
+                  styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" 
+                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" 
+                  rerender="display_messages"/>
             
-              <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');}" rerender="display_messages"/>
+                <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}"
+                  id="serviceSubmitButton">
+                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"
+                     class="btn_iata_success btn-block btn">
+                     {!$Label.ISSP_Confirm}
+                  </a>
+                </apex:outputPanel> 
 
-              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace'}"> 
-                <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');"    class="btn_iata_success btn-block btn">
-                   {!$Label.ISSP_Confirm}
-                </a>
-              </apex:outputPanel> 
+                <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && !isModalErrorMessageEnable}" id="serviceSubmitButton2"> 
+                  <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
+                     {!$Label.ISSP_Confirm}
+                  </a>
+                </apex:outputPanel> 
 
- </div>
-                  <div class="col-md-6">
-              <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">
+              </div>
+              <div class="col-md-6">
+                <a onclick="closeDialog()" class="btn_iata_cancel btn-block btn">
                   {!$label.ISSP_Cancel}
-              </a>
-                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
         <!-- /.modal-content -->
-      </div>
+      </apex:outputPanel>
       <!-- /.modal-dialog -->
     </div>
 
-
     <!-- Modal New Service Request-->
-    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" onblur="refreshPage();">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -305,14 +493,68 @@
           </div>
           <div class="modal-body">
             <p>
-              {!$Label.ISSP_Thanks_for_request}
+                <!-- basto1p SCIM_App_Name__c -->
+              <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_Thanks_for_request_cns,
+              IF(   Serv.recordService.Name=='IFG Production'
+                 || Serv.recordService.Name=='IFG Pre-Production',$Label.IFG_Thanks_for_request,$Label.ISSP_Thanks_for_request))}"/>
             </p>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal New Service Request-->
+    <div class="modal" id="ModalErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
+        <div class="modal-content"> 
+          <div class="modal-header"> 
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p>              
+                  <apex:outputLabel escape = "false" id="errorMessage" value=""/>
+                </p>
+              </div>
+            </div>            
+          </div>  
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-md-12">
+                <a onclick="errorMessageModalClose()" class="btn_iata_cancel btn-block btn">
+                  {!$label.ISSP_Cancel}
+                </a>
+              </div>
+            </div>            
+          </div>          
+        </div>
+      </apex:outputPanel>
+    </div>
+
+    <!-- Modal New Service Request-->
+    <div class="modal" id="ModalNewIepServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"> {!$Label.ANG_ISSP_Open_IATA_EasyPay_Account} </h4>
+          </div>
+          <div class="modal-body">
+            <div class="title">
+                <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
+                <b>{!$Label.ANG_ISSP_UserProvisioningWait}</b>
+            </div>   
+          </div>
+          <div class="modal-footer">
+          </div>          
+        </div>
+      </div>
+    </div>
+
 </apex:form>
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
     </body>
     </html>

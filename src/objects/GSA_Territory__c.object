@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -103,6 +100,21 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <description>AMS =&gt; GDP Synchronization key
+AMS_GDP_Key = AIMS ID + Airline Code</description>
+        <externalId>true</externalId>
+        <inlineHelpText>AMS =&gt; GDP Synchronization key
+AMS_GDP_Key = AIMS ID + Airline Code</inlineHelpText>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Accreditation_ID__c</fullName>
@@ -225,6 +237,19 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATA_Numeric_Country_Code__c</fullName>
+        <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
+        <externalId>false</externalId>
+        <formula>Related_Account__r.state_numeric_code__c</formula>
+        <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
+        <label>IATA Numeric Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Country_Name__c</fullName>
         <externalId>false</externalId>
         <label>Location Country Name</label>
@@ -319,10 +344,22 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Territory_State_Abbreviation_Visible__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Territory_Country_Name__c=&quot;Australia&quot;||Territory_Country_Name__c=&quot;Brazil&quot;||Territory_Country_Name__c= 
+&quot;Canada&quot;||Territory_Country_Name__c=&quot;United States&quot;||Territory_Country_Name__c=&quot;Venezuela&quot;,LEFT(Territory_State_Abbreviation__c,6),null)</formula>
+        <label>Territory State Abbrev. (GDP Files)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Territory_State_Abbreviation__c</fullName>
         <externalId>false</externalId>
-        <label>Territory State Abbreviation</label>
-        <length>6</length>
+        <label>Territory State Abbrev.(ISO State Table)</label>
+        <length>10</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -338,4 +375,5 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
     <pluralLabel>GSA Territories</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

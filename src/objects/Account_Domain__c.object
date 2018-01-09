@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Domains associated to the related account. Contacts related to the same account will have emails validated against this object</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -70,6 +67,11 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <label>Account Domain</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>Domain</label>
         <type>Text</type>
@@ -78,4 +80,17 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>AccountDomain_EmptyName</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISBLANK(Name)</errorConditionFormula>
+        <errorMessage>Domain name field cannot be blank.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>AccountDomain_InvalidDomainName</fullName>
+        <active>false</active>
+        <errorConditionFormula>NOT(REGEX(Name, &quot;^((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})$&quot;))</errorConditionFormula>
+        <errorMessage>The domain name that you provided is not a valid one.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

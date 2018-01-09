@@ -2,6 +2,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     public static Integer ITEMS_PER_PAGE = 2;
     private boolean firsttimepageload=true; 
     public vfIECEBC_RecipientList() {
+        SortBy='CreatedDate';
     }
     
     public PageReference duplicate() {
@@ -10,7 +11,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
         EBC_Master_Filter__c cloned = duplicate(selectedItem.Id, castedSelectedItem.Name);
         
         
-        PageReference pr = new PageReference('/iec/IECEBC_Recipient?id=' + cloned.Id);
+        PageReference pr = new PageReference('/apex/IECEBC_Recipient?id=' + cloned.Id);
         pr.setRedirect(true);
         return pr;
     }
@@ -84,12 +85,22 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
+        /*
         options.add(new SelectOption('CreatedDate DESC ','Sort By', true)); 
         options.add(new SelectOption('CreatedDate DESC','Creation Date'));
         options.add(new SelectOption('LastModifiedDate DESC','Last Edited'));
         options.add(new SelectOption('Name ASC','Name')); 
         options.add(new SelectOption('Audience__c ASC', 'Audience'));
+        */
 
+        options.add(new SelectOption('CreatedDate','Sort By', true)); 
+        options.add(new SelectOption('Name ASC ','List Name')); 
+        options.add(new SelectOption('Audience__c ASC ', 'Audience'));
+        options.add(new SelectOption('CreatedDate ASC ','Created Date - Ascending')); 
+        options.add(new SelectOption('CreatedDate DESC ','Created Date - Descending')); 
+        options.add(new SelectOption('LastModifiedDate ASC ','Last Edited - Ascending')); 
+        options.add(new SelectOption('LastModifiedDate DESC ','Last Edited - Descending')); 
+      
         return options;
     }
 }
