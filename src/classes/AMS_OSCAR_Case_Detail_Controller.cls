@@ -318,14 +318,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 return isVATnumberSpecialCase;
             }else{
 
-                if(isAgencyCorrection 
-                    && (oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Brazil' 
-                        || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'India'          //IN
-                        || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Malaysia'       //MY
-                        || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Thailand'       //TH
-                        || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')
-                    ){
-
+                if(isAgencyCorrection && (oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Brazil' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'India' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Malaysia' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Thailand' || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')){
                     isVATnumberSpecialCase = true;
                 } else{
                     isVATnumberSpecialCase = false;

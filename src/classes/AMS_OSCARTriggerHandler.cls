@@ -3123,12 +3123,7 @@ public class AMS_OSCARTriggerHandler {
 							//Checks if the accounts is BR Abroad, or if it belongs to one of these countries:Brazil, India, Malaysia and Thailand - in order to place again the initial "VAT Number" field value that cannot be changed for BR Abroad
 							if(mAccBranchAbroad.containsKey(acctId)){
 								Account auxAccount = mAccBranchAbroad.get(acctId);
-								if(acctId != updatedOscar.Account__c &&
-									(auxAccount.IATA_ISO_Country__r.Name == 'Brazil' 			//BR
-			                        || auxAccount.IATA_ISO_Country__r.Name == 'India'          	//IN
-			                        || auxAccount.IATA_ISO_Country__r.Name == 'Malaysia'       	//MY
-			                        || auxAccount.IATA_ISO_Country__r.Name == 'Thailand'       	//TH
-			                        || auxAccount.Is_Branch_Abroad__c == 'Yes')){
+								if(acctId != updatedOscar.Account__c && (auxAccount.IATA_ISO_Country__r.Name == 'Brazil' || auxAccount.IATA_ISO_Country__r.Name == 'India' || auxAccount.IATA_ISO_Country__r.Name == 'Malaysia' || auxAccount.IATA_ISO_Country__r.Name == 'Thailand' || auxAccount.Is_Branch_Abroad__c == 'Yes')){
 									accounts.get(acctId).VAT_Number__c = mAccBranchAbroad.get(acctId).VAT_Number__c;
 									accounts.get(acctId).VAT_Number_2__c = mAccBranchAbroad.get(acctId).VAT_Number_2__c;
                         }
