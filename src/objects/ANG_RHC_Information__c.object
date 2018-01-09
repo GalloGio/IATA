@@ -335,17 +335,19 @@ alert(result[0].description);
         <masterLabel>Request RHC Calculation</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
-{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
 
-var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
-rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
 
-var newvalue = Math.floor((Math.random()*15)+20)*1000;
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId}); 
 
-rhcInfo.ANG_RHC_Amount_Provisional__c = newvalue;
-sforce.connection.update([rhcInfo]);
+console.info(result[0]);
 
-window.location.reload();</url>
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
     </webLinks>
 </CustomObject>
