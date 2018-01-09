@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/RME_ALERT_BALANCEUPDATE/*')
 global class ANG_RME_Alert_Service {
 
-	public class RequestMessage{
+	public class RHCMessage{
 		//Basic info
 
 		public String iataCode;
@@ -58,7 +58,7 @@ global class ANG_RME_Alert_Service {
 
 		try{
 			//receive request
-			RequestMessage req = (RequestMessage)JSON.deserializeStrict(RestContext.request.requestBody.toString(), RequestMessage.class);
+			RHCMessage req = (RHCMessage)JSON.deserializeStrict(RestContext.request.requestBody.toString(), RHCMessage.class);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] req - ' + req);
 			result.iataCode = req.iataCode;
 
@@ -97,23 +97,23 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	private static void saveAlert(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
+	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();
 		alert.ANG_Account__c = rhcInfo.ANG_AccountId__c;
 		alert.ANG_RHC_Information__c = rhcInfo.Id;
-		alert.ANG_EventId__c = req.eventId;
-		alert.ANG_Threshold_Level__c = req.thresholdLevel;
-		alert.ANG_Direction__c = req.direction;
-		alert.ANG_RME_Last_Update__c = req.eventTime;
+		alert.ANG_EventId__c = message.eventId;
+		alert.ANG_Threshold_Level__c = message.thresholdLevel;
+		alert.ANG_Direction__c = message.direction;
+		alert.ANG_RME_Last_Update__c = message.eventTime;
 		insert alert;
 
 		setResponse(null, 202);
 	}
 
-	private static void updateRHC(RequestMessage req, ANG_RHC_Information__c rhcInfo) {
-		rhcInfo.ANG_ConsumedRHC__c = req.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = req.consumedRHCPercentage;
-		rhcInfo.ANG_ConsumedRHC_Last_Update__c = req.eventTime.date();
+	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
+		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
 		setResponse(null, 202);
