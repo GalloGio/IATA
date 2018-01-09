@@ -119,11 +119,23 @@ global class ANG_RME_Alert_Service {
 		setResponse(null, 202);
 	}
 
+	global class WebserviceResult {
+		webservice Boolean isSuccess;
+		webservice String description;
+		webservice String iataCode;
+
+		private RHCMessage res;
+
+		private WebserviceResult(){
+			isSuccess = true;
+		}
+	}
+
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
-	webservice static RequestResult requestBalanceUpdate(String accountId){
+	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
 
 		if(result.isSuccess) updateRHC(result.res, acc.RHC_Informations__r[0]);
 
@@ -131,10 +143,10 @@ global class ANG_RME_Alert_Service {
 	}
 
 	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
-	webservice static RequestResult requestProvisionalRHC(String accountId){
+	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
 			ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
@@ -146,10 +158,11 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	private static void doRequest(String iataCode, String mappingName){
+	private static WebserviceResult doRequest(String iataCode, String mappingName){
 
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
+		WebserviceResult result = new WebserviceResult();
 		result.iataCode = iataCode;
 
 		//do callout
@@ -159,7 +172,7 @@ global class ANG_RME_Alert_Service {
 		req.setTimeout(120000);
 		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 
-		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] req - ' + req);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 
 		//start log
 		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
@@ -173,30 +186,34 @@ global class ANG_RME_Alert_Service {
 		try {
 			res = new Http().send(req);
 
-			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] res - ' + res);
-			log.Input_Description__c += '\n\nResponse:\n'+res.toString();
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] res - ' + res);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] res body - ' + res.getBody());
+
+			log.Input_Description__c += '\n\nResponse:\n'+res.toString()+'\n'+res.getBody();
 
 			if(res.getStatusCode() >= 200 && res.getStatusCode() < 300){
 				result.res = (RHCMessage)JSON.deserializeStrict(res.getBody(), RHCMessage.class);
 			}else{
 				result.isSuccess = false;
-				result.description = res.getBody();
 
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
+				log.Error_Message__c = res.getBody();
 			}
 		} catch(Exception e) {
 			result.isSuccess = false;
-			result.description = e.getMessage();
 
-			log.Error_Code__c = 'Unexpected Error';
+			log.Error_Code__c = 'Unexpected Exception on Apex Class';
+			log.Error_Message__c = e.getMessage();
 		}
 
 		log.Success__c = result.isSuccess;
-		if(!log.Success__c) log.Error_Message__c = result.description;
+		if(!result.isSuccess) result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		
 		insert log;
 
-		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] log - ' + log);
-		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - requestBalanceUpdate] result - ' + result);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
+
+		return result;
 	}
 }

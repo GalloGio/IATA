@@ -190,7 +190,7 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
@@ -203,11 +203,11 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
-		System.assertEquals('There was an error', result.description);
+		System.assertEquals('An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin', result.description);
 		System.assert(!result.isSuccess);
 	}
 	
@@ -216,7 +216,7 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
