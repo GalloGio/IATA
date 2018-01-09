@@ -228,7 +228,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             //for(integer fi=0; fi<listIds.size(); fi++){
             //    if (listIds.get(fi)==i.Id) {foundid=true; break;}
             //}
-            if (sObj!='ID_CARD__c') {
+            if (i instanceof GDP_Products_Account_View__c) {
                 GDP_Products_Account_View__c a = (GDP_Products_Account_View__c)i;
                 newPreviousBatchEmail.add(a.Email_Address__c);
                 
@@ -259,7 +259,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 }); 
                 
                 currentBatchEmail.add(a.Email_Address__c);
-            } else{
+            } else if (i instanceof Id_Card__c){
                 Id_Card__c a = (Id_Card__c)i;
                 newPreviousBatchEmail.add(a.Email__c);
                 if (previousBatchEmail.contains(a.Email__c) || currentBatchEmail.contains(a.Email__c)) continue;
