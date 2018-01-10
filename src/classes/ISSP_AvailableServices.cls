@@ -288,8 +288,9 @@ public with sharing class ISSP_AvailableServices{
                 if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open') {
                     isIEPAccountEnable = true;                
                 } else if( 
-                            isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
-                                     (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
+
+                    isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
+                             (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
                     isIEPAccountEnable = true;
                 }
 
@@ -318,11 +319,12 @@ public with sharing class ISSP_AvailableServices{
                     if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
                         modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
                         isModalErrorMessageEnable = true;
+                    } else {
+                        if(contAcc.Account.ANG_IEP_Status_FF__c != ANG_ISSP_PortalServiceHelper.STATUS_OPEN && contAcc.Account.ANG_IEP_Status_FF__c != ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+                            modalErrorMessage = aux.replace('{0}', Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active);
+                            isModalErrorMessageEnable = true;
+                        }
                     }
-                }
-
-                if (!isIEPAccountEnable) {
-                    isModalErrorMessageEnable = true;
                 }
 
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
