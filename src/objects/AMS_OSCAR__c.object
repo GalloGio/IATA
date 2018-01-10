@@ -1822,6 +1822,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Expired__c</fullName>
+		<description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Expired__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1832,6 +1833,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Expiry_Date__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Expiry_Date__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1843,6 +1845,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_First_Name__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.First_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1855,6 +1858,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Last_Name__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Last_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1867,6 +1871,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Organization__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Issuer__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1879,6 +1884,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Position__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Position__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1891,6 +1897,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Record__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>HYPERLINK(&quot;/&quot;&amp;AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Id, AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Name,  &quot;Self&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1903,6 +1910,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Reference__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Registration_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -1915,6 +1923,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>DGR_Validaty__c</fullName>
+        <description>Formula field to display requiered information at the OSCAR level - to be used on the email templates</description>
         <externalId>false</externalId>
         <formula>text(AMS_Online_Accreditation__r.DGR_Agency_Regulation__r.Validity__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
