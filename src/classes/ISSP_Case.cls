@@ -155,6 +155,22 @@ public without sharing class ISSP_Case {
         return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
+    public String fullnameNOCFile { get{
+        Id caseId = ApexPages.currentPage().getParameters().get('caseId');
+        String folderName = '500/' + caseid + '/';
+        String fileName = 'Notice_of_Change_form.pdf';
+        String fullname = folderName + fileName;
+        String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+        Boolean isBankAccountChange = false;
+
+        if(newCase.Reason1__c == 'Bank Detail Update')
+            isBankAccountChange = true;
+
+        return link != '' ? link : '/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        }
+    }
+
     public ISSP_Case() {
         System.debug('xx2 Controller ');
         newCase = new Case();
