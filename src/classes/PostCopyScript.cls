@@ -60,6 +60,14 @@ global class PostCopyScript implements SandboxPostCopy {
 			System.debug('List of HPM Setting records to delete: ' + listHPMSettings);
 			delete listHPMSettings;
 		}
+		
+		//delete ISSP Kavi Setting custom setting record
+		List<ISSP_Kavi_Settings__c> listKVSettings = new List<ISSP_Kavi_Settings__c>();
+		listKVSettings = ISSP_Kavi_Settings__c.getAll().values();
+		if(!listKVSettings.isEmpty()) {
+			System.debug('List of HPM Setting records to delete: ' + listKVSettings);
+			delete listKVSettings;
+		}
 
 	}
 

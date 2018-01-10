@@ -272,8 +272,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <div id="PINFOCAPTCHA">       
                             
                             </div>-->
+                            <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                                <div>
                                         <div id="recaptcha1" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
-
+                                </div>
+                            </div>
                              <hr class="Thin" />
                 
                 
@@ -331,33 +334,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             
                             </apex:pageBlockSection>
                             <hr class="Thin" />
-
-                            
-                            <!-- 
-                             <div id="CODEINFOCAPTCHA"> 
-                             
-                             
-                                      <div id="Captcha_Submenu" class="submenu"   style="  height:138px; margin-left: -75px; margin-top: 34px;">
-                                        <div id="Captcha_Submenu_Panel" class="LogSubMenuPanel_captcha">
-                                            <div style="margin-left:170px;">   
-                                                <div id="captchaEnter" title="Form Submission Validation">
-                                                    <script type="text/javascript"  src="https://www.google.com/recaptcha/api/challenge?k={!publicKey}"></script>
-                                                    <noscript>
-                                                        <iframe src="https://www.google.com/recaptcha/api/noscript?k={!publicKey}"  height="00" width="00" frameborder="0"></iframe>
-                                                        <br />
-                                                        <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-                                                        <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
-                                                    </noscript>
-                                                    <div id="validationResultDiv"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                             
-                            
-                             </div>
-                             -->
-                             <div id="recaptcha2" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                            <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                                <div>
+                                    <div id="recaptcha2" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                                </div>
+                            </div>
                          <hr class="Thin" />
                             
                             <apex:pageBlockButtons location="bottom">
