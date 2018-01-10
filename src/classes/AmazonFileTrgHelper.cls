@@ -98,16 +98,11 @@ public class AmazonFileTrgHelper {
                     AfterUndelete(listIdToProcessPerInt.get(num));
                 }
 
-                else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap '
-                                 + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
+                else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap ' + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
             }
 
 
-        }catch(Exception e){
-
-         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete  ' , '\n MESSAGE: '  + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString()  );
-
-        }
+        }catch(Exception e){ TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete  ' , '\n MESSAGE: '  + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString()  ); }
 
 
     }
@@ -153,9 +148,9 @@ public class AmazonFileTrgHelper {
 
 
         }catch(Exception e){
-            if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS);
-         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: '
-                     + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
+            if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS); 
+
+            TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: ' + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
 
         }
 
