@@ -84,8 +84,12 @@ public class  AmsIataCodeGeneratorTest
         
         c7.AMS_Default_State__c = stateCOdefault.ISO_Code__c;
         update c7;
-        c2.AMS_Default_state__c = stateFRdefault.ISO_Code__c;
-        update c2;
+
+        //c2.AMS_Default_state__c = stateFRdefault.ISO_Code__c;
+        //update c2;
+        // AMSU-107 forcing billing state to the default state of the ISO Country; 
+        // countries that have a default state will have ONLY THAT state below them - as any other state would not be selectable and would be useless
+        // => remove the default state for FR
         
         //Load range from Controller
         if(usingController){

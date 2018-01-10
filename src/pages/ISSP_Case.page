@@ -630,6 +630,8 @@
                                         <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
                                         <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
                                         
+                                        <apex:outputfield label="{!$Label.ISSP_Case_Payment_status}" rendered="{!newCase.RecordType.Name=='Invoicing Collection Cases'}" value="{!newCase.Has_the_agent_paid_invoice__c}" />
+                                        
                                         <!-- SIDRA Fields - Display even when empty -->
                                         <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$ObjectType.Case.fields.Remittance_Date__c.Label}" rendered="{!caseType =='SIDRA'}">
                 							<apex:param value="{!newCase.Remittance_Date__c}"/>
@@ -683,7 +685,7 @@
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
 
-                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation))}">
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c <> 'New MSO')}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">

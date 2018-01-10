@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Draft</fullName>
+        <default>true</default>
+        <label>Draft</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Review 2 - Europe</fullName>
+        <default>false</default>
+        <label>Review 2 - Europe</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Review 2 - Americas</fullName>
+        <default>false</default>
+        <label>Review 2 - Americas</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for translation - French</fullName>
+        <default>false</default>
+        <label>Ready for translation - French</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for translation - Spanish Europe</fullName>
+        <default>false</default>
+        <label>Ready for translation - Spanish Europe</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for translation - Spanish Americas</fullName>
+        <default>false</default>
+        <label>Ready for translation - Spanish Americas</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Review 3 - Europe</fullName>
+        <default>false</default>
+        <label>Review 3 - Europe</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Review 3 - Americas</fullName>
+        <default>false</default>
+        <label>Review 3 - Americas</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reviewed</fullName>
+        <default>false</default>
+        <label>Reviewed</label>
+        <reviewed>true</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Duplicate</fullName>
+        <default>false</default>
+        <label>Duplicate</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Duplicate - web</fullName>
+        <default>false</default>
+        <label>Duplicate - web</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+</StandardValueSet>

@@ -492,7 +492,7 @@
         
     }
 
-     @isTest static void changeCodeGenOnApprovalDisapproval() {
+     @isTest static void changeCodeGenOnApproval() {
         
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
@@ -600,7 +600,51 @@
 
     }
 
-     @isTest static void accreditationProcessLogic() {
+    @isTest static void changeCodeGenOnDisapproval() {
+        
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        
+        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
+
+        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+
+        Test.startTest();
+        
+        AMS_OSCAR__c oscarT = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+        STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 1];
+
+        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+        changeCode.name = 'NEW';
+        changeCode.reasonCode = '21';
+
+        changeCode.memoText = 'New application in progress';
+        changeCode.reasonDesc  = 'NEW APPLICATION';
+        changeCode.status  = '2';
+
+        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
+
+        oscarT.recordTypeID = newRT;
+        oscarT.STEP2__c = 'Not Started';
+        oscarT.STEP12__c = 'Passed';
+        oscarT.STEP15__c = 'Passed';
+
+        update oscarT;
+
+        oscarT.Validation_Status__c = AMS_Utils.PASSED;
+        oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
+        update oscarT;
+
+        oscarT = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscarT.id];
+
+        System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
+        //TODO ASSERT: assert change code dis created
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void accreditationProcessLogic() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
@@ -865,13 +909,375 @@
 
         Test.stopTest();
     }
-    
-    @isTest static void testcoverage() {
+
+    @isTest static void testCertificates() {
+        
+
+        AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+         
+        Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP6__c from AMS_OSCAR__c where Account__c =: a.Id limit 1];
+
+        AMS_Accreditation_Contact__c dgr = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Plitt'];
+        dgr.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
+        update dgr;        
+        Test.startTest();
+        oscar.STEP6__c = 'Passed';
+        update oscar;
+
+        AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
+
+        System.assertEquals('Passed',oscarT.STEP6__c);
+
+        Test.stopTest();
+
+    } 
+
+    @isTest static void testMCLocationType() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-         
-        AMS_OSCARTriggerHandler.increasecoverage(); 
-    }
-    
 
+        Test.startTest();
+
+        List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocationType',
+                                                          TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
+                                                          TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
+                                                          TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
+                                                          TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+
+        insert customsettings;
+
+        Account aHo = [SELECT id, Location_Type__c from Account where Location_Type__c = 'HO' LIMIT 1];
+        Account aBr = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'BR' LIMIT 1];
+
+        AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+        insert ah1;
+
+        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=aBr.id,Parent_Account__c=aHo.id);
+        insert ar1;
+
+        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aBr.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
+        
+        insert oscar;
+         
+        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= false;
+        newCase.setOptions(dmo);
+
+        insert newCase;
+
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
+        insert stagingArea;
+
+        AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
+
+        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
+        oscarToUpdate.Type_of_change__c = AMS_Utils.LOCATION_TYPE;
+        oscarToUpdate.Change_effective_as_of__c = date.today();
+        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscarToUpdate;
+
+        AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
+
+        System.assertEquals('Passed',oscarT.STEP6__c);
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testMCOwnershipToIATA() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        Test.startTest();
+
+        List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination10', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
+                                                          TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
+                                                          TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = true, 
+                                                          TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
+                                                          TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CHF'));
+
+        insert customsettings;
+
+        Account aHo = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'HO' LIMIT 1];
+        Account aBr = [SELECT id, Location_Type__c from Account where Location_Type__c = 'BR' LIMIT 1];
+
+        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aHo.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
+        
+        insert oscar;
+         
+        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= false;
+        newCase.setOptions(dmo);
+
+        insert newCase;
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c );
+        insert stagingArea;
+
+        AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
+
+        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
+        oscarToUpdate.Type_of_change__c = AMS_Utils.OWNERSHIP_IATA;
+        oscarToUpdate.Change_effective_as_of__c = date.today();
+        oscarToUpdate.AMS_Target_Agency__c = aBr.Id;
+        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscarToUpdate;
+
+        AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
+
+        System.assertEquals('Passed',oscarT.STEP6__c);
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testMCOwnershipToNonIATA() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        Test.startTest();
+
+        List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination09', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
+                                                          TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
+                                                          TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
+                                                          TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false, 
+                                                          TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CHF'));
+
+        insert customsettings;
+
+        Account a = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'HO' LIMIT 1];
+
+        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
+        
+        insert oscar;
+         
+        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= false;
+        newCase.setOptions(dmo);
+
+        insert newCase;
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c );
+        insert stagingArea;
+
+        AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
+
+        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
+        oscarToUpdate.Type_of_change__c = AMS_Utils.OWNERSHIP_NON_IATA;
+        oscarToUpdate.Change_effective_as_of__c = date.today();
+        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscarToUpdate;
+
+        AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
+
+        System.assertEquals('Passed',oscarT.STEP6__c);
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testMCChangeOfLocation() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        Test.startTest();
+
+        List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination02', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
+                                                          TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false, 
+                                                          TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
+                                                          TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
+                                                          TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CLF'));
+
+        insert customsettings;
+
+        Account aHo = [SELECT id, Location_Type__c from Account where Location_Type__c = 'HO' LIMIT 1];
+        Account aBr = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'BR' LIMIT 1];
+
+        aBr.Location_Type__c = AMS_Utils.SA;
+        update aBr;
+
+        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aBr.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
+        
+        insert oscar;
+         
+        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+        Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= false;
+        newCase.setOptions(dmo);
+
+        insert newCase;
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
+        insert stagingArea;
+
+        AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
+
+        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
+        oscarToUpdate.Type_of_change__c = AMS_Utils.LOCATION;
+        oscarToUpdate.Change_effective_as_of__c = date.today();
+        oscarToUpdate.AMS_Target_Agency__c = aHo.Id;
+        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscarToUpdate;
+
+        AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
+
+        System.assertEquals('Passed',oscarT.STEP6__c);
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testFetchCaseReason() {
+        String result = '';
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('');
+        System.assertEquals(result, 'Agency Changes');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Location type');
+        System.assertEquals(result, 'CHG – Data Maintenance');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Ownership');
+        System.assertEquals(result, 'CHO / CHS – Change of Ownership / Legal Status');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Major shareholding');
+        System.assertEquals(result, 'CHC – Change of Shareholding');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Location');
+        System.assertEquals(result, 'CHL - Change of Location');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Legal name');
+        System.assertEquals(result, 'CHN - Change of Name');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('VMFR');
+        System.assertEquals(result, 'VMFR Setup/Update');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Minor shareholding');
+        System.assertEquals(result, 'CHG – Data Maintenance');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Hierarchy');
+        System.assertEquals(result, 'Change of Hierarchy');
+
+        result = AMS_OSCARTriggerHandler.fetchCaseReason('Accreditation type');
+        System.assertEquals(result, 'Accreditation Type');
+
+    }    
+        
+    // CB - test AMS_OSCARTriggerHandler.createHoAdminNotifications
+    @isTest static void test_createHoAdminNotifications() 
+    {        
+        Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' ,
+                                    Enable_Minor_Changes_from_Portal__c = true,
+                                    Local_language_Agency_details_required__c = true);
+        insert country;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id; 
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '1000000';
+        parent.IATA_ISO_Country__c = country.Id; 
+
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+      
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'Travel Agent';
+        child.Top_Parent__c = parent.Id;
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr ;
+        child.IATACode__c = '2000000';
+        child.Location_Type__c = 'BR';
+        insert child;
+        System.debug('child Id: ' + child.Id);
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= child.Id;
+        con.Email = 'Test@test11.com';
+        //insert con;
+
+        Contact con_adm = ISSP_ObjectFactory.createNewContact();
+        con_adm.AccountId= parent.Id;
+        con_adm.Email = 'Test@test11.com';
+        con_adm.User_Portal_Status__c = 'Approved Admin';
+        //insert con_adm;
+        insert new list<Contact>{con, con_adm};
+
+        System.debug('con Id: ' + con.Id);
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = child.id,Change_effective_as_of__c = Date.today());
+        oscar.STEP12__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
+        insert oscar;
+
+        Case testCase2 = ISSP_ObjectFactory.createNewCase();
+            testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase2.Reason1__c = 'Cargo';
+            testCase2.Region__c = 'Europe';
+            testCase2.Oscar__c = oscar.Id;
+            testCase2.Customer_recovery__c = false;
+            testCase2.BounceEmailCounter__c = 0.0;
+            testCase2.Case_Language__c = 'English';
+            testCase2.Subject = 'Test 007';
+            testCase2.Reopened_case__c = 0.0;
+            testCase2.AccountId = child.Id;
+            testCase2.Account_Concerned__c = child.Id;
+            testCase2.IFAP_Country_ISO__c = 'tq';
+            testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
+        insert testCase2;
+
+        Test.startTest();
+        
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP16__c = AMS_Utils.PASSED;
+        oscar.STEP1__c = AMS_Utils.PASSED;
+        update oscar;
+
+        Test.stopTest();
+
+        list<Notification__c> notifications = [SELECT Id FROM Notification__c];
+        System.assertNotEquals(true, notifications.isEmpty());
+
+    }
 }

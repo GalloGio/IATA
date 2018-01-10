@@ -54,7 +54,9 @@ public class AMS_OSCARTriggerHandler {
                 'STEP6__c' => System.Label.AMS_OSCAR_STEP6,
                 'STEP7__c' => System.Label.AMS_OSCAR_STEP7,
                 'STEP8__c' => System.Label.AMS_OSCAR_STEP8,
-                'STEP9__c' => System.Label.AMS_OSCAR_STEP9
+                'STEP9__c' => System.Label.AMS_OSCAR_STEP9,
+                'STEP41__c' => System.Label.AMS_OSCAR_STEP41,
+                'STEP42__c' => System.Label.AMS_OSCAR_STEP42
             };
         }
         set;
@@ -110,6 +112,7 @@ public class AMS_OSCARTriggerHandler {
 
 		updateCaseKPIFields();
 		updateCaseInfo();
+        createHoAdminNotifications();
 	}
 
 	private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -1515,6 +1518,83 @@ public class AMS_OSCARTriggerHandler {
 		if(!casesToUpdate.isEmpty()) update casesToUpdate;
 	}
 
+    // Create portal notifications for the HO's portal admin when NoC and Change of Bank Details OSCARs submitted by a BR contact are finalized
+    private static void createHoAdminNotifications() {
+        system.debug('createHoAdminNotifications: enter ');
+        set<Id> setInvolvedAcctIds = new set<Id>();
+        map<Id, AMS_OSCAR__c> lstOscarsToNotify = new map<Id, AMS_OSCAR__c>();
+        list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
+
+        for (AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.new) {
+            AMS_OSCAR__c oldOscar = (AMS_OSCAR__c)Trigger.oldMap.get(oscar.Id);
+            if (oscar.Finalization_result__c == AMS_Utils.PASSED && oldOscar.Finalization_result__c != AMS_Utils.PASSED && ( oscar.Process__c == AMS_Utils.BANKACCCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES ) ) {
+                setInvolvedAcctIds.add(oscar.Account__c);
+                lstOscarsToNotify.put(oscar.Id, oscar);
+            }
+        }
+        system.debug('createHoAdminNotifications: setInvolvedAcctIds :' + setInvolvedAcctIds);
+
+        if (setInvolvedAcctIds.isEmpty()) return;
+
+        map<Id, Account> mapInvolvedAccountsPerId = new map<Id, Account>([SELECT Id, IATACode__c, Top_Parent__c, Top_Parent__r.IATACode__c FROM Account WHERE Id IN :setInvolvedAcctIds]);
+
+        set<Id> setBRAccountIds = new set<Id>();
+        set<Id> setHOAccountIds = new set<Id>();
+
+        for (Account acc : mapInvolvedAccountsPerId.values()) 
+            if (acc.Top_Parent__c != null) {
+                setBRAccountIds.add(acc.Id);
+                setHOAccountIds.add(acc.Top_Parent__c);
+            }
+        system.debug('createHoAdminNotifications: setBRAccountIds :' + setBRAccountIds);
+
+        if (setBRAccountIds.isEmpty()) return; // if empty it means all involved accounts are HOs so there's no OSCAR from a BR account, so we can stop
+
+        // get HO portal admin contacts-list per account
+        map<Id, list<Contact>> mapAdminContactsPerHOId = new map<Id, list<Contact>>();
+        for (Contact con : [SELECT Id, Email, AccountId, User_Portal_Status__c FROM Contact WHERE AccountId IN :setHOAccountIds AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']) {
+            if (mapAdminContactsPerHOId.get(con.AccountId) != null) 
+                mapAdminContactsPerHOId.get(con.AccountId).add(con);
+            else 
+                mapAdminContactsPerHOId.put(con.AccountId, new list<Contact>{con});
+            
+        }
+
+        // get related cases
+        map<Id, Case> mapCasesPerOscarId = new map<Id, Case>();
+        for (Case c : [SELECT Id, CaseNumber, Oscar__c FROM Case WHERE Oscar__c IN :lstOscarsToNotify.keyset()]) {
+            mapCasesPerOscarId.put(c.Oscar__c, c);
+        }
+        
+        try {
+            for (AMS_OSCAR__c oscar : lstOscarsToNotify.values()) {
+                if (setBRAccountIds.contains(oscar.Account__c) && mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c) != null) { // only notify if case is from BR & there is an admin contact on HO
+                    for (Contact con : mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c)) {
+
+                        Notification__c notification = new Notification__c();
+                        notification.Contact__c = con.Id;
+                        notification.Type__c= 'Information';
+                        notification.Notificatin_color__c = '#007FFF';
+                        notification.Alert_Contact_By_Email__c = true;
+                        notification.Expiry_date__c = Datetime.now().addDays(14);
+                        notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' finalized';
+                        notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
+                        notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + mapCasesPerOscarId.get(oscar.Id).Id + '">' + mapCasesPerOscarId.get(oscar.Id).CaseNumber + '</a></p>';
+
+                        lstNotificationsToCreate.add(notification);
+                    }
+                }
+            }
+            system.debug('createHoAdminNotifications: lstNotificationsToCreate :' + lstNotificationsToCreate);
+
+            if (!lstNotificationsToCreate.isEmpty()) 
+                insert lstNotificationsToCreate;
+
+        } catch (Exception e) {
+            system.debug('Add notification ERROR: ' + e.getmessage());
+        }
+    }
+
 	public static String fetchCaseReason(String typeOfChange){
 
 		if(typeOfChange == null || typeOfChange == '')
@@ -2111,7 +2191,11 @@ public class AMS_OSCARTriggerHandler {
 
 	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-	        List<Contact> contList = fetchContactInfoFromCase(oscarCommCaseId);
+			List<Contact> contList;
+	        if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP)
+	        	contList = fetchContactFromAgencyContact(oscarId);
+	        else	
+	        	contList = fetchContactInfoFromCase(oscarCommCaseId);
 
 	        if(!contList.isEmpty())
 				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -2128,6 +2212,12 @@ public class AMS_OSCARTriggerHandler {
 	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
 
 		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+	
+	private static List<Contact> fetchContactFromAgencyContact(String oscarId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select Agency_Contact__c from AMS_OSCAR__c where Id = :oscarId )];
 
 	}
 	
@@ -2149,6 +2239,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId 					= 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId 	= 'IEP_Setup_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId 	= 'IEP_Setup_Finalization_Passed';
+        else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId 	= 'IEP_Setup_Finalization_Failed';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -2511,6 +2604,33 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Passing of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, true);
+
+        }
+
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP42__c <> updatedOscar.STEP42__c && updatedOscar.STEP42__c == 'Failed'){
+
+            System.debug('Sending the email for the user to anounce Finalization Failure of the IEP bank account setup oscar');
+
+            //using an already existing method to send email alert to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SETUPFINALIZATION, false);
+
+        }
+
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
             if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
@@ -2551,7 +2671,7 @@ public class AMS_OSCARTriggerHandler {
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
-                AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+                AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
 
             updatedOSCAR.STEP2__c = 'Failed';
@@ -2919,293 +3039,5 @@ public class AMS_OSCARTriggerHandler {
 
         insert authorizations;
     }
-
-	public static void increasecoverage () {
-		Integer i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-		i=1;
-
-	}
 
 }
