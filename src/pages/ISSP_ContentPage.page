@@ -283,18 +283,16 @@
                                         <div class="col-md-3" id="leftFilter">
                                             Filter by Document Category
                                             <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
-                                            {!selectedValCat}
                                                 <apex:selectOptions value="{!allDocumentCategoryList}"/>
                                             </apex:selectList>
                                             Filter by Country of Publication    
                                             <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
-                                            {!selectedValPub}
                                                 <apex:selectOptions value="{!allCountriesList}"/>
                                             </apex:selectList>
                                         <!--  <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass=" btn btn-danger" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/> -->
-                                          <apex:commandButton value="Apply Filter" action="{!Init}" styleClass="btn btn-success" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" />
+                                          <apex:commandButton value="Apply Filter" action="{!Init}" styleClass="btn btn-success" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors"  oncomplete="loadTableDocs();" />
                                          </div>      
-                                    <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors"/>
+                                    <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
                                      <div class="col-md-9" id="resulttable">
                                         <div class="panel panel-default">
                                             <!---------------------DOCUMENTS TABLE------------------------->
@@ -317,8 +315,7 @@
                                                     
                                                     <!----------------------DESCRIPTION COLUMN------------------------>
                                                     <apex:column >
-                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>
-                                                        {!ver.Description}
+                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>{!ver.Description}
                                                     </apex:column>
 
                                                     <!----------------------COUNTRY OF PUBLICATION COLUMN------------------------>
@@ -389,28 +386,28 @@
                                                                      
                                                <apex:panelGrid id="buttons" columns="8" styleClass="buttons" >                      
                                                 
-                                                <apex:commandLink styleClass="paginate_button" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Previous</apex:commandlink>
+                                                <apex:commandLink styleClass="paginate_button" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">Previous</apex:commandlink>
 
                                                 <apex:repeat  value="{!pageNumberButtons}" var="pageN">
-                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!OR(AND(pageN<5, currentPageNumber<=5),pageN==1)}">
+                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!OR(AND(pageN<5, currentPageNumber<=5),pageN==1)}" oncomplete="loadTableDocs();">
                                                           <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>
                                                      <apex:commandButton styleClass="paginationButt" value="..." rendered="{!AND(pageN>4, currentPageNumber>=4, pageN==currentPageNumber-1)}" disabled="true">
                                                     </apex:commandButton>
                                                     
                                                     <apex:commandButton  styleClass="paginationButt" action="{!navigateToPage}" rendered="{!OR(AND(pageN>4, pageN==(currentPageNumber-1)),AND(pageN>=5, pageN==(currentPageNumber+1),(currentPageNumber+1)!=pageNumberButtons.size),AND(pageN>=5, pageN==currentPageNumber))}"
-                                                    value="{!pageN}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">
+                                                    value="{!pageN}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">
                                                          <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>    
                                                     <apex:commandButton styleClass="paginationButt" value="..." rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size-1,currentPageNumber!=pageNumberButtons.size)}" disabled="true">
                                                     </apex:commandButton>
 
-                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size)}">
+                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size)}" oncomplete="loadTableDocs();">
                                                               <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>
                                                 </apex:repeat>
 
-                                                 <apex:commandLink styleClass="paginate_button" action="{!next}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors">Next</apex:commandlink>
+                                                 <apex:commandLink styleClass="paginate_button" action="{!next}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">Next</apex:commandlink>
                                                </apex:panelGrid>  
                                                <br style="clear: both;" /> 
                                                 </div>
