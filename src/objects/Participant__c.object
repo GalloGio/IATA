@@ -595,7 +595,7 @@ Contact__r.Account.Name
         <description>It&apos; s not possible to change anything if the participant is related to an inactive group</description>
         <errorConditionFormula>AND(
  Local_Governance__r.Active__c = false,
- Local_Governance__r.RecordType.DeveloperName =  &apos;Local_Groups&apos;,  
+ 
  OR(
   ISNEW(),
   ISCHANGED(Contact__c),
