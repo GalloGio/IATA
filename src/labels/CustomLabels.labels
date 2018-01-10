@@ -1331,7 +1331,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature4</shortDescription>
-        <value>Credit Limit</value>
+        <value>Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature4Tooltip</fullName>
@@ -27061,7 +27061,10 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
-        <value>Cost tooltip</value>
+        <value>All application fees are refundable, in the event accreditation is not achieved:
+Small – up to USD 200.000 gross annual sales
+Medium – USD 200.001 – USD 2.000.000 gross annual sales
+Large – more than USD 2.000.000 gross annual sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>

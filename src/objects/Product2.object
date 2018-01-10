@@ -132,7 +132,7 @@
         <fullName>ANG_AE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for AEs</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -143,7 +143,7 @@
         <fullName>ANG_AE_Fees_Additional_Locations__c</fullName>
         <description>N/A. Placeholder</description>
         <externalId>false</externalId>
-        <label>Additional Locations/Codes Beyond 25</label>
+        <label>Additional locations/codes beyond 25</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -154,7 +154,7 @@
         <fullName>ANG_AE_Fees_First_10_locations__c</fullName>
         <description>AE: Annual fees for first 20 locations</description>
         <externalId>false</externalId>
-        <label>First 10 locations</label>
+        <label>First 10 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -165,7 +165,7 @@
         <fullName>ANG_AE_Fees_Next_15_Locations__c</fullName>
         <description>AE: Annual fees for Next 15 locations</description>
         <externalId>false</externalId>
-        <label>11-25 Locations/Codes</label>
+        <label>11-25 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -252,7 +252,7 @@
         <fullName>ANG_HE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for new HE</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
