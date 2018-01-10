@@ -652,6 +652,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
 )),
@@ -667,6 +668,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
@@ -689,6 +691,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
 )),
@@ -704,6 +707,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
