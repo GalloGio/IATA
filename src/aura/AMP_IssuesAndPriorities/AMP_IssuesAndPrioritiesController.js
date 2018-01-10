@@ -92,9 +92,21 @@
         $A.enqueueAction(action);
     },
     // TODO: fix the handling of hidden items
+
+    showDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", true);
+        //pass the issue attribute passed from the event to a component attribute
+        var issue = event.getParam("issue");
+        component.set("v.issueToDelete", issue);
+    },
+
+    hideDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", false);
+    },
+
     handleDeleteIssue : function(component, event, helper) {
         console.log("handleDeleteIssue");
-        var issue = event.getParam("issue");
+        var issue = component.get("v.issueToDelete");
         var issues = component.get("v.issues");
 
         if(issue.Id === undefined) {
@@ -128,6 +140,8 @@
             });
             $A.enqueueAction(action);
         }
+        //hide the delete popup
+        component.set("v.showDeletionCheck", false);
     },
     showPopup : function(component, event, helper) {
         component.set("v.showPopup", true);
