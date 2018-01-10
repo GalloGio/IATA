@@ -3073,13 +3073,21 @@ public without sharing class ISSP_AMS_Accreditation {
             String contentType = 'application/pdf';
             String folder = WrapperAttach.getAmazonFolder(caseId);
 
-            UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(null, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
+            UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(caseId, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
 
             Boolean result = AmazonRest.uploadFile(upF, bodyNOC);
 
             if(result) {
+
                 System.debug('Success: Amazon file Uploaded - ISSP_AMS_Accreditation.cls');
+
+                if(!UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(folder+fileName, size, caseId, 'AMS_File', OTHERS, 'Portal')) {
+                    
+                    System.debug('Error: Couldn\'t save amazon file on Salesforce - ISSP_AMS_Accreditation.cls');
+                }
+
             } else {
+
                 System.debug('Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls');
             }
         }

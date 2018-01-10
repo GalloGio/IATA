@@ -156,18 +156,35 @@ public without sharing class ISSP_Case {
     }
 
     public String fullnameNOCFile { get{
-        Id caseId = ApexPages.currentPage().getParameters().get('caseId');
-        String folderName = '500/' + caseid + '/';
-        String fileName = 'Notice_of_Change_form.pdf';
-        String fullname = folderName + fileName;
-        String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
 
-        Boolean isBankAccountChange = false;
+            Id caseId = ApexPages.currentPage().getParameters().get('caseId');
+            String folderName = '500/' + caseid + '/';
+            String fileName = 'Notice_of_Change_form.pdf';
+            String fullname = folderName + fileName;
 
-        if(newCase.Reason1__c == 'Bank Detail Update')
-            isBankAccountChange = true;
+            List<AmazonFile__c> amazonfilesList = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c =: caseId];
+            Boolean hasFile = false;
+            for(AmazonFile__c af : amazonfilesList) {
+                if(af.Full_Name_Unique__c == fullname) {
+                    hasFile = true;
+                    break;
+                }
+            }
 
-        return link != '' ? link : '/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            if(hasFile){
+                String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+                return link;
+            } else {
+
+                Boolean isBankAccountChange = false;
+
+                if(newCase.Reason1__c == 'Bank Detail Update')
+                    isBankAccountChange = true;
+
+                return '/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            }
+        
         }
     }
 
