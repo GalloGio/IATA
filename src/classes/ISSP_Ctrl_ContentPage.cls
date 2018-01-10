@@ -184,7 +184,7 @@ public class ISSP_Ctrl_ContentPage
     
     if(search!='' && search != null && String.isNotBlank(search)){
       system.debug('##RN search: ' + search);
-      filterSearch = 'and (Title like \'' + '%' + search +'%' +'\' or Description = \'' + '%'  +search +  '%' +'\' or Country_of_publication__c = \'' +search +'\' or Language__c = \'' +search +'\')'; 
+      filterSearch = 'and (Title like \'' + '%' + search +'%' +'\' or Description like \'' + '%'  +search +  '%' +'\' or Country_of_publication__c includes (\'' +search +   '\') or Language__c = \'' +search +'\')'; 
     }
     string filterCat = '';
     string filterCountryP = '';
@@ -195,7 +195,7 @@ public class ISSP_Ctrl_ContentPage
     }
 
     if(selectedValPub!='' && selectedValPub != null && String.isNotBlank(selectedValPub)){
-      filterCountryP = ' and Country_of_publication__c = \'' + selectedValPub + '\'';
+      filterCountryP = ' and Country_of_publication__c includes (\'' + selectedValPub  + '\')';
     }
 
    // init the controller and display some sample data when the page loads
