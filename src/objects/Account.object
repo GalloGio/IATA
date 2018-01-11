@@ -5576,6 +5576,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Domestic Agent</label>
                 </value>
                 <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
+                </value>
+                <value>
                     <fullName>Engine Manufacturer</fullName>
                     <default>false</default>
                     <label>Engine Manufacturer</label>
@@ -6126,6 +6131,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>DPC</controllingFieldValue>
+                <valueName>DPC</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -12877,6 +12886,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -76320,6 +76334,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Domestic Agent</fullName>
                 <default>false</default>
             </values>
@@ -77495,6 +77513,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -84219,6 +84241,17 @@ IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
         <active>true</active>
         <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
         <errorMessage>You cannot modify non IATA members name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Only_Admins_can_edit_DPC</fullName>
+        <active>true</active>
+        <description>Only system admins can set accounts to be category DPC or to remove that</description>
+        <errorConditionFormula>AND( NOT( $User.ProfileId = &quot;00e20000000ncPi&quot;),
+OR(
+  AND( ISPICKVAL(PRIORVALUE( Category__c ),&quot;DPC&quot; ), NOT(ISPICKVAL( Category__c , &quot;DPC&quot;))),
+  AND( NOT(ISPICKVAL(PRIORVALUE( Category__c ),&quot;DPC&quot; )), ISPICKVAL( Category__c , &quot;DPC&quot;))
+))</errorConditionFormula>
+        <errorMessage>Only System Administrators can edit DPC</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Parent_Acc_Airline_Designator_Required</fullName>

@@ -592,4 +592,115 @@ public class ISSP_CaseTest {
         Test.stopTest();
     }
 
+    public static testMethod void testDCPnewCase() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        Contact teamContact = ISSP_ObjectFactory.createNewContact();
+        teamContact.Email = 'teamcontact@email.com';
+        insert teamContact;
+
+       Id p = [select id from profile where name='ISS Portal DPC'].id;
+
+        User user = new User(alias = 'test123', email='test123@noemail.com',
+                emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                ContactId = contact.Id, FederationIdentifier = contact.Id,
+                timezonesidkey='America/Los_Angeles', username='tester@noemail.com');
+
+        insert user;
+
+       List<ISSP_DPC__c> mcs = new List<ISSP_DPC__c>();
+       ISSP_DPC__c accaRoleIds = new ISSP_DPC__c(name='ACCA Roles', Value__c=null);
+       ISSP_DPC__c accaAccounts = new ISSP_DPC__c(name='ACCA Accounts', Value__c=null);
+       ISSP_DPC__c nonAccaAccounts = new ISSP_DPC__c(name='Non-ACCA Accounts', Value__c=null);
+       ISSP_DPC__c dpcRecordType = new ISSP_DPC__c(name='DPC Recordtype', Value__c='test');
+       ISSP_DPC__c dpcSector = new ISSP_DPC__c(name='DPC Sector', Value__c='test');
+       ISSP_DPC__c dpcCategory = new ISSP_DPC__c(name='DPC Category', Value__c='test');
+       mcs.add(accaRoleIds);
+       mcs.add(accaAccounts);
+       mcs.add(nonAccaAccounts);
+       mcs.add(dpcRecordType);
+       mcs.add(dpcSector);
+       mcs.add(dpcCategory);
+       insert mcs;
+        // String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
+        // Case c = new Case();
+        // c.Subject = 'test 1';
+        // c.Status = 'Open';
+        // c.AccountId = account.id;
+        // c.ContactId = contact.id;
+        // c.Region__c = 'Europe';
+        // c.RecordTypeId = recordTypeId;
+        // c.CaseArea__c = 'test';
+        // c.Reason1__c = 'test';
+        // c.Visible_on_ISS_Portal__c = true;
+        // insert c;
+        //
+        // ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        // ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        // ApexPages.currentPage().getParameters().put('topic', 'test');
+        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        // system.runAs(thisUser){
+           system.runAs(user) {
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+
+        }
+        Test.stopTest();
+    }
+
+    public static testMethod void testDCP() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        Contact teamContact = ISSP_ObjectFactory.createNewContact();
+        teamContact.Email = 'teamcontact@email.com';
+        insert teamContact;
+
+       Id p = [select id from profile where name='ISS Portal DPC'].id;
+
+        User user = new User(alias = 'test123', email='test123@noemail.com',
+                emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                ContactId = contact.Id, FederationIdentifier = contact.Id,
+                timezonesidkey='America/Los_Angeles', username='tester@noemail.com');
+
+        insert user;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        c.Visible_on_ISS_Portal__c = true;
+        insert c;
+
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        // ApexPages.currentPage().getParameters().put('topic', 'test');
+        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        // system.runAs(thisUser){
+           system.runAs(user) {
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+
+        }
+        Test.stopTest();
+    }
+
  }
