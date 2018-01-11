@@ -1,0 +1,13 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Dear Agent,<o:p></o:p></span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">We
+would like to inform you that according to our records your Risk Status / Cash
+conditions have been recently updated.</span><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Your
+risk information result now in:<o:p></o:p></span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" align="left" style="line-height: normal;"><i><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Risk Status:</span></i><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<b>{!Account.ANG_RiskStatus__c}<br>
+</b><i>Cash conditions limited to Financial Security:</i>&nbsp;<b>{!IF(Account.ANG_CashCondition__c,
+'Yes','No')}</b></span><span lang="EN-US" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Please
+check more details to the IATA Customer Portal.<br>
+Thank you<o:p></o:p></span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Best Regards</span></p><p class="MsoNormal" align="left" style="line-height: normal;"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;"><br></span></p>]]></td>
+</tr>
+</table>
