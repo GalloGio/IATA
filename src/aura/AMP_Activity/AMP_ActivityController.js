@@ -97,11 +97,11 @@ console.log(JSON.stringify(activity));
         
         console.log('delete clicked...');
         var activity = component.get("v.activity");
-        console.log(JSON.stringify(activity));
-        var index = component.get("v.index");
-        
+        //pass the activity attribute passed from the event to a component attribute (AMP_UpdateIssueOrPriority, 
+        //in this event there are two params registered, issue and index) 
         var deleteEvent = component.getEvent("deleteActivity");
-        deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+        deleteEvent.setParams({ "issue": activity}).fire();
+        //deleteEvent.setParams({ "activityToDelete": activity, "index":index }).fire();
         
         component.set("v.isEditMode", false);
     },

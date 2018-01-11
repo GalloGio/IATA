@@ -39,11 +39,7 @@
     addIssue : function(component, event, helper ){
         var issues = component.get("v.issues");
         var newIssue = JSON.parse(JSON.stringify(component.get("v.newIssue")));
-        // console.log(JSON.stringify(issues));
-        // console.log(newIssue);
         issues.unshift(newIssue);
-        // console.log(JSON.stringify(issues));
-        // console.log(issues);
         component.set("v.issues", issues);
     },
     handleUpdateIssue : function(component, event, helper) {
@@ -107,11 +103,15 @@
     handleDeleteIssue : function(component, event, helper) {
         console.log("handleDeleteIssue");
         var issue = component.get("v.issueToDelete");
+        if(issue == null){
+            issue = event.getParam("issue");
+            console.log(JSON.stringify(issue));
+        }
         var issues = component.get("v.issues");
 
-        if(issue.Id === undefined) {
+        if(issue.Id === undefined ) {
 
-            issues.pop(); // the last item of the list is the unsaved, so we can pop()
+            issues.shift(); // the last item of the list is the unsaved, so we can shift()
             console.log(JSON.stringify(issues));
             component.set("v.issues", issues);
 

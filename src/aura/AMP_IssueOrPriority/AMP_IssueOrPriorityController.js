@@ -53,15 +53,11 @@
         var issue = component.get("v.issue");
         if(issue.Id === undefined) {
             console.log('cancel add new issue -> delete');
-            var deleteIssueEvent = component.getEvent("deleteIssue");
+            var deleteIssueEvent = component.getEvent("cancelAddIssue");
             deleteIssueEvent.setParams({'issue' : issue});
             deleteIssueEvent.fire();
         }
         component.set("v.isEditMode", false);
-    },
-    deletionCheck : function(component, event, helper) {
-        component.set("v.showDeletionCheck", true);
-
     },
     deleteItem : function(component, event, helper) {
         // Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list

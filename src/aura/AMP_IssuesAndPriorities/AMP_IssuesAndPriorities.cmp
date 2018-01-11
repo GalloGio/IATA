@@ -26,6 +26,8 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <!--<aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />-->
     <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.showDeletePopup" />
+    <aura:handler name="cancelAddIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+    
     <aura:handler name="updateIssue" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateIssue" />
 
     <aura:registerEvent name="AMP_IssueOrPriorityError" type="c:AMP_IssueOrPriorityError"/>
