@@ -145,7 +145,7 @@ public class ANG_AccountTriggerHandler {
 				    Active__c = true
 				    , Account__c = acc.Id
 				    , Change_Code__c = config.Change_Code__c
-				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.toUpperCase()
+				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).toUpperCase()
 				    , Reason_Code__c = config.Reason_Code__c
 				    , Reason_Description__c = config.Reason_Code_Description__c
 				    , Source__c = source
