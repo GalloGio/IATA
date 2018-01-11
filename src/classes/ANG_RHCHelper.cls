@@ -21,7 +21,17 @@ public class ANG_RHCHelper {
 
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
-		createRHCInfo([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accountIds], sumFS);
+		
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r), (SELECT Id from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsToProcess = new List<Account>();
+
+		for(Account acct: accountsRetreived){
+
+			if(acct.RHC_Informations__r.isEmpty())
+				accountsToProcess.add(acct);
+		}
+
+		createRHCInfo(accountsToProcess, sumFS);
 	}
 
 	public static void createRHCInfo(List<Account> accounts, Boolean sumFS) {

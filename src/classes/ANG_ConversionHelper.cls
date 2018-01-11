@@ -125,9 +125,9 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES) OR Status__c = :AMS_Utils.ACC_S0_TERMINATED)];
+		List<Account> allAccountsSingleHierarchyHOorTerminatedAgencies = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES AND Status__c != :AMS_Utils.ACC_S0_TERMINATED) OR (Status__c = :AMS_Utils.ACC_S0_TERMINATED and Sector__c in:ALLOWEDSECTORS and Location_Type__c not in:LOCATIONTYPESNEWGEN)) ];
 
-		for(Account acct: allAccountsSingleHierarchyHO){
+		for(Account acct: allAccountsSingleHierarchyHOorTerminatedAgencies){
 
 			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
 				if(acct.Expiry_Date__c < frontierDate){
@@ -136,9 +136,11 @@ global with sharing class ANG_ConversionHelper {
 					toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
 			}else
 				toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+
+			allAgencies.add(acct.Id);
 		}
 
-		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Class__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c,IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.ISO_Code__c ,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c from Account where Location_Type__c in :LOCATIONTYPESBRS and ParentId  = null and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Class__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c,IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.ISO_Code__c ,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c from Account where Location_Type__c in :LOCATIONTYPESBRS and ParentId  = null and IATA_ISO_Country__r.Name = :country and RecordTypeId in:ALLOWEDRECORDTYPES and Sector__c in:ALLOWEDSECTORS and Id not in:allAgencies];
 
 		for(Account acct: allAccountsSingleHierarchyBR){
 			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
@@ -165,7 +167,7 @@ global with sharing class ANG_ConversionHelper {
 
 		System.debug('All hierarchies:'+allHierarchies.size());
 		
-		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHO.size());
+		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHOorTerminatedAgencies.size());
 
 		return toReturn;
 	}
@@ -576,7 +578,7 @@ global with sharing class ANG_ConversionHelper {
 
 		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
 
-		//ANG_RHCHelper.createRHCInfo(topParents, true); as per NEWGEN-2487
+		ANG_RHCHelper.createRHCInfo(topParents, true); //as per NEWGEN-2487
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;

@@ -909,4 +909,69 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals(2,hiers.size());
 
 	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest13() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US',ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO 1',Short_Name__c='Agency HO 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HO',Name='Agency HO 1',Short_Name__c='Agency HO 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a1,a2};
+
+		ANG_RHC_Information__c rhc = new ANG_RHC_Information__c(
+				ANG_AccountId__c = a1.Id,
+				RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+				ANG_UniqueKey__c= a1.id+ANG_RHCHelper.RHC_INFO_STD_RT,
+				CurrencyIsoCode = ctry.CurrencyIsoCode
+			);
+
+		insert rhc;
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+		
+		Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
+
+		Test.stopTest();
+
+
+		System.debug([SELECT Id, ANG_AccountId__c, ANG_AccountId__r.Name from ANG_RHC_Information__c where RecordTypeId = :ANG_RHCHelper.RECTYPE_STDRHCINFO]);
+	}
+
+		@isTest static void ANG_ConversionHelperEnhancedTestTest14() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US',ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO', Name='Agency HO',      Short_Name__c='Agency HO',       Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR', Name='Agency BR (C) 1',Short_Name__c='Agency BR (c) 1', Sector__c = 'Cargo Agent',  Location_Class__c = 'C', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR', Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR', Name='Agency BR (M) 1',Short_Name__c='Agency BR (M) 3', Sector__c = 'Travel Agent', Location_Class__c = 'M', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a1,a2,a3,a4};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+	}
 }
