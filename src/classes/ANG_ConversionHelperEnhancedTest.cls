@@ -281,7 +281,10 @@ private class ANG_ConversionHelperEnhancedTest {
 			if(acct.Name == 'Agency HO ACCREDITED')
 				System.assertEquals(acct.Location_Type__c,'HE');
 			else
-				System.assertEquals(acct.Location_Type__c,'AE');
+				if(acct.Name == 'Agency BR2 ACCREDITED (T)')
+					System.assertEquals(acct.Location_Type__c,'HO');
+				else
+					System.assertEquals(acct.Location_Type__c,'AE');
 
 			if(acct.Name == 'Agency BR2 ACCREDITED (T)')
 				System.assertEquals(acct.Location_Class__c,'T');
@@ -419,11 +422,22 @@ private class ANG_ConversionHelperEnhancedTest {
 			if(acct.Name == 'Agency HO TERMINATED 2017')
 				System.assertEquals(acct.Location_Type__c,'HE');
 			else
-				System.assertEquals(acct.Location_Type__c,'AE');
+				if(acct.Location_Class__c == 'T')
+					System.assertEquals(acct.Location_Type__c,'HO');
+				else
+					System.assertEquals(acct.Location_Type__c,'AE');
 
-			System.assertEquals(acct.Location_Class__c,'P');
-
+			if(acct.Name=='Agency BR (T) TERMINATED 2017')
+				System.assertEquals(acct.Location_Class__c,'T');
+			else
+				System.assertEquals(acct.Location_Class__c,'P');
 		}
+
+		System.assertEquals([Select id from AMS_Agencies_relationhip__c].size(),1);
+		System.assertEquals([Select id from AMS_Agencies_Hierarchy__c].size(),1);
+
+
+
 	}	
 
 
@@ -485,10 +499,7 @@ private class ANG_ConversionHelperEnhancedTest {
 			if(acct.Name == 'Agency HO ACCREDITED')
 				System.assertEquals(acct.Location_Type__c,'HE');
 			else
-				if(acct.Name == 'Agency ST (T) TERMINATED 2017')
-					System.assertEquals(acct.Location_Type__c,'AE');
-				else
-					System.assertEquals(acct.Location_Type__c,'BR');
+				System.assertEquals(acct.Location_Type__c,'AE');
 
 			System.assertEquals(acct.Location_Class__c,'P');
 
@@ -558,11 +569,11 @@ private class ANG_ConversionHelperEnhancedTest {
 			if(acct.Name == 'Agency BR2 TERMINATED 2017 (P)')
 				System.assertEquals(acct.Location_Type__c,'AE');
 			if(acct.Name == 'Agency BR2 TERMINATED 2015 (P)')
-				System.assertEquals(acct.Location_Type__c,'BR');
+				System.assertEquals(acct.Location_Type__c,'AE');
 			if(acct.Name == 'Agency BR4 TERMINATED 2017 (F)')
 				System.assertEquals(acct.Location_Type__c,'AE');
 			if(acct.Name == 'Agency SA TERMINATED 2015')
-				System.assertEquals(acct.Location_Type__c,'SA');
+				System.assertEquals(acct.Location_Type__c,'AE');
 
 
 			System.assertEquals(acct.Location_Class__c,'P');
@@ -571,7 +582,7 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Id, Account__c, Change_Code__c  FROM Agency_Applied_Change_code__c ];
 
-		System.assertEquals(3,changeCodes.size());
+		System.assertEquals(5,changeCodes.size());
 
 	}		
 
@@ -636,17 +647,331 @@ private class ANG_ConversionHelperEnhancedTest {
 			if(acct.Name == 'Agency ST TERMINATED 2017 (F)')
 				System.assertEquals(acct.Location_Type__c,'AE');
 			if(acct.Name == 'Agency ES TERMINATED 2015 (F)')
-				System.assertEquals(acct.Location_Type__c,'ES');
+				System.assertEquals(acct.Location_Type__c,'AE');
 			if(acct.Name == 'Agency SA TERMINATED 2017')
 				System.assertEquals(acct.Location_Type__c,'AE');
 
-			if(acct.Name == 'Agency ES TERMINATED 2015 (F)')
-				System.assertEquals(acct.Location_Class__c,'F');
-			else
-				System.assertEquals(acct.Location_Class__c,'P');
+			System.assertEquals(acct.Location_Class__c,'P');
 
 		}
 
 
-	}	
+	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest9() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO TERMINATED 2017',Short_Name__c='Agency HO TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) 2',Short_Name__c='Agency BR (T) 2', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR (T)',Short_Name__c='Agency BR (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a2,a3,a4};
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
+		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a4.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1, rel2,rel3};
+
+        Account a5 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='SA',Name='Agency SA (P)',Short_Name__c='Agency SA (P)', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a5};
+
+		AMS_Agencies_relationhip__c rel4 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a4.Id, Child_Account__c = a5.Id);
+		insert new List<AMS_Agencies_relationhip__c>{rel4};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+		System.assertEquals(1,finalStruct.totalHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
+
+		System.debug('Running specific migration on:'+structure.values());
+		
+		Id migrationBacthId = ANG_ConversionHelper.runSpecificMigration(structure.values());
+
+		Test.stopTest();
+
+		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+
+		System.assertEquals(3,rels.size());
+		System.assertEquals(2,hiers.size());
+
+	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest10() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO TERMINATED 2017',Short_Name__c='Agency HO TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR (T) 1',Short_Name__c='Agency BR (T) 1', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a2};
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+		System.assertEquals(1,finalStruct.totalHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
+
+		System.debug('Running specific migration on:'+structure.values());
+		
+		Id migrationBacthId = ANG_ConversionHelper.runSpecificMigration(structure.values());
+
+		Test.stopTest();
+
+		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+
+		System.debug('accounts are:'+accounts);
+		System.debug('rels are:'+rels);
+		System.debug('hiers are:'+hiers);
+
+		System.assertEquals(0,rels.size());
+		System.assertEquals(0,hiers.size());
+
+	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest11() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US' , ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='PK', ISO_Code__c = 'PK')  ;
+        insert ctry2 ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO',Short_Name__c='Agency HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry2.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a2};
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+		System.assertEquals(1,finalStruct.totalHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
+
+		System.debug('Running specific migration on:'+structure.values());
+		
+		Id migrationBacthId = ANG_ConversionHelper.runSpecificMigration(structure.values());
+
+		Test.stopTest();
+
+		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+
+		System.debug('accounts are:'+accounts);
+		System.debug('rels are:'+rels);
+		System.debug('hiers are:'+hiers);
+
+		System.assertEquals(0,rels.size());
+		System.assertEquals(0,hiers.size());
+
+	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest12() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US',ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='PK',ISO_Code__c = 'PK')  ;
+        insert ctry2 ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO TERMINATED 2017',Short_Name__c='Agency HO TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR', Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a3 = new Account(IATA_ISO_Country__c = ctry2.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) 2',Short_Name__c='Agency BR (P) 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a4 = new Account(IATA_ISO_Country__c = ctry2.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR (P) 3',Short_Name__c='Agency BR (P) 3', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a2,a3,a4};
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
+		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a4.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1, rel2,rel3};
+
+        Account a5 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='SA',Name='Agency SA (P)',Short_Name__c='Agency SA (P)', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a5};
+
+		AMS_Agencies_relationhip__c rel4 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a4.Id, Child_Account__c = a5.Id);
+		insert new List<AMS_Agencies_relationhip__c>{rel4};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+		System.assertEquals(1,finalStruct.totalHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
+
+		System.debug('Running specific migration on:'+structure.values());
+		
+		Id migrationBacthId = ANG_ConversionHelper.runSpecificMigration(structure.values());
+
+		Test.stopTest();
+
+		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+
+		System.assertEquals(3,rels.size());
+		System.assertEquals(2,hiers.size());
+
+	}
+
+	@isTest static void ANG_ConversionHelperEnhancedTestTest13() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US',ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO 1',Short_Name__c='Agency HO 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HO',Name='Agency HO 1',Short_Name__c='Agency HO 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a1,a2};
+
+		ANG_RHC_Information__c rhc = new ANG_RHC_Information__c(
+				ANG_AccountId__c = a1.Id,
+				RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+				ANG_UniqueKey__c= a1.id+ANG_RHCHelper.RHC_INFO_STD_RT,
+				CurrencyIsoCode = ctry.CurrencyIsoCode
+			);
+
+		insert rhc;
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+		
+		Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
+
+		Test.stopTest();
+
+
+		System.debug([SELECT Id, ANG_AccountId__c, ANG_AccountId__r.Name from ANG_RHC_Information__c where RecordTypeId = :ANG_RHCHelper.RECTYPE_STDRHCINFO]);
+	}
+
+		@isTest static void ANG_ConversionHelperEnhancedTestTest14() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',BSP_Country_free_text__c='US',ISO_Code__c = 'US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO', Name='Agency HO',      Short_Name__c='Agency HO',       Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR', Name='Agency BR (C) 1',Short_Name__c='Agency BR (c) 1', Sector__c = 'Cargo Agent',  Location_Class__c = 'C', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR', Name='Agency BR (P) 1',Short_Name__c='Agency BR (P) 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR', Name='Agency BR (M) 1',Short_Name__c='Agency BR (M) 3', Sector__c = 'Travel Agent', Location_Class__c = 'M', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        
+        insert new List<Account>{a1,a2,a3,a4};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+	}
 }
