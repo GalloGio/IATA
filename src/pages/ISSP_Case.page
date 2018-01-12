@@ -650,9 +650,9 @@
                                         <apex:commandbutton action="{!close}" value="Close case" rendered="{!AND(isPWCCase,newCase.Status!='Closed')}" />
                                         <apex:outputpanel rendered="{!isDPCUser}">
                                             <apex:commandbutton action="{!edit}" value="Edit" rendered="{!AND(isACRAccepted, NOT(isEditMode), NOT(CaseStatus='CLOSED'))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
-                                            <apex:commandbutton action="{!DPCAccept}" value="Accept" rendered="{!AND(OR(AND(CaseType='DPCSR',dpcCanAccept),CaseType='ACR'), NOT(OR(isDPCAccepted,isACRAccepted)))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCAccept}" value="{!$Label.ISSP_Accept}" rendered="{!OR(AND(IsInterDPCCase,dpcCanAccept),AND(OR(AND(CaseType='DPCSR',dpcCanAccept),CaseType='ACR'), NOT(OR(isDPCAccepted,isACRAccepted))))}" />
                                             <apex:commandbutton action="{!DPCCompleteDSR}" value="Complete DSR" rendered="{!AND(caseType='DPCSR',isDPCInvestigateMode)}" rerender="existingCaseForm" disabled="{!OR(newCase.Planned_Start_CR__c!=null, newCase.Planned_End_CR__c!=null)}" styleclass="btn btn_iata_primary" />
-                                            <apex:commandbutton action="{!DPCSave}" value="Save" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCSave}" value="{!$Label.ISSP_Save}" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!DPCCompleteScheduleDSR}" value="Complete Scheduled DSR" rendered="{!AND(caseType='DPCSR',isDPCInvestigateMode)}" rerender="existingCaseForm" disabled="{!OR(newCase.Planned_Start_CR__c==null, newCase.Planned_End_CR__c==null)}" styleclass="btn btn_iata_primary" />
                                             <apex:outputpanel layout="none" rendered=" {!AND(isDPCUser, NOT(isEditMode), OR(isDPCAccepted,isACRAccepted), OR(caseType='ACR', caseType='IATASR'))}">
@@ -665,7 +665,7 @@
 
                                     <c:ANG_ProgressBar helperParam="{! progressBarHelper}"/>
 
-                                    <apex:pageblocksection title="{!$Label.IDCard_CaseDetails}" columns="1" ><!-- rendered="{!NOT(isDPCUser)}" -->
+                                    <apex:pageblocksection title="{!$Label.IDCard_CaseDetails}" columns="1" rendered="{!NOT(isDPCUser)}">
 
                                         <!--SURVEY BUTTON -->
                                         <apex:outputpanel styleclass="btn pull-right" rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false && isToShowSurveyBtn == true && caseType == '' && mySurveyCompletedVariable != true, true , false )}">
@@ -911,10 +911,9 @@
                                         <apex:outputfield value="{!newCase.Rejection_Withdrawal_remarks__c}" />
                                     </apex:pageblocksection>
                                     <!--Fields to be displayed for DPC cases -->
-                                    <apex:pageblocksection rendered="{!OR(caseType='DPCSR', caseType='IATASR')}" title="" columns="1" id="DPCDescription">
-                                    <apex:outputfield value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" />
-                                    <apex:outputfield value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" />
-
+                                    <apex:pageblocksection rendered="{!OR(caseType='DPCSR', caseType='IATASR')}" title="{!$Label.IDCard_CaseDetails}" columns="1" id="DPCDescription">
+                                        <apex:outputfield value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" />
+                                        <apex:outputfield value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" />
                                         <apex:outputfield value="{!newCase.Subject}" />
                                         <apex:outputfield value="{!newCase.Description}" />
                                         <apex:outputfield value="{!newCase.Type}" />
@@ -925,11 +924,23 @@
                                             {!JSONtopics}
                                         <!-- <apex:outputfield value="{!newCase.BSP_s_concerned__c}" /> -->
                                         </apex:pageblocksectionitem>
-
-                                        <apex:inputfield value="{!newCase.Priority}" styleclass="form-control"  required="true" rendered="{!isACCA}"/>
+                                        <!-- PRIORITY Field for DPC -->
+                                        <script>
+                                            function updatePritority(element) {
+                                                var result = confirm('Change priority from ' + element.oldValue + ' to ' + element.value + '.\nAre you sure?');
+                                                if (result) {
+                                                    updateCase();
+                                                } else {
+                                                    element.value = element.oldValue;
+                                                }
+                                            }
+                                        </script>
+                                        <apex:actionFunction name="updateCase" action="{!updateCase}" rerender="existingCaseForm" status="changeOwnerStatus"/>
+                                        <apex:inputfield value="{!newCase.Priority}" styleclass="form-control"  required="true" style="width: auto;" rendered="{!isACCA}"
+                                            onfocus="this.oldValue=this.value" onchange="updatePritority(this);"/>
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(isACCA)}"/>
+                                        
                                         <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!caseType='DPCSR'}" />
-                                        <apex:inputfield value="{!newCase.Status}" styleclass="form-control"  required="true"/>
                                         <apex:outputfield value="{!newCase.Status}" />
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <!-- <apex:outputfield value="{!newCase.ParentId}" /> -->
@@ -946,11 +957,12 @@
                                         <apex:outputfield value="{!newCase.SuppliedEmail}" rendered="{!caseType='DPCSR'}" />
                                         <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
                                         <apex:outputfield value="{!newCase.Type_of_customer__c}" rendered="{!NOT(caseType='DPCSR')}" />
-                                        <apex:outputfield value="{!newCase.OwnerId}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.OwnerId}" rendered="{!caseType='DPCSR'}"/>
+                                        
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem >
                                             <apex:outputlabel value="{!$Label.ISSP_CCOthers}" for="ccothers" />
-                                            <apex:outputText value="{!AdditionalCC}" id="ccothers"/>
+                                            <apex:outputText value="{!AdditionalCC}" id="ccothers" style="word-break: break-word;"/>
                                         </apex:pageblocksectionitem>
                                         <apex:pageBlockSectionItem rendered="{!NOT(HideForClosedCases)}">
                                             <apex:outputPanel layout="none"/>

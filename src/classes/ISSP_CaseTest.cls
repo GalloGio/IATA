@@ -28,13 +28,17 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        
         Test.startTest();
+        ISSP_Case.articleWrapper wrapper = new ISSP_Case.articleWrapper();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
 
         	cttr.AddComment();
         	cttr.edit();
+            ISSP_Case.getFieldMappedValue('test','test');
+            cttr.updateCase();
         }
         Test.stopTest();
 	}
@@ -605,11 +609,11 @@ public class ISSP_CaseTest {
 
        Id p = [select id from profile where name='ISS Portal DPC'].id;
 
-        User user = new User(alias = 'test123', email='test123@noemail.com',
+        User user = new User(alias = 'test123', email=contact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = contact.Id, FederationIdentifier = contact.Id,
-                timezonesidkey='America/Los_Angeles', username='tester@noemail.com');
+                timezonesidkey='America/Los_Angeles', username=teamContact.Email);
 
         insert user;
 
@@ -645,17 +649,37 @@ public class ISSP_CaseTest {
         // ApexPages.currentPage().getParameters().put('topic', 'test');
         // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        ApexPages.currentPage().getParameters().put('caseArea', 'Area1');
         Test.startTest();
         // system.runAs(thisUser){
            system.runAs(user) {
             ISSP_Case cttr = new ISSP_Case();
             cttr.pageLoad();
-
+            cttr.refreshSubTopicPickList();
+            cttr.inputccotheremail = user.Email;
+            cttr.addCCOther();
+            cttr.inputDelCCOther = user.Email;
+            cttr.delCCOther();
         }
         Test.stopTest();
     }
 
-    public static testMethod void testDCP() {
+    public static testMethod void testDPC() {
+        List<ISSP_DPC__c> mcs = new List<ISSP_DPC__c>();
+        ISSP_DPC__c accaRoleIds = new ISSP_DPC__c(name='ACCA Roles', Value__c=null);
+        ISSP_DPC__c accaAccounts = new ISSP_DPC__c(name='ACCA Accounts', Value__c=null);
+        ISSP_DPC__c nonAccaAccounts = new ISSP_DPC__c(name='Non-ACCA Accounts', Value__c=null);
+        ISSP_DPC__c dpcRecordType = new ISSP_DPC__c(name='DPC Recordtype', Value__c='test');
+        ISSP_DPC__c dpcSector = new ISSP_DPC__c(name='DPC Sector', Value__c='test');
+        ISSP_DPC__c dpcCategory = new ISSP_DPC__c(name='DPC Category', Value__c='test');
+        mcs.add(accaRoleIds);
+        mcs.add(accaAccounts);
+        mcs.add(nonAccaAccounts);
+        mcs.add(dpcRecordType);
+        mcs.add(dpcSector);
+        mcs.add(dpcCategory);
+        insert mcs;
+        
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
@@ -668,11 +692,11 @@ public class ISSP_CaseTest {
 
        Id p = [select id from profile where name='ISS Portal DPC'].id;
 
-        User user = new User(alias = 'test123', email='test123@noemail.com',
+        User user = new User(alias = 'test123', email=teamContact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = contact.Id, FederationIdentifier = contact.Id,
-                timezonesidkey='America/Los_Angeles', username='tester@noemail.com');
+                timezonesidkey='America/Los_Angeles', username=teamContact.Email);
 
         insert user;
         String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
@@ -698,7 +722,11 @@ public class ISSP_CaseTest {
            system.runAs(user) {
             ISSP_Case cttr = new ISSP_Case();
             cttr.pageLoad();
-
+            List<SelectOption> lsOptions = cttr.getCaseAreaOptions();
+            cttr.whoToContact = account.Id;
+            cttr.additionalRecipients=user.Email;
+            cttr.save();
+            System.assertEquals(true,cttr.IsInterDPCCase());
         }
         Test.stopTest();
     }

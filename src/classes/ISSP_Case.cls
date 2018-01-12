@@ -7,6 +7,7 @@ public without sharing class ISSP_Case {
     private static String CHINA_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - China & North Asia').RecordTypeId;
     private static String EUROPE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId;
     private static String IDFS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Complaint (IDFS ISS)').RecordTypeId;
+    private static String INTER_DPC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Inter DPCs').RecordTypeId;
     //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
     //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
@@ -274,6 +275,7 @@ public without sharing class ISSP_Case {
         isOnlineOSCARCase = false; //AS - AMS SP02
         isTravelAccreditation = false; //AS - AMS SP07
         disableCaseComments = false;
+        additionalRecipients = '';
         runningUserId = UserInfo.getUserId();
         //Verify User Profile
         Id profileId = userinfo.getProfileId();
@@ -530,14 +532,14 @@ public without sharing class ISSP_Case {
                 User myUser = [SELECT Id, Contact.AccountId, Contact.User_Portal_Status__c FROM User WHERE Id = :UserInfo.getUserId()];
                 if(myUser.Contact.User_Portal_Status__c == 'Approved Admin') isDPCAdmin = true;
                 accountId = myUser.Contact.AccountId;
-                if(accountId == newCase.Account_Concerned__c) {
+                if(accountId == newCase.Account_Concerned__c && newCase.OwnerId != UserInfo.getUserId()) {
                     dpcCanAccept = true;
                 }
                 ISSP_DPC__c accaAccounts = ISSP_DPC__c.getValues('ACCA Accounts');
-                List<Id> lsAccountIds;
+                List<Id> lsAccountIds = new List<Id>();
                 // Boolean isIATA = false;
                 if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
-                if(lsAccountIds.contains(accountId.Substring(0,15))) {isACCA = true;}
+                if(!lsAccountIds.isEmpty() && lsAccountIds.contains(accountId.Substring(0,15))) {isACCA = true;}
 
             }
         } else {
@@ -553,24 +555,29 @@ public without sharing class ISSP_Case {
                 ISSP_DPC__c dpcCategory = ISSP_DPC__c.getValues('DPC Category');
                 List<Id> lsAccountIds;
                 Boolean isIATA = false;
-                if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
-                    if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
-                } else {
-                    if(nonAccaAccounts.Value__c != null ) lsAccountIds = nonAccaAccounts.Value__c.split(',');
-
-                }
                 if(whoToContact == 'IATA') isIATA = true;
                 if(!isIATA ) {
                     newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
                 List<Account> lsAccounts = new List<Account>();
+                if(accaRoleIds.Value__c != null && accaRoleIds.Value__c.contains(UserInfo.getUserRoleId().Substring(0,15))){
                 if(dpcRecordType.Value__c != null && dpcSector.Value__c != null && dpcCategory.Value__c != null) {
                     lsAccounts =
                         [SELECT Id, Name FROM Account
                         WHERE Recordtype.DeveloperName = :dpcRecordType.Value__c
                         AND Sector__c = :dpcSector.Value__c
                         AND Category__c = :dpcCategory.Value__c];
+                }
+                } else {
+                    if(accaAccounts.Value__c != null ) lsAccountIds = accaAccounts.Value__c.split(',');
+                    // if(nonAccaAccounts.Value__c != null ) lsAccountIds = nonAccaAccounts.Value__c.split(',');
+                    if(lsAccountIds != null ) {
+                    lsAccounts =
+                        [SELECT Id, Name FROM Account
+                        WHERE Id IN :lsAccountIds];
+                    }
+
                 }
                 List<Contact> lsContacts =
                     [SELECT Id, Name, Email, AccountId FROM Contact
@@ -882,6 +889,10 @@ public without sharing class ISSP_Case {
             } else {
                 newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
             }
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+	        newCase.setOptions(dmo);
+
         }
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
@@ -909,57 +920,39 @@ public without sharing class ISSP_Case {
                 upsert newCase;
                 if(isDPCUser && whoToContact != 'IATA') {
                     this.e2cpFieldAccess = new E2CPFieldAccess(newCase.Id);
-                    System.debug(additionalRecipients);
-                    List<String> lsEmails = additionalRecipients.split(',');
+                    // filter input emails
                     List<String> lsEmailsTrimmed = new List<String>();
-                    // newCase.CaseArea__c = topic;
-                    // newCase.Reason1__c = subTopic;
-                    for(String s : lsEmails) {
-                        lsEmailsTrimmed.add(s.trim());
+                    for(String s : this.additionalRecipients.split(',')) {
+                        String email = s.trim();
+                        if (!String.isBlank(email)) {
+                            lsEmailsTrimmed.add(email);
+                        }
                     }
-                    List<Contact> lsContacts =
-                    [SELECT Id, Name, Email, AccountId FROM Contact
-                        WHERE Email IN :lsEmailsTrimmed
-                    AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')];
+
+                    List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
+                    List<String> lsNewEmails = new List<String>();
+                    // only add people from Account_Concerned__c by User
                     List<User> lsUsers =
                         [SELECT Id, Name, Email, AccountId, Contact.AccountId FROM User
                         WHERE Email IN :lsEmailsTrimmed
-                        AND ContactId <> null];
-                    System.debug(lsContacts);
-                    List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
-
-                    // only add people from Account_Concerned__c by User
-                    for(User c : lsUsers) {
-                        if(c.Contact.AccountId == newCase.Account_Concerned__c) {
-                            insertAddressInE2CP_CCOthers(c.Email);
-                            CaseTeamMember teammember = new CaseTeamMember(
+                        AND Contact.AccountId = :newCase.Account_Concerned__c];
+                    System.debug('***lsUsers ' + lsUsers);
+                    for(User user : lsUsers) {
+                        CaseTeamMember teammember = new CaseTeamMember(
                             ParentId = newCase.Id,
-                            MemberId = c.Id,
+                            MemberId = user.Id,
                             TeamRoleId = PARTNER_USER_ROLE);
-                            lsCaseTeamMembers.add(teammember);
-                        }
+                        lsCaseTeamMembers.add(teammember);
+                        lsNewEmails.add(user.Email);
+                        System.debug('*** teammember User: '+ teammember);
                     }
-                    // add others by contact
-                    for(Contact c : lsContacts) {
-                        if(c.AccountId != newCase.Account_Concerned__c) {
-                            insertAddressInE2CP_CCOthers(c.Email);
-                            CaseTeamMember teammember = new CaseTeamMember(
-                            ParentId = newCase.Id,
-                            MemberId = c.Id,
-                            TeamRoleId = PARTNER_USER_ROLE);
-                            lsCaseTeamMembers.add(teammember);
-                        }
-                    }
-                    System.debug(lsCaseTeamMembers);
-                    // insert found contact as a team member of the case
+                    // insert found users as a team member of the case
                     Savepoint sp = Database.setSavepoint();
                     try {
-                        // Contact contact = listContact.get(0);
+                        // modify the ccother field in the case before inserting the new team members
+                        insertListAddressInE2CP_CCOthers(lsNewEmails);
                         insert lsCaseTeamMembers;
                     } catch (DMLException e) {
-                        // for (Integer i = 0; i < e.getNumDml(); i++) {
-                        //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
-                        // }
                         Database.rollback(sp);
                     }
                 }
@@ -1094,22 +1087,19 @@ public without sharing class ISSP_Case {
         return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id + commParam); //ApexPages.currentPage();
     }
 
-    public Pagereference DPCAccept() {
-        newCase.ACCA_Owner__c = UserInfo.getUserId();
-        if (caseType == 'DPCSR') {
-            newCase.Status = 'DPC Investigating';
-            User u = [SELECT ContactId FROM User WHERE User.Id = :UserInfo.getUserId()];
-            Contact c = [SELECT Id FROM Contact WHERE Contact.Id = :u.ContactId];
-            newCase.ContactId = c.Id; //Make the DPC user the contact for DPC SRs
+    public PageReference DPCAccept() {
+        Savepoint sp = Database.setSavepoint();
+        try {
+            //change owner
+            User newOwner = [SELECT Id, ContactId FROM User WHERE User.Id = :UserInfo.getUserId()];
+            newCase.ContactId = newOwner.ContactId; //Make the DPC user the contact for DPC SRs
+            newCase.OwnerId = newOwner.Id;
+            newCase.ACCA_Owner__c = newOwner.Id;
+            update newCase;
 
-            newCase.ACCA_Owner__c = u.Id;
-            newCase.OwnerId = u.Id;
+        } catch (DMLException e) {
+            Database.rollback(sp);
         }
-
-        // happens automatically (trigger?)
-        //if (caseType=='ACR')
-        //  newCase.Escalated_Status_ACCA__c = 'DPC Investigating';
-        update newCase;
         newCase = DAL_ISSP.getCase(newCase.Id);
         isEditMode = true;
         return null;
@@ -1560,32 +1550,29 @@ public without sharing class ISSP_Case {
             Contact contact = listContact.get(0);
             CaseTeamMember teammember;
             if(isDPCUser) {
-                User u = [SELECT Id, Contact.AccountId FROM User WHERE ContactId = :contact.Id];
-                System.debug(contact);
-                System.debug(u);
-                System.debug(u.Contact.AccountId);
-                System.debug(newCase.Account_Concerned__c);
-                teammember = new CaseTeamMember(
-                    ParentId = this.newCase.Id
-                    //MemberId = u.Id,
-                    );
-                System.debug(teammember);
                 // only add people from Account_Concerned__c by User
-                if(U.Contact.AccountId == newCase.Account_Concerned__c) {
-                    teammember.MemberId = u.Id;
-                    teammember.TeamRoleId = PARTNER_USER_ROLE; // dcp
+                list<User> listUser = [
+                    SELECT Id, Contact.AccountId FROM User
+                    WHERE ContactId = :contact.Id
+                    AND Contact.AccountId = :newCase.Account_Concerned__c];
+                Id memberId;
+                if (listUser.isEmpty()) {
+                    memberId = contact.Id;
                 } else {
-                    // add others by contact
-                    teammember.MemberId = contact.Id;
-                    teammember.TeamRoleId = PARTNER_USER_ROLE;
+                    memberId = listUser[0].Id;
                 }
-                System.debug(teammember);
+                
+                teammember = new CaseTeamMember(
+                    ParentId = this.newCase.Id,
+                    MemberId = memberId,
+                    TeamRoleId = PARTNER_USER_ROLE);
             } else {
                 teammember = new CaseTeamMember(
                 ParentId = this.newCase.Id,
                 MemberId = contact.Id,
                 TeamRoleId = PARTNER_USER_ROLE);
             }
+            System.debug(teammember);
             insert teammember;
             insertAddressInE2CP_CCOthers(contact.Email);
         } catch (DMLException e) {
@@ -1677,6 +1664,21 @@ public without sharing class ISSP_Case {
             this.e2cpFieldAccess.setAdditionalCC(String.join(new list<String>(setNews),';'));
         }
     }
+    
+    /**
+        Inserts a list of emails in the field Case.E2CP__AdditionalCC__c
+        Previous list is removed
+    **/
+    private void insertListAddressInE2CP_CCOthers(list<String> listInsertEmail) {
+        if (listInsertEmail.isEmpty()) return; 
+        set<String> setNews = new set<String>();
+        for (String email: listInsertEmail) {
+            setNews.add(email.trim());
+        }
+        if (this.e2cpFieldAccess!= null) {
+            this.e2cpFieldAccess.setAdditionalCC(String.join(new list<String>(setNews),';'));
+        }
+    }
 
     /**
         Removes an email in the field Case.E2CP__AdditionalCC__c which is a
@@ -1694,5 +1696,13 @@ public without sharing class ISSP_Case {
         if (this.e2cpFieldAccess!= null) {
             this.e2cpFieldAccess.setAdditionalCC(String.join(listNews,';'));
         }
+    }
+
+    public void updateCase() {
+        update newCase;
+    }
+    
+    public Boolean getIsInterDPCCase() {
+        return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
     }
 }
