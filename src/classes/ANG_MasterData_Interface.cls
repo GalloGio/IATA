@@ -95,7 +95,7 @@ global class ANG_MasterData_Interface{
        
 
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
-    private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren'};
+    private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren', 'RHCInfo'};
 
     private class MasterDataPayload{
         /* Agency Information */
