@@ -12563,42 +12563,42 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Monthly</fullName>
+                    <fullName>M/fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
                 <value>
-                    <fullName>Fortnightly</fullName>
+                    <fullName>F</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
                 </value>
                 <value>
-                    <fullName>Every 10 days</fullName>
+                    <fullName>R</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
                 </value>
                 <value>
-                    <fullName>4 times per month</fullName>
+                    <fullName>W</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
                 </value>
                 <value>
-                    <fullName>Weekly</fullName>
+                    <fullName>V</fullName>
                     <default>false</default>
                     <label>Weekly</label>
                 </value>
                 <value>
-                    <fullName>Every 5 days</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
                 </value>
                 <value>
-                    <fullName>Every 3 days</fullName>
+                    <fullName>B</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
-                    <fullName>Daily</fullName>
+                    <fullName>D</fullName>
                     <default>false</default>
                     <label>Daily</label>
                 </value>
