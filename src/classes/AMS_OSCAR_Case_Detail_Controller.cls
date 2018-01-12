@@ -40,6 +40,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public String remittanceFrequencyToShow{
         get{
+            if (accreditationObj.Remittance_frequency__c == null || accreditationObj.Remittance_frequency__c == '') return '';
             if (!accreditationObj.Remittance_frequency__c.contains(';')) {
                 return getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(accreditationObj.Remittance_frequency__c);
             }else {
