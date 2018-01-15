@@ -59,6 +59,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 	}
 
 	@isTest static void test_OSCARCaseDetail2(){
+		Test.startTest();
+		
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
 		Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
@@ -86,7 +88,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		insert a;
 
-		Test.startTest();
+		
 
 			AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
 
