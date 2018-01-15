@@ -572,69 +572,64 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>Open_to__c</fullName>
         <fullName>Number_of_participants__c</fullName>
         <description>The total number of participants</description>
         <externalId>false</externalId>
-        <label>Open to</label>
-        <required>false</required>
         <label>Number of participants</label>
         <summaryForeignKey>Participant__c.Local_Governance__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Open_to__c</fullName>
+        <externalId>false</externalId>
+        <label>Open to</label>
+        <picklist>
+            <picklistValues>
+                <fullName>IATA Member Airlines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-IATA Airlines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Industry Stakeholders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agency Associations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency Associations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>IATA Member Airlines</fullName>
-                    <default>false</default>
-                    <label>IATA Member Airlines</label>
-                </value>
-                <value>
-                    <fullName>Non-IATA Airlines</fullName>
-                    <default>false</default>
-                    <label>Non-IATA Airlines</label>
-                </value>
-                <value>
-                    <fullName>Strategic Partners</fullName>
-                    <default>false</default>
-                    <label>Strategic Partners</label>
-                </value>
-                <value>
-                    <fullName>Industry Stakeholders</fullName>
-                    <default>false</default>
-                    <label>Industry Stakeholders</label>
-                </value>
-                <value>
-                    <fullName>Cargo Agents</fullName>
-                    <default>false</default>
-                    <label>Cargo Agents</label>
-                </value>
-                <value>
-                    <fullName>Travel Agents</fullName>
-                    <default>false</default>
-                    <label>Travel Agents</label>
-                </value>
-                <value>
-                    <fullName>General Sales Agents</fullName>
-                    <default>false</default>
-                    <label>General Sales Agents</label>
-                </value>
-                <value>
-                    <fullName>Cargo Agency Associations</fullName>
-                    <default>false</default>
-                    <label>Cargo Agency Associations</label>
-                </value>
-                <value>
-                    <fullName>Travel Agency Associations</fullName>
-                    <default>false</default>
-                    <label>Travel Agency Associations</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
