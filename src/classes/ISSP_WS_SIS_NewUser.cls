@@ -87,6 +87,13 @@ global with sharing class ISSP_WS_SIS_NewUser {
     private static User createSISUser(InputData inputData) {
         Boolean isCNS = false;
         
+        // Search for parent Account
+        list<Account> listAccount = [SELECT Id, SIS_ID__c, Account.RecordType.DeveloperName FROM Account WHERE SIS_Id__c = :inputData.SISMemberID];
+        if (listAccount.isEmpty()) {
+            throw new ISSP_WS_SIS_Common.WSException('018', '');
+        }
+        Account theAccount = listAccount[0];
+        
         // find the user based on the email
         List <User> listUser = [
             SELECT Id, ContactId, FederationIdentifier, FedContactId__c,
@@ -128,13 +135,16 @@ global with sharing class ISSP_WS_SIS_NewUser {
                                             Account.SIS_ID__c
                                         FROM Contact
                                         WHERE Email = :inputData.EmailAddress];
-                                        
-            //TODO if SUPER USER create contact and user
-            // otherwise throw an error
+            
             if (listContact.isEmpty()){
-                throw new ISSP_WS_SIS_Common.WSException('011', '');
+                try {
+                    theContact = createNewContact(inputData, theAccount, isCNS);
+                } catch (Exception e) {
+                    throw new ISSP_WS_SIS_Common.WSException('011', e.getMessage());
+                }
+            } else {
+                theContact = listContact[0];
             }
-            theContact = listContact[0];
         }
         
         ISSP_WS_SIS_UpdateUser.updateSISContact(theContact, inputData.SISMemberID, inputData.UserType);
@@ -161,6 +171,17 @@ global with sharing class ISSP_WS_SIS_NewUser {
         }
         ISSP_WS_SIS_Common.grantAccessToSIS(theContact);
         return theUser;
+    }
+    
+    /**
+        Creates a new Contact based on input data 
+    **/
+    private static Contact createNewContact(InputData inputData, Account account, Boolean isCNS) {
+        Contact contact = ISSP_WS_Utilities.createContact(inputData.FirstName, inputData.LastName, inputData.EmailAddress, account.Id, isCNS);
+        contact.Status__c = 'Active';
+        insert contact;
+        contact.Account = account;
+        return contact;
     }
     
     /**

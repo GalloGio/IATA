@@ -164,7 +164,7 @@ private class ISSP_WS_SIS_NewUser_Test {
         System.assertEquals(null, listLogs[0].System__c);
     }
     
-    static testMethod void createSISUser_NoContactOrUser() {
+    static testMethod void createSISUser_NoAccountfound() {
         ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
         
         Test.startTest();
@@ -172,9 +172,24 @@ private class ISSP_WS_SIS_NewUser_Test {
         Test.stopTest();
         
         System.assertEquals(false, response.IsSuccess);
-        System.assertEquals('011', response.ErrorCode);
+        System.assertEquals('018', response.ErrorCode);
         
         checkLogs(false);
+    }
+    
+    static testMethod void createSISUser_NoContactOrUser() {
+        ISSP_WS_SIS_NewUser.InputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.SIS_ID__c = inputData.SISMemberID;
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Test.startTest();
+        ISSP_WS_SIS_NewUser.ResponseData response = ISSP_WS_SIS_NewUser.newUser(inputData);
+        Test.stopTest();
+        
+        checkLogs(true);
     }
     
     static testMethod void createSISUser_NoUser() {
