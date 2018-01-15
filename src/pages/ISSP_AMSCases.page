@@ -104,6 +104,7 @@
     </div>
     <div style="padding-left:138px">
           <apex:form > 
+
         <table width="100%">
             <tr>
                 <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Agency_Accreditation_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Agency_Accreditation_New, $Label.ISSP_AMS_Step0_Agency_Accreditation))}"/></h3></td>
@@ -172,8 +173,6 @@
                 <td class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}"/></h3></td>
             </tr>
             <tr>
-                signature - {!con.Authorized_Signatory__c}
-                status - {!con.User_Portal_Status__c}
                 <td style="vertical-align:top">
                     <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR();return false;">
                         <!--<apex:param assignTo="{!agentCaseType}" value="VR" />-->

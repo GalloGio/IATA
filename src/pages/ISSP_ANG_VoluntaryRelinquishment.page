@@ -409,14 +409,7 @@
                 </apex:pageBlock>
                  <apex:form id="tCondiForm">
                 <apex:pageMessages />
-                <apex:pageBlock >
-                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
-                    <div class="aplabel">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs1}"/>
-                    </div>
-                    <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/> 
-                </apex:pageBlockSection> 
-                </apex:pageBlock>
+
                         <apex:pageBlock >
                             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                 <apex:actionStatus id="buttonLoadingStep3">
