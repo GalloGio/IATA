@@ -573,9 +573,14 @@
     </fields>
     <fields>
         <fullName>Open_to__c</fullName>
+        <fullName>Number_of_participants__c</fullName>
+        <description>The total number of participants</description>
         <externalId>false</externalId>
         <label>Open to</label>
         <required>false</required>
+        <label>Number of participants</label>
+        <summaryForeignKey>Participant__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1993,6 +1998,15 @@ Record Type + Group Type + ISO_Country_Name</description>
   )
 )</errorConditionFormula>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete participants from this group</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>
