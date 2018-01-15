@@ -74,37 +74,32 @@ public with sharing class ISSP_AvailableServices{
 
             Map<String, Map<Decimal, String>> orderRoles = new Map<String, Map<Decimal, String>>();
 
-            if(availableRoles == null){
-                availableRoles = new Map<String,List<String>>();
 
-                for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            availableRoles = new Map<String,List<String>>();
 
-                    if(availableRoles.get(role.Connected_App__c) == null) {
-                        availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
+            for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
 
-                        Map<Decimal, String> aux = new Map<Decimal, String>();
-                        aux.put(role.Order__c, role.Role__c);
+                if(availableRoles.get(role.Connected_App__c) == null) {
+                    availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
 
-                        orderRoles.put(role.Connected_App__c, aux);
+                    Map<Decimal, String> aux = new Map<Decimal, String>();
+                    aux.put(role.Order__c, role.Role__c);
 
-                    } else {                        
-                        availableRoles.get(role.Connected_App__c).add(role.Role__c);
+                    orderRoles.put(role.Connected_App__c, aux);
 
-                        Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
-                        aux.put(role.Order__c, role.Role__c);                        
-                    }
+                } else {                        
+                    availableRoles.get(role.Connected_App__c).add(role.Role__c);
 
+                    Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
+                    aux.put(role.Order__c, role.Role__c);                        
                 }
+
             }
 
             Set<String> availableRolesLst = availableRoles.keySet();
 
-
-            //if(availablePortalServiceRoles == null) {
             List<SelectOption2> availablePortalServiceRolesAux = new List<SelectOption2>();
-            //} else {
-            //    availablePortalServiceRolesAux = availablePortalServiceRoles;
-            //}
+            
             Set<String> availableRolesSet = new Set<String>();
 
             for(String roleConnApp: availableRolesLst){
@@ -113,11 +108,11 @@ public with sharing class ISSP_AvailableServices{
 
                     for(String roleStr : availableRoles.get(roleConnApp)){
                         availableRolesSet.add(roleStr);
-                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
+                        //availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
                     }
                 }
             }
-
+            
 
             if(orderRoles.containsKey(this.Serv.recordService.Name)) {
 
@@ -130,7 +125,9 @@ public with sharing class ISSP_AvailableServices{
                 orders.sort();
 
                 for(Decimal o : orders) {
+
                     String roleStr = rolesOrderToApply.get(o);
+
                     if(availableRolesSet.contains(roleStr)) {
                         availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
 
@@ -142,7 +139,6 @@ public with sharing class ISSP_AvailableServices{
             } else {
                 availablePortalServiceRoles = availablePortalServiceRolesAux;
             }
-
 
             return availablePortalServiceRoles;
 
