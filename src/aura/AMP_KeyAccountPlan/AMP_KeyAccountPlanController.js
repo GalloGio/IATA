@@ -96,11 +96,16 @@
     handleDeleteActivity : function(component, event, helper) {
         console.log("handleDeleteActivity");
         var activity = component.get("v.activityToDelete");
+        console.log(JSON.stringify(activity));
+        if(activity == null){
+            activity = event.getParam("issue");
+            console.log(JSON.stringify(activity));
+        }
         var activities = component.get("v.activities");
 
         if(activity.Id === undefined) {
 
-            activities.pop(); // the last item of the list is the unsaved, so we can pop()
+            activities.shift(); // the last item of the list is the unsaved, so we can shift()
             component.set("v.activities", activities);
 
         }

@@ -15,6 +15,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.showDeletePopup" />
+    <aura:handler name="cancelAddActivity" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteActivity" />
     <aura:handler name="updateActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateActivity" />
     <aura:handler name="showMilestones" event="c:AMP_UpdateIssueOrPriority" action="c.handleShowMilestones" />
 
@@ -113,7 +114,7 @@
                     </div>
 
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <p>Are you sure you want to delete this activity?</p>
+                        <p>Are you sure you want to delete this activity and all its milestones?</p>
                     </div>
                     <footer class="slds-modal__footer">
                         <lightning:button class="slds-button slds-button--neutral" title="No" onclick="{!c.hideDeletePopup}">

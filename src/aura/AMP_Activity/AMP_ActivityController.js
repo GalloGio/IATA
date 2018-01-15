@@ -34,18 +34,15 @@ console.log(JSON.stringify(activity));
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
-        var index = component.get("v.index");
-        
+        //var index = component.get("v.index");
         if(activity.Id === undefined) {
-            console.log('something');
-            var deleteEvent = component.getEvent("deleteActivity");
-            deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+            console.log('cancel add new activity -> delete');
+            var deleteEvent = component.getEvent("cancelAddActivity");
+            deleteEvent.setParams({'issue': activity})
+            deleteEvent.fire();
             
-        } else {
-            
-            component.set("v.isEditMode", false);
-            console.log('canceling edit mode...');
-        }
+        } 
+         component.set("v.isEditMode", false);
     },
     clickSaveActivity : function(component, event, helper) {
         

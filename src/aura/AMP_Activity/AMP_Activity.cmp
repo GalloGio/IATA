@@ -20,7 +20,8 @@
     <aura:registerEvent name="updateActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
-
+    <aura:registerEvent name="cancelAddActivity" type="c:AMP_DeleteIssueOrPriority"/>
+    
     <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleActivityError}"/>
 
     <!-- <tr> -->
