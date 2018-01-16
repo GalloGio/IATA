@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -45,7 +49,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -346,7 +349,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>11/17/2017 12:00 AM</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>
@@ -395,5 +398,4 @@
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
 </CustomObject>

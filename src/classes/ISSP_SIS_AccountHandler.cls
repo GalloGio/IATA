@@ -18,7 +18,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
         for (Account account: listAccount) {
-            if ( validSISAccount(account)) {
+            if ( validSISAccount(account) && account.Status__c != 'Terminated') {
                 if (String.isBlank(account.SIS_ID__c)) {
                     listInsertAccountId.add(account.Id);
                 } else {
@@ -81,7 +81,6 @@ public with sharing class ISSP_SIS_AccountHandler {
                     WHERE ISO_Code__c IN :ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset()]).keyset();
             }
             return account.RecordtypeId==RT_AGENCY &&
-                account.Status__c != 'Terminated' &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
                 ALLOWED_COUNTRIES.contains(account.IATA_ISO_Country__c);
             
@@ -92,6 +91,14 @@ public with sharing class ISSP_SIS_AccountHandler {
     }
     
     private static Boolean isAccountModified(Account accountNew, Account accountOld) {
+        //special case, status is terminated
+        if (accountnew.Status__c == 'Terminated') {
+            if (accountOld.Status__c == 'Terminated') {
+                return false; // if the status was Terminated and is not changing, ignore the update
+            } else {
+                return true; // if the status changing to Terminated then update it
+            }
+        }
         for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
             if (fieldName!='BillingAddress')
             if (accountNew.get(fieldName) != accountOld.get(fieldName)) {

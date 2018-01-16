@@ -199,7 +199,7 @@ public without sharing class ISSP_WS_Utilities {
     @Future(callout=true)
 	public static void invokeCreateAccount(list<Id> listAccountId){
         //find incoming accounts
-        String query = 'SELECT Id, BillingAddress, Country_ISO_Code__c, '
+        String query = 'SELECT Id, BillingAddress, Country_ISO_Code__c, Status__c, '
             + String.join(ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES,',')
             + ' FROM Account WHERE Id IN :listAccountId '
             + ' AND (SIS_ID__c = null OR SIS_ID__c = \'\')';
@@ -246,7 +246,7 @@ public without sharing class ISSP_WS_Utilities {
     @Future(callout=true)
     public static void invokeUpdateAccount(list<Id> listAccountId){
         //find incoming accounts
-        String query = 'SELECT Id, BillingAddress, Country_ISO_Code__c, '
+        String query = 'SELECT Id, BillingAddress, Country_ISO_Code__c, Status__c, '
         + String.join(ISSP_WS_SIS_Callout_UpdateAccount.LIST_FIELD_NAMES,',')
             + ' FROM Account WHERE Id IN :listAccountId';
         System.debug('query ' + query);
