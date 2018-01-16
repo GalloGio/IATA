@@ -738,5 +738,67 @@ public without sharing class ISSP_UserTriggerHandler {
 			delete NonTDReportShareListDelete;
 		}
  	}
- 	
+
+    /**
+        Deactivate SIS permission for input contacts and send an email to helpdesk
+    **/
+    public static void alertSISContactsChangingAccount(set<Id> setContactId){
+        List <Portal_Application_Right__c> appRightList = [
+            SELECT Id, Contact__c, Access_Status_Reason__c
+            FROM Portal_Application_Right__c
+            WHERE Application_Name__c = 'SIS'
+            AND Right__c = 'Access Granted'
+            AND Contact__c IN :setContactId];
+        if (appRightList.isEmpty()) return;
+        
+        Boolean isSandbox = [SELECT Id, IsSandbox FROM Organization LIMIT 1].IsSandbox;
+        list<String> emailsTo = new list<String>();
+        if (isSandbox) {
+            //emailsTo.add('sisopsuat@iata.org'); // sandbox email
+            emailsTo.add('tenaj@iata.org');
+            emailsTo.add('shalbakf@iata.org');
+        } else {
+            emailsTo.add('sishelp@iata.org'); // production email
+        }
+        
+        EmailTemplate templateOK;
+        EmailTemplate templateERROR;
+        for (EmailTemplate template : [SELECT Id, Name FROM EmailTemplate
+            WHERE Name IN ('ISSP WS SIS send alert on Account change', 'ISSP WS SIS send alert on Account change Error')]) {
+            if (template.Name == 'ISSP WS SIS send alert on Account change') templateOK = template;
+            if (template.Name == 'ISSP WS SIS send alert on Account change Error') templateERROR = template;
+        }
+        
+        // deny access to all application rights
+        for (Portal_Application_Right__c right: appRightList) {
+            right.Right__c = 'Access Denied';
+            right.Access_Status_Reason__c = 'Access denied automatically due to contact moving from account to another';
+        }
+        
+        try{
+            list<Messaging.SingleEmailMessage> listEmail = new list<Messaging.SingleEmailMessage>();
+            Database.SaveResult[] listResult = Database.update(appRightList, false);
+            // create an emails to inform helpdesk
+            for (Integer i=0; i<appRightList.size(); i++) { 
+                Portal_Application_Right__c right = appRightList[i];
+                Database.SaveResult result = listResult[i];
+                
+                // create an emails to inform helpdesk
+                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                email.setToAddresses(emailsTo);
+                email.setTargetObjectId(right.Contact__c);
+                email.setTreatTargetObjectAsRecipient(false);
+                email.setSaveAsActivity(false);
+                // set email template for a succes or an error
+                EmailTemplate template = result.isSuccess()? templateOK: templateERROR;
+                email.setTemplateId(template.Id);
+                listEmail.add(email);
+            }
+            // send all emails created
+            Messaging.sendEmail(listEmail);
+        }catch(Exception  e){
+            system.debug('Failed to send email to SIS helpdesk: ' + e.getStackTraceString());
+        }
+        
+    }
 }
