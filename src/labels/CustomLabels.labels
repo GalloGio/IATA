@@ -27086,5 +27086,21 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
         <value>Annual fees for 2018</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_AccreditationsAndChangesDescription</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditations and changes description</shortDescription>
+        <value>This service enables you to apply for a new IATA Agency Accreditation</value>
+    </labels>        
+    <labels>
+        <fullName>ISSP_ANG_RHC_InformationDescription</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RHC Information description</shortDescription>
+        <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
+    </labels>            
 </CustomLabels>
