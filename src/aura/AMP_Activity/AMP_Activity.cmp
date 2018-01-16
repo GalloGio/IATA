@@ -108,7 +108,7 @@
             <td><c:AMP_LongText text="{!v.activity.Details__c}" /></td>
             <td><ui:outputText value="{!v.activity.Status__c}" /></td>
             <td><ui:outputDate value="{!v.activity.Deadline__c}" class="slds-truncate"/></td>
-            <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
+            <td><c:AMP_LongText text="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
             <td><c:AMP_LongText text="{!v.activity.Benefits_to_Account__c}" /></td>
         </aura:set>
     </aura:if>
