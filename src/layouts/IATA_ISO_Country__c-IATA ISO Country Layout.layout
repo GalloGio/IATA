@@ -288,6 +288,10 @@
                 <behavior>Edit</behavior>
                 <field>IEC_Zip_Postal_Code_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Non_Compliant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
