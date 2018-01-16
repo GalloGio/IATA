@@ -7,6 +7,10 @@
         <type>role</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>bricenoa@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>farrella@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
