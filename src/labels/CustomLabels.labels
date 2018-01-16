@@ -27038,14 +27038,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
-        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Entity</value>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish only your Agency&apos;s Head Entity</value>
     </labels>
     <labels>
         <fullName>ANG_Voluntary_Relinquishment_to_NOC_Legacy</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_Voluntary_Relinquishment_to_NOC_Legacy</shortDescription>
-        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish your Agency&apos;s Head Office</value>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish only your Agency&apos;s Head Office</value>
     </labels>
     <labels>
         <fullName>ANG_Effective_Date</fullName>
