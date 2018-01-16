@@ -12563,7 +12563,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>M/fullName>
+                    <fullName>M</fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
