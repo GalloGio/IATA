@@ -148,6 +148,32 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Original_Max_Range__c</fullName>
+        <description>Original Max Range</description>
+        <externalId>false</externalId>
+        <label>Original Max Range</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Min_Range__c</fullName>
+        <description>Original Min Range</description>
+        <externalId>false</externalId>
+        <label>Original Min Range</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Placeholder__c</fullName>
         <description>Used when importing the file through dataloader page. Technical field only.</description>
         <externalId>false</externalId>
