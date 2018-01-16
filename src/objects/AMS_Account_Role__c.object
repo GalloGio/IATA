@@ -732,6 +732,27 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <label>TD</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Owner_Name</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Owner_Account__c</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Person__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Owner_Name__c</field>
+            <operation>equals</operation>
+            <value>Agency Company</value>
+        </filters>
+        <label>ZZ-Search By Owner Name</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AAR-{00000000}</displayFormat>
         <label>AMS Account Role Name</label>
