@@ -43,4 +43,27 @@ public with sharing class vfIECEBC_Layout extends vfIECEBC_Controller {
 		}
 	} // end of renewalPageUrl getter
     
+    /**
+    * Handles the logout link
+    */
+    public Pagereference logout() {
+        try {
+            // delete shopping cart cookie
+            IECCookieHelper.deleteShoppingCartCookie();
+
+            //added 2016-01-11
+            IECOrder_Svc.deleteAllCookies();
+            Cookie Cookie_Sync = new Cookie('Cookie_Sync', '', null, 0, false);
+            ApexPages.currentPage().setCookies(new Cookie[]{Cookie_Sync});
+
+            PageReference pr = Page.IECLogout; //new PageReference('/secur/logout.jsp');
+            pr.setRedirect(true);
+            return pr;
+        }
+        catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+    }
+    
 } // end of vfIECEBC_Layout
