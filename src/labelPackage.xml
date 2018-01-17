@@ -11,11 +11,11 @@
      <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types> 
-        <types>
+    </types>
+    <types>
         <members>*</members>
-        <name>GlobalPicklist</name>
-    </types> 
+        <name>GlobalValueSet</name>
+    </types>
         <types>
         <members>*</members>
         <name>CustomLabel</name>
@@ -28,5 +28,5 @@
         <members>*</members>
         <name>Queue</name>
     </types>
-    <version>37.0</version>
+    <version>40.0</version>
 </Package>
