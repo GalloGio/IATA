@@ -26971,7 +26971,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
@@ -27072,6 +27072,7 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
+        <categories>ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
@@ -27079,6 +27080,14 @@ title,Title,Name</value>
 Small – up to USD 200.000 gross annual sales
 Medium – USD 200.001 – USD 2.000.000 gross annual sales
 Large – more than USD 2.000.000 gross annual sales</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltipConvert</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>The cost of converting from one accreditation type to another is as follows.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
@@ -27103,4 +27112,12 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>RHC Information description</shortDescription>
         <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
     </labels>            
+    <labels>
+        <fullName>ISSP_ANG_VR_Disclaimer</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Voluntary Relinquishment Disclaimer</shortDescription>
+        <value>&lt;p&gt;I hereby voluntarily relinquish IATA Accreditation in respect to the Approved Locations as listed above.&lt;p/&gt;</value>
+    </labels>
 </CustomLabels>
