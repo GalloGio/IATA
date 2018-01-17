@@ -22,7 +22,7 @@ public class ANG_RHCHelper {
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 		
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -54,10 +54,10 @@ public class ANG_RHCHelper {
 				CurrencyIsoCode = a.IATA_ISO_Country__r.CurrencyIsoCode
 			));
 		}
-
+		
 		insert rhcInfos;
 
-		if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);
+		if(sumFS)ANG_Risk_Helper.sumFSAmount(accounts);
 	}
 
 	public static void deactivateRHCInfo(Set<Id> accounts) {
