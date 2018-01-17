@@ -32,14 +32,8 @@ public class ams2gdp_BusinessLogic
 		Map<String, String> addressMap = ams2gdp_Selector.getGDP_AddressByAccount(accountIds);
 		Map<String, String> phoneMap   = ams2gdp_Selector.getGDP_PhoneByAccount(accountIds);
 		Map<String, String> accredMap  = ams2gdp_Selector.getAccreditationByAccount(accountIds);
+		Map<String, String> appointmentMap  = ams2gdp_Selector.getAppointmentByAccount(accountIds);
 
-		Map<String, String> appointmentMap  = new Map<String,String>();
-
-		List<AMS_Inspection__c> lsAppointments =
-			[SELECT Id, Account__c, Airline__r.Airline_Code__c FROM AMS_Inspection__c WHERE Account__c IN : accountIds];
-		for(AMS_Inspection__c ins : lsAppointments) {
-			appointmentMap.put(ins.Account__c, ins.Airline__r.Airline_Code__c);
-		}
 		for(Account account : accounts)
 		{
 			//-- Mapping Key
