@@ -406,7 +406,7 @@
                             </apex:panelGrid>
                             </apex:pageBlockSectionItem>                        
                             <apex:pageBlockSectionItem >
-                                <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs1}"/>
+                                <apex:outputText escape="false" value="{!$Label.ISSP_ANG_VR_Disclaimer}"/>
                             </apex:pageBlockSectionItem>                        
                     </apex:pageBlockSection>
                 </apex:pageBlock>

@@ -13872,7 +13872,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS T&amp;Cs1</shortDescription>
-        <value>&lt;p&gt;I hereby voluntarily relinquish IATA Accreditation in respect to the Approved Locations as listed above.&lt;br/&gt;</value>
+        <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to Section 1 above to make these statements and file this document.&lt;br/&gt;&lt;br/&gt;It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 2). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in Sections 1 and 4, in order to produce and distribute databases among the airline industry participants.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs2</fullName>
@@ -27103,4 +27103,12 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>RHC Information description</shortDescription>
         <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
     </labels>            
+    <labels>
+        <fullName>ISSP_ANG_VR_Disclaimer</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Voluntary Relinquishment Disclaimer</shortDescription>
+        <value>&lt;p&gt;I hereby voluntarily relinquish IATA Accreditation in respect to the Approved Locations as listed above.&lt;p/&gt;</value>
+    </labels>
 </CustomLabels>
