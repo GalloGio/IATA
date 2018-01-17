@@ -405,6 +405,9 @@
                                 <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='Selected Branches Only', newForm.Scope_of_Change__c=='HO - All Branches')}" value="{!IF(newForm.Scope_of_Change__c=='Selected Branches Only',agencyCodesConcernedStr,  $Label.ISSP_ANG_ENTIRE_HIERARCHY)}"/>
                             </apex:panelGrid>
                             </apex:pageBlockSectionItem>                        
+                            <apex:pageBlockSectionItem >
+                                <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs1}"/>
+                            </apex:pageBlockSectionItem>                        
                     </apex:pageBlockSection>
                 </apex:pageBlock>
                  <apex:form id="tCondiForm">
