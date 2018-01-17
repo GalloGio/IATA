@@ -27072,6 +27072,7 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
+        <categories>ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
@@ -27079,6 +27080,14 @@ title,Title,Name</value>
 Small – up to USD 200.000 gross annual sales
 Medium – USD 200.001 – USD 2.000.000 gross annual sales
 Large – more than USD 2.000.000 gross annual sales</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltipConvert</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>The cost of converting from one accreditation type to another is as follows.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
