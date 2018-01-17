@@ -134,8 +134,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	        //Validate Product compliance 
 	        validateCountryCompliance();
-            if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-            
+            if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+            	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
 			for(SelectOption so : categories)
