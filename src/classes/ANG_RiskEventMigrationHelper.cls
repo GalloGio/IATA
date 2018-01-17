@@ -137,7 +137,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).ANG_Risk_ID__c; 
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).id;
 			    reToAdd.ANG_Event_Status__c    = status;
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW + 'prejudiced' +getKey(a), reToAdd.clone(false,false,false,false));
+			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			
 			else //else, confirm if this is a reg to withdraw
@@ -227,14 +227,14 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& !(risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_RVW  + getKey(aacc))
-				|| risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_RVW  + getKey(aacc)))
+				|| risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc)))
 			){
 				return ANG_Risk_Helper.STATUS_ACTIVE; 
 		}
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
 			&& aacc.Reason_Code__c == '61' 
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
-			&& (risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW + getKey(aacc))
+			&& (risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_RVW + getKey(aacc))
 				||risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW + getKey(aacc)))
 			){
 				risksToWithdraw.remove(ANG_Risk_Helper.CHANGE_CODE_NTW + getKey(aacc));
@@ -438,17 +438,17 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		}
 		
 
-	/*	if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW){
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW){
 			if (risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)) 
-				&& aacc.Reason_Code__c == '60' 
+				&& aacc.Reason_Code__c == '61' 
 				&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
-				){
+				){				
 					risksToInsert.get(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)).ANG_Event_Status__c = ANG_Risk_Helper.STATUS_WITHDRAWN;
 			}
 			else 
 				risksToWithdraw.put(ANG_Risk_Helper.CHANGE_CODE_RVW+ getKey(aacc),aacc);
 
-		}*/
+		}
 
 		if(aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RWD && String.isNotBlank(aacc.PreviousReason__c)){
 			if(aacc.PreviousReason__c.contains('61') || aacc.PreviousReason__c.contains('63')){

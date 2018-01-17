@@ -448,6 +448,57 @@ private class ANG_RiskEventMigrationHelperTest {
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
 		system.assertEquals(listRisks.get(0).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_ACTIVE);
 
+		Agency_Applied_Change_code__c ccRWD 
+			= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RWD,
+												PreviousReason__c = '63',
+												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION
+												);
+		insert ccRWD;
+
+		helper = new ANG_RiskEventMigrationHelper(setAccs);
+		listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 1);
+		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
+		system.assertEquals(listRisks.get(0).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
+
+		 // Invert CC order 
+		 
+		 
+		 Case c = createCase();
+		insert c;
+
+
+		 cc= new Agency_Applied_Change_code__c(Account__c = a.id,
+			Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
+			Reason_Code__c = '63',
+			SIDRA_Case__c = c.id,
+			Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION
+			);
+
+		 ccRWD= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RWD,
+												PreviousReason__c = '63',
+												SIDRA_Case__c = c.id,
+												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION
+												);
+		insert new list<Agency_Applied_Change_code__c>{ccRWD,cc};
+
+		helper = new ANG_RiskEventMigrationHelper(setAccs);
+		listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 2);
+		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
+		system.assertEquals(listRisks.get(0).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
+
+		system.assertEquals(reMap.get(listRisks.get(1).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
+		system.assertEquals(listRisks.get(1).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
+
+
+
+
+
 	}
 
 	@isTest
@@ -483,6 +534,35 @@ private class ANG_RiskEventMigrationHelperTest {
 		system.assertEquals(1, listRisks.size());
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT);
 		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN, listRisks.get(0).ANG_Event_Status__c);
+
+		// Invert CC order 
+
+		Case c2 = createCase();
+		insert c2;
+
+		cc= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRW,
+												SIDRA_Case__c = c2.id 
+												);
+		
+
+		 cc1 
+			= new Agency_Applied_Change_code__c(Account__c = a.id,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_OV1,
+												SIDRA_Case__c = c2.id 
+												);
+
+		insert new list<Agency_Applied_Change_code__c>{cc1,cc};
+
+		helper = new ANG_RiskEventMigrationHelper(setAccs);
+		listRisks = helper.convertChangeCodesToRiskEvents();
+		
+		system.assertEquals(2, listRisks.size());
+		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT);
+		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN, listRisks.get(0).ANG_Event_Status__c);
+		system.assertEquals(reMap.get(listRisks.get(1).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT);
+		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN, listRisks.get(1).ANG_Event_Status__c);
 	}
 
 	@isTest
@@ -503,9 +583,10 @@ private class ANG_RiskEventMigrationHelperTest {
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
-												SIDRA_Case__c = c.id 
+												SIDRA_Case__c = c.id,
+												PreviousReason__c = '61'
 												);
-		listCCs.add(cc);
+		listCCs.add(cc);								
 
 		Agency_Applied_Change_code__c cc1 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
@@ -516,7 +597,7 @@ private class ANG_RiskEventMigrationHelperTest {
 
 												);
 		listCCs.add(cc1);
-
+		
 
 		//OSCAR
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Name = 'Oscar');
