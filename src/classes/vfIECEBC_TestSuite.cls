@@ -831,18 +831,6 @@ public class vfIECEBC_TestSuite {
             
         }
     }
-    /*
-     * Test the Fix ID CARD batch. relation between ID CARD and GDP Product Account View
-     */
-    public static void testFixIDCard() {
-        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
-        List<ID_CARD__c> gidcard = createIDCARD(gpavs[0].Id);
-        
-        Test.startTest();
-        SchdlEBCFixIdCardAgencyLink.cancel();
-        SchdlEBCFixIdCardAgencyLink.Schedule(null);
-        Test.stopTest();
-    }
     
     public static void testCampaignPayWithCreditTrusted() {
         
