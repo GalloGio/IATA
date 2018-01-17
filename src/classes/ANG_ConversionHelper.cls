@@ -588,7 +588,7 @@ global with sharing class ANG_ConversionHelper {
 
 		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
 
-		ANG_RHCHelper.createRHCInfo(topParents, true); //as per NEWGEN-2487
+		ANG_RHCHelper.createRHCInfo(topParents, false); //as per NEWGEN-2487
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
