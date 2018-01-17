@@ -28,5 +28,5 @@
         <members>*</members>
         <name>Queue</name>
     </types>
-    <version>40.0</version>
+    <version>37.0</version>
 </Package>
