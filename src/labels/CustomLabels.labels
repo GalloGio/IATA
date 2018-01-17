@@ -26971,7 +26971,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
