@@ -3175,7 +3175,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
     <fields>
         <fullName>CEO_CFO__c</fullName>
         <externalId>false</externalId>
-        <label>CEO/CFO/COO</label>
+        <label>CEO/CFO/COO/CCO/CIO</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
