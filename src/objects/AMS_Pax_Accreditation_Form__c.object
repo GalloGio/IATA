@@ -1305,7 +1305,7 @@
     <fields>
         <fullName>ANG_Accreditation_Model_to_Change__c</fullName>
         <externalId>false</externalId>
-        <label>Accreditation Type</label>
+        <label>Accreditation Model</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1343,7 +1343,7 @@
         <fullName>ANG_Accreditation_type__c</fullName>
         <description>Global picklist with all the types of accreditation.</description>
         <externalId>false</externalId>
-        <label>Accreditation type</label>
+        <label>Accreditation Model</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1358,7 +1358,7 @@
         <externalId>false</externalId>
         <formula>TEXT(HO_Account__r.ANG_Accreditation_Model__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Current Accreditation type</label>
+        <label>Current Accreditation Model</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1934,7 +1934,7 @@
         <fullName>Confirm_accreditation_type_are_correct__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Confirm accreditation type is correct</label>
+        <label>Confirm Accreditation Model is correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4307,7 +4307,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Notify_Change_Accreditation_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Request Change of accreditation type</label>
+        <label>Request Change of Accreditation Model</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
