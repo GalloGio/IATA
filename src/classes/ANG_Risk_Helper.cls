@@ -9,10 +9,14 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_STATUS_B = 'B';
 	public static final String RISK_STATUS_C = 'C';
 
-	//RECORDTYPES
-	public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
-	public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
-	public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    //RHC Information standard record type
+    public static final String RHC_INFO_STD_RT = 'RHC_Information';
+
+    //RECORDTYPES
+    public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
+    public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
+    public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    public static final String RECTYPE_STDRHCINFO           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
 
 
 	//Account - Financial_Review_Result__c
@@ -42,19 +46,20 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_TYPE_PREJUDICED_COLLECTION     = 'Prejudiced collection';
 
 
-	//CHANGE CODES
-	public static final String CHANGE_CODE_FIN = 'FIN';
-	public static final String CHANGE_CODE_IRR = 'IRR';
-	public static final String CHANGE_CODE_RCR = 'RCR';
-	public static final String CHANGE_CODE_NOT = 'NOT';
-	public static final String CHANGE_CODE_MCF = 'MCF';
-	public static final String CHANGE_CODE_RVW = 'RVW';
-	public static final String CHANGE_CODE_IRW = 'IRW';
-	public static final String CHANGE_CODE_NTW = 'NTW';
-	public static final String CHANGE_CODE_CCF = 'CCF';
-	public static final String CHANGE_CODE_CHF = 'CHF';
-	public static final String CHANGE_CODE_CNF = 'CNF';
-	public static final String CHANGE_CODE_CSF = 'CSF';
+    //CHANGE CODES
+    public static final String CHANGE_CODE_FIN = 'FIN';
+    public static final String CHANGE_CODE_IRR = 'IRR';
+    public static final String CHANGE_CODE_RCR = 'RCR';
+    public static final String CHANGE_CODE_NOT = 'NOT';
+    public static final String CHANGE_CODE_MCF = 'MCF';
+    public static final String CHANGE_CODE_RVW = 'RVW';
+    public static final String CHANGE_CODE_IRW = 'IRW';
+    public static final String CHANGE_CODE_NTW = 'NTW';
+    public static final String CHANGE_CODE_CCF = 'CCF';
+    public static final String CHANGE_CODE_CHF = 'CHF';
+    public static final String CHANGE_CODE_CNF = 'CNF';
+    public static final String CHANGE_CODE_CSF = 'CSF';
+	public static final String CHANGE_CODE_RWD = 'RWD';
 
 	//CHANGE CODES REASON DESCRIPTION 
 	public static final String CHANGE_CODE_DESCRIPTION_NCAC                  = 'NON COMPLIANCE TO ACCREDITATION CRITERIA';
@@ -147,6 +152,26 @@ public with sharing class ANG_Risk_Helper{
 		}
 		private set;
 	}
+public class changeAgencyRiskEvent implements Queueable{
+        private List<ANG_Agency_Risk_Event__c> riskList;
+        private Map<id,id> riskMap;
+        public boolean isAllHierarchy = false;
+        
+        
+        public changeAgencyRiskEvent (List<ANG_Agency_Risk_Event__c> listAgencyRiskEventToChange){          
+            this.riskList = listAgencyRiskEventToChange;
+            isAllHierarchy = true;           
+        }
+
+        public changeAgencyRiskEvent(Map<Id,Id> mapToWork){
+            this.riskMap = mapToWork;
+        }
+
+        public void execute (QueueableContext context){
+            if(isAllHierarchy) inactivateRisk(riskList);
+            if(!isAllHierarchy) changeOfHE(riskMap);
+        }
+    }
 
 	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents){
 		if(!riskEvents.isEmpty()){
