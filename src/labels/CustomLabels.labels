@@ -16003,7 +16003,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Country_of_Publication</shortDescription>
-        <value>Country of Publication</value>
+        <value>Country or SAR of Publication</value>
     </labels>
     <labels>
         <fullName>ISSP_Create_New_Agency</fullName>
@@ -17359,7 +17359,23 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Country</shortDescription>
-        <value>Filter by Country</value>
+        <value>Filter by Country or SAR</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Country_Publication</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Country Publication</shortDescription>
+        <value>Filter by Country or SAR of Publication</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Document_Category</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Document Category</shortDescription>
+        <value>Filter by Document Category</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Type</fullName>
