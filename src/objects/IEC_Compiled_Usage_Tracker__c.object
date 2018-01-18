@@ -283,7 +283,7 @@
         <filters>
             <field>Related_Client__c</field>
             <operation>equals</operation>
-            <value>Chris May</value>
+            <value>Simon Johnson</value>
         </filters>
         <label>ZZ-By Related Client</label>
         <language>en_US</language>
