@@ -829,6 +829,21 @@ global with sharing class ANG_ConversionHelper {
 			accountsSplitedToUpdate.add(allAgencies.get(rel.Child_Account__c));
 
 			relationsToDelete.add(rel);
+
+			if(!accountsToUpdate.contains(allAgencies.get(rel.Child_Account__r.Top_Parent__c))){
+
+				if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c == AMS_Utils.AO)
+					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c == AMS_Utils.ACC_S4_LISTED)
+						allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
+
+				allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c = 'HE';
+				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
+				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
+				allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+
+				accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
+			}
 		}
 
 
