@@ -3197,6 +3197,16 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
                     <default>false</default>
                     <label>COO</label>
                 </value>
+                <value>
+                    <fullName>CCO</fullName>
+                    <default>false</default>
+                    <label>CCO</label>
+                </value>
+                <value>
+                    <fullName>CIO</fullName>
+                    <default>false</default>
+                    <label>CIO</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -26531,11 +26541,19 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>CEO_CFO__c</picklist>
             <values>
+                <fullName>CCO</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEO</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIO</fullName>
                 <default>false</default>
             </values>
             <values>
