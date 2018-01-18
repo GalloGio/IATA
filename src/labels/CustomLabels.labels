@@ -855,7 +855,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_AccreditationType</shortDescription>
-        <value>Accreditation Type</value>
+        <value>Accreditation Model</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationTypeRequired</fullName>
@@ -1009,7 +1009,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
-        <value>Return to comparison of accreditation type</value>
+        <value>Return to comparison of Accreditation Models</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
@@ -1465,7 +1465,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle2</shortDescription>
-        <value>Comparison of Travel Agency Accreditation Types</value>
+        <value>Comparison of Travel Agency Accreditation Models</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonViewHere</fullName>
@@ -8865,7 +8865,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
-        <value>Compare Accreditation types</value>
+        <value>Compare Accreditation Models</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
@@ -10774,7 +10774,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
-        <value>1. Accreditation type</value>
+        <value>1. Accreditation Model</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -11025,7 +11025,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Current Accreditation Type</shortDescription>
-        <value>Current Accreditation Type</value>
+        <value>Current Accreditation Model</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Current_Companies</fullName>
@@ -11664,7 +11664,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Updated Accreditation Type</shortDescription>
-        <value>Change of Accreditation Type</value>
+        <value>Change of Accreditation Model</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>
@@ -17420,7 +17420,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>Note that this is a system generated message. Please do not respond to this email.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -19251,7 +19251,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
-        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
@@ -19292,7 +19292,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGSA_CNS</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
@@ -19312,7 +19312,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
         <value>No Company was found for these search criteria. Please modify your search and try again.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
@@ -21787,7 +21787,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_generalError_CNS</shortDescription>
-        <value>It is not possible to finalize your registration process. 
+        <value>It is not possible to finalize your registration process. 
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal please contact us at Tel: 786-413-1000</value>
     </labels>
@@ -26951,7 +26951,7 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
         <value>Voluntary Relinquishment</value>
-	</labels>
+    </labels>
     <labels>    
         <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
         <language>en_US</language>
@@ -27023,7 +27023,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
-        <value>Click here to compare the accreditation types</value>
+        <value>Click here to compare the Accreditation Models</value>
     </labels>
             <labels>
         <fullName>ISSP_ANG_One_or_More</fullName>
@@ -27087,7 +27087,7 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
-        <value>The cost of converting from one accreditation type to another is as follows.</value>
+        <value>The cost of converting from one Accreditation Model to another is as follows.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
@@ -27119,5 +27119,13 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Voluntary Relinquishment Disclaimer</shortDescription>
         <value>&lt;p&gt;I hereby voluntarily relinquish IATA Accreditation in respect to the Approved Locations as listed above.&lt;p/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
+        <value>Request Change of Accreditation Model and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
 </CustomLabels>

@@ -215,6 +215,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String accredidationType {get; set;}
     public Integer cntIFAPContacts {get; set;}
 
+    public Boolean namPaxAgent {get; set;}
+
     public Boolean getnewlabels() {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
@@ -661,6 +663,8 @@ public without sharing class ISSP_AMS_Accreditation {
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
         namEnabled = isocountry.ANG_Enable_NewGen__c;
+
+        namPaxAgent = (sector == 'Travel Agent' && namEnabled);        
 
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
