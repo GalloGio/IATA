@@ -13167,6 +13167,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <fullName>EXE2014_All_Pending_Closure</fullName>
         <columns>NAME</columns>
         <columns>Status__c</columns>
+        <columns>Deadline_for_Alignment__c</columns>
         <columns>Related_Case_Number__c</columns>
         <columns>Exe_Category_New__c</columns>
         <columns>Exe_Category__c</columns>
@@ -13175,7 +13176,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <columns>IATA_Country__c</columns>
         <columns>SOP_Type__c</columns>
         <columns>Deadline_for_Approval__c</columns>
-        <columns>Deadline_for_Alignment__c</columns>
         <columns>OWNER.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
