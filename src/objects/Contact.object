@@ -2876,6 +2876,10 @@ IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/resource/CFO_Contact_image&quot
 &amp;&quot; &quot;&amp;
 IF(TEXT(CEO_CFO__c)=&quot;COO&quot;,IMAGE(&quot;/resource/COO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;CCO&quot;,IMAGE(&quot;/resource/CCO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;CIO&quot;,IMAGE(&quot;/resource/CIO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
 IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(PSG_Member__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SgT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
