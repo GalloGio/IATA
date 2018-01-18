@@ -1,0 +1,132 @@
+<apex:page controller="ISSP_ANG_CodeSearch" language="en" cache="false" 
+           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
+           standardStylesheets="false">
+	
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <c:ISSP_Header></c:ISSP_Header>
+    <c:iss_ap_css />
+  </head>
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
+
+      .section-body {
+        margin: 8px;
+      }
+
+      .table {
+        width: 95%;
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .search {
+      	margin-top: 20px;
+      	margin-left: 20px;
+      	margin-bottom: 20px;
+      }
+
+      .searchResults {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      main {
+        background-color: white;
+      }
+
+    </style>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            doSearch();
+            return false;
+          }
+        });
+      });     	   
+    </script>
+
+  <body>
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      <apex:form id="mainFrm">
+
+		  <apex:actionFunction action="{!doSearch}" name="doSearch" rerender="Contacts"/>
+
+        <div id="page-wrapper" class="col-lg-12">
+          <div class="row">
+            <div class="section-header">
+              <strong>IATA Code Search</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="search">
+		            <span>
+	        	      <apex:outputLabel value="IATA Code"/>
+                  <span>
+                    <apex:inputText value="{! iataCode}"/>
+                    <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                  </span>
+                </span>
+
+                <apex:pageBlock >
+                  <apex:outputLabel value="IATA Code"/>
+                  <apex:outputText value="1234567890"/>
+                </apex:pageBlock>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!--
+
+
+      	<div class="row">
+      	  <section name="mainSection" class="col-md-12 col-sm-12">
+	        <section name="searchMainSection" class="row">
+	          <header class="col-md-12 col-xs-12">
+	            <div class="section-header">
+	              <strong>IATA Code Search</strong>
+	            </div>
+	          </header>
+	          <apex:outputPanel layout="block" id="searchPanel" styleClass="row" style="margin-right: 15px;">
+	          	<section id="searchSection" class="row">
+		          <span>
+	        		<apex:outputLabel value="IATA Code"/>        
+	        		<span>
+			          <apex:inputText value="{! iataCode}"/>
+			          <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+		          	</span>
+		          </span>
+		        </section>
+	          </apex:outputPanel>
+	        </section>
+      	  </section>
+      	</div>
+
+      -->
+      	<c:ISSP_CustomFooter />
+      </apex:form>
+  	</main>
+  </body>  
+
+</apex:page>
