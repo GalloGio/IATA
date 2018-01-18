@@ -183,9 +183,9 @@ public class ams2gdp_Selector
 	public static Map<String, String> getAppointmentByAccount(Set<String> accountIds)
 	{
 		Map<String, String> result = new Map<String, String>();
-		for(AMS_Inspection__c item:[SELECT Id, Account__c, Airline__r.Airline_Code__c FROM AMS_Inspection__c WHERE Account__c IN : accountIds])
+		for(AMS_Inspection__c item:[SELECT Id, Account__c, Airline_Code__c FROM AMS_Inspection__c WHERE Account__c IN : accountIds])
 		{
-			result.put(item.Account__c,item.Airline__r.Airline_Code__c);
+			result.put(item.Account__c,item.Airline_Code__c);
 		}
 
 		return result;
