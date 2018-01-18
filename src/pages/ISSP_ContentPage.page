@@ -281,11 +281,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="leftFilter">
-                                            {!$Label.ISSP_Filter_by_Document_Category}
+                                            Filter by Document Category
                                             <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allDocumentCategoryList}"/>
                                             </apex:selectList>
-                                            {!$Label.ISSP_Filter_by_Country_Publication}
+                                            Filter by Country of Publication    
                                             <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allCountriesList}"/>
                                             </apex:selectList>
