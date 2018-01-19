@@ -179,6 +179,8 @@ public with sharing class ISSP_AvailableServices{
     
     public ISSP_AvailableServices(){
 
+        this.isModalErrorMessageEnable = false;
+
         this.helpTextPortalRoles = new Map<String, String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
@@ -309,7 +311,7 @@ public with sharing class ISSP_AvailableServices{
                     modalErrorMessage = aux.replace('{0}', msgComplement);
                 }
 
-                if (!isIEPAccountEnable) {
+                if (!isIEPAccountEnable && isAuthorisedSignatory) {
                     isModalErrorMessageEnable = true;
                 } else {
                     if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
@@ -754,7 +756,7 @@ public with sharing class ISSP_AvailableServices{
 
         this.failedCount = uprFailed.size();
 
-        this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
+        this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole && !isModalErrorMessageEnable);
 
         system.debug('XXX Serv : '+Serv);
 
