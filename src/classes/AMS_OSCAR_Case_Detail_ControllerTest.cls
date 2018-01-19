@@ -114,7 +114,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
-				Remittance_Frequency__c = 'Daily',
+				Remittance_Frequency__c = 'D',
 				Operation__c = opCode.Id
 			);
 
@@ -137,8 +137,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			controller.accreditationObj.Remittance_Frequency__c = controller.getRfPicklistValues()[0].getValue();
 
 			controller.save();
-
-			System.assertEquals(controller.rightOptionsRF[0].getValue(),'Daily');
+			
+			System.assertEquals(controller.rightOptionsRF[0].getValue(),'D');
 
 			opCode.Allow_multiple_remittances__c = false;
 			update opcode;
