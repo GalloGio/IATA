@@ -2130,8 +2130,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         //System.Debug('Contact type:' + contactType);
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
-            newContact.First_name__c = 'Agency';
-            newContact.Last_name__c = 'Company';
+            newContact.First_name__c = '';
+            newContact.Last_name__c = newContact.Name;
             newContact.Agency_owner__c = true;
             //newContact.Phone__c = '000 000 00 00';
             //newContact.Email__c = 'dummy@gmail.com';
