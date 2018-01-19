@@ -17362,6 +17362,22 @@ Please add below all your company valid email domains, including different ones 
         <value>Filter by Country</value>
     </labels>
     <labels>
+        <fullName>ISSP_Filter_by_Country_Publication</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Country Publication</shortDescription>
+        <value>Filter by Country of Publication</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Document_Category</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Document Category</shortDescription>
+        <value>Filter by Document Category</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Filter_by_Type</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
