@@ -309,7 +309,7 @@ public with sharing class ISSP_AvailableServices{
                     modalErrorMessage = aux.replace('{0}', msgComplement);
                 }
 
-                if (!isIEPAccountEnable) {
+                if (!isIEPAccountEnable && isAuthorisedSignatory) {
                     isModalErrorMessageEnable = true;
                 } else {
                     if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
