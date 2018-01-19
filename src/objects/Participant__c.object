@@ -202,7 +202,7 @@ Contact__r.AccountId
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Local_Group_Type__c</fullName>
