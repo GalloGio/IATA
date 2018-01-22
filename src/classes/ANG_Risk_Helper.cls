@@ -87,8 +87,8 @@ public with sharing class ANG_Risk_Helper{
 
 
 	//Account - Remittance_frequency__c
-	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'Monthly';
-	public static final String REMITTANCE_FREQUENCY_DAILY = 'Daily';
+	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'M';
+	public static final String REMITTANCE_FREQUENCY_DAILY = 'D';
 
 	// ANG_Agency_Risk_Calculation__c - ANG_Adjusted__c
 	public static final String ADJ_YES   = 'Yes';

@@ -151,7 +151,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -207,7 +207,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
@@ -503,7 +503,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -546,7 +546,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
