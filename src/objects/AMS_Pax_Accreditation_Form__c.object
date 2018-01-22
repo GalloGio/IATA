@@ -1343,7 +1343,7 @@
         <fullName>ANG_Accreditation_type__c</fullName>
         <description>Global picklist with all the types of accreditation.</description>
         <externalId>false</externalId>
-        <label>Accreditation type</label>
+        <label>Accreditation Type</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1358,7 +1358,7 @@
         <externalId>false</externalId>
         <formula>TEXT(HO_Account__r.ANG_Accreditation_Model__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Current Accreditation type</label>
+        <label>Current Accreditation Type</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1934,7 +1934,7 @@
         <fullName>Confirm_accreditation_type_are_correct__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Confirm accreditation type is correct</label>
+        <label>Confirm Accreditation Type is correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4307,7 +4307,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Notify_Change_Accreditation_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Request Change of accreditation type</label>
+        <label>Request Change of Accreditation Type</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4711,54 +4711,44 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Monthly</fullName>
+                    <fullName>M</fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
                 <value>
-                    <fullName>Fortnightly</fullName>
+                    <fullName>F</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
                 </value>
                 <value>
-                    <fullName>Every 10 days</fullName>
+                    <fullName>R</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
                 </value>
                 <value>
-                    <fullName>4 times per month</fullName>
+                    <fullName>W</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
                 </value>
                 <value>
-                    <fullName>Weekly</fullName>
+                    <fullName>V</fullName>
                     <default>false</default>
                     <label>Weekly</label>
                 </value>
                 <value>
-                    <fullName>Every 5 days</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
                 </value>
                 <value>
-                    <fullName>Every 3 days</fullName>
+                    <fullName>B</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
-                    <fullName>Daily</fullName>
+                    <fullName>D</fullName>
                     <default>false</default>
                     <label>Daily</label>
-                </value>
-                <value>
-                    <fullName>Daily (China)</fullName>
-                    <default>false</default>
-                    <label>Daily (China)</label>
-                </value>
-                <value>
-                    <fullName>Every 5 day</fullName>
-                    <default>false</default>
-                    <label>Every 5 day</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -6227,39 +6217,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7065,43 +7051,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 day</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7943,39 +7921,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8707,39 +8681,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9471,39 +9441,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10247,39 +10213,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11023,39 +10985,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11799,39 +11757,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12575,39 +12529,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13378,39 +13328,31 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14240,39 +14182,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15015,39 +14953,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15846,39 +15780,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16770,39 +16700,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17646,39 +17572,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18574,35 +18496,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19154,39 +19076,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19948,39 +19866,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20822,39 +20736,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21614,39 +21524,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22465,39 +22371,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23292,39 +23194,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24229,39 +24127,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24468,39 +24362,37 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     <validationRules>
         <fullName>Limit_Remittance_Frequency_Options</fullName>
         <active>true</active>
-        <errorConditionFormula>OR( 
+        <errorConditionFormula>OR(
 
-AND( 
+AND(
 
-ANG_IsNewGenAgency__c, 
+ANG_IsNewGenAgency__c,  
 
 NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;), 
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ), 
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
-AND( 
+AND(
 
-ANG_IsNewGenAgency__c, 
+ANG_IsNewGenAgency__c,  
 
-Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;, 
+Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;,
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 ) 
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
 )</errorConditionFormula>
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>

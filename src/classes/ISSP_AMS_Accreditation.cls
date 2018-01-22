@@ -215,6 +215,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String accredidationType {get; set;}
     public Integer cntIFAPContacts {get; set;}
 
+    public Boolean namPaxAgent {get; set;}
+
     public Boolean getnewlabels() {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
@@ -661,6 +663,8 @@ public without sharing class ISSP_AMS_Accreditation {
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
         namEnabled = isocountry.ANG_Enable_NewGen__c;
+
+        namPaxAgent = (sector == 'Travel Agent' && namEnabled);        
 
         system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
 
@@ -3350,6 +3354,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             SYSTEM.DEBUG('Sending NoC Confirmation 1');
             emailTemplateName = 'ISSP AMS Process Notification';
             fromaddress = 'IATA Service Centre (noreply@iata.org)';
+        } else if (newCase.BSPCountry__c == null) {
+            emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
+            fromaddress = 'IATA (noreply@iata.org)';
         } else if (newCase.BSPCountry__c.contains('Spain')) {
             emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
             fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
@@ -3374,9 +3381,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else if (newCase.Region__c.contains('Africa')) {
             fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
             emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
-         } else if (newCase.BSPCountry__c == null) {
-            emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
-            fromaddress = 'IATA (noreply@iata.org)';
         } else {
             emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
             fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';

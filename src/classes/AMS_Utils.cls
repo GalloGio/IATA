@@ -2550,4 +2550,14 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         'Multicountry' => 'GoGlobal'
     };   
 
+    public static String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    } 
+
 }

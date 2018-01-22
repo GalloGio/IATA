@@ -33,7 +33,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
     public list<Contact> otherUsersList {get; set;}
     public Boolean isEasyPayService {get; set;}
     public String portalServiceRole {get; set;}
-    public List<SelectOption> availablePortalServiceRoles {get; set;} 
+    public List<SelectOption2> availablePortalServiceRoles {get; set;} 
+    public Map<String, String> helpTextPortalRoles {get; set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -45,6 +46,18 @@ public with sharing class ISSP_EditPortalServiceAccess{
             options.add(new SelectOption('Access Granted','Access Granted'));
         return options;
     }
+
+    public class SelectOption2 {
+        public String value {get; set;}
+        public String label {get; set;}
+        public String helpText {get; set;}
+
+        public SelectOption2(String value, String label, String helpText) {
+            this.value = value;
+            this.label = label;
+            this.helpText = helpText;
+        }
+    }    
 
     public ISSP_EditPortalServiceAccess(){
         
@@ -65,6 +78,24 @@ public with sharing class ISSP_EditPortalServiceAccess{
         
         isEasyPayService = false;
 
+        this.helpTextPortalRoles = new Map<String, String>();
+
+        Portal_Applications__c pa = [Select name From Portal_Applications__c where Id =: psaId];
+
+        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+                String aux = role.Role__c.replaceAll(' ','');
+                String aux2 = aux.replaceAll('-','');
+
+                String helpText = Ams_Utils.getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+
+                if(helpText == 'NONE') helpText = '';
+
+                this.helpTextPortalRoles.put(role.Role__c, helpText);
+
+            }
+        }        
+
         if(servName != null && servName != ''){
             isAddUser = true ;
             if(servName.contains('EasyPay')) {
@@ -79,16 +110,13 @@ public with sharing class ISSP_EditPortalServiceAccess{
             }
         }
 
-        availablePortalServiceRoles = new List<SelectOption>();
+        availablePortalServiceRoles = new List<SelectOption2>();
 
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'IATA EasyPay (EDENRED)'];
-        
-        availablePortalServiceRoles.add(new SelectOption('', ''));
-        
+        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c =: pa.name order by Order__c];
+                
         for (Connected_App_Roles__c role : roles) {
-            availablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
-        }         
-
+            availablePortalServiceRoles.add(new SelectOption2(role.Role__c, role.Role__c, this.helpTextPortalRoles.get(role.Role__c)));
+        }
         
         PortalServiceAccess_List = new List<Portal_Application_Right__c>(
             [Select p.Name, p.Application_Name__c, p.Right__c, p.PortalServiceTranslatedName__c , p.Portal_Application__r.Description__c,p.Portal_Application__r.Cannot_be_managed_by_portal_admin__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
@@ -239,6 +267,9 @@ public with sharing class ISSP_EditPortalServiceAccess{
         usersToCreateList = new List <Contact>();
         otherUsersList = new List <Contact>();
         system.debug('selectedContact_Lst: ' + SelectedContacts);
+
+        System.debug('ALEX 2 portalServiceRole-->' + portalServiceRole);
+
         for(String ContactId : selectedContact_Lst){
             system.debug('adding: ' + ContactId);
             contactIdSet.add(ContactId.trim());
@@ -274,6 +305,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
 
         selectedContact_Lst = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
         System.debug('SFF selectedContact_Lst'+selectedContact_Lst);
+
+        System.debug('ALEX portalServiceRole-->' + portalServiceRole);
 
         Set <String> contactIdSet = new Set <String>();
 
