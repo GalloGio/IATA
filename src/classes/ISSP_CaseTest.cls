@@ -37,7 +37,7 @@ public class ISSP_CaseTest {
 
         	cttr.AddComment();
         	cttr.edit();
-            ISSP_Case.getFieldMappedValue('test','test');
+        	ISSP_Case.getFieldMappedValue('test','test');
             cttr.updateCase();
         }
         Test.stopTest();
@@ -726,7 +726,7 @@ public class ISSP_CaseTest {
             cttr.whoToContact = account.Id;
             cttr.additionalRecipients=user.Email;
             cttr.save();
-            System.assertEquals(true,cttr.IsInterDPCCase());
+            System.assertEquals(true,cttr.getIsInterDPCCase());
         }
         Test.stopTest();
     }
