@@ -440,7 +440,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW){
 			if (risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)) 
-				&& aacc.Reason_Code__c == '61' 
+				&& aacc.PreviousReason__c == '61' 
 				&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 				){				
 					risksToInsert.get(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)).ANG_Event_Status__c = ANG_Risk_Helper.STATUS_WITHDRAWN;
