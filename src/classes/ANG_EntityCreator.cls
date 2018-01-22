@@ -121,8 +121,15 @@ public class ANG_EntityCreator {
 
         return (AMS_Accreditation_Contact__c)addFieldsToObject((sObject)obj, fieldsOfObject);
     }
-
-
+    
+    public static AMS_Agencies_Hierarchy__c createAgenciesHierarchy(Map<String,Object> fieldsOfObject){
+        
+        AMS_Agencies_Hierarchy__c agencyRel = new AMS_Agencies_Hierarchy__c();
+        
+        sObject obj = addFieldsToObject((sObject)agencyRel, fieldsOfObject);
+        
+        return (AMS_Agencies_Hierarchy__c)addFieldsToObject((sObject)obj,fieldsOfObject);
+    }
 
 
     public static sObject addFieldsToObject(Sobject obj, Map<String,Object> fieldsOfObject){
