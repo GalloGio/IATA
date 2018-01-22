@@ -937,7 +937,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
