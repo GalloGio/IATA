@@ -570,6 +570,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>AMS History</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_AccountTrackingHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -716,6 +732,15 @@
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Information__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
