@@ -152,6 +152,13 @@ private class GeneralSOQLQueriesAnalyserTest {
 
         System.debug('Checkpoint 11');
         ANG_EntityCreator.checkSFDCLimits();
+        
+        fieldsOfObject = new Map<String,Object>();
+        fieldsOfObject.put('Hierarchy_Name__c', 'Tosca hierarchy');
+
+        AMS_Agencies_Hierarchy__c agHierarchy = new AMS_Agencies_Hierarchy__c();
+        agHierarchy = ANG_EntityCreator.createAgenciesHierarchy(fieldsOfObject);
+        insert agHierarchy;
 
         Test.stopTest();
 
