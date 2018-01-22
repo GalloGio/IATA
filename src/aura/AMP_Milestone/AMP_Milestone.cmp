@@ -16,6 +16,7 @@
     
     <aura:registerEvent name="updateMilestone" type="c:AMP_UpdateOrDeleteTask"/>
     <aura:registerEvent name="deleteMilestone" type="c:AMP_UpdateOrDeleteTask"/>
+    <aura:registerEvent name="cancelAddMilestone" type="c:AMP_UpdateOrDeleteTask"/>
     
     <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleMilestoneError}"/>
     
