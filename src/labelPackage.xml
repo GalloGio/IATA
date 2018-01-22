@@ -11,11 +11,11 @@
      <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types> 
-        <types>
+    </types>
+    <types>
         <members>*</members>
         <name>GlobalPicklist</name>
-    </types> 
+    </types>
         <types>
         <members>*</members>
         <name>CustomLabel</name>
