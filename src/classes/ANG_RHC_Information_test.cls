@@ -19,7 +19,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=country.id,
             IATACode__c ='1234567',
-			Remittance_frequency__c='Monthly',
+			Remittance_frequency__c='M',
             billingCountry = 'fr',
 			ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -222,7 +222,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=[select id from IATA_ISO_Country__c limit 1].get(0).id,
             IATACode__c ='1234567',
-            Remittance_frequency__c='Monthly',
+            Remittance_frequency__c='M',
             billingCountry = 'fr',
             ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -284,7 +284,7 @@ public class ANG_RHC_Information_test{
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','AE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','IATA Passenger Sales Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
