@@ -26,7 +26,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','Non-IATA Passenger Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -104,7 +104,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('ISSP_AMS_Premises_located_at_airport__c','No');
         fieldsOfObject.put('Abbreviated_name__c','NEWGEN-559 HE5');
         fieldsOfObject.put('Abbreviated_Address__c','sdfsdf');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Solicitation_Flag__c',false);
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
@@ -183,7 +183,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','Non-IATA Passenger Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -238,7 +238,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','Non-IATA Passenger Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -292,7 +292,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','Non-IATA Passenger Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -351,7 +351,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','Non-IATA Passenger Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -414,7 +414,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('ISSP_AMS_Premises_located_at_airport__c','No');
         fieldsOfObject.put('Abbreviated_name__c','NEWGEN-559 HE5');
         fieldsOfObject.put('Abbreviated_Address__c','sdfsdf');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Solicitation_Flag__c',false);
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
