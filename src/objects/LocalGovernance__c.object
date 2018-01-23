@@ -572,6 +572,17 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Number_of_local_group_meetings__c</fullName>
+        <description>Total number of local group meetings</description>
+        <externalId>false</externalId>
+        <label>Number of local group meetings</label>
+        <summaryForeignKey>LocalGovernance_Meeting__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Number_of_participants__c</fullName>
         <description>The total number of participants</description>
         <externalId>false</externalId>
