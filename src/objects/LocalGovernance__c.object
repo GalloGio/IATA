@@ -552,6 +552,7 @@
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Excluding Observers</inlineHelpText>
         <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
