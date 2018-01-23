@@ -468,9 +468,9 @@ global class AMS_HierarchyHelper {
 			//only active hierarchy agencies are to be considered
 			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
-			if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
 				return false;
-			if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
+			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId))
 				return false;
 		}
 
