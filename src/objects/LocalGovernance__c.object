@@ -2017,6 +2017,15 @@ Record Type + Group Type + ISO_Country_Name</description>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Delete_group_meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Local_Groups&apos;, 
+PRIORVALUE(Number_of_local_group_meetings__c) &gt; Number_of_local_group_meetings__c, 
+NOT($Permission.Modify_Local_Group_Owners) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete meetings from this group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Delete_participants</fullName>
         <active>true</active>
         <errorConditionFormula>OR(AND(RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;,
