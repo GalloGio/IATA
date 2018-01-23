@@ -7,6 +7,7 @@
 
     <aura:registerEvent name="updateIssue" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteIssue" type="c:AMP_DeleteIssueOrPriority"/>
+    <aura:registerEvent name="cancelAddIssue" type="c:AMP_DeleteIssueOrPriority"/>
 
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleSourceIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleSourceIdClear}"/>
