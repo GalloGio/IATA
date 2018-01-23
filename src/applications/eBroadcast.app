@@ -16,4 +16,5 @@
     <tab>EBC_Email_Exclusion__c</tab>
     <tab>EBC_Master_Filter__c</tab>
     <tab>EBC_Sub_Continent__c</tab>
+    <tab>EBC_Campaign_Emails__c</tab>
 </CustomApplication>

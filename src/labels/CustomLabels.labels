@@ -17367,7 +17367,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Filter by Country Publication</shortDescription>
-        <value>Filter by Country of Publication</value>
+        <value>Filter by Country/Territory of Publication</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Document_Category</fullName>
