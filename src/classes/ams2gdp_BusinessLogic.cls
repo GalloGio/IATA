@@ -44,7 +44,7 @@ public class ams2gdp_BusinessLogic
 			List<String> tradeNameParts = ams2gdp_Utils.WrapText(account.TradeName__c, 32);
 
 			String airlineCode = account.Airline_Code__c;
-			if(account.Location_Class__c == 'M') airlineCode = appointmentMap.get(account.Id);
+			if(account.Location_Class__c == 'M' && appointmentMap.containsKey(account.Id)) airlineCode = appointmentMap.get(account.Id);
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
 				, Parent_GDP_Account_View__c = (account.ParentId !=null)? parentMap.get(account.ParentId): null
