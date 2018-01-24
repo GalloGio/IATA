@@ -185,9 +185,7 @@ public class ISSP_PortalService_Test {
 		);
 
 		insert car;
-        
-		Test.startTest();
-        
+        	       
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
 			
 		List<Contact> cl = new List<Contact>();
@@ -216,6 +214,8 @@ public class ISSP_PortalService_Test {
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation'); 
         insert app;
+
+        Test.startTest();
         
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'IATA Accreditation');
