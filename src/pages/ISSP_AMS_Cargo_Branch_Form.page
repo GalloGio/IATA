@@ -342,7 +342,7 @@
     //FM - AMSU-20
     function togglePointA(v, fldId) {
         var el = document.getElementById(fldId)
-        if(v=='BCH') {
+        if(v=='DGR' || v=='BCH' || v=='DGA') {
             el.style.display='block';
         } else {
             el.style.display='none';
@@ -363,7 +363,7 @@
             $j("#validUntilQuestion").hide();
         }
 
-        if(v=='DGR' || v=='BCH') {
+        if(v=='DGR' || v=='DGA' || v=='BCH') {
             $j("#Experience").hide();
         }else{
             $j("#Experience").show();
@@ -907,24 +907,24 @@
                                 <apex:inputField required="true" value="{!trainedStaffContact.Position_trained_staff__c}" />
                                 </td></tr>
                             <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
-                                <table>
+                        <table>
                                 <tr><td>
                                     <apex:outputText value="Organization / Training School" />
                                 <apex:inputField required="true" value="{!trainedStaffContact.Certificate_Issuer__c}" />
                                 </td><td class="modalrow">
                                     <apex:image value="/img/msg_icons/info16.png" style="margin-top:13px; " title="{!txtHelpTrainedStaffOrganization}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                                </td></tr>  
+                                </td></tr>
                                 </table>
                                 </td>
                                 <td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
-                                <table>
+                                <!--table>
                                 <tr><td>
                                 <apex:outputText value="Reference" />
                                 <apex:inputField required="true" value="{!trainedStaffContact.Registration_number__c}" />
                                 </td><td class="modalrow">
                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:13px;margin-top:13px" title="{!txtHelpTrainedStaffReference}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                 </td></tr>
-                                </table>
+                                </table-->
                                 </td></tr>
                         </table>
                     </td>
@@ -934,14 +934,14 @@
                   <tr>
                       <td style="width:30%">
                         <table>
-                            <tr id="Experience" style="display:{!IF(NOT(AND(trainedStaffContact.Type_Of_Certificate__c<>'DGR',trainedStaffContact.Type_Of_Certificate__c<>'BCH')),'','none')}" >
+                            <tr id="Experience" style="display:{!IF(NOT(AND(trainedStaffContact.Type_Of_Certificate__c<>'DGR',AND(trainedStaffContact.Type_Of_Certificate__c<>'DGA',trainedStaffContact.Type_Of_Certificate__c<>'BCH'))),'','none')}" >
                                 <td class="modalrow" colspan="2">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT2}"/><br/>
                                 <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7}" /><br/>
                                 <apex:inputField value="{!trainedStaffContact.Air_cargo_transport_business_exp__c}" style="width:400px"/><br/><br/>
                             </td></tr>
 
-                            <tr id="point_a" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c=='BCH','','none')}" >
+                            <tr id="point_a" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c=='DGR' || trainedStaffContact.Type_Of_Certificate__c=='DGA' || trainedStaffContact.Type_Of_Certificate__c=='BCH','','none')}" >
                                 <td class="modalrow" colspan="2">    
                                 <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3}" /><br/>
                                 <apex:inputField value="{!trainedStaffContact.IATA_FIATA_training_history__c}" style="width:400px"/>
