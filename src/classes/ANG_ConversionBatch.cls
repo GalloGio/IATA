@@ -8,7 +8,11 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 	
+	global Set<Account> accountsMigrated;
+
 	global ANG_ConversionBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate) {
+		
+		accountsMigrated = new Set<Account>();
 		
 		structures= structuresToMigrate;
 
@@ -29,6 +33,7 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
    	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 
    		System.SavePoint sp;
+   		Set<Account> accountsMigratedRun = new Set<Account>();
 
    		try{
 
@@ -37,10 +42,10 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
    			sp = Database.setSavePoint();
 
 			if(Test.isRunningTest()){
-				ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>(structures));
+				accountsMigratedRun = ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>(structures));
 			}
 			else{
-				ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>{structures.get(this.run)});
+				accountsMigratedRun = ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>{structures.get(this.run)});
 			}
 
 			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(structures.get(this.run), run, BC.getJobId(), false, null);
@@ -54,11 +59,19 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 		}
 
+		if(!accountsMigratedRun.isEmpty())
+			accountsMigrated.addAll(accountsMigratedRun);
+
 
 	}
 	
 	//Finish Method
 	global void finish(Database.BatchableContext BC){
+
+		ANG_ConversionHelper.isMigrationTool=true;
+
+		if(!accountsMigrated.isEmpty())
+			ANG_ConversionHelper.createCorrectionChangeCodes(accountsMigrated);
 		 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
