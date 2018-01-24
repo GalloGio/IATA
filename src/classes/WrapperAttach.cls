@@ -369,7 +369,9 @@ global class WrapperAttach implements Comparable {
             list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( sobjectId, listS3Files);
 
             for(AmazonFile file: listAmazonfiles){
-                listAttach.add(new WrapperAttach(file));
+                if(file.getFullName() != '500/' + sobjectId + '/Notice_of_Change_form.pdf') {
+                    listAttach.add(new WrapperAttach(file));
+                }
             }
         } catch (Exception e) {
             System.debug(e.getMessage());
