@@ -149,7 +149,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 
 	public boolean isAuthCashPayment(Agency_Applied_Change_code__c aacc){
-		system.debug('isAuthCashPayment');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_FIN  
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)) 
 			return true;
@@ -173,7 +172,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}*/
 
 	public string checkLateShortPayment(Agency_Applied_Change_code__c aacc){
-		system.debug('isLateShortPayment');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_IRR  
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& (aacc.Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_OV1
@@ -189,7 +187,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public boolean isPaymentDefault(Agency_Applied_Change_code__c aacc){
-		system.debug('isPaymentDefault');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR  
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& (String.isBlank(aacc.PreviousReason__c) 
@@ -221,7 +218,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}*/
 
 	public string checkFailFinancialStatements(Agency_Applied_Change_code__c aacc){
-		system.debug('isFailFinancialStatements');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
 			&& aacc.Reason_Code__c == '61' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC
@@ -246,7 +242,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 
 	public boolean isMajorchange1(Agency_Applied_Change_code__c aacc){
-		system.debug('isMajorchange1');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CCF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CHF
 			|| aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_CNF
@@ -257,7 +252,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}	
 
 	public boolean isMajorchange2(Agency_Applied_Change_code__c aacc){
-		system.debug('isMajorchange2');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF 
 			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& (aacc.Bulletin_Information__c.toUpperCase().contains('MAJOR')
@@ -282,7 +276,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}*/
 
 	public string checkUnreportedChange(Agency_Applied_Change_code__c aacc){
-		system.debug('isFailFinancialStatements');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
 			&& aacc.Reason_Code__c == '60' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
@@ -330,7 +323,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}*/
 
 	public string checkFailFinancialSecurity(Agency_Applied_Change_code__c aacc){
-		system.debug('isFailFinancialSecurity1');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW 
 			&&locationTypeSet.contains(aacc.Account__r.Location_Type__c)){
 			
@@ -365,7 +357,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public boolean isCommonOwnershipDefault(Agency_Applied_Change_code__c aacc){
-		system.debug('isCommonOwnershipDefault');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR 
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& String.isNotBlank(aacc.PreviousReason__c)
@@ -390,7 +381,6 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}*/
 
 	public string checkPrejudicedCollection(Agency_Applied_Change_code__c aacc){
-		system.debug('isPrejudicedCollection');
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW 
 			&& aacc.Reason_Code__c == '63' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION

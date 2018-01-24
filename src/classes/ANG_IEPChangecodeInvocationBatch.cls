@@ -1,4 +1,4 @@
-public class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObject>, Database.Stateful {
+public class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
 
 	String query;
 
@@ -29,13 +29,10 @@ public class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObj
 
    	public void execute(Database.BatchableContext BC, List<sObject> scope) {
    		system.debug('EXECUTING BATCH');
-   		System.SavePoint sp;
 
    		try{
 
    			this.run++;
-   			
-   			sp = Database.setSavePoint();
 
    			ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper item = recList.get(run);
 
@@ -43,7 +40,7 @@ public class ANG_IEPChangecodeInvocationBatch implements Database.Batchable<sObj
 
 		}catch(Exception e){
 			
-			Database.rollback(sp);throw e;
+			throw e;
 
 		}
 

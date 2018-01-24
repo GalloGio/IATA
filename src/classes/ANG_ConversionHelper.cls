@@ -88,10 +88,27 @@ global with sharing class ANG_ConversionHelper {
 	}
 
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
-            
+         
+		Set<Id> allAgenciesGlobal = new Set<Id>();
+
         Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		for(ANG_ConversionHelper.HierarchyStructure struct: structure.values()){
+			if(struct.isValid){
+				if(struct.isSingleAgencyHierarchy)
+					allAgenciesGlobal.add(struct.topParentId);
+				else{
+					for(AMS_Agencies_relationhip__c rel: struct.relations){
+						allAgenciesGlobal.add(rel.Child_Account__c);
+						allAgenciesGlobal.add(rel.Parent_Account__c);
+					}
+				}
+			}
+		}
+
+		system.debug('Total of valid agencies is:'+allAgenciesGlobal.size());
 
 		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure,countryName));
             
@@ -400,6 +417,8 @@ global with sharing class ANG_ConversionHelper {
 		        
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
+		ANG_ConversionHelper.isMigrationTool=true;
+		
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
 
 		Id conversionBatchId = null;
@@ -498,7 +517,7 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
-	public static List<ANG_ConversionHelper.HierarchyStructure> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
+	public static Set<Account> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
 
 		System.debug('Preparing to convert:'+structures);
 
@@ -595,10 +614,11 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null){
 			createAgencyAuthorizations(container.accountsToUpdate);
-			createCorrectionChangeCodes(container.accountsToUpdate);
+			//createCorrectionChangeCodes(container.accountsToUpdate);
 		}
 
-		return toReturn;
+		//return toReturn;
+		return container.accountsToUpdate;
 
 	}
 
@@ -878,7 +898,7 @@ global with sharing class ANG_ConversionHelper {
 
     }
 
-    private static void createCorrectionChangeCodes(Set<Account> accountsToApply){
+    public static void createCorrectionChangeCodes(Set<Account> accountsToApply){
 
         Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
