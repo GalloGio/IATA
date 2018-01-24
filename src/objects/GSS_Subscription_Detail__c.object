@@ -553,7 +553,7 @@
         <columns>FileRecipientEmail__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00-All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -573,9 +573,9 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00009721</value>
+            <value>A-S00011935</value>
         </filters>
-        <label>Created By Sabrina</label>
+        <label>01-Search by Subscription Number</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -600,7 +600,7 @@
             <field>Zuora_Subscription__c</field>
             <operation>equals</operation>
         </filters>
-        <label>File Sub. Details W/o Z Sub</label>
+        <label>02-File Sub Details WHERE Z Sub = BLANK</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -626,24 +626,7 @@
             <operation>contains</operation>
             <value>MDP</value>
         </filters>
-        <label>MDP Subscriptions</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>View_All_With_Details</fullName>
-        <columns>NAME</columns>
-        <columns>GDP_File_Description__c</columns>
-        <columns>FileRecipientEmail__c</columns>
-        <columns>Calendar_Semi_Monthly_First_Option__c</columns>
-        <columns>Calendar_Monthly_Option__c</columns>
-        <columns>Calendar_Weekly_Option__c</columns>
-        <columns>Zuora_Subscription__c</columns>
-        <columns>File_Name_Custom_Prefix__c</columns>
-        <columns>File_Name_Custom_Suffix__c</columns>
-        <columns>File_Name_Prefix_Option__c</columns>
-        <columns>File_Name_Suffix_Option__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>View All With Details</label>
+        <label>03-MDP File Subscription Details</label>
         <language>en_US</language>
     </listViews>
     <nameField>

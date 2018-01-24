@@ -34128,7 +34128,7 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
     </validationRules>
     <validationRules>
         <fullName>RPM_Approval_only_after_Validation</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Enforce the proper process by ensuring that the manager approval cannot happen before the assistant manager&apos;s validation.</description>
         <errorConditionFormula>AND (
   ISCHANGED(RPM_Approval__c),
