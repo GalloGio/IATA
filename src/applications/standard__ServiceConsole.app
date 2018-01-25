@@ -206,7 +206,11 @@
     <tab>standard-report</tab>
     <tab>My_Status</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_Account_Role__c</tab>
+        </mapping>
         <mapping>
             <tab>My_Status</tab>
         </mapping>
