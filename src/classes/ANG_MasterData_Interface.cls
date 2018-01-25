@@ -20,7 +20,7 @@ global class ANG_MasterData_Interface{
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
-                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,
+                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
@@ -185,8 +185,10 @@ global class ANG_MasterData_Interface{
                 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
-                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.CurrencyIsoCode);
+                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode);
                 
+
+                if(this.RHCInfo ==null)this.RHCInfo = new RHCInfoClass(null, null, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode);
                 //List  of children IATACode
                 //Returned only if specifically requested
                 if(getChildren){
