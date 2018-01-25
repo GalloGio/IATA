@@ -614,7 +614,7 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null){
 			createAgencyAuthorizations(container.accountsToUpdate);
-			//createCorrectionChangeCodes(container.accountsToUpdate);
+			createCorrectionChangeCodes(container.accountsToUpdate);
 		}
 
 		//return toReturn;
