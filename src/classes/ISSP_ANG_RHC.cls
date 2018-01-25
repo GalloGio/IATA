@@ -57,7 +57,7 @@ public with sharing class ISSP_ANG_RHC {
 											Authorized_Signatory__c,
 											Account.Id,
 											Account.Top_Parent__c,
-											Account.Remittance_frequency__c,
+											toLabel(Account.Remittance_frequency__c),
 											Account.ANG_IEP_Status_FF__c,
 											Account.ANG_Accreditation_Model__c,
 											Account.Location_Type__c,
