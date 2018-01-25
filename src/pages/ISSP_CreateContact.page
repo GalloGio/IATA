@@ -74,7 +74,6 @@
                       <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
                       <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
                       <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
-                      <apex:selectOption itemValue="Others " itemLabel="{!$Label.ISSP_Registration_Others}" rendered="{!sRefererCommunity != 'iec'}"/>
                     </apex:selectList>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
