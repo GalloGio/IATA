@@ -414,7 +414,7 @@
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>@iata.org</value>
+            <value>h.spechtenhauser@reisewelt.at</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>
