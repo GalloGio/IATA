@@ -80,7 +80,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
 
         this.helpTextPortalRoles = new Map<String, String>();
 
-        Portal_Applications__c pa = [Select name From Portal_Applications__c where Id =: psaId];
+        Portal_Applications__c pa = [Select name From Portal_Applications__c where Id =: ServiceId];
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
             if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
