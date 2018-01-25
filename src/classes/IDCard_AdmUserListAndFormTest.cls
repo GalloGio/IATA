@@ -200,7 +200,8 @@ private class IDCard_AdmUserListAndFormTest {
 	                                Card_status__c = 'Cancelled ID Card',
 	                                VER_Number__c = cs[2].VER_Number_2__c,
 	                                Agency_IATA_Code__c = a.IATAcode__c,
-	                                Photo__c = 'useless string'
+	                                Photo__c = 'useless string',
+	                                Blacklisted__c = true
 	    	));
 	        
 	        
