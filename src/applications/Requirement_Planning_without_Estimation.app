@@ -8,4 +8,5 @@
     <tab>standard-Dashboard</tab>
     <tab>Test_Scripts__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

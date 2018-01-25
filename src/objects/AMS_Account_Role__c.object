@@ -714,6 +714,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>TD</fullName>
         <columns>NAME</columns>
         <columns>Termination_Date__c</columns>
@@ -1185,6 +1190,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     </recordTypes>
     <searchLayouts>
         <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
+        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

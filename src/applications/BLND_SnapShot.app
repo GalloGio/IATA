@@ -6,4 +6,5 @@
     <tab>BLND_Snapshot</tab>
     <tab>DFSS_SnapShot_Push__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

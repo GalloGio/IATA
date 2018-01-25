@@ -24,4 +24,5 @@
     <tab>IEC_Batch_Replication__c</tab>
     <tab>GDP_Agency_Stats__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>
