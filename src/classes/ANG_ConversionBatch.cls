@@ -1,4 +1,4 @@
-global class ANG_ConversionBatch implements Database.Batchable<sObject>, Database.Stateful {
+global class ANG_ConversionBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
 
 	global List<ANG_ConversionHelper.HierarchyStructure> structures;
 	
@@ -8,11 +8,11 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 	
-	global Set<Account> accountsMigrated;
+	global Set<Id> accountsMigrated;
 
 	global ANG_ConversionBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate) {
 		
-		accountsMigrated = new Set<Account>();
+		accountsMigrated = new Set<Id>();
 		
 		structures= structuresToMigrate;
 
@@ -59,8 +59,10 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 		}
 
-		if(!accountsMigratedRun.isEmpty())
-			accountsMigrated.addAll(accountsMigratedRun);
+		if(!accountsMigratedRun.isEmpty()){
+			For(Account acct: accountsMigratedRun)
+				accountsMigrated.add(acct.Id);
+		}
 
 
 	}
@@ -70,8 +72,11 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 		ANG_ConversionHelper.isMigrationTool=true;
 
-		if(!accountsMigrated.isEmpty())
-			ANG_ConversionHelper.createCorrectionChangeCodes(accountsMigrated);
+		if(!accountsMigrated.isEmpty()){
+
+			ANG_ConversionBatchChangeCodeCreator conversionBatchChangeCodes = new ANG_ConversionBatchChangeCodeCreator(accountsMigrated);
+			Database.executeBatch(conversionBatchChangeCodes,1);	
+    	}
 		 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
