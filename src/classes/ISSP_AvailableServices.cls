@@ -294,7 +294,10 @@ public with sharing class ISSP_AvailableServices{
 
                 String msgComplement;
                 if(isAdmin) {
-                    msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator;
+                    if(contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) 
+                        msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator;
+                    else
+                        msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active;
                 } else {
                     msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active;
                 }
@@ -311,8 +314,11 @@ public with sharing class ISSP_AvailableServices{
                     modalErrorMessage = aux.replace('{0}', msgComplement);
                 }
 
-                if (!isIEPAccountEnable && isAuthorisedSignatory) {
+                if (!isIEPAccountEnable) {
                     isModalErrorMessageEnable = true;
+                    if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
+                        modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
+                    }
                 } else {
                     if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
                         modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
