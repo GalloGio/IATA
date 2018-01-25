@@ -1808,7 +1808,6 @@
                                 <apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAX__c}"  required="false"/>
                                 </td></tr>
 
-                                FAX__c
 						</table>
 						</td>
 

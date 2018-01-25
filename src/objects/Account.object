@@ -8710,7 +8710,21 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Data_Quality_Score__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(AND(RecordTypeId =&quot;012w0000000QBMW&quot;,OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Status__c,&quot;Changes processed&quot;),ISPICKVAL(Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Status__c,&quot;Listed&quot;),ISPICKVAL(Status__c,&quot;Review&quot;),ISPICKVAL(Status__c,&quot;Under review&quot;),ISPICKVAL(Status__c,&quot;approved&quot;)),OR(CONTAINS(Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Country_ISO_Code__c,&quot;SG&quot;))), (IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10) +IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,10) + IF( LEN(IATACode__c) != 8, 0,10) + IF( LEN(Name) = 0, 0,10) + IF( ISBLANK(Accreditation_date__c), 0,10) + IF( ISPICKVAL(Sector__c,&quot;&quot;), 0,5) + IF( ISPICKVAL(Category__c,&quot;&quot;), 0,5) +IF(LEN(Short_Name__c)= 0, 0,5) + IF( ISPICKVAL(Company_Type__c,&quot;&quot;), 0,5) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Phone)= 0,0,5))+IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Email__c)= 0,0,5)) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_a_Financial_Assessment_Contact__c = FALSE,0,5)) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_an_Administrator_User_Portal__c = FALSE,0,5)) +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF( ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;), 0,5)) + IF( LEN(Reason__c) = 0, 0,5)),1)</formula>
+        <formula>IF(AND(RecordTypeId =&quot;012w0000000QBMW&quot;,OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Status__c,&quot;Changes processed&quot;),ISPICKVAL(Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Status__c,&quot;Listed&quot;),ISPICKVAL(Status__c,&quot;Review&quot;),ISPICKVAL(Status__c,&quot;Under review&quot;),ISPICKVAL(Status__c,&quot;approved&quot;))),
+
+(IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10) 
+
++IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,10) 
+
++ IF( LEN(IATACode__c) != 8, 0,10) + IF( LEN(Name) = 0, 0,10) + IF( ISBLANK(Accreditation_date__c), 0,10) 
++ IF( ISPICKVAL(Sector__c,&quot;&quot;), 0,5) + IF( ISPICKVAL(Category__c,&quot;&quot;), 0,5) +IF(LEN(Short_Name__c)= 0, 0,5) + IF( ISPICKVAL(Company_Type__c,&quot;&quot;), 0,5) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Phone)= 0,0,5))
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Email__c)= 0,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_a_Financial_Assessment_Contact__c = FALSE,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_an_Administrator_User_Portal__c = FALSE,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;)),5,IF( ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;), 0,5)) 
+
++ IF( LEN(Reason__c) = 0, 0,5)),1)</formula>
         <label>Data Quality Score</label>
         <precision>18</precision>
         <required>false</required>
