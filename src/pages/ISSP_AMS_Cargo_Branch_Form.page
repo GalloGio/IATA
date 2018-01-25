@@ -934,7 +934,8 @@
                   <tr>
                       <td style="width:30%">
                         <table>
-                            <tr id="Experience" style="display:{!IF(NOT(AND(trainedStaffContact.Type_Of_Certificate__c<>'DGR',AND(trainedStaffContact.Type_Of_Certificate__c<>'DGA',trainedStaffContact.Type_Of_Certificate__c<>'BCH'))),'','none')}" >
+                            <!--tr id="Experience" style="display:{!IF(NOT(AND(trainedStaffContact.Type_Of_Certificate__c<>'DGR',AND(trainedStaffContact.Type_Of_Certificate__c<>'DGA',trainedStaffContact.Type_Of_Certificate__c<>'BCH'))),'','none')}" -->
+                            <tr id="Experience" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c == 'TSA' || trainedStaffContact.Type_Of_Certificate__c =='Experience','','none')}" >
                                 <td class="modalrow" colspan="2">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT2}"/><br/>
                                 <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7}" /><br/>
