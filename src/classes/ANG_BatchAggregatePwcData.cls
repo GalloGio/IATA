@@ -223,8 +223,6 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
     		);
     		
     	}
-
-    	System.debug('## lsAggregationToInsert: '+lsAggregationToInsert);
     	
     	if(!lsAggregationToInsert.isEmpty()){
     		//loop through list of result. If any error, send via email
@@ -246,7 +244,6 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
 
     global void finish(Database.BatchableContext batchableContext) {
 
-    	System.debug('## upsertErrors empty?: '+upsertErrors.isEmpty());
     	System.debug('## upsertErrors: '+upsertErrors);
         // Send an e-mail for debug purpose
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
