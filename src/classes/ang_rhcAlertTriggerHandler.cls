@@ -39,15 +39,7 @@ public class ang_rhcAlertTriggerHandler {
 
 
     public static String mapRemittanceFrequency(Account acc){
-
-        if(acc.IATA_ISO_Country__r.iso_code__c  == 'BR') return 'W';
-        if(acc.Remittance_frequency__c == 'Monthly') return 'M';
-        if(acc.Remittance_frequency__c == 'Fortnightly') return 'F';
-        if(acc.Remittance_frequency__c == '4 times per month') return 'W';
-        if(acc.Remittance_frequency__c == 'Weekly') return 'W';
-        if(acc.Remittance_frequency__c == 'Daily' ) return 'D';
-        if(acc.Remittance_frequency__c == 'Every 3 days') return 'B';
-
+    
         /*
         -------ignore china for now-------
 
@@ -56,7 +48,17 @@ public class ang_rhcAlertTriggerHandler {
         if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'CN') return 'E';
         if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'UA') return 'B';*/
 
-        if(acc.Remittance_frequency__c == 'Every 10 days') return 'W';
+        if(acc.Remittance_frequency__c.length() == 1) return acc.Remittance_frequency__c; // After newgen release 4 Remittance Frequency will not need further mapping
+        
+        if(acc.IATA_ISO_Country__r.iso_code__c  == 'BR') return 'V';
+        
+        if(acc.Remittance_frequency__c == 'Monthly') return 'M';
+        if(acc.Remittance_frequency__c == 'Fortnightly') return 'F';
+        if(acc.Remittance_frequency__c == '4 times per month') return 'W';
+        if(acc.Remittance_frequency__c == 'Weekly') return 'V';
+        if(acc.Remittance_frequency__c == 'Daily' ) return 'D';
+        if(acc.Remittance_frequency__c == 'Every 3 days') return 'B';        
+        if(acc.Remittance_frequency__c == 'Every 10 days') return 'R';
         
         return '';
     }
