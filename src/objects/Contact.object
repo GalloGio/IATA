@@ -9920,7 +9920,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             <value>Access Granted</value>
         </summaryFilterItems>
         <summaryFilterItems>
-            <field>Portal_Application_Right__c.Name</field>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
             <operation>equals</operation>
             <value>a2ww0000000SbSH</value>
         </summaryFilterItems>
