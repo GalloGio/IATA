@@ -75,7 +75,10 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 		if(!accountsMigrated.isEmpty()){
 
 			ANG_ConversionBatchChangeCodeCreator conversionBatchChangeCodes = new ANG_ConversionBatchChangeCodeCreator(accountsMigrated);
-			Database.executeBatch(conversionBatchChangeCodes,1);	
+			if(!Test.isRunningTest())
+				Database.executeBatch(conversionBatchChangeCodes,1);	
+    		else
+				Database.executeBatch(conversionBatchChangeCodes,20);	    			
     	}
 		 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
