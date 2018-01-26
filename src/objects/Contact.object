@@ -9890,6 +9890,46 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_Accreditation_Changes__c</fullName>
+        <description>counts the number of Service IATA Accreditation &amp; Changes for the contact</description>
+        <externalId>false</externalId>
+        <label>Service IATA Accreditation &amp; Changes</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000001D7GO</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>S_EBulletin__c</fullName>
+        <description>counts the number of active E-Bulletin services for the contact</description>
+        <externalId>false</externalId>
+        <label>Service E-Bulletin</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000SbSH</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>S_BSPlink__c</fullName>
         <description>counts the number of BSPlink portal services of Management information report that the contact has access to</description>
         <externalId>false</externalId>
@@ -10229,7 +10269,11 @@ IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037
 &amp;&quot; &quot;&amp; 
 IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
