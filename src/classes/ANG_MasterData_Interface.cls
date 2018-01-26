@@ -120,7 +120,7 @@ global class ANG_MasterData_Interface{
         public string email;
         public string fax;
         public string IATACode;
-        public string id;
+        //public string id; //Silenced for now
         public string IEPStatus;
         public string LocationClass;
         public string locationType;
@@ -137,7 +137,8 @@ global class ANG_MasterData_Interface{
         public string TradeName;
         public string vatNumber;        
         public string topParentIATACode;
-        public string guaranteedAmount;
+        //public string guaranteedAmount; //RTS - Silenced for now
+        //public string guaranteedAmountCurrency; //RTS - Silenced for now
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
@@ -167,7 +168,7 @@ global class ANG_MasterData_Interface{
                 this.email = acc.Email__c;
                 this.fax = acc.fax;
                 this.IATACode = acc.IATACode__c;
-                this.id = acc.Id;
+                //this.id = acc.Id; Silenced for now
                 this.IEPStatus = acc.ANG_IEP_Status_FF__c;
                 this.LocationClass = acc.Location_Class__c;
                 this.locationType = acc.Location_Type__c;
@@ -176,8 +177,8 @@ global class ANG_MasterData_Interface{
                 this.phone = acc.phone;
                 this.portalServiceName = acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name;
                 this.Region = acc.IATA_ISO_Country__r.Region__c;
-                this.guaranteedAmount = string.valueOf(acc.CurrencyIsoCode + ' ' +acc.Guaranteed_amount__c);
-
+                //this.guaranteedAmount = string.valueOf(acc.Guaranteed_amount__c); //Silenced for now
+                //this.guaranteedAmountCurrency = acc.CurrencyIsoCode; //Silenced for now
                 this.RelinquishmentCode =acc.Reason__c!=null?acc.Reason__c.split('-').get(0).leftPad(2,'0'):acc.Reason__c;
                 this.RemittanceFrequency = acc.Remittance_frequency__c;
                 this.Segmentation = acc.Segmentation__c;
