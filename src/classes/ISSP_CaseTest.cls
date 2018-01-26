@@ -519,8 +519,6 @@ public class ISSP_CaseTest {
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'test');
         cttr.getCaseDefectItems();
 
-        cttr.getCaseSubTypeItems();
-
         //cttr.retCaseClassificationItems();
 
         cttr.newCase.CaseArea__c = 'ICH';
@@ -539,9 +537,11 @@ public class ISSP_CaseTest {
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
+        contact.User_Portal_Status__c = 'Approved Admin';
+        contact.Email = 'teamcontact@email.com';
         insert contact;
         Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = 'teamcontact@email.com';
+        teamContact.Email = contact.Email;
         insert teamContact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
@@ -557,6 +557,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         c.Visible_on_ISS_Portal__c = true;
+        c.Account_Concerned__c = contact.AccountId;
         insert c;
 
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
@@ -573,7 +574,7 @@ public class ISSP_CaseTest {
             System.assert(result1.isEmpty(),'wrong result ' + result1);
             
             //insert one cc other
-            cttr.inputccotheremail = teamContact.Email;
+            cttr.inputccotheremail = contact.Email;
             cttr.addCCOther();
             // insert one fake cc other
             cttr.inputccotheremail = 'noemail';
@@ -581,10 +582,10 @@ public class ISSP_CaseTest {
             
             // check a cc other was inserted
             set<String> result2 = new set<String>(cttr.getListCCOther());
-            System.assert(result2.contains(teamContact.Email),'wrong result ' + result2);
+            System.assert(result2.contains(contact.Email),'wrong result ' + result2);
             
             //remove ccother
-            cttr.inputDelCCOther = teamContact.Email;
+            cttr.inputDelCCOther = contact.Email;
             cttr.delCCOther();
             // del one fake cc other
             cttr.inputDelCCOther = 'noemail';
@@ -602,10 +603,10 @@ public class ISSP_CaseTest {
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
+        contact.User_Portal_Status__c = 'Approved Admin';
+        contact.status__c = 'Active';
+        contact.Email = 'teamcontact@email.com';
         insert contact;
-        Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = 'teamcontact@email.com';
-        insert teamContact;
 
        Id p = [select id from profile where name='ISS Portal DPC'].id;
 
@@ -613,7 +614,7 @@ public class ISSP_CaseTest {
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = contact.Id, FederationIdentifier = contact.Id,
-                timezonesidkey='America/Los_Angeles', username=teamContact.Email);
+                timezonesidkey='America/Los_Angeles', username=contact.Email);
 
         insert user;
 
@@ -655,11 +656,19 @@ public class ISSP_CaseTest {
            system.runAs(user) {
             ISSP_Case cttr = new ISSP_Case();
             cttr.pageLoad();
-            cttr.refreshSubTopicPickList();
+            cttr.whoToContact = account.Id;
+            cttr.save();
+            // test insert cc other
             cttr.inputccotheremail = user.Email;
             cttr.addCCOther();
+            set<String> result1 = new set<String>(cttr.getListCCOther());
+            System.assert(result1.contains(user.Email),'wrong result ' + result1);
+
             cttr.inputDelCCOther = user.Email;
             cttr.delCCOther();
+            // test delete cc other
+            list<String> result2 = cttr.getListCCOther();
+            System.assert(result2.isEmpty(),'wrong result ' + result2);
         }
         Test.stopTest();
     }
@@ -718,11 +727,9 @@ public class ISSP_CaseTest {
         // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         // ApexPages.currentPage().getParameters().put('origin', 'Portal');
         Test.startTest();
-        // system.runAs(thisUser){
-           system.runAs(user) {
+        system.runAs(user) {
             ISSP_Case cttr = new ISSP_Case();
             cttr.pageLoad();
-            List<SelectOption> lsOptions = cttr.getCaseAreaOptions();
             cttr.whoToContact = account.Id;
             cttr.additionalRecipients=user.Email;
             cttr.save();
