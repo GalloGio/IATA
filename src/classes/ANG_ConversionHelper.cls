@@ -142,9 +142,14 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsSingleHierarchyHOorTerminatedAgencies = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES AND Status__c != :AMS_Utils.ACC_S0_TERMINATED) OR (Status__c = :AMS_Utils.ACC_S0_TERMINATED and Sector__c in:ALLOWEDSECTORS and Location_Type__c not in:LOCATIONTYPESNEWGEN)) ];
+		List<Account> allAccountsSingleHierarchyHOorTerminatedAgencies = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Top_Parent__r.IATA_ISO_Country__r.BSP__c,Top_Parent__r.IATA_ISO_Country__r.Name,  Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES AND Status__c != :AMS_Utils.ACC_S0_TERMINATED) OR (Status__c = :AMS_Utils.ACC_S0_TERMINATED and Sector__c in:ALLOWEDSECTORS and Location_Type__c not in:LOCATIONTYPESNEWGEN)) ];
 
 		for(Account acct: allAccountsSingleHierarchyHOorTerminatedAgencies){
+
+			//this is single or Terminated Agencies, so we should not catch any Lost BR in another countries hierarchy
+
+			if(acct.Top_Parent__r != null && acct.IATA_ISO_Country__r.Name <> acct.Top_Parent__r.IATA_ISO_Country__r.Name)
+				continue;
 
 			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
 				if(acct.Expiry_Date__c < frontierDate){
@@ -457,6 +462,8 @@ global with sharing class ANG_ConversionHelper {
 			            
 			if(struct.migrated){
 				
+				//System.debug('Account Migrated:'+struct.hierarchyId);
+
 				toReturn.totalMigratedHierarchies ++;
 			
 			}
@@ -493,6 +500,21 @@ global with sharing class ANG_ConversionHelper {
 
 		List<Account> allAccountsSingleHierarchyHO = [SELECT Id  from Account where Location_Type__c in :LOCATIONTYPESNEWGEN and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :countryName and Id not in:accountsMigrated];
 
+		for(Account acct: allAccountsSingleHierarchyHO){
+			accountsMigrated.add(acct.Id);
+			//System.debug('Account Migrated:'+acct.Id);
+		}
+
+		Date frontierDate = Date.today().addMonths(-6);
+
+		List<Account> allAccountsSingleHierarchyHOTerminated = [SELECT Id  from Account where Location_Type__c in :LOCATIONTYPESNEWGEN and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and IATA_ISO_Country__r.Name = :countryName and Id not in:accountsMigrated and Status__c = :AMS_Utils.ACC_S0_TERMINATED and Expiry_Date__c > :frontierDate];
+
+		For(Account acct: allAccountsSingleHierarchyHOTerminated){
+
+			accountsMigrated.add(acct.Id);
+			//System.debug('Account Migrated:'+acct.Id);
+		}
+
 		set<Id> accsToCreateRisks = new set<Id>();
 		for(ANG_ConversionHelper.HierarchyStructure i :toReturn.validHierarchies.values()){
 			accsToCreateRisks.addAll(i.allAgencies);
@@ -512,6 +534,10 @@ global with sharing class ANG_ConversionHelper {
 
 		toReturn.totalMigratedHierarchies+=allAccountsSingleHierarchyHO.size();
 		toReturn.totalHierarchies+=allAccountsSingleHierarchyHO.size();
+
+		toReturn.totalMigratedHierarchies+=allAccountsSingleHierarchyHOTerminated.size();
+		toReturn.totalHierarchies+=allAccountsSingleHierarchyHOTerminated.size();
+
 
 		return toReturn;
 
