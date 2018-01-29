@@ -191,6 +191,7 @@ private class ang_rhcAlertTriggerHandler_test {
 			Name = 'Portugal', 
 			ISO_Code__c = 'PT'
 		);
+		test.StartTest();
         insert country2 ;
 
 		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
@@ -215,7 +216,7 @@ private class ang_rhcAlertTriggerHandler_test {
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );
         insert a;     
-		test.StartTest();
+		
         AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
 		insert iss;
 		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
