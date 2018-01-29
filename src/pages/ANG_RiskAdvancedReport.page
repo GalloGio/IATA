@@ -1,0 +1,86 @@
+<apex:page controller="ANG_RiskAdvancedReport" sidebar="false">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+    <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" /> 
+  <apex:form >
+      <apex:outputpanel >
+        <apex:actionstatus id="status">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                    height: 100%;opacity:0.65;width:100%;">
+                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Please Wait...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+    </apex:outputpanel>
+    <apex:pageBlock >
+    <apex:pageMessages />
+        <apex:pageBlockSection columns="2">
+            <apex:selectList value="{!selectedTimeFrame}" size="1" label="Time Frame">
+                <apex:selectOptions value="{!selectOptionTimeFrame}"/>
+            </apex:selectList>
+            <apex:selectList value="{!selectedRegion}" size="5" label="Region" multiselect="true">
+                <apex:selectOptions value="{!SelectOptionRegion}"/>
+            </apex:selectList>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Run Report" action="{!runReport}" rerender="ResultPanel, theResultBlock" status="status"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    
+    <apex:outputPanel id="ResultPanel">
+        <apex:outputPanel rendered="{!hasRun}">
+            <apex:pageMessage rendered="{!hasError}" severity="warning" summary="Please select at least one region"/>
+            <apex:pageMessage rendered="{!AND(!hasResult, !hasError)}" severity="warning" summary="No account found matching the search criteria"/>
+            <apex:pageBlock id="theResultBlock" rendered="{!hasResult}">
+                <apex:pageBlockTable id="advancedReport" value="{!lsWrapperResult}" var="result">
+                    <apex:column value="{!result.RiskAlert.ANG_Severity__c} - {!result.RiskAlert.CreatedDate}" HeaderValue="Alert"/>
+                    <apex:column value="{!result.theAccount.IATACode__c}" HeaderValue="IATA Code"/>
+                    <apex:column value="{!result.theAccount.Name}" HeaderValue="Agency Name"/>
+                    <apex:column value="{!result.theAccount.IATA_ISO_Country__r.name}" HeaderValue="Country"/>
+                    <apex:column value="{!result.RiskAlert.ANG_Agent_Sales__c}" HeaderValue="Sales Amount"/>
+                    <!--<apex:column value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/> -->
+                    <apex:column style="text-align:right" value="{!result.guaranteedAmount}" HeaderValue="Guaranteed Amount"/> 
+                    <apex:column HeaderValue="Change of Ownership 12 mo">
+                        <ul>
+                            <apex:repeat value="{!result.lsCHICHO}" var="CHICHO">
+                                <li>{!CHICHO.changeCode} - {!CHICHO.convertedDate}</li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:column>
+                    <apex:column HeaderValue="Non-payment / Default 12 mo">
+                        <ul>
+                            <apex:repeat value="{!result.lsIRRDEF}" var="IRRDEF">
+                                <li>{!IRRDEF.changeCode} - {!IRRDEF.convertedDate}</li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:column>
+                    <apex:column HeaderValue="Accredited 24 mo">
+                        <ul>
+                            <apex:repeat value="{!result.lsFIN}" var="FIN">
+                                <li>{!FIN.changeCode} - {!FIN.convertedDate}</li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:column>
+                    <apex:column HeaderValue="Red Alert">
+                        <apex:inputcheckbox selected="{!result.REDAfterYellow}" disabled="true"/>
+                    </apex:column>
+                    <apex:column HeaderValue="Ticketing Authority status">
+                        <apex:outputPanel >
+                            {!result.TAStatus}
+                        </apex:outputPanel> 
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+       </apex:outputPanel>
+        <script type="text/javascript">
+            $('[id$=advancedReport').dataTable({ "iDisplayLength": 50 });                    
+        </script>
+    </apex:outputPanel>
+    </apex:form>
+
+</apex:page>

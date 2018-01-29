@@ -1,0 +1,27 @@
+<apex:component controller="RTSMonthlyDigestEmailComponentController" access="global">
+<html>
+<body>
+  <h3>
+    The following agents have received RTS Red Alerts in the last month:
+  </h3>
+  <table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Agent Name</th>
+        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">IATA Code</th>
+        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">IATA Country</th>
+      </tr>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!redRiskAlerts}" var="rRiskAlert">
+        <tr>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{!rRiskAlert.ANG_Account__r.Name}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{!rRiskAlert.ANG_Account__r.IATACode__c}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{!rRiskAlert.ANG_Account__r.IATA_ISO_Country__r.Name}</td>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+</body>
+</html>
+</apex:component>

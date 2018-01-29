@@ -20,10 +20,10 @@ global class ANG_MasterData_Interface{
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
-                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,
+                                            VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c, Guaranteed_amount__c, CurrencyIsoCode,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
-                                            (Select Id, ANG_RHC_Amount_Simulation__c, CurrencyIsoCode From RHC_Informations__r) //RHC Information
+                                            (Select Id, ANG_RHC_Amount_Simulation__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r) //RHC Information
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
             
@@ -76,10 +76,12 @@ global class ANG_MasterData_Interface{
         public string RiskStatus;
         public Decimal RHCAmount; //Number + currency
         public string RHCCurrency;
-        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency){
+        public Decimal RHCTotalFSProvided;
+        public RHCInfoClass(string RiskStatus, Decimal RHCAmount, string RHCCurrency, Decimal RHCTotalFSProvided){
             this.RiskStatus = RiskStatus==null?'':RiskStatus;
             this.RHCAmount = RHCAmount;
             this.RHCCurrency= RHCCurrency==null?'':RHCCurrency;
+            this.RHCTotalFSProvided = RHCTotalFSProvided;
         }
     }
     
@@ -118,7 +120,7 @@ global class ANG_MasterData_Interface{
         public string email;
         public string fax;
         public string IATACode;
-        public string id;
+        //public string id; //Silenced for now
         public string IEPStatus;
         public string LocationClass;
         public string locationType;
@@ -135,6 +137,8 @@ global class ANG_MasterData_Interface{
         public string TradeName;
         public string vatNumber;        
         public string topParentIATACode;
+        //public string guaranteedAmount; //RTS - Silenced for now
+        //public string guaranteedAmountCurrency; //RTS - Silenced for now
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
@@ -164,7 +168,7 @@ global class ANG_MasterData_Interface{
                 this.email = acc.Email__c;
                 this.fax = acc.fax;
                 this.IATACode = acc.IATACode__c;
-                this.id = acc.Id;
+                //this.id = acc.Id; Silenced for now
                 this.IEPStatus = acc.ANG_IEP_Status_FF__c;
                 this.LocationClass = acc.Location_Class__c;
                 this.locationType = acc.Location_Type__c;
@@ -173,7 +177,8 @@ global class ANG_MasterData_Interface{
                 this.phone = acc.phone;
                 this.portalServiceName = acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name;
                 this.Region = acc.IATA_ISO_Country__r.Region__c;
-
+                //this.guaranteedAmount = string.valueOf(acc.Guaranteed_amount__c); //Silenced for now
+                //this.guaranteedAmountCurrency = acc.CurrencyIsoCode; //Silenced for now
                 this.RelinquishmentCode =acc.Reason__c!=null?acc.Reason__c.split('-').get(0).leftPad(2,'0'):acc.Reason__c;
                 this.RemittanceFrequency = acc.Remittance_frequency__c;
                 this.Segmentation = acc.Segmentation__c;
@@ -185,7 +190,7 @@ global class ANG_MasterData_Interface{
                 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
-                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount_Simulation__c, rhc.CurrencyIsoCode);
+                    this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, rhc.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
                 
                 //List  of children IATACode
                 //Returned only if specifically requested
