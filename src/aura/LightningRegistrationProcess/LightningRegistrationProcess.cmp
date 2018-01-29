@@ -169,7 +169,6 @@
 			                        <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
 			                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
 			                        <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
-			                        <ui:inputSelectOption text="Others" label="{!$Label.c.ISSP_Registration_Others}"/>
 			                </ui:inputSelect>
 						</div>
 

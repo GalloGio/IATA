@@ -14,4 +14,5 @@
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>
