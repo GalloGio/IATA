@@ -244,19 +244,25 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
 
     global void finish(Database.BatchableContext batchableContext) {
 
-    	System.debug('## upsertErrors: '+upsertErrors);
-        // Send an e-mail for debug purpose
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-       // mail.setToAddresses(new String[]{'tullod@iata.org'});	//debug mode only. change it appropriately
-    	// mail.setToAddresses(new String[]{'gasparj@iata.org'});	//debug mode only. change it appropriately
-    	mail.setToAddresses(new String[]{'ferreiraj@iata.org'});	//debug mode only. change it appropriately
+        //Send email to support if any error is found
+        if (!upsertErrors.isEmpty()){
 
-        mail.setSubject('PWC Batch Completed ' + (!upsertErrors.isEmpty() ? 'With Errors' : 'Successfully'));
-        mail.setSenderDisplayName('Batch Processing Completed');
-        mail.setPlainTextBody('Batch Process has been completed. Start Time: ' + dStartTime + '; endTime ' + system.now() + 
-        	(!upsertErrors.isEmpty() ? '\n\nERRORS:\n' + String.join(upsertErrors,'\n') : ''));
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+            System.debug('[ANG_BatchAggregatePwcData] upsertErrors: '+upsertErrors);
+            List<String> emailAddresses = new List<String>();
+            for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){ 
+                emailAddresses.add(supportEmail.Support_Email__c);
+                //add more email addresses if needed
+            }
 
+            if (!emailAddresses.isEmpty()){
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setToAddresses(emailAddresses);    
+                mail.setSubject('PWC Batch Completed With Errors');
+                mail.setSenderDisplayName('Batch Processing Completed');
+                mail.setPlainTextBody('Batch Process has been completed. Start Time: ' + dStartTime + '; endTime ' + system.now() + '\n\nERRORS:\n' + String.join(upsertErrors,'\n'));
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+            }
+        }
     }
     
     private static string sGetLanguage(string sLang){
