@@ -23,21 +23,21 @@
 public class ParticipantHelperTest {
 
     static testMethod void myUnitTest() {
-        //List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
+        List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
 
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User testUser = New User(
+        //Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        /*User testUser = New User(
             Alias = 'standt', Email='standarduser@testorg.com',
             EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
             LocaleSidKey='en_US', ProfileId = testProfile.Id,
             TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
             License_Cost_Center__c = 'ISF005CH01'
-        );
+        );*/
 
-        insert testUser;
+        //insert testUser;
 
         PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
-        PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = testUser.Id);
+        PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = users[0].Id);
         insert psa;
 
         Test.startTest();
@@ -51,14 +51,14 @@ public class ParticipantHelperTest {
         Id rtAG =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
 
         
-        system.runAs(testUser){
+        system.runAs(users[0]){
 
             List<IATA_ISO_Country__c>isocs = new List<IATA_ISO_Country__c>();
             isocs.add(new IATA_ISO_Country__c(
-                Name='Italy', Country_Manager__c=testUser.id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
+                Name='Italy', Country_Manager__c=users[0].id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
             ));
             isocs.add(new IATA_ISO_Country__c(
-                Name='France', Country_Manager__c=testUser.id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
+                Name='France', Country_Manager__c=users[0].id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
             ));
             insert isocs;
 
@@ -75,6 +75,8 @@ public class ParticipantHelperTest {
             
             Id rtLocalGroup =  Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId();
             
+            List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
+
             LocalGovernance__c lg = new LocalGovernance__c();
                 lg.Name = 'Name';
                 lg.Cargo_Passenger__c = 'BSP';
@@ -82,7 +84,8 @@ public class ParticipantHelperTest {
                 lg.Country__c = isocs[0].Id;
                 lg.Active__c = true; 
                 lg.RecordTypeId = rtLocalGroup;
-            insert lg;
+
+            localGovernanceList.add(lg);
             
             LocalGovernance__c lg2 = new LocalGovernance__c();
                 lg2.Name = 'DifferentName';
@@ -92,7 +95,10 @@ public class ParticipantHelperTest {
                 lg2.Active__c = true; 
                 
                 lg2.RecordTypeId = rtLocalGroup;
-            insert lg2;
+
+            localGovernanceList.add(lg2);
+
+            insert localGovernanceList;
             
                 Participant__c part = new Participant__c();
                     part.Contact__c = cont.Id;
