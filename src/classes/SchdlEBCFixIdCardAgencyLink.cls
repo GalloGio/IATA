@@ -22,7 +22,8 @@ global class SchdlEBCFixIdCardAgencyLink implements Database.Batchable<sObject>,
             String iata_code=ic.Agency_IATA_Code__c;
             if (String.isBlank(iata_code)) continue;
             if (iata_code.length()<8) continue;
-            iata_code = iata_code.substring(0, (isTest ? 7:8));
+            iata_code = iata_code.substring(0, (isTest ? 7:7));
+            //System.Debug('iata_code >>>'+iata_code);
             ic.GDP_Products_Account_View__r = new GDP_Products_Account_View__c(IATA_Code__c = iata_code);
         }
         list<Database.SaveResult> results = Database.update(scope,false);
