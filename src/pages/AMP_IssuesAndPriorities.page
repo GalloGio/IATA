@@ -81,7 +81,7 @@
                     </apex:commandLink>
                 </apex:facet> -->
           <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-            <apex:outputText value="{!i.Details__c}"   />
+            <apex:outputText value="{!i.Details__c}" style="display: block;width: 600px;word-wrap: break-word;"/>
             <a href="#" class="show-less">[show less]</a>
           </apex:outputPanel>
           <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
