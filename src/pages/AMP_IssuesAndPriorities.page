@@ -41,7 +41,7 @@
                 <apex:column >
                             <apex:facet name="header">
                     <apex:commandLink action="{! sortByName }"
-                        reRender="issueTable">Item
+                        reRender="issueTable">Name
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name ASC'}">&nbsp;&#8593;</apex:outputPanel>
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name DESC'}">&nbsp;&#8595;</apex:outputPanel>
                     </apex:commandLink>
