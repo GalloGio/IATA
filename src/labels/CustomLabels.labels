@@ -1457,7 +1457,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle1</shortDescription>
-        <value>IATA Online Accreditation Agency</value>
+        <value>IATA Online Agency Accreditation</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle2</fullName>
@@ -26964,28 +26964,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer” user access within the Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer”' IATA EasyPay users' access and Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from the assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;li&gt;Allowed to Add funds from the registered Bank Account to the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Withdraw funds from the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Transfer funds between the Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages users' access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s); establish new and close Sub-wallets&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates direct funded Wallet(s)&lt;/li&gt;&lt;li&gt;Generates and manages indirect funded Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s), including responding to user access requests&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers funds for Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>
