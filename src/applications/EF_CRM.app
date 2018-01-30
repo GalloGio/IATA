@@ -10,4 +10,5 @@
     <tab>EF_Related_Records__c</tab>
     <tab>standard-Dashboard</tab>
     <tab>standard-report</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

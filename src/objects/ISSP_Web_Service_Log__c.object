@@ -333,7 +333,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>YESTERDAY</value>
         </filters>
         <label>KAVI - today</label>
         <language>en_US</language>

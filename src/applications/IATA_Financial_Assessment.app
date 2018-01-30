@@ -16,4 +16,5 @@
     <tab>EmailTemplate__c</tab>
     <tab>Assessment_Template__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

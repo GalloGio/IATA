@@ -8,4 +8,5 @@
     <tab>PKB_Featured__c</tab>
     <tab>standard-KnowledgePublishing</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>
