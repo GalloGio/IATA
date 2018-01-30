@@ -69,6 +69,8 @@ public with sharing class ANG_Risk_Helper{
     //CHANGE CODE IRREGULARITY TYPE
     public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
     public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
+	public static final String CHANGE_CODE_IRR_FC2 = 'FC2';
+    public static final String CHANGE_CODE_IRR_SC2 = 'SC2';
 
     //Contact - User_Portal_Status__c
     public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
