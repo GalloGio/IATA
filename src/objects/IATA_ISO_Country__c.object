@@ -2809,6 +2809,27 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>CNS_countries</fullName>
+        <columns>NAME</columns>
+        <columns>AIMS_Region__c</columns>
+        <columns>Case_BSP_Country__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>IATA_Regional_Office__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_Code_Numeric__c</columns>
+        <columns>ISO_Country_Short_Name__c</columns>
+        <columns>ISS_Office_Location__c</columns>
+        <columns>LVA_CountryLanguage__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CNS_Country__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>CNS countries</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>EUR_Countries</fullName>
         <columns>NAME</columns>
         <columns>BSP_Country_free_text__c</columns>
