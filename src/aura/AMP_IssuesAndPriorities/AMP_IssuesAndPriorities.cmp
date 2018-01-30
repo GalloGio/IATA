@@ -3,9 +3,11 @@
     <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="showPopup" type="Boolean" default="false" />
+    <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
     <!-- 'sobjectType': 'Objective__c',-->
     <aura:attribute name="sortOrder" type="String" />
     <aura:attribute name="issues" type="Objective__c[]" />
+    <aura:attribute name="issueToDelete" type="Objective__c" />
     <aura:attribute name="issuesBackup" type="Objective__c[]" /><!-- access="private"-->
     <aura:attribute name="newIssue" type="Objective__c"
                     default="{     'sobjectType' : 'Objective__c',
@@ -22,7 +24,10 @@
                              'AM_Issue_with_IATA__c': false,
                              'AM_Public__c': false}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-    <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+    <!--<aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />-->
+    <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.showDeletePopup" />
+    <aura:handler name="cancelAddIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+    
     <aura:handler name="updateIssue" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateIssue" />
 
     <aura:registerEvent name="AMP_IssueOrPriorityError" type="c:AMP_IssueOrPriorityError"/>
@@ -252,6 +257,37 @@
         <div class="slds-backdrop slds-backdrop--open"></div>
     </aura:if>
 
+    <aura:if isTrue="{!v.showDeletionCheck}">
+        <div class="slds-modal slds-fade-in-open " style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+
+                        <lightning:button class="slds-button slds-modal__close slds-button--icon-inverse close-button"  onclick="{!c.hideDeletePopup}">
+                            <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#close" class="slds-icon "/>
+                            <span class="slds-assistive-text">Close</span>
+                        </lightning:button>
+                        <h2 id="header99" class="slds-text-heading--medium">Confirmation</h2>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Are you sure you want to delete this line?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" title="No" onclick="{!c.hideDeletePopup}">
+                            No
+                        </lightning:button>
+                        &nbsp;&nbsp;
+                        <lightning:button class="slds-button slds-button--neutral" title="Yes" onclick="{!c.handleDeleteIssue}">
+                            Yes
+                        </lightning:button>
+
+                    </footer>
+                </div>
+            </section>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
 
 
 

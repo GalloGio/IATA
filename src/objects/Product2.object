@@ -4162,6 +4162,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <label>Jill Sladen-Pilon</label>
                 </value>
                 <value>
+                    <fullName>Jonathan Paul Jasper</fullName>
+                    <default>false</default>
+                    <label>Jonathan Paul Jasper</label>
+                </value>
+                <value>
                     <fullName>Karen Stephenson</fullName>
                     <default>false</default>
                     <label>Karen Stephenson</label>
@@ -8614,6 +8619,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Jonathan Paul Jasper</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Karen Stephenson</fullName>
                 <default>false</default>
             </values>
@@ -11565,6 +11574,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14617,6 +14630,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Jonathan Paul Jasper</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Karen Stephenson</fullName>
                 <default>false</default>
             </values>
@@ -17572,6 +17589,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
