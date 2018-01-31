@@ -13,9 +13,10 @@
         <apex:outputPanel id="issueTable">
     <apex:pageMessages />
             <apex:pageBlockTable value="{!lsIssuesAndPriorities}" var="i" >
-                <apex:column style="width: 80px;">
-                                        <apex:facet name="header">Actions</apex:facet>
-
+                <apex:column>
+                    <div style="width: 80px;">
+                        <apex:facet name="header">Actions</apex:facet>
+                    </div>                    
                     <apex:commandLink value="Del" action="{!DeleteLine}" rerender="issueTable" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(OR(AND(isEditMode, IdConcerned==i.Id), NOT(canEdit)), false, true)}"  status="actStatusId">
                                             <apex:param name="IdConcerned" value="{!i.Id}" assignTo="{!IdConcerned}"/>
                                         </apex:commandLink>
@@ -46,7 +47,18 @@
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name DESC'}">&nbsp;&#8595;</apex:outputPanel>
                     </apex:commandLink>
                 </apex:facet>
-                    <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
+                    <!-- <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/> -->
+
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                        <apex:outputText value="{!i.Name}" style="display: block;width: 400px;word-wrap: break-word;"/>
+                        <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                        <apex:outputText value="{!LEFT(i.Name,60)}" style="display: block;width: 400px;"/>
+                        <apex:outputPanel rendered="{!LEN(i.Name)>60}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+
+
                     <apex:inputField value="{!i.Name}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
 
@@ -58,7 +70,16 @@
                                       <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Source_Text__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
                       </apex:commandLink>
                   </apex:facet>
-                  <apex:outputField value="{!i.AM_Source_Text__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
+
+                  <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                    <apex:outputText value="{!i.AM_Source_Text__c}" style="display: block;width: 400px;word-wrap: break-word;"/>
+                    <a href="#" class="show-less">[show less]</a>
+                  </apex:outputPanel>
+                  <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                    <apex:outputText value="{!LEFT(i.AM_Source_Text__c,60)}" style="display: block;width: 400px;"/>
+                    <apex:outputPanel rendered="{!LEN(i.AM_Source_Text__c)>60}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                  </apex:outputPanel>
+
                   <apex:inputField value="{!i.AM_Source_Text__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
                 <!-- <apex:column >
@@ -85,8 +106,8 @@
             <a href="#" class="show-less">[show less]</a>
           </apex:outputPanel>
           <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-            <apex:outputText value="{!LEFT(i.Details__c,100)}" />
-            <apex:outputPanel rendered="{!LEN(i.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+            <apex:outputText value="{!LEFT(i.Details__c,80)}" style="display: block;width: 600px;"/>
+            <apex:outputPanel rendered="{!LEN(i.Details__c)>80}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
           </apex:outputPanel>
                     <apex:inputTextArea value="{!i.Details__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" rows="4" html-maxlength="2048" styleClass="wide-input"/>
                 </apex:column>
