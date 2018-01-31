@@ -47,17 +47,14 @@
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name DESC'}">&nbsp;&#8595;</apex:outputPanel>
                     </apex:commandLink>
                 </apex:facet>
-                    <!-- <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/> -->
-
                     <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-                        <apex:outputText value="{!i.Name}" style="display: block;width: 400px;word-wrap: break-word;"/>
+                        <apex:outputText value="{!i.Name}" style="display: block;width: 200px;word-wrap: break-word;"/>
                         <a href="#" class="show-less">[show less]</a>
                     </apex:outputPanel>
                     <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-                        <apex:outputText value="{!LEFT(i.Name,60)}" style="display: block;width: 400px;"/>
-                        <apex:outputPanel rendered="{!LEN(i.Name)>60}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                        <apex:outputText value="{!LEFT(i.Name,30)}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <apex:outputPanel rendered="{!LEN(i.Name)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
                     </apex:outputPanel>
-
 
                     <apex:inputField value="{!i.Name}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
@@ -72,12 +69,12 @@
                   </apex:facet>
 
                   <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-                    <apex:outputText value="{!i.AM_Source_Text__c}" style="display: block;width: 400px;word-wrap: break-word;"/>
+                    <apex:outputText value="{!i.AM_Source_Text__c}" style="display: block;width: 150px;word-wrap: break-word;"/>
                     <a href="#" class="show-less">[show less]</a>
                   </apex:outputPanel>
                   <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-                    <apex:outputText value="{!LEFT(i.AM_Source_Text__c,60)}" style="display: block;width: 400px;"/>
-                    <apex:outputPanel rendered="{!LEN(i.AM_Source_Text__c)>60}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    <apex:outputText value="{!LEFT(i.AM_Source_Text__c,25)}" style="display: block;width: 150px;word-wrap: break-word;"/>
+                    <apex:outputPanel rendered="{!LEN(i.AM_Source_Text__c)>25}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
                   </apex:outputPanel>
 
                   <apex:inputField value="{!i.AM_Source_Text__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
@@ -102,12 +99,12 @@
                     </apex:commandLink>
                 </apex:facet> -->
           <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-            <apex:outputText value="{!i.Details__c}" style="display: block;width: 600px;word-wrap: break-word;"/>
+            <apex:outputText value="{!i.Details__c}" style="display: block;width: 250px;word-wrap: break-word;"/>
             <a href="#" class="show-less">[show less]</a>
           </apex:outputPanel>
           <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-            <apex:outputText value="{!LEFT(i.Details__c,80)}" style="display: block;width: 600px;"/>
-            <apex:outputPanel rendered="{!LEN(i.Details__c)>80}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+            <apex:outputText value="{!LEFT(i.Details__c,30)}" style="display: block;width: 250px;word-wrap: break-word;"/>
+            <apex:outputPanel rendered="{!LEN(i.Details__c)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
           </apex:outputPanel>
                     <apex:inputTextArea value="{!i.Details__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" rows="4" html-maxlength="2048" styleClass="wide-input"/>
                 </apex:column>
@@ -123,18 +120,6 @@
                     <apex:outputField value="{!i.AM_Level_of_importance__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
                     <apex:inputField value="{!i.AM_Level_of_importance__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
-                <!-- <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header"  >
-                    <apex:commandLink action="{! sortByCanIATASupport }" styleClass="narrow-table-column"
-                        reRender="issueTable">IATA Remit
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Can_IATA_support_the_airline__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Can_IATA_support_the_airline__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Can_IATA_support_the_airline__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputCheckbox value="{!i.AM_Can_IATA_support_the_airline__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
-                </apex:column> -->
                 <apex:column >
 
                     <apex:facet name="header">
@@ -226,14 +211,6 @@
   <apex:includeScript value="{!$Resource.jQuery172}" />
   <script>
     $(document).ready(function(){
-      // $('.long-text-area').each(function() {
-      //   if($(this).text().length > 100 ) {
-      //     var t = $(this).text();
-      //     $(this).append('<span class="show-less">show less</span>');
-      //     $(this).hide().after('<span class="short-text-area">'+t.substring(0,100)+'<span class="show-more">..</span></span>');
-      //
-      //   }
-      // });
       enableShowMoreOrLess();
     });
     function enableShowMoreOrLess() {
