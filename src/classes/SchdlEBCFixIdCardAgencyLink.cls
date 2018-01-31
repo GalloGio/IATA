@@ -66,7 +66,7 @@ global class SchdlEBCFixIdCardAgencyLink implements Database.Batchable<sObject>,
     }
     
     global static String Schedule(string sch) {
-        if (String.isBlank(sch)) sch = '0 0 9 * * ?';
+        if (String.isBlank(sch)) sch = '0 0 * * * ?';
         String schdlName='SchdlEBCFixIdCardAgencyLink' + (Test.isRunningTest() ? 'Test' : '');
         SchdlEBCFixIdCardAgencyLink a = new SchdlEBCFixIdCardAgencyLink();
         return System.schedule(schdlName, sch, a);
