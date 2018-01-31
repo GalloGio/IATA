@@ -2233,7 +2233,7 @@
         <ccEmails>fonterayj@iata.org</ccEmails>
         <description>ITDI Email Alert</description>
         <protected>false</protected>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCARD_ITDI_Email</template>
     </alerts>
@@ -3808,14 +3808,14 @@
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
-        <ccEmails>iataglobalidcardprogram@1eblad3slqosu6nr7jwp5q87o.2-8tfeay.eu3.case.salesforce.com</ccEmails>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
         <description>Send an email as soon as a case is created for IDCard Application</description>
         <protected>false</protected>
         <recipients>
             <field>SuppliedEmail</field>
             <type>email</type>
         </recipients>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCard_ConfirmationEmail</template>
     </alerts>
