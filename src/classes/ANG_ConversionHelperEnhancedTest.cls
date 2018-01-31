@@ -1019,4 +1019,61 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.debug('[ANG_ConversionHelperEnhancedTestTest15]'+[SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
 
 	}
+
+	
+	@isTest static void ANG_ConversionHelperEnhancedTestTest16() {
+		
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO ACCREDITED',Short_Name__c='Agency HO ACCREDITED', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        insert a1;
+
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency ST (T) TERMINATED 2017',Short_Name__c='Agency ST (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) TERMINATED 2015',Short_Name__c='Agency BR (P) TERMINATED 2015', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-10));
+
+        insert new List<Account>{a2,a3};
+
+		Contact newContact1 = new Contact();
+		newContact1.FirstName = 'Joel';
+		newContact1.LastName = 'Chandler';
+		newContact1.Email = 'joel.chandler@test1.com';
+		newContact1.User_Portal_Status__c = 'Approved Admin';
+		newContact1.AccountId = a3.Id;
+
+		insert newContact1;
+
+		newContact1.User_Portal_Status__c = 'Approved Admin';
+
+		update newContact1;
+
+        //Create the hierarchy
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
+		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{rel1, rel2};
+
+        Test.startTest();
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+
+		ANG_ConversionHelper.printStatistics(finalStruct);
+
+		Id conversionBatchId = ANG_ConversionHelper.runFullAnalysesWithReport('US');
+
+		Test.stopTest();
+		
+	}
+
 }
