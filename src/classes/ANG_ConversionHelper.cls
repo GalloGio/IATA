@@ -964,12 +964,11 @@ global with sharing class ANG_ConversionHelper {
 
         Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
-		List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c, Account__c FROM Agency_Applied_Change_code__c WHERE Account__c in :accountsToApply AND Active__c = TRUE];                    
+        //Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
+		List<Account> accounts = [SELECT Id, Status__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
 
-		for(Agency_Applied_Change_code__c aacc : accountActiveChangeCode){
-
-			mapAACCAccounts.put(aacc.Account__c,aacc);
-
+		for(Account a : accounts){
+			if(!a.Agencies_Applied_Change_codes__r.isEmpty()) mapAACCAccounts.put(a.Id,a.Agencies_Applied_Change_codes__r[0]);
 		}
 
         //prepare data structures to feed into change code generator
@@ -980,7 +979,7 @@ global with sharing class ANG_ConversionHelper {
 
 		AMS_OSCAR_JSON.ChangeCode changeCode;
 
-        for(Account acc: accountsToApply){
+        for(Account acc: accounts){
 
 			//create correction change code definition
 	    	changeCode = new AMS_OSCAR_JSON.ChangeCode();
