@@ -18,7 +18,7 @@ global class AMS_BatchScheduler_AggregatePwcData implements Schedulable{
 		   //schedule this same schedulable class again in 30 mins
 		   Datetime dt = Datetime.now().addMinutes(30);
 		   String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
-		   Id schedId = System.Schedule('AMS_AggregatePwcData_'+timeForScheduler,timeForScheduler,new AMS_BatchScheduler_AggregatePwcData());
+		   Id schedId = System.Schedule('AMS_BatchScheduler_AggregatePwcData_'+timeForScheduler,timeForScheduler,new AMS_BatchScheduler_AggregatePwcData());
 		}
 	}
 }
