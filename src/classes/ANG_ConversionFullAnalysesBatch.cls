@@ -18,6 +18,8 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 	global ANG_ConversionFullAnalysesBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate, String countryIn) {
 		
+		ANG_ConversionHelper.isMigrationToolAnalyses=true;
+
 		this.structures = structuresToMigrate;
 
 		this.country = countryIn;
@@ -43,10 +45,11 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
    	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 
-   		this.run++;
-
    		try{
 
+   			this.run++;
+
+   			ANG_ConversionHelper.isMigrationToolAnalyses=true;
 
 	   		Set<Id> accounts = new Set<Id>();
 
@@ -94,14 +97,16 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 				contactGlobal.put(accountsToUpdateLst.get(0).Top_Parent__c != null ? accountsToUpdateLst.get(0).Top_Parent__c : accountsToUpdateLst.get(0).Id, contact.get(0));
 			}
 
+			if(Limits.getDMLStatements() > 0)
+				throw new AMS_ApplicationException('There are DML actions being made (' +Limits.getDMLStatements()+'), since this is a report only, please contact the admin.');
+
 		}catch(Exception e){
 
 			errorsFound += 'Error for Hierarchy ' + structures.get(this.run).topParentId + ':' + e.getStackTraceString();
 			errorsFound += '\n';
+
+			throw e;
 		}
-
-		System.debug('contactGlobal is' + contactGlobal);
-
 
 		//public static Map<Account, Map<String, Integer>> getRiskForecast(Set<Account> accountsInTheHierarchy) ANG_RiskEventMigrationHelper
 	}
@@ -111,8 +116,6 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 		String csvFile = '';
 		
 		try{
-
-			System.debug('contactGlobal is' + contactGlobal);
 
 			for(String column:columnsCSV){
 				csvFile += '"'+column+'"' + ',';

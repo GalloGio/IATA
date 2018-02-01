@@ -87,6 +87,16 @@ global with sharing class ANG_ConversionHelper {
 		Set;
 	}
 
+    public static boolean isMigrationToolAnalyses{
+		get{
+			if(isMigrationToolAnalyses ==null) isMigrationToolAnalyses=false;
+			return isMigrationToolAnalyses;
+		}
+
+		Set;
+	}
+
+
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
          
 		Set<Id> allAgenciesGlobal = new Set<Id>();
@@ -442,10 +452,11 @@ global with sharing class ANG_ConversionHelper {
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
 		       
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
-		
+		        
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
 		ANG_ConversionHelper.isMigrationTool=true;
+		ANG_ConversionHelper.isMigrationToolAnalyses=true;
 		
 		ANG_ConversionFullAnalysesBatch conversionBatch = new ANG_ConversionFullAnalysesBatch(finalStruct.validHierarchies.values(), countryName);
 
@@ -806,10 +817,11 @@ global with sharing class ANG_ConversionHelper {
 
 		}
 		else{
+
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
 					if(allAgencies.get(rel.Child_Account__c).Location_Class__c == TIDSLOCALTIONCLASS || !validateBSPAttributes(allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.BSP_Country_free_text__c, allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.ISO_Code__c, allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.BSP_Country_free_text__c,allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.ISO_Code__c)){
-						relationsTidsToSplit.add(rel);
+                        relationsTidsToSplit.add(rel);
 						if(struct.relations.size() == 1)
 							hierarchyToDelete = true;
 					}
@@ -879,7 +891,7 @@ global with sharing class ANG_ConversionHelper {
 				allAgencies.get(rel.Child_Account__c).Top_Parent__c = null;
 				allAgencies.get(rel.Child_Account__c).Location_Type__c = 'HO';
 
-				if(relationsToCreate){
+				if(relationsToCreate && !isMigrationToolAnalyses){
 					newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 					insert newHierarchy;
 				}
@@ -909,6 +921,8 @@ global with sharing class ANG_ConversionHelper {
 				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
 				allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+
+				System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
 
 				accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
 			}
