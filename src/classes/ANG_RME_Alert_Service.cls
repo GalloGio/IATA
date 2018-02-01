@@ -141,7 +141,7 @@ global class ANG_RME_Alert_Service {
 
 	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage*100;
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
