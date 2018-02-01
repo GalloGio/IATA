@@ -40,7 +40,7 @@ public class ParticipantHelperTest {
         PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = users[0].Id);
         insert psa;
 
-        Test.startTest();
+        
         
         //List<User> users = new List<User>();
         //users.add(new User(FirstName='babbo', LastName='natale', Alias='bnatale', Email='bnatale@gmail.com'));
@@ -72,6 +72,7 @@ public class ParticipantHelperTest {
             Contact cont = new Contact(AccountId=agency.id, FirstName='Complete', LastName='Contact', Email='myCompany@test.com', Title='Director', APJC_Participant__c = false);
             insert cont;
             
+            Test.startTest();
             
             Id rtLocalGroup =  Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId();
             
