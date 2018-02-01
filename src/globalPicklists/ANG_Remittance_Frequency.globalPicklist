@@ -32,51 +32,6 @@
         <fullName>D</fullName>
         <default>false</default>
     </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Daily (China)</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Daily</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Fortnightly</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Every 10 days</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>4 times per month</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Weekly</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Every 5 days</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Monthly</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
-    <globalPicklistValues>
-        <fullName>Every 3 days</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-    </globalPicklistValues>
     <masterLabel>Remittance Frequency</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>
