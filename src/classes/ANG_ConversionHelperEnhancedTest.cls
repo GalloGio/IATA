@@ -1034,8 +1034,10 @@ private class ANG_ConversionHelperEnhancedTest {
 
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency ST (T) TERMINATED 2017',Short_Name__c='Agency ST (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
         Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) TERMINATED 2015',Short_Name__c='Agency BR (P) TERMINATED 2015', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-10));
+		Account a4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR 2 (T) ',Short_Name__c='Agency BR 2 (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+		Account a5 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='BR',Name='Agency BR 3 (T) ',Short_Name__c='Agency BR 3 (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
-        insert new List<Account>{a2,a3};
+        insert new List<Account>{a2,a3,a4,a5};
 
 		Contact newContact1 = new Contact();
 		newContact1.FirstName = 'Joel';
@@ -1057,8 +1059,13 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
 		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
+		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a4.Id);
+		AMS_Agencies_relationhip__c rel4 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a5.Id);
 
-		insert new List<AMS_Agencies_relationhip__c>{rel1, rel2};
+		insert new List<AMS_Agencies_relationhip__c>{rel1, rel2,rel3, rel4};
+
+		Integer dMLStatements = Limits.getDMLStatements();
+		integer futureCalls = Limits.getFutureCalls();
 
         Test.startTest();
 
@@ -1072,7 +1079,13 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		Id conversionBatchId = ANG_ConversionHelper.runFullAnalysesWithReport('US');
 
+
 		Test.stopTest();
+
+		System.assertEquals(dMLStatements,Limits.getDMLStatements());
+		System.assertEquals(futureCalls,Limits.getFutureCalls());
+
+		System.assertEquals([Select Id from AMS_Agencies_Hierarchy__c].size(),1);
 		
 	}
 
