@@ -10438,7 +10438,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
     <fields>
         <fullName>Is_DGR_Compliant__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for BR or AE &gt;=1, for HOI or HE &gt;=2</description>
+        <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for HO &gt;=2, for BR &gt;=1</description>
         <externalId>false</externalId>
         <label>Is DGR Compliant</label>
         <trackFeedHistory>false</trackFeedHistory>
