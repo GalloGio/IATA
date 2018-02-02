@@ -174,6 +174,11 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 					if(acct.RHC_Informations__r.get(0).ANG_Financial_Security__c != null)
 						currentFS = acct.RHC_Informations__r.get(0).ANG_Financial_Security__c;
 
+				}else{
+
+						currentFS = acct.Guaranteed_amount__c; // USD
+						rhcAmt = null; 
+
 				}
 
 				csvFile+= '"' + unNullify(rhcAmt) + '"' + ',';
