@@ -99,14 +99,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		);
 		insert fs;
 
-		ANG_RHC_Alert_Templates__c rat = new ANG_RHC_Alert_Templates__c(
-			name = 'not50percentTemplate',
-			ang_direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
-			ANG_language__c = 'English',
-			ANG_percentage__c = '50%',
-			ANG_template_api__c = 'emailTemplate'       
-		);
-
 		AMS_Country_Specific_Attribute__c att = new AMS_Country_Specific_Attribute__c();
 		att.IATA_ISO_Country__c = defCountry.Id;
 		att.ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP;
