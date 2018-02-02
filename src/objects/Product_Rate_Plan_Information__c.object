@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Contains the main Rate Plans information to be displayed on the product browsing page UI</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -244,20 +241,24 @@
         <fullName>User_Interface_Display__c</fullName>
         <externalId>false</externalId>
         <label>User Interface Display</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>true</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Product Rate Plan Information</label>
     <listViews>
@@ -376,4 +377,5 @@ ISBLANK(Order__c))</errorConditionFormula>
         <errorConditionFormula>AND( Is_Triable__c,  Is_Most_Popular__c )</errorConditionFormula>
         <errorMessage>A triable Rate Plan cannot be most popular</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

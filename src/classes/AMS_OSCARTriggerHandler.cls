@@ -2671,7 +2671,7 @@ public class AMS_OSCARTriggerHandler {
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
-                AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+                AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
 
             updatedOSCAR.STEP2__c = 'Failed';
@@ -2897,13 +2897,19 @@ public class AMS_OSCARTriggerHandler {
                         if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
-                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
-                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+                    //RB: Bypass hierarchy verification when hierarchy is too big with many owners
+                    Apex_Setting__c idAccountOwner = Apex_Setting__c.getInstance('Stop Owner Alignment');
+                    system.debug('Stop Owner Verification: '+ idAccountOwner.Text_1__c);
+                    system.debug('Stop Owner Verification user ID: '+ UserInfo.getUserId());    
 
+                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId())) {
+                        stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                        system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+                    }
 
                     //verify ownership alignment
-                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId()) && allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
                     if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){

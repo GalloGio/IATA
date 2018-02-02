@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000006DAin</value>
+        <value xsi:type="xsd:string">https://www.youtube.com/embed/bohppGp_khU</value>
     </values>
 </CustomMetadata>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used in the DIP Review Process</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -101,45 +98,55 @@
         <description>Used for the DIP Approval process</description>
         <externalId>false</externalId>
         <label>Approval Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Final Approval obtained</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending GPO Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending Legal Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending RM&amp;I Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected by GPO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected by Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected by RM&amp;I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Final Approval obtained</fullName>
+                    <default>false</default>
+                    <label>Final Approval obtained</label>
+                </value>
+                <value>
+                    <fullName>Pending GPO Approval</fullName>
+                    <default>false</default>
+                    <label>Pending GPO Approval</label>
+                </value>
+                <value>
+                    <fullName>Pending Legal Approval</fullName>
+                    <default>false</default>
+                    <label>Pending Legal Approval</label>
+                </value>
+                <value>
+                    <fullName>Pending RM&amp;I Approval</fullName>
+                    <default>false</default>
+                    <label>Pending RM&amp;I Approval</label>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                    <label>Recalled</label>
+                </value>
+                <value>
+                    <fullName>Rejected by GPO</fullName>
+                    <default>false</default>
+                    <label>Rejected by GPO</label>
+                </value>
+                <value>
+                    <fullName>Rejected by Legal</fullName>
+                    <default>false</default>
+                    <label>Rejected by Legal</label>
+                </value>
+                <value>
+                    <fullName>Rejected by RM&amp;I</fullName>
+                    <default>false</default>
+                    <label>Rejected by RM&amp;I</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Case__c</fullName>
@@ -197,57 +204,69 @@
         <fullName>DIP_Status__c</fullName>
         <externalId>false</externalId>
         <label>DIP Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Annual Review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NEW DIP Application</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Annual Review</fullName>
+                    <default>false</default>
+                    <label>Annual Review</label>
+                </value>
+                <value>
+                    <fullName>NEW DIP Application</fullName>
+                    <default>false</default>
+                    <label>NEW DIP Application</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Disclosure_covering_the_last_10_years__c</fullName>
         <externalId>false</externalId>
         <label>Disclosure covering the last 10 years</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accusations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bankruptcy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fines or penalties assessed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Investigations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lawsuits</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Regulatory actions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Accusations</fullName>
+                    <default>false</default>
+                    <label>Accusations</label>
+                </value>
+                <value>
+                    <fullName>Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Fines or penalties assessed</fullName>
+                    <default>false</default>
+                    <label>Fines or penalties assessed</label>
+                </value>
+                <value>
+                    <fullName>Investigations</fullName>
+                    <default>false</default>
+                    <label>Investigations</label>
+                </value>
+                <value>
+                    <fullName>Lawsuits</fullName>
+                    <default>false</default>
+                    <label>Lawsuits</label>
+                </value>
+                <value>
+                    <fullName>Regulatory actions</fullName>
+                    <default>false</default>
+                    <label>Regulatory actions</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>6</visibleLines>
     </fields>
     <fields>
@@ -373,21 +392,25 @@
         <fullName>Premium_Collection__c</fullName>
         <externalId>false</externalId>
         <label>Premium Collection</label>
-        <picklist>
-            <picklistValues>
-                <fullName>The Insurer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TIESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>The Insurer</fullName>
+                    <default>false</default>
+                    <label>The Insurer</label>
+                </value>
+                <value>
+                    <fullName>TIESS</fullName>
+                    <default>false</default>
+                    <label>TIESS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Regulatory_appr_of_reinsurance_agreement__c</fullName>
@@ -446,4 +469,5 @@
     <pluralLabel>DIP Details</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

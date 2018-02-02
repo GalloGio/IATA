@@ -2,6 +2,10 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>*</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>ApprovalProcess</name>
     </types>
     <types>
@@ -42,5 +46,5 @@
         <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>37.0</version>
+    <version>40.0</version>
 </Package>

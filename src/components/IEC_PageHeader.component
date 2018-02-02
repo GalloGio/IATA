@@ -270,7 +270,7 @@
                             <div class="field-group text">
                                 <label>
                                     <span class="input-label">Enter your email address</span>
-                                    <input class="user-input text" type="text" name="username" id="username" />
+                                    <input class="user-input text" type="text" name="username" id="username1" />
                                 </label>
                             </div>
                             <div class="field-group text">

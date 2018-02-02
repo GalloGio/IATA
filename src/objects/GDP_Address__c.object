@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -341,25 +338,30 @@ NULL
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Location</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Location</fullName>
+                    <default>true</default>
+                    <label>Location</label>
+                </value>
+                <value>
+                    <fullName>Mailing</fullName>
+                    <default>false</default>
+                    <label>Mailing</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Address__c</fullName>
@@ -595,4 +597,5 @@ NULL
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

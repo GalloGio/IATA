@@ -9,4 +9,5 @@
     <tab>standard-Chatter</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>
