@@ -22227,7 +22227,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>Available Period:</value>
+        <value>We attend the lines:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
