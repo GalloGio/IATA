@@ -27103,4 +27103,44 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>RHC Information description</shortDescription>
         <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
     </labels>            
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_INVALID</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>An invalid iata code was inputed in the search</shortDescription>
+        <value>You have entered an incorrect IATA Code. Accepted formats are 7 or 8 digits for Travel Agents and 10 to 11 digits for Cargo.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The entered IATA code does not exists</shortDescription>
+        <value>No %TYPE% Agency for this IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>He message</shortDescription>
+        <value>The IATA Code %IATA_CODE% is for a %CHILD_LOCATION%. The %PARENT_LOCATION% details are as follows</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ASSOCIATE_ENTITY</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Associate Entity</shortDescription>
+        <value>Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Office</shortDescription>
+        <value>Branch Office</value>
+    </labels>    
 </CustomLabels>
