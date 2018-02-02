@@ -635,6 +635,23 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	}
 
+	static testMethod void testForecast() {
+		Account a = createAccount(true);
+		a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		insert a;
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_FIN);
+		insert cc;
+		
+		ANG_RiskEventMigrationHelper.getRiskForecast(new Set<Account>{a});
+
+		System.assertEquals(ANG_Risk_Helper.RISK_ASSESSMENT_PASSED , a.ANG_HE_RiskHistoryAssessment__c);
+		System.assertEquals(false, a.ANG_HE_CashCondition__c);
+		
+		//final results are null because we didn't insert calculations
+		System.assertEquals(null, a.ANG_HE_RiskStatus__c);
+	}
+
 	public static Account createAccount(Boolean isHE){
 		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(Name = 'Iso Country Name Test', 
 															CurrencyIsoCode = 'EUR', 

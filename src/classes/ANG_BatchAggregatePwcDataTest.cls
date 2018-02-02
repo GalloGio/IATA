@@ -44,6 +44,10 @@ private class ANG_BatchAggregatePwcDataTest {
         IATA_ISO_Country__c isoCountry5 = new IATA_ISO_Country__c();
         isoCountry5.ISO_Code__c = 'IT';
         isoCountry5.ISO_Code_Numeric__c = 500;
+        IATA_ISO_Country__c isoCountry6 = new IATA_ISO_Country__c();
+        isoCountry6.ISO_Code__c = 'PT';
+        isoCountry6.ISO_Code_Numeric__c = 600;
+        isoCountry6.ANG_Enable_NewGen__c = true;
 
         // Update linked collection and persist them
         isoCountriesWithoutId.add(isoCountry1);
@@ -51,6 +55,7 @@ private class ANG_BatchAggregatePwcDataTest {
         isoCountriesWithoutId.add(isoCountry3);
         isoCountriesWithoutId.add(isoCountry4);
         isoCountriesWithoutId.add(isoCountry5);
+        isoCountriesWithoutId.add(isoCountry6);
         insert isoCountriesWithoutId;
 
         // Create country specific attributes
@@ -122,6 +127,15 @@ private class ANG_BatchAggregatePwcDataTest {
 	        Location_Class__c = 'R',
 	        Location_Type__c = 'HO');
 
+        //NewGen
+        Account account7 = new Account(
+            Name = 'AccountTest7', 
+            RecordTypeId = accRTId,
+            Status__c = 'Approved',
+            Location_Class__c = 'P',
+            Location_Type__c = 'HE',
+            IATA_ISO_Country__c = isoCountry6.Id);
+
         // Update accounts with linked elements
         account1.IATA_ISO_Country__c = isoCountry1.Id;
         account2.IATA_ISO_Country__c = isoCountry2.Id;
@@ -136,6 +150,7 @@ private class ANG_BatchAggregatePwcDataTest {
         accountsWithoutId.add(account4);
         accountsWithoutId.add(account5);
         accountsWithoutId.add(account6);
+        accountsWithoutId.add(account7);
         insert accountsWithoutId;
 
         // Required record types for Agency_Applied_Change_code__c
@@ -273,7 +288,38 @@ private class ANG_BatchAggregatePwcDataTest {
         agencyAppliedChangeCodesWithoutId.add(agencyAppliedChangeCode17);
         insert agencyAppliedChangeCodesWithoutId;
 
-        Contact con1 = new Contact(LastName = 'testCon1', Email = 'testEmail@isTest.dummy', Preferred_language__c = 'SPANISH', AccountId = account1.Id);
+       // (Select Id, ANG_Event_Status__c, ANG_Risk_Type__r.ANG_Risk_ID__c, ANG_Risk_Type__r.Name
+        //                                    From Location_Risk_Events__r where ANG_Event_Status__c in :REStatus AND ANG_AccountId__r.Location_Type__c = 'HE')
+
+        ANG_Agency_Risk_Calculation__c riskCalc1 = new ANG_Agency_Risk_Calculation__c(
+            ANG_Accreditation_Model__c = 'Cash',
+            ANG_Adjusted__c = 'Mixed',
+            ANG_Limit_Cash_Condition__c = false,
+            ANG_Occurrence_Num__c = 2
+        );
+
+        insert riskCalc1;
+
+        ANG_Risk_Event_Type__c riskType1 = new ANG_Risk_Event_Type__c (
+            Name = 'Fail Financial Security',
+            ANG_Risk_ID__c = '9',
+            ANG_Expiration__c = 12,
+            ANG_Agency_Risk_Calculation__c = riskCalc1.Id
+        );
+
+        insert riskType1;
+
+        ANG_Agency_Risk_Event__c riskEvent1 = new ANG_Agency_Risk_Event__c(
+            ANG_AccountId__c = account7.Id,
+            ANG_Risk_Type__c = riskType1.Id,
+            ANG_Event_Status__c = 'Active',
+            ANG_Issued_Date__c = Date.today()
+        );
+
+        insert riskEvent1;
+
+        Contact con1 = new Contact(LastName = 'testCon1', Email = 'testEmail@isTest.dummy', Preferred_language__c = 'SPANISH', AccountId = account1.Id, 
+                        Status__c = 'Active', User_Portal_Status__c = 'Approved Admin');
         Insert con1;
     }
 
@@ -299,7 +345,6 @@ private class ANG_BatchAggregatePwcDataTest {
         Account resultAccount3 = [SELECT Id, (Select AMS_PWC_INT_DEF__c FROM Account_Aggregation_for_Integrations__r)  FROM Account WHERE Name = 'AccountTest3'];
         Account resultAccount4 = [SELECT Id, (Select AMS_PWC_INT_DEF__c, AMS_PWC_INT_IRRS__c FROM Account_Aggregation_for_Integrations__r) FROM Account WHERE Name = 'AccountTest4'];
 
-        System.debug('## Acc Aggreg: ' + [Select id, UniqueKey__c from ANG_Account_Aggregation_for_Integrations__c]);
 
         // Check that our data are correct - DEF
         System.assertEquals(1, resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_DEF__c);
@@ -310,7 +355,6 @@ private class ANG_BatchAggregatePwcDataTest {
         System.assertEquals(1, resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_DEFNONPAY__c);
 
         // Check that our data are correct - IRRS
-        //System.assertEquals(12, resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_IRRS__c);
         System.assertEquals(7, resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_IRRS__c);
 
         System.assertEquals(5, resultAccount2.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_IRRS__c);
@@ -320,10 +364,6 @@ private class ANG_BatchAggregatePwcDataTest {
 
         // Check that our data are correct - Own/share change
         System.assertEquals('Y', resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_OWNSHA_CHANGE__c);
-
-        // Check that our data are correct - Own/share change
-        //System.assertEquals(currentDateTime, resultAccount1.Account_Aggregation_for_Integrations__r[0].AMS_PWC_INT_OWNSHA_LASTDATE__c);
-
     }
 	
 	
