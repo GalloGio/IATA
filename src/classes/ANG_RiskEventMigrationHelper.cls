@@ -477,6 +477,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		for(ANG_Agency_Risk_Event__c re : new ANG_RiskEventMigrationHelper(accountsInTheHierarchy).convertChangeCodesToRiskEvents()){
 			Account a = accounts.get(topParents.get(re.ANG_AccountId__c));
 
+			if(re.ANG_Event_Status__c != ANG_Risk_Helper.STATUS_ACTIVE) continue;
+
 			//risk events are to be reported under Head Entity (this works because 
 			//the only risk event generated under the AE is the Major Changes, which 
 			//fails the risk assessment history with only one ocurrence)
