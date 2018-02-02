@@ -37,9 +37,9 @@ public without sharing class ISSP_AMS_MSO_Controller {
                     territories += (territories == '' ? '' : ', ') + t.ISO_Country__r.Name;
                 }
 
-                tmpList.add(new AppointmentWrapper(a, territories));
+                tmpList.add(new AppointmentWrapper(a, territories, a.Account__r.Accreditation_date__c, a.Account__r.Expiry_Date__c));
             }
-
+            System.debug('lstDisplayAccounts:' + tmpList);
             return tmpList;
         } set;
     }
@@ -57,6 +57,36 @@ public without sharing class ISSP_AMS_MSO_Controller {
     }
 
     
+    public List<Data> getData() {
+        return getChartData(lstAccountsInHierarchy);
+    }
+
+    // The actual chart data; needs to be static to be
+    // called by a @RemoteAction method
+    public static List<Data> getChartData(list<AMS_Inspection__c> lstAccounts) {
+        
+        Integer iAll = lstAccounts.size();
+        Integer iApproved = 0;
+        Integer iClosed = 0;
+        for(AMS_Inspection__c appointment : lstAccounts){
+            if(appointment.Account__r.Status__c == 'Terminated'){ iClosed++; }else{ iApproved++; }
+        }
+        List<Data> data = new List<Data>();
+        data.add(new Data('Approved', iApproved));
+        data.add(new Data('Terminated ', iClosed));
+        data.add(new Data('Total', iAll));
+        return data;
+    }
+    
+    // Wrapper class
+    public class Data {
+        public String name { get; set; }
+        public Integer data1 { get; set; }
+        public Data(String name, Integer data1) {
+            this.name = name;
+            this.data1 = data1;
+        }
+    }
     public ISSP_AMS_MSO_Controller() {
         try {
             User currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
@@ -86,9 +116,9 @@ public without sharing class ISSP_AMS_MSO_Controller {
             strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r ORDER BY ISO_Country__r.Name ASC) ';
         }
 
-        strQuery += 'FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
-        strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
-        strQuery += 'AND Account__r.Purge_Flag__c = false ';
+        strQuery += ' FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
+        strQuery += ' AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
+        strQuery += ' AND Account__r.Purge_Flag__c = false ';
         strQuery += 'AND Account__r.RecordType.DeveloperName = \'IATA_Agency\' ';
 
         if (!isMSO) {
@@ -97,14 +127,16 @@ public without sharing class ISSP_AMS_MSO_Controller {
         
         if (isExcludingTerminated) {
             //strQuery += ' AND Accreditation_Endorsement_Status_code__c <> \'0\'';
-            strQuery += ' AND Account__r.Status__c <> \'Terminated\'';
+            strQuery += ' AND Account__r.Status__c not in (\'Terminated\',\'New application pending\')';
+        }else{
+            strQuery += ' AND Account__r.Status__c <> \'New application pending\'';
         }
 
         if (searchText != null && searchText != '') {
             strQuery += ' AND (';
-            strQuery += 'Account__r.Name LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
-            strQuery += 'OR Account__r.IATACode__c LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
-            strQuery += 'OR Account__r.BillingCountry LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += ' Account__r.Name LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += ' OR Account__r.IATACode__c LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += ' OR Account__r.BillingCountry LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
             strQuery += ')';
         } 
 
@@ -216,10 +248,15 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public class AppointmentWrapper {
         public AMS_Inspection__c appointment {get; set;}
         public String territories {get; set;}
+        public Date dAccreditation_date {get; set;}
+        public Date dExpiry_Date {get; set;}
 
-        public AppointmentWrapper(AMS_Inspection__c appointment, String territories) {
+        public AppointmentWrapper(AMS_Inspection__c appointment, String territories, Date accDate, Date expDate) {
             this.appointment = appointment;
             this.territories = territories;
+            this.dAccreditation_date = accDate;
+            this.dExpiry_Date = expDate;
+
         }
      }
 }

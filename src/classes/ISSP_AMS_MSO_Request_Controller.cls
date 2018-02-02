@@ -169,7 +169,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public Pagereference cancel() {
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
-            return new Pagereference('/ISSP_Homepage');
+            return new Pagereference('/ISSP_AMS_MSO');
         } else {
             return new Pagereference(retURL);
         }

@@ -45,13 +45,20 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
             applyLanguage = 'en_US';
 
-        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, Iso_State__c, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Link_agent_name__c FROM Account WHERE Id = :msoId]);
+        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, 
+                    IATA_ISO_Country__r.Name, Iso_State__c, Iso_State__r.Name, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, 
+                    ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, 
+                    CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, 
+                    IATA_ISO_Shipping_State__c, Link_agent_name__c, Accreditation_date__c, Expiry_Date__c, Status__c FROM Account WHERE Id = :msoId]);
+
+        System.debug('lstAcc: ' + lstAcc);
 
         if (String.isBlank(action) || String.isBlank(msoId) || lstAcc.isEmpty()) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Invalid_Request));
         } else {
         
             msoAccount = lstAcc[0];
+            System.debug('msoAccount: ' + msoAccount);
             if (caseId == null) {
                 oscarCase = new Case();
             } else {
@@ -103,6 +110,30 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 refreshStates();
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 billingState = accreditationForm.IATA_ISO_State__c;
+
+                if (step == 'view') {
+                    String auxCtry = '';
+                    for(Integer i=0 ; i < countryISOCodeList.size() ; i++ ){
+                        if(countryISOCodeList.get(i).getValue() == countrySelected){
+                            auxCtry = countryISOCodeList.get(i).getLabel();
+                        }
+                    }
+                    String auxState = '';
+                    System.debug('billingState: ' + billingState);
+                    System.debug('billingStatesList: ' + billingStatesList);
+
+                    for(Integer i=0 ; i < billingStatesList.size() ; i++ ){
+                        System.debug('billingStatesList.get(i).getValue(): ' + billingStatesList.get(i).getValue());
+                        System.debug('billingStatesList.get(i).getLabel(): ' + billingStatesList.get(i).getLabel());
+                        if(billingStatesList.get(i).getValue() == billingState){
+                            auxState = billingStatesList.get(i).getLabel();
+                        }
+                    }
+                    countrySelected = auxCtry;
+                    billingState = auxState;
+
+                }
+
             }
 
         }
@@ -356,12 +387,15 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
 
     public PageReference cancelRequest() {
+        System.debug('oscar: ' +  oscar);
         oscar.Status__c = 'Closed_Withdrawn';
         update oscar;
 
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         //if (retURL == null) {
-            return new Pagereference('/ISSP_AMS_MSO');
+			//FM AMSU-119
+            //return new Pagereference('/ISSP_AMS_MSO');
+            return new Pagereference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=view');
         /*} else {
             return new Pagereference(retURL);
         }*/
@@ -369,6 +403,19 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference goBackToForm() {
         return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=form&caseId=' + oscarCase.Id);
+    }
+
+    //FM AMSU-119
+    public PageReference goToEdit() {
+        return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=form');
+    }
+    //FM AMSU-119
+    public PageReference goToView() {
+        return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=view');
+    }
+    //FM AMSU-119
+    public PageReference goToTermination() {
+        return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_TERMINATION + '&msoId=' + msoAccount.Id );
     }
 
     //@future
