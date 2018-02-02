@@ -10842,7 +10842,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_New_MSO_Application</shortDescription>
-        <value>Create New MSO</value>
+        <value>Application for a new MSO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>

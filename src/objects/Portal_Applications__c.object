@@ -208,7 +208,7 @@ AND(NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c)),
          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;TIDS Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;TIDS Agent&apos;, true,
          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;IATA Cargo Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;IATA Cargo Agent&apos;, true,
           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;CASS Associate&apos;) &amp;&amp; $User.ANG_Category__c = &apos;CASS Associate&apos;, true,
-           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Import Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Import Agent&apos;, true, false)
+           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Recipient&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Recipient&apos;, true, false)
           )
          )
         )
@@ -315,8 +315,14 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <label>CASS Associate</label>
                 </value>
                 <value>
+                    <fullName>Recipient</fullName>
+                    <default>false</default>
+                    <label>Recipient</label>
+                </value>
+                <value>
                     <fullName>Import Agent</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>Import Agent</label>
                 </value>
             </valueSetDefinition>
@@ -643,7 +649,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export,
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import,
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
-&quot;ICE â€“ IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
 &quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_CNS_Endorsement,
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
@@ -709,6 +715,16 @@ Name
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Support_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Support Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -999,11 +1015,11 @@ OR(
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
+                <fullName>MSO Member Sales Office</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MSO Member Sales Office</fullName>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1137,8 +1153,8 @@ NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c))
         <active>true</active>
         <description>Only allow to save when Restrict by Agency Sector is not empty IF Agency checkbox = TRUE</description>
         <errorConditionFormula>AND(
-NOT(Agency__c),
-TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
+ NOT(Agency__c),
+ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
 )</errorConditionFormula>
         <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Sector.</errorMessage>
     </validationRules>
