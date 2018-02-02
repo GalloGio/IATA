@@ -11780,7 +11780,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX SA</shortDescription>
-        <value>IATA Passenger Sales - New SA</value>
+        <value>IATA Passenger Sales - SA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
