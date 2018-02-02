@@ -33,6 +33,10 @@
                 <field>Agency_IATA_Code__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDP_Products_Account_View__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agency_Name__c</field>
             </layoutItems>

@@ -2184,6 +2184,11 @@ SIS Charge Code Type.</description>
                     <label>Baggage Reference Manual</label>
                 </value>
                 <value>
+                    <fullName>Cabin Safety Guide</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety Guide</label>
+                </value>
+                <value>
                     <fullName>Cargo Agency Conference Resolution Manual</fullName>
                     <default>false</default>
                     <label>Cargo Agency Conference Resolution Manual</label>
@@ -7446,6 +7451,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -10417,6 +10426,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13433,6 +13446,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -16432,6 +16449,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
