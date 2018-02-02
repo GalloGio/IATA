@@ -472,11 +472,17 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			accounts.put(a.Id, a);
 		}
 
+		Map<Id, ANG_Risk_Event_Type__c> riskTypes = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c]);
+
 		//forecast Risk Events to be Generated
 		Map<Account, List<String>> riskEvents = new Map<Account, List<String>>();
 		for(ANG_Agency_Risk_Event__c re : new ANG_RiskEventMigrationHelper(accountsInTheHierarchy).convertChangeCodesToRiskEvents()){
 			Account a = accounts.get(topParents.get(re.ANG_AccountId__c));
 
+			//check correct status (normally done in a trigger, but since risk events are never inserted, need to recalculate here)
+			if(re.ANG_Issued_Date__c.addMonths(Integer.valueOf(riskTypes.get(re.ANG_Risk_Type__c).ANG_Expiration__c)) <= System.today()) re.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
+
+			//we need to discard inactive risk events, as they don't influence risk history
 			if(re.ANG_Event_Status__c != ANG_Risk_Helper.STATUS_ACTIVE) continue;
 
 			//risk events are to be reported under Head Entity (this works because 
