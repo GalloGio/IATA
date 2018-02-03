@@ -265,6 +265,8 @@ global with sharing class ANG_ConversionHelper {
 				if(!(rel.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED))
 					return false;
 
+				if(rel.Child_Account__r.Location_Class__c == TIDSLOCALTIONCLASS) // NEWGEN-2539 TIDS should be raise as an exception to be splited after.
+					return false;
 			}
 
 		}
