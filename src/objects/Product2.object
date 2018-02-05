@@ -2204,6 +2204,11 @@ SIS Charge Code Type.</description>
                     <label>Baggage Reference Manual</label>
                 </value>
                 <value>
+                    <fullName>Cabin Safety Guide</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety Guide</label>
+                </value>
+                <value>
                     <fullName>Cargo Agency Conference Resolution Manual</fullName>
                     <default>false</default>
                     <label>Cargo Agency Conference Resolution Manual</label>
@@ -4180,6 +4185,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <fullName>Jill Sladen-Pilon</fullName>
                     <default>false</default>
                     <label>Jill Sladen-Pilon</label>
+                </value>
+                <value>
+                    <fullName>Jonathan Paul Jasper</fullName>
+                    <default>false</default>
+                    <label>Jonathan Paul Jasper</label>
                 </value>
                 <value>
                     <fullName>Karen Stephenson</fullName>
@@ -7461,6 +7471,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -8631,6 +8645,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10431,6 +10449,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -11585,6 +11607,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13440,6 +13466,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -14634,6 +14664,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16438,6 +16472,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -17592,6 +17630,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>

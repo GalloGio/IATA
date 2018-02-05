@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Allowed</fullName>
+        <default>false</default>
+        <label>Allowed</label>
+    </customValue>
+    <customValue>
+        <fullName>Allowed with Approval</fullName>
+        <default>false</default>
+        <label>Allowed with Approval</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Allowed</fullName>
+        <default>false</default>
+        <label>Not Allowed</label>
+    </customValue>
+    <masterLabel>E&amp;F Allow Billing Agreements</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

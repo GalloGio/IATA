@@ -1085,10 +1085,10 @@
                 {!$Label.ISSP_VR_Case_Submited}
             </apex:outputPanel>
            </strong>
-           <br/>
-           <apex:outputlabel >
-           <br/>
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.</apex:outputlabel>
+           
+           
+           <br/> <br/> 
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
                 <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>

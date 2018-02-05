@@ -333,9 +333,9 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>1/23/2018 12:00 AM</value>
         </filters>
-        <label>KAVI - today</label>
+        <label>. mgo - KAVI</label>
         <language>en_US</language>
         <sharedTo>
             <group>IATAAdmins</group>
