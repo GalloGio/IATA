@@ -13,12 +13,19 @@ global class ANG_RME_Alert_Service {
 		//Balance Update AND RHC alert
 		public String storedBaseCurrency;
 		public Decimal storedRHCValue;
+		public Decimal provisionalRHC;
 		public Decimal consumedRHCAmount;
 		public Decimal consumedRHCPercentage;
 
 		//Used only on RHC Alert
 		public String thresholdLevel;
 		public String direction;
+
+		//Used on INT 033: Request Provisional RHC (button)
+		public String title;
+		public String transactionId;
+		public String api;
+		public String code;
 	}
 
 	global class RequestResult {
@@ -37,6 +44,14 @@ global class ANG_RME_Alert_Service {
 		get{
 			if(result == null) result = new RequestResult();
 			return result;
+		}
+		set;
+	}
+
+	private static ISSP_Web_Service_Log__c log{
+		get{
+			if(log == null) log = new ISSP_Web_Service_Log__c();
+			return log;
 		}
 		set;
 	}
@@ -114,7 +129,7 @@ global class ANG_RME_Alert_Service {
 
 	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage * 100; //External system range is  0-1, Salesforcerange is  0-100
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
@@ -137,7 +152,7 @@ global class ANG_RME_Alert_Service {
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private variable "result"
 
 		if(result.isSuccess) updateRHC(result.res, acc.RHC_Informations__r[0]);
 
@@ -148,14 +163,22 @@ global class ANG_RME_Alert_Service {
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private variable "result"
 
 		if(result.isSuccess){
-			ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
-			rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.storedRHCValue;
-			rhcInfo.ANG_Provisional_RHC_Last_Update__c = result.res.eventTime.date();
-			update rhcInfo;
+
+			if(result.res.iataCode != acc.IATACode__c) log.Error_Code__c = 'Iata Code Mismatch';
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode) log.Error_Code__c = 'Currency Mismatch';
+			else{
+				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+				update rhcInfo;
+			}
+			
+			if(String.isNotEmpty(log.Error_Code__c)) update log;
 		}
+
 
 		return result;
 	}
@@ -176,8 +199,7 @@ global class ANG_RME_Alert_Service {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 
-		//start log
-		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		//start logging
 		log.Web_Service__c = 'Mulesoft/Future Space';
 		log.Method__c = req.getMethod();
 		log.Input_Description__c = 'GET Request\nEndpoint:'+req.getEndpoint();
