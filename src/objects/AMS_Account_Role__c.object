@@ -744,11 +744,9 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <columns>Contact__c</columns>
         <columns>Owner_Account__c</columns>
         <columns>Owner_Name__c</columns>
+        <columns>Employee_Name__c</columns>
         <columns>Person__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>Unified_Owner_Name__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Owner_Name__c</field>

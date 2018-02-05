@@ -11775,6 +11775,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX SA</shortDescription>
+        <value>IATA Passenger Sales - SA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -22227,7 +22235,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>Available Period:</value>
+        <value>We attend the lines:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
