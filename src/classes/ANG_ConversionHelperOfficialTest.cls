@@ -403,7 +403,7 @@ private class ANG_ConversionHelperOfficialTest {
 
 		List<Agency_Applied_Change_code__c> aaccEmptyList = [ Select Id, Account__c, Change_Code__c from Agency_Applied_Change_code__c where Account__r.Name in ('HIERARCHY1 Agency BR1 OK','HIERARCHY1 Agency BR3 OK')];
 
-		System.assertEquals(0,aaccEmptyList.size());
+		System.assertEquals(2,aaccEmptyList.size());
 
 		aAEEptyList = [SELECT Id, Account__c, Status__c, ANG_FormOfPayment_ID__c  from Agency_Authorization__c where Account__r.Name not in ('HIERARCHY1 Agency BR1 OK','HIERARCHY1 Agency BR3 OK')];
 
@@ -798,4 +798,5 @@ private class ANG_ConversionHelperOfficialTest {
 		System.debug([SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
 
 	}
+
 }
