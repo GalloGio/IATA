@@ -33,6 +33,11 @@ public with sharing class ISSP_ANG_CodeSearch {
 
 		Integer len = iataCodeStr.length();
 
+		//
+		// IATA CODE 7-8 DIGITS => Travel Agency
+		//
+		// IATA CODE 10-11 DIGITS => Cargo Agency
+		//
 		if(len < 7 || len > 11 || len == 9) {
 			this.activeError = true;
 			this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_INVALID;
