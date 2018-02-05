@@ -10,4 +10,5 @@
     <tab>E_F_Asset__c</tab>
     <tab>CSS_Tracking__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

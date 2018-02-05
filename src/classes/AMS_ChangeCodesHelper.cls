@@ -342,10 +342,10 @@ public class AMS_ChangeCodesHelper {
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
                 
-
-            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+            //RB 20180118: The below field should only be populated when CER change code gets generated
+            /*if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
-            }
+            }*/
                    
 
         }

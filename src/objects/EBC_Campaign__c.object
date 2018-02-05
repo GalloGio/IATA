@@ -843,6 +843,11 @@ The value is determined by ExactTarget, and this is is only populated once a cam
                     <default>false</default>
                     <label>DELETED</label>
                 </value>
+                <value>
+                    <fullName>EMAIL RECOVER</fullName>
+                    <default>false</default>
+                    <label>EMAIL RECOVER</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

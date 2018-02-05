@@ -420,7 +420,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		for(Account acct: accounts){
 
 			if(acct.Name == 'Agency HO TERMINATED 2017')
-				System.assertEquals(acct.Location_Type__c,'HE');
+				System.assertEquals(acct.Location_Type__c,'HO');
 			else
 				if(acct.Location_Class__c == 'T')
 					System.assertEquals(acct.Location_Type__c,'BR');
