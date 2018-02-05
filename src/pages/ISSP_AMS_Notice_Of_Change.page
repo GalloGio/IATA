@@ -1269,13 +1269,13 @@
 						</apex:pageBlockSection>
 
 						
-						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</strong></div>
+						<!--<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</strong></div>
 						<apex:pageBlockSection columns="1">
 							<apex:pageBlockSectionItem labelStyle="width:44%">
 								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent_Code}"/>
 								<apex:inputfield value="{!newForm.IATA_Cargo_Code__c}"/>
 							</apex:pageBlockSectionItem>
-						</apex:pageBlockSection>
+						</apex:pageBlockSection>-->
 					</apex:outputPanel>
 
                     <apex:outputPanel id="current-owner-summary" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}">
@@ -1808,7 +1808,6 @@
                                 <apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAX__c}"  required="false"/>
                                 </td></tr>
 
-                                FAX__c
 						</table>
 						</td>
 

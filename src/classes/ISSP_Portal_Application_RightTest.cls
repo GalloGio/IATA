@@ -186,4 +186,93 @@ public class ISSP_Portal_Application_RightTest {
 		
 
 	}
+
+
+	public static testMethod void ebulletinAccessDeniedTest() {
+		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+    	system.runAs(thisUser){
+			RecordType rtPar = [select Id from RecordType where developerName=:'Application_rigth'];
+			RecordType rtWeekly = [select Id from RecordType where developerName=:'Weekly'];
+			RecordType rtDaily = [select Id from RecordType where developerName=:'Daily'];
+			
+			Account acc = ISSP_ObjectFactory.createNewAccount();  
+			insert acc;
+			
+			/*SAP_Account__c sap = new SAP_Account__c();
+			sap.SAP_Account_type__c = 'test';
+			sap.Account__c = acc.Id;
+			sap.SAP_Id__c = '1234';
+			insert sap;*/
+			
+			Contact contact = ISSP_ObjectFactory.createNewContact();
+	        contact.AccountId = acc.Id;
+	        insert contact;
+	         
+	        User newUser = new User(alias = 'dsfsdfds', 
+		                            email = contact.email, 
+		                            emailencodingkey = 'UTF-8', 
+		                            firstname = contact.firstName, 
+		                            lastname = contact.lastname, 
+		                            languagelocalekey = 'en_US', 
+		                            localesidkey = 'en_US', 
+		                            contactId = contact.Id,
+		                            timezonesidkey = 'Asia/Dubai',
+		                            username = contact.email+'dfgdf',
+		                            PortalRole = 'Manager',
+		                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+		                            ProfileId = ISSP_Constant.TEST_User_ProfileID,
+		                            IsActive = true);
+	    	insert newUser;
+    	
+
+         	Portal_Applications__c app = new Portal_Applications__c(Name = 'E-Bulletin'); 
+        	insert app;
+			
+			Portal_Application_Right__c par = new Portal_Application_Right__c();
+	        par.Contact__c = contact.Id;
+	        par.Portal_Application__c = app.Id;
+	        par.Right__c = 'Access Granted';
+	        par.RecordTypeId = rtPar.Id;
+	        insert par;
+
+	        AMS_eBulletin_Profile__c profDaily = new AMS_eBulletin_Profile__c(Area_2__c = true, 
+	        																	CountriesList__c = 'GB', 
+	        																	Opt_in__c = true, 
+	        																	Opt_out_Bulletin__c = false, 
+	        																	Program_Passage__c = true, 
+	        																	User__c = newUser.Id,
+	        																	RecordTypeId = rtDaily.Id,
+	        																	Agency_Info_Irregularities__c = true);
+	        insert profDaily;
+
+	        AMS_eBulletin_Profile__c profWeekly = new AMS_eBulletin_Profile__c(Area_2__c = true, 
+	        																	CountriesList__c = 'GB', 
+	        																	Opt_in__c = true, 
+	        																	Opt_out_Bulletin__c = false, 
+	        																	Program_Passage__c = true, 
+	        																	User__c = newUser.Id,
+	        																	RecordTypeId = rtWeekly.Id,
+	        																	Agency_Info_Irregularities__c = true);
+	        insert profWeekly;
+
+	        List<AMS_eBulletin_Profile__c> profiles = [SELECT Id, Opt_in__c, Opt_out_Bulletin__c FROM AMS_eBulletin_Profile__c WHERE User__c =: newUser.Id];
+
+	        System.assertEquals(true, profiles.get(0).Opt_in__c);
+	        System.assertEquals(true, profiles.get(1).Opt_in__c);
+	        System.assertEquals(false, profiles.get(0).Opt_out_Bulletin__c);
+ 			System.assertEquals(false, profiles.get(1).Opt_out_Bulletin__c);
+
+ 			par.Right__c = 'Access Denied';
+ 			update par;
+
+ 			profiles = [SELECT Id, Opt_in__c, Opt_out_Bulletin__c FROM AMS_eBulletin_Profile__c WHERE User__c =: newUser.Id];
+
+	        System.assertEquals(false, profiles.get(0).Opt_in__c);
+	        System.assertEquals(false, profiles.get(1).Opt_in__c);
+	        System.assertEquals(true, profiles.get(0).Opt_out_Bulletin__c);
+ 			System.assertEquals(true, profiles.get(1).Opt_out_Bulletin__c);
+         }
+         
+	}
+
 }

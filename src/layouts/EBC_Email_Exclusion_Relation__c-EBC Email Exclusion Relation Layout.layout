@@ -11,6 +11,10 @@
                 <behavior>Required</behavior>
                 <field>EBC_Email_Exclusion__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Exclusion_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

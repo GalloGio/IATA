@@ -219,7 +219,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
             }
 
 
-            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer')])
+            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and RecordType.Name <> 'Invoicing_Collection_Cases'])
                 for (Case c : aCase) {
 
                     double currentWorkload = m_agentWorkload.get(c.OwnerId);

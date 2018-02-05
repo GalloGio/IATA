@@ -10,4 +10,5 @@
     <tab>AWS_S3_Object__c</tab>
     <tab>About_Force_com_Toolkit_for_AWS</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>
