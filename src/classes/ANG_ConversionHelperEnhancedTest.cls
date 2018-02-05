@@ -433,7 +433,7 @@ private class ANG_ConversionHelperEnhancedTest {
 				System.assertEquals(acct.Location_Class__c,'P');
 		}
 
-		System.assertEquals([Select id from AMS_Agencies_relationhip__c].size(),1);
+		System.assertEquals([Select id from AMS_Agencies_relationhip__c].size(),2);
 		System.assertEquals([Select id from AMS_Agencies_Hierarchy__c].size(),1);
 
 
