@@ -946,10 +946,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Integer getContactAccountAEsChilds() {
+        List <String> l = new List<String>();
+        l.add(AMS_Utils.ACC_S9_APPROVED);
+        l.add(AMS_Utils.ACC_S5_CASHNOCOMMISSION);
+        l.add(AMS_Utils.ACC_S6_CASHWITHCOMMISSION);
+        l.add(AMS_Utils.ACC_S8_CHANGESPROCESSED);
+
         return [SELECT COUNT()
                   FROM Account
                  WHERE Top_Parent__c = :con.Account.Id
-                   AND Location_Type__c = :AMS_Utils.AE];
+                   AND Location_Type__c = :AMS_Utils.AE
+                   AND Status__c in :l];
     }
 
     private List<Account> getBranchList(Boolean fullHierarchy) {
