@@ -401,8 +401,8 @@ private class ANG_ConversionHelperEnhancedTest {
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
 		System.assertEquals(1,finalStruct.totalHierarchies);
-		System.assertEquals(1,finalStruct.totalValidHierarchies);
-		System.assertEquals(0,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
 		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
 
 		Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
