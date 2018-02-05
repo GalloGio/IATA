@@ -45,11 +45,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
             applyLanguage = 'en_US';
 
-        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, 
-                    IATA_ISO_Country__r.Name, Iso_State__c, Iso_State__r.Name, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, 
-                    ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, 
-                    CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, 
-                    IATA_ISO_Shipping_State__c, Link_agent_name__c, Accreditation_date__c, Expiry_Date__c, Status__c FROM Account WHERE Id = :msoId]);
+        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Iso_State__c, Iso_State__r.Name, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Link_agent_name__c, Accreditation_date__c, Expiry_Date__c, Status__c FROM Account WHERE Id = :msoId]);
 
         System.debug('lstAcc: ' + lstAcc);
 
@@ -75,8 +71,12 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                     accreditationForm.Branch_Office_City__c = msoAccount.BillingCity;
                     accreditationForm.Branch_Office_Email__c = msoAccount.Email__c;
                     accreditationForm.Branch_Office_Phone__c = msoAccount.Phone;
-                    accreditationForm.IATA_ISO_State__c = msoAccount.Iso_State__c;
+                    //accreditationForm.IATA_ISO_State__c = msoAccount.Iso_State__c;
+                    accreditationForm.IATA_ISO_State__c = msoAccount.IATA_ISO_Billing_State__c;
+                    
+                    //accreditationForm.IATA_ISO_State__r.Name = msoAccount.Iso_State__r.Name;
                     accreditationForm.Branch_Office_Country__c = msoAccount.IATA_ISO_Country__c;
+                    //accreditationForm.Branch_Office_Country__r.Name = msoAccount.IATA_ISO_Country__r.Name;
                     accreditationForm.IATACode__c = msoAccount.IATACode__c;
                     accreditationForm.Account_Name__c = msoAccount.Name;
                     accreditationForm.Short_Name__c = msoAccount.Short_Name__c;
@@ -140,12 +140,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
     
     public void refreshStates(){
-        list<IATA_ISO_Country__c> isoList = [SELECT Name, Id, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_SP__c, IATA_Country_ZH__c,
-                (SELECT Id, Name FROM IATA_ISO_States__r ORDER BY Name)
-                FROM IATA_ISO_Country__c
-                WHERE Id = :msoAccount.IATA_ISO_Country__c
-                ORDER BY Name];
+        list<IATA_ISO_Country__c> isoList = [SELECT Name, Id, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r ORDER BY Name) FROM IATA_ISO_Country__c WHERE Id = :msoAccount.IATA_ISO_Country__c ORDER BY Name];
         
         IATA_ISO_Country__c iso = isoList[0];    
             
@@ -180,11 +175,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         User u = [SELECT Id, ContactId From User WHERE Id =: UserInfo.getUserId()];
         if(u != null){
             List<Portal_Application_Right__c> par;
-            par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c 
-                        WHERE Contact__c =: u.ContactId 
-                        AND Right__c = 'Access Granted'
-                        AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin')
-                        AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
+            par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c WHERE Contact__c =: u.ContactId AND Right__c = 'Access Granted' AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin') AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
 
             if(par.size()==0) // No access right => return to home page
                 return new PageReference('/ISSP_Homepage');
