@@ -401,8 +401,8 @@ private class ANG_ConversionHelperEnhancedTest {
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
 		System.assertEquals(1,finalStruct.totalHierarchies);
-		System.assertEquals(1,finalStruct.totalValidHierarchies);
-		System.assertEquals(0,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(0,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
 		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
 
 		Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
@@ -423,9 +423,9 @@ private class ANG_ConversionHelperEnhancedTest {
 				System.assertEquals(acct.Location_Type__c,'HE');
 			else
 				if(acct.Location_Class__c == 'T')
-					System.assertEquals(acct.Location_Type__c,'HO');
+					System.assertEquals(acct.Location_Type__c,'BR');
 				else
-					System.assertEquals(acct.Location_Type__c,'AE');
+					System.assertEquals(acct.Location_Type__c,'BR');
 
 			if(acct.Name=='Agency BR (T) TERMINATED 2017')
 				System.assertEquals(acct.Location_Class__c,'T');
@@ -433,7 +433,7 @@ private class ANG_ConversionHelperEnhancedTest {
 				System.assertEquals(acct.Location_Class__c,'P');
 		}
 
-		System.assertEquals([Select id from AMS_Agencies_relationhip__c].size(),1);
+		System.assertEquals([Select id from AMS_Agencies_relationhip__c].size(),2);
 		System.assertEquals([Select id from AMS_Agencies_Hierarchy__c].size(),1);
 
 
@@ -1033,9 +1033,9 @@ private class ANG_ConversionHelperEnhancedTest {
         insert a1;
 
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency ST (T) TERMINATED 2017',Short_Name__c='Agency ST (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
-        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) TERMINATED 2015',Short_Name__c='Agency BR (P) TERMINATED 2015', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-10));
-		Account a4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR 2 (T) ',Short_Name__c='Agency BR 2 (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
-		Account a5 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='BR',Name='Agency BR 3 (T) ',Short_Name__c='Agency BR 3 (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR (P) TERMINATED 2015',Short_Name__c='Agency BR (P) TERMINATED 2015', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-3));
+		Account a4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR 2 (T) ',Short_Name__c='Agency BR 2 (T) TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+		Account a5 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='BR',Name='Agency BR 3 (T) ',Short_Name__c='Agency BR 3 (T)', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
         insert new List<Account>{a2,a3,a4,a5};
 

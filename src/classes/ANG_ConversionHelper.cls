@@ -265,6 +265,8 @@ global with sharing class ANG_ConversionHelper {
 				if(!(rel.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED))
 					return false;
 
+				if(rel.Child_Account__r.Location_Class__c == TIDSLOCALTIONCLASS) // NEWGEN-2539 TIDS should be raise as an exception to be splited after.
+					return false;
 			}
 
 		}
@@ -673,7 +675,7 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null){
 			createAgencyAuthorizations(container.accountsToUpdate);
-			createCorrectionChangeCodes(container.accountsToUpdate);
+			createCorrectionChangeCodes(accountsToUpdate);
 		}
 
 		//return toReturn;
@@ -882,7 +884,9 @@ global with sharing class ANG_ConversionHelper {
 		boolean relationsToCreate = (!relationsTidsToSplit.isEmpty() && relationsTidsToSplit.size() > 1);
 		AMS_Agencies_Hierarchy__c newHierarchy = null;
 
-		for(AMS_Agencies_relationhip__c rel: relationsTidsToSplit){
+		List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatus(relationsTidsToSplit);
+
+		for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
 
 			if(!parentAdded){
 				parentAdded = true;
@@ -931,6 +935,32 @@ global with sharing class ANG_ConversionHelper {
 
 	
 		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,accountsSplitedToUpdate,relationsToUpdate,hierarchy,relationsToDelete,relationsToAdd,hierarchyToDelete);
+
+	}
+
+	private static List<AMS_Agencies_relationhip__c> reOrderListForStatus(Set<AMS_Agencies_relationhip__c> relationsSet){
+
+		List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
+		relations.addAll(relationsSet);
+
+		for(Integer i = 0 ; i < relations.size() ; i++){
+
+			AMS_Agencies_relationhip__c rel = relations.get(i);
+
+
+			if(rel.Child_Account__r.Status__c <> AMS_Utils.ACC_S0_TERMINATED){
+				
+				if(i == 0)
+					return relations; // it's already on the first position.
+
+				relations.remove(i);
+				relations.add(0,rel);
+
+				return relations;
+			}
+		}
+
+		return relations;
 
 	}
 
