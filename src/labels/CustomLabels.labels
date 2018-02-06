@@ -1695,6 +1695,30 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
     </labels>
     <labels>
+        <fullName>ANG_PCI_COMPLIANT</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_PCI_COMPLIANT</shortDescription>
+        <value>PCI compliance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTORE_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTORE_FOP</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTRICT_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTRICT_FOP</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
