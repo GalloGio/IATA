@@ -321,10 +321,20 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(accountId, accreditationId,oscarId);
         if (result[0] != '0') return false;
 
+        
+        system.debug('generateMsoIataCode: after iata code before case update');
+        ANG_OscarProcessHelper.checkSFDCLimits();
+        
+        
         // update case with IATA Code and correct Contact 
-        oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
-        Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
-        update c;
+        //oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+        //Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
+        //update c;
+        updateCaseContact(oscarId, caseId, currentUser.ContactId);
+
+        system.debug('generateMsoIataCode: after case update');
+        
+        ANG_OscarProcessHelper.checkSFDCLimits();
 
         // send confirmation email
         sendConfirmationEmail(caseId, currentUser.ContactId, true);
@@ -365,21 +375,27 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }
     }
 
-    /*@future
-    public static void updateCaseContact(Id caseId, Id contactId) {
+    @future
+    public static void updateCaseContact(Id oscarId, Id caseId, Id ContactId) {
         try {
-            Case c = new Case(Id = caseId, ContactId = contactId);
-            //update c;
+            //Case c = new Case(Id = caseId, ContactId = contactId);
+            AMS_OSCAR__C oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+            Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = ContactId);
+            update c;
+            
         }  catch (DmlException ex) {
             system.debug('Error updating the OSCAR Communication case contact: ' + ex.getMessage());
         }
-    }*/
+    }
 
 
     public void sendConfirmationEmail(Id caseId, Id contactId, Boolean success) {
         String emailTemplateName = success ? 'IDFS_Case confirmation - MSO self-service' : 'IDFS_Case confirmation - phone, e-mail HTML (English)';
 
         SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+        SYSTEM.DEBUG('caseId: ' + caseId);
+        SYSTEM.DEBUG('contactId: ' + contactId);
+        SYSTEM.DEBUG('success: ' + success);
 
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
