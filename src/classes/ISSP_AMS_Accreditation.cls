@@ -3328,6 +3328,71 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
         }
+        
+        /*** AMSU-112 - Start ***/  
+        if(!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) {
+			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}      
+		if(!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) {
+			newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.ISSP_AMS_License_No__c) && !p.matcher(newForm.ISSP_AMS_License_No__c).matches()) {
+			newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c) && !p.matcher(newForm.ISSP_AMS_Trade_Reg_No__c).matches()) {
+			newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.Branch_Office_Street_name_number__c) && !p.matcher(newForm.Branch_Office_Street_name_number__c).matches()) {
+			newForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}   
+		if(!String.isBlank(newForm.Branch_Office_City__c) && !p.matcher(newForm.Branch_Office_City__c).matches()) {
+			newForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}  
+		if(!String.isBlank(newForm.Branch_Office_Postal_code__c) && !p.matcher(newForm.Branch_Office_Postal_code__c).matches()) {
+			newForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.State_Province__c) && !p.matcher(newForm.State_Province__c).matches()) {
+			newForm.State_Province__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_Number_Input__c) && !p.matcher(newForm.ISSP_AMS_VAT_Number_Input__c).matches()) {
+			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		} 
+		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) {
+			newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}  
+		if(!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) {
+			newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) {
+			newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) {
+			newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) {
+			newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+		if(!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) {
+			newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+			errorFound = true;
+		}
+        /*** AMSU-112 - End ***/
+        
+        
 System.DEBUG('validateCharactersInForm  - 1 - isNoticeOfChange: '+isNoticeOfChange);
 System.DEBUG('validateCharactersInForm  - 1 - Notify_Change_Location__c: '+newForm.Notify_Change_Location__c);
 System.DEBUG('validateCharactersInForm  - 1 - errorFound: '+errorFound);
