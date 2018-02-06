@@ -65,7 +65,7 @@
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</td>
-                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH,$Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
+                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH, 'New SA / CHV – New Code', $Label.ISSP_AMS_OPTION_PAX_SA, $Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_CountryConcerned}</td>
