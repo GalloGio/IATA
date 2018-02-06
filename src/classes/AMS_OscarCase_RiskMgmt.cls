@@ -228,7 +228,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
 								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
-								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ParentId, Account.ANG_IsNewGenAgency__c
+								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c
 								  from case where id in:mapTrgNew.keySet()]);
@@ -356,13 +356,18 @@ public class AMS_OscarCase_RiskMgmt {
                     }
                 }
 
+                // get forms of payment for newgen accounts
+                Map<Id,List<Agency_Authorization__c>> fOPsMap = new Map<Id,List<Agency_Authorization__c>>();
+                if (mapCases.values()[0].Account.ANG_IsNewGenAgency__c)
+                    fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
+
 				for(ID idCase:mapChangeCodeToCreate.keyset()){
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 
 
-                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount);
+                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
 
 
 						if(AACC!=null)
@@ -376,7 +381,7 @@ public class AMS_OscarCase_RiskMgmt {
 									if(HierAccnt.id!=CurrAccntId){
 										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
 											//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c, aaccsPerAccount);
+											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
 											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
 											if(AACCHier!=null)
 												lsAACC.add(AACCHier);
@@ -461,7 +466,7 @@ public class AMS_OscarCase_RiskMgmt {
 	}
 
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS, Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount){
+	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS, Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount, List<Agency_Authorization__c> fOPs) {
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		datetime dt = system.now();
 
@@ -509,6 +514,7 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),mapCases.get(idCase)) : '';
 		AACC.End_of_Grace_Period_Date__c = (cc.Calculate_End_Grace_Period_Date__c && mapCases.get(idCase).End_of_Grace_Period_Date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).End_of_Grace_Period_Date__c) : '';
 		AACC.Termination_Date__c = (cc.Calculate_Termination_Date__c && mapCases.get(idCase).Termination_date__c != null) ? GenerateDateForBulletin(mapCases.get(idCase).Termination_date__c) : '';
+		AACC.Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(fOPs, mapCases.get(idCase).Account.ANG_IsNewGenAgency__c);
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();

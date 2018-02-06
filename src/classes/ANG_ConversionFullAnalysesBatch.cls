@@ -128,6 +128,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 			Decimal currentFS = null;
 			String contactEmail = null;
 			String contactName = null;
+			String currencyCode = null;
 
 			For(Account acct:totalAccounts){
 
@@ -165,6 +166,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 				rhcAmt = null;
 				currentFS = null;
+				currencyCode = null;
 
 				if(!acct.RHC_Informations__r.isEmpty()){
 
@@ -174,16 +176,19 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 					if(acct.RHC_Informations__r.get(0).ANG_Financial_Security__c != null)
 						currentFS = acct.RHC_Informations__r.get(0).ANG_Financial_Security__c;
 
+					currencyCode = acct.IATA_ISO_Country__r.CurrencyIsoCode;
+
 				}else{
 
 						currentFS = acct.Guaranteed_amount__c; // USD
-						rhcAmt = null; 
+						rhcAmt = null;
+						currencyCode = acct.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
 
 				}
 
 				csvFile+= '"' + unNullify(rhcAmt) + '"' + ',';
 				csvFile+= '"' + unNullify(currentFS) + '"' + ',';
-				csvFile+= '"' + unNullify(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode) + '"';
+				csvFile+= '"' + unNullify(currencyCode) + '"';
 				csvFile+='\n';
 			}
 
