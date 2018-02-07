@@ -160,70 +160,49 @@ two record types:
         <fullName>Card_Status__c</fullName>
         <externalId>false</externalId>
         <label>Card Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Preapproved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printed/Delivered</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Picture Missing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Rejected by G&amp;D</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Missing Information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Preapproved</fullName>
-                    <default>false</default>
-                    <label>Preapproved</label>
-                </value>
-                <value>
-                    <fullName>Approved</fullName>
-                    <default>false</default>
-                    <label>Approved</label>
-                </value>
-                <value>
-                    <fullName>Printed/Delivered</fullName>
-                    <default>false</default>
-                    <label>Printed/Delivered</label>
-                </value>
-                <value>
-                    <fullName>Cancelled</fullName>
-                    <default>false</default>
-                    <label>Cancelled</label>
-                </value>
-                <value>
-                    <fullName>Cancelled ID Card</fullName>
-                    <default>false</default>
-                    <label>Cancelled ID Card</label>
-                </value>
-                <value>
-                    <fullName>Expired ID Card</fullName>
-                    <default>false</default>
-                    <label>Expired ID Card</label>
-                </value>
-                <value>
-                    <fullName>Sent ID Card</fullName>
-                    <default>false</default>
-                    <label>Sent ID Card</label>
-                </value>
-                <value>
-                    <fullName>Valid ID Card</fullName>
-                    <default>false</default>
-                    <label>Valid ID Card</label>
-                </value>
-                <value>
-                    <fullName>ERROR Picture Missing</fullName>
-                    <default>false</default>
-                    <label>ERROR Picture Missing</label>
-                </value>
-                <value>
-                    <fullName>ERROR Rejected by G&amp;D</fullName>
-                    <default>false</default>
-                    <label>ERROR Rejected by G&amp;D</label>
-                </value>
-                <value>
-                    <fullName>ERROR Missing Information</fullName>
-                    <default>false</default>
-                    <label>ERROR Missing Information</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>Card_Variation_Code__c</fullName>
@@ -1078,11 +1057,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
+                <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1103,6 +1078,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1346,7 +1325,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
@@ -1356,12 +1335,12 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      window.location.reload();
 } 
 
-else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Sent ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
