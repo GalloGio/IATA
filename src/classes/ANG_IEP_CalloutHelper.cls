@@ -72,7 +72,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		system.debug('ANG_IEP_CalloutHelper records2SendList'+records2SendList);
 		
-		if(records2SendList.size() < THRESHOLD && !isRunningTestForThreshold){
+		if((records2SendList.size() + System.Limits.getFutureCalls()) < THRESHOLD && !isRunningTestForThreshold){
 
 			System.debug('The change codes size is bellow THRESHOLD ('+THRESHOLD+'). Running future method process.');
 
