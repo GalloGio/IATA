@@ -777,6 +777,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
         accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
         accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
+        accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
         
 
         insert accreditationObj;
