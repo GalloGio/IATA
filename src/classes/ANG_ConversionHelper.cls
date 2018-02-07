@@ -825,7 +825,7 @@ global with sharing class ANG_ConversionHelper {
 					if(allAgencies.get(rel.Child_Account__c).Location_Class__c == TIDSLOCALTIONCLASS || !validateBSPAttributes(allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.BSP_Country_free_text__c, allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.ISO_Code__c, allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.BSP_Country_free_text__c,allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.ISO_Code__c)){
                         relationsTidsToSplit.add(rel);
 						if(struct.relations.size() == 1)
-							hierarchyToDelete = true;
+							hierarchyToDelete = true; // this need to be changed. Not only with 1 hierarchy we need to delete it.
 					}
 
 					if(!relationsTidsToSplit.contains(rel)){
@@ -886,6 +886,8 @@ global with sharing class ANG_ConversionHelper {
 
 		List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatus(relationsTidsToSplit);
 
+		System.debug('Relations to Split are:'+relationsTidsToSplitLst);
+
 		for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
 
 			if(!parentAdded){
@@ -932,9 +934,29 @@ global with sharing class ANG_ConversionHelper {
 			}
 		}
 
-
-	
+		if(!hierarchyToDelete)
+			hierarchyToDelete = isToDeleteHierarchy(struct,relationsToDelete);
+		
 		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,accountsSplitedToUpdate,relationsToUpdate,hierarchy,relationsToDelete,relationsToAdd,hierarchyToDelete);
+
+	}
+
+	private static boolean isToDeleteHierarchy(ANG_ConversionHelper.HierarchyStructure struct,Set<AMS_Agencies_relationhip__c> relsToDelete){
+
+		if(struct.isSingleAgencyHierarchy)
+			return false;
+
+		Integer countTopParent = 0;
+
+		for(AMS_Agencies_relationhip__c rel: struct.relations){
+			if(relsToDelete.contains(rel))
+				continue;
+
+			if(rel.Parent_Account__c == struct.topParentId)
+				countTopParent++;
+		}
+
+		return countTopParent == 0;
 
 	}
 
