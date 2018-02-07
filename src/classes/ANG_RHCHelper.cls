@@ -85,7 +85,6 @@ public class ANG_RHCHelper {
 			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
 				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
 				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
-				rhc.ANG_RHC_Effective_Date__c=System.Today();
 			}else{
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
@@ -94,7 +93,6 @@ public class ANG_RHCHelper {
 
 				if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
 				else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS;
-				rhc.ANG_RHC_Effective_Date__c=System.Today();
 
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
