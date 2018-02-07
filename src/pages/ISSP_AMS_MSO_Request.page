@@ -471,7 +471,7 @@
                                 
                                 <apex:outputpanel style="padding-left:8px;padding-top:5px;padding-bottom:5px;">
                                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_MSO_Application_Review}" rendered="{!step == 'review' }"/>
-                                        <apex:commandButton styleclass="btn btn-blue" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
+                                        <!--apex:commandButton styleclass="btn btn-blue" action="{!goBackToForm}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/-->
                                     </apex:outputpanel>
                         </apex:pageBlockSection>
 

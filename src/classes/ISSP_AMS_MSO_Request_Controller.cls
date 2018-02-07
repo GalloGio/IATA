@@ -293,7 +293,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         //if (retURL == null) {
-            return new Pagereference('/ISSP_Homepage');
+            //return new Pagereference('/ISSP_Homepage');
+            return new Pagereference('/ISSP_AMS_MSO_Request?step=form&caseId=' + oscarCase.Id);
         /*} else {
             return new Pagereference(retURL);
         }*/
