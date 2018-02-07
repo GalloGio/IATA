@@ -54,6 +54,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CHANGE_CODE_CHF = 'CHF';
 	public static final String CHANGE_CODE_CNF = 'CNF';
 	public static final String CHANGE_CODE_CSF = 'CSF';
+	public static final String CHANGE_CODE_RWD = 'RWD';
 
 	//CHANGE CODES REASON DESCRIPTION 
 	public static final String CHANGE_CODE_DESCRIPTION_NCAC                  = 'NON COMPLIANCE TO ACCREDITATION CRITERIA';
