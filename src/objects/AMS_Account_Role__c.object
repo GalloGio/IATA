@@ -742,11 +742,10 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Contact__c</columns>
-        <columns>Owner_Account__c</columns>
         <columns>Owner_Name__c</columns>
         <columns>Employee_Name__c</columns>
-        <columns>Person__c</columns>
         <columns>Unified_Owner_Name__c</columns>
+        <columns>Owner_Account__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Owner_Name__c</field>
