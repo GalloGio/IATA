@@ -971,6 +971,14 @@ public class ams2gdp_BusinessLogic
 			//gdpAccreditation.Related_Account__c=null;
 			gdpAccreditation.Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(acc.Id);
 
+			//newgen
+			if(acc.ANG_IsNewGenAgency__c) {
+				gdpAccreditation.ANG_IsNewGenAgency__c = acc.ANG_IsNewGenAgency__c;
+				gdpAccreditation.ANG_Accreditation_type__c = acc.ANG_Accreditation_Model__c;
+				gdpAccreditation.ANG_RiskStatus__c = acc.ANG_RiskStatus__c;
+				// gdpAccreditation.Due_Diligence_Status__c = acc.Due_Diligence_Status__c;
+			}
+
 			result.add(gdpAccreditation);
 		}
 
