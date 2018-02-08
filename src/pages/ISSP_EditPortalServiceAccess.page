@@ -123,6 +123,11 @@
     function closeIataIepRequestAccessModal(){
         $('#iataIepRequestAccessModal').modal('hide');
     }
+
+    function onComplete() {  
+        startLoading();
+        insertUpdatePSA();
+    }
     
 </script>
 
@@ -281,6 +286,7 @@
                       <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
 
                       <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
+                      <apex:actionFunction name="insertUpdatePSA" action="{!insertUpdatePSA}" reRender=""/>
 
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
@@ -399,7 +405,7 @@
                                 </apex:repeat>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}"
+                                <apex:commandButton action="{!insertUpdatePSA}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}"
                                    status="loadStatusSpinner"
                                    rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn_iata_success" />
                                 <apex:commandButton onclick="closeUserListModal();" value="{!$Label.ISSP_Cancel}" 
@@ -424,9 +430,11 @@
                                 <apex:outputText escape="false" value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
                                 <br/>
                               </div>
-                              <div class="modal-footer">
-                                <apex:commandButton action="{!CreateNewPortalAccess}" 
+                              <div class="modal-footer">                                   
+                                <apex:commandButton 
+                                  action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
+                                  oncomplete="onComplete();"
                                   status="loadStatusSpinner"
                                   rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn-primary"/>
                               </div>

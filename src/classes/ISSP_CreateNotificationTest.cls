@@ -32,7 +32,7 @@ public class ISSP_CreateNotificationTest {
         insert contact;
          
          Portal_Applications__c app = new Portal_Applications__c(Name = 'test app'); 
-		 insert app;
+         insert app;
          Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
          par.Contact__c = contact.Id;
          insert par;
@@ -54,6 +54,8 @@ public class ISSP_CreateNotificationTest {
          
         insert new AccountTeamMember(AccountId = a.Id, UserId = u.Id, TeamMemberRole = ENV.TeamMemberRolePL.PortalAdministrator);
 
+        Test.startTest();
+
          Case testCase = ISSP_ObjectFactory.createNewCase();
          testCase.ContactId = contact.Id;
             //(Case)ISSP_ObjectFactory.createSObject('Case',false,3);
@@ -61,7 +63,7 @@ public class ISSP_CreateNotificationTest {
          
         
          list<Notification__c> notificationList = [select id from Notification__c];
-         Test.startTest();
+         
              contact.Notification_Template__c = notificationTemplate.Name;
              par.Notification_Template__c = notificationTemplate.Name;
              testCase.Notification_Template__c = notificationTemplate2.Name;

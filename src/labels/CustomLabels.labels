@@ -1457,7 +1457,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle1</shortDescription>
-        <value>IATA Online Accreditation Agency</value>
+        <value>IATA Online Agency Accreditation</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle2</fullName>
@@ -1693,6 +1693,30 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_PCI_COMPLIANT</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_PCI_COMPLIANT</shortDescription>
+        <value>PCI compliance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTORE_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTORE_FOP</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTRICT_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTRICT_FOP</shortDescription>
+        <value>Restrict Forms of Payment</value>
     </labels>
     <labels>
         <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
@@ -2349,7 +2373,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2363,7 +2387,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Airline/Operator Data Changes,New Airline/Operator,Debt Recovery,Billing Query,User Management,Other,Airline Reconciliation,Payments</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -11964,6 +11988,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX SA</shortDescription>
+        <value>IATA Passenger Sales - SA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -16240,7 +16272,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CountryConcerned</shortDescription>
-        <value>Country concerned</value>
+        <value>Country/Territory concerned</value>
     </labels>
     <labels>
         <fullName>ISSP_Country_Requirements</fullName>
@@ -16255,7 +16287,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Country_of_Publication</shortDescription>
-        <value>Country of Publication</value>
+        <value>Country/Territory of Publication</value>
     </labels>
     <labels>
         <fullName>ISSP_Create_New_Agency</fullName>
@@ -17651,7 +17683,23 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Country</shortDescription>
-        <value>Filter by Country</value>
+        <value>Filter by Country/Territory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Country_Publication</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Country Publication</shortDescription>
+        <value>Filter by Country/Territory of Publication</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Document_Category</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter by Document Category</shortDescription>
+        <value>Filter by Document Category</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Type</fullName>
@@ -22511,7 +22559,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>Available Period:</value>
+        <value>We attend the lines:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -26964,28 +27012,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer” user access within the Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer”' IATA EasyPay users' access and Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from the assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;li&gt;Allowed to Add funds from the registered Bank Account to the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Withdraw funds from the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Transfer funds between the Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages users' access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s); establish new and close Sub-wallets&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates direct funded Wallet(s)&lt;/li&gt;&lt;li&gt;Generates and manages indirect funded Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s), including responding to user access requests&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers funds for Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>

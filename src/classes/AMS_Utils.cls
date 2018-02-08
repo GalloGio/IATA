@@ -2,6 +2,8 @@ public without sharing class AMS_Utils {
 
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
+    //public static Boolean isNewGenProcess = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -1182,7 +1184,7 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
                 (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
@@ -2523,6 +2525,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
+	
+	/**
+	Method to help the transformation of accrediation types to display on ebulletin
+	*/
+	public static String transformAccreditationType(String accredType) {
+
+		String result = accredType;
+
+		if (result == null)
+			return null;
+
+		if (result.containsIgnoreCase('Cashless'))
+			result = result.replace('Cashless', 'GoLite');
+		if (result.containsIgnoreCase('Cash'))
+			result = result.replace('Cash', 'GoStandard');
+		if (result.containsIgnoreCase('Multicountry'))
+			result = result.replace('Multicountry', 'GoGlobal');
+
+		return result;
+
+	}
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 

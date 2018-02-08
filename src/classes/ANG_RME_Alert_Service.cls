@@ -13,12 +13,19 @@ global class ANG_RME_Alert_Service {
 		//Balance Update AND RHC alert
 		public String storedBaseCurrency;
 		public Decimal storedRHCValue;
+		public Decimal provisionalRHC;
 		public Decimal consumedRHCAmount;
 		public Decimal consumedRHCPercentage;
 
 		//Used only on RHC Alert
 		public String thresholdLevel;
 		public String direction;
+
+		//Used on INT 033: Request Provisional RHC (button)
+		public String title;
+		public String transactionId;
+		public String api;
+		public String code;
 	}
 
 	global class RequestResult {
@@ -30,6 +37,8 @@ global class ANG_RME_Alert_Service {
 		global String transactionId;
 
 		global List<AgencyResult> summary;
+
+		private RHCMessage res;
 
 		global RequestResult(){
 			api =  'INT_032';
@@ -56,13 +65,21 @@ global class ANG_RME_Alert_Service {
 		set;
 	}
 
+	private static ISSP_Web_Service_Log__c log{
+		get{
+			if(log == null) log = new ISSP_Web_Service_Log__c();
+			return log;
+		}
+		set;
+	}
+
 	private static void setResponse(String message, Integer statusCode){
 		setResponse(message, null, statusCode);
 	}
 
 	private static void setResponse(String message, String stackTrace, Integer statusCode){
 		if(RestContext.response == null) RestContext.response = new RestResponse(); //this line is for testing purposes
-        RestContext.response.addHeader('Content-Type', 'application/json');
+		RestContext.response.addHeader('Content-Type', 'application/json');
 		RestContext.response.statusCode = statusCode;
 
 		result.code = String.valueOf(statusCode);
@@ -108,8 +125,8 @@ global class ANG_RME_Alert_Service {
 				if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
 				//validation passed, perform logic
 				else if(eventType == 'RHCAlert'){
-					saveAlert(req, rhcInfo);
 					updateRHC(req, rhcInfo);
+					saveAlert(req, rhcInfo);
 				}
 				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
 				else setResponse('Invalid Event Type: '+eventType, 405);
@@ -141,7 +158,7 @@ global class ANG_RME_Alert_Service {
 
 	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage*100;
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
@@ -178,11 +195,19 @@ global class ANG_RME_Alert_Service {
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
-			ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
-			rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.storedRHCValue;
-			rhcInfo.ANG_Provisional_RHC_Last_Update__c = result.res.eventTime.date();
-			update rhcInfo;
+
+			if(result.res.iataCode != acc.IATACode__c) log.Error_Code__c = 'Iata Code Mismatch';
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode) log.Error_Code__c = 'Currency Mismatch';
+			else{
+				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+				update rhcInfo;
+			}
+			
+			if(String.isNotEmpty(log.Error_Code__c)) update log;
 		}
+
 
 		return result;
 	}
@@ -196,15 +221,14 @@ global class ANG_RME_Alert_Service {
 
 		//do callout
 		HttpRequest req = new HttpRequest();
-        req.setHeader('Content-Type', 'application/json');
+		req.setHeader('Content-Type', 'application/json');
 		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
 		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 
-		//start log
-		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		//start logging
 		log.Web_Service__c = 'Mulesoft/Future Space';
 		log.Method__c = req.getMethod();
 		log.Input_Description__c = 'GET Request\nEndpoint:'+req.getEndpoint();

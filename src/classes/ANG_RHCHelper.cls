@@ -22,7 +22,7 @@ public class ANG_RHCHelper {
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 		
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -51,7 +51,7 @@ public class ANG_RHCHelper {
 				ANG_AccountId__c = a.Id,
 				RecordTypeId = RECTYPE_STDRHCINFO,
 				ANG_UniqueKey__c=a.id+RHC_INFO_STD_RT,
-				CurrencyIsoCode = a.IATA_ISO_Country__r.CurrencyIsoCode
+				CurrencyIsoCode = a.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode
 			));
 		}
 		
@@ -93,7 +93,6 @@ public class ANG_RHCHelper {
 
 				if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
 				else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS;
-
 
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;

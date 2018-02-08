@@ -45,6 +45,11 @@
                 <operation>equals</operation>
                 <value>Americas</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.IFAP_Country_ISO__c</field>
+                <operation>notEqual</operation>
+                <value>CA,BM,AR,MX,PY,UY</value>
+            </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
         <label>step 2</label>
@@ -109,10 +114,16 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
+            <booleanFilter>1 OR 2</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
                 <value>Europe</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.IFAP_Country_ISO__c</field>
+                <operation>equals</operation>
+                <value>CA,BM,AR,MX,PY,UY</value>
             </criteriaItems>
         </entryCriteria>
         <label>step 5</label>

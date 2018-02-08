@@ -2204,6 +2204,11 @@ SIS Charge Code Type.</description>
                     <label>Baggage Reference Manual</label>
                 </value>
                 <value>
+                    <fullName>Cabin Safety Guide</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety Guide</label>
+                </value>
+                <value>
                     <fullName>Cargo Agency Conference Resolution Manual</fullName>
                     <default>false</default>
                     <label>Cargo Agency Conference Resolution Manual</label>
@@ -4182,6 +4187,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <label>Jill Sladen-Pilon</label>
                 </value>
                 <value>
+                    <fullName>Jonathan Paul Jasper</fullName>
+                    <default>false</default>
+                    <label>Jonathan Paul Jasper</label>
+                </value>
+                <value>
                     <fullName>Karen Stephenson</fullName>
                     <default>false</default>
                     <label>Karen Stephenson</label>
@@ -6130,6 +6140,32 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>MITA_Daily_Master_Files</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>MITA Daily</value>
+        </filters>
+        <label>MITA Daily Master Files</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RCRM_Products</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>PRODUCT2.DESCRIPTION</columns>
@@ -7461,6 +7497,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -8631,6 +8671,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10431,6 +10475,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -11585,6 +11633,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13440,6 +13492,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -14634,6 +14690,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16438,6 +16498,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -17592,6 +17656,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -360,7 +360,7 @@ public with sharing class AMS_AccountRoleCreator
 
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
 
-            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name ';
+            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name, AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c ';
             query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId AND (RecordTypeId in ';
             query = query + '(' + recordTypesPerson +' ) ';
             query = query + ' OR RecordTypeId in ';
@@ -1257,13 +1257,24 @@ public with sharing class AMS_AccountRoleCreator
 
             for (AMS_Accreditation_Contact__c accrtContact : accreditationContactsToProcess)
             {
-                if(accrtContact.Agency_owner__c) 
-                {
-                    String name = (accrtContact.Company__r.name == null ? 
-                        ((accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ' ) + (accrtContact.Last_Name__c == null ? '' : (accrtContact.Last_Name__c)))
-                        : accrtContact.Company__r.name);
+                if (accrtContact.Agency_owner__c) {
+                    if (!accrtContact.AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c) {
 
-                    newOwnersList.add(new OwnerFieldsEntity (name, String.valueOf(accrtContact.Financial_interest__c)));
+                        String name = (accrtContact.Company__r.name == null ?
+                                ((accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ') + (accrtContact.Last_Name__c == null ? '' : (accrtContact.Last_Name__c)))
+                                : accrtContact.Company__r.name);
+
+                        newOwnersList.add(new OwnerFieldsEntity(name, String.valueOf(accrtContact.Financial_interest__c)));
+
+                    } else {
+
+                        String name = (accrtContact.First_Name__c == null && accrtContact.Last_Name__c == null)
+                                ? accrtContact.Company__r.name
+                                : (accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ') + (accrtContact.Last_Name__c == null ? '' : accrtContact.Last_Name__c);
+
+                        newOwnersList.add(new OwnerFieldsEntity(name, String.valueOf(accrtContact.Financial_interest__c)));
+
+                    }
                 }
             }
             
