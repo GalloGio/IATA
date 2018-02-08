@@ -94,7 +94,6 @@ public class ANG_RHCHelper {
 				if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
 				else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS;
 
-
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}

@@ -333,7 +333,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>1/23/2018 12:00 AM</value>
+            <value>TODAY</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
