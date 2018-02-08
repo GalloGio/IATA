@@ -1,9 +1,8 @@
 public with sharing class AMS_AggregatePwcData {
-    // Deprecated - NEWGEN-796 - new logic on ANG_BatchAggregatePwcData
 
     /**
-    * Attributes
-    */
+     * Attributes
+     */
     private Integer defCount;
     private Integer dwdCount;
     private Integer defNonPaymentCount;
@@ -13,75 +12,75 @@ public with sharing class AMS_AggregatePwcData {
     private DateTime ownShaLastDate;
 
     /**
-    * Default constructor
-    */
+     * Default constructor
+     */
     public AMS_AggregatePwcData() {
-       this.defCount = 0;
-       this.dwdCount = 0;
-       this.defNonPaymentCount = 0;
-       this.irrsPositiveCount = 0;
-       this.irrsNegativeCount = 0;
-       this.ownShaChange = false;
-       this.ownShaLastDate = null;
+        this.defCount = 0;
+        this.dwdCount = 0;
+        this.defNonPaymentCount = 0;
+        this.irrsPositiveCount = 0;
+        this.irrsNegativeCount = 0;
+        this.ownShaChange = false;
+        this.ownShaLastDate = null;
     }
 
     /**
-    * Getter / Setter
-    */
+     * Getter / Setter
+     */
     public void setDefCount(Integer defCount) {
-       this.defCount = defCount;
+        this.defCount = defCount;
     }
 
     public Integer getDefCount() {
-       return defCount;
+        return defCount;
     }
 
     public void setDwdCount(Integer dwdCount) {
-       this.dwdCount = dwdCount;
+        this.dwdCount = dwdCount;
     }
 
     public Integer getDwdCount() {
-       return dwdCount;
+        return dwdCount;
     }
 
     public void setDefNonPaymentCount(Integer defNonPaymentCount) {
-       this.defNonPaymentCount = defNonPaymentCount;
+        this.defNonPaymentCount = defNonPaymentCount;
     }
 
     public Integer getDefNonPaymentCount() {
-       return defNonPaymentCount;
+        return defNonPaymentCount;
     }
 
     public void setIrrsPositiveCount(Integer irrsPositiveCount) {
-       this.irrsPositiveCount = irrsPositiveCount;
+        this.irrsPositiveCount = irrsPositiveCount;
     }
 
     public Integer getIrrsPositiveCount() {
-       return irrsPositiveCount;
+        return irrsPositiveCount;
     }
 
     public void setIrrsNegativeCount(Integer irrsNegativeCount) {
-       this.irrsNegativeCount = irrsNegativeCount;
+        this.irrsNegativeCount = irrsNegativeCount;
     }
 
     public Integer getIrrsNegativeCount() {
-       return irrsNegativeCount;
+        return irrsNegativeCount;
     }
 
     public void setOwnShaChange(Boolean ownShaChange) {
-       this.ownShaChange = ownShaChange;
+        this.ownShaChange = ownShaChange;
     }
 
     public Boolean getOwnShaChange() {
-       return ownShaChange;
+        return ownShaChange;
     }
 
     public void setOwnShaLastDate(DateTime ownShaLastDate) {
-       this.ownShaLastDate = ownShaLastDate;
+        this.ownShaLastDate = ownShaLastDate;
     }
 
     public DateTime getOwnShaLastDate() {
-       return ownShaLastDate;
+        return ownShaLastDate;
     }
 
 }
