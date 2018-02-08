@@ -2,10 +2,6 @@
     <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
 
-
- <apex:includeScript value="/soap/ajax/24.0/connection.js"/>
- <apex:includeScript value="/soap/ajax/24.0/apex.js"/>
-
  <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
  <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
 

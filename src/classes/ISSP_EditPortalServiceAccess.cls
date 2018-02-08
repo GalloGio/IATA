@@ -268,8 +268,6 @@ public with sharing class ISSP_EditPortalServiceAccess{
         otherUsersList = new List <Contact>();
         system.debug('selectedContact_Lst: ' + SelectedContacts);
 
-        System.debug('ALEX 2 portalServiceRole-->' + portalServiceRole);
-
         for(String ContactId : selectedContact_Lst){
             system.debug('adding: ' + ContactId);
             contactIdSet.add(ContactId.trim());
@@ -291,9 +289,9 @@ public with sharing class ISSP_EditPortalServiceAccess{
                 otherUsersList.add(thisContact);
             }
         }
-        system.debug('ALEX usersToActivateList: ' + usersToActivateList);
-        system.debug('ALEX usersToCreateList: ' + usersToCreateList);
-        system.debug('ALEX otherUsersList: ' + otherUsersList);
+        system.debug('usersToActivateList: ' + usersToActivateList);
+        system.debug('usersToCreateList: ' + usersToCreateList);
+        system.debug('otherUsersList: ' + otherUsersList);
 
         return null;
     }
@@ -429,16 +427,10 @@ public with sharing class ISSP_EditPortalServiceAccess{
             // This is important for all EASY PAY services because they need to have the portal users.
             //
             if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0) {
-                System.debug('ALEX -> NEW PSA-->' + ContactToAdd_Lst);
-
-
                 insert ContactToAdd_Lst ;
             }
 
             if(existPSA_Lst != null && existPSA_Lst.size() > 0) {
-
-                System.debug('ALEX -> UPDATE PSA-->' + existPSA_Lst);
-
                 update existPSA_Lst ;
             }
 
@@ -470,7 +462,6 @@ public with sharing class ISSP_EditPortalServiceAccess{
             [SELECT Id, Name , AccountId,
             (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
-            //(Select IsActive From User),
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
             AND Community__c != null
