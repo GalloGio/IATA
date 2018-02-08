@@ -1032,6 +1032,23 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>XX_GDP_Products_Account_View_BLANK</fullName>
+        <columns>NAME</columns>
+        <columns>Card_Status__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_Products_Account_View__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>XX-GDP Products - Account View = BLANK</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>must_synch_with_aims</fullName>
         <columns>NAME</columns>
         <columns>MustSyncWithAIMS__c</columns>
