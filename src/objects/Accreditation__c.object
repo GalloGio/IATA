@@ -76,6 +76,42 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Type__c</fullName>
+        <description>account accreditation type</description>
+        <externalId>false</externalId>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Accreditation_Models</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_IsNewGenAgency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the account part of New Gen</description>
+        <externalId>false</externalId>
+        <label>Is NewGen Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RiskStatus__c</fullName>
+        <description>Account risk status</description>
+        <externalId>false</externalId>
+        <label>Risk Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Accreditation_ID__c</fullName>
         <externalId>false</externalId>
         <label>Accreditation ID</label>
@@ -262,11 +298,49 @@
         <fullName>GDP</fullName>
         <active>true</active>
         <label>GDP</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Live</fullName>
         <active>true</active>
         <label>Live</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
