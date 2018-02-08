@@ -65,6 +65,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Principal_business_Org__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Remittance_frequency__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
