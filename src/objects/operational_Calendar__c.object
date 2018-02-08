@@ -220,6 +220,7 @@
         <columns>Remittance_Day__c</columns>
         <columns>Settlement_Day__c</columns>
         <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
