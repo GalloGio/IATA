@@ -335,7 +335,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
     }
 
 
-    public Pagereference insertUpdatePSA() {//List<String> selectedContact_Lst, String ServiceId, Boolean isEasyPayService, String portalServiceRole) {
+    public Pagereference CreateNewPortalAccess() {
 
         List<String> selectedContact_Lst = getSelectedContactsList();
 
