@@ -260,7 +260,7 @@ private class GlobalContactTriggerTest {
         idCard.Related_Contact__c = con.id;
         idCard.Valid_To_Date__c = date.today().addMonths(5);
         idCard.Name_on_ID_Card__c = 'test';
-        idCard.Card_status__c = 'Approved';
+        idCard.Card_status__c = 'Sent ID Card';
         idCard.VER_Number__c = '1234';
         insert idCard;
 
