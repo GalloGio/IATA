@@ -34,7 +34,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
     public Boolean isEasyPayService {get; set;}
     public String portalServiceRole {get; set;}
     public List<SelectOption2> availablePortalServiceRoles {get; set;} 
-    public Map<String, String> helpTextPortalRoles {get; set;}
+    public Map<String, String> helpTextPortalRoles {get; set;}    
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -268,8 +268,6 @@ public with sharing class ISSP_EditPortalServiceAccess{
         otherUsersList = new List <Contact>();
         system.debug('selectedContact_Lst: ' + SelectedContacts);
 
-        System.debug('ALEX 2 portalServiceRole-->' + portalServiceRole);
-
         for(String ContactId : selectedContact_Lst){
             system.debug('adding: ' + ContactId);
             contactIdSet.add(ContactId.trim());
@@ -294,19 +292,54 @@ public with sharing class ISSP_EditPortalServiceAccess{
         system.debug('usersToActivateList: ' + usersToActivateList);
         system.debug('usersToCreateList: ' + usersToCreateList);
         system.debug('otherUsersList: ' + otherUsersList);
+
         return null;
     }
+
+    public Pagereference activateUsers() {
+        if(isEasyPayService) {
+            //
+            // If we are adding contacts to easyPay then we must check if the user is still active. Users that don't log in into the portal
+            // for a certain amount of time get deactivated. The EASYPAY process will perform a user provisioning on the vendor's system and for
+            // that all users must be active.
+            //
+            List<String> selectedContact_Lst = getSelectedContactsList();
+
+            List<User> usersList = [select id, isActive, contactId from User where contactId in : selectedContact_Lst];
+            List<User> usersToActivate = new List<User>();
+
+            for(User user : usersList) {
+                if(!user.isActive) {
+                    user.isActive = true;
+                    usersToActivate.add(user);
+                }
+            }
+
+            if(usersToActivate.size() != 0) {
+                update usersToActivate;
+            }
+        } 
+
+        return null;       
+    }
     
-    public Pagereference CreateNewPortalAccess(){ 
-        System.debug('SFF START CreateNewPortalAccess');
+    public List<String> getSelectedContactsList() {
+        List<String> selectedContact_Lst = new List<String>();
+
+        List<String> selectedContact_Lst_aux = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
+
+        for(String s : selectedContact_Lst_aux) {
+            selectedContact_Lst.add(s.trim());
+        }
+        return selectedContact_Lst;        
+    }
+
+
+    public Pagereference CreateNewPortalAccess() {
+
+        List<String> selectedContact_Lst = getSelectedContactsList();
+
         List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();
-        List<string> selectedContact_Lst = new List<string>();
-        System.debug('SFF SelectedContacts'+SelectedContacts);
-
-        selectedContact_Lst = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
-        System.debug('SFF selectedContact_Lst'+selectedContact_Lst);
-
-        System.debug('ALEX portalServiceRole-->' + portalServiceRole);
 
         Set <String> contactIdSet = new Set <String>();
 
@@ -349,13 +382,18 @@ public with sharing class ISSP_EditPortalServiceAccess{
                  System.debug('SFF isUpdated'+isUpdated);
                 if(isUpdated == false){
                     Portal_Application_Right__c PSAitem = new Portal_Application_Right__c();
+                    
                     PSAitem.Portal_Application__c = ServiceId ;
                     PSAitem.Right__c = auxRight;
                     PSAitem.ANG_Portal_Service_Role__c = portalServiceRole;
+
                     System.debug('SFF ContactId'+ContactId);
+
                     PSAitem.Contact__c = Id.valueOf(ContactId.trim()) ;
-                    System.debug('ZzZz PSA==>'+PSA);
+
+                    //System.debug('ZzZz PSA==>'+PSA);
                     System.debug('SFF PSAitem'+PSAitem);
+
                     ContactToAdd_Lst.add(PSAitem);
                 }
             }
@@ -397,12 +435,11 @@ public with sharing class ISSP_EditPortalServiceAccess{
             }
 
         }
-
         Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);
         return p;
     }
-    
+
     public Pagereference RedirectToService(){       
         Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);

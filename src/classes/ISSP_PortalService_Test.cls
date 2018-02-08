@@ -73,7 +73,7 @@ public class ISSP_PortalService_Test {
 		
 	public static testMethod void unitTest3() {
 
-		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test', ANG_Enable_NewGen__c=true);
         insert ISO_Country;
 
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -134,6 +134,10 @@ public class ISSP_PortalService_Test {
 
         
         ctrl3.getContacts();
+
+        ctrl3.SelectedContacts = con.id;
+
+        ctrl3.activateUsers();
 
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
