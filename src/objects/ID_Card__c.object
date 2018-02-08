@@ -173,19 +173,9 @@ two record types:
                     <label>Preapproved</label>
                 </value>
                 <value>
-                    <fullName>Approved</fullName>
-                    <default>false</default>
-                    <label>Approved</label>
-                </value>
-                <value>
                     <fullName>Printed/Delivered</fullName>
                     <default>false</default>
                     <label>Printed/Delivered</label>
-                </value>
-                <value>
-                    <fullName>Cancelled</fullName>
-                    <default>false</default>
-                    <label>Cancelled</label>
                 </value>
                 <value>
                     <fullName>Cancelled ID Card</fullName>
@@ -1095,14 +1085,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ERROR Missing Information</fullName>
                 <default>false</default>
             </values>
@@ -1212,14 +1194,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         </picklistValues>
         <picklistValues>
             <picklist>Card_Status__c</picklist>
-            <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
