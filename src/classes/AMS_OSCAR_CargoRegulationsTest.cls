@@ -244,6 +244,13 @@
         //system.assertEquals(1, certOscars.size());
     }
 
-
+    @isTest
+    public static void testRefreshCertificates() {
+        Account testAccount = new Account(name='testAccount');
+        insert testAccount;
+        AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = 'DGR', Account__c = testAccount.Id, Last_name__c='test');
+        insert ar;
+        Id batchId = Database.executeBatch(new AMS_Refresh_AMS_AgencyRegulations());
+    }
 
 }

@@ -1,6 +1,6 @@
 global class AMS_Refresh_AMS_AgencyRegulations implements Database.Batchable<sObject> {
 
-	String query = 'SELECT Id FROM AMS_Agency_Regulation__c WHERE Expired__c = FALSE AND Expiry_Date__c < TODAY';
+	String query = 'SELECT Id FROM AMS_Agency_Regulation__c WHERE Expiry_Date__c = TODAY AND Type_Of_Certificate__c = \'DGR\'';
 
 	global AMS_Refresh_AMS_AgencyRegulations() {
 
