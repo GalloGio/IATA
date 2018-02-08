@@ -27,9 +27,6 @@ private class AMS_EBulletinReport_Test {
         IATA_ISO_Country__c us = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US', Region__c='Americas', ISS_Office_Location__c='United States');
         isoCountriesList.add(us);        
 
-        IATA_ISO_Country__c france = new IATA_ISO_Country__c(Name='France', ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France', ANG_Enable_NewGen__c = true);
-        isoCountriesList.add(france);
-
         insert isoCountriesList;
 
 		/**
@@ -44,9 +41,6 @@ private class AMS_EBulletinReport_Test {
 
         IATA_ISO_State__c alasca = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(2).Id ,Name='Alaska', ISO_Code__c='US-AK');
         isoStatesList.add(alasca);
-
-        IATA_ISO_State__c fr01 = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(3).Id ,Name='fr01', ISO_Code__c='FR-01');
-        isoStatesList.add(fr01);
         
 
         insert isoStatesList;
@@ -88,13 +82,6 @@ private class AMS_EBulletinReport_Test {
                          );
       
  		acctList.add(acc2);
-
- 		        Account acc3 = new Account(RecordTypeId = rtAgency, Name = 'My Travels 3', IATAcode__c = '1111113', IATA_ISO_Country__c = france.id, 
-                         Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Location_Class__c = LOCCLASSPAX, Location_Type__c = 'HE', Status__c = 'Approved',
-                         Short_Name__c = 'Short name 3 ', BillingCity = 'Paris', Email__c = 'testeteste@fefe5.com', Remittance_Frequency__c = 'M'
-                         );
-      
- 		acctList.add(acc3);
         
 		insert acctList;
 		//Account Owners
