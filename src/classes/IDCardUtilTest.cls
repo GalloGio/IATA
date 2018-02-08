@@ -688,7 +688,7 @@ private class IDCardUtilTest {
        ID_Card__c idc = new ID_Card__c(Related_Contact__c = cont.id,
                                     Valid_To_Date__c = date.today().addMonths(5),
                                     Name_on_ID_Card__c = 'MARWA',
-                                    Card_status__c = 'Approved',
+                                    Card_status__c = 'Sent ID Card',
                                     VER_Number__c = String.valueOf(cont.VER_Number__c),
                                     Agency_IATA_Code__c = acc.IATACode__c,
                                     Photo__c = 'useless string',

@@ -29,7 +29,7 @@ private class IDCard_ImageViewerControllerTest {
         aIdCard.Agency_IATA_Code__c = '12345678';
         aIdCard.Name_on_ID_Card__c = 'Test IDCard';
         aIdCard.Nature_of_ID_Card__c = 'Nenew';
-        aIdCard.Card_Status__c = 'Approved';
+        aIdCard.Card_Status__c = 'Sent ID Card';
         aIdCard.Type_of_ID_Card__c = 'Passenger';
         aIdCard.Photo_Flag__c = 'Digital';
         aIdCard.Photo__c = '54668.jpg';
