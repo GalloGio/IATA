@@ -814,6 +814,7 @@ global with sharing class ANG_ConversionHelper {
 			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 			allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
 			allAgencies.get(struct.topParentId).Is_PCI_compliant__c = 'Yes';
+			allAgencies.get(struct.topParentId).Organization_Last_Change_Date__c = System.today();
 
 			accountsToUpdate.add(allAgencies.get(struct.topParentId));
 
@@ -841,6 +842,7 @@ global with sharing class ANG_ConversionHelper {
 						allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
 						allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
+						allAgencies.get(rel.Parent_Account__c).Organization_Last_Change_Date__c = System.today();
 
 
 						//if(!(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && rel.Child_Account__r.Expiry_Date__c < frontierDate)) { // let's ignore it
@@ -850,6 +852,7 @@ global with sharing class ANG_ConversionHelper {
 							allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
 							allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
+							allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
 							if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
 								allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
@@ -905,6 +908,7 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(rel.Child_Account__c).ParentId = null;
 					allAgencies.get(rel.Child_Account__c).Top_Parent__c = null;
 					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'HO';
+					allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
 					if(relationsToCreate && !isMigrationToolAnalyses){
 						newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
@@ -916,6 +920,7 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
 					allAgencies.get(rel.Child_Account__c).Top_Parent__c = allAgencies.get(parentRel.Child_Account__c).Id;
 					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'BR';
+					allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
 					relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
 
@@ -936,6 +941,7 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Organization_Last_Change_Date__c = System.today();
 
 					System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
 
