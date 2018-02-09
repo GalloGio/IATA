@@ -879,67 +879,110 @@ global with sharing class ANG_ConversionHelper {
 			hierarchy.Migrated__c = true;
 		}
 
-		boolean parentAdded = false;
-		AMS_Agencies_relationhip__c parentRel;
-		boolean relationsToCreate = (!relationsTidsToSplit.isEmpty() && relationsTidsToSplit.size() > 1);
-		AMS_Agencies_Hierarchy__c newHierarchy = null;
 
-		List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatus(relationsTidsToSplit);
 
-		System.debug('Relations to Split are:'+relationsTidsToSplitLst);
+		Map<String,List<AMS_Agencies_relationhip__c>> relationsToSplitByBSPCountry = splitRelationsByBSPCountry(relationsTidsToSplit,allAgencies);
 
-		for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
+		for(List<AMS_Agencies_relationhip__c> relationsTidsToSplitPerCountry: relationsToSplitByBSPCountry.values()){
 
-			if(!parentAdded){
-				parentAdded = true;
-				parentRel = rel;
-				allAgencies.get(rel.Child_Account__c).ParentId = null;
-				allAgencies.get(rel.Child_Account__c).Top_Parent__c = null;
-				allAgencies.get(rel.Child_Account__c).Location_Type__c = 'HO';
+			boolean parentAdded = false;
+			AMS_Agencies_relationhip__c parentRel;
+			boolean relationsToCreate = (!relationsTidsToSplitPerCountry.isEmpty() && relationsTidsToSplitPerCountry.size() > 1);
+			AMS_Agencies_Hierarchy__c newHierarchy = null;
 
-				if(relationsToCreate && !isMigrationToolAnalyses){
-					newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-					insert newHierarchy;
+			Set<AMS_Agencies_relationhip__c> relationsTidsToSplitPerCountrySet = new Set<AMS_Agencies_relationhip__c>();
+			relationsTidsToSplitPerCountrySet.addAll(relationsTidsToSplitPerCountry);
+
+			List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatus(relationsTidsToSplitPerCountrySet);
+
+			System.debug('Relations to Split are:'+relationsTidsToSplitLst);
+
+			for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
+
+				if(!parentAdded){
+					parentAdded = true;
+					parentRel = rel;
+					allAgencies.get(rel.Child_Account__c).ParentId = null;
+					allAgencies.get(rel.Child_Account__c).Top_Parent__c = null;
+					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'HO';
+
+					if(relationsToCreate && !isMigrationToolAnalyses){
+						newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+						insert newHierarchy;
+					}
+
+				}else{
+
+					allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
+					allAgencies.get(rel.Child_Account__c).Top_Parent__c = allAgencies.get(parentRel.Child_Account__c).Id;
+					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'BR';
+
+					relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+
 				}
 
-			}else{
+				accountsSplitedToUpdate.add(allAgencies.get(rel.Child_Account__c));
 
-				allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
-				allAgencies.get(rel.Child_Account__c).Top_Parent__c = allAgencies.get(parentRel.Child_Account__c).Id;
-				allAgencies.get(rel.Child_Account__c).Location_Type__c = 'BR';
+				relationsToDelete.add(rel);
 
-				relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+				if(!accountsToUpdate.contains(allAgencies.get(rel.Child_Account__r.Top_Parent__c))){
 
+					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c == AMS_Utils.AO)
+						if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c == AMS_Utils.ACC_S4_LISTED)
+							allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
+
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c = 'HE';
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
+					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+
+					System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
+
+					accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
+				}
 			}
 
-			accountsSplitedToUpdate.add(allAgencies.get(rel.Child_Account__c));
-
-			relationsToDelete.add(rel);
-
-			if(!accountsToUpdate.contains(allAgencies.get(rel.Child_Account__r.Top_Parent__c))){
-
-				if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c == AMS_Utils.AO)
-					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c == AMS_Utils.ACC_S4_LISTED)
-						allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
-
-				allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c = 'HE';
-				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
-				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-				allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
-				allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
-
-				System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
-
-				accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
-			}
+			if(!hierarchyToDelete)
+				hierarchyToDelete = isToDeleteHierarchy(struct,relationsToDelete);
+			
 		}
 
-		if(!hierarchyToDelete)
-			hierarchyToDelete = isToDeleteHierarchy(struct,relationsToDelete);
-		
 		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,accountsSplitedToUpdate,relationsToUpdate,hierarchy,relationsToDelete,relationsToAdd,hierarchyToDelete);
 
 	}
+
+
+	private static Map<String,List<AMS_Agencies_relationhip__c>> splitRelationsByBSPCountry(Set<AMS_Agencies_relationhip__c> relationsToUpdate,Map<Id,Account> allAgencies){
+
+		Map<String,List<AMS_Agencies_relationhip__c>> mapToReturn = new Map<String,List<AMS_Agencies_relationhip__c>>();
+
+		for(AMS_Agencies_relationhip__c rel: relationsToUpdate){
+
+			if(!validateBSPAttributes(allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.BSP_Country_free_text__c, allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.ISO_Code__c, allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.BSP_Country_free_text__c,allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.ISO_Code__c)){
+
+				if(mapToReturn.get(rel.Child_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c) != null){
+					mapToReturn.get(rel.Child_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c).add(rel);
+				}else{
+					List<AMS_Agencies_relationhip__c> relToAdd = new List<AMS_Agencies_relationhip__c>();
+					relToAdd.add(rel);
+					mapToReturn.put(rel.Child_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,relToAdd);
+				}
+
+			}else{
+				if(mapToReturn.get('TIDS CATEGORY') != null){
+					mapToReturn.get('TIDS CATEGORY').add(rel);
+				}else{
+					List<AMS_Agencies_relationhip__c> relToAdd = new List<AMS_Agencies_relationhip__c>();
+					relToAdd.add(rel);
+					mapToReturn.put('TIDS CATEGORY',relToAdd);
+				}
+			}
+		}
+
+		return mapToReturn;
+	}
+
 
 	private static boolean isToDeleteHierarchy(ANG_ConversionHelper.HierarchyStructure struct,Set<AMS_Agencies_relationhip__c> relsToDelete){
 
