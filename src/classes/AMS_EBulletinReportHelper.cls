@@ -26,10 +26,10 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String IATACODE			= 	'2-Agency Code';
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
     public static final String ACCREDITATIONTYPE	= 	'6-Accreditation Type';
-    public static final String CASHCONDITION = '9-Cash Condition equal to FS';
+    public static final String CASHCONDITION    = '9-Cash Condition equal to FS';
 	public static final String LOCATIONCLASS	= 	'10-Program';
 	
-	public static final String HIERARCHY	= 	'11-Hierarchy';
+	public static final String HIERARCHY		= 	'11-Hierarchy';
 
 	public static final String STATE  	        = 	'14-Country or State';
 	public static final String COUNTRY  	    =	'15-Country or State';
@@ -47,8 +47,8 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWLEGALSTATUS	= 	'53-New Legal Status';
-	public static final String NEWHIERARCHY	= 	'54-New Hierarchy';
+	public static final String NEWLEGALSTATUS	    = 	'53-New Legal Status';
+	public static final String NEWHIERARCHY	        = 	'54-New Hierarchy';
     public static final String NEWACCREDITATIONTYPE	= 	'56-New Accreditation Type';
 
 	public static final String NEWSTATE 	    =	'58-New Country or State';
@@ -61,6 +61,9 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
 
+	private static final String NOTAPPLICABLE = 'Not Applicable'; 
+	private static final String ADDITIONALQUERYFIELDS = ',Account__r.ANG_IsNewGenAgency__c';
+ 
 	private static Decimal ownersTotalPercentage = 0;
 
 	public static String fieldsQuery;
@@ -292,7 +295,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		List <Agency_Applied_Change_code__c> ccList = 
 				Database.query(
 					AMS_QueryUtils.getFieldsQuery(objectBaseQuery,
-												  fieldsQuery +',Account__r.ANG_IsNewGenAgency__c' +( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
+												  fieldsQuery + ADDITIONALQUERYFIELDS +( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
 												  filterCC)
 					);
 
@@ -710,7 +713,7 @@ public without sharing class AMS_EBulletinReportHelper {
                 
                 else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : '');
+                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
 
 				recordsList.add(strVal);
                 if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
