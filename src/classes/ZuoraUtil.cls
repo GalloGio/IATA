@@ -80,7 +80,7 @@ public class ZuoraUtil
         if (String.isNotBlank(paymentId)) 
         {
             try{
-                return (zconnection.zquery(zoql));
+                return Test.isRunningTest() ? TestDataGenerator.generatePaymentMethodDetails(paymentId) : zconnection.zquery(zoql);
             }catch(Exception ex){
                 throw new IECApplicationException('Could not retreive Payment Method details for id ' + paymentId + '. Error: ' + ex.getMessage());}
         }
