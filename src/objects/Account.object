@@ -2516,6 +2516,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_FA_Opt_out__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -2769,6 +2774,17 @@
             )</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_FA_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
+        <label>Financial Assessment opt-out</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
