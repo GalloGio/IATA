@@ -180,6 +180,16 @@ public class ams2gdp_Selector
 		return result;
 	}
 
+	public static List<String> getAMS_Agency_AuthorizationByAccountIds(List<String> accountIds)
+	{
+		List<String> result = new List<String>();
+		for(Agency_Authorization__c item:[SELECT Id, Account__c FROM Agency_Authorization__c WHERE Account__c IN:accountIds AND RecordType.Name='FormOfPayment'])
+		{
+			result.add(item.Id);
+		}
+
+		return result;
+	}
 
 	public static AMS_GDP_Batch__c getBatchInfo(String batchName)
 	{
