@@ -4,6 +4,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String step {get; set;}
     public String countrySelected {get; set;}
     public String billingState {get; set;}
+    public Static String generatedIATACODE {get; set;}
     public List<SelectOption> billingStatesList {get; set; }
 
     private map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry;
@@ -21,10 +22,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
-	
+    
     public ISSP_AMS_MSO_Request_Controller() {
         step = ApexPages.currentPage().getParameters().get('step');
         Id caseId = ApexPages.currentPage().getParameters().get('caseId');
+        generatedIATACODE = ApexPages.currentPage().getParameters().get('iatacode');
         if (String.isBlank(step)) step = 'form';
 
         mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
@@ -282,7 +284,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             // it just fails to be automatically processed, so it will have to be processed manually
         }
 
-        return new PageReference('/ISSP_AMS_MSO_Request?step=success&caseId=' + oscarCase.Id);
+        //return new PageReference('/ISSP_AMS_MSO_Request?step=success&caseId=' + oscarCase.Id);
+        return new PageReference('/ISSP_AMS_MSO_Request?step=success&iatacode='+generatedIATACODE+'&caseId=' + oscarCase.Id);
     }
 
     public PageReference cancelRequest() {
@@ -331,7 +334,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         //oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
         //Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
         //update c;
-        updateCaseContact(oscarId, caseId, currentUser.ContactId);
+        oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+        generatedIATACODE = oscar.AMS_Online_Accreditation__r.IATACode__c;
+        
+        updateCaseContact(caseId, currentUser.ContactId);
 
         system.debug('generateMsoIataCode: after case update');
         
@@ -358,7 +364,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             CaseComment successComment = new CaseComment();
             successComment.ParentId = c.Id;
             successComment.isPublished = true;
-            successComment.CommentBody = Label.ISSP_AMS_MSO_Request_Successfull + ' ' + c.IATAcode__c;
+            successComment.CommentBody = Label.ISSP_AMS_MSO_Request_Successfull + ' ' + (c.IATAcode__c==null? generatedIATACODE : c.IATAcode__c);
             
             if (!Test.isRunningTest())
                 insert successComment;
@@ -377,11 +383,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     }
 
     @future
-    public static void updateCaseContact(Id oscarId, Id caseId, Id ContactId) {
+    public static void updateCaseContact(Id caseId, Id ContactId) {
         try {
             //Case c = new Case(Id = caseId, ContactId = contactId);
-            AMS_OSCAR__C oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
-            Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = ContactId);
+ 
+            
+            Case c = new Case(Id = caseId, IATAcode__c = generatedIATACODE, ContactId = ContactId);
             update c;
             
         }  catch (DmlException ex) {
