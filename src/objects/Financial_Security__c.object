@@ -749,9 +749,12 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expir
 IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
 
+IF( ISPICKVAL( Security_Status__c , &quot;Pending to be Released&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
 IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-)))))</formula>
+))))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
