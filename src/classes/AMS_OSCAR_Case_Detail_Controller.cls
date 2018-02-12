@@ -252,7 +252,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     for(AMS_Operation__c operation :operationCodes) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
 
-                            if(!allowMultipleRemittances  || (!rightOptions.contains(attribute.Remittance_Frequency__c)))
+                            if(!allowMultipleRemittances  && !rightOptions.contains(attribute.Remittance_Frequency__c))
                                 rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
                                 rightOptions.add(attribute.Remittance_Frequency__c);
                         }
