@@ -97,6 +97,34 @@ public class ANG_RHCHelper {
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}
+
+			Map<String, List<String>> filters = new Map<String, List<String>>();
+			RecordType rt = [Select id From RecordType Where DeveloperName = 'Minimum_RHC_Amount'];
+			filters.put('RecordType', new List<String>{rt.id});
+			filters.put('IATA_ISO_Country__c', new List<String>{rhc.ANG_AccountId__r.IATA_ISO_Country__c});
+
+			List<AMS_Country_Specific_Attribute__c> csa = AMS_Utils.getAMSCountrySpecificAttribute(filters);
+
+			if(csa.size() == 0) {
+				IATA_ISO_Country__c ww = [Select Id From IATA_ISO_Country__c Where ISO_Code__c = 'WW'];	
+				filters.remove('IATA_ISO_Country__c');
+				filters.put('IATA_ISO_Country__c', new List<String>{ww.id});
+				
+				csa = AMS_Utils.getAMSCountrySpecificAttribute(filters);
+			}
+
+			Decimal minimumRHCAmount = null;
+
+			if(csa.size() != 0) {
+				minimumRHCAmount = csa[0].ANG_Minimum_RHC_Amount__c;
+			}
+			
+			if(minimumRHCAmount != null) {
+				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) {
+					rhc.ANG_RHC_Amount__c = minimumRHCAmount;					
+				}
+			}
+			
 		}
 	}
 
