@@ -21,27 +21,44 @@ public class ANG_RHCHelper {
 
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
-	    createRHCInfo([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accountIds], sumFS);
+		
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsToProcess = new List<Account>();
+		List<Account> accountsToSUMFS = new List<Account>();
+
+		for(Account acct: accountsRetreived){
+
+			if(acct.RHC_Informations__r.isEmpty())
+				accountsToProcess.add(acct);
+			else{
+				if(acct.RHC_Informations__r.get(0).ANG_Financial_Security__c == null || acct.RHC_Informations__r.get(0).ANG_Financial_Security__c == 0)
+					accountsToSUMFS.add(acct);
+			}
+
+		}
+
+		createRHCInfo(accountsToProcess, sumFS);
+		ANG_Risk_Helper.sumFSAmount(accountsToSUMFS);
 	}
 
 	public static void createRHCInfo(List<Account> accounts, Boolean sumFS) {
+		if(accounts.isEmpty()) return;
 
-	    if(accounts.isEmpty()) return;
+		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
 
-	    List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
+		for(Account a : accounts){
+			rhcInfos.add(new ANG_RHC_Information__c(
+				ANG_AccountId__c = a.Id,
+				RecordTypeId = RECTYPE_STDRHCINFO,
+				ANG_UniqueKey__c = a.Id+RHC_INFO_STD_RT,
+				ANG_CashCondition__c = a.ANG_CashCondition__c,
+				CurrencyIsoCode = a.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode
+			));
+		}
+		
+		insert rhcInfos;
 
-	    for(Account a : accounts){
-	        rhcInfos.add(new ANG_RHC_Information__c(
-	            ANG_AccountId__c = a.Id,
-	            RecordTypeId = RECTYPE_STDRHCINFO,
-	            ANG_UniqueKey__c=a.id+RHC_INFO_STD_RT,
-	            CurrencyIsoCode = a.IATA_ISO_Country__r.CurrencyIsoCode
-	        ));
-	    }
-
-	    insert rhcInfos;
-
-	    if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);
+		if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);
 	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
@@ -65,7 +82,6 @@ public class ANG_RHCHelper {
 			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
 				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
 				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
-				rhc.ANG_RHC_Effective_Date__c=System.Now();
 			}else{
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
@@ -74,7 +90,6 @@ public class ANG_RHCHelper {
 
 				if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
 				else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS;
-				rhc.ANG_RHC_Effective_Date__c=System.Now();
 
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;

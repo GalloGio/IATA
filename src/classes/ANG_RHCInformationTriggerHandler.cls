@@ -83,5 +83,9 @@ public class ANG_RHCInformationTriggerHandler{
 		}
 
 		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
+
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(Trigger.isInsert || oldMap.get(rhc.id).ANG_RHC_Amount__c != rhc.ANG_RHC_Amount__c) rhc.ANG_RHC_Effective_Date__c=System.Today();
+		}
 	}
 }
