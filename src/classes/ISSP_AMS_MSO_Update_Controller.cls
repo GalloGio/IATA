@@ -322,7 +322,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');
-                oscarCase.Subject = 'CLO - Closure - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'CLO - Closure';
                 oscarCase.Origin = 'Portal';
