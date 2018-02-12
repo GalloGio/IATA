@@ -78,6 +78,10 @@ public class ams2gdp_BusinessLogic
 				, AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c))? account.AIMS_ID__c+'GDP':null
 				, Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
 				, Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
+				// , account.ANG_IsNewGenAgency__c
+				, Remittance_frequency__c = account.Remittance_frequency__c
+				, IEP_Status__c = account.ANG_IEP_Status_FF__c
+				, Is_PCI_compliant__c = account.Is_PCI_compliant__c
 			));
 		}
 	
