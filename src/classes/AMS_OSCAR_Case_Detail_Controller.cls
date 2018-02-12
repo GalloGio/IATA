@@ -162,16 +162,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         return true;
     }
 
-    private Set<String> tocList{
-        get{
-            tocList = new Set<String>();
+    //private Set<String> tocList{
+    //    get{
+    //        tocList = new Set<String>();
 
-            if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
+    //        if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
 
-            return tocList;
-        }
-        set;
-    }
+    //        return tocList;
+    //    }
+    //    set;
+    //}
 
     private List<AMS_Operation__c> operationCodes{
         get{
@@ -234,7 +234,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public List<SelectOption> getRfPicklistValues(){
 
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
-        Set<String> rightOptions;
+        Set<String> rightOptions = new Set<String>();
 
                 if(!allowMultipleRemittances){
                     rfPicklistValues.add(new SelectOption('','--None--'));
@@ -242,7 +242,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 }else if(accreditationObj.Remittance_frequency__c != null){
                     rightOptions = new Set<String>(accreditationObj.Remittance_frequency__c.Split(';'));
                 }else{
-                    rightOptions = new Set<String>();
                     rightOptions.add('');
                 }
                 
@@ -253,8 +252,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     for(AMS_Operation__c operation :operationCodes) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
 
-                            if(!allowMultipleRemittances || !rightOptions.contains(attribute.Remittance_Frequency__c))
+                            if(!allowMultipleRemittances  && !rightOptions.contains(attribute.Remittance_Frequency__c))
                                 rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
+                                rightOptions.add(attribute.Remittance_Frequency__c);
                         }
                     }
 
