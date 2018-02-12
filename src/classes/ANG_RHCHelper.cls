@@ -22,7 +22,7 @@ public class ANG_RHCHelper {
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 		
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -50,18 +50,15 @@ public class ANG_RHCHelper {
 			rhcInfos.add(new ANG_RHC_Information__c(
 				ANG_AccountId__c = a.Id,
 				RecordTypeId = RECTYPE_STDRHCINFO,
-				ANG_UniqueKey__c=a.id+RHC_INFO_STD_RT,
+				ANG_UniqueKey__c = a.Id+RHC_INFO_STD_RT,
+				ANG_CashCondition__c = a.ANG_CashCondition__c,
 				CurrencyIsoCode = a.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode
 			));
 		}
 		
 		insert rhcInfos;
 
-		if(sumFS)ANG_Risk_Helper.sumFSAmount(accounts);
-	}
-
-	public static void deactivateRHCInfo(Set<Id> accounts) {
-		deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
+		if(sumFS) ANG_Risk_Helper.sumFSAmount(accounts);
 	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
