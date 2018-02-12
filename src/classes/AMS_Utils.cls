@@ -4352,14 +4352,9 @@ i++;
   }
 
     public static Date getBiggestDate(Date date1, Date date2) {
-        if(date1 == null && date2 == null) {
-            return null;
-        } else if(date1 != null && date2 == null) {
-            return date1;
-        } else if (date1 == null && date2 != null) {
-            return date2;
-        } else {
-            return (date1 > date2) ? date1 : date2;
-        }
+        if(date1 == null && date2 == null) return null;
+        if(date1 != null && date2 == null) return date1;
+        if(date1 == null && date2 != null) return date2;
+        return (date1 > date2) ? date1 : date2;
     }
 }
