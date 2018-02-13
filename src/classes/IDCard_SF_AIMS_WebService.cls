@@ -20,7 +20,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
     private static final string DECEMBER = 'December';
 
     private static final string CSPRINTEDDELIVERED = 'Printed/Delivered';
-    private static final String CSCANCELED = 'Cancelled';
+    private static final String CSCANCELED = 'Cancelled ID Card';
 
     private static final string SFUPDATEFAILED = 'FAILED';
     private static final string SFUPDATEOK = 'OK';
@@ -189,7 +189,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
 
         aLineInfo.CardType = (aCard.Nature_of_ID_Card__c == null ? '' : aCard.Nature_of_ID_Card__c.toUpperCase());
         //set nature of card to canceled when the status of the IDCard is canceled
-        if (aCard.Card_Status__c == 'Cancelled')
+        if (aCard.Card_Status__c == 'Cancelled ID Card')
             aLineInfo.CardType = 'CANCELLATION';
 
         aLineInfo.IATACode = (aCard.Agency_IATA_Code__c == null ? '' : aCard.Agency_IATA_Code__c);

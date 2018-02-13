@@ -29143,10 +29143,10 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
+        <lookupFilterFields>Services__c</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
-        <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
+        <lookupFilterFields>Status__c</lookupFilterFields>
+        <lookupFilterFields>Use_Contact__c</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>

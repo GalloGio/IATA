@@ -446,7 +446,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                                       + ' and LastName__c =  \'' + LNAME.trim() + '\''
                                       + ' and FirstName__c = \'' + FNAME.trim() +'\''
                                       + ' and Date_of_Birth__c =  ' + parsedDtDOB.format('yyyy-MM-dd')
-                                      + ' AND Card_Status__c != \'Cancelled\' limit 1';
+                                      + ' AND Card_Status__c != \'Cancelled ID Card\' limit 1';
 
             idCardAppQuery = 'Select id,Last_Name__c,First_Name__c,Date_of_Birth__c'
                                 + ' from ID_Card_Application__c '
