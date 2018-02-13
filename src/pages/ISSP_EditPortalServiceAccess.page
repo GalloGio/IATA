@@ -126,7 +126,7 @@
 
     function onComplete() {  
         startLoading();
-        insertUpdatePSA();
+        CreateNewPortalAccess();
     }
     
 </script>
@@ -286,7 +286,7 @@
                       <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
 
                       <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
-                      <apex:actionFunction name="insertUpdatePSA" action="{!insertUpdatePSA}" reRender=""/>
+                      <apex:actionFunction name="CreateNewPortalAccess" action="{!CreateNewPortalAccess}" reRender=""/>
 
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
@@ -405,7 +405,7 @@
                                 </apex:repeat>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton action="{!insertUpdatePSA}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}"
+                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}"
                                    status="loadStatusSpinner"
                                    rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn_iata_success" />
                                 <apex:commandButton onclick="closeUserListModal();" value="{!$Label.ISSP_Cancel}" 
