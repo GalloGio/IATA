@@ -212,6 +212,11 @@ two record types:
                     <default>false</default>
                     <label>ERROR Missing Information</label>
                 </value>
+                <value>
+                    <fullName>Pending/In Progress</fullName>
+                    <default>false</default>
+                    <label>Pending/In Progress</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -1203,11 +1208,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>Pending%2FIn Progress</fullName>
                 <default>false</default>
             </values>
             <values>
