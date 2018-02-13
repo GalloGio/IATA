@@ -7,6 +7,13 @@ public class ANG_AccountTriggerHandler {
 		}
 		set;
 	}
+	public static Boolean isLastFinancialReviewUpgrade{
+		get{
+			if(isLastFinancialReviewUpgrade == null) isLastFinancialReviewUpgrade = false;
+			return isLastFinancialReviewUpgrade;
+		}
+		set;
+	}
 
 	public List<Account> triggerNew = (List<Account>) Trigger.new;
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
