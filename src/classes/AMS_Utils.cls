@@ -165,8 +165,10 @@ public without sharing class AMS_Utils {
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
     public static final String NGVR             = 'VR.1.0';
+    public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
@@ -191,6 +193,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
     public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
+    public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
@@ -2525,27 +2528,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
-	
-	/**
-	Method to help the transformation of accrediation types to display on ebulletin
-	*/
-	public static String transformAccreditationType(String accredType) {
+    
+    /**
+    Method to help the transformation of accrediation types to display on ebulletin
+    */
+    public static String transformAccreditationType(String accredType) {
 
-		String result = accredType;
+        String result = accredType;
 
-		if (result == null)
-			return null;
+        if (result == null)
+            return null;
 
-		if (result.containsIgnoreCase('Cashless'))
-			result = result.replace('Cashless', 'GoLite');
-		if (result.containsIgnoreCase('Cash'))
-			result = result.replace('Cash', 'GoStandard');
-		if (result.containsIgnoreCase('Multicountry'))
-			result = result.replace('Multicountry', 'GoGlobal');
+        if (result.containsIgnoreCase('Cashless'))
+            result = result.replace('Cashless', 'GoLite');
+        if (result.containsIgnoreCase('Cash'))
+            result = result.replace('Cash', 'GoStandard');
+        if (result.containsIgnoreCase('Multicountry'))
+            result = result.replace('Multicountry', 'GoGlobal');
 
-		return result;
+        return result;
 
-	}
+    }
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 
