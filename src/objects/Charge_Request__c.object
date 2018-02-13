@@ -904,66 +904,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>201701</fullName>
-                    <default>false</default>
-                    <label>201701</label>
-                </value>
-                <value>
-                    <fullName>201702</fullName>
-                    <default>false</default>
-                    <label>201702</label>
-                </value>
-                <value>
-                    <fullName>201703</fullName>
-                    <default>false</default>
-                    <label>201703</label>
-                </value>
-                <value>
-                    <fullName>201704</fullName>
-                    <default>false</default>
-                    <label>201704</label>
-                </value>
-                <value>
-                    <fullName>201705</fullName>
-                    <default>false</default>
-                    <label>201705</label>
-                </value>
-                <value>
-                    <fullName>201706</fullName>
-                    <default>false</default>
-                    <label>201706</label>
-                </value>
-                <value>
-                    <fullName>201707</fullName>
-                    <default>false</default>
-                    <label>201707</label>
-                </value>
-                <value>
-                    <fullName>201708</fullName>
-                    <default>false</default>
-                    <label>201708</label>
-                </value>
-                <value>
-                    <fullName>201709</fullName>
-                    <default>false</default>
-                    <label>201709</label>
-                </value>
-                <value>
-                    <fullName>201710</fullName>
-                    <default>false</default>
-                    <label>201710</label>
-                </value>
-                <value>
-                    <fullName>201711</fullName>
-                    <default>false</default>
-                    <label>201711</label>
-                </value>
-                <value>
-                    <fullName>201712</fullName>
-                    <default>false</default>
-                    <label>201712</label>
-                </value>
-                <value>
                     <fullName>201801</fullName>
                     <default>false</default>
                     <label>201801</label>
@@ -1022,6 +962,66 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>201812</fullName>
                     <default>false</default>
                     <label>201812</label>
+                </value>
+                <value>
+                    <fullName>201901</fullName>
+                    <default>false</default>
+                    <label>201901</label>
+                </value>
+                <value>
+                    <fullName>201902</fullName>
+                    <default>false</default>
+                    <label>201902</label>
+                </value>
+                <value>
+                    <fullName>201903</fullName>
+                    <default>false</default>
+                    <label>201903</label>
+                </value>
+                <value>
+                    <fullName>201904</fullName>
+                    <default>false</default>
+                    <label>201904</label>
+                </value>
+                <value>
+                    <fullName>201905</fullName>
+                    <default>false</default>
+                    <label>201905</label>
+                </value>
+                <value>
+                    <fullName>201906</fullName>
+                    <default>false</default>
+                    <label>201906</label>
+                </value>
+                <value>
+                    <fullName>201907</fullName>
+                    <default>false</default>
+                    <label>201907</label>
+                </value>
+                <value>
+                    <fullName>201908</fullName>
+                    <default>false</default>
+                    <label>201908</label>
+                </value>
+                <value>
+                    <fullName>201909</fullName>
+                    <default>false</default>
+                    <label>201909</label>
+                </value>
+                <value>
+                    <fullName>201910</fullName>
+                    <default>false</default>
+                    <label>201910</label>
+                </value>
+                <value>
+                    <fullName>201911</fullName>
+                    <default>false</default>
+                    <label>201911</label>
+                </value>
+                <value>
+                    <fullName>201912</fullName>
+                    <default>false</default>
+                    <label>201912</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
