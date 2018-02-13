@@ -27176,4 +27176,12 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
+    <labels>
+        <fullName>ANG_RHC_RHCAmountTooltip</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RHC RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>    
 </CustomLabels>

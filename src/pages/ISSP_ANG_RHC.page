@@ -175,7 +175,7 @@
                   <tr style="display: {!IF(isCashless,'none','table-row')}">
                     <td>
                       {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.inlineHelpText}" />
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RHCAmountTooltip}" />
                     </td>
                     <td>
                       {!rhcInfo.CurrencyIsoCode} 
@@ -187,7 +187,7 @@
                   <tr style="display: {!IF(isCashless,'none','table-row')}">
                     <td>
                       {!$Label.ISSP_RHC_HUB_Current_Usage}
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_HUB_Current_UsageTooltip" />
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_HUB_Current_UsageTooltip}" />
                     </td>
                     <td>
                       {!rhcInfo.CurrencyIsoCode}
@@ -390,7 +390,7 @@
 
                     <div>
                       <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="ANG_RHC_RiskStatusTooltip" />
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RiskStatusTooltip}" />
                     </div>
                     <div>
                       {! riskStatus}
