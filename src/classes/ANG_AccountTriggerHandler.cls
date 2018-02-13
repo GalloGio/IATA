@@ -121,13 +121,13 @@ public class ANG_AccountTriggerHandler {
 
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
 	private void manageUpgrades() {
-		if(!isExpiration) return;
+		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
 
 		List<Account> upgradedAccounts = new List<Account>();
 		for(Account acc : triggerNew){
 			Account oldAcc = oldMap.get(acc.Id);
 			if(
-				(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A))
+				(isExpiration && oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A))
 				|| (oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false)
 			)
 			upgradedAccounts.add(acc);
@@ -145,7 +145,7 @@ public class ANG_AccountTriggerHandler {
 				    Active__c = true
 				    , Account__c = acc.Id
 				    , Change_Code__c = config.Change_Code__c
-				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).toUpperCase()
+				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
 				    , Reason_Code__c = config.Reason_Code__c
 				    , Reason_Description__c = config.Reason_Code_Description__c
 				    , Source__c = source
@@ -157,9 +157,12 @@ public class ANG_AccountTriggerHandler {
 			if(!changeCodes.isEmpty()) insert changeCodes;
 		}
 		
+			
 		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name = 'RHC Information'];
-		List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Risk_Status_Upgrade' AND isActive = true];
-		List<Notification_Template__c> notificationTemplates = [SELECT Id, Name FROM Notification_Template__c WHERE Identifier__c = 'Risk_Status_Upgrade'];
+
+		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
+		
+		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
 
 		if(rhcServices.isEmpty() || (emailTemplates.isEmpty() && notificationTemplates.isEmpty())) return;
 
@@ -175,8 +178,8 @@ public class ANG_AccountTriggerHandler {
 		for(Id accountId : contactsPerAccount.keySet()){
 			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 				mailTargets.put(contactId, accountId);
-				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
-				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates.get(0).Id));
+				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates.get(0).Name);
 			}
 		}
 
