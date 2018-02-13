@@ -613,7 +613,7 @@ public without sharing class ISSP_Case {
                 ]);
 
         //basto1p
-        // statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
+        statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
         Map<String, String> objectsIds = new Map<String, String>();
         objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
