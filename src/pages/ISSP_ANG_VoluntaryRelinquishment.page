@@ -4,7 +4,8 @@
            showHeader="false"          
            standardStylesheets="true"
            applyBodyTag="false"
-           applyHtmlTag="false"           
+           applyHtmlTag="false"
+           action="{!securityCheck}"
            >
 
     <html> 
