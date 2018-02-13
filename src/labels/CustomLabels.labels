@@ -1740,6 +1740,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>RHC HUB Current Usage Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_RHC_RHCAmountTooltip</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RHC RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
         <fullName>ANG_RHC_RiskStatusTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
