@@ -147,6 +147,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 								Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, account.Assessment_Performed_Date__c)
 								)
 					);
+					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
 				}
 			}
 			if(!casesToUdpateTheAccts.isEmpty())  {              
