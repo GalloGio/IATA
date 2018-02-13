@@ -508,4 +508,14 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         return true;
     }
 
+
+    public Pagereference securityCheck() {
+
+        if (newCase.Id != null && newCase.Status != 'Draft') {
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
+        }
+
+        return null;
+    }
+
 }
