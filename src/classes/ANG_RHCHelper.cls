@@ -80,6 +80,22 @@ public class ANG_RHCHelper {
 	
 	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
+
+		List<IATA_ISO_Country__c> wwList = [Select Id From IATA_ISO_Country__c Where ISO_Code__c = 'WW'];
+		IATA_ISO_Country__c ww = null;
+		if(!wwList.isEmpty()) {
+			ww = wwList[0];
+		}
+
+		RecordType rt = [Select id From RecordType Where DeveloperName = 'Minimum_RHC_Amount'];
+
+		Set<Id> accountsIds = new Set<Id>();
+		for(ANG_RHC_Information__c rhc : rhcInfo) {
+			accountsIds.add(rhc.ANG_AccountId__c);
+		}
+
+		Map<Id, Account> accountsMap = new Map<Id, Account>([Select id, IATA_ISO_Country__c From Account Where id in: accountsIds]);
+
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
 			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
@@ -98,15 +114,29 @@ public class ANG_RHCHelper {
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}
 
-			Map<String, List<String>> filters = new Map<String, List<String>>();
-			RecordType rt = [Select id From RecordType Where DeveloperName = 'Minimum_RHC_Amount'];
-			filters.put('RecordType', new List<String>{rt.id});
-			filters.put('IATA_ISO_Country__c', new List<String>{rhc.ANG_AccountId__r.IATA_ISO_Country__c});
+			//
+			// Minimum RHC amount 
+			//
+			// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
+			// if that is not defined the we get the AMS Country Specific Attributes for the ww country (All countries)
+			//
+			// Then if the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
+			//
+
+			Map<String, List<String>> filters = new Map<String, List<String>>();			
+
+			//
+			// GET the configuration for the account's iso country
+			//
+			filters.put('RecordTypeId', new List<String>{rt.id});
+			filters.put('IATA_ISO_Country__c', new List<String>{accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c});
 
 			List<AMS_Country_Specific_Attribute__c> csa = AMS_Utils.getAMSCountrySpecificAttribute(filters);
 
-			if(csa.size() == 0) {
-				IATA_ISO_Country__c ww = [Select Id From IATA_ISO_Country__c Where ISO_Code__c = 'WW'];	
+			if(csa.size() == 0 && ww != null) {
+				//
+				// GET the configuration for WW
+				//
 				filters.remove('IATA_ISO_Country__c');
 				filters.put('IATA_ISO_Country__c', new List<String>{ww.id});
 				
@@ -119,7 +149,13 @@ public class ANG_RHCHelper {
 				minimumRHCAmount = csa[0].ANG_Minimum_RHC_Amount__c;
 			}
 			
+
+			//
+			// Apply the rule
+			//
 			if(minimumRHCAmount != null) {
+				minimumRHCAmount = ANG_Risk_Helper.currencyConverter('USD', minimumRHCAmount, rhc.CurrencyIsoCode);
+
 				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) {
 					rhc.ANG_RHC_Amount__c = minimumRHCAmount;					
 				}

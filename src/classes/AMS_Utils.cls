@@ -2581,11 +2581,16 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         } else {
             return labelName;
         }
-    } 
+    }
+
+    public static Date getBiggestDate(Date date1, Date date2) {
+        if(date1 != null && date2 != null) return (date1 > date2) ? date1 : date2;
+        if(date1 != null && date2 == null) return date1;
+        if(date1 == null && date2 != null) return date2;
+        return null;        
+    }     
 
     public static List<AMS_Country_Specific_Attribute__c> getAMSCountrySpecificAttribute(Map<String, List<String>> filters) {
-
-        List<AMS_Country_Specific_Attribute__c> rl;
 
         String soql = 'Select id,' +
                              'ANG_Minimum_RHC_Amount__c' +
@@ -2593,6 +2598,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         String clause = ' Where ';
         for(String key :  filters.keySet()) {
+
+            soql += clause;
             
             List<String> values = filters.get(key);
 
@@ -2611,7 +2618,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 inStr += ')';
                 aux = key + ' in ' + inStr;
             } else {
-                aux = key + '=' + values[0];
+                aux = key + '=\'' + values[0] + '\'';
             }
 
             soql += aux;

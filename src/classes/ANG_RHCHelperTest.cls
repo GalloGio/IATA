@@ -3,12 +3,30 @@ private class ANG_RHCHelperTest {
 	
 
 	@testSetup static void createData() {
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US');
+		RecordType rt = [Select id From RecordType Where DeveloperName = 'Minimum_RHC_Amount'];
+		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c (
+				CurrencyIsoCode = 'USD'
+			);
+
+		insert settlement;
+
+		ctry.add(new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', AMS_Settlement_System__c = settlement.id));
+		ctry.add(new IATA_ISO_Country__c(Name = 'WW', ISO_Code__c = 'WW'));		
 		insert ctry;
+
+		AMS_Country_Specific_Attribute__c config = new AMS_Country_Specific_Attribute__c (
+                RecordTypeId = rt.id,
+                IATA_ISO_Country__c = ctry[1].id,
+                ANG_Minimum_RHC_Amount__c = 10
+            );
+
+        insert config;
 
 		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
-		insert new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		insert new Account(IATA_ISO_Country__c = ctry[0].id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 	}
 	
 	
