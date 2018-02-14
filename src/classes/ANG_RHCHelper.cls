@@ -87,7 +87,7 @@ public class ANG_RHCHelper {
 			ww = wwList[0];
 		}
 
-		RecordType rt = [Select id From RecordType Where DeveloperName = 'Minimum_RHC_Amount'];
+		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
 
 		Set<Id> accountsIds = new Set<Id>();
 		for(ANG_RHC_Information__c rhc : rhcInfo) {
@@ -122,39 +122,27 @@ public class ANG_RHCHelper {
 			//
 			// Then if the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
 			//
+			Set<Id> isoSet = new Set<Id>{accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c, ww.id};
 
-			Map<String, List<String>> filters = new Map<String, List<String>>();			
+			List<AMS_Country_Specific_Attribute__c> csa = [Select id, IATA_ISO_Country__c, ANG_Minimum_RHC_Amount__c From AMS_Country_Specific_Attribute__c Where RecordTypeId =: devRecordTypeId And IATA_ISO_Country__c in: isoSet];
 
-			//
-			// GET the configuration for the account's iso country
-			//
-			filters.put('RecordTypeId', new List<String>{rt.id});
-			filters.put('IATA_ISO_Country__c', new List<String>{accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c});
-
-			List<AMS_Country_Specific_Attribute__c> csa = AMS_Utils.getAMSCountrySpecificAttribute(filters);
-
-			if(csa.size() == 0 && ww != null) {
-				//
-				// GET the configuration for WW
-				//
-				filters.remove('IATA_ISO_Country__c');
-				filters.put('IATA_ISO_Country__c', new List<String>{ww.id});
-				
-				csa = AMS_Utils.getAMSCountrySpecificAttribute(filters);
-			}
-
+			Map<Id, Decimal> csaMap = new Map<Id, Decimal>();
+			for(AMS_Country_Specific_Attribute__c a : csa) csaMap.put(a.IATA_ISO_Country__c, a.ANG_Minimum_RHC_Amount__c);			
+			
 			Decimal minimumRHCAmount = null;
 
-			if(csa.size() != 0) {
-				minimumRHCAmount = csa[0].ANG_Minimum_RHC_Amount__c;
-			}
-			
+			if(csaMap.containsKey(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c)) 
+				minimumRHCAmount = csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c);
+			else
+				minimumRHCAmount = csaMap.get(ww.id);
 
 			//
 			// Apply the rule
 			//
 			if(minimumRHCAmount != null) {
 				minimumRHCAmount = ANG_Risk_Helper.currencyConverter('USD', minimumRHCAmount, rhc.CurrencyIsoCode);
+
+				System.debug('ALEX rhc.ANG_RHC_Amount__c : ' + rhc.ANG_RHC_Amount__c + '  minimumRHCAmount : ' + minimumRHCAmount);
 
 				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) {
 					rhc.ANG_RHC_Amount__c = minimumRHCAmount;					

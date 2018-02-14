@@ -2590,42 +2590,4 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return null;        
     }     
 
-    public static List<AMS_Country_Specific_Attribute__c> getAMSCountrySpecificAttribute(Map<String, List<String>> filters) {
-
-        String soql = 'Select id,' +
-                             'ANG_Minimum_RHC_Amount__c' +
-                       ' From AMS_Country_Specific_Attribute__c';
-
-        String clause = ' Where ';
-        for(String key :  filters.keySet()) {
-
-            soql += clause;
-            
-            List<String> values = filters.get(key);
-
-            String aux = '';
-
-            if(values.size() > 1) {
-                Boolean first = true;
-                String inStr = '(';
-                for(String s : values) {
-                    if(!first) {
-                        inStr += ',';
-                    }
-                    inStr += '\'' + s + '\'';
-                    first = false;
-                }
-                inStr += ')';
-                aux = key + ' in ' + inStr;
-            } else {
-                aux = key + '=\'' + values[0] + '\'';
-            }
-
-            soql += aux;
-
-            clause = ' And ';
-        }
-
-        return Database.query(soql);
-    }
 }
