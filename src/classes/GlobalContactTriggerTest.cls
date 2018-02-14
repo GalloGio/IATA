@@ -152,6 +152,8 @@ private class GlobalContactTriggerTest {
         con2.User_Portal_Status__c = 'Active';
         insert con2;
         String newContactId2 = con2.Id;
+		
+		Test.startTest();
 
         Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
         insert app1;
@@ -173,7 +175,7 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         
-        Test.startTest();
+        
         
         ctrl.initialization();
         List <Contact> testContactList = ctrl.getContacts();
