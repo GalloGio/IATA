@@ -812,7 +812,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                     if (!conList[0].ID_Cards__r.isEmpty()){
                         List <ID_Card__c> idCardList = new List <ID_Card__c>();
                         for (ID_Card__c thisCard : conList[0].ID_Cards__r){
-                            thisCard.Card_Status__c = 'Cancelled';
+                            thisCard.Card_Status__c = 'Cancelled ID Card';
                             idCardList.add(thisCard);
                         }
                         update idCardList;
