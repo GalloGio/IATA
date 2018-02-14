@@ -2399,7 +2399,7 @@ public class AMS_OSCARTriggerHandler {
                     
                     boolean isToValidate = true;
                     
-                    if(oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR)){
+                    if((oscar.Process__c == AMS_Utils.NGVR && oscar.Is_NewGen__c) || (oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR))){
                             isToValidate = false; // we can skipp this validation
                     }
 
