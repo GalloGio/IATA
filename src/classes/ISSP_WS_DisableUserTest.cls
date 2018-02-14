@@ -406,6 +406,7 @@ private class ISSP_WS_DisableUserTest {
         checkLogs(true,'disableUser');
     }
     
+	/*
     static testMethod void disableUser_OK_AlreadyDisabled() {
         ISSP_WS_DisableUser.UserInputData inputData = createInputData();
         
@@ -443,6 +444,7 @@ private class ISSP_WS_DisableUserTest {
         System.assertEquals(false, response2.IsSuccess);
         Test.stopTest();
     }
+	*/
     
     static testMethod void disableUser_OK_AllApps() {
         ISSP_WS_DisableUser.UserInputData inputData = createInputData();
