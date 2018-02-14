@@ -226,6 +226,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						}
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						changesContainer.changeCodesToCreateDef.add(changeCode);				
 					}
 
 					if(oscar.AMS_Correction_change_code__c == 'LET') {
@@ -239,6 +241,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						changeCode.status  = '9';
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
 
 				}
