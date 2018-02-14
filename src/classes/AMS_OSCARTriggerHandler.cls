@@ -3073,9 +3073,45 @@ public class AMS_OSCARTriggerHandler {
 
         List<Account> accountsToUpdate = new List<Account>();
 
+        Set<Id> oscarsToInsertSet = new Set<Id>();
+        List<AMS_OSCAR__c> oscarsToInsertList = new List<AMS_OSCAR__c>();
+
         for(AMS_OSCAR__c oscar: oscarsToInsert){
-            if(!(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGENFOP))
-                continue;
+
+            if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGENFOP){
+
+                if((oscar.STEP40__c == AMS_Utils.PASSED && ( oscar.STEP40__c != oldOscars.get(oscar.id).STEP40__c)) || (oscar.ANG_Sanity_checks__c == AMS_Utils.PASSED && ( oscar.ANG_Sanity_checks__c != oldOscars.get(oscar.id).ANG_Sanity_checks__c))){
+                    oscarsToInsertSet.add(oscar.Id);
+                    oscarsToInsertList.add(oscar);
+                }
+            }
+        }
+
+        if(oscarsToInsertSet.isEmpty())
+            return;
+
+        Map<Id,Set<Id>> oscarAccountsMap = fetchAccountIdsToBeProcessed(oscarsToInsertSet);
+        
+        for(AMS_OSCAR__c oscar: oscarsToInsertList){
+            if(oscarAccountsMap.get(oscar.Id) == null){
+                Set<Id> accountIds = new Set<Id>{oscar.Account__c};
+                oscarAccountsMap.put(oscar.Id,accountIds);
+            }
+        }
+
+        List<Agency_Authorization__c> formsOfPaymentToUpdate = new List<Agency_Authorization__c>();
+
+
+        Set<Id> accountIdsInvolvedSet = new Set<Id>();
+        for(Set<Id> accountIds: oscarAccountsMap.values()){
+
+            accountIdsInvolvedSet.addAll(accountIds);
+        }
+
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
+
+        for(AMS_OSCAR__c oscar: oscarsToInsertList){
 
             if(oscar.ANG_Sanity_checks__c == AMS_Utils.PASSED && ( oscar.ANG_Sanity_checks__c != oldOscars.get(oscar.id).ANG_Sanity_checks__c)){        
                 oscar.Process_Start_Date__c = Date.today();
@@ -3093,25 +3129,82 @@ public class AMS_OSCARTriggerHandler {
                     continue;
                 }
 
-                Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
-                accountIdsInvolvedSet.add(oscar.Account__c);
-
-                for(Id accId: accountIdsInvolvedSet){        
+                for(Id accId: oscarAccountsMap.get(oscar.Id)){
 
                     Account acct = new Account(Id = accId);
+                    Boolean accountToAdd = false;
 
-                    acct.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                    if(acct.Is_PCI_compliant__c <> oscar.Is_PCI_compliant__c){
+                        acct.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                        accountToAdd = true;
+                    }
 
-                    if(oscar.Is_PCI_compliant__c == 'Yes')
+                    if(oscar.Is_PCI_compliant__c == 'Yes'){
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
+                        accountToAdd = true;
+                    }
 
-                    accountsToUpdate.add(acct);
+                    if(accountToAdd)
+                        accountsToUpdate.add(acct);
                 }
+
+
+                List<Agency_Authorization__c> formsOfPaymentListPerOscar = new List<Agency_Authorization__c>();
+
+                For(Agency_Authorization__c aa: formsOfPaymentList){
+                    if(oscarAccountsMap.get(oscar.Id).contains(aa.Account__c))
+                        formsOfPaymentListPerOscar.add(aa);
+                }
+                
+                For(Agency_Authorization__c aa: formsOfPaymentListPerOscar){
+
+                    if(aa.Status__c == 'Active' && oscar.Is_PCI_compliant__c == 'No'){
+                        aa.Status__c = 'Non-Active';
+                        formsOfPaymentToUpdate.add(aa);
+
+                    }
+                    else  if(aa.Status__c == 'Non-Active' && oscar.Is_PCI_compliant__c == 'Yes'){
+                        aa.Status__c = 'Active';
+                        formsOfPaymentToUpdate.add(aa);
+                    }
+                }
+
             }
+
+            String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
+
+            ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
+            ANG_OscarProcessHelper.updateUpdater(updater);
+
         }
 
         if(!accountsToUpdate.isEmpty())
             update accountsToUpdate;
+
+        if(!formsOfPaymentToUpdate.isEmpty())
+            update formsOfPaymentToUpdate;
+
+
+        
+
+    }
+
+    public static Map<Id,Set<Id>> fetchAccountIdsToBeProcessed(Set<Id> oscarIds){
+
+        Map<Id,Set<Id>> toReturn = new Map<Id,Set<Id>>();
+
+        For(AMS_Process_Detail__c pd : [Select Id, Account__c, OSCAR__r.Account__c, OSCAR__c from AMS_Process_Detail__c where OSCAR__c in :oscarIds]){
+            if(toReturn.get(pd.OSCAR__c) == null){
+                Set<Id> accountIds = new Set<Id>{pd.Account__c,pd.OSCAR__r.Account__c};
+                toReturn.put(pd.OSCAR__c,accountIds);
+            }
+            else{
+                toReturn.get(pd.OSCAR__c).add(pd.Account__c);
+            }
+        }
+
+        return toReturn;
+
     }
 
     public static void updateAccountWithOptINOUT(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){

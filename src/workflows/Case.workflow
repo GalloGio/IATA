@@ -15051,7 +15051,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management</value>
+            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15116,7 +15116,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA</value>
+            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

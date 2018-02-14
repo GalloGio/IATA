@@ -16922,6 +16922,39 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Americas_IATA_Travel_Agents_Approved</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Quality__c</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.INDUSTRY</field>
+            <operation>equals</operation>
+            <value>Travel Agent</value>
+        </filters>
+        <filters>
+            <field>Region_formula__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Americas - IATA Travel Agents Approved</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ArgentinaCargoAgents</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.SITE</columns>

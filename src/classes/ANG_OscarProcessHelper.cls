@@ -796,7 +796,8 @@ global class ANG_OscarProcessHelper {
 			}
 		}
 
-		updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
+		if(updater.oscarMap.get(theOSCAR.Id) != null)
+			updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
 
 		updater.toUpdate = true;
 
