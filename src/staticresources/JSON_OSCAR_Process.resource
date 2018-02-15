@@ -5687,7 +5687,7 @@
                       "oscarid"
                     ]
                   },
-          {
+				          {
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
@@ -5702,6 +5702,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "ANG_FA_Opt_out__c",
                   "STEP11__c"
                 ],
                 "IsDependent": false
