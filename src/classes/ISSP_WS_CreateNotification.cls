@@ -418,9 +418,11 @@ global class ISSP_WS_CreateNotification {
 	            Notification_template__c nt = templateList[0];
 	            for (Contact thisContact : contactList){
 	            	system.debug('CREATING NOTIFICATION FOR THIS CONTACT: ' + thisContact);
-	            	if(notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id)) != null){
-	            		system.debug('FOUND A TRANSLATION');
-	            		nt = notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id));
+	            	if(notificationTemplateTranslateMap.containsKey(nt.Name) &&
+	            		notificationTemplateTranslateMap.get(nt.Name).containsKey(contactLanguageMap.get(thisContact.Id))
+	            	){
+	            		system.debug('ALEX FOUND A TRANSLATION');
+	            		nt = notificationTemplateTranslateMap.get(nt.Name).get(contactLanguageMap.get(thisContact.Id));
 	            	}
 	            	if (nt.Expire_in_days__c != null){
 	            		expirationDate = system.Now() + nt.Expire_in_days__c;
