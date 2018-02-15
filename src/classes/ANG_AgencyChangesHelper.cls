@@ -185,10 +185,11 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(config == null)
 						config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
 
-					if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
+					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
 					else
-					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+					
 					System.debug('[ANG_AgencyChangesHelper] Checkpoint2 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 					System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
