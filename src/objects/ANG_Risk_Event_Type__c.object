@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,9 +45,10 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
@@ -62,11 +59,25 @@
         <label>Agency Risk Calculation</label>
         <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
         <relationshipLabel>Risk Event Types</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculation</relationshipName>
+        <relationshipName>Risk_Event_Types</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Delay_Cash_Condition__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Number of days Risk Event should wait before receiving the Cash Conditions check</description>
+        <externalId>false</externalId>
+        <label>Delay Cash Condition (Days)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ANG_Description__c</fullName>
@@ -176,4 +187,11 @@
         <searchResultsAdditionalFields>ANG_Expiration__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Delay_Cash_Conditions</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_Delay_Cash_Condition__c &gt; 0 &amp;&amp; Limit_Cash_conditions__c</errorConditionFormula>
+        <errorMessage>Delaying Cash Conditions only work when Risk Events start with false and enforce Cash Conditions some days later</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
