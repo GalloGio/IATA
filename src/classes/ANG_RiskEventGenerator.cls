@@ -275,7 +275,7 @@ public class ANG_RiskEventGenerator {
 				re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
 				re.ANG_Limit_Cash_Conditions__c = rType.Limit_Cash_conditions__c;
 
-				if(rType.ANG_Delay_Cash_Condition__c != null) re.ANG_Cash_Conditions_Activation__c = re.ANG_Issued_Date__c.addDays(Integer.valueOf(rType.ANG_Delay_Cash_Condition__c)));
+				if(rType.ANG_Delay_Cash_Condition__c != null) re.ANG_Cash_Conditions_Activation__c = re.ANG_Issued_Date__c.addDays(Integer.valueOf(rType.ANG_Delay_Cash_Condition__c));
 			}
 
 			if(re.ANG_TargetAgency__c == 'HE Account') re.ANG_AccountId__c = re.ANG_HE_AccountId__c;

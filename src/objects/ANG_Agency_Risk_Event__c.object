@@ -118,21 +118,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_CC_Activation_Days__c</fullName>
-        <description>Reports the number of days for activation on the Risk Event type so we have access to it on the trigger</description>
-        <externalId>false</externalId>
-        <formula>ANG_Risk_Type__r.ANG_Delay_Cash_Condition__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Cash Conditions Activation Days</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ANG_CaseId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
