@@ -1145,4 +1145,45 @@ public class ams2gdp_BusinessLogic
 		
 		return result;
  	}
+
+	/**
+ 	 * This function format a List of Agency Authorization (AMS) records to Agency Profile & Specialization (GDP) records
+ 	 * @param  List<AMS_Agency_Authorization__c>
+ 	 * @return List<GDP_Products_Account_View__c>
+ 	 * @author Aku Luukka <luukkaa@iata.org>
+ 	 */
+ 	public static List<GDP_Products_Account_View__c> formatAgencyAuthorization2GDPAccountView(List<Agency_Authorization__c> authorizations){
+
+		// List<Id> productIds = new List<Id>();
+		List<Id> accountIds = new List<Id>();
+		for(Agency_Authorization__c aa : authorizations) {
+			accountIds.add(aa.Account__c);
+		}
+
+		// because the AMS_GDP_Key__c == accountId we can query based on them
+		List<GDP_Products_Account_View__c> result =
+			[SELECT Id, AMS_GDP_Key__c, CA_Status__c, CC_Status__c, EP_Status__c
+			FROM GDP_Products_Account_View__c
+			WHERE AMS_GDP_Key__c IN :accountIds];
+
+		for(GDP_Products_Account_View__c prod : result) {
+			for(Agency_Authorization__c aa : authorizations) {
+				if(aa.Account__c == prod.AMS_GDP_Key__c) {
+					if(aa.ANG_FormOfPayment_ID__c == 'CA') {
+						prod.CA_Status__c = aa.Status__c;
+					}
+					else if(aa.ANG_FormOfPayment_ID__c == 'CC') {
+						prod.CC_Status__c = aa.Status__c;
+					}
+					else if(aa.ANG_FormOfPayment_ID__c == 'EP') {
+						prod.EP_Status__c = aa.Status__c;
+					}
+				}
+			}
+		}
+		System.debug(result);
+
+		return result;
+ 	}
+
 }
