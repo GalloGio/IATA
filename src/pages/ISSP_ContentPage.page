@@ -379,7 +379,7 @@
                                                         </span>
                                                     </div>-->
                                                
-                                                    <apex:outputText id='pageNumber' style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
+                                                    <apex:outputText id="pageNumber" style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
                                                    {!currentPageNumber}
                                                    {!$Label.ISSP_of} {!pageNumberButtons.size}
                                                     </apex:outputText>    
