@@ -74,15 +74,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		);
 		insert c;
 
-
-		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = a.Id,
-			CurrencyIsoCode = 'USD',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			ANG_Financial_Security__c = 0
-		);
-		insert rhcInfo;
-
 		Financial_Security__c fs = new Financial_Security__c(
 			Region__c = 'Europe', 
 			Security_status__c = 'Active', 
@@ -111,10 +102,26 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert att;
 	}
 
+	private static ANG_RHC_Information__c getRHCH_Information() {
+		Account a = [SELECT Id FROM Account LIMIT 1];
+
+		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = a.Id,
+			CurrencyIsoCode = 'USD',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			ANG_Financial_Security__c = 0
+		);
+		insert rhcInfo;
+
+		return rhcInfo;
+	}
+
 	private static testmethod voId test_sucess_legacy(){
 
 		Test.StartTest();
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		ANG_RHC_Information__c rhcInfo = getRHCH_Information();
+		
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -140,7 +147,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 		country.ANG_Enable_NewGen__c = true;
 		update country;
 
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+		ANG_RHC_Information__c rhcInfo = getRHCH_Information();
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -156,7 +164,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static testmethod voId testRiskAlertCreationNoConfigurationMatched(){
 
 		Test.StartTest();
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		ANG_RHC_Information__c rhcInfo = getRHCH_Information();
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -173,6 +183,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static testmethod voId testRestrictFOPonRiskAlertCreation(){
 
 		Test.StartTest();
+
+		ANG_RHC_Information__c rhcInfo = getRHCH_Information();
 
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
             new AMS_ChangeCodes__c(
@@ -196,8 +208,6 @@ private class ANG_RHCAlertTriggerHandler_test {
         };
 
         insert changeCodeList;
-
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
@@ -222,13 +232,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
 
 		Test.StopTest();
-
-
 	}
 
 	private static testmethod voId testRestoreFOPonRiskAlertCreation(){
 
 		Test.StartTest();
+
+		ANG_RHC_Information__c rhcInfo = getRHCH_Information();
 
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
             new AMS_ChangeCodes__c(
@@ -252,8 +262,6 @@ private class ANG_RHCAlertTriggerHandler_test {
         };
 
         insert changeCodeList;
-
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
