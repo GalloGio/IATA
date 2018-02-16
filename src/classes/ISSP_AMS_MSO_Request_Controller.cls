@@ -29,6 +29,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         Id caseId = ApexPages.currentPage().getParameters().get('caseId');
         generatedIATACODE = ApexPages.currentPage().getParameters().get('iatacode');
         reason = ApexPages.currentPage().getParameters().get('reason');
+
         if (String.isBlank(step)) step = 'form';
 
         mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
