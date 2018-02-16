@@ -111,7 +111,7 @@ public without sharing class ISSP_Case {
             return (caseType == 'OSCAR' && newCase.Reason1__c == 'GSA / MSO / Handling Agent');
         }
     }
-    
+
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
     //public String CaseDPCStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Escalated_Status_ACCA__c);}   }
@@ -260,7 +260,7 @@ public without sharing class ISSP_Case {
             if (paramTopic == 'SA') {
                 newCase.Subject = 'New SA - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Process';
-                newCase.Reason1__c = 'New SA / CHV â€“ New Code';
+                newCase.Reason1__c = 'New SA / CHV – New Code';
                 newCase.Status = 'Draft';
                 newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                 isAccreditationUploadCase = true;
@@ -899,7 +899,7 @@ public without sharing class ISSP_Case {
                 
                 if(isDPCUser && whoToContact != 'IATA') {
                     addListCCOthersToDPC(this.additionalRecipients);
-                }
+                }                
                 /**
                 popContact();
                 String typeOfProcess = '';
