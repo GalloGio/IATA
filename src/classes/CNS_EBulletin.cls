@@ -966,6 +966,7 @@ public with sharing class CNS_EBulletin {
 
             String header = getHeader();
             System.debug('CNS_EBulletin - dailyReportDownload - header: ' + header);
+            dailyFileDownload = '';
             getRecords(header, newFormDaily, endDate, startDate);
 
         }catch(Exception e){
@@ -1010,6 +1011,7 @@ public with sharing class CNS_EBulletin {
 
             String header = getHeader();
             System.debug('CNS_EBulletin - weeklyReportDownload - header: ' + header);
+            weeklyFileDownload = '';
             getRecords(header, newFormWeekly, endDate, startDate);
 
         }catch(Exception e){
@@ -1046,7 +1048,7 @@ public with sharing class CNS_EBulletin {
 
         AMS_EBulletinRecordsBatch batchRecords = new AMS_EBulletinRecordsBatch(header, query, eBulletinProfile, endDate, startDate, ccNamesToRecoverAux, countriesFilterAux, locClsListAux, true);
         isBatchProcessing = true;
-        batchRecordsId = Database.executeBatch(batchRecords, 50);
+        batchRecordsId = Database.executeBatch(batchRecords, 200);
     }
 
     @TestVisible private static String getQuery(){
@@ -1118,6 +1120,14 @@ public with sharing class CNS_EBulletin {
                         AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, attachment.get(0).id);
                         dailyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
                     }
+                } else {
+
+                    isBatchProcessing = true;
+                    isGettingReportWeekly = true;
+                    isGettingReportDaily = true;
+                    System.debug('CNS_EBulletin - checkBatchStatus - job completed waiting for attachment');
+
+
                 }
 
             } else if(aaj.get(0).Status == 'Aborted' || aaj.get(0).Status == 'Failed') {
@@ -1129,6 +1139,8 @@ public with sharing class CNS_EBulletin {
             } else {
 
                 isBatchProcessing = true;
+                isGettingReportWeekly = true;
+                isGettingReportDaily = true;
                 System.debug('CNS_EBulletin - checkBatchStatus - job processing');
 
             }
