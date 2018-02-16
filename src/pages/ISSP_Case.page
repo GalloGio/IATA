@@ -756,6 +756,8 @@
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
+                                        <!-- AMSU-119 - added isMSO Condition -->
+                                        <!--apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO')}"-->
                                         <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', NOT(isMSOcase))}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
