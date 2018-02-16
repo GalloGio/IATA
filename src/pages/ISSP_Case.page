@@ -931,7 +931,10 @@
                                             onfocus="this.oldValue=this.value" onchange="updatePritority(this);"/>
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(AND(isACCA,newCase.Status!='Closed'))}"/>
                                         
+                                        <apex:inputfield value="{!newCase.Priority}" styleclass="form-control"  required="true" rendered="{!isACCA}"/>
+                                        <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(isACCA)}"/>
                                         <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:inputfield value="{!newCase.Status}" styleclass="form-control"  required="true"/>
                                         <apex:outputfield value="{!newCase.Status}" />
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <!-- <apex:outputfield value="{!newCase.ParentId}" /> -->
