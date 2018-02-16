@@ -218,6 +218,7 @@
         <fullName>ANG_RHC_Amount__c</fullName>
         <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>
+        <inlineHelpText>Help text for the RHC Amount</inlineHelpText>
         <label>RHC Amount</label>
         <precision>18</precision>
         <required>false</required>
@@ -396,7 +397,7 @@ alert(result[0].description);
 
 var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
 
-var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId}); 
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId, flagUpdateProvisioning: false}); 
 
 console.info(result[0]);
 
