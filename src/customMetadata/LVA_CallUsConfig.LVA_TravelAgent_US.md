@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">08:30 - 12:30 from Monday to Friday</value>
+        <value xsi:type="xsd:string">11:30 am to 3:30pm EST from Monday to Friday</value>
     </values>
     <values>
         <field>Business_Hours_Name__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>PhoneNumber__c</field>
-        <value xsi:type="xsd:string">+1 877-734-2826</value>
+        <value xsi:type="xsd:string">+1 877 734 2826</value>
     </values>
     <values>
         <field>Sector__c</field>

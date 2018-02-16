@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Payable immediately due net</fullName>
+        <default>false</default>
+        <label>Payable immediately due net</label>
+    </customValue>
+    <customValue>
+        <fullName>30 days after invoice date</fullName>
+        <default>false</default>
+        <label>30 days after invoice date</label>
+    </customValue>
+    <customValue>
+        <fullName>10 days after invoice date</fullName>
+        <default>false</default>
+        <label>10 days after invoice date</label>
+    </customValue>
+    <customValue>
+        <fullName>15 days after invoice date</fullName>
+        <default>false</default>
+        <label>15 days after invoice date</label>
+    </customValue>
+    <customValue>
+        <fullName>20 days after invoice date</fullName>
+        <default>false</default>
+        <label>20 days after invoice date</label>
+    </customValue>
+    <customValue>
+        <fullName>07 days after invoice date</fullName>
+        <default>false</default>
+        <label>07 days after invoice date</label>
+    </customValue>
+    <masterLabel>E&amp;F Payment Terms</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

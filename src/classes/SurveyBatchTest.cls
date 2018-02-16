@@ -1107,10 +1107,10 @@ public class SurveyBatchTest {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
       prepareTestForCountries(5,null);
       }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1124,10 +1124,10 @@ public class SurveyBatchTest {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(5,5);
     }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1140,10 +1140,11 @@ static testMethod void testForCountries3() {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(6,10);
     }
-   test.startTest();
+   
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);

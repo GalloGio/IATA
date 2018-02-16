@@ -382,6 +382,22 @@
         <label>Webstar Accreditation Errors</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Zuora</fullName>
+        <columns>NAME</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Type__c</columns>
+        <columns>Source__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>contains</operation>
+            <value>Zuora</value>
+        </filters>
+        <label>Zuora</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>E-{0000000000}</displayFormat>
         <label>IEC Error Log Name</label>

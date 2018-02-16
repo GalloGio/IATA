@@ -281,11 +281,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="leftFilter">
-                                            Filter by Document Category
+                                            {!$Label.ISSP_Filter_by_Document_Category}
                                             <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allDocumentCategoryList}"/>
                                             </apex:selectList>
-                                            Filter by Country of Publication    
+                                            {!$Label.ISSP_Filter_by_Country_Publication}
                                             <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allCountriesList}"/>
                                             </apex:selectList>
@@ -379,7 +379,7 @@
                                                         </span>
                                                     </div>-->
                                                
-                                                    <apex:outputText id='pageNumber' style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
+                                                    <apex:outputText id="pageNumber" style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
                                                    {!currentPageNumber}
                                                    {!$Label.ISSP_of} {!pageNumberButtons.size}
                                                     </apex:outputText>    

@@ -8,7 +8,6 @@
     <customButtons>New_Manage_Fees_Checklist</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -213,6 +212,9 @@
         <layoutColumns>
             <layoutItems>
                 <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <customLink>Conga_Merge_Letters</customLink>
             </layoutItems>
         </layoutColumns>
         <style>CustomLinks</style>
