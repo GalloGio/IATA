@@ -111,7 +111,7 @@ public without sharing class ISSP_Case {
             return (caseType == 'OSCAR' && newCase.Reason1__c == 'GSA / MSO / Handling Agent');
         }
     }
-
+    
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
     //public String CaseDPCStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Escalated_Status_ACCA__c);}   }
