@@ -269,6 +269,7 @@
         function validateMobile(){
           //the return value
           var isValidMobile = true;
+          $j('.invalidmobile').hide();
           try{
             //mobile number
             var mobile = $j("input[name='{!$Component.newContact.businessmobileinput}']");
@@ -286,8 +287,6 @@
                 //Save dial code and country values into the hidden field
                 var temp2 = document.getElementById('{!$Component.newContact.phone2}');
                 temp2.value = completeMobileNbr;
-
-                $j('.invalidmobile').hide();
 
               }else{
                 //alert("The Mobile Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code or select the country flag from the drop down.");
@@ -308,6 +307,7 @@
         function validateFax(){
           //the return value
           var isValidFax = true;
+          $j('.invalidfax').hide();
           try{
             //fax number validation
             var fax = $j("input[name='{!$Component.newContact.businessfaxinput}']");
@@ -326,8 +326,6 @@
                 var temp3 = document.getElementById('{!$Component.newContact.phone3}');
                 temp3.value = completeFaxNbr;
 
-                $j('.invalidfax').hide();
-
               }else{
                 //alert("The Fax Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code or select the country flag from the drop down.");
                 $j('.invalidfax').show();
@@ -345,11 +343,13 @@
 
         function validateInputs(){
           //validate the format number for the phone, mobile and fax per country
-          var arePhoneFaxMobileNumbersValid = validatePhone() && validateMobile() && validateFax();
+          var isPhoneOK = validatePhone();
+          var isMobileOK = validateMobile();
+          var isFaxOK = validateFax();
+          
+          var arePhoneFaxMobileNumbersValid = isPhoneOK && isMobileOK && isFaxOK;
           //validate mandatory input fields
-          var isMandatoryFieldsOK = validateMandatoryFields();
-
-          return arePhoneFaxMobileNumbersValid && isMandatoryFieldsOK;
+          return arePhoneFaxMobileNumbersValid && validateMandatoryFields();
 
         }
     </script>  
