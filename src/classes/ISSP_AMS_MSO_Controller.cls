@@ -144,8 +144,12 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
         system.debug('query: ' + strQuery);
 
-        lstAccountsInHierarchy = Database.query(strQuery);
-
+        if(airlineCode != null && airlineCode != ''){
+            lstAccountsInHierarchy = Database.query(strQuery);
+        }else{
+            lstAccountsInHierarchy = new list<AMS_Inspection__c>();
+        }   
+        
         ssc = new ApexPages.StandardSetController(lstAccountsInHierarchy);
         if (strRenderAs == 'PDF') 
             ssc.setPageSize(lstAccountsInHierarchy.size()); // for PDF display all records
