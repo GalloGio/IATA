@@ -431,12 +431,8 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
                     filterLanguage = firstLanguage;
                 } 
 
-                Integer i = 1;
-
                 for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
-                    req.File_Identifier2__c += i;
-                    i++;
-                    
+                                    
                     if (filterLanguage == req.Language__c) {
 
                         if (req.Requirement_text__c != null) {
