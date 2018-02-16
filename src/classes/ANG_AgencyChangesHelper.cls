@@ -1183,7 +1183,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 		}
-
+        
 		return changesContainer;
 	}
 
@@ -1341,9 +1341,13 @@ public with sharing class ANG_AgencyChangesHelper {
 				isActive = true;
 			}
 
-			if(objectChanges != null && !objectChanges.isEmpty())
-				objectChangesByChangeCode = objectChanges.get(index);
-
+            if(objectChanges != null && !objectChanges.isEmpty()){
+				if(objectChanges.size() == 1)
+					objectChangesByChangeCode = objectChanges.get(0);
+				else
+					objectChangesByChangeCode = objectChanges.get(index);
+			}
+            
 			AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
 
 			changesContainer.addChangeCode(changeCodeResult.changeCode);
