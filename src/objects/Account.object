@@ -2920,6 +2920,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
+        <description>PCI compliance expiry date</description>
+        <externalId>false</externalId>
+        <label>PCI compliance expiry date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
@@ -5576,6 +5586,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Domestic Agent</label>
                 </value>
                 <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
+                </value>
+                <value>
                     <fullName>Engine Manufacturer</fullName>
                     <default>false</default>
                     <label>Engine Manufacturer</label>
@@ -5664,11 +5679,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>IBCS consolidator</fullName>
                     <default>false</default>
                     <label>IBCS consolidator</label>
-                </value>
-                <value>
-                    <fullName>Import Agent</fullName>
-                    <default>false</default>
-                    <label>Import Agent</label>
                 </value>
                 <value>
                     <fullName>Individual Government</fullName>
@@ -5779,6 +5789,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>Railway Line</fullName>
                     <default>false</default>
                     <label>Railway Line</label>
+                </value>
+                <value>
+                    <fullName>Recipient</fullName>
+                    <default>false</default>
+                    <label>Recipient</label>
                 </value>
                 <value>
                     <fullName>Resort</fullName>
@@ -5974,11 +5989,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Import Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>MSO Member Sales Office</valueName>
             </valueSettings>
             <valueSettings>
@@ -5994,6 +6004,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Travel Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Recipient</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
@@ -6126,6 +6141,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>DPC</controllingFieldValue>
+                <valueName>DPC</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -10078,19 +10097,24 @@ WSPN-Worldspan</inlineHelpText>
                     <label>Member</label>
                 </value>
                 <value>
-                    <fullName>Bankrupt</fullName>
-                    <default>false</default>
-                    <label>Bankrupt</label>
-                </value>
-                <value>
-                    <fullName>Merged</fullName>
-                    <default>false</default>
-                    <label>Merged</label>
-                </value>
-                <value>
                     <fullName>Inactive</fullName>
                     <default>false</default>
                     <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Suspended</fullName>
+                    <default>false</default>
+                    <label>Suspended</label>
+                </value>
+                <value>
+                    <fullName>Withdrawn</fullName>
+                    <default>false</default>
+                    <label>Withdrawn</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -10436,6 +10460,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_DGR_Compliant__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for HO &gt;=2, for BR &gt;=1</description>
+        <externalId>false</externalId>
+        <label>Is DGR Compliant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Is_PCI_compliant__c</fullName>
@@ -12023,8 +12057,9 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>PCI_DSS_Compliant__c</fullName>
+        <description>Date that the PCI Expiry Notification was sent.</description>
         <externalId>false</externalId>
-        <label>PCI DSS Compliant</label>
+        <label>PCI Expiry Notification Sent</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -12564,44 +12599,92 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>Monthly </label>
+                </value>
+                <value>
+                    <fullName>F</fullName>
+                    <default>false</default>
+                    <label>Fortnightly </label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>Every 10 days </label>
+                </value>
+                <value>
+                    <fullName>W</fullName>
+                    <default>false</default>
+                    <label>4 times per month </label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>Weekly </label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>Every 5 days </label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>Every 3 days </label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>Daily </label>
+                </value>
+                <value>
                     <fullName>Monthly</fullName>
                     <default>false</default>
                     <label>Monthly</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Fortnightly</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Every 10 days</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>4 times per month</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Weekly</fullName>
                     <default>false</default>
                     <label>Weekly</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Every 5 days</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Every 3 days</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
+                    <isActive>false</isActive>
                 </value>
                 <value>
                     <fullName>Daily</fullName>
                     <default>false</default>
                     <label>Daily</label>
+                    <isActive>false</isActive>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -12655,6 +12738,16 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SIS_Entry_Date__c</fullName>
+        <description>Used by SIS team to store when the account joined to SIS</description>
+        <externalId>false</externalId>
+        <label>SIS Entry Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>SIS_ID__c</fullName>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
@@ -12695,6 +12788,26 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <default>false</default>
                     <label>Active</label>
                 </value>
+                <value>
+                    <fullName>Basic</fullName>
+                    <default>false</default>
+                    <label>Basic</label>
+                </value>
+                <value>
+                    <fullName>Restricted</fullName>
+                    <default>false</default>
+                    <label>Restricted</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -12722,6 +12835,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>IATA Office</label>
                 </value>
                 <value>
+                    <fullName>IATA RESELLER</fullName>
+                    <default>false</default>
+                    <label>IATA RESELLER</label>
+                </value>
+                <value>
                     <fullName>ISPA Airline</fullName>
                     <default>false</default>
                     <label>ISPA Airline</label>
@@ -12742,6 +12860,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>ISUA Supplier</label>
                 </value>
                 <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
                     <fullName>TERMINATED</fullName>
                     <default>false</default>
                     <label>TERMINATED</label>
@@ -12750,6 +12873,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>TOU</fullName>
                     <default>false</default>
                     <label>TOU</label>
+                </value>
+                <value>
+                    <fullName>TOU Agent</fullName>
+                    <default>false</default>
+                    <label>TOU Agent</label>
                 </value>
                 <value>
                     <fullName>TOU E&amp;F</fullName>
@@ -12893,6 +13021,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -16849,6 +16982,39 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>Americas</value>
         </filters>
         <label>Americas - IATA Travel Agents</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Americas_IATA_Travel_Agents_Approved</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Quality__c</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.INDUSTRY</field>
+            <operation>equals</operation>
+            <value>Travel Agent</value>
+        </filters>
+        <filters>
+            <field>Region_formula__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Americas - IATA Travel Agents Approved</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -26868,6 +27034,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -27463,7 +27656,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27471,6 +27664,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27482,6 +27691,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27501,11 +27714,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29418,10 +29639,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -29503,6 +29720,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29844,6 +30065,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30486,7 +30734,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30494,6 +30742,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30505,6 +30769,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30524,11 +30792,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30872,10 +31148,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32409,10 +32681,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -32490,6 +32758,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32859,6 +33131,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Associations%2C Alliances and NGOs</fullName>
@@ -33087,7 +33386,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33095,6 +33394,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33106,6 +33421,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33125,11 +33444,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35074,10 +35401,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>MSO Member Sales Office</fullName>
                 <default>false</default>
             </values>
@@ -35095,6 +35418,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35551,6 +35878,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36131,35 +36485,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36167,6 +36521,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36178,6 +36548,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36197,11 +36571,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -37318,10 +37700,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39185,6 +39563,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
@@ -39384,6 +39789,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Active</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>SIS_Sub_Status__c</picklist>
@@ -39393,6 +39814,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39412,11 +39837,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39665,10 +40098,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42429,7 +42858,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ICCS_Membership_Status__c</picklist>
             <values>
-                <fullName>Bankrupt</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42441,11 +42870,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Merged</fullName>
+                <fullName>Prospect</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prospect</fullName>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43013,7 +43446,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43021,6 +43454,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43032,6 +43481,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43051,11 +43504,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46969,6 +47430,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Airline</fullName>
@@ -47428,7 +47916,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47436,6 +47924,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47447,6 +47951,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -47466,11 +47974,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -47742,10 +48258,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49802,6 +50314,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Airline</fullName>
@@ -50087,7 +50626,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50095,6 +50634,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50106,6 +50661,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -50125,11 +50684,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54216,6 +54783,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>General Sales Agent</fullName>
@@ -54512,7 +55106,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54520,6 +55114,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54531,6 +55141,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54550,11 +55164,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58206,10 +58828,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -58287,6 +58905,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58502,6 +59124,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58898,7 +59547,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58906,6 +59555,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58917,6 +59582,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58936,11 +59605,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59292,10 +59969,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60997,6 +61670,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -61389,7 +62089,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61397,6 +62097,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61408,6 +62124,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61427,11 +62147,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61719,10 +62447,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63423,6 +64147,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -63815,7 +64566,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63823,6 +64574,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63834,6 +64601,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63853,11 +64624,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64145,10 +64924,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IGHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65649,10 +66424,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -65730,6 +66501,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65981,6 +66756,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66576,7 +67378,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66584,6 +67386,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66595,6 +67413,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66614,11 +67436,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68781,10 +69611,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -68866,6 +69692,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71012,7 +71842,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ICCS_Membership_Status__c</picklist>
             <values>
-                <fullName>Bankrupt</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71024,11 +71854,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Merged</fullName>
+                <fullName>Prospect</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prospect</fullName>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72170,15 +73004,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72186,6 +73020,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72197,6 +73047,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -72216,11 +73070,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74364,10 +75226,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Governments</fullName>
                 <default>false</default>
             </values>
@@ -76336,6 +77194,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Domestic Agent</fullName>
                 <default>false</default>
             </values>
@@ -76405,10 +77267,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IBCS consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76493,6 +77351,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76821,6 +77683,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77441,7 +78330,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77449,6 +78338,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77460,6 +78365,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77479,11 +78388,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77511,6 +78428,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -80695,10 +81616,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Government</fullName>
                 <default>false</default>
             </values>
@@ -80780,6 +81697,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recipient</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -81256,6 +82177,33 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICCS_Membership_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82164,35 +83112,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82200,6 +83148,22 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>SIS_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82211,6 +83175,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA RESELLER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82230,11 +83198,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -83494,10 +84470,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Individual Governments</fullName>
                 <default>false</default>
             </values>
@@ -84185,14 +85157,14 @@ ANG_IsNewGenAgency__c,
 
 NOT(Country_ISO_Code__c  = &apos;BR&apos;),
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
 AND(
 
@@ -84200,14 +85172,14 @@ ANG_IsNewGenAgency__c,
 
 Country_ISO_Code__c  = &apos;BR&apos;,
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
 )</errorConditionFormula>
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>
@@ -84285,6 +85257,14 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 ,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
         <errorDisplayField>Reason_for_creation__c</errorDisplayField>
         <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_agency_BR_without_parent_accoun</fullName>
+        <active>false</active>
+        <description>Block users from creating or editing BR Agency RT without a parent account</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;IATA_Agency&quot;,ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISBLANK(ParentId))</errorConditionFormula>
+        <errorDisplayField>ParentId</errorDisplayField>
+        <errorMessage>BR Accounts cannot be created without a parent.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>
@@ -84548,29 +85528,38 @@ var connection = sforce.connection;
 
 var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
 
-var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
+    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
+    
+}else{
+    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
 
-newmsoagency.RecordTypeId = recType.Id;
-newmsoagency.Name = &apos;{!Account.Name}&apos;;
-newmsoagency.Sector__c = &quot;Travel Agent&quot;;
-newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
-newmsoagency.Location_Class__c = &quot;M&quot;;
-newmsoagency.Location_Type__c = &quot;HO&quot;;
-newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+    newmsoagency.RecordTypeId = recType.Id;
+    newmsoagency.Name = &apos;{!Account.Name}&apos;;
+    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+    newmsoagency.Location_Class__c = &quot;M&quot;;
+    newmsoagency.Location_Type__c = &quot;HO&quot;;
+    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
 
-if({!Account.IATA_Member__c} == true) { 
-newmsoagency.Location_Category__c = &quot;IC&quot;; 
-} 
-else { 
-newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    if({!Account.IATA_Member__c} == true) { 
+        newmsoagency.Location_Category__c = &quot;IC&quot;; 
+    } else { 
+        newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    }
+
+    result = sforce.connection.create([newmsoagency]);
+    var accId = result[0].id;
+
+    var airlineId = &apos;{!Account.Id}&apos;;
+
+    if (typeof srcUp == &apos;function&apos;) {	
+		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+	}else{
+		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+        alert(&apos;This option is to use on the console&apos;);
+	}
 }
-
-result = sforce.connection.create([newmsoagency]);
-var accId = result[0].id;
-
-var airlineId = &apos;{!Account.Id}&apos;;
-
-javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>
