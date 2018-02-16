@@ -260,7 +260,7 @@ public without sharing class ISSP_Case {
             if (paramTopic == 'SA') {
                 newCase.Subject = 'New SA - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Process';
-                newCase.Reason1__c = 'New SA / CHV – New Code';
+                newCase.Reason1__c = 'New SA / CHV - New Code';
                 newCase.Status = 'Draft';
                 newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                 isAccreditationUploadCase = true;
