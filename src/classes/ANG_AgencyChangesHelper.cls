@@ -94,6 +94,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static void handleNewGenChangesProcess(List<AMS_Oscar__c> oscars){
 
+		System.debug('## entering changes...');
 		AMS_Utils.AgChangesConfig config = null;
 
 		AMS_OSCAR__c oscar = oscars[0];
@@ -249,6 +250,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
+				System.debug('###1before1 entering approval');
 
 				if(config == null)
 					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
@@ -256,6 +258,20 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
+
+				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In'){
+					System.debug('### entering approval');
+
+					Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+
+					for (Account a :changesContainer.accountsMap.values()){
+						System.debug('### a: '+a);
+		                if(a.ANG_FA_Opt_out__c != valueToAgency ){
+		                	System.debug('### a2: '+a);
+		                    a.ANG_FA_Opt_out__c = valueToAgency;
+		                }
+					}
+				}
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -274,7 +290,6 @@ public with sharing class ANG_AgencyChangesHelper {
 					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
 
 				validationBeforeClosure(oscar, config);
-
 			}
 
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint5 changesCodes are:'+ changesContainer.changeCodesToCreateDef);
@@ -1259,7 +1274,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_IsNewGenAgency__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
