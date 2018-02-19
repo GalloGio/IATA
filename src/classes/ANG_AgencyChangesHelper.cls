@@ -974,18 +974,20 @@ public with sharing class ANG_AgencyChangesHelper {
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
 
+	        //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
+	        toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+
+        	oscarToProcess.ANG_FA_Opt_out__c = 'Not Applicable';	
         }
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
 
-        //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
-        toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
 
 		return toReturn;
 	}
