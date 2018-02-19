@@ -1035,7 +1035,7 @@ public without sharing class ISSP_Case {
     }
 
     /**
-        Take ownership of a case for DPC (except RT Inner DPC)
+        Take ownership of a case for DPC (except RT Inter DPC)
     **/
     public Pagereference DPCAccept() {
         newCase.ACCA_Owner__c = UserInfo.getUserId();
@@ -1056,16 +1056,14 @@ public without sharing class ISSP_Case {
     }
 
     /**
-        Take ownership of a case for DPC (only RT Inner DPC)
+        Take ownership of a case for DPC (only RT Inter DPC)
     **/
-    public PageReference InnerDPCAccept() {
+    public PageReference InterDPCAccept() {
         Savepoint sp = Database.setSavepoint();
         try {
             //change owner
-            User newOwner = [SELECT Id, ContactId FROM User WHERE User.Id = :UserInfo.getUserId()];
-            newCase.ContactId = newOwner.ContactId; //Make the DPC user the contact for DPC SRs
-            newCase.OwnerId = newOwner.Id;
-            newCase.ACCA_Owner__c = newOwner.Id;
+            newCase.OwnerId = UserInfo.getUserId();
+            newCase.ACCA_Owner__c = UserInfo.getUserId();
             newCase.Status = 'In progress';
             update newCase;
 
