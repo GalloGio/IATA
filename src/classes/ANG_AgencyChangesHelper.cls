@@ -250,7 +250,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
-				System.debug('###1before1 entering approval');
 
 				if(config == null)
 					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
@@ -259,19 +258,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In'){
-					System.debug('### entering approval');
-
-					Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
-
-					for (Account a :changesContainer.accountsMap.values()){
-						System.debug('### a: '+a);
-		                if(a.ANG_FA_Opt_out__c != valueToAgency ){
-		                	System.debug('### a2: '+a);
-		                    a.ANG_FA_Opt_out__c = valueToAgency;
-		                }
-					}
-				}
+				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In')
+					changesContainer = handleFAOptOut(oscar, changesContainer, null);
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -986,6 +974,7 @@ public with sharing class ANG_AgencyChangesHelper {
         	removeContactsFlag(accountsAffected);
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
+
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
@@ -995,6 +984,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
+
+        //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
+        toReturn = handleFAOptOut(oscarToProcess, toReturn, FALSE);
 
 		return toReturn;
 	}
@@ -1452,5 +1444,24 @@ public with sharing class ANG_AgencyChangesHelper {
     	}
 
     	return toReturn;
+    }
+
+    private static AChangeStructure handleFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Boolean bOptOut){
+
+			Boolean valueToAgency;
+
+			if(bOptOut != null)
+				valueToAgency = bOptOut;
+			else
+				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+
+			for (Account a :changesContainer.accountsMap.values()){
+                if(a.ANG_FA_Opt_out__c != valueToAgency ){
+                    a.ANG_FA_Opt_out__c = valueToAgency;
+                }
+			}
+
+
+		return changesContainer;
     }
 }

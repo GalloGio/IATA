@@ -40717,7 +40717,8 @@ NOT(ISCHANGED(Reason_for_change_of_Financial_result__c ))
 NOT( 
 OR( 
 $Profile.Name = &apos;System Administrator&apos;, 
-$Profile.Name = &apos;System Administrator - automated processes&apos; 
+$Profile.Name = &apos;System Administrator - automated processes&apos;,
+AND( ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;), ISPICKVAL(ANG_FA_Opt_out__c, &apos;Opt-Out&apos;))
 )
 )
 )</errorConditionFormula>
