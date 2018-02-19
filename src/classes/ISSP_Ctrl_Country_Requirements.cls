@@ -127,7 +127,13 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             countryIsoCode = user.contact.Account.IATA_ISO_Country__r.ISO_Code__c;
             
             category = user.contact.Account.Category__c;
-            sector = user.contact.Account.Sector__c;
+            
+            //
+            // At this point the country requirements are only available for Travel Agents.
+            //
+            sector = 'Travel Agent';
+            //sector = user.contact.Account.Sector__c;
+
             countryName = user.contact.Account.IATA_ISO_Country__r.Name; 
             amsCountryLabel = countryName;
             isHOAccredited = false;
