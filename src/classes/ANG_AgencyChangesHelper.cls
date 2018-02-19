@@ -94,7 +94,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static void handleNewGenChangesProcess(List<AMS_Oscar__c> oscars){
 
-		System.debug('## entering changes...');
 		AMS_Utils.AgChangesConfig config = null;
 
 		AMS_OSCAR__c oscar = oscars[0];
@@ -259,7 +258,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
 				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In')
-					changesContainer = handleFAOptOut(oscar, changesContainer, null);
+					changesContainer = applyFAOptOut(oscar, changesContainer, null);
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -986,7 +985,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			upsert toUpsert;
 
         //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
-        toReturn = handleFAOptOut(oscarToProcess, toReturn, FALSE);
+        toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
 
 		return toReturn;
 	}
@@ -1446,14 +1445,23 @@ public with sharing class ANG_AgencyChangesHelper {
     	return toReturn;
     }
 
-    private static AChangeStructure handleFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Boolean bOptOut){
+    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Boolean bOptOut){
 
 			Boolean valueToAgency;
 
-			if(bOptOut != null)
+			// check if we are forcing a value depending on type of changes
+			if(bOptOut != null){
+
 				valueToAgency = bOptOut;
-			else
+
+				// if we force value FALSE then ANG_FA_Opt_out__c in not applicable
+				if (!valueToAgency){	
+					oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+				}
+
+			} else {
 				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+			}
 
 			for (Account a :changesContainer.accountsMap.values()){
                 if(a.ANG_FA_Opt_out__c != valueToAgency ){

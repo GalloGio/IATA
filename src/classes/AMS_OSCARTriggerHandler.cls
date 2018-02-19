@@ -368,10 +368,6 @@ public class AMS_OSCARTriggerHandler {
 
             }
 
-            if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.Type_of_change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-                oscar.ANG_FA_Opt_out__c = 'Not Applicable';
-            }
-
         }
     }
 
