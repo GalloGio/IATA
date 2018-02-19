@@ -3,6 +3,11 @@ private class ANG_AccountTriggerHandlerTest {
 
 
 	@testSetup static void createData() {
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Prov', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/calculatedrhc/{agencyId}/v1', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Bal', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/consumedrhc/{agencyId}/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
+
         Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
         Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
@@ -15,7 +20,6 @@ private class ANG_AccountTriggerHandlerTest {
 		ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B, ANG_Limit_Cash_Condition__c = false);
 		ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(RecordTypeId = riskStatusAssessmentRT, ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, ANG_Risk_History_Assessment__c = AMS_Utils.FAILED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c, ANG_Limit_Cash_Condition__c = true);
 		insert new List<ANG_Agency_Risk_Calculation__c>{calcA, calcB, calcC};
-
 	}
 	
 	static testMethod void test_riskStatus_allcases() {
@@ -26,6 +30,9 @@ private class ANG_AccountTriggerHandlerTest {
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] first update should be A');
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY;
 		a.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.PASSED;
+
+		System.debug('ALEX test_riskStatus_allcases accountId: ' + a.id);
+
 		update a;
 
 		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, Subject FROM Cases) FROM Account WHERE Name = 'Test'];
@@ -60,11 +67,15 @@ private class ANG_AccountTriggerHandlerTest {
 		
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+
+		System.debug('ALEX test_RHCupdate accountId: ' + a.id);
+
 		update a;
 
 		Test.startTest();
 
 		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+
 		update a;
 
 		Test.stopTest();
@@ -119,4 +130,24 @@ private class ANG_AccountTriggerHandlerTest {
 		Test.stopTest();
 
 	}
+/*
+	static testMethod void test_updateRHCInformation_OptIN_OptOUT() {
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+
+		List<Account> l = new List<Account>();
+
+		l.add(new Account(Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1'));
+		l.add(new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2'));
+		l.add(new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3'));
+
+		insert l;
+
+		//l[0].Name = 'NameTest11';
+		//l[1].Name = 'NameTest22';
+		//l[2].Name = 'NameTest33';
+
+		update l;
+	}
+	*/
 }

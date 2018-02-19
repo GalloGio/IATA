@@ -1,5 +1,9 @@
 public class ANG_AccountTriggerHandler {
 
+	private static Integer LIST_LIMIT = 90;
+	private static Integer FIRST_WS = 1;
+	private static Integer SECOND_WS = 2;
+
 	public static Boolean isExpiration{
 		get{
 			if(isExpiration == null) isExpiration = false;
@@ -42,6 +46,7 @@ public class ANG_AccountTriggerHandler {
 		UpdateRiskEventStatus();
 		updateRHCInformation();
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id', 'Top_Parent__c').run();
+		updateRHCInformation_OptIN_OptOUT();
 	}
 
 	public void onBeforeDelete(){}
@@ -397,6 +402,24 @@ public class ANG_AccountTriggerHandler {
 		update reToUpdateList;
 	}
 
+	private void updateRHCInformation_OptIN_OptOUT() {
+
+		if(triggerNew.size() < LIST_LIMIT) {
+
+			System.debug('ALEX updateRHCInformation_OptIN_OptOUT first Call');
+
+			ANG_UpdateRHCInformationHandler.ExecuteUpdateInformationHandler(triggerNew, FIRST_WS);
+
+			System.debug('ALEX updateRHCInformation_OptIN_OptOUT triggerNew : ' + triggerNew);
+
+			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(triggerNew, SECOND_WS);
+			database.executebatch(b);
+		} else {
+			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(triggerNew, FIRST_WS);
+			database.executebatch(b);
+		}
+
+	}
 
 	private void runRiskAssessment() {
 		

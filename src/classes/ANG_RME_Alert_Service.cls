@@ -190,8 +190,9 @@ global class ANG_RME_Alert_Service {
 
 	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
 	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
@@ -271,6 +272,8 @@ global class ANG_RME_Alert_Service {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
+
+		log = null;
 
 		return result;
 	}
