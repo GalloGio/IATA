@@ -3309,6 +3309,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <default>false</default>
                     <label>ANG.FOPMANAGEMENT.1.0</label>
                 </value>
+				<value>
+                    <fullName>PCI.COMPLIANT.1.0</fullName>
+                    <default>false</default>
+                    <label>PCI.COMPLIANT.1.0</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -23182,6 +23187,17 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
+		<picklistValues>
+			<picklist>Is_PCI_compliant__c</picklist>
+			<values>
+				<fullName>Yes</fullName>
+				<default>true</default>
+			</values>
+			<values>
+				<fullName>No</fullName>
+				<default>false</default>
+			</values>
+		</picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
@@ -23273,6 +23289,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>PCI%2ECOMPLIANT%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31777,6 +31797,17 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
         </picklistValues>
+		<picklistValues>
+			<picklist>Is_PCI_compliant__c</picklist>
+			<values>
+				<fullName>Yes</fullName>
+				<default>true</default>
+			</values>
+			<values>
+				<fullName>No</fullName>
+				<default>false</default>
+			</values>
+		</picklistValues>
         <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
