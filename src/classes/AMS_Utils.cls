@@ -2480,6 +2480,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     // if secondvalue < firstValuue , returns 2
     // if there is a rate problem, return -1
     // if there is a amount problem, return -2
+    /*NEWGEN-2809
     public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
 
         if(firstValue == null || secondValue == null){
@@ -2516,7 +2517,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         System.debug('Returning 0');
         return 0;
     
-    }
+    }*/
 
     public static Contact getIEPContact(String conId) {
         return [SELECT User_Portal_Status__c,
