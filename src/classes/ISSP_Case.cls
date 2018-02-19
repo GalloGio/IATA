@@ -1715,4 +1715,20 @@ public without sharing class ISSP_Case {
     public Boolean getIsInterDPCCase() {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
     }
+    
+    public list<CaseHistory> getListCaseHistory() {
+        list<CaseHistory> listHistory = new list<CaseHistory>();
+        for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
+            FROM CaseHistory
+            WHERE CaseId = :newCase.Id
+            ORDER BY CreatedDate DESC]
+        ) {
+            try {
+                Id tmp = (Id)history.newValue;//ignore lines with ids
+            } catch(Exception e) {
+                listHistory.add(history);
+            }
+        }
+        return listHistory;
+    }
 }

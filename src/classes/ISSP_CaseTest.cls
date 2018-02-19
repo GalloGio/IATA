@@ -733,6 +733,7 @@ public class ISSP_CaseTest {
             cttr.whoToContact = account.Id;
             cttr.additionalRecipients=user.Email;
             cttr.save();
+            cttr.getListCaseHistory();
             System.assertEquals(true,cttr.getIsInterDPCCase());
         }
         Test.stopTest();

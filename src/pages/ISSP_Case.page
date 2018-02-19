@@ -1202,9 +1202,17 @@
                                     </apex:pageblocktable>
                                 </apex:pageblock>
 
+                                <apex:pageblock title="{!$ObjectType.CaseHistory.label}" rendered="{!IsInterDPCCase}">
+                                    <apex:pageblocktable value="{!listCaseHistory}" var="item" styleclass="table-hover table table-condensed table-responsive">
+                                        <apex:column value="{!item.CreatedDate}" />
+                                        <apex:column value="{!item.CreatedBy.Name}" headervalue="{!$ObjectType.CaseHistory.fields.CreatedById.label}"/>
+                                        <apex:column value="{!item.Field}" />
+                                        <apex:column value="{!item.OldValue}" />
+                                        <apex:column value="{!item.NewValue}" />
+                                    </apex:pageblocktable>
+                                </apex:pageblock>
 
                             </apex:form>
-
 
                             <script>
         $('.bDetailBlock ').last().hide();
