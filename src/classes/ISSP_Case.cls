@@ -80,8 +80,6 @@ public without sharing class ISSP_Case {
     public String caseTypeSelection {get; set;}
     private String caseTypeSelectionInit;
     public String caseClassificationSelection {get; set;}
-    
-    public Boolean isMSOcase {get; set;}
 
     //Store PDF per type of Accreditation request e.g. TIDS, VR etc,
     public List <ISSP_PDF_Per_Region__c> pdfPerAccreditationTypeList {get; set;}
@@ -205,7 +203,6 @@ public without sharing class ISSP_Case {
         System.debug('xx2 Controller ');
         newCase = new Case();
 
-        isMSOcase = false;
         showAP = false;
         showAccreditation = false;
         isAccreditationUploadCase = false;
@@ -1717,21 +1714,5 @@ public without sharing class ISSP_Case {
     
     public Boolean getIsInterDPCCase() {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
-    }
-    
-    public list<CaseHistory> getListCaseHistory() {
-        list<CaseHistory> listHistory = new list<CaseHistory>();
-        for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
-            FROM CaseHistory
-            WHERE CaseId = :newCase.Id
-            ORDER BY CreatedDate DESC]
-        ) {
-            try {
-                Id tmp = (Id)history.newValue;//ignore lines with ids
-            } catch(Exception e) {
-                listHistory.add(history);
-            }
-        }
-        return listHistory;
     }
 }
