@@ -65,14 +65,6 @@ public class AMS_OSCARTriggerHandler {
     //*************************************
     //********* context methods ***********
     //*************************************
-    /*** AMSU-113 Start ***/
-    public static Set<String> pciCompliantProcesses {
-        get {
-            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
-        }
-        set;
-    }
-    /*** AMSU-113 End ***/
 
     public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
 
@@ -101,8 +93,8 @@ public class AMS_OSCARTriggerHandler {
 
         handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
         
-        /*** AMSU-113 Start ***/
-        processPCICompliant(Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+		/*** AMSU-113 Start ***/
+        processPCIComplaint((List<AMS_OSCAR__c>) Trigger.new);
         /*** AMSU-113 End ***/
 	}
 
@@ -127,32 +119,26 @@ public class AMS_OSCARTriggerHandler {
         updateCaseInfo();
         createHoAdminNotifications();
         /*** AMSU-113 Start ***/
-        updateAccountPCICompliant((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        updateAccountPCIComplaint((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 End ***/
 	}
 
     /*** AMSU-113 Start ***/
-    public static void processPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
+    public static void processPCIComplaint(List<AMS_OSCAR__c> oscars) {
         for(AMS_Oscar__c oscar : oscars) {
-            AMS_Oscar__c oldOscar = oldMap.get(oscar.Id);
-            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Is_PCI_compliant__c == 'No') {
-                oscar.Change_Code__c = 'PCI';
+            if(!String.isBlank(oscar.Account__c) && oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Status__c != AMS_Utils.OSCAR_CLOSED) {
+                oscar.Status__c = 'Submitted';
             }
         }
-    } 
+    }
 
-    public static void updateAccountPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+    public static void updateAccountPCIComplaint(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         List<Account> accsToUpdate = new List<Account>();
         for(AMS_Oscar__c oscar : oscars) {
             AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
-            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
-                Account accToUpdate = new Account(Id= oscar.Account__c, Is_PCI_compliant__c= oscar.Is_PCI_compliant__c);
-                if(oscar.Is_PCI_compliant__c == 'Yes') {
-                    accToUpdate.ANG_PCI_compliance_expiry_date__c= oscar.ANG_PCI_compliance_expiry_date__c;
-                    accToUpdate.PCI_DSS_Compliant__c = null;
-                }
-                accsToUpdate.add(accToUpdate);
-            }
+            if(!String.isBlank(oscar.Account__c) && oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
+                accsToUpdate.add(new Account(Id= oscar.Account__c, Is_PCI_compliant__c= oscar.Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c= oscar.ANG_PCI_compliance_expiry_date__c));
+	}
         }
 
         if(!accsToUpdate.isEmpty()) {
