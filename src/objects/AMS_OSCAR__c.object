@@ -34140,14 +34140,14 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
     </validationRules>
     <validationRules>
         <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Block from using the OSCAR on accounts that are not Agency or Standard</description>
         <errorConditionFormula>AND(
   NOT(OR(
     Account__r.RecordType.DeveloperName=&quot;Standard_Account&quot;,
     Account__r.RecordType.DeveloperName=&quot;IATA_Agency&quot;
   )),
-  ISCHANGED(Sanity_check_results__c)
+  ISNEW()
 )</errorConditionFormula>
         <errorMessage>OSCAR object can&apos;t be used in accounts that are not Agencies or Standard</errorMessage>
     </validationRules>
