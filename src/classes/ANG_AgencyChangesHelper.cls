@@ -257,6 +257,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
+				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In')
+					changesContainer = applyFAOptOut(oscar, changesContainer, null);
+
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
 				if(config == null)
@@ -978,6 +981,9 @@ public with sharing class ANG_AgencyChangesHelper {
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
 
+	    //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
+	    toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
+
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
 
@@ -1259,7 +1265,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_IsNewGenAgency__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1436,5 +1443,33 @@ public with sharing class ANG_AgencyChangesHelper {
     	}
 
     	return toReturn;
+    }
+
+    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Boolean bOptOut){
+
+			Boolean valueToAgency;
+
+			// check if we are forcing a value depending on type of changes
+			if(bOptOut != null){
+
+				valueToAgency = bOptOut;
+
+				// if we force value FALSE then ANG_FA_Opt_out__c in not applicable
+				if (!bOptOut){	
+					oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+				}
+
+			} else {
+				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+			}
+
+			for (Account a :changesContainer.accountsMap.values()){
+                if(a.ANG_FA_Opt_out__c != valueToAgency ){
+                    a.ANG_FA_Opt_out__c = valueToAgency;
+                }
+			}
+
+
+		return changesContainer;
     }
 }
