@@ -17091,7 +17091,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
-        <value>Thank you for submiting the request for Credit Card form of Payment.</value>
+        <value>Thank you for submitting your self-declaration or PCI DSS Certificate.</value>
     </labels>
     <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
