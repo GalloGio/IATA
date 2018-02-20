@@ -68,7 +68,7 @@
         </aura:renderIf>
     </td>
     <aura:renderIf isTrue="{!v.isEditMode }">
-        <td><ui:inputText value="{!v.issue.Name}" class="slds-input required" /></td>
+        <td><ui:inputText value="{!v.issue.Name}" class="slds-input required" maxlength="80"/></td>
         <td>
             <!--<c:LookupSObject preselectedSearchString="Source"
             label="Contact" pluralLabel="Contacts" sObjectAPIName="contact"
