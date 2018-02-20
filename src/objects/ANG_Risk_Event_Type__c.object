@@ -70,6 +70,7 @@
         <defaultValue>0</defaultValue>
         <description>Number of days Risk Event should wait before receiving the Cash Conditions check</description>
         <externalId>false</externalId>
+        <inlineHelpText>If value equals to 0 cash condition will be enforced on creation. Leave blank to prevent limit cash condition</inlineHelpText>
         <label>Delay Cash Condition (Days)</label>
         <precision>3</precision>
         <required>false</required>
