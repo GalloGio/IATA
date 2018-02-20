@@ -14,6 +14,9 @@ private class AMS_EBulletinReport_Test {
 
 	@testSetup static void dataSetupForEBulletin() {
 		
+		//EM: To be deleted
+		AMS_EBulletinReportWebservice amsweb = new AMS_EBulletinReportWebservice();
+		
 		/**
 		 1. Iso Countries
 		*/
