@@ -257,8 +257,27 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In')
-					changesContainer = applyFAOptOut(oscar, changesContainer, null);
+				if (containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP},oscar.ANG_Type_Of_Change__c)) {
+
+					// If opt-out is not applicable we'll put the value of the new parent
+					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c == null ? false : changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c);
+					
+					//else we'll get the value input on the oscar
+					}else { 
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false);
+					}
+
+				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+
+	    			changesContainer= applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, FALSE);
+	    		
+	    		//all other changes
+				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In'){
+					// if a value for FA opt-out is selected on the oscar left panel, put it on the accounts involved
+					changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet ,null);
+				}				
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -719,7 +738,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
 			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
 		}
-
+ 
 		return toReturn;
 	}
 
@@ -980,9 +999,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
-
-	    //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
-	    toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
@@ -1445,30 +1461,29 @@ public with sharing class ANG_AgencyChangesHelper {
     	return toReturn;
     }
 
-    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Boolean bOptOut){
+    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean bOptOut){
 
 			Boolean valueToAgency;
 
-			// check if we are forcing a value depending on type of changes
+			// check if we are forcing a value - depending on type of changes
 			if(bOptOut != null){
 
 				valueToAgency = bOptOut;
 
-				// if we force value FALSE then ANG_FA_Opt_out__c in not applicable
-				if (!bOptOut){	
-					oscar.ANG_FA_Opt_out__c = 'Not Applicable';
-				}
+				//// if we are forcing the value FALSE then make sure ANG_FA_Opt_out__c in not applicable
+				//if (!bOptOut){	
+				//	oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+				//}
 
 			} else {
 				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
 			}
 
-			for (Account a :changesContainer.accountsMap.values()){
-                if(a.ANG_FA_Opt_out__c != valueToAgency ){
-                    a.ANG_FA_Opt_out__c = valueToAgency;
+			for (Id key: accountIdsInvolvedSet){
+                if(changesContainer.accountsMap.get(key).ANG_FA_Opt_out__c != valueToAgency ){
+                    changesContainer.accountsMap.get(key).ANG_FA_Opt_out__c = valueToAgency;
                 }
 			}
-
 
 		return changesContainer;
     }

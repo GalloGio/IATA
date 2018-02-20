@@ -197,7 +197,7 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-	    <fields>
+    <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
         <externalId>false</externalId>
@@ -7419,7 +7419,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 </value>
                 <value>
                     <fullName>Not Applicable</fullName>
-                    <default>false</default>
+                    <default>true</default>
                     <label>Not Applicable</label>
                 </value>
             </valueSetDefinition>
