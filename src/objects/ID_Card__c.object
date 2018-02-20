@@ -213,9 +213,9 @@ two record types:
                     <label>ERROR Missing Information</label>
                 </value>
                 <value>
-                    <fullName>Pending/In Progress</fullName>
+                    <fullName>ID Card Pending/In Progress</fullName>
                     <default>false</default>
-                    <label>Pending/In Progress</label>
+                    <label>ID Card Pending/In Progress</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1043,27 +1043,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>must_synch_with_aims</fullName>
-        <columns>NAME</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Card_Status__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>MustSyncWithAIMS__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>equals</operation>
-            <value>Cancelled,Cancelled ID Card</value>
-        </filters>
-        <label>Must Sync on Cancelled Cards</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <displayFormat>IDC-{000000000}</displayFormat>
         <label>ID Card Name</label>
@@ -1090,6 +1069,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
+                <fullName>Cancelled ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ERROR Missing Information</fullName>
                 <default>false</default>
             </values>
@@ -1107,6 +1090,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1208,7 +1195,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Pending%2FIn Progress</fullName>
+                <fullName>ID Card Pending%2FIn Progress</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1338,7 +1325,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
@@ -1348,12 +1335,12 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      window.location.reload();
 } 
 
-else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Sent ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
