@@ -1545,10 +1545,10 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case childCase = createSIDRALite(ifapCase);
         insert childCase;
-
-        Test.startTest();
+        
         try {
             WSSidraLite.updateSidraLiteAndParent(ifapCase, childCase);
         } catch (SidraLiteHelperForIFAP.SidraLiteException e) {
@@ -1985,6 +1985,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase = createSIDRALite(ifapCase);
         insert sidraLiteCase;
         
@@ -1992,7 +1993,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+       
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase, account);
         System.assert(result.size()==1, 'Expected 1 case comment');
         Test.stopTest();
@@ -2003,6 +2004,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase1 = createSIDRALite(ifapCase);
         Case sidraLiteCase2 = createSIDRALite(ifapCase);
         insert new list<Case>{sidraLiteCase1, sidraLiteCase2};
@@ -2014,7 +2016,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+        
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase1, account);
         System.assert(result.size()==2, 'Expected 2 case comments');
         Test.stopTest();
