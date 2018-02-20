@@ -257,9 +257,28 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-				// if a value for FA opt-out is selected on the oscar left panel, put it on the accounts involved
-				if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In')
+				if (containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP},oscar.ANG_Type_Of_Change__c)) {
+
+					// If opt-out is not applicable we'll put the value of the new parent
+					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c == null ? false : changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c);
+					
+					//else we'll get the value input on the oscar
+					}else { 
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false);
+					}
+
+				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+
+	    			changesContainer= applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, FALSE);
+	    		
+	    		//all other changes
+				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In'){
+					// if a value for FA opt-out is selected on the oscar left panel, put it on the accounts involved
 					changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet ,null);
+				}				
+
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -720,13 +739,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
 			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
 		}
-
-		// If opt-out is not applicable we'll put the value of the new parent
-		if(oscarToProcess.ANG_FA_Opt_out__c == 'Not Applicable'){ 
-			toReturn = applyFAOptOut(oscarToProcess, toReturn, accountIdsInvolvedSet, toReturn.accountsMap.get(oscarToProcess.New_Parent__c).ANG_FA_Opt_out__c == null ? false : toReturn.accountsMap.get(oscarToProcess.New_Parent__c).ANG_FA_Opt_out__c);
-		}else{ //else we'll get the value input on the oscar
-			toReturn = applyFAOptOut(oscarToProcess, toReturn, accountIdsInvolvedSet, oscarToProcess.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false);
-		}
  
 		return toReturn;
 	}
@@ -988,9 +1000,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
-
-	    //NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
-	    toReturn = applyFAOptOut(oscarToProcess, toReturn, accountsAffected, FALSE);
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
