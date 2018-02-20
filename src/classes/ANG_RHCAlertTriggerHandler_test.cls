@@ -97,7 +97,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId test_sucess_legacy(){
 
-		Test.StartTest();
+		Test.startTest();
 
 		Contact contact = new Contact(
 			FirstName = 'test',
@@ -125,13 +125,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert ara;
 
 		System.assertEquals(1, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'There should one Process Case Created');
-		Test.StopTest();
+		Test.stopTest();
 
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
 	}
 
 	private static testmethod voId test_sucess_newgen(){
-		Test.StartTest();
+
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
 		update country;
@@ -144,6 +144,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			email = 'testiata@yopmail.com'
 		);
 		insert contact;
+
+		Test.startTest();
 
 		ISSP_ObjectFactory.createPortalUser(contact);
 
@@ -161,13 +163,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 		);
 
 		insert ara;
-		Test.StopTest();
+
+		Test.stopTest();
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
 	}
 
 	private static testmethod voId testRiskAlertCreationNoConfigurationMatched(){
 
-		Test.StartTest();
+		Test.startTest();
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
@@ -179,12 +182,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert ara;
 
 		System.assert(![SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was sent');
-		Test.StopTest();
+		Test.stopTest();
 	}
 
 	private static testmethod voId testRestrictFOPonRiskAlertCreation(){
 
-		Test.StartTest();
+		Test.startTest();
 
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
 			new AMS_ChangeCodes__c(
@@ -233,14 +236,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals(1,[SELECT ID from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Non-Active'].Size());
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
 
-		Test.StopTest();
+		Test.stopTest();
 
 
 	}
 
 	private static testmethod voId testRestoreFOPonRiskAlertCreation(){
 
-		Test.StartTest();
+		Test.startTest();
 
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
 			new AMS_ChangeCodes__c(
@@ -289,7 +292,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals(1,[SELECT ID from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active'].Size());
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR' and Active__c = true].Size());
 
-		Test.StopTest();
+		Test.stopTest();
 
 
 	}
