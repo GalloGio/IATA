@@ -35,12 +35,20 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		);		
 		insert listRequirements;
 
+		list<AMS_Accreditation_Country_CheckList__c> ll = new List<AMS_Accreditation_Country_CheckList__c>();
 		AMS_Accreditation_Country_CheckList__c cc = new AMS_Accreditation_Country_CheckList__c(
 				IATA_ISO_Country__c = listCountries.get(2).id,
 				Operation__c = 'Airline'
 			);
 
-		insert cc;
+		AMS_Accreditation_Country_CheckList__c cc2 = new AMS_Accreditation_Country_CheckList__c(
+				IATA_ISO_Country__c = listCountries.get(2).id,
+				Operation__c = 'Travel Agent'
+			);
+		ll.add(cc);
+		ll.add(cc2);
+
+		insert ll;
 
 		List<AMS_Accreditation_Requirement__c> lst = new List<AMS_Accreditation_Requirement__c>();
 
@@ -240,6 +248,9 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
         System.runAs(testUser) {
             ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+
+            controller.getLanguagesMap();
+            controller.getCountryRequirementsList();
         }	
 
         Test.stopTest();
