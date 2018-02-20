@@ -1000,9 +1000,6 @@ public with sharing class ANG_AgencyChangesHelper {
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
 
-	    //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
-	    toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
-
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
 

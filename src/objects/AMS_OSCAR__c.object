@@ -197,40 +197,6 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-	    <fields>
-        <fullName>ANG_FA_Opt_out__c</fullName>
-        <defaultValue>&quot;Not Applicable&quot;</defaultValue>
-        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
-        <label>Financial assessment opt-in / opt-out</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Opt-In</fullName>
-                    <default>false</default>
-                    <label>Opt-In</label>
-                </value>
-                <value>
-                    <fullName>Opt-Out</fullName>
-                    <default>false</default>
-                    <label>Opt-Out</label>
-                </value>
-                <value>
-                    <fullName>Not Applicable</fullName>
-                    <default>false</default>
-                    <label>Not Applicable</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
     <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
@@ -7453,7 +7419,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 </value>
                 <value>
                     <fullName>Not Applicable</fullName>
-                    <default>false</default>
+                    <default>true</default>
                     <label>Not Applicable</label>
                 </value>
             </valueSetDefinition>
