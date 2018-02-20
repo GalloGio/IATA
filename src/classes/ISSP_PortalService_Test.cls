@@ -208,6 +208,8 @@ public class ISSP_PortalService_Test {
 		con2.Community__c = 'ISS Customer Portal';
 		cl.add(con2);
 		
+		Test.startTest();
+		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;
 		con3.Email = 'con3@test.test';
@@ -218,8 +220,6 @@ public class ISSP_PortalService_Test {
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation'); 
         insert app;
-
-        Test.startTest();
         
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'IATA Accreditation');

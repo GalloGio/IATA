@@ -279,7 +279,6 @@ public with sharing class ANG_AgencyChangesHelper {
 					changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet ,null);
 				}				
 
-
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
 				if(config == null)
@@ -1000,6 +999,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
         }
+
+	    //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
+	    toReturn = applyFAOptOut(oscarToProcess, toReturn, FALSE);
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;

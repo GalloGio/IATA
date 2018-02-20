@@ -202,7 +202,7 @@ Contact__r.AccountId
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Local_Group_Type__c</fullName>
@@ -637,6 +637,19 @@ Contact__r.Account.Name
 )</errorConditionFormula>
         <errorMessage>The contact chosen must have a value for the following fields:
 First Name, Last Name, Title, Email and Account Name. Please complete these information and try again.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Create_Edit_Participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Reg_Div_Groups&apos;,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Local_Groups&apos;,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to add or edit participants to this group</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Group_Type</fullName>

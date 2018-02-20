@@ -3203,6 +3203,11 @@ SIS Charge Code Type.</description>
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Floating License</fullName>
                     <default>false</default>
                     <label>Floating License</label>
@@ -3711,6 +3716,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>Excel Spreadsheet</fullName>
                     <default>false</default>
                     <label>Excel Spreadsheet</label>
+                </value>
+                <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
                 </value>
                 <value>
                     <fullName>Forms</fullName>
@@ -8117,6 +8127,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8462,6 +8476,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11083,6 +11101,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11424,6 +11446,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14124,6 +14150,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14477,6 +14507,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17106,6 +17140,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17447,6 +17485,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
