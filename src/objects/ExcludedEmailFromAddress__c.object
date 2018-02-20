@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Email to case Excluded Email address</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -60,24 +57,29 @@
         <fullName>ApplicationName__c</fullName>
         <externalId>false</externalId>
         <label>Application Name</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ANY</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TTBS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ANY</fullName>
+                    <default>true</default>
+                    <label>ANY</label>
+                </value>
+                <value>
+                    <fullName>SIS</fullName>
+                    <default>false</default>
+                    <label>SIS</label>
+                </value>
+                <value>
+                    <fullName>TTBS</fullName>
+                    <default>false</default>
+                    <label>TTBS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>ExcludedEmailFromAddress</label>
     <listViews>
@@ -98,4 +100,5 @@
     <pluralLabel>ExcludedEmailFromAddresses</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

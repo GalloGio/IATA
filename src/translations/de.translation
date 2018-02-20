@@ -5545,8 +5545,192 @@ and
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Alternatively --></label>
+        <name>ISSP_AMS_MSO_Alternatively</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Application_Review --></label>
+        <name>ISSP_AMS_MSO_Application_Review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Application_Section_2 --></label>
+        <name>ISSP_AMS_MSO_Application_Section_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Billing_State_ErrMsg --></label>
+        <name>ISSP_AMS_MSO_Billing_State_ErrMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Country_ErrMsg --></label>
+        <name>ISSP_AMS_MSO_Country_ErrMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Account_Name_GSA --></label>
+        <name>ISSP_AMS_MSO_GSA_Account_Name_GSA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Account_Name_MSO --></label>
+        <name>ISSP_AMS_MSO_GSA_Account_Name_MSO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Account_Status --></label>
+        <name>ISSP_AMS_MSO_GSA_Account_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Appointment_Active --></label>
+        <name>ISSP_AMS_MSO_GSA_Appointment_Active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Appointment_Status --></label>
+        <name>ISSP_AMS_MSO_GSA_Appointment_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Appointment_Terminated --></label>
+        <name>ISSP_AMS_MSO_GSA_Appointment_Terminated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Category --></label>
+        <name>ISSP_AMS_MSO_GSA_Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_City --></label>
+        <name>ISSP_AMS_MSO_GSA_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Country --></label>
+        <name>ISSP_AMS_MSO_GSA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Date_Appointment_Terminated --></label>
+        <name>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Date_of_Appointment --></label>
+        <name>ISSP_AMS_MSO_GSA_Date_of_Appointment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Download_CSV --></label>
+        <name>ISSP_AMS_MSO_GSA_Download_CSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Edit_MSO_Details --></label>
+        <name>ISSP_AMS_MSO_GSA_Edit_MSO_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments --></label>
+        <name>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_GSA_Introduction_Text --></label>
+        <name>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_GSA_Service_Description --></label>
+        <name>ISSP_AMS_MSO_GSA_GSA_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_GSA_GSA_Service_Name --></label>
         <name>ISSP_AMS_MSO_GSA_GSA_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_GSA_Title --></label>
+        <name>ISSP_AMS_MSO_GSA_GSA_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_IATA_Code --></label>
+        <name>ISSP_AMS_MSO_GSA_IATA_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_MSO_Introduction_Text --></label>
+        <name>ISSP_AMS_MSO_GSA_MSO_Introduction_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_MSO_Service_Description --></label>
+        <name>ISSP_AMS_MSO_GSA_MSO_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_MSO_Service_Name --></label>
+        <name>ISSP_AMS_MSO_GSA_MSO_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_MSO_Terminate_MSO --></label>
+        <name>ISSP_AMS_MSO_GSA_MSO_Terminate_MSO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_MSO_Title --></label>
+        <name>ISSP_AMS_MSO_GSA_MSO_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Next --></label>
+        <name>ISSP_AMS_MSO_GSA_Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Previous --></label>
+        <name>ISSP_AMS_MSO_GSA_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Request_New_MSO --></label>
+        <name>ISSP_AMS_MSO_GSA_Request_New_MSO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Search_Placeholder --></label>
+        <name>ISSP_AMS_MSO_GSA_Search_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Street_Address --></label>
+        <name>ISSP_AMS_MSO_GSA_Street_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_GSA_Territories --></label>
+        <name>ISSP_AMS_MSO_GSA_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Invalid_Request --></label>
+        <name>ISSP_AMS_MSO_Invalid_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Legal_Status --></label>
+        <name>ISSP_AMS_MSO_Legal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Office_Email --></label>
+        <name>ISSP_AMS_MSO_Office_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Request_Successfull --></label>
+        <name>ISSP_AMS_MSO_Request_Successfull</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_StepFinal_Thanks --></label>
+        <name>ISSP_AMS_MSO_StepFinal_Thanks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Termination_Confirmation_Text --></label>
+        <name>ISSP_AMS_MSO_Termination_Confirmation_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Termination_Request --></label>
+        <name>ISSP_AMS_MSO_Termination_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Termination_Request_Successfull --></label>
+        <name>ISSP_AMS_MSO_Termination_Request_Successfull</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Thank_You --></label>
+        <name>ISSP_AMS_MSO_Thank_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Update_Request --></label>
+        <name>ISSP_AMS_MSO_Update_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Update_Request_Section1 --></label>
+        <name>ISSP_AMS_MSO_Update_Request_Section1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Update_Request_Successfull --></label>
+        <name>ISSP_AMS_MSO_Update_Request_Successfull</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Manager --></label>
@@ -5663,6 +5847,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS New HO details --></label>
         <name>ISSP_AMS_New_HO_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_New_MSO_Application --></label>
+        <name>ISSP_AMS_New_MSO_Application</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC Acreditation Type Section Header --></label>
@@ -6251,6 +6439,10 @@ and
     <customLabels>
         <label>IATA Verkauf von Passagierflügen - Neue Hauptniederlassung</label>
         <name>ISSP_AMS_OPTION_PAX_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION PAX SA --></label>
+        <name>ISSP_AMS_OPTION_PAX_SA</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Office_Full_Address --></label>
@@ -8444,7 +8636,7 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Country</name>
     </customLabels>
     <customLabels>
-        <label>Betreffendes Land</label>
+        <label>Land / betroffenes Gebiet</label>
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
@@ -8452,7 +8644,7 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Country_Requirements</name>
     </customLabels>
     <customLabels>
-        <label>Land</label>
+        <label>Land / Gebiet der Veröffentlichung</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
     <customLabels>
@@ -8514,6 +8706,14 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
     <customLabels>
         <label>Das Feld „Aktuelles Passwort“ muss ausgefüllt werden.</label>
         <name>ISSP_CurrentPasswordMandatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Big --></label>
+        <name>ISSP_CustomFooter_Big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CustomFooter_Small --></label>
+        <name>ISSP_CustomFooter_Small</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_DDS_BTN_OPTOIN --></label>
@@ -9132,8 +9332,16 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Fill_Profile_Fields</name>
     </customLabels>
     <customLabels>
-        <label>Nach Land filtern</label>
+        <label>Nach Land / Gebiet filtern</label>
         <name>ISSP_Filter_by_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Filter by Country Publication --></label>
+        <name>ISSP_Filter_by_Country_Publication</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Filter by Document Category --></label>
+        <name>ISSP_Filter_by_Document_Category</name>
     </customLabels>
     <customLabels>
         <label>Nach Typ filtern</label>
@@ -10217,6 +10425,14 @@ Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch
     <customLabels>
         <label><!-- ISSP_Portal Application_Rights --></label>
         <name>ISSP_Portal_Application_Rights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage --></label>
+        <name>ISSP_Portal_BackgroundImage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Portal_BackgroundImage_size --></label>
+        <name>ISSP_Portal_BackgroundImage_size</name>
     </customLabels>
     <customLabels>
         <label>Nächster</label>
@@ -11613,6 +11829,126 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
+        <label><!-- LVA_AgentOffline --></label>
+        <name>LVA_AgentOffline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_AgentOnline --></label>
+        <name>LVA_AgentOnline</name>
+    </customLabels>
+    <customLabels>
+        <label>Stellen Sie eine Frage</label>
+        <name>LVA_AskQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Rufen Sie uns an</label>
+        <name>LVA_CallUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Verfügbarer Zeitraum:</label>
+        <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefon für das ausgewählte Land nicht verfügbar.</label>
+        <name>LVA_CallUsNoConfigAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Unter folgenden Nummern können Sie mit einem IATA-Vertreter sprechen:</label>
+        <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Chatten Sie mit uns</label>
+        <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ClientMessage --></label>
+        <name>LVA_ClientMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqDesc --></label>
+        <name>LVA_ConsoleNewChatReqDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleNewChatReqTitle --></label>
+        <name>LVA_ConsoleNewChatReqTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupDesc --></label>
+        <name>LVA_ConsoleStatusChangedPopupDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ConsoleStatusChangedPopupTitle --></label>
+        <name>LVA_ConsoleStatusChangedPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat beenden</label>
+        <name>LVA_EndChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Im Hinblick auf Ihre Kriterien fanden andere Benutzer folgende Antworten hilfreich:</label>
+        <name>LVA_FAQsHeader</name>
+    </customLabels>
+    <customLabels>
+        <label>Schließen, zur Kenntnis genommen</label>
+        <name>LVA_IntroVidCloseDontShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Schließen und nächstes Mal erneut erinnern</label>
+        <name>LVA_IntroVidCloseShowNext</name>
+    </customLabels>
+    <customLabels>
+        <label>Willkommen auf der IATA-Kundendienstseite!</label>
+        <name>LVA_IntroductionVideo</name>
+    </customLabels>
+    <customLabels>
+        <label>Ich kann auch auf [languages] mit Ihnen chatten.</label>
+        <name>LVA_LanguagesMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat verlassen?</label>
+        <name>LVA_ModalMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_New_Chat_Message --></label>
+        <name>LVA_New_Chat_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat nicht verfügbar</label>
+        <name>LVA_NoAvailableButtons</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat nicht verfügbar</label>
+        <name>LVA_NoAvailableButtonsForCNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_OperatorMessage --></label>
+        <name>LVA_OperatorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir möchten Ihnen gerne helfen</label>
+        <name>LVA_ReachOutUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zum Chat</label>
+        <name>LVA_ReturnToChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat sichern</label>
+        <name>LVA_SaveChat</name>
+    </customLabels>
+    <customLabels>
+        <label>Wählen Sie Ihren bevorzugten Kommunikationskanal:</label>
+        <name>LVA_SelectPreferredChannel</name>
+    </customLabels>
+    <customLabels>
+        <label>Teilen Sie ein Lob mit uns</label>
+        <name>LVA_ShareACompliment</name>
+    </customLabels>
+    <customLabels>
+        <label>Bringen Sie ein Anliegen vor</label>
+        <name>LVA_VoiceAConcern</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Label to display for missing Product Category --></label>
         <name>Label_For_Missing_Product_Category</name>
     </customLabels>
@@ -11701,7 +12037,7 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentFootNote --></label>
+        <label>Sie können das Protokoll dieser Chat-Sitzung mit der Schaltfläche „Chat sichern“ speichern. Ein komplettes Protokoll dieser Sitzung ist außerdem im Kundenportal verfügbar.</label>
         <name>LiveAgentFootNote</name>
     </customLabels>
     <customLabels>
@@ -11713,7 +12049,7 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LiveAgentOfflineButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentPlaceHolder --></label>
+        <label>Geben Sie hier Ihre Mitteilung ein</label>
         <name>LiveAgentPlaceHolder</name>
     </customLabels>
     <customLabels>
@@ -11765,11 +12101,11 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LiveAgentPostChatresolutionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <label>Einer unserer Vertreter steht Ihnen in Kürze zur Verfügung. Sie sind Kunde &lt;queuenumber&gt; in der Warteschlange. Ihre Wartezeit wird rund &lt;queueminutes&gt; Minute(n) betragen. Wenn Sie es eilig haben, können Sie Ihre Frage auch als Fall über unser Kundenportal stellen. Sie erhalten schnell eine Antwort. Wenn Ihre Angelegenheit dringend ist, können Sie die Option „Rufen Sie uns an“ wählen.</label>
         <name>LiveAgentWaitingMessageChat</name>
     </customLabels>
     <customLabels>
-        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <label>Dieser Chat kann beginnen.</label>
         <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
@@ -13981,42 +14317,22 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>ANG_Remittance_Frequency</name>
+        <name>ANG_Risk_Status</name>
         <picklistValues>
-            <masterLabel>4 times per month</masterLabel>
-            <translation><!-- 4 times per month --></translation>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Daily</masterLabel>
-            <translation><!-- Daily --></translation>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Daily (China)</masterLabel>
-            <translation><!-- Daily (China) --></translation>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Every 10 days</masterLabel>
-            <translation><!-- Every 10 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Every 3 days</masterLabel>
-            <translation><!-- Every 3 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Every 5 days</masterLabel>
-            <translation><!-- Every 5 days --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14067,34 +14383,26 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Method</name>
+        <name>EF_Frequency</name>
         <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14106,52 +14414,6 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <picklistValues>
             <masterLabel>Inactive</masterLabel>
             <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Event_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_CHO</masterLabel>
-            <translation><!-- Inactive_CHO --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Migrated</masterLabel>
-            <translation><!-- Inactive_Migrated --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Revoked</masterLabel>
-            <translation><!-- Inactive_Revoked --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_TER</masterLabel>
-            <translation><!-- Inactive_TER --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive_Withdrawn</masterLabel>
-            <translation><!-- Inactive_Withdrawn --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_HE_RiskHistoryAssessment</name>
-        <picklistValues>
-            <masterLabel>Failed</masterLabel>
-            <translation><!-- Failed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Applicable</masterLabel>
-            <translation><!-- Not Applicable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passed</masterLabel>
-            <translation><!-- Passed --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14762,18 +15024,341 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
+        <name>ANG_Financial_Review_Result</name>
         <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
+            <masterLabel>Satisfactory</masterLabel>
+            <translation><!-- Satisfactory --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
+            <masterLabel>Satisfactory - New Financial Security</masterLabel>
+            <translation><!-- Satisfactory - New Financial Security --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
+            <masterLabel>Satisfactory - No Action</masterLabel>
+            <translation><!-- Satisfactory - No Action --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Satisfactory - Release Financial Security</masterLabel>
+            <translation><!-- Satisfactory - Release Financial Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Satisfactory - Update Financial Security</masterLabel>
+            <translation><!-- Satisfactory - Update Financial Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unsatisfactory - New Financial Security</masterLabel>
+            <translation><!-- Unsatisfactory - New Financial Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unsatisfactory - No action</masterLabel>
+            <translation><!-- Unsatisfactory - No action --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unsatisfactory - Release Financial Security</masterLabel>
+            <translation><!-- Unsatisfactory - Release Financial Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unsatisfactory - Update Financial Security</masterLabel>
+            <translation><!-- Unsatisfactory - Update Financial Security --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Accreditation_Models</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cashless</masterLabel>
+            <translation><!-- Cashless --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legacy</masterLabel>
+            <translation><!-- Legacy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multicountry</masterLabel>
+            <translation><!-- Multicountry --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Risk_Event_Conditions</name>
+        <picklistValues>
+            <masterLabel>&lt;</masterLabel>
+            <translation><!-- &lt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&lt;=</masterLabel>
+            <translation><!-- &lt;= --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;</masterLabel>
+            <translation><!-- &gt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;=</masterLabel>
+            <translation><!-- &gt;= --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blank</masterLabel>
+            <translation><!-- Blank --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Does not Include</masterLabel>
+            <translation><!-- Does not Include --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equal to</masterLabel>
+            <translation><!-- Equal to --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equal to today</masterLabel>
+            <translation><!-- Equal to today --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater than today</masterLabel>
+            <translation><!-- Greater than today --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Includes</masterLabel>
+            <translation><!-- Includes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less than today</masterLabel>
+            <translation><!-- Less than today --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not blank</masterLabel>
+            <translation><!-- Not blank --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not equal to</masterLabel>
+            <translation><!-- Not equal to --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_HE_RiskHistoryAssessment</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed</masterLabel>
+            <translation><!-- Passed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Remittance_Frequency</name>
+        <picklistValues>
+            <masterLabel>4 times per month</masterLabel>
+            <translation><!-- 4 times per month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Daily (China)</masterLabel>
+            <translation><!-- Daily (China) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 10 days</masterLabel>
+            <translation><!-- Every 10 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 3 days</masterLabel>
+            <translation><!-- Every 3 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 5 days</masterLabel>
+            <translation><!-- Every 5 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -15492,134 +16077,6 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>ANG_Risk_Status</name>
-        <picklistValues>
-            <masterLabel>A</masterLabel>
-            <translation><!-- A --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>B</masterLabel>
-            <translation><!-- B --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>C</masterLabel>
-            <translation><!-- C --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Applicable</masterLabel>
-            <translation><!-- Not Applicable --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Risk_Event_Conditions</name>
-        <picklistValues>
-            <masterLabel>&lt;</masterLabel>
-            <translation><!-- &lt; --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>&lt;=</masterLabel>
-            <translation><!-- &lt;= --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>&gt;</masterLabel>
-            <translation><!-- &gt; --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>&gt;=</masterLabel>
-            <translation><!-- &gt;= --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Blank</masterLabel>
-            <translation><!-- Blank --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Does not Include</masterLabel>
-            <translation><!-- Does not Include --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equal to</masterLabel>
-            <translation><!-- Equal to --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equal to today</masterLabel>
-            <translation><!-- Equal to today --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Greater than today</masterLabel>
-            <translation><!-- Greater than today --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Includes</masterLabel>
-            <translation><!-- Includes --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Less than today</masterLabel>
-            <translation><!-- Less than today --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not blank</masterLabel>
-            <translation><!-- Not blank --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not equal to</masterLabel>
-            <translation><!-- Not equal to --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Category</name>
         <picklistValues>
             <masterLabel>ANSP</masterLabel>
@@ -15887,192 +16344,6 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Accreditation_Models</name>
-        <picklistValues>
-            <masterLabel>Cash</masterLabel>
-            <translation><!-- Cash --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cashless</masterLabel>
-            <translation><!-- Cashless --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Legacy</masterLabel>
-            <translation><!-- Legacy --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Multicountry</masterLabel>
-            <translation><!-- Multicountry --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>ANG_Financial_Review_Result</name>
-        <picklistValues>
-            <masterLabel>Satisfactory</masterLabel>
-            <translation><!-- Satisfactory --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Satisfactory - New Financial Security</masterLabel>
-            <translation><!-- Satisfactory - New Financial Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Satisfactory - No Action</masterLabel>
-            <translation><!-- Satisfactory - No Action --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Satisfactory - Release Financial Security</masterLabel>
-            <translation><!-- Satisfactory - Release Financial Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Satisfactory - Update Financial Security</masterLabel>
-            <translation><!-- Satisfactory - Update Financial Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unsatisfactory - New Financial Security</masterLabel>
-            <translation><!-- Unsatisfactory - New Financial Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unsatisfactory - No action</masterLabel>
-            <translation><!-- Unsatisfactory - No action --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unsatisfactory - Release Financial Security</masterLabel>
-            <translation><!-- Unsatisfactory - Release Financial Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unsatisfactory - Update Financial Security</masterLabel>
-            <translation><!-- Unsatisfactory - Update Financial Security --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Sector</name>
         <picklistValues>
             <masterLabel>Accommodation</masterLabel>
@@ -16141,6 +16412,71 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <picklistValues>
             <masterLabel>Travel Agent</masterLabel>
             <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>ANG_Event_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_CHO</masterLabel>
+            <translation><!-- Inactive_CHO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Migrated</masterLabel>
+            <translation><!-- Inactive_Migrated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Revoked</masterLabel>
+            <translation><!-- Inactive_Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_TER</masterLabel>
+            <translation><!-- Inactive_TER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Withdrawn</masterLabel>
+            <translation><!-- Inactive_Withdrawn --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

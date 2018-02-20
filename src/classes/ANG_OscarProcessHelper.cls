@@ -43,6 +43,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c 
 					FROM Account
 					WHERE Id =:accountId FOR UPDATE];
@@ -65,7 +66,7 @@ global class ANG_OscarProcessHelper {
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
-					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
+					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c, (SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
 					from AMS_OSCAR__c where Id = : oscarId LIMIT 1];
 
 			System.debug('[ANG_OscarProcessHelper] Fetched Account:' + theAccount);
@@ -532,7 +533,7 @@ global class ANG_OscarProcessHelper {
 		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
     	*/
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
 		
 		try{
@@ -547,12 +548,12 @@ global class ANG_OscarProcessHelper {
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
 			if(!isEmptySetOfLists(allRelationsOnHierarchy.values())){
-			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
+				accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
 			}
 
 			accountHierarchyRelationships.add(oscar.Account__c);
 
-			restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
+			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
 			
 			oscar.ANG_Restrict_Cash__c = restrictCash; 
 			oscar.ANG_Restrict_Credit_Card__c = restrictCreditCard;
@@ -562,24 +563,28 @@ global class ANG_OscarProcessHelper {
 			
 			updater.oscarMap.put(oscar.Id,oscar);
 
-			List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountHierarchyRelationships];
+			if(!accountIdsChanged.isEmpty()){
 
-			String changeCodeName= null;
-			
-			/*
-				 - PCA if Restrict cash is set
-				 - CCA if Restrict Credit card is set 
-				 - FOP if both Restrict cash and Restrict Credit card are set
-			*/
+				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
 
-			if(restrictCreditCard && restrictCash)
-				changeCodeName = 'FOP';
-			else if(restrictCash)
-				changeCodeName = 'PCA';
-			else
-				changeCodeName = 'CCA';
+				String changeCodeName= null;
+				
+				/*
+					 - PCA if Restrict cash is set
+					 - CCA if Restrict Credit card is set 
+					 - FOP if both Restrict cash and Restrict Credit card are set
+				*/
 
-			updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+				if(restrictCreditCard && restrictCash)
+					changeCodeName = 'FOP';
+				else if(restrictCash)
+					changeCodeName = 'PCA';
+				else
+					changeCodeName = 'CCA';
+
+				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+
+			}
 
 			updateUpdater(updater);
 		
@@ -605,7 +610,7 @@ global class ANG_OscarProcessHelper {
 			- If "Restore credit card and if the Account has PCI Compliant = "Yes" then set Status = "Active" on  Agency Authorization having Form of Payment ID = CC
     	*/
 
-    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
 
 		try{
 
@@ -621,7 +626,7 @@ global class ANG_OscarProcessHelper {
 
 			accountHierarchyRelationships.add(oscar.Account__c);
 
-			restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCreditCard, restoreCash, false, false,  'Active');
+			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCreditCard, restoreCash, false, false,  'Active');
 		
 			oscar.ANG_Restore_Credit_Card__c = restoreCreditCard; 
 			oscar.ANG_Restore_Cash__c = restoreCash;
@@ -631,24 +636,27 @@ global class ANG_OscarProcessHelper {
 			
 			updater.oscarMap.put(oscar.Id,oscar);
 
-			List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountHierarchyRelationships];
+			if(!accountIdsChanged.isEmpty()){
+				
+				List<Account> accountToCreateCC = [Select Id, Status__c from Account where Id in :accountIdsChanged];
 
-			String changeCodeName= null;
-			
-			/*
-			 - PCR if Restore cash is set
-			 - CCR if Restore Credit card is set 
-			 - FPR if both Restore cash and Restore Credit card are set
-			*/
+				String changeCodeName= null;
+				
+				/*
+				 - PCR if Restore cash is set
+				 - CCR if Restore Credit card is set 
+				 - FPR if both Restore cash and Restore Credit card are set
+				*/
 
-			if(restoreCreditCard && restoreCash)
-				changeCodeName = 'FPR';
-			else if(restoreCash)
-				changeCodeName = 'PCR';
-			else
-				changeCodeName = 'CCR';
+				if(restoreCreditCard && restoreCash)
+					changeCodeName = 'FPR';
+				else if(restoreCash)
+					changeCodeName = 'PCR';
+				else
+					changeCodeName = 'CCR';
 
-			updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+			}
 
 			updateUpdater(updater);
 
@@ -665,11 +673,13 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    public static void restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash, String valueToAdd){
+    public static Set<Id> restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash, String valueToAdd){
 
     	System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
 
-    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	Set<Id> accountIdsChanged = new Set<Id>();
+
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
     	for(Agency_Authorization__c aa: aaLst){
@@ -679,11 +689,13 @@ global class ANG_OscarProcessHelper {
 	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
 	    			aa.Status__c = valueToAdd;
 	    			aaLstToUpdate.add(aa);
+	    			accountIdsChanged.add(aa.Account__c);
 	    		}
 
 	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
     				aa.Status__c = valueToAdd;
     				aaLstToUpdate.add(aa);
+    				accountIdsChanged.add(aa.Account__c);
     			}
 
     		}
@@ -693,11 +705,13 @@ global class ANG_OscarProcessHelper {
 				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA' && aa.Status__c != valueToAdd){
     				aa.Status__c = valueToAdd;
     				aaLstToUpdate.add(aa);
+    				accountIdsChanged.add(aa.Account__c);
     			}
 
 	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
     				aa.Status__c = valueToAdd;
     				aaLstToUpdate.add(aa);
+    				accountIdsChanged.add(aa.Account__c);
     			}
 
     		}
@@ -707,6 +721,7 @@ global class ANG_OscarProcessHelper {
     	if(!aaLstToUpdate.isEmpty())
     		update aaLst;
 
+    	return accountIdsChanged;
     	
     }
 
@@ -781,7 +796,8 @@ global class ANG_OscarProcessHelper {
 			}
 		}
 
-		updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
+		if(updater.oscarMap.get(theOSCAR.Id) != null)
+			updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
 
 		updater.toUpdate = true;
 

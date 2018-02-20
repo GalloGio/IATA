@@ -106,18 +106,28 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			AMS_Operation__c opCode = new AMS_Operation__c(
 				Name = 'test operation',
 				Settlement__c = settlement.id,
-				Allow_multiple_remittances__c = true,
+				Allow_multiple_remittances__c = false,
 				Country__c = country.id
 			);
 
 			insert opCode;
 
-			ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
+			List<ANG_BSP_Attributes__c> bSPAttributes = new List<ANG_BSP_Attributes__c>();
+
+			ANG_BSP_Attributes__c bSPAttributes1 = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
-				Remittance_Frequency__c = 'Daily',
+				Remittance_Frequency__c = 'D',
 				Operation__c = opCode.Id
 			);
+			bSPAttributes.add(bSPAttributes1);
 
+				ANG_BSP_Attributes__c bSPAttributes2 = new ANG_BSP_Attributes__c(
+				Class_Type__c  = 'P',
+				Remittance_Frequency__c = 'V',
+				Operation__c = opCode.Id
+			);
+			bSPAttributes.add(bSPAttributes2);
+			
 			insert bSPAttributes;
 
 			AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
@@ -137,10 +147,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			controller.accreditationObj.Remittance_Frequency__c = controller.getRfPicklistValues()[0].getValue();
 
 			controller.save();
-
-			System.assertEquals(controller.rightOptionsRF[0].getValue(),'Daily');
-
-			opCode.Allow_multiple_remittances__c = false;
+			
+			opCode.Allow_multiple_remittances__c = true;
 			update opcode;
 
 			controller = new AMS_OSCAR_Case_Detail_Controller();
@@ -150,6 +158,18 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			controller.oscarobj.ANG_Type_Of_Change__c = 'VMFR';
 
 			System.assert(!controller.getRfPicklistValues().isEmpty());
+
+			System.assert(controller.remittanceFrequencyToShow == '');
+
+			controller.accreditationObj.Remittance_Frequency__c = 'V';
+
+			System.assert(controller.remittanceFrequencyToShow.contains('Weekly'));
+
+			controller.accreditationObj.Remittance_Frequency__c = 'V;D';
+
+			System.assert(controller.remittanceFrequencyToShow.contains('Daily'));
+			System.assert(controller.isNewAE == false);
+			System.assert(controller.displayErrorMsg == false);
 
 		Test.stopTest();
 	}

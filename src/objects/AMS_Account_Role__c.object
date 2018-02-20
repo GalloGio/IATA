@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object that represents a connection between an Account another entity. This other entity can be a Person, a Contact or another Account. This will replace the Agency Employee and Agency Ownership + Owner structure.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -158,53 +155,64 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Duty__c</fullName>
         <externalId>false</externalId>
         <label>Duty</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Y</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Earning__c</fullName>
         <externalId>false</externalId>
         <label>Earning</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Employee_Name__c</fullName>
@@ -212,7 +220,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <label>Employee Name</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -221,25 +229,30 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Employee_type__c</fullName>
         <externalId>false</externalId>
         <label>Employee type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CL</fullName>
+                    <default>false</default>
+                    <label>CL</label>
+                </value>
+                <value>
+                    <fullName>IE</fullName>
+                    <default>false</default>
+                    <label>IE</label>
+                </value>
+                <value>
+                    <fullName>RG</fullName>
+                    <default>false</default>
+                    <label>RG</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -255,37 +268,45 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Hours__c</fullName>
         <externalId>false</externalId>
         <label>Hours</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Inconsistent_Contact_Info__c</fullName>
@@ -320,33 +341,40 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AIMS3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WEBSTAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS2</fullName>
+                    <default>false</default>
+                    <label>AIMS2</label>
+                </value>
+                <value>
+                    <fullName>AIMS3</fullName>
+                    <default>false</default>
+                    <label>AIMS3</label>
+                </value>
+                <value>
+                    <fullName>WEBSTAR</fullName>
+                    <default>false</default>
+                    <label>WEBSTAR</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Owner_Account__c</fullName>
@@ -359,7 +387,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <relationshipLabel>AMS Account Roles</relationshipLabel>
         <relationshipName>AMS_Account_Roles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -417,77 +445,95 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Position__c</fullName>
         <externalId>false</externalId>
         <label>Position</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>F</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>H</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>L</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>B</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>F</fullName>
+                    <default>false</default>
+                    <label>F</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>H</fullName>
+                    <default>false</default>
+                    <label>H</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>L</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Registration_Date__c</fullName>
@@ -515,49 +561,60 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <fullName>Stage__c</fullName>
         <externalId>false</externalId>
         <label>Stage</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Start_date__c</fullName>
@@ -617,7 +674,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Valid</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -657,6 +714,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>TD</fullName>
         <columns>NAME</columns>
         <columns>Termination_Date__c</columns>
@@ -675,6 +737,24 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <label>TD</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Owner_Name</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Unified_Owner_Name__c</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Employee_Name__c</columns>
+        <columns>Owner_Account__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Unified_Owner_Name__c</field>
+            <operation>equals</operation>
+            <value>Agency Company</value>
+        </filters>
+        <label>ZZ-Search By Unified Owner Name - GDP</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AAR-{00000000}</displayFormat>
         <label>AMS Account Role Name</label>
@@ -682,7 +762,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Account Roles</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Employee</fullName>
         <active>true</active>
@@ -1107,6 +1187,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     </recordTypes>
     <searchLayouts>
         <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
+        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
@@ -1129,6 +1214,7 @@ ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Legacy_External_ID__c),IS
 )))</errorConditionFormula>
         <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Assign_New_Financial_Assessment_Contact</fullName>
         <availability>online</availability>

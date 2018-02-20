@@ -31,6 +31,16 @@ private class ANG_IEP_CalloutHelperTest {
 			return res;
 		}
 	}
+	public class UnauthorizedEndpointMockHttpResponseGenerator implements HttpCalloutMock {
+		// Implement this interface method
+		public HTTPResponse respond(HTTPRequest req) {
+		
+			CalloutException e = (CalloutException)CalloutException.class.newInstance();
+	        e.setMessage('Unauthorized endpoint!');
+	        throw e;
+
+		}
+	}
 
 	@testSetup static void setup(){
 
@@ -77,6 +87,23 @@ private class ANG_IEP_CalloutHelperTest {
 		system.assertEquals('Update_Sent',agencyEventsList.get(0).Update_Type__c);
 
 		
+	}
+	@isTest static void unauthorizedEndpointResponse() {
+		
+		Test.startTest();
+
+		Test.setMock(HttpCalloutMock.class, new UnauthorizedEndpointMockHttpResponseGenerator());
+
+		Account acct = [Select Id, ANG_IEP_Status__c, IATACode__c, Location_Type__c from Account LIMIT 1];
+		
+		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
+
+		insert aacc1;
+		Test.stopTest();
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c,Integration_System__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id];
+
+		system.assertEquals(1,agencyEventsList.size());
+		system.assertEquals('Error',agencyEventsList.get(0).Update_Type__c);
 	}
 	
 	@isTest static void validateIncorrectResponse() {

@@ -833,6 +833,23 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Reconsideration_result__c = 'Passed';
                 oscar.Reconsideration_date__c = Date.today();
                 res = True;
+
+                //restart manager approval step
+                oscar.STEP2__c = 'Not Started';
+                oscar.RPM_Approval__c = 'Not Started';
+
+                //restart validation step
+                if(oscar.Process__c == AMS_Utils.AGENCYCHANGES){
+
+                    oscar.STEP25__c = 'Not Started';
+                } else {
+
+                    oscar.STEP15__c = 'Not Started';
+                }
+
+                oscar.Validation_result__c = 'N/A';
+                oscar.Validation_Status__c = 'Not Applicable';
+
             }
 
             return res;

@@ -62,7 +62,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         List <Case> csList = new List <Case> ();        
         // create an IFAP case, will be selected by the 3rd report when generating the CSV
         Case cs = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                          Status = 'Financial Security Requested',
+                          //Status = 'Financial Security Requested',
                           Financial_Review_Result__c = 'Satisfactory - New Financial Security',
                           Financial_Review_Type__c = 'Adhoc',
                           Type_of_customer__c = 'asfg',

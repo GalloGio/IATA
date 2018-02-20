@@ -265,7 +265,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 IATAcode__c = a1.IATAcode__c,
                 Branch_Office_Country__c = a1.IATA_ISO_Country__c,
                 SAAM_Case__c = oscarCase.Id,
-                Remittance_frequency__c = 'Monthly'
+                Remittance_frequency__c = 'M'
 				);
 
         insert stagingArea;

@@ -1,7 +1,7 @@
 public class ANG_RHCInformationTriggerHandler{
 
-	public final Double UPPERFLUCTUATION = 1;
-	public final Double LOWERFLUCTUATION = 2;
+	//public final Double UPPERFLUCTUATION = 1;
+	//public final Double LOWERFLUCTUATION = 2;
 
 	public List<ANG_RHC_Information__c> triggerNew = (List<ANG_RHC_Information__c>) Trigger.new;
 	public List<ANG_RHC_Information__c> triggerOld = (List<ANG_RHC_Information__c>) Trigger.old;
@@ -27,7 +27,7 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onBeforeUpdate(){
 		convertAndSumFS();
 		sumRHCAmount();
-		analyzeConsumedRHCAdjustment();
+		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
@@ -90,7 +90,13 @@ public class ANG_RHCInformationTriggerHandler{
 		}
 
 		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
+
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(Trigger.isInsert || oldMap.get(rhc.id).ANG_RHC_Amount__c != rhc.ANG_RHC_Amount__c) rhc.ANG_RHC_Effective_Date__c=System.Today();
+		}
 	}
+
+	/* as per NEWGEN-1085
 
 	private void analyzeConsumedRHCAdjustment(){
 
@@ -152,8 +158,9 @@ public class ANG_RHCInformationTriggerHandler{
 
 
 	}
+	*/
 
-	private boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
+	/*private boolean isEmptySetOfLists(List<List<AMS_Agencies_relationhip__c>> setOfLists){
 
 		if(setOfLists.isEmpty())
 			return true;
@@ -165,7 +172,9 @@ public class ANG_RHCInformationTriggerHandler{
 
 		return true;
 	}
+	*/
 
+/*
 	private Decimal hasfluctuation(Decimal newValue, Decimal oldValue){
 
 		Decimal UPPERTHRESHOLD = 100;
@@ -182,8 +191,9 @@ public class ANG_RHCInformationTriggerHandler{
 		return -1;
 
 	}
+*/
 
-
+/*
 	private List<Agency_Authorization__c> performFOPaction(Set<Id> accounts, Decimal action){
 
 		System.debug('Performing FOP actions on accounts ' + accounts + ' with action ' + action);
@@ -208,7 +218,9 @@ public class ANG_RHCInformationTriggerHandler{
 		return toReturn;
 
 	}
+*/
 
+/*
 	public void createChangeCodeForFOP(Map<Id,String> accountsAndStatus) {
 
 		AMS_ChangeCodes__c changeCodeConfigPCA = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('PCA');
@@ -269,4 +281,5 @@ public class ANG_RHCInformationTriggerHandler{
 			AMS_ChangeCodesHelper.createAAChangeCodes(listOfCCToInsert, oscarsToAdd, accountToCreateCC, true);
 
 	}
+	*/
 }

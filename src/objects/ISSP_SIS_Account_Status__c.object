@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Default values for fields SIS Status and SIS Substatus based on Recordtype, Status__c and ISO Country Code</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Country_ISO_Codes__c</fullName>
+        <description>List of Country ISO codes, comma separated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Use keyword &quot;All&quot; to select all countries</inlineHelpText>
+        <label>Country ISO Codes</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recordtype__c</fullName>
+        <description>Account Developer Name</description>
+        <externalId>false</externalId>
+        <label>Recordtype Developer Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Status__c</fullName>
+        <description>Default value for field Account.SIS_Status__c</description>
+        <externalId>false</externalId>
+        <label>SIS Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Substatus__c</fullName>
+        <description>Default value for field Account.SIS_Sub_Status__c</description>
+        <externalId>false</externalId>
+        <label>SIS Substatus</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Account Status__c value</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ISSP SIS Account Status</label>
+    <visibility>Public</visibility>
+</CustomObject>

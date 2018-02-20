@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to notify agents about risk status or cash conditions upgrades</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Risk Status Upgrade</name>
+    <style>freeForm</style>
+    <subject>Risk Information Upgrade</subject>
+    <textOnly>Dear Agent,
+
+We would like to inform you that according to our records one or more risk events that were previously registered under your risk history have recently expired.
+
+This brings your risk information to be updated as follow:
+
+Risk Status: {!Account.ANG_RiskStatus__c}
+Cash conditions limited to Financial Security: {!IF(Account.ANG_CashCondition__c, &apos;Yes&apos;,&apos;No&apos;)}
+
+For more information about risk management, please do not hesitate to contact us via the IATA Customer Portal.
+
+Best Regards,
+
+
+IATA – Global Delivery Center</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

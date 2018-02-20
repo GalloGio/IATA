@@ -33,7 +33,11 @@ public with sharing class ANG_ProductComparisonHelper {
 			lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models test'];
 		}
 
-		this.costTooltip = Label.ISSP_ANG_ProdCompCostTooltip;
+		if(Type == 'A') {
+			this.costTooltip = Label.ISSP_ANG_ProdCompCostTooltip;
+		} else {
+			this.costTooltip = Label.ISSP_ANG_ProdCompCostTooltipConvert;
+		}
 
     	if(!lsPB.isEmpty())	thePricebook = lsPB.get(0);
     	

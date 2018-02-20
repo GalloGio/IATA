@@ -25,10 +25,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -64,6 +60,10 @@
         <fullName>BudgetedCost</fullName>
     </fields>
     <fields>
+        <fullName>CampaignImageId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>CampaignMemberRecordTypeId</fullName>
         <type>Lookup</type>
     </fields>
@@ -78,111 +78,137 @@
         <fullName>Campaign_Category__c</fullName>
         <externalId>false</externalId>
         <label>Department</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Customer Care</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Direct Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Field Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Customer Care</fullName>
+                    <default>false</default>
+                    <label>Customer Care</label>
+                </value>
+                <value>
+                    <fullName>Direct Sales</fullName>
+                    <default>false</default>
+                    <label>Direct Sales</label>
+                </value>
+                <value>
+                    <fullName>Field Sales</fullName>
+                    <default>false</default>
+                    <label>Field Sales</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Campaign_IATA_Area__c</fullName>
         <externalId>false</externalId>
         <label>IATA Area</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AsiaPac</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EMEA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Worldwide</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>AsiaPac</fullName>
+                    <default>false</default>
+                    <label>AsiaPac</label>
+                </value>
+                <value>
+                    <fullName>EMEA</fullName>
+                    <default>false</default>
+                    <label>EMEA</label>
+                </value>
+                <value>
+                    <fullName>Worldwide</fullName>
+                    <default>false</default>
+                    <label>Worldwide</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Campaign_LOB_Focus__c</fullName>
         <externalId>false</externalId>
         <label>Campaign LOB Focus</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Business Intelligence</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Consulting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Distribution &amp; Financial Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E&amp;F</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Publishing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Partnerships</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Advertising</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Business Intelligence</fullName>
+                    <default>false</default>
+                    <label>Business Intelligence</label>
+                </value>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>Distribution &amp; Financial Services</fullName>
+                    <default>false</default>
+                    <label>Distribution &amp; Financial Services</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>E&amp;F</fullName>
+                    <default>false</default>
+                    <label>E&amp;F</label>
+                </value>
+                <value>
+                    <fullName>Events</fullName>
+                    <default>false</default>
+                    <label>Events</label>
+                </value>
+                <value>
+                    <fullName>Publishing</fullName>
+                    <default>false</default>
+                    <label>Publishing</label>
+                </value>
+                <value>
+                    <fullName>Strategic Partnerships</fullName>
+                    <default>false</default>
+                    <label>Strategic Partnerships</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Advertising</fullName>
+                    <default>false</default>
+                    <label>Advertising</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>9</visibleLines>
     </fields>
     <fields>
@@ -224,31 +250,38 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <fullName>Campaign_focus__c</fullName>
         <externalId>false</externalId>
         <label>Campaign Segment Focus</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Travel &amp; Tourism</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport &amp; CIVAV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pax</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Specific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel &amp; Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel &amp; Tourism</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Airport &amp; CIVAV</fullName>
+                    <default>false</default>
+                    <label>Airport &amp; CIVAV</label>
+                </value>
+                <value>
+                    <fullName>Pax</fullName>
+                    <default>false</default>
+                    <label>Pax</label>
+                </value>
+                <value>
+                    <fullName>Not Specific</fullName>
+                    <default>false</default>
+                    <label>Not Specific</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Cost_Center__c</fullName>
@@ -387,88 +420,10 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
     </fields>
     <fields>
         <fullName>Status</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Planned</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Live</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aborted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Type</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Brochure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commercial Kits</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fax</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Flyer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Internet Ads (AdWords, etc)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Newsletter</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Promotional Items</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Seminar / Conference</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Telemarketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Webform</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Webinar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <listViews>

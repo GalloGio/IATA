@@ -228,7 +228,7 @@
             <td colspan="3" class="total-line"><b>Subtotal</b></td>
             <td align="right" class="total-value" width="15%" ><div id="subtotal">
                 <apex:outputText value="{0, number, currency} USD">
-                    <apex:param value="{!vfQuote.orderTotalAmount}"/>
+                    <apex:param value="{!vfQuote.orderSubTotalAmount}"/>
                 </apex:outputText>
             </div></td>
         </tr>

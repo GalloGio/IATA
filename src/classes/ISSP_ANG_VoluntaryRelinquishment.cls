@@ -421,11 +421,6 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
             return null;
         }
 
-       if (!newform.Accept_terms_and_conditions__c) {
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
-            return null;
-        }
-
         newForm.Submitted_to_IATA__c = TRUE;        
         upsert newForm;
 
@@ -494,5 +489,12 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
                     ];
     }
     
+    public Pagereference securityCheck() {
 
+        if (newCase.Id != null && newCase.Status != 'Draft') {
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
+        }
+
+        return null;
+    }
 }

@@ -19,7 +19,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=country.id,
             IATACode__c ='1234567',
-			Remittance_frequency__c='Monthly',
+			Remittance_frequency__c='M',
             billingCountry = 'fr',
 			ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -222,7 +222,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=[select id from IATA_ISO_Country__c limit 1].get(0).id,
             IATACode__c ='1234567',
-            Remittance_frequency__c='Monthly',
+            Remittance_frequency__c='M',
             billingCountry = 'fr',
             ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -284,7 +284,7 @@ public class ANG_RHC_Information_test{
         fieldsOfObject.put('Short_Name__c','NewGenAgency');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','AE');
-        fieldsOfObject.put('Remittance_frequency__c','Monthly');
+        fieldsOfObject.put('Remittance_frequency__c','M');
         fieldsOfObject.put('Sector__C','Travel Agent');
         fieldsOfObject.put('Category__C','IATA Passenger Sales Agent');
         fieldsOfObject.put('Reason_for_creation__c','Account is missing');
@@ -317,9 +317,15 @@ public class ANG_RHC_Information_test{
          
         ANG_RHC_Information__c rhcInfo = [ Select Id from ANG_RHC_Information__c];
 
-        rhcInfo.ANG_ConsumedRHC_Percent__c = 101;
+        ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+                recordtypeid=ANG_RHCHelper.RECTYPE_RISKALERT_RHC,
+                ANG_Account__c=a.Id,
+                ANG_RHC_Information__c=rhcInfo.id,
+                ANG_Direction__c='UP',
+                ANG_Threshold_Level__c='100%'
+            );
 
-        update rhcInfo;
+        insert ara;
 
         Test.startTest();
 
@@ -333,26 +339,17 @@ public class ANG_RHC_Information_test{
                 System.assertEquals('Active',aa.Status__c);
         }
 
-        rhcInfo = [ Select Id from ANG_RHC_Information__c];
 
-        rhcInfo.ANG_ConsumedRHC_Percent__c = null;
+         ANG_Risk_Alert__c ara2 = new ANG_Risk_Alert__c(
+                recordtypeid=ANG_RHCHelper.RECTYPE_RISKALERT_RHC,
+                ANG_Account__c=a.Id,
+                ANG_RHC_Information__c=rhcInfo.id,
+                ANG_Direction__c='DOWN',
+                ANG_Threshold_Level__c='100%'
+            );
 
-        update rhcInfo;
-
-        authorizations = [Select Id , Status__c,Account__c,  ANG_FormOfPayment_ID__c from Agency_Authorization__c];
-
-        for(Agency_Authorization__c aa: authorizations){
-
-            if(aa.ANG_FormOfPayment_ID__c == 'CA')
-                System.assertEquals('Active',aa.Status__c);
-        }
-
-        rhcInfo = [ Select Id from ANG_RHC_Information__c];
-
-        rhcInfo.ANG_ConsumedRHC_Percent__c = 50;
-
-        update rhcInfo;
-
+        insert ara2;
+        
         authorizations = [Select Id , Status__c,Account__c,  ANG_FormOfPayment_ID__c from Agency_Authorization__c];
 
         for(Agency_Authorization__c aa: authorizations){

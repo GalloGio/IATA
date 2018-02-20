@@ -151,7 +151,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -207,7 +207,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
@@ -503,7 +503,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -546,7 +546,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
@@ -611,7 +611,7 @@
         Test.startTest();
         
         AMS_OSCAR__c oscarT = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-        STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 1];
+        STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c, Is_NewGen__c from AMS_OSCAR__c limit 1];
 
         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -1191,5 +1191,93 @@
         System.assertEquals(result, 'Accreditation Type');
 
     }    
+        
+    // CB - test AMS_OSCARTriggerHandler.createHoAdminNotifications
+    @isTest static void test_createHoAdminNotifications() 
+    {        
+        Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' ,
+                                    Enable_Minor_Changes_from_Portal__c = true,
+                                    Local_language_Agency_details_required__c = true);
+        insert country;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id; 
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '1000000';
+        parent.IATA_ISO_Country__c = country.Id; 
+
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+      
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'Travel Agent';
+        child.Top_Parent__c = parent.Id;
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr ;
+        child.IATACode__c = '2000000';
+        child.Location_Type__c = 'BR';
+        insert child;
+        System.debug('child Id: ' + child.Id);
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= child.Id;
+        con.Email = 'Test@test11.com';
+        //insert con;
+
+        Contact con_adm = ISSP_ObjectFactory.createNewContact();
+        con_adm.AccountId= parent.Id;
+        con_adm.Email = 'Test@test11.com';
+        con_adm.User_Portal_Status__c = 'Approved Admin';
+        //insert con_adm;
+        insert new list<Contact>{con, con_adm};
+
+        System.debug('con Id: ' + con.Id);
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = child.id,Change_effective_as_of__c = Date.today());
+        oscar.STEP12__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
+        insert oscar;
+
+        Case testCase2 = ISSP_ObjectFactory.createNewCase();
+            testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase2.Reason1__c = 'Cargo';
+            testCase2.Region__c = 'Europe';
+            testCase2.Oscar__c = oscar.Id;
+            testCase2.Customer_recovery__c = false;
+            testCase2.BounceEmailCounter__c = 0.0;
+            testCase2.Case_Language__c = 'English';
+            testCase2.Subject = 'Test 007';
+            testCase2.Reopened_case__c = 0.0;
+            testCase2.AccountId = child.Id;
+            testCase2.Account_Concerned__c = child.Id;
+            testCase2.IFAP_Country_ISO__c = 'tq';
+            testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
+        insert testCase2;
+
+        Test.startTest();
+        
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP16__c = AMS_Utils.PASSED;
+        oscar.STEP1__c = AMS_Utils.PASSED;
+        update oscar;
+
+        Test.stopTest();
+
+        list<Notification__c> notifications = [SELECT Id FROM Notification__c];
+        System.assertNotEquals(true, notifications.isEmpty());
+
+    }
 }

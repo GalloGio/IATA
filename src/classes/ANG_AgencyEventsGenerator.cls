@@ -1,22 +1,22 @@
 public class ANG_AgencyEventsGenerator{
-	private String cmType;
-	private String accField;
-	private String topParentField;
-	private list<sObject> newRecList;
-	private map<id,sObject>oldRecMap;
+    private String cmType;
+    private String accField;
+    private String topParentField;
+    private list<sObject> newRecList;
+    private map<id,sObject>oldRecMap;
 
 
-	public ANG_AgencyEventsGenerator(list<sObject> nrL,map<id,sObject>orM,string cmt,string acf, string tpf){
-		cmType=cmt;
-		accField=acf;
-		topParentField=tpf;
-		newRecList=nrL;
-		oldRecMap=orM;
-	}
+    public ANG_AgencyEventsGenerator(list<sObject> nrL,map<id,sObject>orM,string cmt,string acf, string tpf){
+        cmType=cmt;
+        accField=acf;
+        topParentField=tpf;
+        newRecList=nrL;
+        oldRecMap=orM;
+    }
 
-	public void run(){
+    public void run(){
         
-        if(ANG_ConversionHelper.isMigrationTool) return; //in case of migrating account, prevents following code to be run
+        if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
         list<ANG_CalloutMapping__c> calloutmappingList= new list<ANG_CalloutMapping__c>();
         for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getAll().values()){
             if(cm.Type__c== cmType) calloutmappingList.add(cm);
