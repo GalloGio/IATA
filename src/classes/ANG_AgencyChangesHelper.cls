@@ -277,6 +277,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
 
 				validationBeforeClosure(oscar, config);
+
 			}
 
 			System.debug('[ANG_AgencyChangesHelper] Checkpoint5 changesCodes are:'+ changesContainer.changeCodesToCreateDef);
@@ -973,13 +974,11 @@ public with sharing class ANG_AgencyChangesHelper {
         	removeContactsFlag(accountsAffected);
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
-
         }
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
         		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
-
         }
 
 	    //NEWGEN-1088 apply FAopt-out = false when changing to cash or cashless
@@ -987,7 +986,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!toUpsert.isEmpty())
 			upsert toUpsert;
-
 
 		return toReturn;
 	}
@@ -1457,7 +1455,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				valueToAgency = bOptOut;
 
 				// if we force value FALSE then ANG_FA_Opt_out__c in not applicable
-				if (!valueToAgency){	
+				if (!bOptOut){	
 					oscar.ANG_FA_Opt_out__c = 'Not Applicable';
 				}
 
