@@ -196,7 +196,8 @@ global class SFDC_ProductCatalog
 	    	ws.ProductLanguage 			= p.Refinement_Language__c; 
 	    	ws.ProductCategory 			= p.Line_of_Business__c;
 	    	ws.ProductMedia 			= p.Media__c;
-	    	ws.ProductAvailabilityDate 	= p.Effective_From__c;
+	    	//ws.ProductAvailabilityDate 	= p.Effective_From__c;
+	    	ws.ProductAvailabilityDate 	= p.Expected_Availability_Date__c;
 	    	ws.ProductSampleLink 		= p.IEC_Sample_Link__c;	
 	    	ws.ProductOrder 			= Integer.valueOf(p.IEC_OrderBy__c);
 	    	ws.PageAreaOfActivityLevel	= p.IEC_Page_Areas_of_Activity__c;
