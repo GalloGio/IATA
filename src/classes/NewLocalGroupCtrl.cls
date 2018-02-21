@@ -22,7 +22,7 @@ global  class NewLocalGroupCtrl {
       Set<Id> setRegDivRecordTypes = new Set<Id>();
         Set<Id> setLocalGroupRecordTypes = new Set<Id>();
         for (RecordType rt : lsRecordTypes) {
-            if(rt.DeveloperName == 'Reg_Div_Groups' || rt.DeveloperName == 'Draft_Reg_Div_Group') {
+            if(rt.DeveloperName == 'Reg_Div_Groups') {
                 setRegDivRecordTypes.add(rt.Id);
             } else if(rt.DeveloperName == 'Local_Groups') {
                 setLocalGroupRecordTypes.add(rt.Id);
