@@ -67,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Case_subject__c</fullName>
+        <description>Formula to get the Subject field from the parent Case</description>
         <externalId>false</externalId>
         <formula>Local_Charge_Request__r.Subject</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
