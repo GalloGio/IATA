@@ -40,7 +40,7 @@ global  class NewLocalGroupCtrl {
         if(!redirect && lg.RecordTypeId == null) {
             for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
                 if(info.isAvailable()) {
-                    if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {
+                    if( info.getName() == 'Reg/Div Groups') {
                         redirect = true;
                     }
                 }
