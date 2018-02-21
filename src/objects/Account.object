@@ -11068,23 +11068,25 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
-        <formula>case (TEXT(Location_Type__c)
-       , &apos;AO&apos;, 1
-       , &apos;EP&apos;, 1
-       , &apos;HO&apos;, 1
+        <formula>case (TEXT(Location_Type__c) 
+, &apos;AO&apos;, 1 
+, &apos;EP&apos;, 1 
+, &apos;HO&apos;, 1 
+, &apos;HE&apos;, 1 
 
-       , &apos;BR&apos;, 2
-       , &apos;CS&apos;, 2
-       , &apos;EB&apos;, 2
-       , &apos;ES&apos;, 2
-       , &apos;SE&apos;, 2
-       , &apos;TD&apos;, 2
-       , &apos;WH&apos;, 2
+, &apos;BR&apos;, 2 
+, &apos;CS&apos;, 2 
+, &apos;EB&apos;, 2 
+, &apos;ES&apos;, 2 
+, &apos;SE&apos;, 2 
+, &apos;TD&apos;, 2 
+, &apos;WH&apos;, 2 
+, &apos;AE&apos;, 2 
 
-       , &apos;ST&apos;, 3
-       , &apos;AW&apos;, 3
-       , &apos;SA&apos;, 3
-       , 99
+, &apos;ST&apos;, 3 
+, &apos;AW&apos;, 3 
+, &apos;SA&apos;, 3 
+, 99 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Location Type Ordered</label>
