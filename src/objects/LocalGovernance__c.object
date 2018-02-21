@@ -1051,21 +1051,6 @@ Record Type + Group Type + ISO_Country_Name</description>
         <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>Reg_Div_Groups_Pending_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Draft_Reg_Div_Group</value>
-        </filters>
-        <label>Reg / Div Groups Pending Approval</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <label>Group Name</label>
         <trackHistory>false</trackHistory>
