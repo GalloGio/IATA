@@ -302,6 +302,11 @@
 	            if(country == 'Canada' || country == 'United States' || country == 'Venezuela' || country == 'Australia' || country == 'Brazil') {
 	            	$j("#billingstate").parent().siblings('.col-lg-5').find("label").append( "<span class='required'>*</span>" );
 	         	    $j(".billingstate").addClass('rec');            	
+	            } else {
+	            	$j('#billingstate input').prop('placeholder', 'N/A');
+	            	$j('#billingstate input').prop('disabled', true);
+	            	$j('#shippingstate input').prop('placeholder', 'N/A');
+	            	$j('#shippingstate input').prop('disabled', true);
 	            }
             }
         }
