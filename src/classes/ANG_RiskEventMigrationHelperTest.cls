@@ -195,7 +195,7 @@ private class ANG_RiskEventMigrationHelperTest {
                  );
         insert cFS;
 
-
+        Test.startTest();
 		Case caseSIdra = new Case(
 							BSP_CASS__c = 'BSP',
 							parentId=cFS.id,
@@ -214,7 +214,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												Date_time_of_change__c =system.today().addDays(-40),
 												SIDRA_Case__c = caseSIdra.id 
 												);
-		Test.startTest();
+		
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
@@ -730,7 +730,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		ANG_RiskEventMigrationHelper.getRiskForecast(new Set<Account>{a});
 
 		System.assertEquals(ANG_Risk_Helper.RISK_ASSESSMENT_PASSED , a.ANG_HE_RiskHistoryAssessment__c);
-		System.assertEquals(false, a.ANG_HE_CashCondition__c);
+		System.assertEquals(true, a.ANG_HE_CashCondition__c);
 		
 		//final results are null because we didn't insert calculations
 		System.assertEquals(null, a.ANG_HE_RiskStatus__c);
