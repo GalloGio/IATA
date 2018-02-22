@@ -20,7 +20,7 @@ global class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject
 	}
 
    	global void execute(Database.BatchableContext BC, List<Account> scope) {
-		ANG_UpdateRHCInformationHandler.ExecuteUpdateInformationHandler(scope, wsToRun);
+		ExecuteUpdateInformationHandler(scope, wsToRun);
    	}
 
 	global void finish(Database.BatchableContext BC) {
@@ -29,4 +29,14 @@ global class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject
 			database.executebatch(b);
 		}
 	}
+
+	public static void ExecuteUpdateInformationHandler(List<Account> accountList, Integer wsToRun) {
+		for(Account account : accountList) {
+			if(wsToRun == FIRST_WS) {
+				ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC(String.valueOf(account.id), true);
+			} else if(wsToRun == SECOND_WS) {
+				ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate(String.valueOf(account.id));
+			}
+		}
+	}	
 }

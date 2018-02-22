@@ -1,6 +1,7 @@
 public class ANG_AccountTriggerHandler {
 
 	private static Integer FIRST_WS = 1;
+	private static Integer BATCH_SCOPE = 100;
 
 	public static Boolean isExpiration{
 		get{
@@ -421,7 +422,7 @@ public class ANG_AccountTriggerHandler {
 
 		if(accountsList.size() != 0) {
 			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(accountsList, FIRST_WS);
-			database.executebatch(b);
+			database.executebatch(b, BATCH_SCOPE);
 		}
 
 	}
