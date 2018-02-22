@@ -64,6 +64,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>TIP_BSP_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>TIP_BSP_Country__r.BSP_Country_free_text__c</formula>
+        <label>BSP Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TIP_BSP_Country__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
@@ -97,6 +107,19 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>TIP_Payment_Provider_Product__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Provider Product</label>
+        <referenceTo>TIP_Payment_Provider_Product__c</referenceTo>
+        <relationshipLabel>Payment Product Country Configs</relationshipLabel>
+        <relationshipName>TIP_Payment_Product_Country_Configs</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
     <label>Payment Product Country Config</label>
     <nameField>
         <label>Payment Product Country Config Name</label>
@@ -104,6 +127,6 @@
     </nameField>
     <pluralLabel>Payment Product Country Configs</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
