@@ -111,7 +111,7 @@ public without sharing class ISSP_Case {
             return (caseType == 'OSCAR' && newCase.Reason1__c == 'GSA / MSO / Handling Agent');
         }
     }
-    
+
     public String CaseType { get {return ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);}   }
     public String CaseStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Status);}    }
     //public String CaseDPCStatus { get {return ISSP_Constant.caseStatusMap.get(newCase.Escalated_Status_ACCA__c);}   }
@@ -260,7 +260,7 @@ public without sharing class ISSP_Case {
             if (paramTopic == 'SA') {
                 newCase.Subject = 'New SA - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Process';
-                newCase.Reason1__c = 'New SA / CHV - New Code';
+                newCase.Reason1__c = 'New SA / CHV – New Code';
                 newCase.Status = 'Draft';
                 newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                 isAccreditationUploadCase = true;
@@ -899,7 +899,7 @@ public without sharing class ISSP_Case {
                 
                 if(isDPCUser && whoToContact != 'IATA') {
                     addListCCOthersToDPC(this.additionalRecipients);
-                }                
+                }
                 /**
                 popContact();
                 String typeOfProcess = '';
@@ -1050,7 +1050,7 @@ public without sharing class ISSP_Case {
     }
 
     /**
-        Take ownership of a case for DPC (except RT Inner DPC)
+        Take ownership of a case for DPC (except RT Inter DPC)
     **/
     public Pagereference DPCAccept() {
         newCase.ACCA_Owner__c = UserInfo.getUserId();
@@ -1071,16 +1071,14 @@ public without sharing class ISSP_Case {
     }
 
     /**
-        Take ownership of a case for DPC (only RT Inner DPC)
+        Take ownership of a case for DPC (only RT Inter DPC)
     **/
-    public PageReference InnerDPCAccept() {
+    public PageReference InterDPCAccept() {
         Savepoint sp = Database.setSavepoint();
         try {
             //change owner
-            User newOwner = [SELECT Id, ContactId FROM User WHERE User.Id = :UserInfo.getUserId()];
-            newCase.ContactId = newOwner.ContactId; //Make the DPC user the contact for DPC SRs
-            newCase.OwnerId = newOwner.Id;
-            newCase.ACCA_Owner__c = newOwner.Id;
+            newCase.OwnerId = UserInfo.getUserId();
+            newCase.ACCA_Owner__c = UserInfo.getUserId();
             newCase.Status = 'In progress';
             update newCase;
 
@@ -1731,5 +1729,21 @@ public without sharing class ISSP_Case {
     
     public Boolean getIsInterDPCCase() {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
+    }
+    
+    public list<CaseHistory> getListCaseHistory() {
+        list<CaseHistory> listHistory = new list<CaseHistory>();
+        for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
+            FROM CaseHistory
+            WHERE CaseId = :newCase.Id
+            ORDER BY CreatedDate DESC]
+        ) {
+            try {
+                Id tmp = (Id)history.newValue;//ignore lines with ids
+            } catch(Exception e) {
+                listHistory.add(history);
+            }
+        }
+        return listHistory;
     }
 }
