@@ -257,11 +257,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-				if (containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP},oscar.ANG_Type_Of_Change__c)) {
+				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
 					// If opt-out is not applicable we'll put the value of the new parent
 					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
-						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c == null ? false : changesContainer.accountsMap.get(oscar.New_Parent__c).ANG_FA_Opt_out__c);
+
+						Account newParent;
+						if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
+							newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
+						else
+							newParent = [Select Id, ANG_FA_Opt_out__c from Account where Id = :oscar.New_parent__c];
+
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
 					
 					//else we'll get the value input on the oscar
 					}else { 
