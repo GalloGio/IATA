@@ -589,6 +589,11 @@ public without sharing class ISSP_APProcess {
             newCase.Reason1__c = strChangeType;
             newCase.Subject='Airline Participation - ' + strOperationType + ' - '+ strChangeType + ' - ' + newCase.Country_concerned_by_the_query__c;
         }
+        if (strOperationType=='BSP') {
+            newCase.Subject += ' - ' + hqAccount.IATACode__c + '/' + hqAccount.Airline_designator__c;
+        } else if (strOperationType.startsWith('CASS')) {
+            newCase.Subject += ' - ' + hqAccount.Airline_Prefix__c + '/' + hqAccount.Airline_designator__c;
+        }
        
         newCase.Verification__c = strOperationType;  //Store the type of Joining application, for later use in indentifying Duplicate application for same AL + Country 
         newCase.Type_of_customer__c = con.Account.Category__c;
