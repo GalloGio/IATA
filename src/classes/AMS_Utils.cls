@@ -325,6 +325,8 @@ public without sharing class AMS_Utils {
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
+    public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+
     static {
         refreshCache();
     }
