@@ -34140,7 +34140,7 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
     </validationRules>
     <validationRules>
         <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Block from using the OSCAR on accounts that are not Agency or Standard</description>
         <errorConditionFormula>AND(
   NOT(OR(
