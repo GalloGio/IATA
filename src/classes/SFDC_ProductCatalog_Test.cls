@@ -7,7 +7,6 @@ private class SFDC_ProductCatalog_Test
 	{
 		//-- Generate Products with Prices 
 		List<Product2> products = TestDataGenerator.generateProductsWithPrice(10);
-		SFDC_ProductCatalog.fakeCoverage();
 
 		//-- Update Product Properties 
 		Integer x =0;
@@ -23,7 +22,7 @@ private class SFDC_ProductCatalog_Test
 		update products;
 
 		//-- Call the service 
-		Date dt = Date.today();
+		Date dt = Date.today().addDays(-1);
 		RestRequest req = new RestRequest();
 			req.httpMethod = 'GET';
 			req.requestURI = URL.getSalesforceBaseUrl() . toExternalForm() + '/services/apexrest/ProductCatalog';
