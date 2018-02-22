@@ -42,7 +42,7 @@
         <criteriaItems>
             <field>ID_Card__c.Card_Status__c</field>
             <operation>equals</operation>
-            <value>Cancelled</value>
+            <value>Cancelled ID Card</value>
         </criteriaItems>
         <criteriaItems>
             <field>ID_Card__c.Cancellation_Date__c</field>

@@ -226,5 +226,14 @@ ISCHANGED(VMFR__c)
 )</errorConditionFormula>
         <errorMessage>It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Create_Edit_Group_Meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Local_Groups&apos;,
+NOT($Permission.Modify_Local_Group_Owners)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to add or edit meetings to this group</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

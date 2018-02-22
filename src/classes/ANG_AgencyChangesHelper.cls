@@ -185,10 +185,11 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(config == null)
 						config = ANG_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
 
-					if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
+					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
 					else
-					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+					
 					System.debug('[ANG_AgencyChangesHelper] Checkpoint2 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 					System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
@@ -226,6 +227,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						}
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						changesContainer.changeCodesToCreateDef.add(changeCode);				
 					}
 
 					if(oscar.AMS_Correction_change_code__c == 'LET') {
@@ -239,6 +242,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						changeCode.status  = '9';
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
 
 				}
@@ -251,6 +256,35 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
+
+				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
+
+					// If opt-out is not applicable we'll put the value of the new parent
+					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
+
+						Account newParent;
+						if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
+							newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
+						else
+							newParent = [Select Id, ANG_FA_Opt_out__c from Account where Id = :oscar.New_parent__c];
+
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
+					
+					//else we'll get the value input on the oscar
+					}else { 
+						changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false);
+					}
+
+				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+
+	    			changesContainer= applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet, FALSE);
+	    		
+	    		//all other changes
+				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In'){
+					// if a value for FA opt-out is selected on the oscar left panel, put it on the accounts involved
+					changesContainer = applyFAOptOut(oscar, changesContainer, accountIdsInvolvedSet ,null);
+				}				
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -711,7 +745,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}else{ //moving part of the hierarchy to a new AE (no need to sum fs because no FS existis)
 			ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.New_Parent__c)}, false);
 		}
-
+ 
 		return toReturn;
 	}
 
@@ -1178,7 +1212,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 		}
-
+        
 		return changesContainer;
 	}
 
@@ -1254,7 +1288,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_IsNewGenAgency__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1336,9 +1371,13 @@ public with sharing class ANG_AgencyChangesHelper {
 				isActive = true;
 			}
 
-			if(objectChanges != null && !objectChanges.isEmpty())
-				objectChangesByChangeCode = objectChanges.get(index);
-
+            if(objectChanges != null && !objectChanges.isEmpty()){
+				if(objectChanges.size() == 1)
+					objectChangesByChangeCode = objectChanges.get(0);
+				else
+					objectChangesByChangeCode = objectChanges.get(index);
+			}
+            
 			AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
 
 			changesContainer.addChangeCode(changeCodeResult.changeCode);
@@ -1427,5 +1466,32 @@ public with sharing class ANG_AgencyChangesHelper {
     	}
 
     	return toReturn;
+    }
+
+    private static AChangeStructure applyFAOptOut(AMS_Oscar__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean bOptOut){
+
+			Boolean valueToAgency;
+
+			// check if we are forcing a value - depending on type of changes
+			if(bOptOut != null){
+
+				valueToAgency = bOptOut;
+
+				//// if we are forcing the value FALSE then make sure ANG_FA_Opt_out__c in not applicable
+				//if (!bOptOut){	
+				//	oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+				//}
+
+			} else {
+				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+			}
+
+			for (Id key: accountIdsInvolvedSet){
+                if(changesContainer.accountsMap.get(key).ANG_FA_Opt_out__c != valueToAgency ){
+                    changesContainer.accountsMap.get(key).ANG_FA_Opt_out__c = valueToAgency;
+                }
+			}
+
+		return changesContainer;
     }
 }

@@ -68,7 +68,7 @@ public class AMS_OSCAR_ProcessViewerController {
             return (
                 oscar != null
                 && !AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)
-		&& !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
+        && !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
                 //&& oscar.Process__c != AMS_Utils.NEWHELITE
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
@@ -144,6 +144,12 @@ public class AMS_OSCAR_ProcessViewerController {
     public boolean isNewgenRT{
         get{
             return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
+        }
+    }
+
+    public Boolean blockFAoptOut{
+        get{
+            return (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE));
         }
     }
 
@@ -362,7 +368,7 @@ public class AMS_OSCAR_ProcessViewerController {
         for(Schema.SObjectField field : fMap.values()){
 
             Schema.DescribeFieldResult fd = field.getDescribe();
-            if(fd.isAccessible()) fields += fd.getName() + ', ';
+            if(fd.isAccessible() || Test.isRunningTest()) fields += fd.getName() + ', ';
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         

@@ -173,19 +173,9 @@ two record types:
                     <label>Preapproved</label>
                 </value>
                 <value>
-                    <fullName>Approved</fullName>
-                    <default>false</default>
-                    <label>Approved</label>
-                </value>
-                <value>
                     <fullName>Printed/Delivered</fullName>
                     <default>false</default>
                     <label>Printed/Delivered</label>
-                </value>
-                <value>
-                    <fullName>Cancelled</fullName>
-                    <default>false</default>
-                    <label>Cancelled</label>
                 </value>
                 <value>
                     <fullName>Cancelled ID Card</fullName>
@@ -221,6 +211,11 @@ two record types:
                     <fullName>ERROR Missing Information</fullName>
                     <default>false</default>
                     <label>ERROR Missing Information</label>
+                </value>
+                <value>
+                    <fullName>ID Card Pending/In Progress</fullName>
+                    <default>false</default>
+                    <label>ID Card Pending/In Progress</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1032,24 +1027,20 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>must_synch_with_aims</fullName>
+        <fullName>XX_GDP_Products_Account_View_BLANK</fullName>
         <columns>NAME</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>Card_Status__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>MustSyncWithAIMS__c</field>
+            <field>GDP_Products_Account_View__c</field>
             <operation>equals</operation>
-            <value>1</value>
         </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>equals</operation>
-            <value>Cancelled,Cancelled ID Card</value>
-        </filters>
-        <label>Must Sync on Cancelled Cards</label>
+        <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1078,11 +1069,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
+                <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1103,6 +1090,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1196,14 +1187,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
@@ -1212,11 +1195,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>ID Card Pending%2FIn Progress</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1346,7 +1325,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
@@ -1356,12 +1335,12 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      window.location.reload();
 } 
 
-else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Sent ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);

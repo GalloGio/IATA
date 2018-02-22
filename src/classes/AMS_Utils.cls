@@ -2587,6 +2587,13 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         } else {
             return labelName;
         }
-    } 
+    }
 
+    public static Date getBiggestDate(Date date1, Date date2) {
+        if(date1 != null && date2 != null) return (date1 > date2) ? date1 : date2;
+        if(date1 != null && date2 == null) return date1;
+        if(date1 == null && date2 != null) return date2;
+        return null;        
+    }
+    
 }

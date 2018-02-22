@@ -432,6 +432,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
                 } 
 
                 for(AMS_Accreditation_Requirement__c req : List_CountryReqments) {
+                                    
                     if (filterLanguage == req.Language__c) {
 
                         if (req.Requirement_text__c != null) {
@@ -501,6 +502,16 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         	return false;
 
         return true;
+    }
+
+
+    public Pagereference securityCheck() {
+
+        if (newCase.Id != null && newCase.Status != 'Draft') {
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
+        }
+
+        return null;
     }
 
 }

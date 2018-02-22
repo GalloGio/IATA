@@ -255,7 +255,7 @@
                             <apex:column headerClass="info">
                               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </apex:column>
-                            <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),agentType)),
+                            <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA cargo Agent'),agentType)),
                                                                          $Label.ISSP_AMS_NoC_Request_for_Change)}">
                               <apex:outputText >
                                 <strong>{!reqs.Name}</strong><br/>

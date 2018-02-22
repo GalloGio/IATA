@@ -197,7 +197,7 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-	    <fields>
+    <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
         <externalId>false</externalId>
@@ -7419,7 +7419,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 </value>
                 <value>
                     <fullName>Not Applicable</fullName>
-                    <default>false</default>
+                    <default>true</default>
                     <label>Not Applicable</label>
                 </value>
             </valueSetDefinition>
@@ -40717,7 +40717,9 @@ NOT(ISCHANGED(Reason_for_change_of_Financial_result__c ))
 NOT( 
 OR( 
 $Profile.Name = &apos;System Administrator&apos;, 
-$Profile.Name = &apos;System Administrator - automated processes&apos; 
+$Profile.Name = &apos;System Administrator - automated processes&apos;,
+AND( ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;), ISPICKVAL(ANG_FA_Opt_out__c, &apos;Opt-Out&apos;),
+ISPICKVAL(AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, &apos;Cashless&apos;))
 )
 )
 )</errorConditionFormula>
