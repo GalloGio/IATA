@@ -1,6 +1,6 @@
 global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable<sObject>, Schedulable{
     
-    private final String query = 'SELECT Id, ANG_Issued_Date__c, ANG_Expiration_Date__c, ANG_Event_Status__c, ANG_Expired__c FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__r.Region_formula__c  IN :regionList AND ((ANG_Issued_Date__c <= TODAY AND ANG_Expiration_Date__c > TODAY AND ANG_Event_Status__c = :inactiveStatus) OR (ANG_Event_Status__c = :activeStatus AND (ANG_Expiration_Date__c <= TODAY OR (ANG_Cash_Conditions_Activation_Date_FF__c <= TODAY && ANG_Limit_Cash_Conditions__c = false)))';
+    private final String query = 'SELECT Id, ANG_Issued_Date__c, ANG_Expiration_Date__c, ANG_Event_Status__c, ANG_Expired__c, ANG_Limit_Cash_Conditions__c, ANG_Cash_Conditions_Activation_FF__c FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__r.Region_formula__c  IN :regionList AND ((ANG_Issued_Date__c <= TODAY AND ANG_Expiration_Date__c > TODAY AND ANG_Event_Status__c = :inactiveStatus) OR (ANG_Event_Status__c = :activeStatus AND (ANG_Expiration_Date__c <= TODAY OR (ANG_Cash_Conditions_Activation_FF__c <= TODAY AND ANG_Limit_Cash_Conditions__c = false))))';
     private final String inactiveStatus = ANG_Risk_Helper.STATUS_INACTIVE;
     private final String activeStatus = ANG_Risk_Helper.STATUS_ACTIVE;
 
