@@ -10097,24 +10097,19 @@ WSPN-Worldspan</inlineHelpText>
                     <label>Member</label>
                 </value>
                 <value>
+                    <fullName>Bankrupt</fullName>
+                    <default>false</default>
+                    <label>Bankrupt</label>
+                </value>
+                <value>
+                    <fullName>Merged</fullName>
+                    <default>false</default>
+                    <label>Merged</label>
+                </value>
+                <value>
                     <fullName>Inactive</fullName>
                     <default>false</default>
                     <label>Inactive</label>
-                </value>
-                <value>
-                    <fullName>Active</fullName>
-                    <default>false</default>
-                    <label>Active</label>
-                </value>
-                <value>
-                    <fullName>Suspended</fullName>
-                    <default>false</default>
-                    <label>Suspended</label>
-                </value>
-                <value>
-                    <fullName>Withdrawn</fullName>
-                    <default>false</default>
-                    <label>Withdrawn</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -12600,90 +12595,42 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>M</fullName>
                     <default>false</default>
-                    <label>Monthly </label>
+                    <label>Monthly</label>
                 </value>
                 <value>
                     <fullName>F</fullName>
                     <default>false</default>
-                    <label>Fortnightly </label>
+                    <label>Fortnightly</label>
                 </value>
                 <value>
                     <fullName>R</fullName>
                     <default>false</default>
-                    <label>Every 10 days </label>
+                    <label>Every 10 days</label>
                 </value>
                 <value>
                     <fullName>W</fullName>
                     <default>false</default>
-                    <label>4 times per month </label>
+                    <label>4 times per month</label>
                 </value>
                 <value>
                     <fullName>V</fullName>
                     <default>false</default>
-                    <label>Weekly </label>
+                    <label>Weekly</label>
                 </value>
                 <value>
                     <fullName>S</fullName>
                     <default>false</default>
-                    <label>Every 5 days </label>
+                    <label>Every 5 days</label>
                 </value>
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
-                    <label>Every 3 days </label>
+                    <label>Every 3 days</label>
                 </value>
                 <value>
                     <fullName>D</fullName>
                     <default>false</default>
-                    <label>Daily </label>
-                </value>
-                <value>
-                    <fullName>Monthly</fullName>
-                    <default>false</default>
-                    <label>Monthly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Fortnightly</fullName>
-                    <default>false</default>
-                    <label>Fortnightly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 10 days</fullName>
-                    <default>false</default>
-                    <label>Every 10 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>4 times per month</fullName>
-                    <default>false</default>
-                    <label>4 times per month</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Weekly</fullName>
-                    <default>false</default>
-                    <label>Weekly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 5 days</fullName>
-                    <default>false</default>
-                    <label>Every 5 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 3 days</fullName>
-                    <default>false</default>
-                    <label>Every 3 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Daily</fullName>
-                    <default>false</default>
                     <label>Daily</label>
-                    <isActive>false</isActive>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -27033,33 +26980,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -30064,33 +29984,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33130,33 +33023,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Associations%2C Alliances and NGOs</fullName>
@@ -35881,33 +35747,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>ID_Card_KeyAccount_features__c</picklist>
             <values>
                 <fullName>CSV File Upload</fullName>
@@ -36492,19 +36331,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39558,33 +39397,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42857,7 +42669,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ICCS_Membership_Status__c</picklist>
             <values>
-                <fullName>Active</fullName>
+                <fullName>Bankrupt</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42869,15 +42681,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merged</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47429,33 +47237,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Airline</fullName>
@@ -50309,33 +50090,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54782,33 +54536,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>General Sales Agent</fullName>
@@ -59127,33 +58854,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -61669,33 +61369,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -64142,33 +63815,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66755,33 +66401,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>4 - China</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71841,7 +71460,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ICCS_Membership_Status__c</picklist>
             <values>
-                <fullName>Active</fullName>
+                <fullName>Bankrupt</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71853,15 +71472,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merged</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77686,33 +77301,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Accomodation</fullName>
@@ -82180,33 +81768,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ICCS_Membership_Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>ID_Card_KeyAccount_features__c</picklist>
             <values>
                 <fullName>CSV File Upload</fullName>
@@ -83119,19 +82680,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -84950,7 +84511,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
         <errorConditionFormula>AND(
   OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
@@ -84962,7 +84523,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
    EF_SIS_Code_Verified__c=true,
    OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
