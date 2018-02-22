@@ -1,6 +1,35 @@
 @isTest
 private class ANG_financialReviewOnCaseTest {
     @testSetup static void testSetup() {
+
+        User u=[select id from User where id =:UserInfo.getUserId()];
+        System.runAs(u){
+            insert new EmailTemplate(
+                isActive = true,
+                Name = 'Risk_Status_Upgrade',
+                DeveloperName = 'Risk_Status_Upgrade',
+                TemplateType = 'text',
+                FolderId = UserInfo.getUserId()
+            );
+        }
+
+        insert new Notification_template__c (
+            Subject__c = 'Some subject',
+            Message__c = 'Some message',
+            Type__c = 'Information',
+            Notification_color__c = '#FF5E4D',
+            Admins_Users__c = 'User',
+            Expire_in_days__c = 0,
+            Identifier__c = 'Risk_Status_Upgrade'
+        );
+        insert new AMS_ChangeCodes__c(
+            Name = 'UpgradedRisk', 
+            Change_Code__c = 'UGR', 
+            Integration_RecId__c = 'C', 
+            Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
+        );
+
+
         // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name = 'France', 
@@ -10,17 +39,19 @@ private class ANG_financialReviewOnCaseTest {
         );
         insert country;
         
-        // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        // Create an Agency HE account
         Account a = new Account(
             Name = 'Qatar Airways', 
             Airline_designator__c = 'QR', 
-            RecordTypeId = AirlineHQ_RT_Id, 
+            recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
             iataCode__C='99999999',
             BillingCountry='France',
             Location_type__C='HE',
             Location_Class__c='P',
-            IATA_ISO_Country__c=country.id
+            Type = 'IATA Passenger Sales Agent',
+            Sector__c='Travel Agent',
+            IATA_ISO_Country__c=country.id,
+            ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH
 
         );
         insert a;        
@@ -32,6 +63,7 @@ private class ANG_financialReviewOnCaseTest {
         Contact cont= new Contact(
         		lastName='lastName',
         		Financial_Assessment_Contact__c=true,
+                AccountId = a.Id, 
         		email='test@test.com'
         	);
         insert cont;
@@ -53,6 +85,30 @@ private class ANG_financialReviewOnCaseTest {
                         Validity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
         insert fs;
 
+
+        ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(RecordTypeId = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT, ANG_Financial_Review_Result__c = 'Satisfactory - New Financial Security', ANG_Risk_History_Assessment__c = AMS_Utils.FAILED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B, ANG_Limit_Cash_Condition__c = false);
+        ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(RecordTypeId = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT, ANG_Financial_Review_Result__c = null, ANG_Risk_History_Assessment__c = AMS_Utils.FAILED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c, ANG_Limit_Cash_Condition__c = true);
+        ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(ANG_Order__c = 1, ANG_Occurrence_Num__c = 1, ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO, ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH, RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+        insert new List<ANG_Agency_Risk_Calculation__c>{calcC, calcB, rule};
+
+        ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+            Name = 'Risk Event Test',
+            ANG_Description__c = 'Risk Event Test',
+            ANG_Expiration__c = 24,
+            ANG_Risk_ID__c = 'testRiskId',
+            ANG_Agency_Risk_Calculation__c = rule.Id
+
+        );
+        insert ret;
+
+        ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+            ANG_AccountId__c = a.id,
+            ANG_Risk_Type__c = ret.id,
+            ANG_Issued_Date__c = System.today(),
+            ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
+        );
+
+        insert re1;
        
 
     }
@@ -78,4 +134,29 @@ private class ANG_financialReviewOnCaseTest {
         system.assertEquals(afterUpdateAcc.Financial_Review_Result__c,beforeUpdateAcc.Financial_Review_Result__c);
 
     }
+
+     TestMethod static void updateCaseStatusToUpgradeAccountRiskStatus(){
+       
+        
+
+        Account beforeUpdateAcc =[select id, ANG_HE_RiskStatus__c,Financial_Review_Result__c from account limit 1]; 
+
+        system.assertEquals('C',beforeUpdateAcc.ANG_HE_RiskStatus__c);
+        Test.startTest();
+            Portal_Applications__c par = new Portal_Applications__c (Name = 'RHC Information');
+            insert par;
+
+            insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = [select id from Contact limit 1].get(0).Id);
+            case c=[select id,Financial_Review_Result__c from case limit 1];
+            c.status='Closed';
+            update c;
+        Test.stopTest();
+        account afterUpdateAcc =[select ANG_HE_RiskStatus__c,Financial_Review_Result__c, (select id from Agencies_Applied_Change_codes__r) from account limit 1];   
+
+        system.assertEquals(c.Financial_Review_Result__c,afterUpdateAcc.Financial_Review_Result__c);
+        system.assertEquals('B',afterUpdateAcc.ANG_HE_RiskStatus__c);
+        System.assertEquals(1, [SELECT Id, Subject__c FROM Notification__c].size(), 'Notification was not created'); 
+        System.assertEquals(1, afterUpdateAcc.Agencies_Applied_Change_codes__r.size(), 'Change Code was not created');
+    }
+
 }
