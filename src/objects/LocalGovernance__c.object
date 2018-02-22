@@ -573,6 +573,28 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Number_of_local_group_meetings__c</fullName>
+        <description>Total number of local group meetings</description>
+        <externalId>false</externalId>
+        <label>Number of local group meetings</label>
+        <summaryForeignKey>LocalGovernance_Meeting__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_participants__c</fullName>
+        <description>The total number of participants</description>
+        <externalId>false</externalId>
+        <label>Number of participants</label>
+        <summaryForeignKey>Participant__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Open_to__c</fullName>
         <externalId>false</externalId>
         <label>Open to</label>
@@ -1029,21 +1051,6 @@ Record Type + Group Type + ISO_Country_Name</description>
         <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>Reg_Div_Groups_Pending_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Draft_Reg_Div_Group</value>
-        </filters>
-        <label>Reg / Div Groups Pending Approval</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <label>Group Name</label>
         <trackHistory>false</trackHistory>
@@ -1054,8 +1061,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <recordTypes>
         <fullName>Draft_Reg_Div_Group</fullName>
         <active>true</active>
-        <description>Represents a new Reg/Div group before it has been approved</description>
-        <label>Draft Reg/Div Group</label>
+        <label>Draft_Reg_Div_Group</label>
         <picklistValues>
             <picklist>Cargo_Passenger__c</picklist>
             <values>
@@ -1083,6 +1089,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1122,7 +1132,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>None</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -1141,6 +1151,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1994,6 +2008,29 @@ Record Type + Group Type + ISO_Country_Name</description>
   )
 )</errorConditionFormula>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_group_meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Local_Groups&apos;, 
+PRIORVALUE(Number_of_local_group_meetings__c) &gt; Number_of_local_group_meetings__c, 
+NOT($Permission.Modify_Local_Group_Owners) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete meetings from this group</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),
+AND(RecordType.DeveloperName = &apos;Local_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete participants from this group</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>

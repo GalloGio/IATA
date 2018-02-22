@@ -73,7 +73,7 @@ public class ISSP_PortalService_Test {
 		
 	public static testMethod void unitTest3() {
 
-		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test', ANG_Enable_NewGen__c=true);        
         insert ISO_Country;
 
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -134,6 +134,10 @@ public class ISSP_PortalService_Test {
 
         
         ctrl3.getContacts();
+        
+        ctrl3.SelectedContacts = con.id;
+
+        ctrl3.activateUsers();        
 
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
@@ -186,7 +190,7 @@ public class ISSP_PortalService_Test {
 
 		insert car;
         
-		Test.startTest();
+		
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
 			
@@ -205,6 +209,8 @@ public class ISSP_PortalService_Test {
 		con2.Email = 'con2@test.test';
 		con2.Community__c = 'ISS Customer Portal';
 		cl.add(con2);
+		
+		Test.startTest();
 		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;

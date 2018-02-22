@@ -69,6 +69,12 @@ private class AMP_IATAGroupExtensionTest
 			License_Cost_Center__c = 'ISF005CH01'
 		);
 
+		insert testUser;
+
+		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = testUser.Id);
+		insert psa;
+
 		System.runAs(testUser) {
 			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
 			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);

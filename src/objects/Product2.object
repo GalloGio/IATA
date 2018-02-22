@@ -3183,6 +3183,11 @@ SIS Charge Code Type.</description>
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Floating License</fullName>
                     <default>false</default>
                     <label>Floating License</label>
@@ -3693,6 +3698,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Forms</fullName>
                     <default>false</default>
                     <label>Forms</label>
@@ -3885,6 +3895,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
+                </value>
+                <value>
+                    <fullName>Events</fullName>
+                    <default>false</default>
+                    <label>Events</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -8097,6 +8112,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8442,6 +8461,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11063,6 +11086,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11404,6 +11431,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14104,6 +14135,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14460,6 +14495,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14538,6 +14577,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
+            <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -17086,6 +17129,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17427,6 +17474,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
                 <default>false</default>
             </values>
             <values>
