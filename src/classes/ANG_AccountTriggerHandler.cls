@@ -1,8 +1,6 @@
 public class ANG_AccountTriggerHandler {
 
-	private static Integer LIST_LIMIT = 90;
 	private static Integer FIRST_WS = 1;
-	private static Integer SECOND_WS = 2;
 
 	public static Boolean isExpiration{
 		get{
@@ -404,18 +402,25 @@ public class ANG_AccountTriggerHandler {
 
 	private void updateRHCInformation_OptIN_OptOUT() {
 
-		if(triggerNew.size() < LIST_LIMIT) {
+		List<Account> accountsList = new List<Account>();
 
-			System.debug('ALEX updateRHCInformation_OptIN_OptOUT first Call');
+		for(Account newAcc : triggerNew) {
+			Account oldAcc = oldMap.get(newAcc.Id);
+			//
+			// Check if ANG_FA_Opt_out__c changed from TRUE to FALSE
+			// Check if ANG_CashCondition__c changed from TRUE to FALSE and isLastFinancialReviewUpgrade is TRUE 
+			// (isLastFinancialReviewUpgrade = TRUE means that the change was originated in a IFAP process) 
+			//
+			//
+			if((oldAcc.ANG_FA_Opt_out__c  && !newAcc.ANG_FA_Opt_out__c) || 
+			   (oldAcc.ANG_CashCondition__c  && !newAcc.ANG_CashCondition__c && isLastFinancialReviewUpgrade)
+			  ) {
+				accountsList.add(newAcc);	
+			}
+		}
 
-			ANG_UpdateRHCInformationHandler.ExecuteUpdateInformationHandler(triggerNew, FIRST_WS);
-
-			System.debug('ALEX updateRHCInformation_OptIN_OptOUT triggerNew : ' + triggerNew);
-
-			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(triggerNew, SECOND_WS);
-			database.executebatch(b);
-		} else {
-			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(triggerNew, FIRST_WS);
+		if(accountsList.size() != 0) {
+			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(accountsList, FIRST_WS);
 			database.executebatch(b);
 		}
 

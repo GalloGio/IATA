@@ -1,4 +1,4 @@
-global class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject> {
+global class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject>, Database.AllowsCallouts {
 
 	private static Integer FIRST_WS = 1;
 	private static Integer SECOND_WS = 2;

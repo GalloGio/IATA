@@ -179,11 +179,17 @@ global class ANG_RME_Alert_Service {
 
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
+
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
 
 		if(result.isSuccess) updateRHC(result.res, acc.RHC_Informations__r[0]);
+
+		//
+		// To reset the singleton for future calls
+		//
+		log = null;	
 
 		return result;
 	}
@@ -210,10 +216,13 @@ global class ANG_RME_Alert_Service {
 
 				update rhcInfo;
 			}
-			
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
 		}
 
+		//
+		// To reset the singleton for future calls
+		//
+		log = null;	
 
 		return result;
 	}
@@ -272,9 +281,7 @@ global class ANG_RME_Alert_Service {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
-
-		log = null;
-
+		
 		return result;
 	}
 }
