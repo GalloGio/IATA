@@ -30,9 +30,10 @@ public class ANG_AgencyEventsGenerator{
                 if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
                     if(!insertedRecordsSet.contains(String.valueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField))+cm.Event_type__c)){
                         AMS_Agency_Updates__c auRec = new AMS_Agency_Updates__c(
-                            Account__c = String.ValueOf(cm.Action__c=='PUT'?obj.get(accField):obj.get(topParentField)), 
+                            Account__c = String.ValueOf(obj.get(accField)), 
                             Update_Type__c = cm.Event_type__c,
                             Integration_System__c='Mulesoft',
+                            Action_Type__c=cm.Action__c,
                             Change_Code__c=cm.Change_Code__c,
                             Agency_Applied_Change_code__c=cmType=='ChangeCode'?String.ValueOf(obj.get('id')):null,
                             ConfigurationID__c=cm.id
