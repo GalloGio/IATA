@@ -117,6 +117,7 @@ public class AMS_OSCARTriggerHandler {
         updateCaseKPIFields();
         updateCaseInfo();
         createHoAdminNotifications();
+        updateIfapForOptinOut();
     }
 
     private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -3175,4 +3176,38 @@ public class AMS_OSCARTriggerHandler {
         if(!accountsToUpdate.isEmpty())
             update accountsToUpdate;
     }
+
+
+    public static void updateIfapForOptinOut(){
+
+        Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+        Map<Id, AMS_OSCAR__c> newMap = (Map<Id,AMS_OSCAR__c>) Trigger.newMap;
+
+        Set<Id> oscarsToProcess = new Set<Id>();
+
+        for(AMS_Oscar__c oscar: newMap.values()){
+
+            if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed')
+                oscarsToProcess.add(oscar.Id);
+
+        }
+
+        List<Case> casesToUpdate = new List<Case>();
+
+        if(oscarsToProcess.isEmpty())
+            return;
+
+        List<Case> casesToProcess = [Select Id , Status, OSCAR__c from Case where OSCAR__c in :oscarsToProcess and RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP];
+        
+        for(Case c: casesToProcess){
+            if(c.Status != 'Closed Opt-out'){
+                c.Status = 'Closed Opt-out';
+                casesToUpdate.add(c);
+            }
+        }
+
+        if(!casesToUpdate.isEmpty())
+            update casesToUpdate;
+    }
+
 }
