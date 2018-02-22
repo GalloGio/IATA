@@ -147,7 +147,9 @@
 			$j("#drpdwnSState").removeClass('rec');
 			$j('#shippingstate input').val('');
 			$j('#shippingstate input').show();
-			$j('#divToMove3').hide();			
+			$j('#divToMove3').hide();
+			$j('#shippingstate input').prop('placeholder', 'N/A');
+	        $j('#shippingstate input').prop('disabled', true);			
 		}
 	}
 	
