@@ -1,5 +1,8 @@
 public class ANG_AccountTriggerHandler {
 
+	private static Integer FIRST_WS = 1;
+	private static Integer BATCH_SCOPE = 100;
+
 	public static Boolean isExpiration{
 		get{
 			if(isExpiration == null) isExpiration = false;
@@ -42,6 +45,7 @@ public class ANG_AccountTriggerHandler {
 		UpdateRiskEventStatus();
 		updateRHCInformation();
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id', 'Top_Parent__c').run();
+		updateRHCInformation_OptIN_OptOUT();
 	}
 
 	public void onBeforeDelete(){}
@@ -397,6 +401,31 @@ public class ANG_AccountTriggerHandler {
 		update reToUpdateList;
 	}
 
+	private void updateRHCInformation_OptIN_OptOUT() {
+
+		List<Account> accountsList = new List<Account>();
+
+		for(Account newAcc : triggerNew) {
+			Account oldAcc = oldMap.get(newAcc.Id);
+			//
+			// Check if ANG_FA_Opt_out__c changed from TRUE to FALSE
+			// Check if ANG_CashCondition__c changed from TRUE to FALSE and isLastFinancialReviewUpgrade is TRUE 
+			// (isLastFinancialReviewUpgrade = TRUE means that the change was originated in a IFAP process) 
+			//
+			//
+			if((oldAcc.ANG_FA_Opt_out__c  && !newAcc.ANG_FA_Opt_out__c) || 
+			   (oldAcc.ANG_CashCondition__c  && !newAcc.ANG_CashCondition__c && isLastFinancialReviewUpgrade)
+			  ) {
+				accountsList.add(newAcc);	
+			}
+		}
+
+		if(accountsList.size() != 0) {
+			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(accountsList, FIRST_WS);
+			database.executebatch(b, BATCH_SCOPE);
+		}
+
+	}
 
 	private void runRiskAssessment() {
 		
