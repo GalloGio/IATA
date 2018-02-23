@@ -4,10 +4,12 @@ private class AMS_MigrationToolHelperTest {
 	@testSetup static void setup(){
 
 		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
 		// create test account1
 		Account account1 = new Account();
 		account1.Name = 'Test account';
+        account1.RecordTypeId = agencyRT;
 		account1.IATACode__c = '4242424';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
