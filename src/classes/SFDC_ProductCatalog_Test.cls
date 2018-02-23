@@ -22,7 +22,7 @@ private class SFDC_ProductCatalog_Test
 		update products;
 
 		//-- Call the service 
-		Date dt = Date.today();
+		Date dt = Date.today().addDays(-1);
 		RestRequest req = new RestRequest();
 			req.httpMethod = 'GET';
 			req.requestURI = URL.getSalesforceBaseUrl() . toExternalForm() + '/services/apexrest/ProductCatalog';

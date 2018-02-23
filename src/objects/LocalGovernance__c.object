@@ -1051,21 +1051,6 @@ Record Type + Group Type + ISO_Country_Name</description>
         <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>Reg_Div_Groups_Pending_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Draft_Reg_Div_Group</value>
-        </filters>
-        <label>Reg / Div Groups Pending Approval</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <label>Group Name</label>
         <trackHistory>false</trackHistory>
@@ -1076,8 +1061,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <recordTypes>
         <fullName>Draft_Reg_Div_Group</fullName>
         <active>true</active>
-        <description>Represents a new Reg/Div group before it has been approved</description>
-        <label>Draft Reg/Div Group</label>
+        <label>Draft_Reg_Div_Group</label>
         <picklistValues>
             <picklist>Cargo_Passenger__c</picklist>
             <values>
@@ -1105,6 +1089,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1144,7 +1132,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>None</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -1163,6 +1151,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCC</fullName>
                 <default>false</default>
             </values>
             <values>

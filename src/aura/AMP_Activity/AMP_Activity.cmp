@@ -55,7 +55,7 @@
             </aura:if>
         </td>
         <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true" maxlength = "80"/></td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5"/></td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5" maxlength="32768"/></td>
         <td class="allignTop">
             <ui:inputSelect aura:id="statusList" class="slds-select required" >
 
@@ -88,7 +88,7 @@
                              listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"
                              listIconClass="slds-icon-standard-connected-apps" />
         </td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" aura:id="benefits" class="slds-textarea" rows="5"/></td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" aura:id="benefits" class="slds-textarea" rows="5" maxlength= "1024"/></td>
 
         <aura:set attribute="else">
             <td>
