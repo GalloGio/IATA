@@ -132,7 +132,7 @@ public class ANG_RHCHelper {
 			//						
 			Decimal minimumRHCAmount = null;
 
-			if(csaMap.containsKey(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c)) 
+			if(csaMap.containsKey(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) && csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) != null)
 				minimumRHCAmount = csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c);
 			else
 				minimumRHCAmount = csaMap.get(DEFAULT_CODE);
