@@ -499,15 +499,26 @@ public with sharing class AMS_OSCAR_Automation {
     public class AMS_OSCAR_Step15_succeeded implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step15_succeeded.processWork');
-            Boolean res = False;
+            Boolean res = False;               
+            Boolean hasFRRequiredStep = false;
+            
+            if (oscar.Type_of_change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.STEP11__c != AMS_Utils.PASSED){
+                Account oscarAccount = [SELECT ANG_Accreditation_Model__c FROM Account WHERE Id = :oscar.Account__c];
+                if (oscarAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+                    hasFRRequiredStep = true;
+                }
+            }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))) {
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+                && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
-            } else {
-                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
+            }else if(hasFRRequiredStep){
+                    oscar.addError('When changing the Accreditation Model from "Cashless" to "Cash" the step "Conduct Financial Review" must be passed');
+            }else{    
+                    oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
             }
 
             return res;
@@ -1207,14 +1218,14 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.addError('Cannot set risk event to passed because manager approval is not authorized.');
 
             if (oscar != null) {
-			
+            
                 res = True;
             }
 
             return res;
         }
     }
-	
+    
     public class AMS_OSCAR_Step41_failed implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');
