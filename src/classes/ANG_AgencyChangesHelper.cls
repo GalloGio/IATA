@@ -1476,13 +1476,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			// check if we are forcing a value - depending on type of changes
 			if(bOptOut != null){
-
 				valueToAgency = bOptOut;
-
-				//// if we are forcing the value FALSE then make sure ANG_FA_Opt_out__c in not applicable
-				//if (!bOptOut){	
-				//	oscar.ANG_FA_Opt_out__c = 'Not Applicable';
-				//}
 
 			} else {
 				valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
