@@ -502,7 +502,7 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;               
             Boolean hasFRRequiredStep = false;
             
-            if (oscar.Type_of_change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.STEP11__c != AMS_Utils.PASSED){
+            if (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.STEP11__c != AMS_Utils.PASSED){
                 Account oscarAccount = [SELECT ANG_Accreditation_Model__c FROM Account WHERE Id = :oscar.Account__c];
                 if (oscarAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
                     hasFRRequiredStep = true;
