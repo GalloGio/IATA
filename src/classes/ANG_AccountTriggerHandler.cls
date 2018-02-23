@@ -34,7 +34,7 @@ public class ANG_AccountTriggerHandler {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
 		updateRHCInformation();
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id', 'id').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
 	}
 
 	public void onBeforeDelete(){}

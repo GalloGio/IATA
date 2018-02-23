@@ -30,7 +30,7 @@ public class ANG_RHCInformationTriggerHandler{
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c').run();
 	}
 
 	public void onBeforeDelete(){}
