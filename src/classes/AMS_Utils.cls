@@ -2,6 +2,8 @@ public without sharing class AMS_Utils {
 
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
+    //public static Boolean isNewGenProcess = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -161,6 +163,8 @@ public without sharing class AMS_Utils {
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
+    public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
+    public static final String NGVR             = 'VR.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
@@ -186,6 +190,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_Agency_Changes');
     public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+    public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
@@ -230,8 +235,21 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
-    public static final String CASE_REASON_BR_IP = 'New BR / IP';  
+    public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
+    public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
+
+    // Case - Status    
+    public static final String CASE_STATUS_CLOSED = 'Closed';
+    public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+
+    //set with the ifap status to update the account's last financial review
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+
+
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
@@ -300,6 +318,9 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
+    public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
+    public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
+    public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
     static {
         refreshCache();
@@ -2322,7 +2343,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return lRes;
     }
 
-	//20-06-2017 - Change AMSU-93 - special chars replacement
+    //20-06-2017 - Change AMSU-93 - special chars replacement
     public static String cleanSpecialChars(String s){
 
         String sRes = '';
@@ -2504,6 +2525,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
+	
+	/**
+	Method to help the transformation of accrediation types to display on ebulletin
+	*/
+	public static String transformAccreditationType(String accredType) {
+
+		String result = accredType;
+
+		if (result == null)
+			return null;
+
+		if (result.containsIgnoreCase('Cashless'))
+			result = result.replace('Cashless', 'GoLite');
+		if (result.containsIgnoreCase('Cash'))
+			result = result.replace('Cash', 'GoStandard');
+		if (result.containsIgnoreCase('Multicountry'))
+			result = result.replace('Multicountry', 'GoGlobal');
+
+		return result;
+
+	}
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 
@@ -2523,5 +2565,22 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         return oscarSteps;
     }
+
+    public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
+        'Legacy' => 'Legacy',
+        'Cashless' =>   'GoLite',
+        'Cash' =>   'GoStandard',
+        'Multicountry' => 'GoGlobal'
+    };   
+
+    public static String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    } 
 
 }

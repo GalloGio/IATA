@@ -143,13 +143,13 @@
                        }
                         
                         var uploadErrors = [];
-        				var acceptFileTypes = {!allowedExtensions};
+                        var acceptFileTypes = {!allowedExtensions};
                         var currentAmazonFilesArray = getAllFileNames();
                         
                         //Remove any special characters from file name
-                        	var fn = data.originalFiles[0]['name'];
-                        	fn = fn.replace(/ /gi,'_');
-                        	fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
+                            var fn = data.originalFiles[0]['name'];
+                            fn = fn.replace(/ /gi,'_');
+                            fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
                         
                         //alert(data.originalFiles[0]['type']);
                         if (data.originalFiles[0]['type'] === undefined) {
@@ -161,40 +161,44 @@
                             $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         } else {
                             
-        				if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
-            				uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
-        				}
+                        if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
+                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
+                            window.onbeforeunload = null;
+                        }
                        
-                      	if(currentAmazonFilesArray.indexOf(fn) > -1) {
-                        	uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
+                        if(currentAmazonFilesArray.indexOf(fn) > -1) {
+                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
+                            window.onbeforeunload = null;
                          }
                         
                         console.log('File size: '+ data.originalFiles[0]['size']);   
                         console.log('File length: '+ data.originalFiles[0]['name'].length);
                             
-        				if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
-            				uploadErrors.push('Filesize is too big');
-        				}
+                        if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
+                            uploadErrors.push('Filesize is too big');
+                            window.onbeforeunload = null;
+                        }
                          
                         if(data.originalFiles[0]['name'] && data.originalFiles[0]['name'].length > 80) {
-            				uploadErrors.push('Filename is too long (Max. 80 characters)');
-        				}
+                            uploadErrors.push('Filename is too long (Max. 80 characters)');
+                            window.onbeforeunload = null;
+                        }
                        
                             
-        				if(uploadErrors.length > 0) {
-            				alert(uploadErrors.join("\n"));
+                        if(uploadErrors.length > 0) {
+                            alert(uploadErrors.join("\n"));
                             $("#input-{!reqCnt}").removeAttr('disabled');
                             if(isIE()) {
-                        		$("#loading-{!reqCnt}").hide();
-                       		}
-        				} else {
+                                $("#loading-{!reqCnt}").hide();
+                            }
+                        } else {
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
                         // and then Submit
-                        	data.submit();
+                            data.submit();
                             $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         }
                       }
-                   	},
+                    },
                     progress: function(e, data){
                         // This is what makes everything really cool, thanks to that callback
                         // you can now update the progress bar based on the upload progress.
@@ -209,9 +213,9 @@
                     },
                     done: function (event, data) {
                         //Remove any special characters from file name
-                       	var fn = data.originalFiles[0]['name'];
-                       	fn = fn.replace(/ /gi,'_');
-                       	fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
+                        var fn = data.originalFiles[0]['name'];
+                        fn = fn.replace(/ /gi,'_');
+                        fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
                         
                         $(".FileInput-{!reqCnt}").val(folderInit); //Set folder back to init value in case rerendering fails in next line
                         createAmazonFileObject{!reqCnt}_JS(fn, data.originalFiles[0].size);
@@ -220,8 +224,8 @@
                         $("#input-{!reqCnt}").removeAttr('disabled');
                         
                         if(isIE()) {
-                        	$("#loading-{!reqCnt}").hide();
-                       	}
+                            $("#loading-{!reqCnt}").hide();
+                        }
                         
                         window.onbeforeunload = null;
                                                 

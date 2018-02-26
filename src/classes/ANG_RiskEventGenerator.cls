@@ -195,6 +195,8 @@ public class ANG_RiskEventGenerator {
 						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
 						risk.put(sourceFields.get(objectName), o.Id);
 						risk.ANG_UniqueKey__c = uniqueKey;
+						
+						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
 						riskEvents .add(risk);
 					}
@@ -276,6 +278,7 @@ public class ANG_RiskEventGenerator {
 			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
 
+			if(Trigger.isInsert && re.ANG_isCashlessAgency__c) re.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
 			if((String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')) && !skipStatusAssignment ){
 				if(re.ANG_Issued_Date__c > System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
 				else re.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE;

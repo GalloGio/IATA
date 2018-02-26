@@ -8,10 +8,19 @@
  <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            doSearch();
+            return false;
+          }
+        });
+      });      
 
     // When document is ready
     $(document).ready(function() {
-        onready();
+      onready();
     });
 
     function onready() {
@@ -47,28 +56,29 @@
     }
 
     function showIdModal(){
-    	$('#idCardModal').modal('show');
+      $('#idCardModal').modal('show');
     }
 
     function closeIdModal(){
-    	$('#idCardModal').modal('hide');
+      $('#idCardModal').modal('hide');
     }
 
     function showReasonModal(){
-    	$('#inactiveReason').modal('show');
+      $('#inactiveReason').modal('show');
     }
 
     function closeModal(){
-    	$('#inactiveReason').modal('hide');
+      $('#inactiveReason').modal('hide');
     }
 
     function showRejectReasonModal(){
-    	$('#rejectionReason').modal('show');
+      $('#rejectionReason').modal('show');
     }
 
     function closeRejectModal(){
-    	$('#rejectionReason').modal('hide');
+      $('#rejectionReason').modal('hide');
     }
+
     </script>
 
 
@@ -107,6 +117,9 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Contacts" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="contactListForm" />
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/>
+
+    <apex:actionFunction action="{!doSearch}" name="doSearch" rerender="Contacts"/>
+
     <!-- <apex:pageMessages /> -->
     <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         {!$Label.ISSP_Contacts}<br />
@@ -140,8 +153,8 @@
 
     <apex:outputPanel id="theSecondModal" >
     <apex:outputPanel rendered="{!contactsWithIdCard}" >
-   	<script>showIdModal();</script>
-   	<!-- Id Card users being inactivated -->
+    <script>showIdModal();</script>
+    <!-- Id Card users being inactivated -->
     <div class="modal fade" id="idCardModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -149,17 +162,17 @@
             <h4 class="modal-title">{!$Label.ISSP_InactiveUser_Important}</h4>
           </div>
           <div class="modal-body">
-          	<apex:outputText value="{!contactsWithIdCardString}" escape="false" />
+            <apex:outputText value="{!contactsWithIdCardString}" escape="false" />
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!inactivate}" onclick="closeIdModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
-          	<apex:commandButton action="{!resetIdCard}" value="{!$Label.ISSP_Cancel}" onclick="closeIdModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton action="{!inactivate}" onclick="closeIdModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
+            <apex:commandButton action="{!resetIdCard}" value="{!$Label.ISSP_Cancel}" onclick="closeIdModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>
      </div>
-	</apex:outputPanel>
-	</apex:outputPanel>
+  </apex:outputPanel>
+  </apex:outputPanel>
 
     <apex:pageBlock id="Contacts" >
       <!--  <apex:pageBlockButtons location="top"> -->
@@ -208,7 +221,19 @@
                 <apex:param name="AlphaFilter" value="{!a}" assignTo="{!AlphaFilter}" />
             </apex:commandLink>
         </apex:repeat>
-    </span>
+      </span>
+
+      <!-- SEARCH -->
+      <span>
+        <apex:outputLabel style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" value="{! $Label.ISSP_ANG_SearchContacts}"/>        
+        <span>
+          <apex:inputText style="font-weight: normal; font-size: 91%; padding: 0 4px; color: #015BA7" id="searchString" value="{!searchString}"/>  
+          <!--apex:outputLink styleclass="btn btn_iata_primary btn-xs hidden" value="OLA" target="_blank">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </apex:outputLink-->
+          <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+        </span>
+      </span>
 
         <!-- <apex:pageMessages escape="false"/> -->
         <apex:pageBlockTable value="{!contactList}" var="item" styleClass="table-hover  table table-condensed table-responsive" id="pbt_contacts">
@@ -342,15 +367,15 @@
           </div>
           <div class="modal-body">
             <apex:selectList id="reasonList" value="{!contactStatus}" size="1" styleClass="UserStatus form-control"  >
-				<apex:selectOptions value="{!inactiveReasonOptions}" />
-			</apex:selectList>
+        <apex:selectOptions value="{!inactiveReasonOptions}" />
+      </apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" 
+            <apex:commandButton action="{!checkIdCard}" onclick="closeModal();" value="{!$Label.ISSP_Confirm}" 
               rerender="theSecondModal, theRepeat,Contacts, loadStatusSpinner" 
               status="loadStatusSpinner"
               StyleClass="btn btn-default"/>
-          	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>
@@ -365,12 +390,12 @@
           </div>
           <div class="modal-body">
             <apex:selectList id="reasonRejectList" value="{!contactStatus}" size="1" styleClass="UserStatus form-control"  >
-				<apex:selectOptions value="{!rejectionReasonOptions}" />
-			</apex:selectList>
+        <apex:selectOptions value="{!rejectionReasonOptions}" />
+      </apex:selectList>
           </div>
           <div class="modal-footer">
-          	<apex:commandButton action="{!reject}" onclick="closeRejectModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
-          	<apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeRejectModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
+            <apex:commandButton action="{!reject}" onclick="closeRejectModal();" value="{!$Label.ISSP_Confirm}" rerender="Contacts, theRepeat" StyleClass="btn btn-default"/>
+            <apex:commandButton value="{!$Label.ISSP_Cancel}" onclick="closeRejectModal();" rerender="Contacts, theRepeat" StyleClass="btn btn-primary"/>
           </div>
         </div>
       </div>

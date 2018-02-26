@@ -14,6 +14,7 @@ public with sharing class ISSP_ANG_RHC {
 	public Id accountIdTP {get; set;}
 	public Id accountId {get; set;}
 	public Boolean isCashless {get; set;}
+	public ANG_ProductComparisonHelper helper {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c rhcInfo {get;set;}
 	public Boolean hasRightAccessIceService { get {
@@ -31,6 +32,7 @@ public with sharing class ISSP_ANG_RHC {
 		initFormsOfPayment();
 		initializeRHCInfo();
 		initRiskProfile();
+		this.helper = new ANG_ProductComparisonHelper('B');
 	}
 
 	@TestVisible private Boolean hasRightAccess(String service) {
@@ -55,7 +57,7 @@ public with sharing class ISSP_ANG_RHC {
 											Authorized_Signatory__c,
 											Account.Id,
 											Account.Top_Parent__c,
-											Account.Remittance_frequency__c,
+											toLabel(Account.Remittance_frequency__c),
 											Account.ANG_IEP_Status_FF__c,
 											Account.ANG_Accreditation_Model__c,
 											Account.Location_Type__c,

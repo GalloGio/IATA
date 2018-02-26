@@ -1078,13 +1078,17 @@
                <apex:outputPanel rendered="{!isNoticeOfChange}">
                 {!IF(newform.Is_change_bank_account_details__c, $Label.ISSP_AMS_StepFinal_ChangeBank, $Label.ISSP_AMS_StepFinal_ChangeOther)}
                </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'FoP Management'}">
+                {!$Label.ISSP_PCI_Case_Submited}                
+               </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'CLO - Closure'}">
+                {!$Label.ISSP_VR_Case_Submited}
+            </apex:outputPanel>
            </strong>
            
            
-           <br/>
-           <apex:outputlabel >
-           <br/> 
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.</apex:outputlabel>
+           <br/> <br/> 
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
                 <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
@@ -1092,8 +1096,8 @@
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>
-            -->
-            <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange)}">
+            -->            
+            <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
                  <apex:pageBlockSection >
                      <apex:pageBlockSectionItem >
                          <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>

@@ -246,7 +246,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	
 	public Boolean showTopPanel{
 		get{
-			return true;
+			return oscar.RecordTypeId != AMS_Utils.RECTYPE_NEWGENFOP;
 		}
 		private set;
 	}

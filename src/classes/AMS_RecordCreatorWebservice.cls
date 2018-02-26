@@ -22,9 +22,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
     public static String NEWNAE = 'ANG.NEW.AE.1.0';
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
+    public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP, NEWVR_PV};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -49,7 +50,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('Arguments cannot be null.');
 
             String oscarRecordType = fetchOscarRecordType(typeOfProcess);
-
+            
             if(String.isBlank(oscarRecordType))
                 throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
                 //return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
@@ -101,7 +102,7 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV))
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
                     if(oscarCase.AccountId != realAccountId)
                         oscarCase.AccountId = realAccountId;
 
@@ -136,11 +137,11 @@ global without sharing class AMS_RecordCreatorWebservice {
         List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
 
         if(!cases.isEmpty()){
-            System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
-            return cases.get(0).Account_Concerned__c;
+                System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
+                return cases.get(0).Account_Concerned__c;
+            
         }else{
             System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
-
         }
 
         return null;
@@ -258,6 +259,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
             return oscarRT.get('ANG_Agency_Changes');
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
+            return oscarRT.get('NGFormsOfPayment');
         
         return null;
     
@@ -289,7 +293,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV){
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
@@ -297,7 +301,16 @@ global without sharing class AMS_RecordCreatorWebservice {
             fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
         }
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
+        Account acc = [SELECT ANG_IsNewGenAgency__c FROM Account WHERE Id =:accountId];
+
+        if(processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c){
+            accreditationObj = fetchAccreditationObject(accreditationId);
+            oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
+            oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+        }
+
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
@@ -307,8 +320,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
                 oscar.Type_of_change__c = typeOfChange;
-            
+
             if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+
                 oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
             }
         }
@@ -330,10 +344,15 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
             
         }
+
+        if(processType.equalsIgnoreCase(NGFOP_PV)){
+            oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
+            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;   
+        }
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV)) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -414,7 +433,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c, SAAM_Case__r.Reason1__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
     }
 

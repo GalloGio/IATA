@@ -403,7 +403,7 @@ private class ANG_ConversionHelperOfficialTest {
 
 		List<Agency_Applied_Change_code__c> aaccEmptyList = [ Select Id, Account__c, Change_Code__c from Agency_Applied_Change_code__c where Account__r.Name in ('HIERARCHY1 Agency BR1 OK','HIERARCHY1 Agency BR3 OK')];
 
-		System.assertEquals(0,aaccEmptyList.size());
+		System.assertEquals(2,aaccEmptyList.size());
 
 		aAEEptyList = [SELECT Id, Account__c, Status__c, ANG_FormOfPayment_ID__c  from Agency_Authorization__c where Account__r.Name not in ('HIERARCHY1 Agency BR1 OK','HIERARCHY1 Agency BR3 OK')];
 
@@ -698,6 +698,11 @@ private class ANG_ConversionHelperOfficialTest {
 
 		System.debug([Select Id, ANG_AccountId__c,ANG_CashCondition__c,ANG_RME_Amount__c,ANG_ConsumedRHC__c,ANG_ConsumedRHC_Percent__c,ANG_Consumed_RHC_Date__c,ANG_ConsumedRHC_Last_Update__c,ANG_Enable_Calculation__c,ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,ANG_Minimum_Financial_Security__c,ANG_RHC_Amount_Provisional__c,ANG_Provisional_RHC_Last_Update__c,ANG_RME_Amount_Provisional__c,ANG_RHC_Amount__c,ANG_RHC_Amount_Simulation__c,ANG_RHC_Effective_Date__c,ANG_RME_Amount_Last_Update__c,ANG_Financial_Security__c,ANG_UniqueKey__c from ANG_RHC_Information__c]);
 
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
+
+		System.assertEquals(1,hierarchies.size());
+		
+		System.assertEquals(hierarchy.Id,hierarchies.get(0).Id);
 	}
 
 	@isTest static void ANG_ConversionHelperEnhancedTestTest7() {
@@ -743,7 +748,18 @@ private class ANG_ConversionHelperOfficialTest {
 
 		Test.stopTest();
 
-		System.debug([SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
+		System.debug('Accounts are:' + [SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
+
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
+
+		List<AMS_Agencies_relationhip__c> relations = [SELECT Id, Hierarchy__c, Parent_Account__c, Child_Account__c  FROM AMS_Agencies_relationhip__c];
+
+		System.debug('hierarchies are:'+hierarchies);
+		System.debug('relations are:'+relations);
+
+		System.assertEquals(1,hierarchies.size());
+		
+		System.assertNotEquals(hierarchy.Id,hierarchies.get(0).Id);
 
 	}
 
@@ -797,5 +813,11 @@ private class ANG_ConversionHelperOfficialTest {
 
 		System.debug([SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
 
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
+
+		System.assertEquals(1,hierarchies.size());
+		
+		System.assertNotEquals(hierarchy.Id,hierarchies.get(0).Id);
 	}
+
 }

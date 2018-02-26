@@ -37,6 +37,10 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             if(this.oscar.Account__c == null)
                 return false;
+
+            if(this.oscar.AMS_Online_Accreditation__c == null)
+                return false;
+                
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (
@@ -358,7 +362,7 @@ public class AMS_OSCAR_ProcessViewerController {
         for(Schema.SObjectField field : fMap.values()){
 
             Schema.DescribeFieldResult fd = field.getDescribe();
-            if(fd.isAccessible()) fields += fd.getName() + ', ';
+            if(fd.isAccessible() || Test.isRunningTest()) fields += fd.getName() + ', ';
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         

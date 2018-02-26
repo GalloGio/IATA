@@ -293,7 +293,7 @@ public class ANG_RiskAssessmentEngine_Test{
         	name='acc4',
         	Location_Type__c='HE',
         	Location_Class__c='P',
-        	Remittance_frequency__c='Monthly',
+        	Remittance_frequency__c='M',
         	ANG_Accreditation_Model__c ='Cash',
         	Status__c='Terminated',
         	ANG_HE_RiskHistoryAssessment__c='Passed',

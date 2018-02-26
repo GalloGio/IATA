@@ -10,7 +10,7 @@ private class ang_AmendFS_test {
         	name='acc1',
 			Location_Type__c='HE',
 			Location_Class__c='P',
-			Remittance_frequency__c='Monthly',
+			Remittance_frequency__c='M',
 			ANG_Accreditation_Model__c ='Cash',
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );

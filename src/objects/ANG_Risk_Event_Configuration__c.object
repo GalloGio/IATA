@@ -54,6 +54,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Activate_In__c</fullName>
+        <externalId>false</externalId>
+        <label>Activate in N Days</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Field01_Conditions__c</fullName>
         <externalId>false</externalId>
         <label>Field01 Conditions</label>

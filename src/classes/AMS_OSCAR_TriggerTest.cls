@@ -151,7 +151,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -207,7 +207,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
@@ -503,7 +503,7 @@
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
         Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
         
-        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'Monthly', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        Account a1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
         insert a1;
         
@@ -546,7 +546,7 @@
         theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
         theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
         theAccreditation.Abbreviated_Address__c='sdfsdf';
-        theAccreditation.Remittance_frequency__c='Monthly';
+        theAccreditation.Remittance_frequency__c='M';
         theAccreditation.Solicitation_Flag__c=false;
         theAccreditation.Location_Class__c='P';
         theAccreditation.Location_Type__c='HE';
@@ -611,7 +611,7 @@
         Test.startTest();
         
         AMS_OSCAR__c oscarT = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-        STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 1];
+        STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c, Is_NewGen__c from AMS_OSCAR__c limit 1];
 
         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 

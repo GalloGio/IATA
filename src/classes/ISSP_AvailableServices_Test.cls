@@ -88,11 +88,11 @@ public class ISSP_AvailableServices_Test {
             );
 
         Account a3 = new Account (
-                name = 'AccountTest',
+                name = 'AccountTest3',
                 IATA_ISO_Country__c = germany.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS,
-                Location_type__c = 'HE',
+                Location_type__c = 'AO',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -100,8 +100,8 @@ public class ISSP_AvailableServices_Test {
                 name = 'AccountTest4',
                 IATA_ISO_Country__c = spain.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
+                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+                Location_type__c = 'HO',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -424,73 +424,8 @@ public class ISSP_AvailableServices_Test {
         }        
     }
 
-/*
-    public static testMethod void testServices_4() {
 
-        Contact c4 = [select id from contact where lastName = 'ContactTest4'];
-
-        Portal_Applications__c serviceTest2 = [select id from Portal_Applications__c where name = 'serviceTest2'];
-
-        system.debug(LoggingLevel.ERROR, '--CON ID 2 : ' + c4.id);
-
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-        User testeUser4 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing',
-                LanguageLocaleKey='en_US', 
-                ContactId = c4.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser2@testorg.com'
-            );
-        
-        System.runAs(testeUser4) {
-            ISSPServiceListView__c cs = new ISSPServiceListView__c();
-            cs.Name = 'Test';
-            cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
-            cs.Field_Set_API_Name__c = 'ISSP_Available_services';
-            cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
-            cs.Permission_set__c = '0PS200000004CryGAE';
-            insert cs;
-            
-            Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
-            insert app;
-
-            Portal_Application_Right__c rightApp = new Portal_Application_Right__c (
-                    Right__c = 'Access Granted',
-                    Contact__c = c4.id,
-                    Portal_Application__c = serviceTest2.id
-                );
-
-            insert rightApp;            
-
-            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-
-            cttr.initialization();
-            
-            List<ISSP_AvailableServices.ServiceWrapper> serviceList = cttr.getServiceList();
-
-            cttr.getServices();
-            cttr.refresh();
-            
-            cttr.sortExpression = 'Name';
-            cttr.getServices();
-            cttr.refresh();
-            cttr.sortExpression = 'Case_creation_record_type__c';
-            cttr.getServices();
-            cttr.refresh();
-            
-            cttr.setSortDirection('DESC');
-            system.assertEquals('DESC', cttr.getSortDirection());
-            cttr.sortExpression = 'ASC';
-
-        }                      
-    }
-    */
+    
 
     public static testMethod void testEasyPay5() {
         
@@ -528,6 +463,65 @@ public class ISSP_AvailableServices_Test {
            
         
     }
+
+    public static testMethod void testEasyPay6() {
+        
+        Contact c = [select id from contact where lastName = 'ContactTest'];
+
+        Account a = [Select Id from Account Where name = 'AccountTest4'];
+
+        c.accountId = a.id;
+
+        update c;
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        
+        ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+        ISSPServiceListView__c cs = new ISSPServiceListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+        cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+        cs.Permission_set__c = '0PS200000004CryGAE';
+        insert cs;
+        
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
+        insert app;
+        
+        cttr.initialization();
+        
+           
+        
+    }
+
+    public static testMethod void testEasyPay7() {
+        
+        Contact c = [select id from contact where lastName = 'ContactTest3'];
+
+        Account a = [Select Id from Account Where name = 'AccountTest3'];
+
+        c.accountId = a.id;
+
+        update c;
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        
+        ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+        ISSPServiceListView__c cs = new ISSPServiceListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+        cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+        cs.Permission_set__c = '0PS200000004CryGAE';
+        insert cs;
+        
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
+        insert app;
+        
+        cttr.initialization();               
+        
+    }
+
 
     public static testMethod void testnewAppsRequest2() {
         
@@ -858,7 +852,7 @@ public class ISSP_AvailableServices_Test {
 
             cttr.initialization();
 
-            List<SelectOption> l = cttr.availablePortalServiceRoles;
+            List<ISSP_AvailableServices.SelectOption2> l = cttr.availablePortalServiceRoles;
         }
         Test.stopTest();
     }
@@ -935,7 +929,7 @@ public class ISSP_AvailableServices_Test {
 
             cttr.initialization();
 
-            List<SelectOption> l = cttr.availablePortalServiceRoles;
+            List<ISSP_AvailableServices.SelectOption2> l = cttr.availablePortalServiceRoles;
         }
         Test.stopTest();
     }    
