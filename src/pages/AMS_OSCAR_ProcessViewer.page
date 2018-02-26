@@ -650,16 +650,6 @@ function buildFunctionCall(func, argList){
             $("select.inputElem option[value='Not Applicable']").remove();            
         }
     }
-
-    /*
-    function setBlankValue() {
-        try {
-            $('#Is_PCI_compliant__c')[0].childNodes[0].childNodes[0].value = '';
-        } catch(e) {
-            console.log(e);
-        }
-    }
-    */
     /*** AMSU-113 End ***/
 
     $(document).ready(function() {
