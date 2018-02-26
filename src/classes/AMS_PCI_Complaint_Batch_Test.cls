@@ -14,8 +14,7 @@ private class AMS_PCI_Complaint_Batch_Test {
 		insert countrylist;
 		
 		List<Account> agencylist = new List<Account>();
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
-		Account a1 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
+		Account a1 = new Account(Name='Test1 Agency',
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', Location_Class__c = 'P',
 			Is_PCI_compliant__c = 'yes', ANG_PCI_compliance_expiry_date__c = d);
@@ -33,9 +32,6 @@ private class AMS_PCI_Complaint_Batch_Test {
 	static testMethod void runStartTest() {		
 		Test.startTest();
 		AMS_PCI_Complaint_Batch.start('0 1 * * * ?', 1);
-		AMS_PCI_Complaint_Batch.ErrorWrapper err = new AMS_PCI_Complaint_Batch.ErrorWrapper(null, 'test');
-		Id accountId = err.accountId;
-		String message = err.message;
 		Test.stopTest();	
 	}
 	
