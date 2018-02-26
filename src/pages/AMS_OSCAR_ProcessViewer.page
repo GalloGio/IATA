@@ -645,10 +645,6 @@ function buildFunctionCall(func, argList){
                 }
             }
         }
-        
-        if("{!isPCICompliant}" == "true") {
-            $("select.inputElem option[value='Not Applicable']").remove();            
-        }
     }
     /*** AMSU-113 End ***/
 
