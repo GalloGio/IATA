@@ -182,7 +182,29 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 
             }   
 
-            setTimeout(function(){       
+            setTimeout(function(){
+                
+                
+                if(action == 'aNG_RestrictFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restrict_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restrict_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                }   
+
+                if(action == 'aNG_RestoreFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restore_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restore_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                } 
+
                  buildFunctionCall(action,args);
             },10);
         }
@@ -610,9 +632,7 @@ function buildFunctionCall(func, argList){
             var nodes = $("#inlineSTEP6")[0].childNodes;
             if(nodes) {
                 for(var i = 0; i<nodes.length; i++) {
-
                     var node = nodes[i];
-                    alert(node);
                     if(node.id && node.id.indexOf("PCI") >= 0) {
                         var node_1 = $(nodes[i-1]);
                         var node_2 = $(nodes[i-2]);
@@ -647,7 +667,7 @@ function buildFunctionCall(func, argList){
         /* This is basic - uses default settings */
         $(".lightbox").lightcase();
         
-    });
+    });    
     
     function clicked(item) {
         clickedId = "inline" + $(item).attr("id");
