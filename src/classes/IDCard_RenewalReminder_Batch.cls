@@ -27,7 +27,7 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
 
             //create list of idcards already renewed
             ID_Card__c[] renewedIDCards = [Select Valid_To_Date__c, Related_Contact__r.Id From ID_Card__c
-                                           where Related_Contact__r.Id IN :contactsIds and (Is_Active_Card__c = True OR Card_Status__c = 'Printed/Delivered')
+                                           where Related_Contact__r.Id IN :contactsIds and (Is_Active_Card__c = True OR Card_Status__c = 'Valid ID Card')
                                                    and Valid_To_Date__c > NEXT_MONTH];
 
             //create list of pending idcard cases
