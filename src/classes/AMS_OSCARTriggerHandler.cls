@@ -2850,7 +2850,7 @@ public class AMS_OSCARTriggerHandler {
             if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
         }
 
-        if(updatedOSCAR.Process__c == AMS_utils.NGOPTINOUT && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOSCAR.Step11__c <> AMS_Utils.PASSED){
+        if(updatedOSCAR.Process__c == AMS_utils.NGOPTINOUT && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOSCAR.Step11__c <> AMS_Utils.PASSED && updatedOscar.ANG_FA_Opt_out__c == 'Opt-In'){
             updatedOscar.addError('If Financial assessment opt-in / opt-out is set to Opt-in, Conduct Financial Review is mandatory to close the case');
         }
 
