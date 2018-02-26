@@ -22,7 +22,7 @@ public class ANG_RHCInformationTriggerHandler{
 		for(ANG_RHC_Information__c rhcrec:triggerNew){
 			tempMap.put(rhcrec.id, new ANG_RHC_Information__c());
 		}
-		new ANG_AgencyEventsGenerator(triggerNew,tempMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,tempMap,'RHC_Information','ANG_AccountId__c').run();
 	}
 	public void onBeforeUpdate(){
 		convertAndSumFS();
@@ -30,7 +30,7 @@ public class ANG_RHCInformationTriggerHandler{
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c', 'ANG_AccountId__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c').run();
 	}
 
 	public void onBeforeDelete(){}
