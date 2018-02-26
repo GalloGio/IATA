@@ -90,7 +90,7 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		Contact c = new Contact(FirstName = 'test', LastName = 'test', AccountId = acc2.Id, User_Portal_Status__c = 'Approved Admin', Email = 'testiata@yopmail.com');
 		insert c;
 
-		Portal_Applications__c par = new Portal_Applications__c (Name = 'RHC Information');
+		Portal_Applications__c par = new Portal_Applications__c (Name =ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
 		insert par;
 
 		insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);

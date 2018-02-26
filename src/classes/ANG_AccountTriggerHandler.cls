@@ -160,7 +160,7 @@ public class ANG_AccountTriggerHandler {
 			if(!changeCodes.isEmpty()) insert changeCodes;
 		}
 		
-		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name = 'RHC Information'];
+		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
 		List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Risk_Status_Upgrade' AND isActive = true];
 		List<Notification_Template__c> notificationTemplates = [SELECT Id, Name FROM Notification_Template__c WHERE Identifier__c = 'Risk_Status_Upgrade'];
 
