@@ -3785,7 +3785,13 @@
               {
                 "Name": "STEP6",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "checkAccountHierarchyCorrection",
+                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "args": ["oscarid"]
+                  }
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4540,7 +4546,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Head Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
@@ -4884,7 +4890,12 @@
                     ]
                   }
                 ],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step36_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "STEP36__c"
                 ],
@@ -5053,7 +5064,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Head Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
@@ -5432,7 +5443,7 @@
                     "ChangeCode": {
                       "Name": "REC",
                       "ReasonCode": "22",
-                      "MemoText": "New application - Head Office reconsidered",
+                      "MemoText": "New application - Associate Entity reconsidered",
                       "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
@@ -5470,6 +5481,13 @@
                     "ActionLabel": "AMS_OSCAR_Action6",
                     "args": [
                       "oscarid"
+                    ]
+                  },
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "6"
                     ]
                   }
                 ],
@@ -5536,10 +5554,10 @@
                 "Required": [],
                 "Actions": [
                   {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid"
+                      "oscarid", "26"
                     ]
                   },
                   {
@@ -5635,7 +5653,15 @@
                 "Required": [
                   "STEP6"
                 ],
-                "Actions": [],
+                "Actions": [
+					{
+						"FunctionName": "SIDRALiteAction",
+						"ActionLabel": "AMS_OSCAR_Action7",
+						"args": [
+						  "oscarid", "9"
+						]
+					}
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5669,6 +5695,13 @@
                     "ActionLabel": "AMS_OSCAR_Action3",
                     "args": [
                       "oscarid"
+                    ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "11"
                     ]
                   }
                 ],
@@ -5708,6 +5741,13 @@
                       "agencyid",
                       "accountNameFromOscar"
                     ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "35"
+                    ]
                   }
                 ],
                 "Automations": [
@@ -5737,7 +5777,15 @@
                   "STEP8",
                   "STEP9"
                 ],
-                "Actions": [],
+                "Actions": [
+					{
+						"FunctionName": "SIDRALiteAction",
+						"ActionLabel": "AMS_OSCAR_Action7",
+						"args": [
+						  "oscarid", "14"
+						]
+					}
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5798,6 +5846,13 @@
                     "args": [
                       "oscarid"
                     ]
+                  },
+				  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "RPM"
+                    ]
                   }],
                 "Automations": [
                   {
@@ -5832,7 +5887,12 @@
                     ]
                   }
                 ],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step36_succeeded"
+                  }
+                ],
                 "DisplayFields": [
                   "STEP36__c"
                 ],
@@ -6108,37 +6168,118 @@
           }
         ]
       },
-    {
-    "Name": "PCI.COMPLIANT.1.0",
-    "Flows": [
       {
-      "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
-      "Steps": [
-        {
-        "Name": "STEP6",
-        "Required": [],
-        "Actions": [],
-        "Automations": [
+        "Name": "ANG.FOPMANAGEMENT.1.0",
+        "Flows": [
           {
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+            "Name": "ANG_RESTRICT_FOP",
+            "Steps": [
+              {
+                "Name": "STEP38",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "aNG_RestrictFOP",
+                    "ActionLabel": "AMS_OSCAR_Action17",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }  
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Restrict_Cash__c",
+                  "ANG_Restrict_Credit_Card__c",
+                  "STEP38__c"
+                ],
+                "IsDependent": false
+              }
+            ]
           },
           {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+            "Name": "ANG_RESTORE_FOP",
+            "Steps": [
+              {
+                "Name": "STEP39",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "aNG_RestoreFOP",
+                    "ActionLabel": "AMS_OSCAR_Action18",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Restore_Cash__c",
+                  "ANG_Restore_Credit_Card__c",
+                  "STEP39__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "ANG_PCI_COMPLIANT",
+            "Steps": [
+              {
+                "Name": "STEP40",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "ANG_checkAccountHierarchy",
+                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
+                  "ANG_Sanity_checks__c",
+                  "STEP40__c"
+                ],
+                "IsDependent": false
+              }
+            ]
           }
-        ],
-        "DisplayFields": [
-          "Is_PCI_compliant__c",
-          "ANG_PCI_compliance_expiry_date__c",
-          "STEP6__c"
-        ],
-        "IsDependent": false
-        }
-      ]
-      }
-    ]
-    }
+        ]
+      },
+      {
+		"Name": "PCI.COMPLIANT.1.0",
+		"Flows": [
+		  {
+		    "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+		    "Steps": [
+		      {
+			    "Name": "STEP6",
+			    "Required": [],
+			    "Actions": [],
+			    "Automations": [
+		        {
+			      "Status": "Passed",
+				  "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+		        },
+		        {
+				  "Status": "Failed",
+				  "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+		        }
+		      ],
+		      "DisplayFields": [
+		        "Is_PCI_compliant__c",
+		        "ANG_PCI_compliance_expiry_date__c",
+			    "STEP6__c"
+		      ],
+		      "IsDependent": false
+		    }
+          ]
+	     }
+    	]
+	  }
     ]
   }
 }
