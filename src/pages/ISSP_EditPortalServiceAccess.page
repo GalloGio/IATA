@@ -430,7 +430,7 @@
                                 <apex:outputText escape="false" value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
                                 <br/>
                               </div>
-                              <div class="modal-footer">                                   
+                              <div class="modal-footer">
                                 <apex:commandButton 
                                   action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
