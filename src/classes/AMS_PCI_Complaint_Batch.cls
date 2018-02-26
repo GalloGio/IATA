@@ -48,7 +48,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                        ' Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry,' +
                        ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
                        ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
-                       'FROM Account ' + 
+                       'FROM Account ' +
                        'WHERE Location_Class__c = :location AND Status__c IN :availableStatus AND Is_PCI_compliant__c NOT IN :pciValues' + 
                        ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false)' + 
                        ' AND RecordtypeId = :AGENCY_RECORDTYPE';
@@ -85,7 +85,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
     global void finish(Database.BatchableContext BC) {
         List<Technical_Logs__c> lstErrorsToInsert = new List<Technical_Logs__c>();
-
+        
 
 
         sendEmailResult(lstResult);
@@ -95,7 +95,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                                                         Record__c= BC.getJobId(),
                                                         Status__c= error.accountId,
                                                         Log__c= error.message));
-        }
+    }
 
         if(!lstErrorsToInsert.isEmpty()) {
             insert lstErrorsToInsert;
@@ -111,8 +111,6 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 accountIds.add(agReg.Id);
             }
         }
-
-
 
         //contacts that will receive notifications for PCI renewal
         Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
@@ -267,7 +265,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Visible_on_ISS_Portal__c = true;
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
-
+        
         system.debug('before case: ' + theCommunicationCase);
         
         insert theCommunicationCase;
