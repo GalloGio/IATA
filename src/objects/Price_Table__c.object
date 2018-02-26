@@ -254,11 +254,6 @@
         <columns>IATA_Package__c</columns>
         <columns>Can_Pay_by_Cheque__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Expedite_Delivery_added_to_IDCard_Price__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
