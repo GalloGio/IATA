@@ -65,6 +65,14 @@ public class AMS_OSCARTriggerHandler {
     //*************************************
     //********* context methods ***********
     //*************************************
+    /*** AMSU-113 Start ***/
+    public static Set<String> pciCompliantProcesses {
+        get {
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
+        }
+        set;
+    }
+    /*** AMSU-113 End ***/
 
     public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
 
@@ -89,13 +97,15 @@ public class AMS_OSCARTriggerHandler {
 
         checkOwnershipOnProcess(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
-        processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
         
 		/*** AMSU-113 Start ***/
-        processPCIComplaint((List<AMS_OSCAR__c>) Trigger.new);
+        processPCICompliant(Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 End ***/
+
+		processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
 	}
 
     public static void handleBeforeInsert() {
@@ -119,26 +129,34 @@ public class AMS_OSCARTriggerHandler {
         updateCaseInfo();
         createHoAdminNotifications();
         /*** AMSU-113 Start ***/
-        updateAccountPCIComplaint((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        updateAccountPCICompliant((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 End ***/
 	}
 
     /*** AMSU-113 Start ***/
-    public static void processPCIComplaint(List<AMS_OSCAR__c> oscars) {
+    public static void processPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
+        System.debug('processPCICompliant - start ' );
         for(AMS_Oscar__c oscar : oscars) {
-            if(!String.isBlank(oscar.Account__c) && oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Status__c != AMS_Utils.OSCAR_CLOSED) {
-                oscar.Status__c = 'Submitted';
+            AMS_Oscar__c oldOscar = oldMap.get(oscar.Id);
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED && oscar.Is_PCI_compliant__c == 'No') {
+                oscar.Change_Code__c = 'PCI';
+                System.debug('processPCICompliant - oscar: ' + oscar);
             }
         }
-    }
+    } 
 
-    public static void updateAccountPCIComplaint(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+    public static void updateAccountPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         List<Account> accsToUpdate = new List<Account>();
         for(AMS_Oscar__c oscar : oscars) {
             AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
-            if(!String.isBlank(oscar.Account__c) && oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
-                accsToUpdate.add(new Account(Id= oscar.Account__c, Is_PCI_compliant__c= oscar.Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c= oscar.ANG_PCI_compliance_expiry_date__c));
-	}
+            if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
+                Account accToUpdate = new Account(Id= oscar.Account__c, Is_PCI_compliant__c= oscar.Is_PCI_compliant__c);
+                if(oscar.Is_PCI_compliant__c == 'Yes') {
+                    accToUpdate.ANG_PCI_compliance_expiry_date__c= oscar.ANG_PCI_compliance_expiry_date__c;
+                    accToUpdate.PCI_DSS_Compliant__c = null;
+                }
+                accsToUpdate.add(accToUpdate);
+            }
         }
 
         if(!accsToUpdate.isEmpty()) {
@@ -2868,6 +2886,8 @@ public class AMS_OSCARTriggerHandler {
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+        
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -3200,9 +3220,44 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOscar.Sanity_Check_Passed__c == true) {
                 updatedOscar.addError('Change code already generated for this OSCAR! Rollback data through a new OSCAR Correction and Set this OSCAR Status to Closed_Withdrawn');                
             }
+        //FM AMSU-113            
+        }else if (updatedOscar.recordTypeID == certRT){
+            System.debug('updatedOscar.Is_PCI_compliant__c: ' + updatedOscar.Is_PCI_compliant__c);
+            System.debug('updatedOscar.Change_Code__c: ' + updatedOscar.Change_Code__c);
+            System.debug('oldOSCAR.STEP6__c: ' + oldOSCAR.STEP6__c);
+            System.debug('updatedOscar.STEP6__c: ' + updatedOscar.STEP6__c);
+            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Is_PCI_compliant__c == 'No'){
             
             updatedOscar.Sanity_Check_Passed__c = true;
         }
+                System.debug('updatedOscar.Is_PCI_compliant__c: entrei' );
+
+                Savepoint sp = Database.setSavepoint();
+
+                try {
+                
+                    if(updatedOscar.Change_Code__c == 'PCI') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'PCI';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'PLS NOTE AGT HAS NOT SUBMITTED PCI DSS PROOF OF COMPLIANCE BY THE DEADLINE THEREFORE A NON COMPLIANCE NOTICE HAS BEEN ISSUED';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    
+                        System.debug('updatedOscar.Is_PCI_compliant__c: criei CC' );
+                        //AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+                    }
+
+                } catch (Exception ex) {
+                    System.debug('Exception: ' + ex);
+                    Database.rollback(sp); throw ex;
+                }
+            }
         }
     }
 
