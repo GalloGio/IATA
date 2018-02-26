@@ -15,6 +15,9 @@ public class ANG_RHCHelper {
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
+    //RHC Portal Service Name
+    public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
+
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
