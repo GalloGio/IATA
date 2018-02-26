@@ -2695,6 +2695,11 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>No</label>
                 </value>
+				<value>
+					<fullName>Nil CC</fullName>
+					<default>false</default>
+					<label>Nil CC</label>
+				</value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -23191,10 +23196,14 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 			<picklist>Is_PCI_compliant__c</picklist>
 			<values>
 				<fullName>Yes</fullName>
-				<default>true</default>
+				<default>false</default>
 			</values>
 			<values>
 				<fullName>No</fullName>
+				<default>false</default>
+			</values>
+			<values>
+				<fullName>Nil CC</fullName>
 				<default>false</default>
 			</values>
 		</picklistValues>
@@ -31801,10 +31810,14 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 			<picklist>Is_PCI_compliant__c</picklist>
 			<values>
 				<fullName>Yes</fullName>
-				<default>true</default>
+				<default>false</default>
 			</values>
 			<values>
 				<fullName>No</fullName>
+				<default>false</default>
+			</values>
+			<values>
+				<fullName>Nil CC</fullName>
 				<default>false</default>
 			</values>
 		</picklistValues>
@@ -37508,6 +37521,32 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+	<validationRules>
+        <fullName>AMS_PCI_Expiry_Date_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+	OR(
+		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+	),
+	OR(
+		AND(
+			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c)
+		),
+		AND(
+			RecordType.DeveloperName = &apos;NEW&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c),
+			OR(
+				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+				TEXT(Process__c) == &apos;NEW.BR&apos;
+			)
+		)	
+	)
+)</errorConditionFormula>
+        <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
@@ -37657,6 +37696,19 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>RPM_Approval__c</errorDisplayField>
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
+        <active>true</active>
+        <description>Block from using the OSCAR on accounts that are not Agency or Standard</description>
+        <errorConditionFormula>AND(
+  NOT(OR(
+    Account__r.RecordType.DeveloperName=&quot;Standard_Account&quot;,
+    Account__r.RecordType.DeveloperName=&quot;IATA_Agency&quot;
+  )),
+  ISNEW()
+)</errorConditionFormula>
+        <errorMessage>OSCAR object can&apos;t be used in accounts that are not Agencies or Standard</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Voluntary_Relinquishment_Suspension</fullName>
