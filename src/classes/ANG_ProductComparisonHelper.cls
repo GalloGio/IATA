@@ -179,7 +179,7 @@ public with sharing class ANG_ProductComparisonHelper {
 	    			
 	    			lst = new List<TableCell>();	 
 	    			
-	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCost,
+	    			lst.add(new TableCell('Cost',
 	    								  '',
 	    								  Label.ANG_ISSP_ProductComparisonCost,
 	    								  ''));
