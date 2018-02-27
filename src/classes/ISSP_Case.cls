@@ -1716,11 +1716,27 @@ public without sharing class ISSP_Case {
         return newCase.RecordTypeId==INTER_DPC_RECORD_TYPE_ID;
     }
     
+    public String getAccountConcernedName() {
+        try {
+            return [SELECT Name FROM Account WHERE Id = :newCase.Account_Concerned__c].Name;
+        } catch (Exception e) {
+            return '';
+        }
+    }
+    
     public list<CaseHistory> getListCaseHistory() {
+        list<String> listExcluded;
+        try {
+            listExcluded = ISSP_DPC__c.getValues('History Excluded Fields').Value__c.split(',');
+        } catch (Exception e) {
+            listExcluded = new list<String>();
+        }
+        
         list<CaseHistory> listHistory = new list<CaseHistory>();
         for (CaseHistory history: [SELECT Id,Field,NewValue,OldValue,CreatedBy.Name,CreatedDate
             FROM CaseHistory
             WHERE CaseId = :newCase.Id
+            AND Field NOT IN :listExcluded
             ORDER BY CreatedDate DESC]
         ) {
             try {

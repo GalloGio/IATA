@@ -700,7 +700,7 @@ public class ISSP_CaseTest {
         insert teamContact;
 
        Id p = [select id from profile where name='ISS Portal DPC'].id;
-
+       ISSP_UserTriggerHandler.preventTrigger = true;
         User user = new User(alias = 'test123', email=teamContact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
@@ -735,6 +735,10 @@ public class ISSP_CaseTest {
             cttr.save();
             cttr.getListCaseHistory();
             System.assertEquals(true,cttr.getIsInterDPCCase());
+            cttr.getAccountConcernedName();
+            cttr.newCase.Account_Concerned__c = null;
+            update cttr.newCase;
+            cttr.getAccountConcernedName();
         }
         Test.stopTest();
     }
