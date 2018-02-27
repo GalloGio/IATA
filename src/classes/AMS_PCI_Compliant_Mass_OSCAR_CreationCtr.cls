@@ -3,8 +3,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public static final Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
     public static final Integer MAX_SEARCH_ELEMENTS = 6000;
 
-    public WrapperFilter filter {get;set;}
-    public String selectedIds {get;set;}
+    public WrapperFilter filter {get;set;}    
 
     public Map<String,IATA_ISO_Country__c> mCountries;
     public List<String> dailyCountry {get; set;}
@@ -27,6 +26,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         set;
     }
     public Map<Id, String> mapAccountToError {get;set;}
+    public String selectedIds {get;set;}
 
     public AMS_PCI_Compliant_Mass_OSCAR_CreationCtr() {
     	dailyCountry = new List<String>();
@@ -44,12 +44,21 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         batchStartTime = Datetime.now();
         isPollerActive = true;
         Set<Account> filteredAccounts = new Set<Account>();
+        system.debug('selectedIds: ' + selectedIds);
+        
         for(AccountWrapper accW : lstAccountsWrapper) {
             if(accW.selected) {
                 filteredAccounts.add(accW.accountRecord);
             }
         }
-        batchClass = new AMS_PCI_Complaint_Batch(1, new Set<String>(this.filter.country), filteredAccounts.size() == lstAccountsWrapper.size() ? null : filteredAccounts);
+
+        if(filteredAccounts.isEmpty()) {
+            isPollerActive = false;
+            return null;
+        }
+        
+        batchClass = new AMS_PCI_Complaint_Batch(1, new Set<String>(this.filter.country), 
+            filteredAccounts.size() == lstAccountsWrapper.size() && filteredAccounts.size() != 0  ? null : filteredAccounts);
         batchId = Database.executeBatch(batchClass, 1);
         isBatchRunning = true;
         return null;
@@ -67,22 +76,6 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                 searchCases();
             }
         }
-        return null;
-    }
-
-    public PageReference selectAll() {
-        for(AccountWrapper aw : lstAccountsWrapper) {
-            aw.selected = true;
-        }
-
-        return null;
-    }
-
-    public PageReference deselectAll() {
-        for(AccountWrapper aw : lstAccountsWrapper) {
-            aw.selected = false;
-        }
-
         return null;
     }
 
