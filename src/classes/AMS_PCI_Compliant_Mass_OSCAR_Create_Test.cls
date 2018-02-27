@@ -38,6 +38,10 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 		ctrl.filter.country = new List<String> {isoc1.Id};
 		ctrl.searchPreview();
 		ctrl.createPCIOscar();
+		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper aw = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper(a1);
+		aw.selected = true;
+		ctrl.mapAccounts.put(a1.Id,aw);
+		ctrl.createPCIOscar();
 		ctrl.checkBatchStatus();
 		ctrl.getApprovalButtonLabel();
 		List<SelectOption> opts = ctrl.countryNameListSelectOption;
