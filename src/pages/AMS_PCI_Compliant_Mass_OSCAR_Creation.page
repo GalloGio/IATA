@@ -32,11 +32,7 @@
 
   <apex:form id="mainForm">
   <script>
-  var selecetedIds;
-
   $( document ).ready(function() {
-    selecetedIds = new Set();
-
     $(".regionPicklist option[value='GVA HO']").remove();
     $(".regionPicklist option[value='Europe (Americas Countries)']").remove();
     // apply table pagination
@@ -49,26 +45,34 @@
 
   function setPagination() {
     $(".result-table").DataTable( {
+      "destroy": true,
       "searching": false,
       "lengthMenu": [ 10, 25, 50, 100, 200, 500, 1000 ]
     });
   }
 
-  function addSelectedId(accountId) {
-    selecetedIds.add(accountId);
+  function selectCheckboxes(value) {
+    $(".line-select").each(function() {
+      this.checked = value;
+    });
   }
 
-  function removeSelectedId(accountId) {
-    selecetedIds.delete(accountId);
-  }
+  function getSelectedIds() {
+    var selectedIds = [];
+    $(".result-table .dataRow").each(function() {
 
-  function onChangeSelection(accountId) {
-    console.log(accountId);
-    if(!selecetedIds.has(accountId)) {
-      addSelectedId(accountId);
-    } else {
-      removeSelectedId(accountId);
-    }
+      var ischecked = false;
+      console.log(this);
+      $(this).find(".line-select").each(function() {
+        ischecked = $(this).prop('checked');
+      });
+      if (ischecked) {
+        $(this).find(".id-value").each(function() {
+          selectedIds.push(this.innerHTML.trim());
+        });
+      }
+    });
+    return selectedIds;
   }
 
   </script>
@@ -122,22 +126,32 @@
 
     </td>
     <td valign="top">
-
-    <apex:actionRegion >
-      <apex:actionPoller action="{!checkBatchStatus}" reRender="batchInfo, lstAccounts" interval="5" enabled="{!isPollerActive}" 
-        oncomplete="if({!isBatchFinished}) {setPagination();}"/>
+    <apex:actionFunction action="{!createPCIOscar}" name="createPCIOscar" >
+      <apex:param name="selectedIds" value="" assignTo="{!selectedIds}"/>
+    </apex:actionFunction>
+    <apex:actionFunction action="{!null}" name="reRenderLst" reRender="lstAccounts"/>
+      
       <apex:pageBlock title="Accounts">
         <apex:pageBlockButtons location="bottom">
-          <apex:commandButton value="{!approvalButtonLabel}" action="{!createPCIOscar}" disabled="{!OR(isBatchRunning, isBatchFinished, lstAccountsWrapper.size == 0)}" rendered="{!showResults}" reRender="mainForm" onclick="console.log(selecetedIds);"/>          
-        </apex:pageBlockButtons>   
-        <apex:outputPanel id="batchInfo">
-          <apex:pageMessage severity="info" strength="1" summary="The batch is running" rendered="{!isBatchRunning}"/>
-          <apex:pageMessage severity="confirm" strength="1" summary="The batch is completed" rendered="{!isBatchFinished}"/>
-        </apex:outputPanel>
+          <apex:commandButton value="{!approvalButtonLabel}" onclick="console.log(getSelectedIds()); createPCIOscar(getSelectedIds());" 
+              disabled="{!OR(isBatchRunning, isBatchFinished, lstAccountsWrapper.size == 0)}" rendered="{!showResults}" reRender="mainForm" oncomplete="setPagination();">            
+          </apex:commandButton>          
+        </apex:pageBlockButtons> 
+
+        <apex:actionRegion >
+          <apex:outputPanel id="batchInfo">
+            <apex:pageMessage severity="info" strength="1" summary="The batch is running" rendered="{!isBatchRunning}"/>
+            <apex:pageMessage severity="confirm" strength="1" summary="The batch is completed" rendered="{!isBatchFinished}"/>          
+          </apex:outputPanel>
+          <apex:actionPoller action="{!checkBatchStatus}" reRender="batchInfo, lstAccounts" interval="5" enabled="{!isPollerActive}" 
+          oncomplete="setPagination();"/>
+        </apex:actionRegion>
         <apex:outputPanel id="lstAccounts">
           <apex:outputPanel rendered="{!showResults}" style="margin-bottom: 5px;" layout="block">
-            <apex:commandButton value="Select All" action="{!selectAll}"/>
-            <apex:commandButton value="Deselect All" action="{!deselectAll}"/>
+            <!-- <apex:commandButton value="Select All" action="{!selectAll}"/> -->
+            <input type="button" value="Select All" onclick="selectCheckboxes(true);"/>
+            <!-- <apex:commandButton value="Deselect All" action="{!deselectAll}"/> -->
+            <input type="button" value="Deselect All" onclick="selectCheckboxes(false);"/>
           </apex:outputPanel>
           <apex:pageBlockTable value="{!lstAccountsWrapper}" var="wrapper" rendered="{!showResults}" styleclass="result-table">
             <apex:column styleclass="id-value hidden" headerClass="hidden">
@@ -145,7 +159,8 @@
             </apex:column>
 
             <apex:column >
-              <apex:inputCheckbox value="{!wrapper.selected}" disabled="{!isBatchFinished}" onchange="onChangeSelection('{!wrapper.accountRecord.Id}');"/>
+              <apex:inputCheckbox styleClass="line-select" value="{!wrapper.selected}" disabled="{!isBatchFinished}"/>
+              <!-- <input class="line-select" type="checkbox"/> -->
             </apex:column>
             <apex:column >
               <apex:facet name="header">Account</apex:facet>
@@ -181,7 +196,7 @@
           </apex:pageBlockTable>
         </apex:outputPanel>  
       </apex:pageBlock>    
-    </apex:actionRegion>
+    
   </td>
     </tr>
   </table>
