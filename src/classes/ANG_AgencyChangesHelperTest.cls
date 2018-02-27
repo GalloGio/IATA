@@ -2555,8 +2555,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_Agencies_Hierarchy__c originalHierarchy =  [Select Id from AMS_Agencies_Hierarchy__c];
 
-		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
-		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
+		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Account AE1 H1'];
+		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Main HE Account H1'];
 
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
@@ -2665,6 +2665,22 @@ public class ANG_AgencyChangesHelperTest {
             Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot close the OSCAR until the Manager Approval Step is not completed.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
+
+        oscar.Status__c = 'Open';
+
+        oscar.ANG_FA_Opt_out__c = 'Opt-Out';
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		update oscar;
+       
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
+        update oscar;
+
+        oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+        
 
 		Test.stopTest();
 
