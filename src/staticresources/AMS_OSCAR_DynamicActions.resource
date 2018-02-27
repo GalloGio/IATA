@@ -347,6 +347,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed deactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -355,13 +357,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"Deactivation",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
 
@@ -369,6 +374,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed reactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -377,13 +384,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"Reactivation",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
 
@@ -391,6 +401,8 @@ var dyn_functions = {
         var oscarIdsToRemove = [];
         var sMessageSuccess = "";
         var sMessageError = "";
+        var finalMessage = "";
+        var hasSuccess = "N";
 
         if(confirm('Do you want to proceed reactivating agencies?')){
             oscarIdsToRemove.push(arg);
@@ -399,13 +411,16 @@ var dyn_functions = {
 
             for (var i = 0; i < response.length; i++) {
                 if(response[i].result=='Ok'){
+                    hasSuccess = "Y";
                     sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
                 if(response[i].result=='Error'){
                     sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
                 }
             }
-            alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+            finalMessage = "Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess;
+            sforce.apex.execute("AMS_BSPLinkIntegration","SaveResponseInAttachmentFromOscar",{oscarIds:oscarIdsToRemove,process:"DeactivationUndo",message:finalMessage,isSuccess:hasSuccess});
+            alert(finalMessage);
         }
     },
     
