@@ -390,8 +390,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		//set containing Newgen Account Ids
 
-		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
-
+		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
 		//IFAP P5 start   
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
@@ -409,10 +408,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				else
 				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
 					&& ngAccounts.containsKey(c.accountId) 
-					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)){
+					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)
+					&& ngAccounts.get(c.accountId).Financial_Review_Result__c != c.Financial_Review_Result__c){
              		
              		Account account = ngAccounts.get(c.accountId);
-
              		//NEWGEN - adds NG account to be updated
              		AcctToBeUpdatedPerId.put(c.accountId, new account(
 								id =c.accountId,
