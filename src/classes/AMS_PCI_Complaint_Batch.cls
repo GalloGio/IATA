@@ -1,14 +1,29 @@
-global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Schedulable {
+global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Database.Stateful, Schedulable {
     
     private Integer batchScope {get;set;}
+    public Id iata_iso_Country_id {get;set;}
+    public Set<String> list_iata_iso_Country_id {get;set;}
+    global List<ErrorWrapper> lstErrors {get;set;}
+    global List<ResultWrapper> lstResult {get;set;}
+    public Set<Account> filteredAccounts {get;set;}
 
-    global AMS_PCI_Complaint_Batch(Integer batchScope) {
-        //this.batchScope = batchScope;
-        this.batchScope = 1;
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id) {
+        this.batchScope = batchScope;
+        this.list_iata_iso_Country_id = list_iata_iso_Country_id;
+        this.lstErrors = new List<ErrorWrapper>();
+        this.lstResult = new List<ResultWrapper>();
+    }
+
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id, Set<Account> filteredAccounts) {
+        this.batchScope = batchScope;
+        this.list_iata_iso_Country_id = list_iata_iso_Country_id;
+        this.lstErrors = new List<ErrorWrapper>();
+        this.lstResult = new List<ResultWrapper>();
+        this.filteredAccounts = filteredAccounts;
     }
 
     public static void start(String cron, Integer scope) {
-        System.schedule('AMS PCI Complaint Batch', cron, new AMS_PCI_Complaint_Batch (scope));
+        System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
     }
 
     global void execute(SchedulableContext sc) {
@@ -16,30 +31,78 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, '+
-                        'Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity, ' +
-                        'IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet, ' + 
-                        'CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c, ' +
-                        'Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,Location_Type__c, ' +
-                        'Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, ' +
-                        'ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, ' +
-                        'Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry, ' +
-                        'Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name, ' + 
-                        'IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
-                       'FROM Account ' +
-                       'WHERE ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90';
+        String location = AMS_Utils.LC_PASSENGER;
+        Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
+        String reason = 'PCI DSS Compliant';
+        Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
+                                                       AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
+                                                       AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
+        Set<String> pciValues = new Set<String> {'Yes', 'Nil CC', 'No'};
+        String query = 'SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c,' +
+                       ' Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity,' +
+                       ' IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet,' +
+                       ' CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,' +
+                       ' Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,Location_Type__c,' +
+                       ' Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry,' +
+                       ' ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c,' + 
+                       ' Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry,' +
+                       ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
+                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
+                       'FROM Account ' + 
+                       'WHERE Location_Class__c = :location AND Status__c IN :availableStatus AND Is_PCI_compliant__c NOT IN :pciValues' + 
+                       ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false)' + 
+                       ' AND RecordtypeId = :AGENCY_RECORDTYPE';
+
+        if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
+            query += ' AND IATA_ISO_Country__c IN :list_iata_iso_Country_id';
+        }
+
+        if(filteredAccounts != null && !filteredAccounts.isEmpty()) {
+            query += ' AND Id IN :filteredAccounts';
+        }
+
         return Database.getQueryLocator(query);
     }
 
     global void execute(Database.BatchableContext BC, List<sObject> scope) {
-        validateCandidatesForRenewal(scope);
+        List<ResultWrapper> resChunk = new List<ResultWrapper>();
+        Savepoint sp = Database.setSavepoint();
+        try {
+            validateCandidatesForRenewal(scope, resChunk);
+        } catch(Exception e) {
+            Database.rollback(sp);
+            for(sObject record : scope) {
+                lstErrors.add(new ErrorWrapper((Id) record.get('Id'), e.getMessage()));
+            }   
+            for(ResultWrapper r : resChunk) {
+                r.message = e.getMessage();
+                r.cse = null;
+            }         
+        }
+
+        lstResult.addAll(resChunk);
     }
     
     global void finish(Database.BatchableContext BC) {
+        List<Technical_Logs__c> lstErrorsToInsert = new List<Technical_Logs__c>();
+
+
+
+        sendEmailResult(lstResult);
         
+        for(ErrorWrapper error : lstErrors) {
+            lstErrorsToInsert.add(new Technical_Logs__c(Operation__c= 'PCI Compliant', 
+                                                        Record__c= BC.getJobId(),
+                                                        Status__c= error.accountId,
+                                                        Log__c= error.message));
+        }
+
+        if(!lstErrorsToInsert.isEmpty()) {
+            insert lstErrorsToInsert;
+        }
     }
 
-    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal){
+    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW){
 
         Set<Id> accountIds = new Set<Id>();
 
@@ -48,6 +111,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
                 accountIds.add(agReg.Id);
             }
         }
+
+
 
         //contacts that will receive notifications for PCI renewal
         Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
@@ -77,7 +142,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
 
         //get contacts of first accounts
         if(!accountIds.isEmpty()) {
-            List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+            List<Contact> allContacts = new List<Contact>([SELECT Id, Name, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
             for(Contact c: allContacts){
                 if(!keyContactsPerAccount.containsKey(c.AccountId))
@@ -90,7 +155,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
         system.debug('accountIdsHOs: ' + accountIdsHOs);
         //get contacts of topParents and relate them with first account
         if(!accountIdsHOs.isEmpty()){
-            List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+            List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Name, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
             for(Contact cHO: allContactsHOs){
 
@@ -139,24 +204,43 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
                 system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
                 //find portal admin
                 for(Contact c: keyContactsPerAccount.get(agReg.Id)){
-                    if(c.User_Portal_Status__c == 'Approved Admin')
+                    if(c.User_Portal_Status__c == 'Approved Admin') {
                         comCasecontact = c;
+                        break;
+                    }
                 }
 
                 system.debug('CHECK comcasecontact' + keyContactsPerAccount.get(agReg.Id).get(0));
                 //if no admin is found just use one of the existing keyContacts
-                if(comCasecontact == null) comCasecontact = keyContactsPerAccount.get(agReg.Id).get(0);
+                system.debug('before assign comCaseContact: ' + comCasecontact);
+                if(comCasecontact == null) {
+                    comCasecontact = keyContactsPerAccount.get(agReg.Id).get(0);
+                }
+                system.debug('after assign comCaseContact: ' + comCasecontact);
             }
 
             system.debug('creating renewal for PCI');
 
             AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact);
+            ResultWrapper resProcess = new ResultWrapper(agReg);
+            if(comCaseContact != null) {
+                resProcess.con = comCaseContact;
+            }
+            if(oscar != null) {
+                Case cse = [SELECT CaseNumber FROM Case WHERE Id = :oscar.Oscar_Communication_Case_Id__c];
+                resProcess.cse = cse;
+            }
             
+            resW.add(resProcess);
             System.debug('oscar: ' + oscar);
             sendEmailAlert(keyContactsPerAccount.get(agReg.Id), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
+            agReg.PCI_DSS_Compliant__c = Date.today();
             
         }
+
+        update pciRequiringRenewal;
+
     }
 
     
@@ -164,6 +248,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = accountData.Id,
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
+        
+        theOscar.OSCAR_Deadline__c = Date.today().addDays(30);
         insert theOscar;
 
         system.debug('createStagingArea oscar: '+ theOscar);
@@ -178,10 +264,15 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
         theCommunicationCase.Reason1__c = 'PCI DSS Compliant';
         theCommunicationCase.Region__c = accountData.Region_formula__c;
         theCommunicationCase.SAAM_Deadline_Date__c = accountData.ANG_PCI_compliance_expiry_date__c;
+        theCommunicationCase.Visible_on_ISS_Portal__c = true;
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
+
+        system.debug('before case: ' + theCommunicationCase);
         
         insert theCommunicationCase;
+
+        system.debug('after case: ' + theCommunicationCase);
 
         AMS_Pax_Accreditation_Form__c theStagingArea = new AMS_Pax_Accreditation_Form__c();
 
@@ -235,13 +326,11 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
     
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
-        
         Id templateId;
         Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
 
-        if(recipents == null)
-        {
+        if(recipents == null) {
             templateToIATA = true;
 
             //getTemplate
@@ -435,6 +524,59 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Sch
     private static Id getSpecificLangTemplate(String lang, Map<String, Id> availableTemplates){
         if(availableTemplates.get(lang) != null) return availableTemplates.get(lang);
         else return availableTemplates.get('English');
+    }
+
+    public class ErrorWrapper {
+        public Id accountId {get;set;}
+        public String message {get;set;}
+
+        public ErrorWrapper(Id accountId, String message) {
+            this.accountId = accountId;
+            this.message = message;
+        }
+    }
+
+    public class ResultWrapper {
+        public Account acc {get;set;}
+        public Contact con {get;set;}
+        public Case cse {get;set;}
+        public Boolean hasError {get;set;}
+        public String message {get;set;}
+
+        public ResultWrapper(Account acc) {
+            this.acc = acc;
+            this.con = new Contact();
+            this.cse = new Case();
+            this.hasError = false;
+            this.message = '';
+        }
+    }
+
+    public static void sendEmailResult(List<ResultWrapper> results) {
+        String body = '<html><body>';
+        String table = '<table border="1" cellpadding="10"><tr><th>Account</th><th>Contact</th><th>Contact Portal Status</th><th>IATA Code</th>';
+        table += '<th>Country</th><th>Case</th><th>Message</th></tr>';
+        for(ResultWrapper res : results) {
+            table += '<tr>';
+            table += '<td>' + res.acc.Name + '</td>';
+            table += '<td>' + res.con.Name + '</td>';
+            table += '<td>' + res.con.User_Portal_Status__c + '</td>';
+            table += '<td>' + res.acc.IATACode__c + '</td>';
+            table += '<td>' + res.acc.IATA_ISO_Country__r.Name + '</td>';
+            table += '<td>' + res.cse.CaseNumber + '</td>';
+            table += '<td>' + res.message + '</td>';
+            table += '</tr>';
+        }
+        table += '</table>';
+        body += table + '</body></html>';
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'PCI Oscar mass creation report';
+        message.htmlBody = body;
+        
+        message.toAddresses = new List<String> {UserInfo.getUserEmail(), 'tfccardoso89@gmail.com'};
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
+        Messaging.sendEmail(messages);
     }
     
 }
