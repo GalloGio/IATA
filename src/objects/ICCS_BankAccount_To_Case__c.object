@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>A junction object containing a N-to-N between Bank Account and Case</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -134,28 +131,34 @@
         <fullName>Split_type__c</fullName>
         <externalId>false</externalId>
         <label>Split type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Amount</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Balance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Total</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Percentage</fullName>
+                    <default>false</default>
+                    <label>Percentage</label>
+                </value>
+                <value>
+                    <fullName>Amount</fullName>
+                    <default>false</default>
+                    <label>Amount</label>
+                </value>
+                <value>
+                    <fullName>Balance</fullName>
+                    <default>false</default>
+                    <label>Balance</label>
+                </value>
+                <value>
+                    <fullName>Total</fullName>
+                    <default>false</default>
+                    <label>Total</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>caseTypeIsDelete__c</fullName>
@@ -202,4 +205,5 @@ TEXT(ICCS_Bank_Account__r.CurrencyIsoCode)</errorConditionFormula>
         <errorDisplayField>Notice_of_Assignment__c</errorDisplayField>
         <errorMessage>The Notice of Assignment flag cannot be set, because the selected bank account doesn&apos;t have its Notice of Assignment flag set.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

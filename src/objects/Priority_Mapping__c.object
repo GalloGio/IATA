@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Case Priority Mapping.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -60,284 +57,351 @@
         <fullName>Application__c</fullName>
         <externalId>false</externalId>
         <label>Application</label>
-        <picklist>
-            <picklistValues>
-                <fullName>SIS Help Desk</fullName>
-                <default>true</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SIS Help Desk</fullName>
+                    <default>true</default>
+                    <label>SIS Help Desk</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Case_Classification__c</fullName>
         <externalId>false</externalId>
         <label>Case Classification</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Application Error</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing Data Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Related</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certification Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Digital Signature Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Enhancement to Existing Feature</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Input File load Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Master Table Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member Profile Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Migration Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Feature</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Output File Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Processing Time Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reporting Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sandbox Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Server / iiNET Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Settlement File Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Supporting Document</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>System Related</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User Access Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Application Error</fullName>
+                    <default>true</default>
+                    <label>Application Error</label>
+                </value>
+                <value>
+                    <fullName>Billing Data Issue</fullName>
+                    <default>false</default>
+                    <label>Billing Data Issue</label>
+                </value>
+                <value>
+                    <fullName>Business Related</fullName>
+                    <default>false</default>
+                    <label>Business Related</label>
+                </value>
+                <value>
+                    <fullName>Certification Issue</fullName>
+                    <default>false</default>
+                    <label>Certification Issue</label>
+                </value>
+                <value>
+                    <fullName>Digital Signature Issue</fullName>
+                    <default>false</default>
+                    <label>Digital Signature Issue</label>
+                </value>
+                <value>
+                    <fullName>Enhancement to Existing Feature</fullName>
+                    <default>false</default>
+                    <label>Enhancement to Existing Feature</label>
+                </value>
+                <value>
+                    <fullName>Input File load Issue</fullName>
+                    <default>false</default>
+                    <label>Input File load Issue</label>
+                </value>
+                <value>
+                    <fullName>Master Table Issue</fullName>
+                    <default>false</default>
+                    <label>Master Table Issue</label>
+                </value>
+                <value>
+                    <fullName>Member Profile Issue</fullName>
+                    <default>false</default>
+                    <label>Member Profile Issue</label>
+                </value>
+                <value>
+                    <fullName>Migration Issue</fullName>
+                    <default>false</default>
+                    <label>Migration Issue</label>
+                </value>
+                <value>
+                    <fullName>New Feature</fullName>
+                    <default>false</default>
+                    <label>New Feature</label>
+                </value>
+                <value>
+                    <fullName>Output File Issue</fullName>
+                    <default>false</default>
+                    <label>Output File Issue</label>
+                </value>
+                <value>
+                    <fullName>Processing Time Issue</fullName>
+                    <default>false</default>
+                    <label>Processing Time Issue</label>
+                </value>
+                <value>
+                    <fullName>Reporting Issue</fullName>
+                    <default>false</default>
+                    <label>Reporting Issue</label>
+                </value>
+                <value>
+                    <fullName>Sandbox Issue</fullName>
+                    <default>false</default>
+                    <label>Sandbox Issue</label>
+                </value>
+                <value>
+                    <fullName>Server / iiNET Issue</fullName>
+                    <default>false</default>
+                    <label>Server / iiNET Issue</label>
+                </value>
+                <value>
+                    <fullName>Settlement File Issue</fullName>
+                    <default>false</default>
+                    <label>Settlement File Issue</label>
+                </value>
+                <value>
+                    <fullName>Supporting Document</fullName>
+                    <default>false</default>
+                    <label>Supporting Document</label>
+                </value>
+                <value>
+                    <fullName>System Related</fullName>
+                    <default>false</default>
+                    <label>System Related</label>
+                </value>
+                <value>
+                    <fullName>User Access Issue</fullName>
+                    <default>false</default>
+                    <label>User Access Issue</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Case_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Case Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Access to SIS Solution is not possible</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Alerts are not / incorrectly delivered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>A master table value provided to SIS has caused a validation error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing data captured through IS-Web does not contain intended values</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing data is incorrectly reported or not present in the respective clearing house.</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing data submitted via IS-IDEC/IS-XML does not contain intended values</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Related Question</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certification Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Enhancement to Existing Feature</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Functionality not working as expected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoices cannot be Digitally Signed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member Profile issue / updates not working</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Minor defects which do not affect functionality</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Feature Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other Digital Signature issues</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reports cannot be viewed / downloaded</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Response times for files submitted are greater than expected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Response times for manual file load are greater than expected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sandbox Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Server / iiNET Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIS Solution is not working</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIS usage data incorrectly produced</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Submission of billing data not possible</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Supporting Documents did not link</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>System Related Question</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unable to send migrated transaction types</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User password is disabled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Validation reports have not been received / generated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Access to SIS Solution is not possible</fullName>
+                    <default>true</default>
+                    <label>Access to SIS Solution is not possible</label>
+                </value>
+                <value>
+                    <fullName>Alerts are not / incorrectly delivered</fullName>
+                    <default>false</default>
+                    <label>Alerts are not / incorrectly delivered</label>
+                </value>
+                <value>
+                    <fullName>A master table value provided to SIS has caused a validation error</fullName>
+                    <default>false</default>
+                    <label>A master table value provided to SIS has caused a validation error</label>
+                </value>
+                <value>
+                    <fullName>Billing data captured through IS-Web does not contain intended values</fullName>
+                    <default>false</default>
+                    <label>Billing data captured through IS-Web does not contain intended values</label>
+                </value>
+                <value>
+                    <fullName>Billing data is incorrectly reported or not present in the respective clearing house.</fullName>
+                    <default>false</default>
+                    <label>Billing data is incorrectly reported or not present in the respective clearing house.</label>
+                </value>
+                <value>
+                    <fullName>Billing data submitted via IS-IDEC/IS-XML does not contain intended values</fullName>
+                    <default>false</default>
+                    <label>Billing data submitted via IS-IDEC/IS-XML does not contain intended values</label>
+                </value>
+                <value>
+                    <fullName>Business Related Question</fullName>
+                    <default>false</default>
+                    <label>Business Related Question</label>
+                </value>
+                <value>
+                    <fullName>Certification Issue</fullName>
+                    <default>false</default>
+                    <label>Certification Issue</label>
+                </value>
+                <value>
+                    <fullName>Enhancement to Existing Feature</fullName>
+                    <default>false</default>
+                    <label>Enhancement to Existing Feature</label>
+                </value>
+                <value>
+                    <fullName>Functionality not working as expected</fullName>
+                    <default>false</default>
+                    <label>Functionality not working as expected</label>
+                </value>
+                <value>
+                    <fullName>Invoices cannot be Digitally Signed</fullName>
+                    <default>false</default>
+                    <label>Invoices cannot be Digitally Signed</label>
+                </value>
+                <value>
+                    <fullName>Member Profile issue / updates not working</fullName>
+                    <default>false</default>
+                    <label>Member Profile issue / updates not working</label>
+                </value>
+                <value>
+                    <fullName>Minor defects which do not affect functionality</fullName>
+                    <default>false</default>
+                    <label>Minor defects which do not affect functionality</label>
+                </value>
+                <value>
+                    <fullName>New Feature Request</fullName>
+                    <default>false</default>
+                    <label>New Feature Request</label>
+                </value>
+                <value>
+                    <fullName>Other Digital Signature issues</fullName>
+                    <default>false</default>
+                    <label>Other Digital Signature issues</label>
+                </value>
+                <value>
+                    <fullName>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS</fullName>
+                    <default>false</default>
+                    <label>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS</label>
+                </value>
+                <value>
+                    <fullName>Reports cannot be viewed / downloaded</fullName>
+                    <default>false</default>
+                    <label>Reports cannot be viewed / downloaded</label>
+                </value>
+                <value>
+                    <fullName>Response times for files submitted are greater than expected</fullName>
+                    <default>false</default>
+                    <label>Response times for files submitted are greater than expected</label>
+                </value>
+                <value>
+                    <fullName>Response times for manual file load are greater than expected</fullName>
+                    <default>false</default>
+                    <label>Response times for manual file load are greater than expected</label>
+                </value>
+                <value>
+                    <fullName>Sandbox Issue</fullName>
+                    <default>false</default>
+                    <label>Sandbox Issue</label>
+                </value>
+                <value>
+                    <fullName>Server / iiNET Issue</fullName>
+                    <default>false</default>
+                    <label>Server / iiNET Issue</label>
+                </value>
+                <value>
+                    <fullName>SIS Solution is not working</fullName>
+                    <default>false</default>
+                    <label>SIS Solution is not working</label>
+                </value>
+                <value>
+                    <fullName>SIS usage data incorrectly produced</fullName>
+                    <default>false</default>
+                    <label>SIS usage data incorrectly produced</label>
+                </value>
+                <value>
+                    <fullName>Submission of billing data not possible</fullName>
+                    <default>false</default>
+                    <label>Submission of billing data not possible</label>
+                </value>
+                <value>
+                    <fullName>Supporting Documents did not link</fullName>
+                    <default>false</default>
+                    <label>Supporting Documents did not link</label>
+                </value>
+                <value>
+                    <fullName>System Related Question</fullName>
+                    <default>false</default>
+                    <label>System Related Question</label>
+                </value>
+                <value>
+                    <fullName>Unable to send migrated transaction types</fullName>
+                    <default>false</default>
+                    <label>Unable to send migrated transaction types</label>
+                </value>
+                <value>
+                    <fullName>User password is disabled</fullName>
+                    <default>false</default>
+                    <label>User password is disabled</label>
+                </value>
+                <value>
+                    <fullName>Validation reports have not been received / generated</fullName>
+                    <default>false</default>
+                    <label>Validation reports have not been received / generated</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Case_Type__c</fullName>
         <externalId>false</externalId>
         <label>Case Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Feature Request</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>General Question</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Problem / Issue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Feature Request</fullName>
+                    <default>true</default>
+                    <label>Feature Request</label>
+                </value>
+                <value>
+                    <fullName>General Question</fullName>
+                    <default>false</default>
+                    <label>General Question</label>
+                </value>
+                <value>
+                    <fullName>Problem / Issue</fullName>
+                    <default>false</default>
+                    <label>Problem / Issue</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Priority__c</fullName>
         <externalId>false</externalId>
         <label>Priority</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Priority 1 (Showstopper)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Priority 2 (Major)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Priority 3 (Minor)</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Priority 4 (Trivial Defects)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Priority 1 (Showstopper)</fullName>
+                    <default>false</default>
+                    <label>Priority 1 (Showstopper)</label>
+                </value>
+                <value>
+                    <fullName>Priority 2 (Major)</fullName>
+                    <default>false</default>
+                    <label>Priority 2 (Major)</label>
+                </value>
+                <value>
+                    <fullName>Priority 3 (Minor)</fullName>
+                    <default>true</default>
+                    <label>Priority 3 (Minor)</label>
+                </value>
+                <value>
+                    <fullName>Priority 4 (Trivial Defects)</fullName>
+                    <default>false</default>
+                    <label>Priority 4 (Trivial Defects)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Visible_in_ISS_Portal__c</fullName>
@@ -402,4 +466,5 @@
     <pluralLabel>Priorities Mappings</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

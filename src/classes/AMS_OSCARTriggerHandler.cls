@@ -112,6 +112,7 @@ public class AMS_OSCARTriggerHandler {
 
 		updateCaseKPIFields();
 		updateCaseInfo();
+        createHoAdminNotifications();
 	}
 
 	private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -1517,6 +1518,83 @@ public class AMS_OSCARTriggerHandler {
 		if(!casesToUpdate.isEmpty()) update casesToUpdate;
 	}
 
+    // Create portal notifications for the HO's portal admin when NoC and Change of Bank Details OSCARs submitted by a BR contact are finalized
+    private static void createHoAdminNotifications() {
+        system.debug('createHoAdminNotifications: enter ');
+        set<Id> setInvolvedAcctIds = new set<Id>();
+        map<Id, AMS_OSCAR__c> lstOscarsToNotify = new map<Id, AMS_OSCAR__c>();
+        list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
+
+        for (AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.new) {
+            AMS_OSCAR__c oldOscar = (AMS_OSCAR__c)Trigger.oldMap.get(oscar.Id);
+            if (oscar.Finalization_result__c == AMS_Utils.PASSED && oldOscar.Finalization_result__c != AMS_Utils.PASSED && ( oscar.Process__c == AMS_Utils.BANKACCCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES ) ) {
+                setInvolvedAcctIds.add(oscar.Account__c);
+                lstOscarsToNotify.put(oscar.Id, oscar);
+            }
+        }
+        system.debug('createHoAdminNotifications: setInvolvedAcctIds :' + setInvolvedAcctIds);
+
+        if (setInvolvedAcctIds.isEmpty()) return;
+
+        map<Id, Account> mapInvolvedAccountsPerId = new map<Id, Account>([SELECT Id, IATACode__c, Top_Parent__c, Top_Parent__r.IATACode__c FROM Account WHERE Id IN :setInvolvedAcctIds]);
+
+        set<Id> setBRAccountIds = new set<Id>();
+        set<Id> setHOAccountIds = new set<Id>();
+
+        for (Account acc : mapInvolvedAccountsPerId.values()) 
+            if (acc.Top_Parent__c != null) {
+                setBRAccountIds.add(acc.Id);
+                setHOAccountIds.add(acc.Top_Parent__c);
+            }
+        system.debug('createHoAdminNotifications: setBRAccountIds :' + setBRAccountIds);
+
+        if (setBRAccountIds.isEmpty()) return; // if empty it means all involved accounts are HOs so there's no OSCAR from a BR account, so we can stop
+
+        // get HO portal admin contacts-list per account
+        map<Id, list<Contact>> mapAdminContactsPerHOId = new map<Id, list<Contact>>();
+        for (Contact con : [SELECT Id, Email, AccountId, User_Portal_Status__c FROM Contact WHERE AccountId IN :setHOAccountIds AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']) {
+            if (mapAdminContactsPerHOId.get(con.AccountId) != null) 
+                mapAdminContactsPerHOId.get(con.AccountId).add(con);
+            else 
+                mapAdminContactsPerHOId.put(con.AccountId, new list<Contact>{con});
+            
+        }
+
+        // get related cases
+        map<Id, Case> mapCasesPerOscarId = new map<Id, Case>();
+        for (Case c : [SELECT Id, CaseNumber, Oscar__c FROM Case WHERE Oscar__c IN :lstOscarsToNotify.keyset()]) {
+            mapCasesPerOscarId.put(c.Oscar__c, c);
+        }
+        
+        try {
+            for (AMS_OSCAR__c oscar : lstOscarsToNotify.values()) {
+                if (setBRAccountIds.contains(oscar.Account__c) && mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c) != null) { // only notify if case is from BR & there is an admin contact on HO
+                    for (Contact con : mapAdminContactsPerHOId.get(mapInvolvedAccountsPerId.get(oscar.Account__c).Top_Parent__c)) {
+
+                        Notification__c notification = new Notification__c();
+                        notification.Contact__c = con.Id;
+                        notification.Type__c= 'Information';
+                        notification.Notificatin_color__c = '#007FFF';
+                        notification.Alert_Contact_By_Email__c = true;
+                        notification.Expiry_date__c = Datetime.now().addDays(14);
+                        notification.Subject__c = (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ' finalized';
+                        notification.Message__c = '<p>A ' + (oscar.Process__c == AMS_Utils.BANKACCCHANGES ? 'Change of Bank Account Details' : 'Notice of Change') + ' case submitted from one of your branch accounts, with IATA Code ' + mapInvolvedAccountsPerId.get(oscar.Account__c).IATACode__c + ', has been finalized.<br/>';
+                        notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + mapCasesPerOscarId.get(oscar.Id).Id + '">' + mapCasesPerOscarId.get(oscar.Id).CaseNumber + '</a></p>';
+
+                        lstNotificationsToCreate.add(notification);
+                    }
+                }
+            }
+            system.debug('createHoAdminNotifications: lstNotificationsToCreate :' + lstNotificationsToCreate);
+
+            if (!lstNotificationsToCreate.isEmpty()) 
+                insert lstNotificationsToCreate;
+
+        } catch (Exception e) {
+            system.debug('Add notification ERROR: ' + e.getmessage());
+        }
+    }
+
 	public static String fetchCaseReason(String typeOfChange){
 
 		if(typeOfChange == null || typeOfChange == '')
@@ -2593,7 +2671,7 @@ public class AMS_OSCARTriggerHandler {
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
-                AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+                AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
 
             updatedOSCAR.STEP2__c = 'Failed';
@@ -2819,13 +2897,19 @@ public class AMS_OSCARTriggerHandler {
                         if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
-                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
-                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+                    //RB: Bypass hierarchy verification when hierarchy is too big with many owners
+                    Apex_Setting__c idAccountOwner = Apex_Setting__c.getInstance('Stop Owner Alignment');
+                    system.debug('Stop Owner Verification: '+ idAccountOwner.Text_1__c);
+                    system.debug('Stop Owner Verification user ID: '+ UserInfo.getUserId());    
 
+                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId())) {
+                        stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                        system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+                    }
 
                     //verify ownership alignment
-                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId()) && allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
                     if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){

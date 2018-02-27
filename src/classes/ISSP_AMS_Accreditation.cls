@@ -12,6 +12,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     private static final String BNK_ACCNT_DTLS = 'BNK_ACCNT_DTLS';
     private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+    private static final String OTHERS = 'OTHERS';
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
     private String vSAAMCaseId;
@@ -2130,8 +2131,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         //System.Debug('Contact type:' + contactType);
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
-            newContact.First_name__c = 'Agency';
-            newContact.Last_name__c = 'Company';
+            newContact.First_name__c = '';
+            newContact.Last_name__c = newContact.Name;
             newContact.Agency_owner__c = true;
             //newContact.Phone__c = '000 000 00 00';
             //newContact.Email__c = 'dummy@gmail.com';
@@ -2903,6 +2904,10 @@ public without sharing class ISSP_AMS_Accreditation {
             return null;
         }
 
+        //INC355752 - add attachment to case after submission
+        if(isNoticeOfChange)
+            attachNOCFormToCase(newCase.Id, isBankAccountChange);
+
         try {
             system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
             system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
@@ -2959,8 +2964,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Submitted_to_IATA__c = TRUE;
             upsert newForm;
 
-            if(newCase.Status == 'Draft') //Change queue for drafts being submitted; Open - EDMC cases stay with current owner
-                newCase.ownerid = getRegionalQueue();
+            // AMSU-110 assign Case via assignment rules
+            //if(newCase.Status == 'Draft') //Change queue for drafts being submitted; Open - EDMC cases stay with current owner
+            //    newCase.ownerid = getRegionalQueue();
             
             newCase.Status = 'Open';
             newCase.Dossier_reception_date__c = datetime.now().date();
@@ -2975,8 +2981,12 @@ public without sharing class ISSP_AMS_Accreditation {
             //However, remove on Submit to IATA if same as acount of user i..e. Case Account, as it is not required
             if(newCase.Account_Concerned__c == newCase.AccountId)
                 newCase.Account_Concerned__c = null;
-              
-            update newCase;
+            
+            // AMSU-110 assign Case via assignment rules -> re-trigger assignment rules on update
+            //update newCase;
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+            Database.update(newCase, dmo);
 
             //***********
 
@@ -3022,9 +3032,14 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Pre-Send Confirm: ' + isNoticeOfChange);
             sendConfirmationEmail(newCase);
 
+            // AMSU-39 if NoC from BR then create notification for HO portal admin
+            if (isNoticeOfChange && amsOfficeType != AMS_Utils.HO && amsOfficeType != AMS_Utils.HE) {
+                createHoAdminNotifications();
+            }
+
             if (isNoticeOfChange)
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
-
+                
             return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {
             newForm.Submitted_to_IATA__c = FALSE;
@@ -3035,6 +3050,49 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         return null;
+    }
+
+    private static void attachNOCFormToCase(Id caseId, Boolean isBankAccountChange) {
+
+        PageReference pdfNOC = new Pagereference('/ISSP_AMS_PDF_NoC?caseId=' + caseId + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange);
+        
+        Blob bodyNOC;
+
+        try {
+
+            bodyNOC = pdfNOC.getContent();
+            System.debug('PDF Content success');
+
+        } catch (Exception e) {
+            System.debug('ERROR getting PDF content: ' + e.getMessage());
+        }
+
+        if(bodyNOC != null) {
+            Long size = bodyNOC.size();
+            String fileName = 'Notice_of_Change_form.pdf';
+            String contentType = 'application/pdf';
+            String folder = WrapperAttach.getAmazonFolder(caseId);
+
+            UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(caseId, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
+
+            Boolean result = AmazonRest.uploadFile(upF, bodyNOC);
+
+            if(result) {
+
+                System.debug('Success: Amazon file Uploaded - ISSP_AMS_Accreditation.cls');
+
+                if(!UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(folder+fileName, size, caseId, 'AMS_File', OTHERS, 'Portal')) {
+                    
+                    System.debug('Error: Couldn\'t save amazon file on Salesforce - ISSP_AMS_Accreditation.cls');
+                }
+
+            } else {
+
+                System.debug('Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls');
+            }
+        }
+        
+    
     }
 
     public Pagereference goToDownloadPDF() {
@@ -3699,7 +3757,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c, Shipping_Country__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -5956,9 +6014,28 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
-                    
+
+                    if (hqAccount.Name == null) {
+                        hqAccount.Name.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
+                    if (hqAccount.BillingStreet == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
+                        hqAccount.BillingStreet.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                    if (hqAccount.BillingCity == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
+                        hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                                        
                     if (hqAccount.Email__c == null) {
                         hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
+                    if (hqAccount.Phone == null) {
+                        hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
 
@@ -7427,7 +7504,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205
-        ID lAccountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
+        ID lAccountConcerned = ( (newForm.Scope_of_Change__c == 'Selected Branches Only' && newCase.Account_Concerned__c != null) ? newCase.Account_Concerned__c : vHQAccountId );
         if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
             List<AMS_Accreditation_Contact__c> prevAndCurrOwnersList = new List<AMS_Accreditation_Contact__c>();
             for (AMS_Accreditation_Contact__c lCont: countAccreditationContact) {
@@ -7889,6 +7966,38 @@ system.debug('aqui sectorValue ' + sectorValue);
             return Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
         } else {
             return accreditationModel;
+        }
+    }
+
+    private void createHoAdminNotifications() {
+        // get HO portal admin contact
+        List<Contact> adminContactsHO = new List<Contact>([SELECT Id, Email, AccountId, Account.IATACode__c, User_Portal_Status__c FROM Contact WHERE AccountId = :con.Account.Top_Parent__c AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin']);
+
+        if (!adminContactsHO.isEmpty()) {
+            try {
+                list<Notification__c> lstNotificationsToCreate = new list<Notification__c>();
+
+                for (Contact loopCon : adminContactsHO) {
+                    Notification__c notification = new Notification__c();
+                    notification.Contact__c = loopCon.Id;
+                    notification.Type__c= 'Information';
+                    notification.Notificatin_color__c = '#007FFF';
+                    notification.Alert_Contact_By_Email__c = true;
+                    notification.Expiry_date__c = Datetime.now().addDays(14);
+                    notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + loopCon.Account.IATACode__c;
+                    notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + loopCon.Account.IATACode__c + '.<br/>';
+                    notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
+
+                    lstNotificationsToCreate.add(notification);
+                }
+
+                insert lstNotificationsToCreate;
+
+            } catch (Exception e) {
+                system.debug('Add notification ERROR: ' + e.getmessage());
+            }
+        } else {
+            system.debug('Add notification ERROR: no portal admins found on HO account');
         }
     }
 }

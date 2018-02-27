@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -53,6 +49,7 @@ two record types:
 2- WebStar contains WebStar data (WebStar is master data)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -139,77 +136,89 @@ two record types:
         <fullName>Card_Code__c</fullName>
         <externalId>false</externalId>
         <label>Card Code</label>
-        <picklist>
-            <picklistValues>
-                <fullName>TACB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TACT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>TACB</fullName>
+                    <default>false</default>
+                    <label>TACB</label>
+                </value>
+                <value>
+                    <fullName>TACT</fullName>
+                    <default>false</default>
+                    <label>TACT</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Card_Status__c</fullName>
         <externalId>false</externalId>
         <label>Card Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Printed/Delivered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cancelled ID Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Expired ID Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sent ID Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Valid ID Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ERROR Picture Missing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ERROR Rejected by G&amp;D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ERROR Missing Information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Preapproved</fullName>
+                    <default>false</default>
+                    <label>Preapproved</label>
+                </value>
+                <value>
+                    <fullName>Printed/Delivered</fullName>
+                    <default>false</default>
+                    <label>Printed/Delivered</label>
+                </value>
+                <value>
+                    <fullName>Cancelled ID Card</fullName>
+                    <default>false</default>
+                    <label>Cancelled ID Card</label>
+                </value>
+                <value>
+                    <fullName>Expired ID Card</fullName>
+                    <default>false</default>
+                    <label>Expired ID Card</label>
+                </value>
+                <value>
+                    <fullName>Sent ID Card</fullName>
+                    <default>false</default>
+                    <label>Sent ID Card</label>
+                </value>
+                <value>
+                    <fullName>Valid ID Card</fullName>
+                    <default>false</default>
+                    <label>Valid ID Card</label>
+                </value>
+                <value>
+                    <fullName>ERROR Picture Missing</fullName>
+                    <default>false</default>
+                    <label>ERROR Picture Missing</label>
+                </value>
+                <value>
+                    <fullName>ERROR Rejected by G&amp;D</fullName>
+                    <default>false</default>
+                    <label>ERROR Rejected by G&amp;D</label>
+                </value>
+                <value>
+                    <fullName>ERROR Missing Information</fullName>
+                    <default>false</default>
+                    <label>ERROR Missing Information</label>
+                </value>
+                <value>
+                    <fullName>ID Card Pending/In Progress</fullName>
+                    <default>false</default>
+                    <label>ID Card Pending/In Progress</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Card_Variation_Code__c</fullName>
@@ -431,7 +440,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Expedite</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -544,29 +553,35 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Nature_of_ID_Card__c</fullName>
         <externalId>false</externalId>
         <label>Nature of ID Card</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renew</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reissue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Replacement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Renew</fullName>
+                    <default>false</default>
+                    <label>Renew</label>
+                </value>
+                <value>
+                    <fullName>Reissue</fullName>
+                    <default>false</default>
+                    <label>Reissue</label>
+                </value>
+                <value>
+                    <fullName>Replacement</fullName>
+                    <default>false</default>
+                    <label>Replacement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Now_Date__c</fullName>
@@ -594,45 +609,54 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Paid__c</fullName>
         <externalId>false</externalId>
         <label>Paid</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Type__c</fullName>
         <externalId>false</externalId>
         <label>Payment Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Credit Card</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FOC / Key Account</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoice</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>true</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>FOC / Key Account</fullName>
+                    <default>false</default>
+                    <label>FOC / Key Account</label>
+                </value>
+                <value>
+                    <fullName>Invoice</fullName>
+                    <default>false</default>
+                    <label>Invoice</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Phone__c</fullName>
@@ -647,25 +671,30 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Photo_Flag__c</fullName>
         <externalId>false</externalId>
         <label>Photo Flag</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Digital</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Paper</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No-photo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Digital</fullName>
+                    <default>true</default>
+                    <label>Digital</label>
+                </value>
+                <value>
+                    <fullName>Paper</fullName>
+                    <default>false</default>
+                    <label>Paper</label>
+                </value>
+                <value>
+                    <fullName>No-photo</fullName>
+                    <default>false</default>
+                    <label>No-photo</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Photo__c</fullName>
@@ -838,21 +867,25 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Type_of_ID_Card__c</fullName>
         <externalId>false</externalId>
         <label>Type of ID Card</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TIDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>TIDS</fullName>
+                    <default>false</default>
+                    <label>TIDS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>VER_Number__c</fullName>
@@ -932,6 +965,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
+        <columns>Nature_of_ID_Card__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Card_Status__c</field>
@@ -993,24 +1027,20 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>must_synch_with_aims</fullName>
+        <fullName>XX_GDP_Products_Account_View_BLANK</fullName>
         <columns>NAME</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>Card_Status__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>MustSyncWithAIMS__c</field>
+            <field>GDP_Products_Account_View__c</field>
             <operation>equals</operation>
-            <value>1</value>
         </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>equals</operation>
-            <value>Cancelled,Cancelled ID Card</value>
-        </filters>
-        <label>Must Sync on Cancelled Cards</label>
+        <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1039,11 +1069,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
+                <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1064,6 +1090,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent ID Card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1157,14 +1187,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
@@ -1173,11 +1195,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>ID Card Pending%2FIn Progress</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1282,6 +1300,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <errorConditionFormula>AND(PRIORVALUE(MustSyncWithAIMS__c) == true, NOT(CONTAINS($Profile.Name ,&apos;System Administrator&apos;) ) ,NOT(CONTAINS($Profile.Name , &apos;idcard portal profile&apos; )))</errorConditionFormula>
         <errorMessage>Card has been already sent to AIMS. It can not be modified anymore.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Cancel_Card</fullName>
         <availability>online</availability>
@@ -1306,7 +1325,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
@@ -1316,12 +1335,12 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      window.location.reload();
 } 
 
-else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Sent ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);

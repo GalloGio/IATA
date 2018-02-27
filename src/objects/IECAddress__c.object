@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object containing addresses</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -61,21 +58,25 @@
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Billing</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Shipping</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Billing</fullName>
+                    <default>true</default>
+                    <label>Billing</label>
+                </value>
+                <value>
+                    <fullName>Shipping</fullName>
+                    <default>false</default>
+                    <label>Shipping</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>City__c</fullName>
@@ -318,4 +319,5 @@
         <errorDisplayField>ISO_State__c</errorDisplayField>
         <errorMessage>Data entry is not allowed</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

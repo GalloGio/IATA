@@ -32,6 +32,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
         get;
         set {statusCancelled = false; }
     }
+    //RN-INC356501
+    public String whichcountry {get;set;}
 
     public IDCardLoginController() {
         System.debug('**** Enter in IDCARD LOGIN PAGE');
@@ -50,18 +52,17 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
     //Login with Codes
     public PageReference verify() {
-        
-        Boolean validCaptcha =validCaptcha();
+        if (!Test.isRunningTest())  findLocation();
+        Boolean validCaptcha;
 
         //@@ Disables captcha
         //validCaptcha = true;
 
-        //exception for China INC185215
-        if (IATACodeLocation != null || IATACodeLocation != '') {
-            List<Account> zaccount = [SELECT BillingCountry FROM Account WHERE Account.IATACode__c = : IATACodeLocation.trim()];
-            if (zaccount.size() > 0)
-                if (zaccount[0].BillingCountry == 'PEOPLE\'S REPUBLIC OF CHINA')
-                    validCaptcha = true;
+        //exception for China //RN-INC356501
+        if (whichcountry == 'CN'){
+            validCaptcha = true;
+        }else{
+            validCaptcha =validCaptcha();
         }
 
         //for test method to pass captcha validation
@@ -273,16 +274,18 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     *
     */
     public PageReference verifyAlternative() {
-        Boolean validCaptcha = validCaptcha();
+        Boolean validCaptcha;
+         if (!Test.isRunningTest())  findLocation();
 
         //@@ Disables captcha
         //validCaptcha = true;
 
-        //exception for China INC185215
-        List<Account> zaccount = [SELECT BillingCountry FROM Account WHERE Account.IATACode__c = : IATACodeLocation2.trim()];
-        if (zaccount.size() > 0)
-            if (zaccount[0].BillingCountry == 'PEOPLE\'S REPUBLIC OF CHINA')
-                validCaptcha = true;
+        //exception for China //RN-INC356501
+        if (whichcountry == 'CN'){
+            validCaptcha = true;
+        }else{
+            validCaptcha =validCaptcha();
+        }
 
         //for test method to pass captcha validation
         if (Test.isRunningTest())
@@ -443,7 +446,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                                       + ' and LastName__c =  \'' + LNAME.trim() + '\''
                                       + ' and FirstName__c = \'' + FNAME.trim() +'\''
                                       + ' and Date_of_Birth__c =  ' + parsedDtDOB.format('yyyy-MM-dd')
-                                      + ' AND Card_Status__c != \'Cancelled\' limit 1';
+                                      + ' AND Card_Status__c != \'Cancelled ID Card\' limit 1';
 
             idCardAppQuery = 'Select id,Last_Name__c,First_Name__c,Date_of_Birth__c'
                                 + ' from ID_Card_Application__c '
@@ -732,6 +735,43 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                 ret =  hdrs.get('X-Salesforce-SIP');
             return ret;
         }
+    }
+
+    //RN-INC356501
+    public void findLocation(){
+
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
+        String ipinfo_token = cs.value__c;
+        String ipAddress = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+
+        String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(IP_LOOKUP_URL);
+        req.setMethod('GET');
+        req.setTimeout(2000);
+        HttpResponse res;
+        try{
+            res = h.send(req);
+            JSONParser parser = JSON.createParser(res.getBody());
+            system.debug('message:' + String.valueOf(parser));
+            while (parser.nextToken() != null) {
+                system.debug('field name:' + JSONToken.FIELD_NAME);
+                system.debug('value:' + parser.getText());
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) &&
+                    (parser.getText() == 'country')) {
+                    parser.nextToken();
+                    system.debug('COUNTRY:' + parser.getText());
+                    whichcountry = parser.getText();
+                }
+            }
+
+
+        }catch(Exception e){
+
+        }
+
+
     }
 
 }

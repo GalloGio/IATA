@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IDCard Price tables (fee)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -127,6 +124,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ISO_Region__c</fullName>
+        <description>Iso Country Region</description>
+        <externalId>false</externalId>
+        <formula>text(ISO_Country__r.Region__c)</formula>
+        <label>ISO Region</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Mass_Purchase_exp__c</fullName>
         <description>Fees per card for mass application purchase</description>
         <externalId>false</externalId>
@@ -151,85 +159,100 @@
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>HUBM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDA3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDAU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDCA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDLA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDNA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDNZ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RAFR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RMEA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HUBM</fullName>
+                    <default>false</default>
+                    <label>HUBM</label>
+                </value>
+                <value>
+                    <fullName>IDA3</fullName>
+                    <default>false</default>
+                    <label>IDA3</label>
+                </value>
+                <value>
+                    <fullName>IDAU</fullName>
+                    <default>false</default>
+                    <label>IDAU</label>
+                </value>
+                <value>
+                    <fullName>IDCA</fullName>
+                    <default>false</default>
+                    <label>IDCA</label>
+                </value>
+                <value>
+                    <fullName>IDLA</fullName>
+                    <default>false</default>
+                    <label>IDLA</label>
+                </value>
+                <value>
+                    <fullName>IDNA</fullName>
+                    <default>false</default>
+                    <label>IDNA</label>
+                </value>
+                <value>
+                    <fullName>IDNZ</fullName>
+                    <default>false</default>
+                    <label>IDNZ</label>
+                </value>
+                <value>
+                    <fullName>RAFR</fullName>
+                    <default>false</default>
+                    <label>RAFR</label>
+                </value>
+                <value>
+                    <fullName>RMEA</fullName>
+                    <default>false</default>
+                    <label>RMEA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_Class_of_Agent__c</fullName>
         <externalId>false</externalId>
         <label>Type (Class) of Agent</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TIDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>TIDS</fullName>
+                    <default>false</default>
+                    <label>TIDS</label>
+                </value>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Price Table</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>ID_Card_Fee__c</columns>
-        <columns>CURRENCY_ISO_CODE</columns>
         <columns>ISO_Country__c</columns>
         <columns>ISO_Country_Code__c</columns>
-        <columns>Region__c</columns>
+        <columns>ISO_Region__c</columns>
         <columns>Type_Class_of_Agent__c</columns>
-        <columns>IATA_Package__c</columns>
+        <columns>ID_Card_Fee__c</columns>
         <columns>Expedite__c</columns>
-        <columns>Can_Pay_by_Cheque__c</columns>
         <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
+        <columns>IATA_Package__c</columns>
+        <columns>Can_Pay_by_Cheque__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -255,28 +278,6 @@
         <label>Country that Can Pay by Cheque</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>asdasdasd</fullName>
-        <columns>NAME</columns>
-        <columns>ID_Card_Fee__c</columns>
-        <columns>CURRENCY_ISO_CODE</columns>
-        <columns>ISO_Country__c</columns>
-        <columns>ISO_Country_Code__c</columns>
-        <columns>Region__c</columns>
-        <columns>Type_Class_of_Agent__c</columns>
-        <columns>IATA_Package__c</columns>
-        <columns>Expedite__c</columns>
-        <columns>Can_Pay_by_Cheque__c</columns>
-        <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ISO_Country__c</field>
-            <operation>equals</operation>
-            <value>United Kingdom</value>
-        </filters>
-        <label>All asd</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <displayFormat>PT-{0000}</displayFormat>
         <label>Price Table Name</label>
@@ -285,4 +286,12 @@
     <pluralLabel>Price Tables</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Expedite_Delivery</fullName>
+        <active>true</active>
+        <description>Only one expedite delivery option can be selected</description>
+        <errorConditionFormula>AND(!ISBLANK(Expedite__c),Expedite_Delivery_added_to_IDCard_Price__c = TRUE)</errorConditionFormula>
+        <errorMessage>It&apos;s not possible to have values in both fields (ID Card Fee , Expedite Delivery added to IDCard Price). Please select only one.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

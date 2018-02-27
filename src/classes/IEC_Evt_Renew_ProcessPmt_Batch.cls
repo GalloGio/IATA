@@ -49,6 +49,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 		// List of Orders used to update the order with the status of payment
 		List<Order> lstOrderToUpdate = new List<Order>();
 		List<Map<Id, OrderItem>> lst_mapOrderPaidByCreditCard = new List<Map<Id, OrderItem>>();
+		List<OrderItem> lstOrderItemToUpdate = new List<OrderItem>();
 		
 		try
 		{
@@ -89,9 +90,17 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 				List<Map<Id, IECZuoraHelper.PaymentMethod>> lst_mapOrderId_PaymentMethod = new List<Map<Id, IECZuoraHelper.PaymentMethod>>();
 				List<Map<String, ZuoraUtil.zAccountPaymentMethod>> lst_mapOrderId_AccountPaymentMethod = new List<Map<String, ZuoraUtil.zAccountPaymentMethod>>();
 				List<Map<Id, String>> lst_mapOrderId_PaymentType = new List<Map<Id, String>>();
+				Map<Id, String> mapOrdersNotRenewed = new Map<Id, String>();
+				Map<Id, String> mapOrderItemsNotRenewed = new Map<Id, String>();
 
 				// Loop over orderitems to determine which orders will be submitted to zuora
 				for (OrderItem oi : scope) {
+
+					//list of Zuora default payment methods to validate
+					List<Zuora.zObject> validateDefaultPaymentMethods = new List<Zuora.zObject>();
+					String transactionStatus;
+					Datetime transactionDateTime;
+
 					// Skip order items that doesn't have tax calculation
 					if (oi.Tax__c != null)
 					{
@@ -142,23 +151,61 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 										// Define the payment method ID on the order
 										Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
 										zPaymentMethod.setValue('Id', oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
-										lst_mapOrderId_PaymentMethod[i].put(oi.OrderId, new IECZuoraHelper.PaymentMethod(zPaymentMethod));
-										
-										// Define the payment type on the order
-										lst_mapOrderId_PaymentType[i].put(oi.OrderId, IECConstants.PaymentThresholdType_CreditCard);
-										
-										ZuoraUtil.zAccountPaymentMethod zAccPmtMethod = new ZuoraUtil.zAccountPaymentMethod();
-										zAccPmtMethod.zPaymentMethodName = 'Credit Card';
-										zAccPmtMethod.zPaymentMethod = oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c;
-										lst_mapOrderId_AccountPaymentMethod[i].put(oi.OrderId, zAccPmtMethod);
+										zPaymentMethod.setValue('NumConsecutiveFailures', 20);
 
-										j++;
-										
-										// Once the sub-array index reaches to the maximum number allowed per callout
-										// then reset the level 2 index J and increment the Level 1 index I to force to create a new sub-array
-										if (j == iZuoraAPIObjectLimit)
+										validateDefaultPaymentMethods.add(zPaymentMethod);
+										// validate if credit card is valid or invalid
+										// update NumConsecutiveFailures to 20 just to trigger the card validation - 
+										List<Zuora.zApi.SaveResult> results = ZuoraUtil.zupdate(validateDefaultPaymentMethods);
+
+										System.debug('susana results - ' + results);
+										// verify the Last Transaction registered on Zuora
+										// if is Error, the renewal order process ends here for that order
+										List<Zuora.zObject> pm = ZuoraUtil.getPaymentMethodDetails(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c); 
+										System.debug('susana pm - ' + pm);
+										System.debug('susana pm transactionStatus - ' + pm.get(0).getValue('LastTransactionStatus'));
+
+										if(pm.size()>0)
 										{
-											j = 0; i++;
+											transactionStatus = (String)pm.get(0).getValue('LastTransactionStatus');
+							            	transactionDateTime = (Datetime)pm.get(0).getValue('LastTransactionDateTime');
+										}
+
+										// if the LastTransactionStatus is different from Approved, the credit card is invalid for payment
+										// we will stop the process
+										if(transactionStatus == 'Approved' && transactionStatus != null){
+
+											// Record the order id and order item that will be submitted to Zuora
+											lst_mapOrderPaidByCreditCard[i].put(oi.OrderId, oi);
+
+											System.debug('susana zPaymentMethod - '+zPaymentMethod);
+											lst_mapOrderId_PaymentMethod[i].put(oi.OrderId, new IECZuoraHelper.PaymentMethod(zPaymentMethod));
+											System.debug('susana lst_mapOrderId_PaymentMethod - '+lst_mapOrderId_PaymentMethod);
+											// Define the payment type on the order
+											lst_mapOrderId_PaymentType[i].put(oi.OrderId, IECConstants.PaymentThresholdType_CreditCard);
+											System.debug('susana lst_mapOrderId_PaymentType - '+lst_mapOrderId_PaymentType);
+											ZuoraUtil.zAccountPaymentMethod zAccPmtMethod = new ZuoraUtil.zAccountPaymentMethod();
+											zAccPmtMethod.zPaymentMethodName = 'Credit Card';
+											zAccPmtMethod.zPaymentMethod = oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c;
+											lst_mapOrderId_AccountPaymentMethod[i].put(oi.OrderId, zAccPmtMethod);
+											System.debug('susana zAccPmtMethod - '+zAccPmtMethod);
+											System.debug('susana lst_mapOrderId_AccountPaymentMethod - '+lst_mapOrderId_AccountPaymentMethod);
+											
+											j++;
+											
+											// Once the sub-array index reaches to the maximum number allowed per callout
+											// then reset the level 2 index J and increment the Level 1 index I to force to create a new sub-array
+											if (j == iZuoraAPIObjectLimit)
+											{
+												j = 0; i++;
+											}
+										}
+										else
+										{	
+											mapOrdersNotRenewed.put(oi.OrderId, '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
+											mapOrderItemsNotRenewed.put(oi.Id, '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c);
+											System.debug('susana mapOrdersNotRenewed - ' + mapOrdersNotRenewed);
+											lstReleaseLog.add(IEC_EventReleaseLog_Svc.logError('Zuora Billing Account\'s default payment method is not a valid credit card to proceed with the payment.', '' + transactionStatus + ' registered on ' + transactionDateTime + ' for payment method id ' + oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__External_Id__c, oi.OrderId, idEventRelease, 'Credit Card Validation', oi.Order.BillToContactId, false));
 										}
 									}
 									else
@@ -232,10 +279,32 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 					}
 				}
 				
+				for(Id oid : mapOrdersNotRenewed.keySet()){
+
+					lstOrderToUpdate.add(new Order(
+						Id = oid,
+						Status = IECConstants.ORDER_STATUS_PAYMENT_FAILURE,
+						Is_Paid__c = false,
+						Payment_Gateway_Response__c = mapOrdersNotRenewed.get(oid)
+					));
+
+				}
+
+				for(Id oiid : mapOrderItemsNotRenewed.keySet()){
+
+					lstOrderItemToUpdate.add(new OrderItem(
+						Id = oiid,
+						IEC_Is_Paid__c = false
+					));
+
+				}
+
+				
 				/*////////////////////////////////////////////////////////////
 				// Update Orders Status and Paid flag
 				///////////////////////////////////////////////////////////*/
 				update lstOrderToUpdate;
+				update lstOrderItemToUpdate;
 
 				//*** delete logs for proceeded orders and/or subscriptions
 				if (setOrderOrSubscriptionId.size() > 0)
@@ -287,5 +356,9 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
                           + 'Best regards,<br/>'
                           + 'eCommerce Support Team<br/>'
                         , true, null);
+
+
 	}
+
+	
 }
