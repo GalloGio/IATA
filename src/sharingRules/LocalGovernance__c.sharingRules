@@ -15,19 +15,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Show_drafts_to_AM_team</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Show drafts to AM team</label>
-        <sharedTo>
-            <group>Account_management_team</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Draft Reg/Div Group</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>Show_non_drafts_to_all</fullName>
         <accessLevel>Read</accessLevel>
         <label>Show non-drafts to all</label>
@@ -36,8 +23,8 @@
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Draft Reg/Div Group</value>
+            <operation>equals</operation>
+            <value>Reg/Div Groups</value>
         </criteriaItems>
     </sharingCriteriaRules>
 </SharingRules>

@@ -2216,16 +2216,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Code__c</fullName>
-        <externalId>false</externalId>
-        <label>Code</label>
-        <length>4</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Company</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -4982,6 +4972,44 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Size_of_the_group__c</fullName>
+        <externalId>false</externalId>
+        <label>Size of the group</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>3-8</fullName>
+                    <default>false</default>
+                    <label>3-8</label>
+                </value>
+                <value>
+                    <fullName>9-14</fullName>
+                    <default>false</default>
+                    <label>9-14</label>
+                </value>
+                <value>
+                    <fullName>15-20</fullName>
+                    <default>false</default>
+                    <label>15-20</label>
+                </value>
+                <value>
+                    <fullName>21-25</fullName>
+                    <default>false</default>
+                    <label>21-25</label>
+                </value>
+                <value>
+                    <fullName>26+</fullName>
+                    <default>false</default>
+                    <label>26+</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Status</fullName>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -7047,6 +7075,29 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -8193,6 +8244,29 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -9159,6 +9233,29 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel Agency</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10220,6 +10317,29 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel Agency</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11362,6 +11482,29 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -12464,6 +12607,29 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel Agency</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Size_of_the_group__c</picklist>
+            <values>
+                <fullName>15-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21-25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>26%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-14</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
