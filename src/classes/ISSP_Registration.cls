@@ -893,7 +893,6 @@ public without sharing class ISSP_Registration {
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
         
         Boolean newProvider = ((acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider' ) ? True : False);
-        system.debug('##newProvider: ' + newProvider);
         if(sRefererCommunity == constIEC){
             userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline, newProvider);
         }
@@ -954,15 +953,10 @@ public without sharing class ISSP_Registration {
                 }
                 con.Preferred_Language__c = languageString;
                 
-                system.debug('##Test here set parameters to contact');
-                system.debug('##acc.Sector__c: ' +acc.Sector__c);
-                system.debug('##acc.Category__c: ' +acc.Category__c);
                 if(acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider'){
             		con.Primary_Contact__c = true;
                 	con.User_Portal_Status__c = 'Approved Admin';
-                    system.debug('##Test here setted');
             	}
-                system.debug('##Test here done');
                 
                 upsert con;
             } catch (Exception e) {
