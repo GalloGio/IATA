@@ -954,15 +954,27 @@ public without sharing class ISSP_Registration {
                 }
                 con.Preferred_Language__c = languageString;
                 
-                system.debug('##Test here set parameters to contact');
-                system.debug('##acc.Sector__c: ' +acc.Sector__c);
-                system.debug('##acc.Category__c: ' +acc.Category__c);
+
                 if(acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider'){
             		con.Primary_Contact__c = true;
                 	con.User_Portal_Status__c = 'Approved Admin';
-                    system.debug('##Test here setted');
+
+                    //TIP-16 - Assign TIP Portal Service
+                    Id appListId;
+                    ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                    if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
+                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+                    }else{
+                        appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
+                    }
+
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
             	}
-                system.debug('##Test here done');
                 
                 upsert con;
             } catch (Exception e) {
