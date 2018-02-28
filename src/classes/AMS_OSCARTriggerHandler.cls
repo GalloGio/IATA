@@ -3228,12 +3228,27 @@ public class AMS_OSCARTriggerHandler {
         List<Account> accountsToUpdate = new List<Account>();
 
         Set<Id> accountIds = new Set<Id>();
+        Map<Id,AMS_Oscar__c> accountsOscars = new Map<Id,AMS_Oscar__c>();
 
         For(AMS_Oscar__c oscar: oscarsToProcess){
             accountIds.add(oscar.account__c);
+            accountsOscars.put(oscar.account__c,oscar);
         }
 
-        Map<Id,Account> accountsFS = new Map<Id,Account>([Select Id, ANG_FA_Opt_out__c, Guaranteed_amount__c from Account where Id in:accountIds]);
+        Map<Id,Account> accountsFS = new Map<Id,Account>([Select Id, ParentId, ANG_FA_Opt_out__c, Guaranteed_amount__c from Account where Id in:accountIds or ParentId in:accountIds]);
+
+        Map<Id,List<Account>> accountsChildren = new Map<Id,List<Account>>();
+
+        For(Account account: accountsFS.values()){
+
+            if(!accountIds.contains(account.Id)){
+
+                if(accountsChildren.get(account.ParentId) == null)
+                    accountsChildren.put(account.ParentId,new List<Account>{account});
+                else
+                    accountsChildren.get(account.ParentId).add(account);
+            }
+        }
 
         for (AMS_OSCAR__c oscar : oscarsToProcess){
 
@@ -3252,6 +3267,11 @@ public class AMS_OSCARTriggerHandler {
                     Account a = new Account(Id = oscar.Account__c);
                     a.ANG_FA_Opt_out__c = valueToAgency;
                     accountsToUpdate.add(a);
+
+                    For(Account acct: accountsChildren.get(oscar.Account__c)){
+                        acct.ANG_FA_Opt_out__c = valueToAgency;
+                        accountsToUpdate.add(acct);
+                    }
                 }
                 
                 System.debug('Sending email alert for process ' + oscar.Process__c + ' with value for Opt set to ' + oscar.ANG_FA_Opt_out__c);
@@ -3266,8 +3286,40 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if(!accountsToUpdate.isEmpty())
+        List<Agency_Applied_Change_code__c> activeChangeCodes =
+            new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+
+        //map accountId -> active change code
+        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+        for (Id accId : accountIds) {
+            for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
+                if (changeCode.Account__c == accId)
+                    accountsChangeCode.put(accId, changeCode);
+        }
+
+
+
+        For(Account acct: accountsToUpdate){
+
+            if(accountIds.contains(acct.Id)){
+
+                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                changeCode.name = acct.ANG_FA_Opt_out__c ? 'OOT' : 'OIN';
+                changeCode.memoText = acct.ANG_FA_Opt_out__c ? 'Agent has opted out from Annual financial review.' : 'Agent has opted in from Annual financial review.';
+                
+                changeCode.reasonCode = accountsChangeCode.get(acct.Id).Reason_Code__c;
+                changeCode.reasonDesc  = accountsChangeCode.get(acct.Id).Reason_Description__c;
+
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
+            }
+
+        }
+
+        if(!accountsToUpdate.isEmpty()){
+
             update accountsToUpdate;
+        }
     }
 
 
