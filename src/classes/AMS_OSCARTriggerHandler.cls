@@ -3261,7 +3261,7 @@ public class AMS_OSCARTriggerHandler {
 
                 }
                 
-                Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-In' ? true : false;
+                Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
 
                 if(accountsFs.get(oscar.Account__c).ANG_FA_Opt_out__c != valueToAgency ){
                     Account a = new Account(Id = oscar.Account__c);
