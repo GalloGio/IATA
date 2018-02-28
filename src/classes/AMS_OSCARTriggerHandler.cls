@@ -71,36 +71,6 @@ public class AMS_OSCARTriggerHandler {
     }
     /*** AMSU-113 End ***/
 
-    /*** AMSU-121 Start ***/
-    public static Map<Id, AMS_Pax_Accreditation_Form__c> getAllAccreditations(List<AMS_OSCAR__c> oscars) {
-        Set<Id> onlineAccreditaionsIds = new Set<Id>();
-        for(AMS_OSCAR__c oscar : oscars) {
-            if(oscar.AMS_Online_Accreditation__c != null) {
-                onlineAccreditaionsIds.add(oscar.AMS_Online_Accreditation__c);
-            }
-        }
-
-        if(!onlineAccreditaionsIds.isEmpty()) {
-            return getAccreditations(onlineAccreditaionsIds);
-        }
-
-        return new Map<Id, AMS_Pax_Accreditation_Form__c>();
-    }
-
-    public static Map<Id, AMS_Pax_Accreditation_Form__c> getAccreditations2(Set<Id> accreditationsIds, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
-        Map<Id, AMS_Pax_Accreditation_Form__c> res = new Map<Id, AMS_Pax_Accreditation_Form__c>();
-
-        for(Id accreditationId : accreditationsIds) {
-            AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(accreditationId);
-            if(accreditation != null) {
-                res.put(accreditationId, accreditation);
-            }
-        }
-
-        return res;
-    }
-    /*** AMSU-121 End ***/
-
 	//*************************************
 	//********* context methods ***********
 	//*************************************
@@ -114,13 +84,9 @@ public class AMS_OSCARTriggerHandler {
 		//create agency regulation objects for Cargo agencies
 		handleCargoAgencyRegulations();
 
-        /*** AMSU-121 Start ***/
-        Map<Id, AMS_Pax_Accreditation_Form__c> allOnlineAccr = getAllAccreditations(oscars);
-        /*** AMSU-121 Start ***/
+		handleSanityCheckValidations(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
-		handleSanityCheckValidations(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap, allOnlineAccr);
-
-		handleChangesProcess(oscars, allOnlineAccr);
+		handleChangesProcess(oscars);
 
 		ANG_AgencyChangesHelper.handleNewGenChangesProcess(oscars);
 
@@ -167,9 +133,6 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-113 Start ***/
         updateAccountPCICompliant((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 End ***/
-		/*** AMSU-121 Start ***/
-        handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
-        /*** AMSU-121 End ***/
 
 	}
 	
@@ -217,40 +180,6 @@ public class AMS_OSCARTriggerHandler {
     }
 
     /*** AMSU-113 End ***/
-
-    /*** AMSU-121 Start ***/
-    public static void handleChangeOfLocation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
-        List<AMS_Pax_Accreditation_Form__c> accreditationsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
-        Id changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-
-        for(AMS_OSCAR__c oscar : oscars) {
-            if(String.isBlank(oscar.Type_of_change__c)) {
-                continue;
-            }
-
-            AMS_OSCAR__c oldOscar = oldMap.get(oscar.Id);
-            Boolean prevIsChangeOfLocation = String.isBlank(oldOscar.Type_of_change__c) ? false : new Set<String>(oldOscar.Type_of_change__c.split(';')).contains(AMS_Utils.Location);
-            Boolean currIsChangeOfLocation = new Set<String>(oscar.Type_of_change__c.split(';')).contains(AMS_Utils.Location);
-
-
-            if(!prevIsChangeOfLocation && currIsChangeOfLocation && oscar.RecordTypeId == changeRT) {
-                AMS_Pax_Accreditation_Form__c accreditation = new AMS_Pax_Accreditation_Form__c(Id = oscar.AMS_Online_Accreditation__c);
-                accreditation.Shipping_Street__c = null;
-                accreditation.Shipping_City__c = null;
-                accreditation.Shipping_State__c = null;
-                accreditation.Shipping_Country__c = null;
-                accreditation.Shipping_Postal_Code__c = null;
-                accreditation.Shipping_ISO_State__c = null;
-                accreditation.Shipping_ISO_Country__c = null;
-                accreditationsToUpdate.add(accreditation);
-            }
-        }
-
-        if(!accreditationsToUpdate.isEmpty()) {
-            update accreditationsToUpdate;
-        }
-    }
-    /*** AMSU-121 End ***/
 
 	private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
 
@@ -505,7 +434,7 @@ public class AMS_OSCARTriggerHandler {
 			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
-	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars, Map<Id, AMS_Pax_Accreditation_Form__c> allOnlineAccr) {
+	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
@@ -523,7 +452,7 @@ public class AMS_OSCARTriggerHandler {
 			List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate);
 
 			if (validateTypeOfChange(oscarsToValidate, configs) && oscarsToProcess.size() > 0 )
-				processAgencyChanges(oscarsToProcess, configs, allOnlineAccr);
+				processAgencyChanges(oscarsToProcess, configs);
 		}
 	}
 
@@ -580,7 +509,7 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
-	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs, Map<Id, AMS_Pax_Accreditation_Form__c> allOnlineAccr) {
+	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
 
 		boolean isSanityCheck = false;
 
@@ -695,7 +624,7 @@ public class AMS_OSCARTriggerHandler {
 		// )
 		Map<Id, AMS_HierarchyHelper.AccountStruct> accountStructPerAcct = getAccountsInfoBeforeChanges(accounts);
 
-        Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations2(oscarOnlineAccredIds, allOnlineAccr);
+		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
 		//Here we will save the accounts that will suffer ownership changes
 		Map<Id, Set<Id>> accountsAffectedPerOnlineAccreditation = new Map<Id, Set<Id>>();
@@ -2506,7 +2435,7 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-	public static void handleSanityCheckValidations(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap, Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations){
+	public static void handleSanityCheckValidations(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
 		//Validation: should not be possible to pass sanity checks without attachments - NEWGEN-1401
 		for(AMS_Oscar__c oscar: oscars){
 
@@ -2562,39 +2491,10 @@ public class AMS_OSCARTriggerHandler {
 						}
 					}
 				}
-
-                /*** AMSU-121 Start ***/
-                validateShippingAddress(oscar, onlineAccreditations);
-                /*** AMSU-121 End ***/ 
 			}
 		}
 	}
-
-    /*** AMSU-121 Start ***/
-    private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
-        AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
-        System.debug('Shipping validation -> ' + accreditation);
-        if(accreditation != null) {
-            String street = accreditation.Shipping_Street__c; 
-            String city = accreditation.Shipping_City__c;
-            String state = accreditation.Shipping_State__c;
-            String zipCode = accreditation.Shipping_Postal_Code__c;
-            String country = accreditation.Shipping_Country__c;
-            Id isoState = accreditation.Shipping_ISO_State__c;
-            Id isoCountry = accreditation.Shipping_ISO_Country__c;
-
-            if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) /* && String.isBlank(country) */ && isoState == null && isoCountry == null) {
-                return;
-            }
-
-            if(!String.isBlank(street) && !String.isBlank(city) && !String.isBlank(isoState) && !String.isBlank(isoCountry)) {
-                return;
-            }
-
-            oscar.addError('Error - Incomplete shipping address.');
-        }        
-    }
-    /*** AMSU-121 End ***/ 
+	
 
 	public static Set<Id> checkProcessAndStatusToMigrateOwners(String typeOfChange, String process, Set<Id> accountsList)
 	{
