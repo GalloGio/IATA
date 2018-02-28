@@ -3268,9 +3268,11 @@ public class AMS_OSCARTriggerHandler {
                     a.ANG_FA_Opt_out__c = valueToAgency;
                     accountsToUpdate.add(a);
 
-                    For(Account acct: accountsChildren.get(oscar.Account__c)){
-                        acct.ANG_FA_Opt_out__c = valueToAgency;
-                        accountsToUpdate.add(acct);
+                    if(accountsChildren.get(oscar.Account__c) != null){
+                        For(Account acct: accountsChildren.get(oscar.Account__c)){
+                            acct.ANG_FA_Opt_out__c = valueToAgency;
+                            accountsToUpdate.add(acct);
+                        }
                     }
                 }
                 
