@@ -132,6 +132,15 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account__c</fields>
+        <fields>Active__c</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <relatedList>Agency_Applied_Change_code__c.OSCAR__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
