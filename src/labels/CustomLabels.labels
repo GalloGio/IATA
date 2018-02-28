@@ -3731,6 +3731,13 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>ICE_Portal_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE Portal Service</shortDescription>
+        <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone’s calendar.</value>
+    </labels>
+    <labels>
         <fullName>ICH</fullName>
         <language>en_US</language>
         <protected>false</protected>
