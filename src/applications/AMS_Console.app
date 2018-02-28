@@ -222,12 +222,16 @@
     <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
     <tab>AMS_Account_Role__c</tab>
+	<tab>AMS_PCI_Compliant_Mass_Oscar_Creation</tab>
     <workspaceMappings>
         <mapping>
             <tab>AMS_Account_Role__c</tab>
         </mapping>
         <mapping>
             <tab>AMS_OSCAR__c</tab>
+        </mapping>
+		<mapping>
+            <tab>AMS_PCI_Compliant_Mass_Oscar_Creation</tab>
         </mapping>
         <mapping>
             <tab>AMS_Voucher_Region__c</tab>
