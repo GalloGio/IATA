@@ -1,5 +1,7 @@
 trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
   
+  NewGen_AccountRiskStatusTriggerHandler newgenHandler = new NewGen_AccountRiskStatusTriggerHandler();
+
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
   //DTULLO: added to skip trigger execution if aggreagating data for PwC
@@ -18,7 +20,9 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   if(trigger.isAfter && trigger.isUpdate){
     //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if(trigger.newmap <> null)
-    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);  
+    AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
+
+    newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);  
   }
 
 

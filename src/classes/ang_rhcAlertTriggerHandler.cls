@@ -86,5 +86,12 @@ public class ang_rhcAlertTriggerHandler{
             ANG_RHCHelper.sendMailUpdateRiskAlert(c.id,riskAlertMap.get(accId).ANG_RHC_Information__c,templateID,riskAlertMap.get(accId).id);
 		}
 
+		Map <Id, Account> accountMap = NewGen_Account_Statement_Helper.getAllHierarchies(alertTemplateMap.keySet());
+        Map <Id, Set <String>> usersPerAccount = NewGen_Account_Statement_Helper.getUsersPerAccount(accountMap.keySet(), NewGen_Account_Statement_Helper.SERVICE_RHC);
+
+        for (Id accountId : alertTemplateMap.keySet()) {
+			NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(accountId), Label.NewGenApp_RHC_RiskAlert_Notification, new List <String> { riskAlertMap.get(accountId).ANG_Threshold_Level__c, riskAlertMap.get(accountId).ANG_Direction__c });
+        }
+
 	}
 }

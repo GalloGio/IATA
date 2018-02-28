@@ -1,4 +1,5 @@
-public without sharing class ISSP_Ctrl_AccountStatements {
+@RestResource(urlMapping='/newgenapp/v1/iceGetBalances/*')
+global class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
 
@@ -126,6 +127,30 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		markLastUpdated();
 		markFirstOldPeriod();
         initListCurrency();
+	}
+
+	/**
+		Get method for NewGenAPP mobile
+	**/
+	@HttpGet
+	global static List <WrapperStatement> doGet(){
+		ISSP_Ctrl_AccountStatements acc = new ISSP_Ctrl_AccountStatements();
+
+		if(acc.listWrapper != null && !acc.listWrapper.isEmpty()){
+			String disclaimer = Label.ISSP_Account_Statements_Disclaimer;
+
+	        if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
+	        	disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
+	        }
+
+	        for(WrapperStatement wrapper : acc.listWrapper){
+	        	wrapper.disclaimer = disclaimer;
+	        	wrapper.listCurrency = acc.listCurrency;
+	        	wrapper.location = Label.ISSP_Account_Statement_Location;
+	        }
+	    }
+
+		return acc.listWrapper;
 	}
 
 	/**
@@ -260,16 +285,19 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 	/**
 		class to store a list of Account Statements and the sumarized data
 	**/
-	public class WrapperStatement implements Comparable {
-		public Account_Statement__c parent {get;set;}
-		public list<Account_Statement__c> listStatements {get; set;}
-		public String accountSite {get;set;}
-		public Boolean showDetail {get;set;}
-		public DateTime lastUpdatedDate {get; set;}
-		public Boolean lastUpdatedMark {get; set;}
-        public Boolean showSeparation {get; set;}
+	global class WrapperStatement implements Comparable {
+		global Account_Statement__c parent {get;set;}
+		global list<Account_Statement__c> listStatements {get; set;}
+		global String accountSite {get;set;}
+		global Boolean showDetail {get;set;}
+		global DateTime lastUpdatedDate {get; set;}
+		global Boolean lastUpdatedMark {get; set;}
+        global Boolean showSeparation {get; set;}
+        global String disclaimer { get; set; }
+        global List <String> listCurrency {get; set;}
+        global String location { get; set;}
 
-		public WrapperStatement(Account_Statement__c statement) {
+		global WrapperStatement(Account_Statement__c statement) {
 			this.parent = statement.clone();
 			this.listStatements = new list<Account_Statement__c>();
 			this.listStatements.add(statement);
@@ -277,6 +305,9 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 			this.accountSite = statement.Account__r.Site;
 			this.showSeparation = false;
 			this.lastUpdatedMark = false;
+			this.disclaimer = '';
+			this.listCurrency = new List <String>();
+			this.location = '';
 		}
 
 		/**
