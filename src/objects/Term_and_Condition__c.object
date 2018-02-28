@@ -76,10 +76,10 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-	<valueSet>
+        <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>true</sorted>
-		<restrictedPicklist>true</restrictedPicklist>
                 <value>
                     <fullName>EN</fullName>
                     <default>false</default>
@@ -90,7 +90,7 @@
                     <default>false</default>
                     <label>FR</label>
                 </value>
-		<value>
+                <value>
                     <fullName>PT</fullName>
                     <default>false</default>
                     <label>PT</label>
