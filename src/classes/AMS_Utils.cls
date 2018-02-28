@@ -1363,6 +1363,12 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
                                                                     ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
+        /*** AMSU-121 Start ***/
+        if(!oscarNewGenProcesses.contains(oscar.Process__c)) {
+            fieldsMapping.put('ShippingState', 'Shipping_State__c');
+        }
+        /*** AMSU-121 End ***/
+
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
