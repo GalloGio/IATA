@@ -106,6 +106,7 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
+		handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 	}
 
     public static void handleBeforeInsert() {
@@ -144,23 +145,35 @@ public class AMS_OSCARTriggerHandler {
     } 
 
     public static void updateAccountPCICompliant(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
-        List<Account> accsToUpdate = new List<Account>();
+        Map<Id, String> mapExpiryDates = new Map<Id,String>();
         for(AMS_Oscar__c oscar : oscars) {
             AMS_OSCAR__c oldOscar = oldMap.get(oscar.id);
             if(!String.isBlank(oscar.Account__c) && pciCompliantProcesses.contains(oscar.Process__c) && oscar.Location_Class__c == AMS_Utils.LC_PASSENGER && oldOscar.STEP6__c != oscar.STEP6__c && oscar.STEP6__c == AMS_Utils.PASSED) {
-                Account accToUpdate = new Account(Id= oscar.Account__c, Is_PCI_compliant__c= oscar.Is_PCI_compliant__c);
-                if(oscar.Is_PCI_compliant__c == 'Yes') {
-                    accToUpdate.ANG_PCI_compliance_expiry_date__c= oscar.ANG_PCI_compliance_expiry_date__c;
-                    accToUpdate.PCI_DSS_Compliant__c = null;
+                if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
+                    mapExpiryDates.put(oscar.Account__c, oscar.ANG_PCI_compliance_expiry_date__c + ',' + oscar.Is_PCI_compliant__c);
                 }
-                accsToUpdate.add(accToUpdate);
             }
         }
 
-        if(!accsToUpdate.isEmpty()) {
-            update accsToUpdate;
+        if(!mapExpiryDates.isEmpty()) {
+            asyncUpdateAccPCI(mapExpiryDates);
         }
+        }
+
+    @future
+    public static void asyncUpdateAccPCI(Map<Id, String> mapValues) {
+        List<Account> accounts = new List<Account>();
+        for(Id accountId : mapValues.keySet()) {
+            List<String> values = mapValues.get(accountId).split(',');
+            accounts.add(new Account(Id= accountId, 
+                                     ANG_PCI_compliance_expiry_date__c= Date.valueOf(values[0]), 
+                                     Is_PCI_compliant__c= (String) values[1],
+                                     PCI_DSS_Compliant__c= null));
     }
+
+        update accounts;
+    }
+
     /*** AMSU-113 End ***/
 
 	private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -2431,6 +2444,10 @@ public class AMS_OSCARTriggerHandler {
                     if(oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR)){
                             isToValidate = false; // we can skipp this validation
                     }
+                    //AMSU-113
+                    if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT && oscar.Is_PCI_compliant__c != 'Yes' && oscar.Is_PCI_compliant__c != 'Nil CC'){
+                        isToValidate = false; // we can skipp this validation
+                    }
 
                     if(isToValidate){
 
@@ -2450,16 +2467,29 @@ public class AMS_OSCARTriggerHandler {
                                 System.debug(e.getStackTraceString());
                             }
 
-                            List<AmazonFile__c> amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];
+                            List<AmazonFile__c> amazonFiles = new List<AmazonFile__c>();
 
-                            if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty())
-                                oscar.addError('Error - There are no attachments associated with this case/oscar.');
-                        }
-                    }
-                }
-            }
-        }
-    }
+                            //AMSU-113 - added validation for PCI Compliant
+                            if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
+                                amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id AND File_Identifier_picklist__c = 'PCI_COMPLIANCE'];
+                            }else{
+                                amazonFiles = [SELECT Id FROM AmazonFile__c WHERE case__c =: c.Id];        
+                            }
+
+							if((attchs == null || attchs.isEmpty()) && amazonFiles.isEmpty()){
+								//AMSU-113 - added error msg for PCI Compliant
+                                if(oscar.Process__c == AMS_Utils.PCI_COMPLIANT){
+                                    oscar.addError('Error - There are no PCI Compliant attachments with associated with this case/oscar.');
+                                }else{ 
+									oscar.addError('Error - There are no attachments associated with this case/oscar.');
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
     public static Set<Id> checkProcessAndStatusToMigrateOwners(String typeOfChange, String process, Set<Id> accountsList)
     {
