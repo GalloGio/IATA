@@ -505,7 +505,7 @@ public class AMS_OSCARTriggerHandler {
 			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
-	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
+	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars, Map<Id, AMS_Pax_Accreditation_Form__c> allOnlineAccr) {
 
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
@@ -523,7 +523,7 @@ public class AMS_OSCARTriggerHandler {
 			List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate);
 
 			if (validateTypeOfChange(oscarsToValidate, configs) && oscarsToProcess.size() > 0 )
-				processAgencyChanges(oscarsToProcess, configs);
+				processAgencyChanges(oscarsToProcess, configs, allOnlineAccr);
 		}
 	}
 
@@ -580,7 +580,7 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
-	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs, Map<Id, AMS_Pax_Accreditation_Form__c> allOnlineAccr) {
 
 		boolean isSanityCheck = false;
 
@@ -695,7 +695,7 @@ public class AMS_OSCARTriggerHandler {
 		// )
 		Map<Id, AMS_HierarchyHelper.AccountStruct> accountStructPerAcct = getAccountsInfoBeforeChanges(accounts);
 
-		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
+        Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations2(oscarOnlineAccredIds, allOnlineAccr);
 
 		//Here we will save the accounts that will suffer ownership changes
 		Map<Id, Set<Id>> accountsAffectedPerOnlineAccreditation = new Map<Id, Set<Id>>();
