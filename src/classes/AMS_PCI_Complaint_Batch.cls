@@ -265,6 +265,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Region__c = accountData.Region_formula__c;
         theCommunicationCase.SAAM_Deadline_Date__c = accountData.ANG_PCI_compliance_expiry_date__c;
         theCommunicationCase.Visible_on_ISS_Portal__c = true;
+        theCommunicationCase.Status = 'Accepted_Future Date';
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
 
@@ -574,7 +575,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         message.subject = 'PCI Oscar mass creation report';
         message.htmlBody = body;
         
-        message.toAddresses = new List<String> {UserInfo.getUserEmail(), 'tfccardoso89@gmail.com'};
+        message.toAddresses = new List<String> {UserInfo.getUserEmail()};
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
         Messaging.sendEmail(messages);
     }
