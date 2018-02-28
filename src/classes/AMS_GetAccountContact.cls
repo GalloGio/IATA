@@ -29,7 +29,7 @@ global class AMS_GetAccountContact {
 		} else if(!bspLst.isEmpty()) {
 			return new List<Contact> {new Contact(Id= bspLst[0].Id)};
 		} else {
-			return new List<Contact>();
+			return null;
 		}
 	}
 
