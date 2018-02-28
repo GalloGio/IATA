@@ -5766,6 +5766,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Passenger only</label>
                 </value>
                 <value>
+                    <fullName>Payment Provider</fullName>
+                    <default>false</default>
+                    <label>Payment Provider</label>
+                </value>
+                <value>
                     <fullName>Processor</fullName>
                     <default>false</default>
                     <label>Processor</label>
@@ -6126,6 +6131,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Lessor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Financial Institution</controllingFieldValue>
+                <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -27856,17 +27865,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>CANSO</fullName>
@@ -30986,17 +30984,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -33622,17 +33609,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37523,17 +37499,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -39912,17 +39877,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45319,17 +45273,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -48051,17 +47994,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52479,17 +52411,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -56883,17 +56804,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -59722,17 +59632,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -62188,17 +62087,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -64649,17 +64537,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -67497,17 +67374,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74828,17 +74694,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -79290,17 +79145,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -81467,6 +81311,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Provider</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -84076,17 +83924,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>e-freight</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TIP_Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

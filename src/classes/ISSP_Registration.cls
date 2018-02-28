@@ -891,15 +891,17 @@ public without sharing class ISSP_Registration {
 
         //EM: Management of email according to the portal
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
+        
+        Boolean newProvider = ((acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider' ) ? True : False);
         if(sRefererCommunity == constIEC){
-            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline);
+            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline, newProvider);
         }
 
         else{
             if(communityName=='' || communityName==null){
-            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
+            userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline, newProvider);
             }else if(communityName=='CNS'){
-                userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'CNS', lang, isNotIATA, newAirline);
+                userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'CNS', lang, isNotIATA, newAirline, newProvider);
             }
             
         }
@@ -950,6 +952,12 @@ public without sharing class ISSP_Registration {
                     }
                 }
                 con.Preferred_Language__c = languageString;
+                
+                if(acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider'){
+            		con.Primary_Contact__c = true;
+                	con.User_Portal_Status__c = 'Approved Admin';
+            	}
+                
                 upsert con;
             } catch (Exception e) {
                 throw new transformationException('' +e.getMessage() );
@@ -1077,6 +1085,11 @@ public without sharing class ISSP_Registration {
                          acc.IATA_ISO_Shipping_State__c = states[0].id;
                     }
                 }
+                /*
+                if(acc.Sector__c == 'Payment Provider' && acc.Category__c = 'Financial Institution'){
+                    
+                }
+                */
                 system.debug('acc +++ ' + acc);
                 upsert acc;
 
@@ -1127,7 +1140,13 @@ public without sharing class ISSP_Registration {
             	if (validation == IECUtil.DomainValidation.MATCHINGDOMAIN)
                 	con.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
             }
-
+			/*
+            if(acc.Sector__c == 'Payment Provider' && acc.Category__c == 'Financial Institution'){
+            	con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+                
+            }
+            */
             upsert con;
 
             //TF-SP08 - give access to Agency Accreditation service
