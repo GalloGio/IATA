@@ -187,11 +187,11 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                 continue;
             }
             if(!finLst.isEmpty()) {
-                mapAccounts.get(acc.Id).setContact(appLst[0]);
+                mapAccounts.get(acc.Id).setContact(finLst[0]);
                 continue;
             }
             if(!bspLst.isEmpty()) {
-                mapAccounts.get(acc.Id).setContact(appLst[0]);
+                mapAccounts.get(acc.Id).setContact(bspLst[0]);
             }
 
         }
