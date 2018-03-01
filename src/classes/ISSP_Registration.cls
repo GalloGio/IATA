@@ -956,6 +956,22 @@ public without sharing class ISSP_Registration {
                 if(acc.Sector__c == 'Financial Institution' && acc.Category__c == 'Payment Provider'){
             		con.Primary_Contact__c = true;
                 	con.User_Portal_Status__c = 'Approved Admin';
+
+                    //TIP-16 - Assign TIP Portal Service
+                    Id appListId;
+                    ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                    if (serviceIdInstance != null && serviceIdInstance.TIP_Portal_Service_Id__c != null){
+                        appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+                    }else{
+                        appListId = [SELECT Id FROM Portal_Applications__c WHERE Name = 'Agency Accreditation' LIMIT 1].id;
+                    }
+
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
             	}
                 
                 upsert con;
