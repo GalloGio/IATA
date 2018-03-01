@@ -3261,16 +3261,18 @@ public class AMS_OSCARTriggerHandler {
 
                 }
                 
-                Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-In' ? true : false;
+                Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
 
                 if(accountsFs.get(oscar.Account__c).ANG_FA_Opt_out__c != valueToAgency ){
                     Account a = new Account(Id = oscar.Account__c);
                     a.ANG_FA_Opt_out__c = valueToAgency;
                     accountsToUpdate.add(a);
 
-                    For(Account acct: accountsChildren.get(oscar.Account__c)){
-                        acct.ANG_FA_Opt_out__c = valueToAgency;
-                        accountsToUpdate.add(acct);
+                    if(accountsChildren.get(oscar.Account__c) != null){
+                        For(Account acct: accountsChildren.get(oscar.Account__c)){
+                            acct.ANG_FA_Opt_out__c = valueToAgency;
+                            accountsToUpdate.add(acct);
+                        }
                     }
                 }
                 
