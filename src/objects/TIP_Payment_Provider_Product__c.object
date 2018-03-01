@@ -53,6 +53,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BIN_Range__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BIN Range</label>
+        <referenceTo>TIP_BIN_Range__c</referenceTo>
+        <relationshipLabel>Payment Provider Products</relationshipLabel>
+        <relationshipName>Payment_Provider_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TIP_Accepted_transactions__c</fullName>
         <externalId>false</externalId>
         <label>Accepted transactions</label>
@@ -152,6 +164,18 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Form_of_payment__c</fullName>
+        <externalId>false</externalId>
+        <label>Form of payment</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Form_Of_Payment_Options</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TIP_GDS_Integration__c</fullName>
