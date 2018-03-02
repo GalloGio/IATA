@@ -266,11 +266,24 @@
         <externalId>false</externalId>
         <inlineHelpText>Open Loop or Closed Loop</inlineHelpText>
         <label>Payment Product Network  type</label>
-        <length>40</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>OPEN_LOOP</fullName>
+                    <default>false</default>
+                    <label>Open Loop</label>
+                </value>
+                <value>
+                    <fullName>CLOSE_LOOP</fullName>
+                    <default>false</default>
+                    <label>Close Loop</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TIP_Payment_guarantee__c</fullName>
