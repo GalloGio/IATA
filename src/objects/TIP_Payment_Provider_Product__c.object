@@ -53,6 +53,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BIN_Range__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BIN Range</label>
+        <referenceTo>TIP_BIN_Range__c</referenceTo>
+        <relationshipLabel>Payment Provider Products</relationshipLabel>
+        <relationshipName>Payment_Provider_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TIP_Accepted_transactions__c</fullName>
         <externalId>false</externalId>
         <label>Accepted transactions</label>
@@ -154,6 +166,18 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>TIP_Form_of_payment__c</fullName>
+        <externalId>false</externalId>
+        <label>Form of payment</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Form_Of_Payment_Options</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>TIP_GDS_Integration__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Integration with a given GDS enables agents (Using this GDS) to have an aoutomated access to this alternative transfer method</inlineHelpText>
@@ -242,11 +266,24 @@
         <externalId>false</externalId>
         <inlineHelpText>Open Loop or Closed Loop</inlineHelpText>
         <label>Payment Product Network  type</label>
-        <length>40</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>OPEN_LOOP</fullName>
+                    <default>false</default>
+                    <label>OPEN_LOOP</label>
+                </value>
+                <value>
+                    <fullName>CLOSED_LOOP</fullName>
+                    <default>false</default>
+                    <label>CLOSED_LOOP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TIP_Payment_guarantee__c</fullName>
@@ -386,6 +423,11 @@
         <unique>false</unique>
     </fields>
     <label>Payment Provider Product</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>TIP_ Name</label>
         <type>Text</type>
@@ -393,5 +435,12 @@
     <pluralLabel>Payment Provider Products</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ClosedLoop_Product_on_OpenLoop_Provider</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(TIP_Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(TIP_Payment_Product_Network_type__c, &quot;CLOSED_LOOP&quot;)</errorConditionFormula>
+        <errorDisplayField>TIP_Payment_Product_Network_type__c</errorDisplayField>
+        <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
