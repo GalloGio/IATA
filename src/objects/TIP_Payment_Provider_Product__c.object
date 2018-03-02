@@ -278,9 +278,9 @@
                     <label>Open Loop</label>
                 </value>
                 <value>
-                    <fullName>CLOSE_LOOP</fullName>
+                    <fullName>CLOSED_LOOP</fullName>
                     <default>false</default>
-                    <label>Close Loop</label>
+                    <label>Closed Loop</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
