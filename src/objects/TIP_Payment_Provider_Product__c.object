@@ -423,6 +423,11 @@
         <unique>false</unique>
     </fields>
     <label>Payment Provider Product</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>TIP_ Name</label>
         <type>Text</type>
@@ -430,5 +435,12 @@
     <pluralLabel>Payment Provider Products</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ClosedLoop_Product_on_OpenLoop_Provider</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(TIP_Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(TIP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
+        <errorDisplayField>TIP_Payment_Product_Network_type__c</errorDisplayField>
+        <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
