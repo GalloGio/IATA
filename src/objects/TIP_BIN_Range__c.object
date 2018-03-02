@@ -72,9 +72,9 @@
         <fullName>TIP_Payment_Provider_Product__c</fullName>
         <externalId>false</externalId>
         <label>Payment Provider Product</label>
-        <referenceTo>TIP_Payment_Provider_Product__c</referenceTo>
+        <referenceTo>Partner_products__c</referenceTo>
         <relationshipLabel>BIN Ranges</relationshipLabel>
-        <relationshipName>TIP_BIN_Ranges</relationshipName>
+        <relationshipName>BIN_Ranges</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>

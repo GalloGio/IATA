@@ -124,12 +124,12 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>TIP_Payment_Provider_Product__c</fullName>
+        <fullName>TIP_Product__c</fullName>
         <externalId>false</externalId>
-        <label>Payment Provider Product</label>
-        <referenceTo>TIP_Payment_Provider_Product__c</referenceTo>
+        <label>TIP Product</label>
+        <referenceTo>Partner_products__c</referenceTo>
         <relationshipLabel>Payment Product Country Configs</relationshipLabel>
-        <relationshipName>TIP_Payment_Product_Country_Configs</relationshipName>
+        <relationshipName>Payment_Product_Country_Configs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
