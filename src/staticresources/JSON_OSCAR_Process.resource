@@ -6333,7 +6333,16 @@
                     ]
           }
         ],
-                "Automations": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_failed"
+                  }
+                ],
                 "DisplayFields": [
                   "STEP1__c"
                 ],
