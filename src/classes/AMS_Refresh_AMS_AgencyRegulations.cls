@@ -1,25 +1,36 @@
-global class AMS_Refresh_AMS_AgencyRegulations implements Database.Batchable<sObject> {
+global class AMS_Refresh_AMS_AgencyRegulations implements Database.Batchable<sObject>, Schedulable {
 
-	String query = 'SELECT Id FROM AMS_Agency_Regulation__c WHERE Expiry_Date__c = TODAY AND Type_Of_Certificate__c = \'DGR\'';
+    private Integer batchScope {get;set;}
+    String query = 'SELECT Id FROM AMS_Agency_Regulation__c WHERE Expiry_Date__c = LAST_N_DAYS:2 AND Type_Of_Certificate__c = \'DGR\'';
 
-	global AMS_Refresh_AMS_AgencyRegulations() {
+    public static void start(String cron, Integer scope) {
+        System.schedule('AMS Agency Regulations Refresh Batch', cron, new AMS_Refresh_AMS_AgencyRegulations (scope));
+    }
 
-	}
+    global void execute(SchedulableContext sc) {
+        Database.executeBatch(this, this.batchScope);
+    }
+    
+    global AMS_Refresh_AMS_AgencyRegulations(Integer batchScope) {
+        this.batchScope = batchScope;
+    }
 
-	global Database.QueryLocator start(Database.BatchableContext BC) {
-		return Database.getQueryLocator(query);
-	}
+    global Database.QueryLocator start(Database.BatchableContext BC) {
+        return Database.getQueryLocator(query);
+    }
 
-   	global void execute(Database.BatchableContext BC, List<sObject> scope) {
-		try {
-			update scope;
-		} catch(Exception e) {
-			System.debug(e);
-		}
-	}
+    global void execute(Database.BatchableContext BC, List<sObject> scope) {
+        try {
+            System.debug('before - ' + scope);
+            update scope;
+            System.debug('after- ' + scope);
+        } catch(Exception e) {
+            System.debug(e);
+        }
+    }
 
-	global void finish(Database.BatchableContext BC) {
+    global void finish(Database.BatchableContext BC) {
 
-	}
+    }
 
 }
