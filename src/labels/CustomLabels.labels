@@ -19784,7 +19784,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>The Business Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code prefixed with + or to select the country flag from the drop down</value>
+        <value>The Business Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_ChangeMyCompany</fullName>
@@ -19930,6 +19930,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Please select the type of customer</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_FaxPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Fax Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_IATACode_Bubble</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -19942,14 +19950,6 @@ Cargo Agencies - 11 digits;&lt;br/&gt;
 GSA - 3 letters.
 &lt;br/&gt;&lt;br/&gt;
 If you do not have an IATA Code please go back and select ‘Other Company’ as ‘Type of Customer’.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Registration_FaxPhone_Msg</fullName>
-        <categories>ISSP, myProfile</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Registration</shortDescription>
-        <value>The Fax Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code prefixed with + or to select the country flag from the drop down</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_JobTitle</fullName>
@@ -20005,7 +20005,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>The Mobile Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code prefixed with + or to select the country flag from the drop down</value>
+        <value>The Mobile Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_MyCompany</fullName>
