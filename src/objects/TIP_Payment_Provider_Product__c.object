@@ -275,12 +275,12 @@
                 <value>
                     <fullName>OPEN_LOOP</fullName>
                     <default>false</default>
-                    <label>OPEN_LOOP</label>
+                    <label>Open Loop</label>
                 </value>
                 <value>
                     <fullName>CLOSED_LOOP</fullName>
                     <default>false</default>
-                    <label>CLOSED_LOOP</label>
+                    <label>Closed Loop</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -438,7 +438,7 @@
     <validationRules>
         <fullName>ClosedLoop_Product_on_OpenLoop_Provider</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(TIP_Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(TIP_Payment_Product_Network_type__c, &quot;CLOSED_LOOP&quot;)</errorConditionFormula>
+        <errorConditionFormula>ISPICKVAL(TIP_Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(TIP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
         <errorDisplayField>TIP_Payment_Product_Network_type__c</errorDisplayField>
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
     </validationRules>
