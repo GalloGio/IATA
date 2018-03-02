@@ -172,17 +172,14 @@ public class ANG_AccountTriggerHandler {
 		}
 		
 			
-		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name = 'RHC Information'];
-
 		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
 		
 		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
 
-		if(rhcServices.isEmpty() || (emailTemplates.isEmpty() && notificationTemplates.isEmpty())) return;
+		if(emailTemplates.isEmpty() && notificationTemplates.isEmpty()) return;
 
 		Set<Id> accountIds = new Map<Id, Account>(upgradedAccounts).keySet();
-		Set<Id> serviceIds = new Map<Id, Portal_Applications__c>(rhcServices).keySet();
-		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIds, serviceIds);
+		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIds, new set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE});
 
 		if(contactsPerAccount.isEmpty()) return;
 

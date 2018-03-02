@@ -149,7 +149,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ISSP_ObjectFactory.createPortalUser(contact);
 
-		Portal_Applications__c par = new Portal_Applications__c (Name = 'RHC Information');
+		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
 		insert par;
 
 		insert new Portal_Application_Right__c(Portal_Application__c = par.id, Right__c = 'Access Granted', Contact__c = contact.Id);

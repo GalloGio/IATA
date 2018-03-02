@@ -15,6 +15,8 @@ public class ANG_RHCHelper {
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
+    //RHC Portal Service Name
+    public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
 
     public static final String DEFAULT_CODE = 'WW';
 	// *********************************************************
@@ -65,7 +67,7 @@ public class ANG_RHCHelper {
 
 	public static void deactivateRHCInfo(Set<Id> accounts) {
 		deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
-	}
+ 	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
 		if(!rhcInfos.isEmpty()) delete rhcInfos;

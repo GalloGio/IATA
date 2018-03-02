@@ -18298,6 +18298,13 @@ this is the tiess topic help</value>
         <value>IATA Certificate</value>
     </labels>
     <labels>
+        <fullName>ISSP_ICE_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ICE_Description</shortDescription>
+        <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone&apos;s calendar.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IDCard_VER_Number</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

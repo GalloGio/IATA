@@ -239,7 +239,7 @@ global class ANG_RME_Alert_Service {
 		req.setHeader('Content-Type', 'application/json');
 		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
-		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
+		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c);
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 

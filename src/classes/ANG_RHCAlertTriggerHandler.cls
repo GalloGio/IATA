@@ -125,8 +125,7 @@ public class ANG_RHCAlertTriggerHandler{
             rhcInfo.put(r.ANG_AccountId__c, r);
         }
 
-        List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name = 'RHC Information'];
-        Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
+        Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts,new set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE} ); //this sets use the 15 char id
 
         Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
         for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
