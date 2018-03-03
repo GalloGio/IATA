@@ -15757,7 +15757,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (HQ Location)</relationshipLabel>
         <relationshipName>TIP_HQ_Location</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
@@ -15766,7 +15766,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>TIP_Provider_Type__c</fullName>
         <externalId>false</externalId>
         <label>Provider Type</label>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
