@@ -221,7 +221,11 @@
     <tab>AMS_Voucher_Region__c</tab>
     <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
+    <tab>AMS_Account_Role__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_Account_Role__c</tab>
+        </mapping>
         <mapping>
             <tab>AMS_OSCAR__c</tab>
         </mapping>

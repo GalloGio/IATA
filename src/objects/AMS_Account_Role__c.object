@@ -220,7 +220,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <label>Employee Name</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -387,7 +387,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <relationshipLabel>AMS Account Roles</relationshipLabel>
         <relationshipName>AMS_Account_Roles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -674,7 +674,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Valid</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -714,6 +714,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>TD</fullName>
         <columns>NAME</columns>
         <columns>Termination_Date__c</columns>
@@ -737,20 +742,17 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Contact__c</columns>
-        <columns>Owner_Account__c</columns>
+        <columns>Unified_Owner_Name__c</columns>
         <columns>Owner_Name__c</columns>
-        <columns>Person__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>Employee_Name__c</columns>
+        <columns>Owner_Account__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Owner_Name__c</field>
+            <field>Unified_Owner_Name__c</field>
             <operation>equals</operation>
             <value>Agency Company</value>
         </filters>
-        <label>ZZ-Search By Owner Name</label>
+        <label>ZZ-Search By Unified Owner Name - GDP</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -760,7 +762,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Account Roles</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Employee</fullName>
         <active>true</active>
@@ -1185,6 +1187,11 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     </recordTypes>
     <searchLayouts>
         <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
+        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

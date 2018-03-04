@@ -45,6 +45,10 @@ private class AMS_OSCAR_TriggerICCTest {
                 SAAM_Case__c = theCommunicationCase.Id);
 
         insert stagingArea;
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
         
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
         customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Change1', TC_Location_type__c = false,

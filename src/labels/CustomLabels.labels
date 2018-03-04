@@ -2205,7 +2205,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -11775,6 +11775,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX SA</shortDescription>
+        <value>IATA Passenger Sales - SA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -17959,6 +17967,13 @@ this is the tiess topic help</value>
         <value>IATA Certificate</value>
     </labels>
     <labels>
+        <fullName>ISSP_ICE_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ICE_Description</shortDescription>
+        <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone&apos;s calendar.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IDCard_VER_Number</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -22227,7 +22242,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>Available Period:</value>
+        <value>We attend the lines:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>

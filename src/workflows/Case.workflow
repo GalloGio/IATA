@@ -2233,7 +2233,7 @@
         <ccEmails>fonterayj@iata.org</ccEmails>
         <description>ITDI Email Alert</description>
         <protected>false</protected>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCARD_ITDI_Email</template>
     </alerts>
@@ -3808,14 +3808,14 @@
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
-        <ccEmails>iataglobalidcardprogram@1eblad3slqosu6nr7jwp5q87o.2-8tfeay.eu3.case.salesforce.com</ccEmails>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
         <description>Send an email as soon as a case is created for IDCard Application</description>
         <protected>false</protected>
         <recipients>
             <field>SuppliedEmail</field>
             <type>email</type>
         </recipients>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCard_ConfirmationEmail</template>
     </alerts>
@@ -12792,7 +12792,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review</value>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -15051,7 +15051,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management</value>
+            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15116,7 +15116,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA</value>
+            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

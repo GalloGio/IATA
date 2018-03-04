@@ -2184,6 +2184,11 @@ SIS Charge Code Type.</description>
                     <label>Baggage Reference Manual</label>
                 </value>
                 <value>
+                    <fullName>Cabin Safety Guide</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety Guide</label>
+                </value>
+                <value>
                     <fullName>Cargo Agency Conference Resolution Manual</fullName>
                     <default>false</default>
                     <label>Cargo Agency Conference Resolution Manual</label>
@@ -3178,6 +3183,11 @@ SIS Charge Code Type.</description>
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Floating License</fullName>
                     <default>false</default>
                     <label>Floating License</label>
@@ -3688,6 +3698,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Forms</fullName>
                     <default>false</default>
                     <label>Forms</label>
@@ -3880,6 +3895,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
+                </value>
+                <value>
+                    <fullName>Events</fullName>
+                    <default>false</default>
+                    <label>Events</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -4160,6 +4180,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <fullName>Jill Sladen-Pilon</fullName>
                     <default>false</default>
                     <label>Jill Sladen-Pilon</label>
+                </value>
+                <value>
+                    <fullName>Jonathan Paul Jasper</fullName>
+                    <default>false</default>
+                    <label>Jonathan Paul Jasper</label>
                 </value>
                 <value>
                     <fullName>Karen Stephenson</fullName>
@@ -6110,6 +6135,32 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>MITA_Daily_Master_Files</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>MITA Daily</value>
+        </filters>
+        <label>MITA Daily Master Files</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RCRM_Products</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>PRODUCT2.DESCRIPTION</columns>
@@ -7441,6 +7492,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -8057,6 +8112,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8405,6 +8464,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8611,6 +8674,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10411,6 +10478,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -11015,6 +11086,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11359,6 +11434,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11565,6 +11644,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13221,6 +13304,18 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS-Fraud %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS-Tools %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -13242,6 +13337,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>ID Cards%2FTIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13289,6 +13388,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PBI %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -13318,6 +13421,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO %28SFO Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13417,6 +13524,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14048,6 +14159,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14404,6 +14519,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14482,6 +14601,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
+            <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -14614,6 +14737,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16418,6 +16545,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
@@ -17022,6 +17153,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17366,6 +17501,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17572,6 +17711,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18104,6 +18247,7 @@ The product will only appear on the Online Store when the date entered in this f
         <searchResultsAdditionalFields>Line_of_Business__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SAP_Material_Number__c</searchResultsAdditionalFields>
     </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Charge_Code_Fee_needs_Charge_Code_Type</fullName>
         <active>true</active>

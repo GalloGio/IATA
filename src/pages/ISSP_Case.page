@@ -692,10 +692,10 @@
                                                     {!$Label.ISSP_AMS_Download_PDF_Copy}
                                                 </apex:outputlink>
                                                 
-                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=true'}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
+                                                <apex:outputlink value="{!fullnameNOCFile}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
-                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=false'}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change')}">
+                                                <apex:outputlink value="{!fullnameNOCFile}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change')}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
                                                 <apex:outputlink value="{!IF(OR(newCase.Reason1__c == 'New HE standard',newCase.Reason1__c == 'New HE lite'),'/ISSP_AMS_PDF_ANG_PAX_HE?caseId='+ newCase.Id,'')}" id="amsHEFormLink" rendered="{!OR(newCase.Reason1__c == 'New HE standard', newCase.Reason1__c == 'New HE lite')}" target="_new">

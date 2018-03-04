@@ -12,6 +12,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     private static final String BNK_ACCNT_DTLS = 'BNK_ACCNT_DTLS';
     private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+    private static final String OTHERS = 'OTHERS';
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
     private String vSAAMCaseId;
@@ -2130,8 +2131,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         //System.Debug('Contact type:' + contactType);
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
-            newContact.First_name__c = 'Agency';
-            newContact.Last_name__c = 'Company';
+            newContact.First_name__c = '';
+            newContact.Last_name__c = newContact.Name;
             newContact.Agency_owner__c = true;
             //newContact.Phone__c = '000 000 00 00';
             //newContact.Email__c = 'dummy@gmail.com';
@@ -2903,6 +2904,10 @@ public without sharing class ISSP_AMS_Accreditation {
             return null;
         }
 
+        //INC355752 - add attachment to case after submission
+        if(isNoticeOfChange)
+            attachNOCFormToCase(newCase.Id, isBankAccountChange);
+
         try {
             system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
             system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
@@ -3034,7 +3039,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isNoticeOfChange)
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
-
+                
             return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {
             newForm.Submitted_to_IATA__c = FALSE;
@@ -3045,6 +3050,49 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         return null;
+    }
+
+    private static void attachNOCFormToCase(Id caseId, Boolean isBankAccountChange) {
+
+        PageReference pdfNOC = new Pagereference('/ISSP_AMS_PDF_NoC?caseId=' + caseId + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange);
+        
+        Blob bodyNOC;
+
+        try {
+
+            bodyNOC = pdfNOC.getContent();
+            System.debug('PDF Content success');
+
+        } catch (Exception e) {
+            System.debug('ERROR getting PDF content: ' + e.getMessage());
+        }
+
+        if(bodyNOC != null) {
+            Long size = bodyNOC.size();
+            String fileName = 'Notice_of_Change_form.pdf';
+            String contentType = 'application/pdf';
+            String folder = WrapperAttach.getAmazonFolder(caseId);
+
+            UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(caseId, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
+
+            Boolean result = AmazonRest.uploadFile(upF, bodyNOC);
+
+            if(result) {
+
+                System.debug('Success: Amazon file Uploaded - ISSP_AMS_Accreditation.cls');
+
+                if(!UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(folder+fileName, size, caseId, 'AMS_File', OTHERS, 'Portal')) {
+                    
+                    System.debug('Error: Couldn\'t save amazon file on Salesforce - ISSP_AMS_Accreditation.cls');
+                }
+
+            } else {
+
+                System.debug('Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls');
+            }
+        }
+        
+    
     }
 
     public Pagereference goToDownloadPDF() {
@@ -5966,9 +6014,28 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
-                    
+
+                    if (hqAccount.Name == null) {
+                        hqAccount.Name.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
+                    if (hqAccount.BillingStreet == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
+                        hqAccount.BillingStreet.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                    if (hqAccount.BillingCity == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
+                        hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                                        
                     if (hqAccount.Email__c == null) {
                         hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
+                    if (hqAccount.Phone == null) {
+                        hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
 

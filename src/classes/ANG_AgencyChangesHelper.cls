@@ -1148,7 +1148,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
-		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

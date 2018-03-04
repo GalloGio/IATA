@@ -6,10 +6,16 @@ private class AMS_EBulletinReport_Test {
 	1. IATA ISO Countries
 	2. Accounts to be added change codes
 	3. Change Codes to be extracted
-	4. AMS EBulletin Profiles to be used (at least 2, 1 Daily and 1 Weekly)
+	4. Contact
+	5. Portal User
+	6. AMS EBulletin Profiles to be used (at least 2, 1 Daily and 1 Weekly)
+	7. Custom Settings
 	*/
 
 	@testSetup static void dataSetupForEBulletin() {
+		
+		//EM: To be deleted
+		AMS_EBulletinReportWebservice amsweb = new AMS_EBulletinReportWebservice();
 		
 		/**
 		 1. Iso Countries
@@ -201,13 +207,32 @@ private class AMS_EBulletinReport_Test {
 		update aaCCToEBulletin;
 
 		/**
-		 4. AMS EBulletin Profiles
+		 4. Contact
+		 */
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acctList.get(0).Id;
+		con.Email = 'Test@test11.com';
+		con.User_Portal_Status__c='Administrator';
+        
+        insert con;
+
+        /**
+		 5. Portal User
+		 */
+
+		 User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		 con.OwnerId = newUser.Id;
+        update con;
+
+		/**
+		 6. AMS EBulletin Profiles
 		 */
 		
 		setEBulletinProfiles();
 
 		/**
-		 5. Custom Settings
+		 7. Custom Settings
 		 */
 
 		createEBulletinCustomSettings();
@@ -220,13 +245,15 @@ private class AMS_EBulletinReport_Test {
 		DateTime dT = System.now();
 		DateTime fromDate = DateTime.newInstance(dT.year(), dT.month(), dT.day(), 0,0,0);
 
+		User newUser = [SELECT Id FROM User WHERE Alias = 'dsfsdfds' LIMIT 1];
+
 		AMS_eBulletin_Profile__c dailyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
                         Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
                         RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c,Agency_Info_Reinstatements__c
                     	 FROM AMS_eBulletin_Profile__c
-                     	 WHERE User__c = :Userinfo.getuserid() and RecordType.Name = 'Daily'
+                     	 WHERE User__c = :newUser.Id and RecordType.Name = 'Daily'
                     	LIMIT 1
                 		];
 
@@ -245,6 +272,8 @@ private class AMS_EBulletinReport_Test {
 
 		DateTime dT = System.now();
 		DateTime fromDate = DateTime.newInstance(dT.year(), dT.month(), dT.day(), 0,0,0);
+
+		User newUser = [SELECT Id FROM User WHERE Alias = 'dsfsdfds' LIMIT 1];
 		
 		AMS_eBulletin_Profile__c dailyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
@@ -252,7 +281,7 @@ private class AMS_EBulletinReport_Test {
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
                         RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c,Agency_Info_Reinstatements__c
                     	 FROM AMS_eBulletin_Profile__c
-                     	 WHERE User__c = :Userinfo.getuserid() and  RecordType.Name = 'Daily'
+                     	 WHERE User__c = :newUser.Id and  RecordType.Name = 'Daily'
                     	LIMIT 1
                 		];
 
@@ -271,7 +300,8 @@ private class AMS_EBulletinReport_Test {
 	@isTest static void test_WeeklyExtraction() {
 		// Implement test code
 		DateTime dT = System.now();
-        Test.startTest();
+
+		User newUser = [SELECT Id FROM User WHERE Alias = 'dsfsdfds' LIMIT 1];
 
         AMS_eBulletin_Profile__c weeklyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
@@ -279,15 +309,34 @@ private class AMS_EBulletinReport_Test {
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
                         RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c,Agency_Info_Reinstatements__c
                     	 FROM AMS_eBulletin_Profile__c
-                     	 WHERE User__c = :Userinfo.getuserid() and RecordType.Name = 'Weekly'
+                     	 WHERE User__c = :newUser.Id and RecordType.Name = 'Weekly'
                     	LIMIT 1
                 		];
 
 		system.debug('weeklyProfile: ' + weeklyProfile);
 
-        AMS_EBulletinReportWebservice.generateEBulletinReport( weeklyProfile,dt.addDays(-5), system.now() , '');
+		System.runAs(newUser)
+        {
+			ISSP_AMS_EBulletin controller = new ISSP_AMS_EBulletin();
+			controller.newFormWeekly = weeklyProfile;
+			controller.pWeekStart = String.valueOf(dt.addDays(-5).format('dd/MM/yyyy'));
+			controller.pWeekEnd = String.valueOf(dt.format('dd/MM/yyyy'));
+			
 
-        Test.stopTest();
+	        AMS_EBulletinReportHelper.AMSEBulletinFilters filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(weeklyProfile, dt.addDays(-5), system.now());
+	        //AMS_EBulletinReportHelper.getEBulletinFields(filters,'Agency_Applied_Change_code__c','","');
+	        ISSP_AMS_EBulletin.filters = filters;
+	        String header = ISSP_AMS_EBulletin.getHeader();
+	        String query = ISSP_AMS_EBulletin.getQuery();
+	        AMS_EBulletinReportHelper.eBulletinSettingsList = new List<AMS_CustomSettingsUtils.AMS_EBulletinSetting>();
+			AMS_EBulletinReportHelper.headersList = new List<String>();
+
+	    	Test.startTest();
+	        AMS_EBulletinRecordsBatch batchRecords = new AMS_EBulletinRecordsBatch(header, query, weeklyProfile, dt, dt.addDays(-5), ISSP_AMS_EBulletin.ccNamesToRecoverAux, ISSP_AMS_EBulletin.countriesFilterAux, ISSP_AMS_EBulletin.locClsListAux, false);
+	        Database.executeBatch(batchRecords, 50);
+	        Test.stopTest();
+
+	    }
 
 	}
 
@@ -321,10 +370,11 @@ private class AMS_EBulletinReport_Test {
 	public static void setEBulletinProfiles(){
 
 		List<AMS_eBulletin_Profile__c> eBulletinProfiles = new List <AMS_eBulletin_Profile__c>();
+		User newUser = [SELECT Id FROM User WHERE Alias = 'dsfsdfds' LIMIT 1];
 
 		eBulletinProfiles.add( 
 			new AMS_eBulletin_Profile__c( RecordTypeId  	  		 		  		= Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Daily').RecordTypeId,
-										  User__c       			 		  		= Userinfo.getuserid(),
+										  User__c       			 		  		= newUser.Id,
 										  TimeZone__c		  		 		  		= UserInfo.getTimeZone().toString(),
 										  Opt_in__c    		  		 		  		= true,
 										  Opt_out_Bulletin__c		 		  		= false,
@@ -349,7 +399,7 @@ private class AMS_EBulletinReport_Test {
 
 		eBulletinProfiles.add(  
 			new AMS_eBulletin_Profile__c( RecordTypeId  							= Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Weekly').RecordTypeId,
-										  User__c       			 		  		= Userinfo.getuserid(),
+										  User__c       			 		  		= newUser.Id,
 										  TimeZone__c		  		 		  		= UserInfo.getTimeZone().toString(),
 										  Opt_in__c    		  		 		  		= true,
 										  Opt_out_Bulletin__c		 		  		= false,
@@ -593,6 +643,16 @@ private class AMS_EBulletinReport_Test {
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='80-IRR: Accumulated Irregularities',Label__c='IRR: Accumulated Irregularities',API_Name__c='Account__r.Accumulated_Irregularities__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=77,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
 
 		insert eBulletinSettings;
+
+		/**
+		 4.	ISSP_CS__c
+		*/
+
+		List<ISSP_CS__c> isspCs = new List<ISSP_CS__c>();
+		isspCs.add( new ISSP_CS__c(Name = 'eBulletin_UserGuide',Value__c = 'EBULLETIN-USERGUIDE-'));
+        isspCs.add( new ISSP_CS__c(Name = 'eBulletin_StartDate',Value__c = '01/08/2015'));
+
+        insert isspCs;
 
 	}
 

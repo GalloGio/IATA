@@ -24,7 +24,7 @@
                 <field>Name_on_ID_Card__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>VER_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -40,6 +40,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Agency_IATA_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDP_Products_Account_View__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -267,7 +271,7 @@
         <label>Photo</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Photo__c</field>
             </layoutItems>
         </layoutColumns>

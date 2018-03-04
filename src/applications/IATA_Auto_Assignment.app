@@ -10,4 +10,5 @@
     <tab>System_Settings__c</tab>
     <tab>Auto_Queue__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

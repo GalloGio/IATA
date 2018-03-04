@@ -1988,11 +1988,12 @@ public class WSSidraLiteTest {
         Case sidraLiteCase = createSIDRALite(ifapCase);
         insert sidraLiteCase;
         
+		Test.startTest();
         Account account = [Select Id, Status__c from Account where id =:sidraLiteCase.AccountId];
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+        
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase, account);
         System.assert(result.size()==1, 'Expected 1 case comment');
         Test.stopTest();
@@ -2007,6 +2008,7 @@ public class WSSidraLiteTest {
         Case sidraLiteCase2 = createSIDRALite(ifapCase);
         insert new list<Case>{sidraLiteCase1, sidraLiteCase2};
 
+		Test.startTest();
         Account account = [Select Id, Status__c,
             (Select id, caseNumber, Comments__c, Termination_date__c from Cases where id != :sidraLiteCase1.id)
             from Account
@@ -2014,7 +2016,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+        
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase1, account);
         System.assert(result.size()==2, 'Expected 2 case comments');
         Test.stopTest();

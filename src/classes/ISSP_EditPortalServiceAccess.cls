@@ -266,6 +266,44 @@ public with sharing class ISSP_EditPortalServiceAccess{
         return null;
     }
     
+    public Pagereference activateUsers() {
+        if(isEasyPayService) {
+            //
+            // If we are adding contacts to easyPay then we must check if the user is still active. Users that don't log in into the portal
+            // for a certain amount of time get deactivated. The EASYPAY process will perform a user provisioning on the vendor's system and for
+            // that all users must be active.
+            //
+            List<String> selectedContact_Lst = getSelectedContactsList();
+
+            List<User> usersList = [select id, isActive, contactId from User where contactId in : selectedContact_Lst];
+            List<User> usersToActivate = new List<User>();
+
+            for(User user : usersList) {
+                if(!user.isActive) {
+                    user.isActive = true;
+                    usersToActivate.add(user);
+                }
+            }
+
+            if(usersToActivate.size() != 0) {
+                update usersToActivate;
+            }
+        } 
+
+        return null;       
+    }
+    
+    public List<String> getSelectedContactsList() {
+        List<String> selectedContact_Lst = new List<String>();
+
+        List<String> selectedContact_Lst_aux = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
+
+        for(String s : selectedContact_Lst_aux) {
+            selectedContact_Lst.add(s.trim());
+        }
+        return selectedContact_Lst;        
+    }    
+    
     public Pagereference CreateNewPortalAccess(){ 
         System.debug('SFF START CreateNewPortalAccess');
         List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();

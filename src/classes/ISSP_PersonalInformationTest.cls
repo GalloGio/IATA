@@ -135,7 +135,7 @@ private class ISSP_PersonalInformationTest {
     		LastName__c = con.LastName,
     		Name_on_ID_Card__c = 'Test ID Card',
     		Related_Contact__c = con.Id,
-    		Card_Status__c =  'Approved',
+    		Card_Status__c =  'Sent ID Card',
     		Valid_From_Date__c = Date.today(),
     		Valid_To_Date__c = Date.today().addMonths(5));
 
