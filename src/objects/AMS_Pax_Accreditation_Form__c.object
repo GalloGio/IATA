@@ -4713,42 +4713,42 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <value>
                     <fullName>M</fullName>
                     <default>false</default>
-                    <label>Monthly </label>
+                    <label>MonthlyÂ </label>
                 </value>
                 <value>
                     <fullName>F</fullName>
                     <default>false</default>
-                    <label>Fortnightly </label>
+                    <label>FortnightlyÂ </label>
                 </value>
                 <value>
                     <fullName>R</fullName>
                     <default>false</default>
-                    <label>Every 10 days </label>
+                    <label>Every 10 daysÂ </label>
                 </value>
                 <value>
                     <fullName>W</fullName>
                     <default>false</default>
-                    <label>4 times per month </label>
+                    <label>4 times per monthÂ </label>
                 </value>
                 <value>
                     <fullName>V</fullName>
                     <default>false</default>
-                    <label>Weekly </label>
+                    <label>WeeklyÂ </label>
                 </value>
                 <value>
                     <fullName>S</fullName>
                     <default>false</default>
-                    <label>Every 5 days </label>
+                    <label>Every 5 daysÂ </label>
                 </value>
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
-                    <label>Every 3 days </label>
+                    <label>Every 3 daysÂ </label>
                 </value>
                 <value>
                     <fullName>D</fullName>
                     <default>false</default>
-                    <label>Daily </label>
+                    <label>DailyÂ </label>
                 </value>
                 <value>
                     <fullName>4 times per month</fullName>
