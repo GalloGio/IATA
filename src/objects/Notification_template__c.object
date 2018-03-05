@@ -121,6 +121,17 @@ notifications with this box checked will be first in the list of notification on
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Identifier__c</fullName>
+        <description>Unique identifier used internally so the template can be found on code in all environments</description>
+        <externalId>true</externalId>
+        <label>Identifier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Language__c</fullName>
         <externalId>false</externalId>
         <label>Language</label>

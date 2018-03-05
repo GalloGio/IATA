@@ -1,5 +1,13 @@
 public class ANG_AccountTriggerHandler {
 
+	public static Boolean isExpiration{
+		get{
+			if(isExpiration == null) isExpiration = false;
+			return isExpiration;
+		}
+		set;
+	}
+
 	public List<Account> triggerNew = (List<Account>) Trigger.new;
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
 
@@ -20,12 +28,13 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 		manageDowngrades();
+		manageUpgrades();
 	}
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
 		updateRHCInformation();
-		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id', 'Top_Parent__c').run();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
 	}
 
 	public void onBeforeDelete(){}
@@ -111,6 +120,80 @@ public class ANG_AccountTriggerHandler {
 		
 		//downgrade from B to C
 		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, portalAdmins);
+	}
+
+	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
+	private void manageUpgrades() {
+		if(!isExpiration) return;
+
+		List<Account> upgradedAccounts = new List<Account>();
+		for(Account acc : triggerNew){
+			Account oldAcc = oldMap.get(acc.Id);
+			if(
+				(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A))
+				|| (oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false)
+			)
+			upgradedAccounts.add(acc);
+		}
+
+		if(upgradedAccounts.isEmpty()) return;
+
+		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
+		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+
+		if(config != null){
+			for(Account acc : upgradedAccounts){
+				changeCodes.add(new Agency_Applied_Change_code__c(
+				    Active__c = true
+				    , Account__c = acc.Id
+				    , Change_Code__c = config.Change_Code__c
+				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).toUpperCase()
+				    , Reason_Code__c = config.Reason_Code__c
+				    , Reason_Description__c = config.Reason_Code_Description__c
+				    , Source__c = source
+				    , CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
+				    , To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+				));
+			}
+
+			if(!changeCodes.isEmpty()) insert changeCodes;
+		}
+		
+		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
+		List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Risk_Status_Upgrade' AND isActive = true];
+		List<Notification_Template__c> notificationTemplates = [SELECT Id, Name FROM Notification_Template__c WHERE Identifier__c = 'Risk_Status_Upgrade'];
+
+		if(rhcServices.isEmpty() || (emailTemplates.isEmpty() && notificationTemplates.isEmpty())) return;
+
+		Set<Id> accountIds = new Map<Id, Account>(upgradedAccounts).keySet();
+		Set<Id> serviceIds = new Map<Id, Portal_Applications__c>(rhcServices).keySet();
+		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIds, serviceIds);
+
+		if(contactsPerAccount.isEmpty()) return;
+
+		Map<String, String> mailTargets = new Map<String, String>(); //key: contact => value: account
+		List<String> notificationTargets = new List<String>();
+		List<ANG_RHCHelper.Email> emails = new List<ANG_RHCHelper.Email>();
+		for(Id accountId : contactsPerAccount.keySet()){
+			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
+				mailTargets.put(contactId, accountId);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
+				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
+			}
+		}
+
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(emails);
+
+		List<Notification__c> notifications = new List<Notification__c>();
+		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
+			Account a = newMap.get(mailTargets.get(nt.Contact__c));
+			nt.Message__c = nt.Message__c
+							.replace('#RISK_STATUS#', a.ANG_RiskStatus__c)
+							.replace('#CASH_CONDITION#', (a.ANG_CashCondition__c ? 'Yes' : 'No'));
+			notifications.add(nt);
+		}
+		if(!notifications.isEmpty()) insert notifications;
 	}
 
 
