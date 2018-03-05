@@ -1385,12 +1385,6 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
                                                                     ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
-		/*** AMSU-121 Start ***/
-        if(!oscarNewGenProcesses.contains(oscar.Process__c)) {
-            fieldsMapping.put('ShippingState', 'Shipping_State__c');
-        }
-        /*** AMSU-121 End ***/
-		
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
@@ -2713,22 +2707,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
-
-    public static String getICCSMembershipStatus(String conId){
-        Contact c = [SELECT User_Portal_Status__c,
-                       Account.ICCS_Membership_Status__c,
-                       Account.Top_Parent__c,
-                       Account.Top_Parent__r.ICCS_Membership_Status__c
-                  FROM Contact WHERE Id = :conId limit 1];
-                  
-		if(c.Account.Top_Parent__c == null){
-			return c.Account.ICCS_Membership_Status__c;
-		}
-		else{
-			return c.Account.Top_Parent__r.ICCS_Membership_Status__c;
-		}
-    }    	
-    
+	
 	/**
 	Method to help the transformation of accrediation types to display on ebulletin
 	*/
