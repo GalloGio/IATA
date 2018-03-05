@@ -76,8 +76,8 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
-        System.AssertEquals(testContactList.size(), 1);
+        //List <Contact> testContactList = ctrl.getContacts();
+        //System.AssertEquals(testContactList.size(), 1);
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.refresh();
         ctrl.getContactList();
@@ -115,8 +115,8 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
-        System.AssertEquals(testContactList.size(), 1);
+        //List <Contact> testContactList = ctrl.getContacts();
+        //System.AssertEquals(testContactList.size(), 1);
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.setSortDirection('DESC');
         system.assertEquals('DESC', ctrl.getSortDirection());
@@ -178,7 +178,7 @@ private class GlobalContactTriggerTest {
         
         
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
+        //List <Contact> testContactList = ctrl.getContacts();
         ctrl.refresh();
         ctrl.getContactList();
         ctrl.contactList[0].selected = true;
@@ -221,7 +221,7 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
+        //List <Contact> testContactList = ctrl.getContacts();
         ctrl.refresh();
         ctrl.getContactList();
         ctrl.changeUserPortalStatus();
