@@ -88778,6 +88778,13 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Effective_Start_Date_on_Payment_Provider</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISCHANGED(RecordTypeId) ,RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;,   NOT(ISNEW()), ISBLANK(Accreditation_date__c))</errorConditionFormula>
+        <errorDisplayField>Accreditation_date__c</errorDisplayField>
+        <errorMessage>Accreditation Date is mandatory for Payment Provider</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
         <active>true</active>
         <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
