@@ -5307,7 +5307,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <value>
                     <fullName>W</fullName>
                     <default>false</default>
-                    <label>4 times per month�</label>
+                    <label>4 times per month </label>
                 </value>
                 <value>
                     <fullName>V</fullName>
