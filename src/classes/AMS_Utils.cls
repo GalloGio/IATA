@@ -124,6 +124,9 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
+    public static final Set<String> ANG_OSCAR_MAJOR_CHANGES = new Set<String>{ANG_OWNERSHIP, ANG_HIERARCHY, ANG_LOCATION_TYPE_DIFFLEGALENTITY, ANG_LEGAL_NAME,
+                                                                                ANG_LEGAL_STATUS, ANG_MAJOR_SHAREHOLDING, ANG_ACCREDITATION_TYPE};
+
     public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
@@ -172,7 +175,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
-    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION}; 
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
