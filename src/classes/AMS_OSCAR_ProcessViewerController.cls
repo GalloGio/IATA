@@ -155,7 +155,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean hideFAoptOut{
         get{
-            return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES), oscar.ANG_Type_Of_Change__c);
+            return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c);
         }
     }
 
