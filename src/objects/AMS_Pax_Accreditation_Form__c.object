@@ -511,6 +511,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>AMS_CorrectionPerLocation</label>
     </fieldSets>
     <fieldSets>
@@ -658,11 +663,6 @@
         </displayedFields>
         <displayedFields>
             <field>Abbreviated_Address__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-		<displayedFields>
-            <field>Shipping_State__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -5307,7 +5307,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <value>
                     <fullName>W</fullName>
                     <default>false</default>
-                    <label>4 times per month </label>
+                    <label>4 times per month�</label>
                 </value>
                 <value>
                     <fullName>V</fullName>
