@@ -2321,6 +2321,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         
         return lRes;
     }
+	
+	//AMSU-112
+    public static String replaceTabCharcter(String str) {
+        return String.isBlank(str) ? str : str.replaceAll('\t', ' ');  
+    }
 
 	//20-06-2017 - Change AMSU-93 - special chars replacement
     public static String cleanSpecialChars(String s){

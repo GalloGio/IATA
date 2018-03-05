@@ -3274,6 +3274,25 @@ public without sharing class ISSP_AMS_Accreditation {
 
         return true;
     }
+	
+	/*** AMSU--112 Start ***/
+    public Set<String> accfieldsToCheck = new Set<String> {'BillingState', 'BillingStreet', 'BillingCity'};
+    public Set<String> formfieldsToCheck = new Set<String> {'Account_Name__c', 'Trade_Name__c', 'Branch_Office_Street_name_number__c', 'Branch_Office_City__c', 'Branch_Office_Postal_code__c', 'State_Province__c',
+                                                            'Shipping_Street__c', 'Shipping_City__c', 'Shipping_Postal_Code__c', 'Shipping_State__c', 'Shipping_Country__c', 'ISSP_AMS_License_No__c', 
+                                                            'ISSP_AMS_Trade_Reg_No__c'};
+    public Set<String> confieldsToCheck = new Set<String> {'AddressStreet__c', 'AddressCity__c', 'First_name__c', 'Last_name__c'};
+    public void checkTabCharacters(AMS_Pax_Accreditation_Form__c form, Account acc, AMS_Accreditation_Contact__c con) {
+        for(String fieldToCheck : formfieldsToCheck) {
+            form.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) form.get(fieldToCheck)));
+        }
+        for(String fieldToCheck : accfieldsToCheck) {
+            acc.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) acc.get(fieldToCheck)));
+        }
+        for(String fieldToCheck : confieldsToCheck) {
+            con.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) con.get(fieldToCheck)));
+        }
+    }
+    /*** AMSU-112 End ***/
 
     public boolean validateCharactersInForm() {
         boolean errorFound = false;
@@ -3330,6 +3349,10 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         
         /*** AMSU-112 - Start ***/  
+		//replace tab character
+        checkTabCharacters(newForm, hqAccount, newContact);
+		
+		//check non latin characters
         if(!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) {
 			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
 			errorFound = true;
