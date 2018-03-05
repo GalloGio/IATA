@@ -209,13 +209,6 @@
             summary="{!IF(isVATnumberSpecialCase,'The VAT Number fields will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy','The VAT Number fields will only be updated on all agency, except for the agencies that are Branch Abroad')}"
             rendered="{!isAgencyCorrection && (isVATnumberSpecialCase || isBranchAbroadSelected)}"
         />
-		
-		<!-- AMSU-121 -->
-		<apex:pageMessage severity="WARNING"
-            strength="1"
-            summary="Enter full shipping address if the agent has provided one"   
-			rendered="{!AND(isChangeOfLocation, oscarObj.STEP6__c <> 'Passed')}"         
-		/>
 
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
             <apex:pageBlockSectionItem >
