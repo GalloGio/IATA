@@ -661,11 +661,6 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-		<displayedFields>
-            <field>Shipping_State__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>Location</label>
     </fieldSets>
     <fieldSets>
@@ -5292,17 +5287,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <value>
                     <fullName>M</fullName>
                     <default>false</default>
-                    <label>Monthly </label>
+                    <label>Monthly</label>
                 </value>
                 <value>
                     <fullName>F</fullName>
                     <default>false</default>
-                    <label>Fortnightly </label>
+                    <label>Fortnightly</label>
                 </value>
                 <value>
                     <fullName>R</fullName>
                     <default>false</default>
-                    <label>Every 10 days </label>
+                    <label>Every 10 days</label>
                 </value>
                 <value>
                     <fullName>W</fullName>
@@ -5312,82 +5307,22 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <value>
                     <fullName>V</fullName>
                     <default>false</default>
-                    <label>Weekly </label>
+                    <label>Weekly</label>
                 </value>
                 <value>
                     <fullName>S</fullName>
                     <default>false</default>
-                    <label>Every 5 days </label>
+                    <label>Every 5 days</label>
                 </value>
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
-                    <label>Every 3 days </label>
+                    <label>Every 3 days</label>
                 </value>
                 <value>
                     <fullName>D</fullName>
                     <default>false</default>
-                    <label>Daily </label>
-                </value>
-                <value>
-                    <fullName>4 times per month</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>4 times per month</label>
-                </value>
-                <value>
-                    <fullName>Daily</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
                     <label>Daily</label>
-                </value>
-                <value>
-                    <fullName>Daily (China)</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Daily (China)</label>
-                </value>
-                <value>
-                    <fullName>Every 10 days</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Every 10 days</label>
-                </value>
-                <value>
-                    <fullName>Every 3 days</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Every 3 days</label>
-                </value>
-                <value>
-                    <fullName>Every 5 day</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Every 5 day</label>
-                </value>
-                <value>
-                    <fullName>Every 5 days</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Every 5 days</label>
-                </value>
-                <value>
-                    <fullName>Fortnightly</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Fortnightly</label>
-                </value>
-                <value>
-                    <fullName>Monthly</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Monthly</label>
-                </value>
-                <value>
-                    <fullName>Weekly</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Weekly</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
