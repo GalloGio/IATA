@@ -65,7 +65,7 @@ global class AMS_2_MDM_Webservice {
             
             
             System.debug('Requested Agencies from MDM PI - ' + ids);
-
+/*
             List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -86,8 +86,8 @@ global class AMS_2_MDM_Webservice {
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
-
-/**  NEWGEN-801
+*/
+/**  NEWGEN-801 **/
             List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -110,8 +110,8 @@ global class AMS_2_MDM_Webservice {
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
-                    END OF EWGEN-801
-  */
+                    
+ /* EOF NEWGEN-801 */
             AMS_XML_Generator xmlGen = new AMS_XML_Generator();
             Integer inicioCPU = Limits.getCpuTime();
             Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -274,7 +274,7 @@ global class AMS_2_MDM_Webservice {
         r[5]=agencyId;
         
         try{
-            
+/*            
             Account ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -294,8 +294,8 @@ global class AMS_2_MDM_Webservice {
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id = :agencyId];
-            
- /* NEWGEN-801
+         */   
+ /* NEWGEN-801 */
 
              Account ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
@@ -320,7 +320,8 @@ global class AMS_2_MDM_Webservice {
                     IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
                     FROM Account where id = :agencyId];
 
-*/
+/* EOF NEWGEN-801 */
+
             sLogRecord += ' - IATACodes: ' + ag.IATACode__c;
                 
             //Check if IATACODE exists! if not end with error
