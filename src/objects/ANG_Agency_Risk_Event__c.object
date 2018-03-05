@@ -356,6 +356,15 @@ Id
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>ANG_isCashlessAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
+        <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
@@ -386,6 +395,10 @@ Id
             </values>
             <values>
                 <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Cashless</fullName>
                 <default>false</default>
             </values>
             <values>

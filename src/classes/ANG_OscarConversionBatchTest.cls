@@ -66,7 +66,7 @@ private class ANG_OscarConversionBatchTest {
 		oscar = [SELECT Id, RecordTypeId, Process__c from AMS_OSCAR__c LIMIT 1];
 		stagingArea = [SELECT Id, Location_Type__c from AMS_Pax_Accreditation_Form__c LIMIT 1];
 
-		System.assertEquals('New HE standard - Test HO', comCase.Subject);
+		System.assertEquals('New Head Entity - GoStandard - FR', comCase.Subject);
 		System.assertEquals('Accreditation Process', comCase.CaseArea__c);
 		System.assertEquals('New HE standard', comCase.Reason1__c);
 		

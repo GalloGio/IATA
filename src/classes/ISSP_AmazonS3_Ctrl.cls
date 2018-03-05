@@ -48,7 +48,7 @@ global class ISSP_AmazonS3_Ctrl {
         AMAZONURL  =
                 AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
              +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-        
+        system.debug('aqui ApexPages.currentPage() ' + ApexPages.currentPage());
         if(ApexPages.currentPage().getParameters().containsKey('caseId')){
             id = ApexPages.currentPage().getParameters().get('caseId');
         }
@@ -133,6 +133,32 @@ global class ISSP_AmazonS3_Ctrl {
         this.refreshReviewStatusMap();
     }
 
+    public ISSP_AmazonS3_Ctrl(ISSP_ANG_PCI pciCtrl){
+        system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + pciCtrl.newCase.Id);
+        this.Id = pciCtrl.newCase.Id;
+        
+        if(this.id== null)
+        return;
+        
+        this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
+                 account.IATA_ISO_Country__r.iso_code__c ,
+                 IFAP_Agent_Code__c,AccountId ,Financial_Review_Type__c,IsComplaint__c,
+                 Reason1__c, CaseArea__c
+                 from Case where id = : this.id];
+        
+        AMAZONURL  =
+                AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
+             +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
+        
+        allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
+        maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
+        
+        this.actionStatus = '201';
+        accessid =  CREDENTIALS.AWSAccessKeyId;
+        calculePolicy('');        
+        this.refreshAmazonFileMap();
+        this.refreshReviewStatusMap();
+    }
     public ISSP_AmazonS3_Ctrl(ISSP_AddAttachment amsCtrl) {
         this.Id = amsCtrl.tmpCase.Id;
         
@@ -161,6 +187,7 @@ global class ISSP_AmazonS3_Ctrl {
     }
 
     public String getStorageFolder() {
+        system.debug('aqui getStorageFolder ...');
         Id idVal;
         String FOLDER = FOLDER_STEM;
        
