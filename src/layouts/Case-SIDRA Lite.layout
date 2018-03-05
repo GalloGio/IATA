@@ -10,6 +10,7 @@
     <customButtons>Deactivate_BSPLink</customButtons>
     <customButtons>Undo_Deactivation_BSPLink</customButtons>
     <customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>OscarFOP</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
