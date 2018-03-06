@@ -641,7 +641,8 @@
                                                 <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
                                             </apex:outputpanel>
                                             <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
-                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c, newCase.Status!='Closed'),AND(caseType='DPCSR', isDPCAdmin, newCase.Status!='Closed'),AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed'))}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(NOT(IsInterDPCCase), newCase.Status!='Closed',OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c),AND(caseType='DPCSR', isDPCAdmin)))}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />
                                         </apex:outputpanel>
                                     </apex:pageblockbuttons>
 
@@ -934,7 +935,7 @@
                                             <apex:outputLink value="/ISSP_Account?id={!newCase.AccountId}&mid=M1S2">{!newCase.Account.Name}</apex:outputLink>
                                         </apex:outputText>
                                          -->
-                                        <apex:outputfield value="{!newCase.ContactId}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
+                                        <apex:outputfield value="{!newCase.Contact.Name}" label="{!$Label.ISSP_Contact}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
 
                                         <apex:outputfield value="{!newCase.SuppliedEmail}" rendered="{!caseType='DPCSR'}" />
                                         <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
