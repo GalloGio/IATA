@@ -12578,90 +12578,42 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>M</fullName>
                     <default>false</default>
-                    <label>Monthly </label>
+                    <label>Monthly</label>
                 </value>
                 <value>
                     <fullName>F</fullName>
                     <default>false</default>
-                    <label>Fortnightly </label>
+                    <label>Fortnightly</label>
                 </value>
                 <value>
                     <fullName>R</fullName>
                     <default>false</default>
-                    <label>Every 10 days </label>
+                    <label>Every 10 days</label>
                 </value>
                 <value>
                     <fullName>W</fullName>
                     <default>false</default>
-                    <label>4 times per month </label>
+                    <label>4 times per month</label>
                 </value>
                 <value>
                     <fullName>V</fullName>
                     <default>false</default>
-                    <label>Weekly </label>
+                    <label>Weekly</label>
                 </value>
                 <value>
                     <fullName>S</fullName>
                     <default>false</default>
-                    <label>Every 5 days </label>
+                    <label>Every 5 days</label>
                 </value>
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
-                    <label>Every 3 days </label>
+                    <label>Every 3 days</label>
                 </value>
                 <value>
                     <fullName>D</fullName>
                     <default>false</default>
-                    <label>Daily </label>
-                </value>
-                <value>
-                    <fullName>Monthly</fullName>
-                    <default>false</default>
-                    <label>Monthly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Fortnightly</fullName>
-                    <default>false</default>
-                    <label>Fortnightly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 10 days</fullName>
-                    <default>false</default>
-                    <label>Every 10 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>4 times per month</fullName>
-                    <default>false</default>
-                    <label>4 times per month</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Weekly</fullName>
-                    <default>false</default>
-                    <label>Weekly</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 5 days</fullName>
-                    <default>false</default>
-                    <label>Every 5 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Every 3 days</fullName>
-                    <default>false</default>
-                    <label>Every 3 days</label>
-                    <isActive>false</isActive>
-                </value>
-                <value>
-                    <fullName>Daily</fullName>
-                    <default>false</default>
                     <label>Daily</label>
-                    <isActive>false</isActive>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -36361,19 +36313,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82730,19 +82682,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
