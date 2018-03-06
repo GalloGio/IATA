@@ -73,7 +73,7 @@
             <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
-				<value>
+                <value>
                     <fullName>UP</fullName>
                     <default>false</default>
                     <label>UP</label>
@@ -331,6 +331,25 @@ J-Joint Vent</description>
         <unique>false</unique>
     </fields>
     <label>AMS Country Specific Attribute</label>
+    <listViews>
+        <fullName>RHC_Risk_Alerts</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>ANG_PortalNotificationTemplate__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RHC_Risk_Alert</value>
+        </filters>
+        <label>RHC Risk Alerts</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
@@ -906,5 +925,5 @@ OR(
 )</errorConditionFormula>
         <errorMessage>For Risk Alert attributes you must fill both Direction AND Percentage</errorMessage>
     </validationRules>
-	<visibility>Public</visibility>
+    <visibility>Public</visibility>
 </CustomObject>

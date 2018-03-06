@@ -15123,7 +15123,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>IEP Bank account setup</value>
         </criteriaItems>
-		<criteriaItems>
+        <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>FoP Management</value>
