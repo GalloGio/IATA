@@ -388,54 +388,35 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		    	caseAccsSet.add(cse.accountId);
 		    } 
 		}
-		//set containing Newgen Account Ids
 
-		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
-
-		//IFAP P5 start   
-		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
+			
+			//set containing Newgen Account Ids
+			Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
+			//IFAP P5 start   
+			map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 			list<Case> casesToUdpateTheAccts = new list<Case>();
 			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
-			for(Case c: CasesToConsider){
+			for(Case c: casesToConsider){
 				if(!ngAccounts.containsKey(c.accountId) &&
 					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
 					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
 					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))
-				){ 
-					casesToUdpateTheAccts.add(c);
-				}
-				else
-				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
-					&& ngAccounts.containsKey(c.accountId) 
-					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)){
-             		
-             		Account account = ngAccounts.get(c.accountId);
-
-             		//NEWGEN - adds NG account to be updated
-             		AcctToBeUpdatedPerId.put(c.accountId, new account(
-								id =c.accountId,
-								Financial_Review_Result__c=c.Financial_Review_Result__c,
-								Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, account.Assessment_Performed_Date__c)
-								)
-					);
-					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
-				}
+				) casesToUdpateTheAccts.add(c);
 			}
+			map<id,account> ngAccMap=  ANG_CaseTriggerHandler.setFinancialReviewResultOnAccount(casesToConsider,ngAccounts,AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET);
+			if(ngAccMap !=null) AcctToBeUpdatedPerId.putAll(ngAccMap);
+
 			if(!casesToUdpateTheAccts.isEmpty())  {              
 				// throw new transformationException();
 				 map<Id,Account> temMap =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
 				 AcctToBeUpdatedPerId.putAll(temMap);
 			}   
-		} 
-		System.debug('***After checking record type ' + caseRecType);
-		if(!casesToConsider.isEmpty()){
-			//if(caseRecType)
+		
 			System.debug('***Do blah blah blah only for IFAP case related accounts ');
 			Set<ID> acctIds = new Set<ID>();
 			for (Case cse : casesToConsider) {
-			//for (Case cse : cases) 
 				acctIds.add(cse.AccountId);
 			}
 			//Re-open/ed is not considered as Closed Status anymore.
@@ -862,12 +843,15 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			 	}
 			}
 		}
-		/*trgCaseEscalationMailNotificationICH Trigger*/
-		/*Risk Event Management*/
-  		if(Trigger.isInsert || Trigger.isUpdate){
-    		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+		if(Trigger.isBefore){
+			if(Trigger.isInsert)new ANG_CaseTriggerHandler().onBeforeInsert();
+			if(Trigger.isUpdate)new ANG_CaseTriggerHandler().onBeforeUpdate();
   		}
-  		/*Risk Event Management*/
+		if(Trigger.isAfter){
+			if(Trigger.isInsert)new ANG_CaseTriggerHandler().onAfterInsert();
+			if(Trigger.isUpdate)new ANG_CaseTriggerHandler().onAfterUpdate();
+  		}
+  	
 	}
 	/*Share trigger code*/
 	
