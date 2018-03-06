@@ -1,6 +1,7 @@
 trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
   
   NewGen_AccountRiskStatusTriggerHandler newgenHandler = new NewGen_AccountRiskStatusTriggerHandler();
+  NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
 
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
@@ -21,8 +22,9 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if(trigger.newmap <> null)
     AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
-
-    newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);  
+    if(newgenCS.Push_Notifications_State__c){
+      newgenHandler.onAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap);  
+    }
   }
 
 
