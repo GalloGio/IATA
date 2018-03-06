@@ -27208,4 +27208,76 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_INVALID</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>An invalid iata code was inputed in the search</shortDescription>
+        <value>You have entered an incorrect IATA Code. Accepted formats are 7 or 8 digits for Travel Agents and 10 to 11 digits for Cargo.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The entered IATA code does not exists</shortDescription>
+        <value>No %TYPE% Agency for this IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>He message</shortDescription>
+        <value>The IATA Code %IATA_CODE% is for a %CHILD_LOCATION%. The %PARENT_LOCATION% details are as follows</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ASSOCIATE_ENTITY</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Associate Entity</shortDescription>
+        <value>Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Office</shortDescription>
+        <value>Branch Office</value>
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link to the IATAs CheckACode page</shortDescription>
+        <value>Please refer to our paid &lt;a href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Code (HO / HE)</shortDescription>
+        <value>IATA Code (HO / HE)</value>
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Status</shortDescription>
+        <value>Risk Status</value>
+    </labels>  
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Security Exists</shortDescription>
+        <value>Financial Security Exists</value>
+    </labels>     
 </CustomLabels>
