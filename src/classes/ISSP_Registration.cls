@@ -1253,15 +1253,14 @@ public without sharing class ISSP_Registration {
         zipCodeApplicable = new Map<String,Boolean>();
         if (countryMapEmpty)
             countryMap = new Map<Id, String>();			
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]){
-            if (iso.Name != 'All Countries'){
-                options.add(new SelectOption(iso.Id,iso.Name));
-                zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Postal_Code_required__c);//TC
-                if (countryMapEmpty) {
-                    countryMap.put(iso.Id, iso.Name);
-                }
-                countryISOCodeMap.put(iso.Id, iso.ISO_Code__c);
+        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
+                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
+            options.add(new SelectOption(iso.Id,iso.Name));
+            zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Postal_Code_required__c);//TC
+            if (countryMapEmpty) {
+                countryMap.put(iso.Id, iso.Name);
             }
+            countryISOCodeMap.put(iso.Id, iso.ISO_Code__c);
         }
         return options;
     }
@@ -1438,7 +1437,7 @@ public without sharing class ISSP_Registration {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
         	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
-        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        //	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
         } else {
         	types.add(new SelectOption(Airline,Label.ISSP_Airline));
         	types.add(new SelectOption(GSA,Label.ISSP_GSSA));
@@ -1623,12 +1622,11 @@ public without sharing class ISSP_Registration {
 		get{
 			if(shpCountry == null) {
 				List<SelectOption> options = new List<SelectOption>();
-				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]) {
-					if (iso.Name != 'All Countries'){
+				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
+                                            where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]) {
 						options.add(new SelectOption(iso.Name,iso.Name));
-					}	
 				}
-				shpCountry = options;
+                shpCountry = options;
 			}
 			return shpCountry;					
 		}

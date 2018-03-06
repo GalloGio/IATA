@@ -9,6 +9,14 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
+        <fullName>Includes</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Does not Include</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
         <fullName>Blank</fullName>
         <default>false</default>
     </globalPicklistValues>

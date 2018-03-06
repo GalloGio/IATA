@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>IATA_ISO_NCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IATA_Numeric_Country_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

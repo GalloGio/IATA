@@ -270,7 +270,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>E2CP__Case_Thread_Id__c</field>
+                <field>Case_Thread_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

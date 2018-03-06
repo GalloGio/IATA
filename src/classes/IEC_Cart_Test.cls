@@ -11,7 +11,7 @@
 @isTest
 private class IEC_Cart_Test {
 	static User oUser = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
-	static List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, null, null, false);
+	static List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, null, null, false, null);
 
 	@isTest(seeAllData=true)
 	static void test1() {		

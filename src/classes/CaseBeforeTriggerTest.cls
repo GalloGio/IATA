@@ -25,23 +25,48 @@ private class CaseBeforeTriggerTest {
 
         BusinessHours bHourObj = new BusinessHours();
         bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-
+        List<Account> accounts = new List<Account>();
         Account a = new Account( name ='IFAP ACCT',
-                                 industry = 'pluto',
+                                 industry = 'Travel Agent',
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
-                                 IATACode__c ='1234567',
-                                 Site_Index__c = '1234567',
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
                                  Type = 'IATA Cargo Agent',
                                  billingCountry = 'ss',Location_Type__c = 'AO',
                                  category__c = 'IATA Cargo Agent',
                                  sector__c = 'Cargo Agent');
-        insert a;
+        accounts.add(a);
+        //lstMatchedAccounts
+        Account b = new Account( name ='IFAP ACCT1',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='0123456',
+                                 Site_Index__c = '1234',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(b);
+
+        Account c = new Account( name ='test',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(c);
+        insert accounts;
          
         Contact con =new contact(lastname = 'pluto' ,
                                  firstname = 'test',
                                  phone = '123',
-                                 accountid = a.id,
+                                 accountid = accounts[0].id,
                                  Financial_Assessment_Contact__c = true);
         insert con;
                                 
@@ -102,27 +127,43 @@ private class CaseBeforeTriggerTest {
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '1234567',
+                          IATAcode__c = '12345 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
         insert cas3; 
+        cas3.IATAcode__c = '1234567';
+        update cas3;
 
         Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
                           Status = 'Assessment Performed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '0123456789',
+                          IATAcode__c = '01234567 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
-        insert cas4; 
+        insert cas4;
+        cas4.IATAcode__c = '0123456789';
+        update cas4;
 
+        Case cas5 = new Case(recordtypeID = AmericacaseRecordTypeID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          IATAcode__c = '1234 SS',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas5; 
     }
     
     @isTest static void testISSP_Case_3() {
@@ -453,6 +494,8 @@ private class CaseBeforeTriggerTest {
         //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+        ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
@@ -552,6 +595,27 @@ private class CaseBeforeTriggerTest {
         system.assertEquals(true,exceptionRaised);
         
         test.stopTest();
+        List <Case> lcs = new List<Case>();
+        Case cs3 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICH', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='General Question');  
+        lcs.add(cs3);
+
+        Case cs4 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='aa');  
+        lcs.add(cs4);
+
+         Case cs5 = new Case(RecordTypeId = PortalsharingRTID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
+        lcs.add(cs5);
+        try{insert lcs;}catch(Exception e){exceptionRaised = true;}
+        system.assertEquals(true,exceptionRaised);
+
+        ID caseRecordType = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+        Case cs6 = new Case(RecordTypeId = caseRecordType, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED);
+        insert cs6;
+
+
     }
     
     @istest static void test1() {
@@ -2000,7 +2064,7 @@ private class CaseBeforeTriggerTest {
                  contactid = con.id,
                  AccountId = a.id,
                  Assessment_Performed_Date__c = date.today(),
-                 Financial_Review_Result__c = 'very good'                                
+                 Financial_Review_Result__c = 'Satisfactory - No Action'                                
                  );
        
        insert c;
@@ -2443,6 +2507,4 @@ private class CaseBeforeTriggerTest {
 
         Test.stopTest();
     }
-
-
-}
+  }

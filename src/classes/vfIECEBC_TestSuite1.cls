@@ -546,6 +546,10 @@ public class vfIECEBC_TestSuite1 {
             layoutController.getSProdGSS();
             layoutController.getSContactEmail();
             layoutController.getSContactSubject();
+            layoutController.logout();
+            Boolean newNow=layoutController.showRenewNow;
+            String pageUrl=layoutController.renewalPageUrl;
+            layoutController.getIsUserLoggedIn();
             
             vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
             System.assertEquals(4, dashboardCon.campaignsCount);
@@ -833,6 +837,10 @@ insert gpavs;*/
             
             templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
             templateExtCon.upsertDesignAndContinue();
+            // next() coverage
+            PageReference nextStep = campaignExtCon.next();
+            // previous() coverage
+            PageReference prevStep = campaignExtCon.previous();
         }
     }
     

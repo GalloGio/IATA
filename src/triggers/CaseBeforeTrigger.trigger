@@ -157,6 +157,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if(Trigger.isInsert || Trigger.isUpdate){
+	
+		/*DigitalGenius trigger - turn off*/
+		if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
         
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
@@ -229,19 +232,27 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         
         /*UserInfoUpdate Trigger*/
         if(UserInfoUpdate){//FLAG 
-            system.debug('UserInfoUpdate');
+            system.debug('##UserInfoUpdate');
             //IMPRO GM START
             //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             CurrUser = UserInfo.getUserId();
+            Set<string> caseStatus = new set<string>(); 
+            for(CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()){//RN-INC347705 -> get isclosed cases status from custom Setting to remove a query
+                caseStatus.add(cs.name);
+            }
             //IMPRO GM END
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
-            for(Case c : Trigger.new){
-                if((Trigger.isInsert && c.Status == 'Closed') || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
-                    c.WhoClosedCase__c = UserInfo.getUserId();
-                }if(c.Status != 'Closed')
+            for(Case c : Trigger.new){//RN-INC342887 - validation with isClosed
+                if((Trigger.isInsert && caseStatus.contains(c.status)) || 
+                        (Trigger.isUpdate && caseStatus.contains (c.status)) ){
+                        c.WhoClosedCase__c = CurrUser;
+                    }
+                if(Trigger.isUpdate && !caseStatus.contains(c.status)){
                     c.WhoClosedCase__c = null;
+                    }
+                }
             }// END Update L.Faccio --------------
-        }    
+            
         /*UserInfoUpdate Trigger*/
         
         /*trgCheckBusinessHoursBeforeInsert Trigger*/
@@ -674,7 +685,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                 WebIATAcode = WebIATAcode.substring(0, 10);
                             system.debug('IATA CODE 2: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                             //in case the user enters 7 digits we need to get the 8th digit  
-                            if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7) {
+                            if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7 && WebIATAcode.isNumeric() ) {
                                 String t = WebIATAcode.trim();
                                 Long a = Long.valueof(t);
                                 Long remainder = math.mod(a, 7);
@@ -682,7 +693,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             }
                             system.debug('IATA CODE 3: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                             //in case the user enters 10 digits we need to get the 11th digit
-                            if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10) {
+                            if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10 && WebIATAcode.isNumeric() ) {
                                 String t = WebIATAcode.trim();
                                 Long a = Long.valueof(t);
                                 Long remainder = math.mod(a, 7);
@@ -822,24 +833,27 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgAccelyaRequestSetCountry Trigger*/
                 
         /*trgBeforeInsertUpdate Trigger*/ /*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
-        if(trgBeforeInsertUpdate){//FLAG
+        if (trgBeforeInsertUpdate) { //FLAG
             system.debug('trgBeforeInsertUpdate');
             //INC239697
             for (Case cse : Trigger.new) {
                 CS_Email2CasePremium__c code;
-                if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
-                    code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
-                if (code != null) {
-                    system.debug('##ROW##');
-                    cse.Groups__c = code.Group__c;
-                }else {
-                    system.debug('##ROW##');
+                if (cse.Groups__c != 'CNS Team') {
                     cse.Groups__c = 'Default';
+
+                    if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
+                        code = CS_Email2CasePremium__c.getInstance(cse.OwnerProfile__c);
+                    if (code != null) {
+                        system.debug('##ROW##');
+                        cse.Groups__c = code.Group__c;
+                    }
+
+                    code = CS_Email2CasePremium__c.getInstance(cse.RecordTypeId);
+                    if (code != null) {
+                        cse.Groups__c = code.Group__c;
+                    }
                 }
-                if(cse.RecordTypeId == ifgCaseRecordTypeID) {
-                    cse.Groups__c = IFG_TEAM_CASE_GROUP_NAME;
-                }				
-            }   
+            }
         }
         /*trgBeforeInsertUpdate Trigger*/
         
@@ -1452,8 +1466,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /****************************************************************************************************************************************************/    
     
     else if (Trigger.isUpdate) {
-        
-        /*trgCase Trigger.isUpdate*/
+        /*trgCase Trigger.isUpdate*/ 
         if(trgCase){//FLAG
             system.debug('trgCase Trigger.isUpdate');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
@@ -2104,5 +2117,5 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
     }
-    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
+    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/    
 }

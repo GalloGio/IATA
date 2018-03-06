@@ -54,14 +54,7 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		Account acc3= new Account(Name='Acc3', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);		
 		insert new List<Account>{acc1, acc2, acc3};
 
-		Contact c = new Contact(FirstName = 'test', LastName = 'test', AccountId = acc2.Id, User_Portal_Status__c = 'Approved Admin', Email = 'testiata@yopmail.com');
-		insert c;
-
-		Portal_Applications__c par = new Portal_Applications__c (Name = 'RHC Information');
-		insert par;
-
-		insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
-
+		
 		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
 			ANG_AccountId__c = acc1.id,
 			ANG_Risk_Type__c = ret.id,
@@ -92,7 +85,16 @@ public class ANG_ActivateDeactivateREBatch_Test{
 	static testMethod void testBatch(){ // testing batch 3 records(one to be set active, one to be set inactive, one to ignore)
 		
 		Test.startTest();
-		
+
+		Account acc2 =[select id from account where name='Acc2'];
+		Contact c = new Contact(FirstName = 'test', LastName = 'test', AccountId = acc2.Id, User_Portal_Status__c = 'Approved Admin', Email = 'testiata@yopmail.com');
+		insert c;
+
+		Portal_Applications__c par = new Portal_Applications__c (Name =ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		insert par;
+
+		insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
+	
 		ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'Europe','Americas','Asia'});
 		bat.execute(null);
 		

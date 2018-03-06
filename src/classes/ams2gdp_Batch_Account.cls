@@ -1,43 +1,45 @@
-global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Database.Stateful
-{
+global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Database.Stateful {
 	public String query;
 	public List<String> extraIds;
 	public Integer errorsCount;
 	public Integer totalRecords;
 	public List<String> failed_records;
 	public Datetime syncStartedDate;
-	public Datetime previousSyncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
 	Set<String> locationsSet;
 	Set<String> statusSet;
+	public Boolean isManual;
+	public Boolean secondRun;
 
 
-	public void init(Boolean runNext, List<String> ids)
-	{
+	public void init(Boolean runNext, List<String> ids, Boolean manual, Boolean secondR) {
+		isManual = manual == null ? false : manual;
 		batchName = 'Job 1: GDP Products - Account View';
 		processNextBatch = runNext;
 		extraIds = ids;
+		secondRun = secondR;
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		//-- Fields used for Sync
+
 		String fields = ' Id, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Check_Digit__c, Company_Type__c, Email__c, GDP_Location_Type__c, GDP_Opt_In__c, IATACode__c, Incorporation_Type__c, GDS__c'
-			+	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
-			+	', Short_Name__c , Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, TradeName__c, TTY__c, VAT_Number__c, VAT_Number_2__c, Website'
-			+	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c';
+		                +	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
+		                +	', Short_Name__c , Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, TradeName__c, TTY__c, VAT_Number__c, VAT_Number_2__c, Website'
+		                +	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c';
 
 		String idsCondition;
-		if(extraIds!=null && extraIds.size() > 0) {
-			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
-		}else {
+		if (extraIds != null && extraIds.size() > 0) {
+			idsCondition = 'Id IN (\'' + String.join(extraIds, '\', \'') + '\')';
+		} else {
 			idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
-			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
 				idsCondition += ' AND Status__c IN  :statusSet ';
 
 			}
-			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
 				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
 				idsCondition += ' AND Location_Class__c IN:  locationsSet';
 			}
@@ -53,84 +55,78 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		// }
 
 		//-- Query conditions
-		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			,	'IATACode__c != null'
-			,	'CNS_Agency__c = false'
-			,	'CNS_Account__c = false'
-			,	idsCondition
-		};
+		List<String> conditions = new List<String> {'RecordTypeId= \'' + recordTypes.get('Agency') + '\''
+		        ,	'IATACode__c != null'
+		        ,	'CNS_Agency__c = false'
+		        ,	'CNS_Account__c = false'
+		        ,	idsCondition
+		                                           };
 
-		if(extraIds!=null && extraIds.size() > 0) {
-			 if(extraIds[0]=='none'){
-			 conditions.add('Id=null');}
-			 else{
-			//Run batch on specific Ids
-			List<String> specificIds = new List<String>();
-			for(String s: extraIds)
-			{
-				if(s.length() >= 15) specificIds.add(s.left(15));
-			}
-
-			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
-		}else{
-			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
-
-			if(batchInfo != null)
-			{
-				String deltaConditions;
-				//Keeps a copy of the Last_Sync_Start_Date__c to be used on the Job_1_Original_Start_Date__c
-				previousSyncStartedDate = batchInfo.Last_Sync_Start_Date__c == null ? Datetime.now() : batchInfo.Last_Sync_Start_Date__c;
-				//Run only on the deltas
-				if(runNext){
-					deltaConditions = String.format('LastModifiedDate >= {0}'
-						,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
-				}else{
-					deltaConditions = String.format('LastModifiedDate >= {0}'
-						,new List<String>{batchInfo.Job_1_Original_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+		if (extraIds != null && extraIds.size() > 0) {
+			if (extraIds[0] == 'none') {
+				conditions.add('Id=null');
+			} else {
+				//Run batch on specific Ids
+				List<String> specificIds = new List<String>();
+				for (String s : extraIds) {
+					if (s.length() >= 15) specificIds.add(s.left(15));
 				}
 
-				if(String.isNotBlank(batchInfo.Failed_Records__c))
-				{
+				if (specificIds.size() > 0)	conditions.add('Id IN (\'' + String.join(specificIds, '\', \'') + '\')');
+			}
+		} else {
+			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
+
+			if (batchInfo != null) {
+				//Run only on the deltas
+				String deltaConditions;
+				if(secondRun){
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}else{
+					deltaConditions = String.format('LastModifiedDate >= {0}'
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				}
+
+				system.debug('##deltaConditions: ' + deltaConditions);
+
+				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
 					List<String> failedRecordIds = new List<String>();
-					for(String s: batchInfo.Failed_Records__c.split(';'))
-					{
-						if(s.length() >= 15)
+					for (String s : batchInfo.Failed_Records__c.split(';')) {
+						if (s.length() >= 15)
 							failedRecordIds.add(s.left(15));
 					}
-					if(failedRecordIds.size() > 0)
+					if (failedRecordIds.size() > 0)
 						deltaConditions += ' OR Id IN (\'' + String.join(failedRecordIds, '\' , \'') + '\') ';
 				}
 
-				conditions.add('('+deltaConditions+')');
+				conditions.add('(' + deltaConditions + ')');
 			}
 		}
 
 		query = String.format('SELECT {0} '
-			+	'FROM Account '
-			+ 	'WHERE {1} '
-			+	'ORDER BY ParentId DESC ',
-			new List<String>{fields,String.join(conditions, ' AND ')}
-		);
+		                      +	'FROM Account '
+		                      + 	'WHERE {1} '
+		                      +	'ORDER BY ParentId DESC ',
+		                      new List<String> {fields, String.join(conditions, ' AND ')}
+		                     );
 	}
 
-	global ams2gdp_Batch_Account()
-	{
-		init(false,null);
+	global ams2gdp_Batch_Account() {
+		init(false, null, false, false);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext)
-	{
-		init(runNext, null);
+	global ams2gdp_Batch_Account(Boolean runNext, Boolean manual, Boolean secondRun) {
+		init(runNext, null, manual, secondRun);
 	}
 
-	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra)
-	{
-		init(runNext, extra);
+	global ams2gdp_Batch_Account(Boolean runNext, List<String> extra, Boolean manual) {
+		system.debug('##ams2gdp_Batch_Account, extra: ' + extra);
+		init(runNext, extra, manual, false);
 	}
 
-	global Database.QueryLocator start(Database.BatchableContext BC)
-	{
+	global Database.QueryLocator start(Database.BatchableContext BC) {
 		errorsCount = 0;
 		totalRecords = 0;
 		failed_records = new List<String>();
@@ -143,80 +139,50 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	 * Synchronize Account
 	 * 	=>	GDP Products - Account View
 	 */
-   	global void execute(Database.BatchableContext BC, List<Account> accounts)
-   	{
-   		//-- Total records to be processed
-   		totalRecords += accounts.size();
+	global void execute(Database.BatchableContext BC, List<Account> accounts) {
+		//-- Total records to be processed
+		totalRecords += accounts.size();
 
-   		//-- Errors list
-   		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
+		//-- Errors list
+		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
 		//-- Format Account to GDP_Products_Account_View
 		List<GDP_Products_Account_View__c> products_to_save = new List<GDP_Products_Account_View__c>();
-		try
-		{
+		try {
 			products_to_save = ams2gdp_BusinessLogic.formatAccount2ProductAccountView(accounts);
 
 			//-- Raise exception for Unit Tests
-			if(Test.isRunningTest() &&   throwException) insert new Account();
-		}
-		catch(Exception ex)
-		{
+			if (Test.isRunningTest() &&   throwException) insert new Account();
+		} catch (Exception ex) {
 			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
 		}
 
 		//-- Save Records
-		List<Database.UpsertResult> products_save_results = Database.upsert(products_to_save,GDP_Products_Account_View__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+		List<Database.UpsertResult> products_save_results = Database.upsert(products_to_save, GDP_Products_Account_View__c.AMS_GDP_Key__c.getDescribe().getSObjectField(), false);
 
 		//-- Process Errors
 		errors.addAll(ams2gdp_Error.formatUpsertResult(products_to_save, products_save_results, batchName, 'AMS_GDP_Key__c'));
 
 		//-- Log the current Errors
-		if(!errors.isEmpty())
-		{
+		if (!errors.isEmpty()) {
 			errorsCount = errorsCount + errors.size();
 			ams2gdp_Utils.logErrors(errors);
 
 			//-- Save failed records
 			Set<String> set_failed_records = new Set<String>(failed_records);
 
-			for(ams2gdp_Error failed_rec : errors)
+			for (ams2gdp_Error failed_rec : errors)
 				set_failed_records.add(failed_rec.amsRecordId);
 
-			failed_records =new List<String>(set_failed_records);
+			failed_records = new List<String>(set_failed_records);
 		}
 	}
 
-	global void finish(Database.BatchableContext BC)
-	{
-		AMS_GDP_Batch__c amsGdpBatch;
-
+	global void finish(Database.BatchableContext BC) {
 		if(processNextBatch){
-			//-- Start next batch
-			Database.executeBatch(new ams2gdp_Batch_Inspection(true));
-			//creates last sync info in the first run
-			amsGdpBatch = new AMS_GDP_Batch__c(
-				Batch_Name__c=batchName,
-				Last_Sync_Start_Date__c = syncStartedDate,
-				Last_Sync_End_Date__c = Datetime.now(),
-				Job_1_Original_Start_Date__c = previousSyncStartedDate,
-				Total_Failed_Records__c = errorsCount,
-				Total_Records_Processed__c = totalRecords,
-				Failed_Records__c = String.join(failed_records, ';').left(32768));
-		}else{
-			//creates last sync info in reconciliation run (second time in this batches order)
-			amsGdpBatch = new AMS_GDP_Batch__c(
-				Batch_Name__c=batchName,
-				Last_Sync_Start_Date__c = syncStartedDate,
-				Last_Sync_End_Date__c = Datetime.now(),
-				Total_Failed_Records__c = errorsCount,
-				Total_Records_Processed__c = totalRecords,
-				Failed_Records__c = String.join(failed_records, ';').left(32768));
+			Database.executeBatch(new ams2gdp_Batch_Inspection(true, isManual));
 		}
-
-		//-- Update Last Sync Info
-		upsert amsGdpBatch Batch_Name__c;
-
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}

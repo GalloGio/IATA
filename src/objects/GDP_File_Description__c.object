@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used to describe the file representation that will be used to generate Txt, Xls and XML files</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -62,101 +59,125 @@
         <externalId>false</externalId>
         <inlineHelpText>Will Allow to segregate the File Production. Selection of option 0 will deactivate the production of the file.</inlineHelpText>
         <label>Atom</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>11</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>12</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>13</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>14</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>15</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>16</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>17</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>18</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>19</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>20</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>255</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+                <value>
+                    <fullName>13</fullName>
+                    <default>false</default>
+                    <label>13</label>
+                </value>
+                <value>
+                    <fullName>14</fullName>
+                    <default>false</default>
+                    <label>14</label>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                    <label>15</label>
+                </value>
+                <value>
+                    <fullName>16</fullName>
+                    <default>false</default>
+                    <label>16</label>
+                </value>
+                <value>
+                    <fullName>17</fullName>
+                    <default>false</default>
+                    <label>17</label>
+                </value>
+                <value>
+                    <fullName>18</fullName>
+                    <default>false</default>
+                    <label>18</label>
+                </value>
+                <value>
+                    <fullName>19</fullName>
+                    <default>false</default>
+                    <label>19</label>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                    <label>20</label>
+                </value>
+                <value>
+                    <fullName>255</fullName>
+                    <default>false</default>
+                    <label>255</label>
+                </value>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Class__c</fullName>
@@ -164,33 +185,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Agency Classification</inlineHelpText>
         <label>Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P,V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M,G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>P,V</fullName>
+                    <default>false</default>
+                    <label>P,V</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>M,G,X</fullName>
+                    <default>false</default>
+                    <label>M,G</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Database_Connector__c</fullName>
@@ -371,29 +399,35 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the File Type in which the data is converted, When DATABASE the replication process does carry directly the information to the given database</inlineHelpText>
         <label>File Format</label>
-        <picklist>
-            <picklistValues>
-                <fullName>XML</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XLSX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TXT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Database</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>XML</fullName>
+                    <default>false</default>
+                    <label>XML</label>
+                </value>
+                <value>
+                    <fullName>XLSX</fullName>
+                    <default>false</default>
+                    <label>XLSX</label>
+                </value>
+                <value>
+                    <fullName>TXT</fullName>
+                    <default>false</default>
+                    <label>TXT</label>
+                </value>
+                <value>
+                    <fullName>Database</fullName>
+                    <default>false</default>
+                    <label>Database</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>File_Naming_Convention__c</fullName>
@@ -414,29 +448,48 @@
         <externalId>false</externalId>
         <inlineHelpText>The Frequency set the logic of when the data from the Rest API is produced</inlineHelpText>
         <label>Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Semi-Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Semi-Monthly</fullName>
+                    <default>false</default>
+                    <label>Semi-Monthly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Full_SFDC_ID__c</fullName>
+        <description>Show the full ID</description>
+        <externalId>false</externalId>
+        <formula>CASESAFEID(Id)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Full SFDC ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Geo_Coverage_Definition__c</fullName>
@@ -471,21 +524,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Delta will refer to the Select of Delta Update Records for updated Account View Records Only for the given period of time, Master is every Account View Records</inlineHelpText>
         <label>Magnitude</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Delta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Master</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Delta</fullName>
+                    <default>false</default>
+                    <label>Delta</label>
+                </value>
+                <value>
+                    <fullName>Master</fullName>
+                    <default>false</default>
+                    <label>Master</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Master_File_Description__c</fullName>
@@ -538,7 +595,7 @@
         <label>Order By</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -549,25 +606,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Used by the Reference Record and Will tell the replication process which payload procedure to consume to get the data</inlineHelpText>
         <label>Payload Procedure</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDCard</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>false</default>
+                    <label>Subscription</label>
+                </value>
+                <value>
+                    <fullName>IDCard</fullName>
+                    <default>false</default>
+                    <label>IDCard</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product_Type__c</fullName>
@@ -575,33 +637,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Used on the Reference Record To Determine the Family Product Category</inlineHelpText>
         <label>Product Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>GSS</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MDP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACSWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACEWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GSS</fullName>
+                    <default>true</default>
+                    <label>GSS</label>
+                </value>
+                <value>
+                    <fullName>MDP</fullName>
+                    <default>false</default>
+                    <label>MDP</label>
+                </value>
+                <value>
+                    <fullName>CAC</fullName>
+                    <default>false</default>
+                    <label>CAC</label>
+                </value>
+                <value>
+                    <fullName>CACSWS</fullName>
+                    <default>false</default>
+                    <label>CACSWS</label>
+                </value>
+                <value>
+                    <fullName>CACEWS</fullName>
+                    <default>false</default>
+                    <label>CACEWS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reference_Clause__c</fullName>
@@ -610,7 +679,7 @@
         <inlineHelpText>Used on the Reference Record To Limit the Query as clause where inside the REST API</inlineHelpText>
         <label>Reference Clause</label>
         <length>4000</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -636,21 +705,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Service Target is used to upsert the data to the right table into the mysql</inlineHelpText>
         <label>Service Target</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Response</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Response</fullName>
+                    <default>false</default>
+                    <label>Response</label>
+                </value>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>false</default>
+                    <label>Subscription</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Web_Service_Default_Response__c</fullName>
@@ -659,7 +732,7 @@
         <inlineHelpText>For CAC Web Service Default returned response when the code is not found</inlineHelpText>
         <label>Web Service Default Response</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -827,6 +900,47 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>GSS_File_Naming_Convention</fullName>
+        <columns>NAME</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <label>GSS_File_Naming_Convention</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>GSS_File_Naming_Convention1</fullName>
+        <columns>NAME</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>File_Naming_Convention__c</field>
+            <operation>contains</operation>
+            <value>Suffix]&amp;</value>
+        </filters>
+        <label>GSS_File_Naming_Convention_&amp;</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>GSS_Non_Reference_File_Descriptions</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
@@ -924,20 +1038,55 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>TXT_CHANGE_FILES</fullName>
+        <columns>NAME</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Weekly</value>
+        </filters>
+        <label>TXT CHANGE FILES</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Test_Layouts</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
+        <columns>Atom__c</columns>
         <columns>Class__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
+            <field>Atom__c</field>
             <operation>contains</operation>
-            <value>test</value>
+            <value>0</value>
         </filters>
-        <label>Test Layouts</label>
+        <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -952,6 +1101,7 @@
         <columns>Geo_Coverage_Definition__c</columns>
         <columns>Master_File_Description__c</columns>
         <columns>Is_Reference__c</columns>
+        <columns>Order_By__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -959,24 +1109,19 @@
             <value>0</value>
         </filters>
         <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
             <field>File_Format__c</field>
             <operation>equals</operation>
             <value>TXT</value>
         </filters>
         <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Member Master</value>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
         </filters>
         <label>01_GSS_Member_TXT_Masters</label>
         <language>en_US</language>
@@ -1017,7 +1162,6 @@
         <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
         </filters>
         <label>02_GSS_3rd_Party_TXT_Masters</label>
         <language>en_US</language>
@@ -1214,7 +1358,7 @@
     </listViews>
     <nameField>
         <label>GDP File Description Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GDP File Descriptions</pluralLabel>
@@ -1243,4 +1387,5 @@
         <searchResultsAdditionalFields>Class__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

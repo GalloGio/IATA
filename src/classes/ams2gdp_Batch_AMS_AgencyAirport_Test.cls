@@ -43,13 +43,13 @@ private class ams2gdp_Batch_AMS_AgencyAirport_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(false));
+ 			Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestBatchAMSAgencyAirport()
 	{
-		ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false);
+		ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 

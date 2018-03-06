@@ -182,6 +182,7 @@ private class ISSP_WS_Test {
         con.User_Portal_Status__c = 'Approved User';  
         con.Community__c = '';  
         update con;
+		Test.startTest();
         ISSP_WS_NewUser.createUser(myInput);
         myInput.services = 'SIS';
         ISSP_WS_NewUser.createUser(myInput);
@@ -191,6 +192,7 @@ private class ISSP_WS_Test {
         ISSP_WS_NewUser.createUser(myInput);
         myInput.email = 'a';
         ISSP_WS_NewUser.createUser(myInput);
+		Test.stopTest();
     }
 
     static testMethod void NewUser_4() {
@@ -248,6 +250,8 @@ private class ISSP_WS_Test {
         ISSP_WS_NewUser.createUser(myInput);
         con.status__c = 'Inactive';
         update con;
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.accountIATAcode = '1001';
         ISSP_WS_NewUser.createUser(myInput);
 		Test.stopTest();
     }
@@ -355,6 +359,7 @@ private class ISSP_WS_Test {
     }
     
     static testMethod void NewUser_7() {
+	/*
         Map<Id, String> sisFedIdMap = new Map<Id, String>();
         Map<Id, String> sisEmailMap = new Map<Id, String>();
         Map<Id, String> sisFirstNameMap = new Map<Id, String>();
@@ -429,6 +434,7 @@ private class ISSP_WS_Test {
             }
         }
         Test.stopTest();
+		*/
     }
     
     static testMethod void NewUser_8() {
@@ -1014,8 +1020,8 @@ private class ISSP_WS_Test {
         Map<Id, String> sisLastNameMap = new Map<Id, String>();
         sisLastNameMap.put(con.id, '1234');
         ISSP_WS_Utilities.invokeSisModifyUser(sisFedIdMap, sisEmailMap, sisFirstNameMap, sisLastNameMap);
-    }
-    
+    } 
+    */
     static testMethod void createNotification_1() {
         List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
         insert errorList;
@@ -1307,7 +1313,7 @@ private class ISSP_WS_Test {
         myInputData.listOfUsers = emailList;
         ISSP_WS_CreateNotification.createNotification(myInputData);
     }
-    */
+    
     public static List <ISSP_Int_Error__c> createErrors(){
         List <ISSP_Int_Error__c> errorList = new List <ISSP_Int_Error__c>();
         ISSP_Int_Error__c newError1 = new ISSP_Int_Error__c();

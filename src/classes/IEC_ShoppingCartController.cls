@@ -173,15 +173,16 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 				//susana alves INC332088
 				//verify if the order don't have related order items
 				Order orderToDelete = storeCart.getCartOrderContent(); 
-				system.debug('orderToDelete : ' + orderToDelete);
-				Boolean canDeleteOrder = !([SELECT count() FROM OrderItem WHERE OrderId = :orderToDelete.Id] > 0);
-				system.debug('canDeleteOrder? : ' + canDeleteOrder);
-				if(canDeleteOrder){
-					// the order don't have related products, so can be deleted
-					system.debug('empty order on the cart to be deleted : ' + storeCart.getCartOrderContent());
-					IECOrder_Svc.deleteOrder(storeCart.getCartOrderContent());
+				if(orderToDelete != null){
+					system.debug('orderToDelete : ' + orderToDelete);
+					Boolean canDeleteOrder = !([SELECT count() FROM OrderItem WHERE OrderId = :orderToDelete.Id] > 0);
+					system.debug('canDeleteOrder? : ' + canDeleteOrder);
+					if(canDeleteOrder){
+						// the order don't have related products, so can be deleted
+						system.debug('empty order on the cart to be deleted : ' + storeCart.getCartOrderContent());
+						IECOrder_Svc.deleteOrder(storeCart.getCartOrderContent());
+					}
 				}
-
 				buildOrderItemFromCookie();
 			}
 

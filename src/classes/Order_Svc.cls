@@ -147,7 +147,7 @@ public without sharing class Order_Svc
                 shipTo.Name                 = Utility.truncate(shipToLocation.Account_Name__c,35);
                 //shipTo.Name                 = Utility.truncate(ord.ShipToContact_Name__c,35);
                 //TC: Enhancement
-                List<String> addressLines 	= Utility.splitAddress(shipToLocation.Street__c, 35);
+                List<String> addressLines   = Utility.splitAddress(shipToLocation.Street__c, 35);
                 shipTo.AddressLine1         = addressLines[0];
                 shipTo.AddressLine2         = addressLines[1];
                 shipTo.City                 = Utility.truncate(shipToLocation.City__c,35);
@@ -252,6 +252,18 @@ public without sharing class Order_Svc
                 orderItemIds.add(oi.Id);
         
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
+        //-- susana
+        //-- Verify if the status of the order is valid before send the order to SAP
+        //-- if the order is not paid and status is Payment Failure, the order cannot be created on SAP
+        /*for(Order o : orderById.values())
+        {   system.debug('Is_Paid__c :: ' + o.Is_Paid__c);
+            system.debug('Status :: ' + o.Status);
+            if(o.Is_Paid__c == false && o.Status == IECConstants.ORDER_STATUS_PAYMENT_FAILURE) //Payment Failure
+            {
+                orderById.remove(o.id);
+                system.debug('order ' + o.id + ' removed from map');
+            }
+        }*/
 
         //-- SFDC <=> SAP Mapping table 
         Map<String, SFDC_SAP_Mapping__c> sapTable = orderSelector.getOrderMapTable();
@@ -734,11 +746,21 @@ public without sharing class Order_Svc
             {
                 contractItem.Quantity  = '1';
                 contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);
+                system.debug('contractItem.UnitPrice ' + contractItem.UnitPrice);
             }
             else
             {
-                contractItem.Quantity  = String.valueOf(ordItem.Quantity);
-                contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+                Decimal decNumber = ordItem.UnitPrice.stripTrailingZeros(); //ENHC0011664 start
+                if(decNumber.scale() >= 3){
+                    contractItem.Quantity = '1';
+                    contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);  //ENHC0011664 end 
+                }
+                else{
+                    contractItem.Quantity  = String.valueOf(ordItem.Quantity);
+                    contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+                
+                }
+                
             }
             contractItem.UnitPriceCurr = ord.CurrencyIsoCode;
             contractItem.DateFrom      = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_Start_Date__c : ord.EffectiveDate);
@@ -1716,7 +1738,8 @@ public without sharing class Order_Svc
                         //System.debug('Kyle Porter Debug subscribe time: ' + DateTime.now());
                         subscribeResults = ZuoraUtil.zsubscribe(subsRequestLists);
                     }
-                    
+
+                    system.debug('##### subscribeResults :: ' + subscribeResults);
                     /*System.debug( 'logger = ' + Zuora.zApi.currentLogger.toString() );
                     if (Zuora.zApi.currentLogger != null) {
                         system.debug('SOAP Request = ' + Zuora.zApi.currentLogger.request );
@@ -1764,7 +1787,7 @@ public without sharing class Order_Svc
                                 orderItemId_subscribeResult.put((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId, null);
                 }
             }
-        
+        system.debug('##### orderItemId_subscribeResult :: ' + orderItemId_subscribeResult);
         return orderItemId_subscribeResult;
     }
 
@@ -1845,6 +1868,7 @@ public without sharing class Order_Svc
                 if(ordItem != null){
                     
                     Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id != null ? ordItem.Id : ordItem.OrderId);
+                    system.debug('##### subResponse :: ' + subResponse);
                     iecOrderId_paymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
 
                     if (subResponse != null && subResponse.Success) {
@@ -1980,7 +2004,7 @@ public without sharing class Order_Svc
                 //*** should not throw exception because no update nor rollback is performed
                 //throw Exception
                 //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' '));
-
+                system.debug('##### itemsStatus in error :: '+itemsStatus);
                 return itemsStatus;
             }
 
@@ -2002,6 +2026,7 @@ public without sharing class Order_Svc
                 Map<Id,Zuora.zApi.SaveResult> resultByOrderId;
                 try {
                     resultByOrderId = createZuoraPayment(orderMap, orderId_Items, orderId_zAccountPaymentMethod, invoiceMap);
+                    system.debug('##### resultByOrderId :: '+resultByOrderId);
                 } catch (Exception e) {}
                 
                 //Parse payment Result
@@ -2013,6 +2038,7 @@ public without sharing class Order_Svc
 
                     //Parse the Zuora payment response and get the Map of Payment Result By orderId
                     Map<Id,String> paymentResultByOrderId = parsePaymentResult(resultByOrderId);
+                    system.debug('##### paymentResultByOrderId :: '+paymentResultByOrderId);
                     if(paymentResultByOrderId != null && !paymentResultByOrderId.isEmpty()){
                         for(String orderId : paymentResultByOrderId.keySet()){
                             String zResult = paymentResultByOrderId.get(orderId);
@@ -2025,20 +2051,27 @@ public without sharing class Order_Svc
                                 for (OrderItem oi : orderId_Items.get(orderId))
                                     if (oi.Id != null && itemsStatus.containsKey(oi.Id))
                                         itemsStatus.put(oi.Id, 'Failed: ' + zResult);
+
+                                system.debug('##### itemsStatus failed :: '+itemsStatus);
                             }
                         }
                     }
                     
                     if(paymentIds != null && paymentIds.size() > 0){
+                        system.debug('##### paymentIds :: '+paymentIds);
+                        system.debug('##### orderMap :: '+orderMap);
                         //Get the detail for the payment from Zuora
                         List<Zuora.zObject> zPaymentsDetails = getZuoraPayments(paymentIds,orderMap);
-
+                        system.debug('##### zPaymentsDetails :: '+zPaymentsDetails);
                         //Get the payment details
                         if(zPaymentsDetails != null && zPaymentsDetails.size() > 0){
                             for(Zuora.zObject payment : zPaymentsDetails){
                                 
                                 String paymentStatus = (String)payment.getValue('Status');
                                 String OrderId = (String)payment.getValue('SFDCOrderId__c');
+
+                                system.debug('##### paymentStatus :: '+paymentStatus);
+                                system.debug('##### OrderId :: '+OrderId);
                                 
                                 Order order2Update = orderMap.get(OrderId);
                                 ZuoraUtil.zAccountPaymentMethod zapm = orderId_zAccountPaymentMethod.get(OrderId);
@@ -2048,20 +2081,24 @@ public without sharing class Order_Svc
                                     order2Update.Payment_Type__c = zapm.zPaymentMethodName;
                                     order2Update.Zuora_Credit_Card_Id__c = zapm.zPaymentMethod;
                                 }
-
+                                system.debug('###### paymentStatus :: ' + paymentStatus);
                                 if(paymentStatus != null && paymentStatus.contains('Error')){
                                     
                                     //Get the payment error message
+                                    String GatewayResponse = (String)payment.getValue('GatewayResponse');
                                     String GatewayResponseCode = (String)payment.getValue('GatewayResponseCode');
                                     String GatewayState = (String)payment.getValue('GatewayState');
                                     String paymentError = (String)payment.getValue('GatewayResponse');
-                                    
-                                    //Delete all of the Subscription on Zuora
-                                    orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode);
-                                }
 
+                                    //order2Update.Status = 'Payment Failure';
+                                    //order2Update.Is_Paid__c = false;
+
+                                    //Delete all of the Subscription on Zuora
+                                    orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode + ', GatewayResponse : ' + GatewayResponse);
+                                }
+                                system.debug('##### orderIdsForFailedSub :: '+orderIdsForFailedSub);
                                 if (!orderAlreadyToUpdate.contains(order2Update.Id))
-                                {
+                                {   system.debug('##### orderAlreadyToUpdate :: '+orderAlreadyToUpdate);
                                     orderAlreadyToUpdate.add(order2Update.Id);
                                     orderToUpdate.add(order2Update);
                                 }
@@ -2074,9 +2111,10 @@ public without sharing class Order_Svc
                     for (Id idOrder : orderMap.keySet())
                         orderIdsForFailedSub.put(idOrder, 'Exception on payment');
                 }
-
+                system.debug('##### orderIdsForFailedSub :: '+orderIdsForFailedSub);
                 //Throw exception if the transaction failed
                 if(orderIdsForFailedSub.size() > 0){
+                    system.debug('Payment Failure - Error on credit card');
                     //Update order if an error occur
                     if(orderToUpdate.size() > 0)
                         update orderToUpdate;
@@ -2100,6 +2138,7 @@ public without sharing class Order_Svc
                     //*** should not throw exception because no update nor rollback is performed
                     //throw Exception
                     //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' ') );
+                    system.debug('##### itemsStatus in error 2 :: '+itemsStatus);
                     return itemsStatus;
                 }
 
@@ -2116,7 +2155,7 @@ public without sharing class Order_Svc
         if(orderItemsToUpdate.size() > 0){
             update orderItemsToUpdate;
         }
-
+        system.debug('##### itemsStatus :: '+itemsStatus);
         return itemsStatus;
     }
 
@@ -2194,6 +2233,7 @@ public without sharing class Order_Svc
         {
             try{
                 lstPayments = IECZuoraHelper.queryApiCall(query);
+                system.debug('##### lstPayments :: '+lstPayments);
             }catch(Exception ex){
                 //Log the payment exception
                 IEC_Error_Log__c errorLog = IECErrorLogger.createErrorLog('Order_Svc/getZuoraPayments',query,ex.getMessage(),ex.getStackTraceString());
@@ -2310,7 +2350,7 @@ public without sharing class Order_Svc
             lstOrder.add(order);
 
         }
-
+        system.debug('##### lstInvoicePayment :: ' + lstInvoicePayment);
         if(lstInvoicePayment.size() > 0){
             if(!Test.isRunningTest()){
                 try{
@@ -2332,20 +2372,22 @@ public without sharing class Order_Svc
                     resultByOrderId.put(lstOrder[i].Id, lstResults[i]);
             }
         }
-
+        system.debug('##### resultByOrderId :: ' + resultByOrderId);
         return resultByOrderId;
     }
 
     //Delete zuora Subscription when an error occur
     @future(callout = true)
     public static void deleteZuoraSubscription(set<Id> orderIds){
+        system.debug('deleteZuoraSubscription');
         deleteZuoraSubscriptionNow(orderIds);
     }
     public static void deleteZuoraSubscriptionNow(set<Id> orderIds){
-        
+        system.debug('deleteZuoraSubscriptionNow');
         map<Id,Order> orderMap = new Order_Sel().getOrderByStatus(orderIds);
         Map<Id, List<OrderItem>> orderId_Items = new OrderItem_Sel().getOrderItems(orderIds);
-
+        system.debug('#### orderMap :: '+orderMap);
+        system.debug('#### orderId_Items :: '+orderId_Items);
         //List of Zuora Subscription to delete
         set<String> sub2Delete = new set<String>();
         //
@@ -2361,6 +2403,10 @@ public without sharing class Order_Svc
         for(Id orderId:orderId_Items.keySet()){
             
             Order order = orderMap.get(orderId);
+            system.debug('#### Zuora_Transaction_Id__c :: '+order.Zuora_Transaction_Id__c);
+            system.debug('#### IEC_Zuora_ST_SubscriptionId__c :: '+order.IEC_Zuora_ST_SubscriptionId__c);
+            system.debug('#### IEC_Zuora_ST_InvoiceId__c :: '+order.IEC_Zuora_ST_InvoiceId__c);
+
             if(order.Zuora_Transaction_Id__c != null){ refId.add(order.Zuora_Transaction_Id__c); }
 
             if(order.IEC_Zuora_ST_SubscriptionId__c != null)
@@ -2369,24 +2415,33 @@ public without sharing class Order_Svc
                 inv2Delete.add(order.IEC_Zuora_ST_InvoiceId__c);
 
             list<OrderItem> ordItems = orderId_Items.get(orderId);
+            system.debug('#### ordItems :: '+ordItems);
+
             if(ordItems != null && ordItems.size() > 0){
                 for(OrderItem oi : ordItems){
                     //orderItemIds.add(oi.Id);
                     if(oi.Zuora_SubscriptionId__c != null){
+                        system.debug('#### oi.Zuora_SubscriptionId__c :: '+oi.Zuora_SubscriptionId__c);
                         sub2Delete.add(oi.Zuora_SubscriptionId__c);
                         orderItemIdBySubId.put(oi.Id,oi.Zuora_SubscriptionId__c);
                         orderItemByOrderId.put(oi.Id, orderId);
                     }
                     if(oi.Zuora_InvoiceId__c != null){
+                        system.debug('#### oi.Zuora_InvoiceId__c :: '+oi.Zuora_InvoiceId__c);
                         inv2Delete.add(oi.Zuora_InvoiceId__c);
                     }
                 }
             }        
         }
 
+        system.debug('#### refId :: '+refId);
+        system.debug('#### sub2Delete :: '+sub2Delete);
+        system.debug('#### inv2Delete :: '+inv2Delete);
+
         //Change the Payments status to Cancel 
         List<Zuora.zObject> paymentCancel = new List<Zuora.zObject>();
         for(String payId : refId){
+            system.debug('#### cancel payment');
             Zuora.zObject payment = new Zuora.zObject('Payment');
             payment.setValue('Id',payId);
             payment.setValue('Status','Canceled');
@@ -2394,11 +2449,24 @@ public without sharing class Order_Svc
         }
         try{
             if(paymentCancel.size() > 0)
-            {
+            {   system.debug('paymentCancel' + paymentCancel);
                 List<Zuora.zApi.SaveResult> updatePay = ZuoraUtil.zupdate(paymentCancel);
                 System.debug('updatePay ' + updatePay);
+                /*
+                for (Zuora.zApi.SaveResult result : updatePay) {
+                    System.debug('updatePay ' + updatePay);
+                    if (!result.Success){
+                        Zuora.zObject[] errors = result.errors;
+                         for (Zuora.zObject error : errors) {
+                            String errorCode = (String)error.getValue('Code');
+                            String message = (String)error.getValue('Message');
+                         }
+                    }
+                }*/
+                
             }
         }catch(Exception ex){
+            system.debug('#### exception on payment :: ' + ex.getMessage()+ ' - ' +ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(paymentCancel),ex.getMessage(),ex.getStackTraceString()));
         }
 
@@ -2406,23 +2474,31 @@ public without sharing class Order_Svc
         List<String> invIds = new List<String>();
         invIds.addAll(inv2Delete);
 
+        system.debug('###### invIds :: '+invIds);
+
         List<Zuora.zObject> invoicesCancel = new List<Zuora.zObject>();
         for(String invId : invIds){
+            system.debug('#### cancel invoice');
             Zuora.zObject invoice = new Zuora.zObject('Invoice');
             invoice.setValue('Id',invId);
             invoice.setValue('Status','Draft');
             invoicesCancel.add(invoice);
         }
+
+        system.debug('###### invoicesCancel :: '+invoicesCancel);
+
         try{
             if(invoicesCancel.size() > 0)
-            {
+            {   system.debug('####### invoicesCancel');
                 List<Zuora.zApi.SaveResult> updateInv = ZuoraUtil.zupdate(invoicesCancel);
                 System.debug('updateInv ' + updateInv);
                 for(Zuora.zObject inv : invoicesCancel)
                     inv.setValue('Status','Canceled');
                 updateInv =  ZuoraUtil.zupdate(invoicesCancel);
+                system.debug('###### updateInv :: '+updateInv);
             }
         }catch(Exception ex){
+            system.debug('#### exception on invoice :: ' + ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(invoicesCancel),ex.getMessage(),ex.getStackTraceString()));
         }
 
@@ -2489,8 +2565,10 @@ public without sharing class Order_Svc
         //Delete Payments
         try{
             if(refId.size() > 0){ List<Zuora.zApi.DeleteResult> deleteTrans = ZuoraUtil.zdelete('Payment',refId); 
+            system.debug('#### deleteTrans :: '+deleteTrans);
             }
         }catch(Exception ex){
+            system.debug('#### exception on deleteTrans :: ' + ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(refId),ex.getMessage(),ex.getStackTraceString()));
         }
         
@@ -2498,24 +2576,30 @@ public without sharing class Order_Svc
         try{
             if(invIds.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteInv = ZuoraUtil.zdelete('Invoice',invIds);
+                system.debug('#### deleteInv :: '+deleteInv);
             }
         }catch(Exception ex){
+            system.debug('#### exception on deleteInv :: ' + ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(invIds),ex.getMessage(),ex.getStackTraceString()));
         }
         
         List<String> ids = new List<String>();
         ids.addAll(sub2Delete);
+        system.debug('#### ids :: '+ids);
         try{
             if(ids.size() > 0){
                 List<Zuora.zApi.DeleteResult> deleteSub = ZuoraUtil.zdelete('Subscription',ids);
+                system.debug('#### deleteSub :: '+deleteSub);
             }
                 
         }catch(Exception ex){
+            system.debug('#### exception on deleteSub :: ' + ex.getStackTraceString());
             lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(ids),ex.getMessage(),ex.getStackTraceString()));
         }
 
         //Log errors
         if(lstErrors.size() > 0) IECErrorLogger.logErrors(lstErrors);
+        system.debug('#### lstErrors :: ' + lstErrors);
 
     }
 
@@ -2523,6 +2607,7 @@ public without sharing class Order_Svc
     public static void orderItemsToUpdateInZuora(Set<Id> orderIds){
         //get the Pending Activation items
         List<OrderItem> pendingOrderItems = new OrderItem_Sel().getOrdersItemsPendingActivation(orderIds);
+        system.debug('#### pendingOrderItems :: ' + pendingOrderItems);
         if(pendingOrderItems != null && pendingOrderItems.size() > 0){
             //process the Pending Activation items by batch
             IEC_ZuoraSubscriptionActivation_Batch batch = new IEC_ZuoraSubscriptionActivation_Batch(pendingOrderItems);
@@ -2536,7 +2621,7 @@ public without sharing class Order_Svc
 
         //List of Subscription to Actived
         List<Zuora.zObject> lstZsubscriptionToUpdate = new List<Zuora.zObject>();
-
+        system.debug('#### updateZsubscriptions :: ' + orderItems);
         for(OrderItem oi : orderItems){
             Zuora.zObject zSubscription = new Zuora.zObject('Subscription');
             zSubscription.setValue('Id', oi.Zuora_SubscriptionId__c);
@@ -3774,7 +3859,7 @@ public without sharing class Order_Svc
         Create order and order items for auto renewal
     ****************************************************************************************************/
     public static List<OrderItem> createAutoRenewalOrders(IEC_Event_Release__c eventRelease, List<IEC_Event_Subscription__c> subscriptions){
-        
+        system.debug('##### createAutoRenewalOrders :: ');
         List<Order> lstOrder = new List<Order>();
         map<Id,Contact> contactMap = new map<Id,Contact>();
         map<Id,Id> userIdByContactId = new map<Id,Id>();
@@ -3782,6 +3867,9 @@ public without sharing class Order_Svc
         List<IEC_Event_Release_Log__c> lstErrors = new List<IEC_Event_Release_Log__c>();
 
         List<OrderItem> orderItems = new List<OrderItem>();
+
+        system.debug('##### eventRelease :: '+eventRelease);
+        system.debug('##### subscriptions :: '+subscriptions);
 
         //Get a map of Event subscription by subscriber
         for(IEC_Event_Subscription__c subscription : subscriptions){
@@ -3821,7 +3909,8 @@ public without sharing class Order_Svc
                 lstErrors.add(IEC_EventReleaseLog_Svc.logError(msg, '', null, eventRelease.Id, 'Create order', subscription.Subscriber__c, subscription.Id, false));
             }
         }
-              
+        system.debug('##### lstOrder :: '+lstOrder);
+        system.debug('##### lstErrors :: '+lstErrors); 
         if(lstOrder.size() > 0){
 
             set<Id> orderIds = new set<Id>();
@@ -3841,13 +3930,13 @@ public without sharing class Order_Svc
 
             //Get the inserted orders
             list<Order> insertedOrders = Order_Sel.getOrdersById(orderIds);
-            
+            system.debug('##### insertedOrders :: '+insertedOrders);
             //Create orderItem for each order
             set<Id> orderItemIds = new set<Id>();
             if(insertedOrders != null && insertedOrders.size() > 0){
                 orderItemIds = createOrderItemsForAutoRenewal(eventRelease, insertedOrders, contactId_EventSubscription);
             }
-
+            system.debug('##### orderItemIds :: '+orderItemIds);
             //Set the event release Sales amount and quatity
             Map<Id,OrderItem> orderItemsById = new OrderItem_Sel().getOrdersItemsById(orderItemIds);
             orderItems.addAll(orderItemsById.values());
@@ -3855,7 +3944,8 @@ public without sharing class Order_Svc
 
         //Log errors
         if(lstErrors.size() > 0) insert lstErrors;
-
+        system.debug('##### orderItems :: '+orderItems);
+        system.debug('##### lstErrors :: '+lstErrors); 
         return orderItems;
 
     }
@@ -4129,5 +4219,72 @@ public without sharing class Order_Svc
         }
     }
 
+     /*******************************************************************
+        Updating IEC SAP INVOICE when ORDER Status is Payment Confirmed
+        
+        INC295559
+         checking if all the orders related to the Invoice are with status Payment Confirmed.
+         IF Yes :
+            - we will change the IEC SAP Invoice status to Zuora Ready
+         IF No:
+            - nothing happens with the IEC SAP Invoice Status
+        
+      *******************************************************************/
+    public static void sapInvoiceStatusUpdate(Map<Id, Order> newMap, Map<Id, Order> oldMap){
+        system.debug('sap invoice status update starting...');
+     
+        Set<Id> orderId = new Set<Id>();
+        List<IEC_SAP_Invoice__c> sapInvoice = new List<IEC_SAP_Invoice__c>();
+        List<IEC_SAP_Invoice__c> sapInvoiceToUpdate = new List<IEC_SAP_Invoice__c>();
+
+        Set<Id> sapInvoiceId = new Set<Id>();
+        List<Order> orderList = new List<Order>();
+        Boolean stopSapInvoiceUpdate = false;
+
+        for (Order order : newMap.values()) {
+                Order oldOrder = oldMap.get(order.Id);
+
+                if(order.Status == IECConstants.ORDER_PAYMENT_CONFIRMED
+                    && oldOrder != null && oldOrder.Status != order.Status 
+                    && (Order.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer || Order.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)){
+                    
+                    if(order.SAP_Invoice__c != null)
+                        sapInvoiceId.add(order.SAP_Invoice__c);
+                }
+        }
+
+        system.debug('##### orderItems :: '+sapInvoiceId);
+        
+        if(sapInvoiceId.size() > 0){
+            orderList = [SELECT id, SAP_Invoice__c, Status FROM Order where SAP_Invoice__c IN :sapInvoiceId];
+            system.debug('##### orderList :: '+orderList); 
+            if(!orderList.isEmpty()){
+                for(Order o : orderList){
+                    if(o.Status != IECConstants.ORDER_PAYMENT_CONFIRMED){
+                        stopSapInvoiceUpdate = true;
+                    }
+                }
+            }
+            
+            system.debug('stopSapInvoiceUpdate ' + stopSapInvoiceUpdate);
+            
+            if(!stopSapInvoiceUpdate){ // all the related orders have the status Payment Confirmed
+                sapInvoice = [SELECT id, Order__c, Billing_Account__r.Zuora__External_Id__c FROM IEC_SAP_Invoice__c where Id IN :sapInvoiceId];
+
+                if(!sapInvoice.isEmpty()){
+                    for(IEC_SAP_Invoice__c sapInv : sapInvoice){
+                        sapInv.Status__c = IECConstants.IECSAPInvoice_Status_ZuoraReady;
+                        sapInv.Payment_Date__c = Date.today();
+                        sapInv.Zuora_Billing_Account_ID__c = sapInv.Billing_Account__r.Zuora__External_Id__c;
+                        sapInvoiceToUpdate.add(sapInv);
+                    }
+                }
+                if(!sapInvoiceToUpdate.isEmpty())
+                    update sapInvoiceToUpdate;
+            }
+        }
+        system.debug('##### sapInvoiceToUpdate ' + sapInvoiceToUpdate);
+
+    }
 
 }

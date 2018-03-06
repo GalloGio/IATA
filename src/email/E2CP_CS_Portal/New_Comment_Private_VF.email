@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="Case: {!relatedTo.CaseNumber} {!relatedTo.Subject} {!relatedTo.E2CP__Case_Thread_Id__c}" recipientType="User" relatedToType="Case">
+<messaging:plainTextEmailBody >
+A new *private* comment has been added to this case:
+{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)+relatedTo.Id}
+
+{!relatedTo.E2CP__Most_Recent_Private_Comment__c}
+
+
+{!relatedTo.E2CP__HistoryText__c}
+
+***************************
+Case: {!relatedTo.CaseNumber}
+Country concerned by the query: {!relatedTo.Country_concerned_by_the_query__c}
+Status: {!relatedTo.Status}
+Priority Level: {!relatedTo.Priority}
+
+
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

@@ -265,7 +265,7 @@
                 <field>Dossier_Validation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_validate__c</field>
             </layoutItems>
         </layoutColumns>
@@ -292,7 +292,7 @@
                 <field>RPM_Approval__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_approval__c</field>
             </layoutItems>
         </layoutColumns>
@@ -363,10 +363,6 @@
                 <behavior>Edit</behavior>
                 <field>Country_Specifics_Approval_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Change_effective_as_of__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -384,10 +380,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Storage_performed__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Update_AIMS_Approval_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -426,10 +418,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Update_AIMS_Disapproval_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Close_IFAP_Disapproval_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -459,10 +447,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Update_AIMS_Rejection_Date__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Close_IFAP_Rejection_Date__c</field>

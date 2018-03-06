@@ -7,19 +7,20 @@
 global class IECConstants {
 
   //Order Status : add by CGI - David D 2015-10-16
-  public static final String ORDER_STATUS_PAID       =  'Paid';
+  public static final String ORDER_STATUS_PAID       =  'Paid';//Used for credit card only
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
   public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
   public static final String ORDER_STATUS_CHECK = 'Check';
   public static final String ORDER_STATUS_PENDING_PAYMENT = 'Pending Payment';
   public static final String ORDER_STATUS_PAYMENT_FAILURE = 'Payment Failure';
+  public static final String ORDER_STATUS_INVOICED = 'Invoiced';
 
   public static final String ORDER_TYPE_QUOTE = 'Quote';
   public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
   public static final String ORDER_TYPE_AUTORENEWAL = 'Subscription'; //Event Auto-Renew
 
 
-  public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';
+  public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';//Used for bank transfer
 
   // Zuora Payment Method
   public static final String ZUORA_PAYMENT_METHOD_PREFIX_CREDIT_CARD = 'Credit Card';

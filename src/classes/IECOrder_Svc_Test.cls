@@ -64,7 +64,7 @@ private class IECOrder_Svc_Test {
             system.runAs(oUser)
             {
                 //*** cover method "validateQuoteNumberToConvert"
-                system.assertEquals(IECOrder_Svc.validateQuoteNumberToConvert(oOrder.OrderNumber, oUser.Id), false);
+                system.assertEquals(IECOrder_Svc.validateQuoteNumberToConvert(oOrder.OrderNumber, oUser.Id, oContact.Id), false);
 
                 //*** cover method "changePenddingOrder"
                 IECOrder_Svc.changePenddingOrder(oOrder);

@@ -27,7 +27,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '', 'SE BSP RM 2011/02D 8021244', '2011-03-16 10:51:00', 'Approved',
-                                                              'Double Irregularity','Short Payment', '2011-03-15 18:00:00');
+                                                              'Double Irregularity','Short Payment', '2011-03-15 18:00:00', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -38,7 +38,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '', '8021244', '2011-03-16 10:51', 'Approved',
-                                                              'Double Irregularity','Short Payment', '');
+                                                              'Double Irregularity','Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -48,7 +48,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00', 'Approved',
-                                                              'Double Irregularity', 'Short Payment', '');
+                                                              'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -58,7 +58,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00', 'Approved',
-                                                              'Double Irregularity', 'Short Payment', '');
+                                                              'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -68,7 +68,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00', 'Approved',
-                                                              'Double Irregularity', 'Short Payment', '');
+                                                              'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -78,7 +78,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -88,7 +88,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','shnhsh', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -98,7 +98,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'tjshvbs', 'Short Payment', '');
+                                                              'Approved', 'tjshvbs', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -108,7 +108,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-15-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -118,7 +118,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-30 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -127,7 +127,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-15-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -137,7 +137,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-15-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -147,7 +147,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-15-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -157,7 +157,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Groupon', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -167,7 +167,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSPddd', '8021244',
                                                               'Group', '2011/02D', '2011-02-15 18:00:00', '2011-02-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '17768.0', '8021244', '2011-03-16 10:51:00',
-                                                              'Approved', 'Double Irregularity', 'Short Payment', '');
+                                                              'Approved', 'Double Irregularity', 'Short Payment', '', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -177,7 +177,7 @@ private class SIDRARnSIntegrationWS_Test {
                                                               'Follow Up Remittance 2011/02D 8021244 SYDAFRIKARESOR I HELSINGBORG AB','Nordic & Baltic', 'BSP', '8021244',
                                                               'Group', '2011/02D', '2011-03-15 18:00:00', '2011-03-15 18:00:00', '2011-03-17 18:00:00', 'SEK', '17768.0',
                                                               '17768.0', '0.0', '17768.0', '0.0', '', 'SE BSP RM 2011/02D 8021244', '2011-03-16 10:51:00', 'Approved',
-                                                              'Double Irregularity','Short Payment', '2011-13-15 18:00:00');
+                                                              'Double Irregularity','Short Payment', '2011-13-15 18:00:00', '123.45', '678.90');
 
         system.assertNotEquals(RetVal, '');
     }
@@ -193,7 +193,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '', '0', '0');
 
         Test.stopTest();
     }
@@ -207,7 +207,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '', '0', '0', '0', '0', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '', '0', '0', '0', '0', '0', '', '0', '0');
 
         Test.stopTest();
     }
@@ -221,7 +221,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '', '0', '0', '0', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '', '0', '0', '0', '0', '', '0', '0');
 
         Test.stopTest();
     }
@@ -235,7 +235,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '', '0', '0', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '', '0', '0', '0', '', '0', '0');
 
         Test.stopTest();
     }
@@ -249,7 +249,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '', '0', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '', '0', '0', '', '0', '0');
 
         Test.stopTest();
     }
@@ -263,13 +263,41 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '', '0', '', '0', '0');
 
         Test.stopTest();
     }
 
     static testMethod void UpdateCaseNullBadCaseNumber(){
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase('11240044', '0', '0', '0', '0', '', '0', '');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase('11240044', '0', '0', '0', '0', '', '0', '', '0', '0');
+    }
+    
+    static testMethod void UpdateCaseInvalidGDIPremium(){
+        Test.startTest();
+        Case aCase = new Case();
+        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.Subject = 'Test Case Subject';
+        insert aCase;
+
+        Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
+
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '', '', '0');
+
+        Test.stopTest();
+    }
+    
+    static testMethod void UpdateCaseInvalidAgencyFees(){
+        Test.startTest();
+        Case aCase = new Case();
+        acase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        acase.Subject = 'Test Case Subject';
+        insert aCase;
+
+        Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
+
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '', '0', '');
+
+        Test.stopTest();
     }
 
     static testMethod void UpdateCaseInvalidLateDatePayment(){
@@ -281,7 +309,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
 
-        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '2011-13-15 18:00:00');
+        string RetVal = SIDRARnSIntegrationWS.UpdateCase(theCase[0].CaseNumber, '0', '0', '0', '0', '0', '0', '2011-13-15 18:00:00', '0', '0');
 
         Test.stopTest();
     }

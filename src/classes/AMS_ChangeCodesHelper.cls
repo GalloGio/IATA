@@ -138,10 +138,20 @@ public class AMS_ChangeCodesHelper {
 
         Integer index = 0;
 
-        Set<Account> accountsToUpdate = new Set<Account>();        
-        
+        Set<Account> accountsToUpdate = new Set<Account>();
+
+        Set<Id> accountIds = new Set<Id>();
+        for(Account acc: oscarAgencies)
+            accountIds.add(acc.Id);
+
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
-        
+
+        // get the forms of payment for all accounts involved in the changes to display on eBulletin
+        Map<Id,List<Agency_Authorization__c>> fOPs = null;
+
+        //if(AMS_Utils.isNewGenProcess)
+        if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c)
+            fOPs = fetchFormsOfPayment(accountIds);
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
@@ -159,11 +169,15 @@ public class AMS_ChangeCodesHelper {
             
             if(objectChanges != null && !objectChanges.isEmpty())
                 objectChangesByChangeCode = objectChanges.get(index);
-            
-            ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive);
+
+            List<Agency_Authorization__c> accFOPs = null;
+
+            if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c)
+                accFOPs = fOPs.get(oscarAgencies.get(index).Id);
+
+            ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive, accFOPs);
 
             aaccToInsert.add(changeCodeResult.changeCode);
-            
         
             aaccHistoryToProcess.put(oscarAgencies.get(index).Id, changeCodeResult);
             aaccHistoryPerAcct.put(oscarAgencies.get(index).Id, changeCodeResult);
@@ -179,7 +193,7 @@ public class AMS_ChangeCodesHelper {
 
         List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
 
-        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
+        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts) && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
                 update accountsToUpdateList;
         }
@@ -252,7 +266,7 @@ public class AMS_ChangeCodesHelper {
      Add Change Code to be Created NeW method with Change Code History
     */
 
-    private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive, List<Agency_Authorization__c> fOPs) {
 
 
         Id oscarId = null;
@@ -273,6 +287,7 @@ public class AMS_ChangeCodesHelper {
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
             , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
+            , Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen__c)
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
@@ -329,7 +344,7 @@ public class AMS_ChangeCodesHelper {
         
         if(oscar != null){
 
-            if( aacNEW.Change_Code__c == 'NEW' ){
+            if( aacNEW.Change_Code__c == 'NEW' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning){
                 oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
@@ -337,15 +352,15 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
                 
-
-            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+            //RB 20180118: The below field should only be populated when CER change code gets generated
+            /*if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
-            }
+            }*/
                    
 
         }
@@ -382,7 +397,7 @@ public class AMS_ChangeCodesHelper {
     */
    
     private static ChangeCodeStruct createAAChangeCode(AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
-        return createAAChangeCode( null, changeCode, oscar, oscarAgency, isActive);
+        return createAAChangeCode( null, changeCode, oscar, oscarAgency, isActive, null);
     }
 
 
@@ -417,20 +432,24 @@ public class AMS_ChangeCodesHelper {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null
-					&& !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
-                    (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
-                    ) {
+                if (accToUpdateStatus != null) {
+
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
-                    changeCodes.add(changeCode);
+                    
+                    if(changeCode != null) {
 
-                    /*if (changeCode.status != null) {
-                        system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
-                        accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
-                    }*/
+                        changeCodes.add(changeCode);
 
-                    accts.add(accToUpdateStatus);
-                    oscars.add(oscar);
+                        /*if (changeCode.status != null) {
+                            system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
+                            accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
+                        }*/
+
+                        accts.add(accToUpdateStatus);
+                        oscars.add(oscar);
+
+                    }
+
                 }
             }
 
@@ -615,6 +634,46 @@ public class AMS_ChangeCodesHelper {
             else return false;
         }
         return false;
+    }
+
+    public static String generateFOPString(List<Agency_Authorization__c> fOPs, Boolean isNewGen){
+
+        String fopString = isNewGen ? '' : 'Not Applicable';
+
+        String authRelabel;
+        List<String> orderedFOPs = new List<String>();
+
+        if(fOPs != null && !fOPs.isEmpty() && isNewGen){
+            for(Agency_Authorization__c fop : fOPs) {
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
+                orderedFOPs.add(authRelabel);
+            }
+            
+            orderedFOPs.sort();
+            
+            for(String fop: orderedFOPs){
+                fopString += fop + ' - ';
+            }
+
+            fopString = fopString.removeEnd(' - ');
+        }
+
+        return fopString;
+    }
+
+    public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
+
+        Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
+            if(fOPs.keySet().contains(fop.Account__c))
+                fOPs.get(fop.Account__c).add(fop);
+            else
+                    fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
+        }
+
+        return fOPs;
     }
 
 }

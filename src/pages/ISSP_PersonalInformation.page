@@ -193,6 +193,18 @@
                                     </span>
                                 </div>
                             </div>
+                            <div class="row form-group">
+                                <div class="col-md-4" style="padding-left:28px">
+                                    <label class="lbl" for="exampleInputEmail1">{!$ObjectType.Contact.fields.Authorized_Signatory__c.Label}</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <apex:outputField value="{!con.Authorized_Signatory__c}" rendered="{!NOT(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    <apex:inputField styleclass="editMode" value="{!con.Authorized_Signatory__c}" rendered="{!(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    <span class="saveMode">
+                                        <apex:outputField value="{!con.Authorized_Signatory__c}" rendered="{!(con.User_Portal_Status__c == 'Approved Admin')}"/>
+                                    </span>                                    
+                                </div>
+                            </div>
                             <!-- end row -->
                             <div class="row form-group">
                                 <div class="col-md-4" style="padding-left:28px">

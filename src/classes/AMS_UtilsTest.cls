@@ -715,18 +715,100 @@ private class AMS_UtilsTest {
         System.assertEquals ([SELECT COUNT() FROM Agency_Applied_Change_code__c WHERE Change_Code__C = 'IEP' AND Account__r.Id = :acct.Id], 1, '1 IEP change code should have been generated');
 
         //assert no update was generated
-        System.assertEquals([SELECT COUNT() FROM AMS_Agency_Updates__c WHERE Account__r.name = :acct.Id], 0, 'No updates should be generated for IEP change code');
+        System.assertEquals([SELECT COUNT() FROM AMS_Agency_Updates__c WHERE Account__r.name = :acct.Id  AND Integration_System__c = 'SAP PI' ], 0, 'No updates should be generated for IEP change code');
 
         Test.stopTest();
 
     }
-    
-    @isTest static void testCaseChildHelperFake(){
 
-        CaseChildHelper.newgenfakemethod();
-
+     @isTest static void CustomChangeIntegrations(){
+        AMS_ChangeCodes_Integration__c aci = new AMS_ChangeCodes_Integration__c(name = 'test', RecId_A__c= 'A', RecId_B__c='B', RecId_Res__c='C');
+        insert aci;
+        String sRes = AMS_Utils.getRecIdFromIntegrationMatriz('A', 'B');
+        System.assertEquals(sRes, 'C');
+        String statusDesc = AMS_Utils.overrideEBulletinStatusDescr('Cash basis/no commission');
+        System.assertEquals(statusDesc, 'DEFAULT/SUSPENSION');
+        statusDesc = AMS_Utils.overrideEBulletinStatusDescr('Cash basis/with commission');
+        System.assertEquals(statusDesc, 'REVIEW/STDS REMOVAL/NOTICE OF TERMINATION');        
      }
-            static testMethod void fakeTest(){
-            AMS_Utils.fakeMethod();     
-  } 
+
+     @isTest static void  copyDataFromAccount(){        
+        Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+        List<AMS_Pax_Accreditation_Form__c> onlineAccredsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
+        String SECTORPAX = 'Travel Agent';
+        String CATEGORYPAX = 'IATA Passenger Sales Agent';
+        String LOCCLASSPAX = 'P';
+
+        String SECTORCASS = 'Cargo Agent';
+        String CATEGORYCASS = 'IATA Cargo Sales Agent';
+        String LOCCLASSCASS = 'C';
+
+        String CHANGELOCATIONTYPE = 'Location type';
+        String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
+        String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
+
+        Boolean isPax = true;
+
+        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+        insert italy;
+
+
+        Account A1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
+                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
+                         );
+
+        insert A1;
+
+        Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = A1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
+
+        insert C1;
+
+        createCaseAndOSCAR(A1,C1);
+
+        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c,AMS_Online_Accreditation__c, Process__c, Type_of_change__c from AMS_OSCAR__c];
+        Set<Id> accountIds = (new Map<Id, Account>([Select id from Account])).keySet();
+        AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = [Select id, Account_Name__c, Short_Name__c, Trade_Name__c,ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c, Branch_Office_Street_name_number__c,Website__c, 
+        Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Country__c, IATA_ISO_State__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_Email__c, Branch_Office_Phone__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c,
+        Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
+        Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c, ISSP_AMS_Legal_Status__c, ISSP_AMS_GDS_with_signed_contract__c from AMS_Pax_Accreditation_Form__c where id = :oscarLst[0].AMS_Online_Accreditation__c];
+       // Id oscarAccountParent = oscarLst.get(oscarLst[0].Account__c).ParentId;
+       // Set<Id> accAffected = new Set<Id> {oscarLst[0].Account__c, oscarAccountParent};
+        Map<Id, Account> getAccounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+                BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
+                ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+                Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
+                Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name
+                 FROM Account WHERE Id IN :accountIds]);
+        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscarLst[0], accountIds, 'Ownership to non-IATA Agent;  Minor Shareholding', getAccounts, oscarOnlineAccreditation));
+        onlineAccredsToUpdate.add(AMS_Utils.CopyDataFromAccountToStaging(AMS_UTILS.OWNERSHIP_IATA, A1, oscarOnlineAccreditation));
+
+        //------------------------modifyInspectionStatus-----------------------
+        AMS_Person__c per = new AMS_Person__c(Lastname__c = 'Teste');
+        insert per;
+        AMS_Account_Role__c ao1 = new AMS_Account_Role__c(Account__c = A1.id, Person__c = per.id);
+        insert ao1;
+        List<AMS_Inspection__c> allInspectionsToUpdate = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=A1.id,Accreditation_Endorsement_Status_code__c = '0');
+        insert ins1;
+        List<AMS_Inspection__c> lins = new List<AMS_Inspection__c>();
+        lins.add(ins1);
+        allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(lins, '0'));
+
+        //isAMSProfile
+        AMS_Utils.isAMSProfile(rtAgency);
+        //getChangeCodeMemoText
+        String result = AMS_Utils.getChangeCodeMemoText(AMS_Utils.new_AHA_BSP, 'DIS');
+
+        //BlobToBytes
+        String myString = 'StringToBlob';
+        Blob myBlob = Blob.valueof(myString);
+        AMS_Utils.BlobToBytes(myBlob);
+        //findGapInRange
+        List<Integer> orderedSlotsOccupied = new List<Integer>();
+        orderedSlotsOccupied.add(1);orderedSlotsOccupied.add(6);
+        AMS_Utils.findGapInRange(1,10,orderedSlotsOccupied);
+     }
 }

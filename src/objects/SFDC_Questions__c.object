@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Stores script questions, with guidance</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
@@ -62,24 +59,29 @@
         <description>Only includes Radio Button today, as that is what the scoring supports.  When multiple answers can be chosen a multi select option can be added.</description>
         <externalId>false</externalId>
         <label>Answer Format</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Radio Button</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Checkbox</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Free text</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Radio Button</fullName>
+                    <default>true</default>
+                    <label>Radio Button</label>
+                </value>
+                <value>
+                    <fullName>Checkbox</fullName>
+                    <default>false</default>
+                    <label>Checkbox</label>
+                </value>
+                <value>
+                    <fullName>Free text</fullName>
+                    <default>false</default>
+                    <label>Free text</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Help__c</fullName>
@@ -147,6 +149,7 @@
         <searchResultsAdditionalFields>Answer_Format__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>CloneQuestion</fullName>
         <availability>online</availability>

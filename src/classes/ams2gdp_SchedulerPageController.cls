@@ -5,6 +5,7 @@ public with sharing class ams2gdp_SchedulerPageController
     public Boolean processNext{get;set;}
     public String query{get;set;}
     public List<String> jobIds{get;set;}
+    public Boolean isManual {get; set;}
 
 	public List<SelectOption> availableJobs{get;set;}
 	public List<AsyncApexJob> jobs{get{
@@ -73,10 +74,11 @@ public with sharing class ams2gdp_SchedulerPageController
 
 		if(jobName == 'ams2gdp_Batch_Account')
 		{
+            
 
             if(processNext && specificRecordIds.size() >0)
             {
-            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false,specificRecordIds);
+            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false,specificRecordIds, isManual);
 	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
 
@@ -84,99 +86,99 @@ public with sharing class ams2gdp_SchedulerPageController
 	            //New version of inspection batches runs receiving directly from a list of accounts
 	            List<String> ids2 = specificRecordIds;
 	            if(ids2.isEmpty()) ids2.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Inspection(false,ids2)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Inspection(false,ids2, isManual)));
 
 
 	            //Start Job 3
 	            List<String> ids3 = ams2gdp_Selector.getAMS_TerritoryIdsByAccountIds(specificRecordIds);
 	            if(ids3.isEmpty()) ids3.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Territory(false,ids3)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Territory(false,ids3, isManual)));
 
 	            //Start Job 4
 	            List<String> ids4 = specificRecordIds;
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account2(false,ids4)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account2(false,ids4, isManual)));
 
 	            //Start Job 5
 	           // List<String> ids5 = ams2gdp_Selector.getAMS_AddressIdsByAccountIds(specificRecordIds);
 	            List<String> ids5 =specificRecordIds;
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Address(false,ids5)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Address(false,ids5, isManual)));
 
 	            //Start Job 6
 	            List<String> ids6 = ams2gdp_Selector.getAMS_Agency_AffiliationIdsByAccountIds(specificRecordIds);
 	            if(ids6.isEmpty()) ids6.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(false,ids6)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(false,ids6, isManual)));
 
 	            //Start Job 7
 	            List<String> ids7 = ams2gdp_Selector.getAMS_Account_RoleIdsByAccountIds(specificRecordIds);
 	            if(ids7.isEmpty()) ids7.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(false,ids7)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(false,ids7, isManual)));
 
 	            //Start Job 8
 	            List<String> ids8 = ams2gdp_Selector.getAMS_Agency_AirportIdsByAccountIds(specificRecordIds);
 	            if(ids8.isEmpty()) ids8.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(false,ids8)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(false,ids8, isManual)));
 
 	            //Start Job 9
 	            List<String> ids9 = ams2gdp_Selector.getAMS_Agency_ProfileIdsByAccountIds(specificRecordIds);
 	            if(ids9.isEmpty()) ids9.add('none');
-	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9)));
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9, isManual)));
 
 	            //Start Job 1 again
-				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds)));
+				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds,isManual)));
             	
             }
             else
             {
-            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(processNext,specificRecordIds);
+            	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(processNext,specificRecordIds, isManual);
 	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
             }
 		}
 		else if(jobName == 'ams2gdp_Batch_Account2')
 		{
-            ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false,specificRecordIds);
+            ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false,specificRecordIds, isManual);
             query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Address')
 		{
-			ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false,specificRecordIds);
+			ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Agency_Affiliation')
 		{
-			ams2gdp_Batch_Agency_Affiliation batch = new ams2gdp_Batch_Agency_Affiliation(false,specificRecordIds);
+			ams2gdp_Batch_Agency_Affiliation batch = new ams2gdp_Batch_Agency_Affiliation(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Account_Role')
 		{
-			ams2gdp_Batch_AMS_Account_Role batch = new ams2gdp_Batch_AMS_Account_Role(false,specificRecordIds);
+			ams2gdp_Batch_AMS_Account_Role batch = new ams2gdp_Batch_AMS_Account_Role(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Airport')
 		{
-			ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false,specificRecordIds);
+			ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Profile')
 		{
-			ams2gdp_Batch_AMS_Agency_Profile batch = new ams2gdp_Batch_AMS_Agency_Profile(false,specificRecordIds);
+			ams2gdp_Batch_AMS_Agency_Profile batch = new ams2gdp_Batch_AMS_Agency_Profile(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Inspection')
 		{
-			ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false,specificRecordIds);
+			ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Territory')
 		{
-			ams2gdp_Batch_Territory batch = new ams2gdp_Batch_Territory(false,specificRecordIds);
+			ams2gdp_Batch_Territory batch = new ams2gdp_Batch_Territory(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}

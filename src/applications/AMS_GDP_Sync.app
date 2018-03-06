@@ -11,4 +11,5 @@
     <tab>AMS_GDP_Batch__c</tab>
     <tab>AMS2GDP_Log__c</tab>
     <tab>AMS_GDP_Synchronizer</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

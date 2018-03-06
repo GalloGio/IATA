@@ -1,32 +1,5 @@
 trigger trgAccreditation on Accreditation__c (before insert, before update, after insert, after update) {
-	
-	//EM: To be removed
-	if (Test.isRunningTest()) {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-	}
-
+		
 	/* Before Insert && Before Update*/
 	if ((Trigger.isInsert || Trigger.isUpdate) && Trigger.isBefore) {
 		if (!IECConstants.GDPReplication_ProfileIDswithAccess.contains(UserInfo.getProfileId().substring(0, 15))) {

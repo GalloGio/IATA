@@ -16,6 +16,14 @@
    <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
 
     <script type="text/javascript">
+
+		if (!String.prototype.startsWith) {
+  			String.prototype.startsWith = function(searchString, position) {
+    		position = position || 0;
+    		return this.indexOf(searchString, position) === position;
+  			};
+		}    	
+		
 		var redirectUrl = '{!redirectUrl}';
 		var current = window.self.location.href;
 		var prefix = current.substr(0, current.lastIndexOf("/"));
@@ -90,7 +98,8 @@
 
 					    <div class="inner-wrapper">
 
-					        <h1 class="page-title">{!$Label.Login}</h1>
+					        <h1 class="page-title" style="margin-bottom: 0;">{!$Label.Login}</h1>
+					         <p style="margin-top: 10px;">{!$label.IE_Warning} {!$label.ThankYou}</p>   
                             <apex:outputPanel id="errorMessage">
 					        
 						        <apex:outputPanel rendered="{!!hasConfirm}" layout="block">

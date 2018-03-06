@@ -13,7 +13,7 @@ private class ANG_RiskEventTest {
 
         ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(
             ANG_AccountId__c = a.Id
-            , ANG_Risk_Type__c = [SELECT Id FROM ANG_Risk_Event_Type__c].Id
+            , ANG_Risk_Type__c = riskType.Id
             , ANG_Issued_date__c = System.today().addDays(5)
         );
 
@@ -58,6 +58,32 @@ private class ANG_RiskEventTest {
         
         //Inactive and not Active because AddDays(5)
         System.assertEquals(ANG_Risk_Helper.STATUS_INACTIVE, statusRiskEvent);
+
+    }
+
+    static testMethod void test_RiskEventForCashlessAgencies() {
+        Account acc1 = new Account(
+            Name ='acc1',
+            Location_Type__c=AMS_Utils.HE,
+            Location_Class__c=AMS_Utils.LC_PASSENGER,
+            ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASHLESS,
+            recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        );
+
+        insert acc1;
+
+         ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(
+            ANG_AccountId__c = acc1.Id,
+            ANG_Risk_Type__c =[select id from ANG_Risk_Event_Type__c].get(0).id,
+            ANG_Issued_date__c = System.today()
+        );
+
+        insert re;   
+
+        re=[select id, ang_event_status__c from ANG_Agency_Risk_Event__c where id=:re.id];
+
+        system.assertEquals(re.ang_event_status__c,ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS);
+
 
     }
 }

@@ -27,7 +27,7 @@ public with sharing class ANG_GenericHistoryViewerController {
         System.debug('Custom history query ' + theCustomQuery);
 
         //TODO: NEED TO REFINE THIS QUERY TO MAKE IT WORK FOR CUSTOM OBJECTS AS WELL, HISTORY TABLE IS DIFFERENTLY NAMED
-        String theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObj.Id + '\' ORDER BY CreatedDate DESC';
+        String theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObj.Id + '\' ORDER BY CreatedDate DESC,ID DESC';
         System.debug('Standard history query ' + theStandardQuery);
 
         List<SObject> customHistoryRecords = database.query(theCustomQuery);
@@ -122,7 +122,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             
             //for some reason record type changes generate 2 records in history table???!!! one has the values with Ids of the record types
             //and the other has the value with the label of the record type. we just want to keep the one with the names
-            if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' )
+            if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' || (trackedFieldLabel == 'Parent' && !tmpOld.startsWith('001') && !tmpNew.startsWith('001')) || (trackedFieldLabel == 'Owner' && !tmpOld.startsWith('005') && !tmpNew.startsWith('005')))
                 continue;
             else 
                 mergedHistoric.add(new GenericHistoryWrapper(history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false,trackedFieldApiName,isLookUpValueMap.get(tmpNew) || isLookUpValueMap.get(tmpOld)));
@@ -206,9 +206,16 @@ public with sharing class ANG_GenericHistoryViewerController {
             //small little pirate hack :)
             if(fieldAPIName == 'RecordType')
                 fieldAPIName = 'RecordTypeId';
-            if(fieldAPIName == 'Parent')
+            
+            if(fieldAPIName == 'Parent'){
                 fieldAPIName = 'ParentId';
+                this.fieldAPIName = 'ParentId';
+            }
 
+            if(fieldAPIName == 'Owner'){
+                fieldAPIName = 'OwnerId';
+                this.fieldAPIName = 'OwnerId';
+            }
 
             
             if(isLookUpValueOld){

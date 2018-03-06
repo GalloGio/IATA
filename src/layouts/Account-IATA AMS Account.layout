@@ -131,11 +131,23 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_PCI_compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_PCI_compliance_expiry_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -308,6 +320,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Main_Accreditation_Organization__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Date_Organisation_Status_attained__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Organization_Last_Change_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -600,6 +624,10 @@
                 <behavior>Readonly</behavior>
                 <field>WebStar_ID__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAP_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -701,19 +729,18 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
         <fields>Active__c</fields>
-        <fields>Contact__c</fields>
         <fields>RECORDTYPE</fields>
-        <fields>Person__c</fields>
+        <fields>Unified_Owner_Name__c</fields>
         <fields>Owner_Name__c</fields>
         <fields>Owner_Account__c</fields>
+        <fields>Contact__c</fields>
         <fields>Percentage__c</fields>
-        <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
-        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Termination_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -781,9 +808,20 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Threshold_Level__c</fields>
+        <fields>ANG_Direction__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -50,6 +50,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_Restrict_internal_selection__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Cannot_move_contact_between_Agencies__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Critical_Service__c</field>
             </layoutItems>
             <layoutItems>
@@ -89,6 +97,10 @@
                 <field>ANG_Restrict_by_Agency_Category__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Restrict_by_Accreditation_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -126,6 +138,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Service_Description_Label__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Confirm_Text__c</field>
             </layoutItems>
         </layoutColumns>
@@ -148,6 +164,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Application_icon_URL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Country_Coverage__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -198,9 +218,11 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
+        <fields>Contact.Account_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Right__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>

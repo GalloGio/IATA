@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -142,7 +139,7 @@
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -152,7 +149,7 @@
         <label>Created from</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -160,12 +157,15 @@
     <fields>
         <fullName>ANG_Event_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Event Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Event_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
@@ -203,7 +203,7 @@
         <defaultValue>TODAY()</defaultValue>
         <externalId>false</externalId>
         <label>Issued Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -237,7 +237,31 @@
         <relationshipLabel>Agency Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Remarks__c</fullName>
+        <description>Holds extra information provided by Supervisors and Admins</description>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_Configuration__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Technical Use: indicates the Id of the Risk Event Configuration that triggered the creation of the Risk Event.</description>
+        <externalId>false</externalId>
+        <label>Configuration</label>
+        <referenceTo>ANG_Risk_Event_Configuration__c</referenceTo>
+        <relationshipLabel>Agency Risk Events</relationshipLabel>
+        <relationshipName>ANG_Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -260,8 +284,8 @@
         <referenceTo>ANG_Risk_Event_Type__c</referenceTo>
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
-        <required>true</required>
-        <trackHistory>true</trackHistory>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -298,6 +322,18 @@ Id
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_TargetAgency__c</fullName>
+        <description>Technical field: reflects the Target Agency of the Configuration. Used to avoid a query on triggers</description>
+        <externalId>false</externalId>
+        <formula>TEXT(ANG_Risk_Configuration__r.ANG_TargetAgency__c)</formula>
+        <label>Target Agency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_UniqueKey__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>This field is populated by the ANG_RiskEventGenerator.loadInitialInformation() method (called on the before trigger).</description>
@@ -305,7 +341,7 @@ Id
         <label>Unique Key</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -320,6 +356,15 @@ Id
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>ANG_isCashlessAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
+        <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
@@ -329,7 +374,7 @@ Id
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
         <label>Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agency Risk Events</pluralLabel>
@@ -339,7 +384,7 @@ Id
         <active>true</active>
         <label>Risk Event</label>
         <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
+            <picklist>ANG_Event_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
@@ -353,11 +398,19 @@ Id
                 <default>false</default>
             </values>
             <values>
+                <fullName>Inactive_Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inactive_Migrated</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Inactive_Revoked</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_TER</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -387,6 +440,12 @@ Id
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Prevent_RE_in_Not_Accreditated_Agencies</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_Manual__c &amp;&amp; ANG_AccountId__r.RecordType.DeveloperName!=&apos;IATA_Agency&apos;</errorConditionFormula>
+        <errorMessage>You can only create risk events for Accredited Agencies</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Prevent_users_from_changing_issued_date</fullName>
         <active>true</active>
@@ -419,4 +478,5 @@ PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
 ) &gt; 1</errorConditionFormula>
         <errorMessage>Please, fill only one of the source fields</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -68,3 +68,22 @@
 .THIS .slds-size_1-of-2.slds-col--padded.resizeBox{
 	min-height: 90px;
 }
+.THIS .slds-tabs--default__link {
+    /*word-break: break-all !important;*/
+    height: auto !important;
+
+}
+
+.THIS .slds-button {
+    white-space: nowrap;
+}
+
+.THIS .slds-truncate {
+    /*word-wrap: break-word !important;*/
+    white-space: normal !important;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-page-header__detail-row {
+        margin: 0.5rem 0 0.75rem 0rem !important;
+    }
+}

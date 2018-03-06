@@ -25,6 +25,18 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
 
+    //FM 09-10-2017 - AMSU-72 - get date format based on user regional settings
+    date myDate = date.newInstance(2001, 12, 21);
+    public String dateFormatToShow {
+        get {
+            String s = myDate.format();
+            s = s.replace('2001', 'YYYY');
+            s = s.replace('12', 'MM');
+            s = s.replace('21', 'DD');
+            return s;
+        }
+    }
+
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
             AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
@@ -37,6 +49,8 @@ public with sharing class AMS_AccreditationContactController {
 
 
     };
+
+    public static final List<String> NGOWNEREDITABLECHANGES = new List<String>{'minor shareholding','major shareholding','ownership'};
 
     
     // TODO at a later stage: after having 100% ownershiprate in total and saving the owners, need to update OSCAR's field that states that the 
@@ -58,7 +72,7 @@ public with sharing class AMS_AccreditationContactController {
                             SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c,
-                            SAAM_Case__r.OSCAR__r.CNS_process__c
+                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
@@ -133,11 +147,17 @@ public with sharing class AMS_AccreditationContactController {
 
         blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
                                 && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
-								&& aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE
+                                && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
                             || typeOfChangeContainsOwnershipToIATA
                             || (aoa.SAAM_Case__r.OSCAR__r.CNS_process__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c =='R');
+
+        if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
+            blockOwnershipEdit = false;
+
+        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
+            blockOwnershipEdit = true;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
@@ -145,7 +165,7 @@ public with sharing class AMS_AccreditationContactController {
 
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
-        isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW || aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEWHE)? true : false;
+        isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW)? true : false;
         isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
         isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(aoa.SAAM_Case__r.OSCAR__r.Process__c) ? true : false;
     }
@@ -154,7 +174,7 @@ public with sharing class AMS_AccreditationContactController {
     {
         Id rt = this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.AGENCYCHANGES || this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR ? AcCurrentOwnerRt : AcPersonRt;
 
-        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
+        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt));
         this.acWrapper.add(acWrapper);
     }
     
@@ -595,17 +615,41 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<5;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(wrapped.ac.Date_joined_agency__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Date_joined_agency__c.year(), wrapped.ac.Date_joined_agency__c.month(),wrapped.ac.Date_joined_agency__c.day());
+                        wrapped.dateJoined = dt.format('YYYY-MM-dd');
+                    }
                     fieldToCheck = wrapped.dateJoined;
-                if(i == 1)
+                }
+                if(i == 1){
+                    if(wrapped.ac.Prev_Job1_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_From__c.year(), wrapped.ac.Prev_Job1_From__c.month(),wrapped.ac.Prev_Job1_From__c.day());
+                        wrapped.prev1From = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1From;
-                if(i == 2)
+                }
+                if(i == 2){
+                    if(wrapped.ac.Prev_Job1_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_To__c.year(), wrapped.ac.Prev_Job1_To__c.month(),wrapped.ac.Prev_Job1_To__c.day());
+                        wrapped.prev1To = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1To;
-                if(i == 3)
+                }
+                if(i == 3){
+                    if(wrapped.ac.Prev_Job2_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_From__c.year(), wrapped.ac.Prev_Job2_From__c.month(),wrapped.ac.Prev_Job2_From__c.day());
+                        wrapped.prev2From = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2From;
-                if(i == 4)
+                }
+                if(i == 4){
+                    if(wrapped.ac.Prev_Job2_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_To__c.year(), wrapped.ac.Prev_Job2_To__c.month(),wrapped.ac.Prev_Job2_To__c.day());
+                        wrapped.prev2To = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2To;
-
+                }
                 if(!dateFieldValidation(fieldtoCheck))
                     return wrapped.ac.First_Name__c + ' '+wrapped.ac.Last_Name__c + ' with date: ' + fieldToCheck;
             }
@@ -620,11 +664,21 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<2;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(tsw.ac.Certificate_Issued_on__c != null){
+                        DateTime dt = DateTime.newInstance(tsw.ac.Certificate_Issued_on__c.year(), tsw.ac.Certificate_Issued_on__c.month(),tsw.ac.Certificate_Issued_on__c.day());
+                        tsw.certificateIssueDate = dt.format('YYYY-MM-dd');
+                    }
                     fieldToCheck = tsw.certificateIssueDate;
-                if(i == 1)
+                }    
+                if(i == 1){
+                    if(tsw.ac.Certificate_Issued_on__c != null && (tsw.ac.Type_of_certificate__c == 'DGR' || tsw.ac.Type_of_certificate__c == 'CATA')){
+                        system.debug('RB Valid until: ' + tsw.ac.Valid_until__c);
+                        DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
+                        tsw.validUntil = dt.format('YYYY-MM-dd');
+                    }
                     fieldtoCheck = tsw.validUntil;
-
+                }    
                 if(!dateFieldValidation(fieldtoCheck))
                 {
                     String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
@@ -884,7 +938,8 @@ public with sharing class AMS_AccreditationContactController {
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE && 
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE &&
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AE && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
                 }
@@ -900,10 +955,10 @@ public with sharing class AMS_AccreditationContactController {
             this.prev2To = String.valueOf(acParam.Prev_Job2_To__c);
             
             this.ac = acParam;
-            if(this.ac.Company__c == null)
+            /*if(this.ac.Company__c == null)
             {
                 this.ac.Company__c = acParam.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
-            }
+            }*/
             if(acParam.Person_AMS__c != null)
             {
                 this.recordId = acParam.Person_AMS__c;

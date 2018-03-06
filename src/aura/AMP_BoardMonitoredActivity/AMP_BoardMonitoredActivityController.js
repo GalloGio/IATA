@@ -9,8 +9,8 @@
 		}
 
 		var statusValues = [];
-		statusValues.push('On track');
-		statusValues.push('On hold');
+		statusValues.push('On Track');
+		statusValues.push('On Hold');
 		statusValues.push('Delayed');
 		statusValues.push('Delivered');
 		statusValues.push('Canceled');

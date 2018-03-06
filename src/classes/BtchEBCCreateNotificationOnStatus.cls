@@ -213,7 +213,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 				} // end if ebcPref.Monthly_Account_Status
 			} // end of if billingAcct.eBroadcast_Preferences__r
 		} // end for Zuora__CustomerAccount__c
-		fakeMethod();
 		
 		// complete the information based on SubscriptionProductCharge/ProductRatePlan or Subscription
 		for ( Zuora__SubscriptionProductCharge__c subProdCharge : subProdChargeIdToObjectMap.values())
@@ -343,67 +342,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 		System.debug( '\n\BillingAcct query num of recs:' + customerAccountList.size());
 		System.debug( 'BillingAcct query result:' + customerAccountList);
 	} // showQuery
-	*/
-
-	 public void fakeMethod(){
-         Integer k = 0;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++; 
-        k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-        k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;
-       k++;        
-    }
+	*/	 
 } // end of BtchEBCCreateNotificationOnStatus class
 

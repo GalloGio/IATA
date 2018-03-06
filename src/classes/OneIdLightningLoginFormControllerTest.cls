@@ -301,6 +301,7 @@ private class  OneIdLightningLoginFormControllerTest {
     }
     @IsTest
     static void testGetSanctionCountryFalse() {
+    	insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
@@ -337,6 +338,7 @@ private class  OneIdLightningLoginFormControllerTest {
         Auth.AuthConfiguration authConfig = OneIdLightningLoginFormController.getAuthConfig();
         System.assertNotEquals(null, authConfig);
     }
+    
 
 
 }

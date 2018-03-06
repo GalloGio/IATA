@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -98,7 +95,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
@@ -110,9 +107,18 @@
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Consumed_RHC_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Consumed RHC Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>ANG_Enable_Calculation__c</fullName>
@@ -197,6 +203,18 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_Amount_Simulation__c</fullName>
+        <description>Temporary field to be used during simulation of RHC</description>
+        <externalId>false</externalId>
+        <label>RHC Amount (Simulation)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Amount__c</fullName>
         <description>The current RHC Amount for the agent</description>
         <externalId>false</externalId>
@@ -217,6 +235,26 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Last_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>RME Amount Last Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Provisional__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisional RME Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_RME_Amount__c</fullName>
@@ -265,6 +303,7 @@
         <errorConditionFormula>NOT(ANG_Enable_Calculation__c) &amp;&amp; ISCHANGED(ANG_RME_Amount__c)</errorConditionFormula>
         <errorMessage>You are not allowed to confirm a new RHC amount for a terminated agent</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Confirm_RHC</fullName>
         <availability>online</availability>
@@ -299,6 +338,52 @@ alert(result[0].errors.message);
 }//end if-else profile check</url>
     </webLinks>
     <webLinks>
+        <fullName>Request_Balance_Update</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Balance Update</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_Consumed_RHC</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Consumed RHC</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Request_RHC_Calculation</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -306,17 +391,19 @@ alert(result[0].errors.message);
         <masterLabel>Request RHC Calculation</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
-{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
 
-var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
-rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
 
-var newvalue = Math.floor((Math.random()*15)+20)*1000;
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId}); 
 
-rhcInfo.ANG_RHC_Amount_Provisional__c = newvalue;
-sforce.connection.update([rhcInfo]);
+console.info(result[0]);
 
-window.location.reload();</url>
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
     </webLinks>
 </CustomObject>

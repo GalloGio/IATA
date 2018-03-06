@@ -105,7 +105,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                                     // check the Agent Type of the Account
                                     for (Account Acct : Cont2Account){
                                         if(theContact.AccountId == Acct.id){
-                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent') {
+                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
                                                 theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
                                             }
                                         }
@@ -212,6 +212,12 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             if (Contacts) {
                 system.debug('Contacts BeforeUpdate');
                 AccountDomainContactHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
+
+                /* NEWGEN ANG_ContactHandler */
+                ANG_ContactHandler angHandler = new ANG_ContactHandler();
+                angHandler.handleBeforeUpdate();
+                /* NEWGEN ANG_ContactHandler */
+                
             }
             /*Contacts Trigger.BeforeUpdate*/
 
@@ -426,6 +432,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Set<Id> actListToReview = new Set<Id>();
                 /*IFG deployment*/
                 set<Id> conIdSet = new set<Id>();
+                //WMO-234 for user with SIS application changing its account
+                set<Id> setSISContactChangingAccount = new set<Id>();
 
                 for(Contact con : trigger.new){
                     if((con.User_Portal_Status__c == 'Regional Administrator' && trigger.oldMap.get(con.Id).User_Portal_Status__c != 'Regional Administrator')
@@ -448,6 +456,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             conFirstNameMap.put(con.Id, con.FirstName);
                             conLastNameMap.put(con.Id, con.LastName);
                         }
+                    }
+                    //WMO-234
+                    if (con.S_SIS__c>0 && con.AccountId != trigger.oldMap.get(con.Id).AccountId) {
+                        setSISContactChangingAccount.add(con.Id);
                     }
                     /*IFG deployment
                     if(con.accountId != null) 
@@ -472,6 +484,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     SCIMServProvManager.reviewIFGAccountSharing(actListToReview);
                 }
                 /*IFG deployment*/
+                
+                //WMO-234
+                if (!setSISContactChangingAccount.isEmpty()) {
+                    ISSP_UserTriggerHandler.alertSISContactsChangingAccount(setSISContactChangingAccount);
+                }
             }
             /*ISSP_ContactUpdaetPortalUser Trigger.AfterUpdate*/
 

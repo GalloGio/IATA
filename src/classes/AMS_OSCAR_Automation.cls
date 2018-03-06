@@ -17,12 +17,12 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 oscar.Sanity_check_received__c = Date.today();
                 
-                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA || oscar.Process__c == AMS_Utils.VOLRELINQUISH){
 
                     oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
                 
                 }
-                else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH){
+                else {
 
                     oscar.Process_Start_Date__c = Date.today();
                 
@@ -60,7 +60,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
@@ -171,6 +171,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Invoice_status__c = 'Outstanding';
+                oscar.Proof_of_payment_received__c = Date.today();
                 res = True;
             }
 
@@ -286,7 +287,8 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
-                oscar.Bank_Guarantee_received__c = Date.today();
+                //RB: 15-11-2017 - INC354179 FS Bank_Guarantee_received__c should only be populated when FS Step is Valid.
+                //oscar.Bank_Guarantee_received__c = Date.today();
                 oscar.Financial_security_result__c = 'Rejected';
                 res = True;
             }
@@ -499,11 +501,13 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step15_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null) {
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
+            } else {
+                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable, Failed or Passed.');
             }
 
             return res;
@@ -520,7 +524,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
                 
-                if(oscar.Process__c == AMS_Utils.NEWHELITE)
+                if(oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE)
                     oscar.Status__c = 'Pending Approval';
                 else
                     oscar.Status__c = 'On Hold_Internal';
@@ -552,11 +556,15 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step25_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null) {
+            if (oscar != null && (oscar.STEP12__c == AMS_Utils.PASSED || oscar.STEP12__c == AMS_Utils.NOT_APPLICABLE)) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
                 oscar.Status__c = 'Pending Approval';
                 res = True;
+            } else if(oscar != null && oscar.STEP12__c == AMS_Utils.FAILED) {
+                oscar.addError('Validation can\'t be Passed when Manage Financial Security step is Failed.');
+            } else {
+                oscar.addError('Validation can only be Passed if Manage Financial Security step is Not Applicable or Passed.');
             }
 
             return res;
@@ -579,6 +587,22 @@ public with sharing class AMS_OSCAR_Automation {
             return res;
         }
     }
+
+    public class AMS_OSCAR_Step25_inProgress implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step25_inProgress.processWork');
+            Boolean res = False;
+
+            if (oscar != null && oscar.STEP12__c == AMS_Utils.FAILED) {
+                oscar.addError('Validation can only be Failed when Manage Financial Security step is Failed.');
+            } else {
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
 
     /*public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
     {
@@ -604,14 +628,21 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step2_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null && (oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed')) {
-
-                oscar.Approval_disapproval_date__c = Date.today();
-                oscar.Status__c = 'On Hold_Internal';
-                res = True;
-
+            if (oscar.STEP6__c != 'Passed' && oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                oscar.addError('Manager Approval cannot be granted if Sanity check step does not equals PASSED');
             } else {
-                oscar.addError('Approval can only be set after the validation Qualification Criteria is passed');
+                
+                if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
+
+                    oscar.Approval_disapproval_date__c = Date.today();
+                    oscar.Status__c = 'On Hold_Internal';
+                    res = True;
+
+                } else if(oscar != null && oscar.STEP12__c == 'Failed') {
+                    oscar.addError('Approval can\'t be set when Manage Financial Security step is Failed.');
+                }else {
+                    oscar.addError('Approval can only be set after the validation Qualification Criteria is passed');
+                }
             }
 
             return res;
@@ -642,11 +673,18 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step1_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null) {
+            if (oscar.STEP2__c != 'Passed' && !(oscar.Process__c == AMS_Utils.new_TIDS || oscar.Process__c == AMS_Utils.new_AHA || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_MSO || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.AGENCYCHANGES))
+                oscar.addError('Application Finalization cannot be granted if the Approval step does not equals PASSED');
+            else if(oscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
+                oscar.addError('Cannot set application finalization to passed because manager approval is not authorized.');
+            else {
 
-                oscar.Finalization_result__c = 'Passed';
-                res = True;
+                if (oscar != null) {
 
+                    oscar.Finalization_result__c = 'Passed';
+                    res = True;
+
+                }
             }
 
             return res;
@@ -738,6 +776,17 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Withdrawal_result__c = 'Passed';
+
+                if(oscar.Process__c == AMS_Utils.NGCHANGES){
+                    List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
+                    if(riskEvents != null && !riskEvents.isEmpty()){
+                        for(ANG_Agency_Risk_Event__c rEvent : riskEvents)
+                            rEvent.ANG_Event_Status__c = 'Inactive_Withdrawn';
+
+                        update riskEvents;
+                    }
+                }
+
                 res = True;
             }
 
@@ -784,6 +833,23 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Reconsideration_result__c = 'Passed';
                 oscar.Reconsideration_date__c = Date.today();
                 res = True;
+
+                //restart manager approval step
+                oscar.STEP2__c = 'Not Started';
+                oscar.RPM_Approval__c = 'Not Started';
+
+                //restart validation step
+                if(oscar.Process__c == AMS_Utils.AGENCYCHANGES){
+
+                    oscar.STEP25__c = 'Not Started';
+                } else {
+
+                    oscar.STEP15__c = 'Not Started';
+                }
+
+                oscar.Validation_result__c = 'N/A';
+                oscar.Validation_Status__c = 'Not Applicable';
+
             }
 
             return res;
@@ -1126,6 +1192,90 @@ public with sharing class AMS_OSCAR_Automation {
             if (oscar != null) {
                 oscar.Financial_security_result__c = 'N/A';
                 res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step36_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step36_succeeded.processWork');
+            Boolean res = False;
+
+            if(oscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar.ANG_Type_Of_Change__c) && oscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL)
+                oscar.addError('Cannot set risk event to passed because manager approval is not authorized.');
+
+            if (oscar != null) {
+			
+                res = True;
+            }
+
+            return res;
+        }
+    }
+	
+    public class AMS_OSCAR_Step41_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');
+
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Failed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step41_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step41_succeeded.processWork');
+
+            Boolean res = False;
+
+
+            if (oscar != null) {
+
+                oscar.IRIS_update_result__c = 'Passed';
+
+                res = True;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_succeeded.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Passed';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step42_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step42_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Finalization_result__c = 'Failed';
+
+                res = true;
             }
 
             return res;

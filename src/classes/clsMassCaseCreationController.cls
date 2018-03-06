@@ -570,15 +570,9 @@ public with sharing class clsMassCaseCreationController {
   
   // Create cases (The case created by this function will be flagged as "Agent to be notified (Tracked Email)")
   public PageReference MassCaseCreateSendTrackedEmail() {
-	// Callout governor limit = 100
-	if(nbrSelectedRecords <= 100){
-	    MassCaseCreation('tracked email');
-	    System.debug('**** MassCaseCreateSendTrackedEmail');
-	}
-	else{
-		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Tracked Email batches are limited to 100 agents (' + nbrSelectedRecords + ' selected)'));
-	}
-    return null;
+		MassCaseCreation('tracked email');
+        System.debug('**** MassCaseCreateSendTrackedEmail');
+		return null;
   }
 
   //openCase is used as a flag if theres any contact in lstContact has an open case this will be used in js function

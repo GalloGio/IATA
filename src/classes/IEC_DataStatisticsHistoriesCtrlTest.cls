@@ -8,14 +8,14 @@ private class IEC_DataStatisticsHistoriesCtrlTest
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
 
-	private static void InitSubscription(boolean bCreateCharge){
+	private static void InitSubscription(User usr, boolean bCreateCharge){
         IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
 
         //set all Custom setting
         TestDataGenerator.generateApexSetting();
         List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
-        List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,2,true); // 2 Contacts
-        List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, contacts[1].Id, contacts[1].Id,true); // 1 Order
+        //List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,2,true); // 2 Contacts
+        List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId,true); // 1 Order
         List<OrderItem> orderItems = TestDataGenerator.generateWebDownloadOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order
 
         lstSubscriptionList = new List<Zuora__Subscription__c>();
@@ -106,7 +106,7 @@ private class IEC_DataStatisticsHistoriesCtrlTest
         
         System.runAs(usr) {
             // Initialize Data for test scenario
-            InitSubscription(false);
+            InitSubscription(usr, false);
             
             Test.startTest();
     

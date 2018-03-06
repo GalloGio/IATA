@@ -593,7 +593,7 @@ public with sharing class IECOrder_Svc {
             doProductSwap(items, listProductId);
 
             //-- Get product informations 
-            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false);
+            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false, null);
             Map<String, EComProduct_DTO> ecomProductById = new Map<String, EComProduct_DTO>();
 
             System.debug('#ecomProducts: ' + ecomProducts.size());
@@ -701,8 +701,6 @@ public with sharing class IECOrder_Svc {
 
     public static Order getPenddingOrder(Boolean createOrder)
     {
-        Order pendingOrder;
-        
         Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
 
         //-- Data Selectors 
@@ -710,7 +708,14 @@ public with sharing class IECOrder_Svc {
         
         //-- Check if current User has pending Order: if not create one
         System.debug('pendding order for::'+oCurrentCustomer.sfUser.Id);
-        pendingOrder = orderSelector.getPenddingOrder(oCurrentCustomer.sfUser.Id);
+        Order pendingOrder = orderSelector.getPenddingOrder(oCurrentCustomer.sfUser.Id);
+
+        //if no pending orders where the user is the ownerId it will check if there is orders for the user contact on the billToContactId
+        if(pendingOrder == null){
+            System.debug('pendding order for::'+oCurrentCustomer.sfUser.ContactId);
+            pendingOrder = orderSelector.getPendingOrderByBillToContactId(oCurrentCustomer.sfUser.ContactId);
+        }
+
 
         //-- Validate Order Locations are valid
         if(pendingOrder != null)
@@ -745,9 +750,9 @@ public with sharing class IECOrder_Svc {
             System.debug('No pending order, create a new order ?' + (createOrder ? 'Yes' : 'No'));
 
             if (createOrder)
-                return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+                return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact, oCurrentCustomer.sfUser.Id);
             else
-                return new Order();
+                return new Order(OwnerId = oCurrentCustomer.sfUser.Id);
         }
     }
 
@@ -772,7 +777,7 @@ public with sharing class IECOrder_Svc {
             
             if(pendingOrder == null)
             {
-                pendingOrder = orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+                pendingOrder = orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact, oCurrentCustomer.sfUser.Id);
             }
 
             Map<Id, List<OrderItem>> orderItemsByOrder = itemSelector.getOrderItems(new Set<Id>{pendingOrder.Id});
@@ -808,7 +813,7 @@ public with sharing class IECOrder_Svc {
             for(String pCode : productByCode.keySet())
                 listProductId.add(productByCode.get(pCode).Id);
 
-            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false);
+            List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(listProductId, false,null,null, false, null);
             Map<Id, EComProduct_DTO> ecomProductById = new Map<Id, EComProduct_DTO>();
             Map<String, EComProduct_DTO> ecomProductByCode = new Map<String, EComProduct_DTO>();
 
@@ -869,7 +874,7 @@ public with sharing class IECOrder_Svc {
         delete [select id from OrderItem where id in :orderItemIds];
     }*/
 
-    public static Boolean validateQuoteNumberToConvert(String quoteNumber, Id createdBy)
+    public static Boolean validateQuoteNumberToConvert(String quoteNumber, Id createdBy, Id billToContactId)
     {
         /**Type='Quote' 
                 AND 
@@ -877,10 +882,12 @@ public with sharing class IECOrder_Svc {
         List<Order> quotes = [
             SELECT Id 
             FROM Order 
-            WHERE OwnerId = :createdBy
+            WHERE ( OwnerId = :createdBy OR BillToContactId = :billToContactId)
                 AND OrderNumber = :quoteNumber
             LIMIT 1
         ];
+
+        System.debug('angielaz, validateQuoteNumberToConvert-->quotes: ' + quotes);
 
         return (quotes.size() == 1);
     }

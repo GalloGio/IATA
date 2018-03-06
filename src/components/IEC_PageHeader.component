@@ -104,7 +104,10 @@
                             <form action="{!$Site.BaseUrl}/IEC_Login?doLogin=true&retUrl={!currentPageName}" method="post">
                                 <a class="icon sign-in js-open-login" href="{!$Site.BaseUrl}/IEC_Login"><span class="text">{!$Label.SignIn}</span></a>
                                 <div class="group-container sign-in-container">
-                                    <div class="group-title">Please log in</div>                                    
+                                    <div class="group-title">Please log in</div>
+                                    <p style="margin-bottom : 0; word-break: break-word; width: 350px;  white-space: pre-line;
+                                        font-size: 1.2rem;">{!$label.IE_Warning}
+                                        {!$label.ThankYou}</p>                           
                                     <div class="field-group text">
                                         <label>
                                             <span class="input-label">Enter your email address</span>
@@ -267,7 +270,7 @@
                             <div class="field-group text">
                                 <label>
                                     <span class="input-label">Enter your email address</span>
-                                    <input class="user-input text" type="text" name="username" id="username" />
+                                    <input class="user-input text" type="text" name="username" id="username1" />
                                 </label>
                             </div>
                             <div class="field-group text">
@@ -297,9 +300,8 @@
                                         <div class="category-title">{!cat.label}</div>
                                         
                                         <ul class="nav">
-                                            <!-- INC340004 - Cannot view all publications on the store - susana alves
                                             <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}">{!$Label.View_all}</a></li>
-                                            -->
+                                            
                                             <apex:repeat value="{!subCategories[cat.value]}" var="topic">
                                                 <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
                                             </apex:repeat>

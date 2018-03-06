@@ -6,8 +6,8 @@ global  class NewLocalGroupCtrl {
     List<Cluster_to_ISO_Country__c> nton;
     public List<SelectOption> allClusters {get;set;}
     public integer getAllClustersSize(){return allClusters==null ? 0 : allClusters.size();}
-    public String theCluster {get;set;} 
-    
+    public String theCluster {get;set;}
+
     public NewLocalGroupCtrl(ApexPages.StandardController stdctrl){
         lg = (LocalGovernance__c)stdctrl.getRecord();
         onChangeGroupType();
@@ -22,17 +22,17 @@ global  class NewLocalGroupCtrl {
       Set<Id> setRegDivRecordTypes = new Set<Id>();
         Set<Id> setLocalGroupRecordTypes = new Set<Id>();
         for (RecordType rt : lsRecordTypes) {
-            if(rt.DeveloperName == 'Reg_Div_Groups' || rt.DeveloperName == 'Draft_Reg_Div_Group') {
+            if(rt.DeveloperName == 'Reg_Div_Groups') {
                 setRegDivRecordTypes.add(rt.Id);
             } else if(rt.DeveloperName == 'Local_Groups') {
                 setLocalGroupRecordTypes.add(rt.Id);
             }
         }
         String recordId =  ApexPages.currentPage().getParameters().get('id');
-        if(recordId != null) {
+        /*if(recordId != null) {
             lg = [SELECT Id, Name, RecordTypeId, RecordType.Name, Local_Governance_type__c,Country__c, Cluster__c FROM LocalGovernance__c WHERE Id = :recordId];
         }
-        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);
+        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);*/
         // 1. if there is already a recordtype set redirect accordingly
         if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
         else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
@@ -40,7 +40,7 @@ global  class NewLocalGroupCtrl {
         if(!redirect && lg.RecordTypeId == null) {
             for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
                 if(info.isAvailable()) {
-                    if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {
+                    if( info.getName() == 'Reg/Div Groups') {
                         redirect = true;
                     }
                 }
@@ -67,7 +67,7 @@ global  class NewLocalGroupCtrl {
         // I cannot do that by filtered lookup because it's from parent to child
         nton = [SELECT IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Cluster__c, Cluster__r.Name,
                 		Cluster__r.Local_Group_type__c,  Cluster__r.Region__c, Cluster__r.Country_Manager__c, Cluster__r.IATA_Local_Office__c
-                FROM Cluster_to_ISO_Country__c 
+                FROM Cluster_to_ISO_Country__c
                 WHERE Cluster__r.Local_Group_type__c = :lg.Local_Governance_type__c];
        	system.debug(LoggingLevel.ERROR,'###### CERCO PER TYPE = '+lg.Local_Governance_type__c);
         set<Id> displayedClusters = new set<Id>();
@@ -82,7 +82,7 @@ global  class NewLocalGroupCtrl {
         }
         system.debug(LoggingLevel.ERROR,'###### HO ALLCLUISTERSIZE = '+getAllClustersSize());
     }
-    
+
     public PageReference MySave(){
         //if(nton==null)
         	onChangeGroupType();
@@ -92,7 +92,7 @@ global  class NewLocalGroupCtrl {
         }else if(lg.Country__c!=null && lg.Cluster__c!=null){
         	ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You cannot choose both a country and a cluster.'));
         	return null;
-    	
+
     	}else if(lg.Cluster__c!=null){
         	boolean clusterAllowed = false;
             for(Cluster_to_ISO_Country__c c2c : nton)
@@ -100,12 +100,12 @@ global  class NewLocalGroupCtrl {
                     clusterAllowed = true;
                     break;
                 }
-            
+
             if(!clusterAllowed){
                 ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'This cluster is not allowed for Local Group Type '+lg.Local_Governance_type__c));
         		return null;
             }
-            
+
         }else if(lg.Country__c!=null){
 			boolean countryAllowed = true;
 			String clustername = '';
@@ -115,7 +115,7 @@ global  class NewLocalGroupCtrl {
                     clustername = c2c.Cluster__r.Name;
                     break;
                 }
-            
+
             if(!countryAllowed){
                 ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'This country is not allowed for Local Group Type '+lg.Local_Governance_type__c+' because it is part of cluster '+clustername));
         		return null;
@@ -123,15 +123,15 @@ global  class NewLocalGroupCtrl {
 
         }
         system.debug('----------------  Passo validazioni iniziali --------------------');
-        List<LocalGovernance__c> dup = [SELECT Name, Id FROM LocalGovernance__c 
-                                        WHERE Id <> :lg.Id AND RecordType.DeveloperName='Local_Groups' AND Cluster__c=:lg.Cluster__c AND Country__c=:lg.Country__c 
-                                                AND Local_Governance_type__c=:lg.Local_Governance_type__c AND Active__c=true];
-        
+        List<LocalGovernance__c> dup = [SELECT Name, Id FROM LocalGovernance__c
+                                        WHERE Id <> :lg.Id AND RecordType.DeveloperName='Local_Groups' AND Cluster__c=:lg.Cluster__c AND Country__c=:lg.Country__c
+                                                AND Local_Governance_type__c=:lg.Local_Governance_type__c ]; // AND Active__c=true
+
         if(dup.size()>0){
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Error: the local group <a href="/'+dup[0].Id+'">'+dup[0].Name+'</a> exists already.'));
             return null;
         }
-        
+
         //lg.Active__c = true;
         system.debug('----------------  niente duplicati --------------------');
         database.UpsertResult sr = database.upsert(lg,false);
@@ -143,7 +143,7 @@ global  class NewLocalGroupCtrl {
         return new PageReference('/'+sr.getId());
 
     }
-    
+
     webService static String deactivateLocalGroup(String localgroupid) {
         List<LocalGovernance__c> lg = [SELECT ID FROM LocalGovernance__c WHERE ID = :localgroupid];
         if(lg.size()==1){

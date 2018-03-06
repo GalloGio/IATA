@@ -192,6 +192,30 @@
               stopLoading();
           }, {buffer: true, escape: false, timeout: 120000} );
         }
+        
+        function downloadSelectedZIP() {
+            startLoading();
+            var selection = new Array();
+            $(":checkbox.selectZipFilesCheckbox:checked").each(function(){
+                selection.push(this.value);
+            });
+            if (selection.length == 0) {
+                console.log("No files selected");
+                stopLoading();
+                return;
+            }
+            console.log(selection.length + ' files selected');
+            AMS_OSCAR_Attachments.getSelectedExpiringLink("{!caseId}",selection,function(result, event){
+                try {
+                    var zipfiles = new ZipFiles(result, "files.zip");
+                    zipfiles.downloadZip();
+                } catch (e) {
+                    alert(e);
+                }
+                stopLoading();
+            }, {buffer: true, escape: false, timeout: 120000} );
+          
+        }
     </script>
 
     <apex:form id="mainform" >
@@ -207,6 +231,7 @@
                 <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" rendered="{!NOT(isReadOnly)}"  />
                 <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" rendered="{!NOT(isReadOnly)}"  />
                 <input type="button" class="btn" value="Download All Files" onclick="downloadZIP(); return false;"/>
+                <input type="button" class="btn" value="Download Selected Files" onclick="downloadSelectedZIP(); return false;"/>
             </apex:pageblockButtons>
 
             <apex:pageMessages />
@@ -227,6 +252,10 @@
             </apex:outputPanel> 
 
             <apex:pageBlockTable styleClass="tablesorter" id="tableAttachments" value="{!listAttachments}" var="attach" rendered="{!listAttachments.size > 0}">
+
+                <apex:column headerValue="" >
+                    <input type="checkbox" value="{!attach.Id}" class="selectZipFilesCheckbox" />
+                </apex:column>
 
                 <!--  ACTIONS -->
                 <apex:column headerValue="{!$Label.Action}" styleClass="actionColumn">

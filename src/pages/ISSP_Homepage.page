@@ -167,7 +167,10 @@
                   </span>
                 </li>
                 <script>
-                  if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                  if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                    var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                    $('#appReq{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
+                  } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
                     var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
                     $('#appReq{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
                   }
@@ -467,7 +470,10 @@
                                                         if('{!app.Right__c}' == 'Access Requested'){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!app.Portal_Application__r.Name} Request: <br/> {!$Label.ISSP_Request_pending_approval}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
-                                                        }else if('{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'!=''){
+                                                        } else if('{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'!=''){
+                                                          var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'+'</div>';
+                                                          $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                        } else if('{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'!=''){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
@@ -492,7 +498,10 @@
                                                         <h5>{!app.Name}</h5>
                                                     </a>
                                                     <script>
-                                                    if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                                                    if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                                                        var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                                                        $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                    } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
                                                         var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
                                                         $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                     }
@@ -518,7 +527,10 @@
                                                         </span>
                                                     </ul>
                                                     <script>
-                                                        if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                                                        if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                                                          var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                                                          $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                        } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
@@ -621,9 +633,9 @@
 <!---------------------------------------------------------------------------------------------->
 <!------------------------------------Login Survey Popup---------------------------------------------------------->
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
-    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
           rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {

@@ -67,6 +67,8 @@ private class AMS_OSCAR_AttachmentsTest {
 	System.assertEquals(3, AMS_OSCAR_Attachments.getAllExpiringLink(cse.Id).size());
 	System.assertEquals(AMS_OSCAR_Attachments.getExpiringLink('testfileName.pdf'), AMS_OSCAR_Attachments.getExpiringLinkWS('testfileName.pdf'));
 
+	System.assertEquals(1, AMS_OSCAR_Attachments.getSelectedExpiringLink(cse.Id, new List<String>{a.Id}).size());
+
 	//read
 	System.debug(loggingLevel.INFO, '____ [cls AMS_OSCAR_AttachmentsTest - AMS_OSCAR_Attachments] con.amazonPath - ' + con.amazonPath);
 	System.debug(loggingLevel.INFO, '____ [cls AMS_OSCAR_AttachmentsTest - AMS_OSCAR_Attachments] con.amazonURL - ' + con.amazonURL);

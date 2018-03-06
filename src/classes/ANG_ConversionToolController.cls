@@ -11,6 +11,7 @@ public with sharing class ANG_ConversionToolController {
 	public Boolean displayTable { get; set; }
 	public Account iataCountryName { get; set; }
 	public List<ANG_ConversionToolController.OverviewTableRow> OverviewTable { get; set; }
+	public List<ANG_ConversionToolController.OverviewTableRow> OverviewRiskEventTable { get; set; }
 	public ANG_ConversionHelper.ControllerLightStructure finalStruct;
 	public List<ANG_ConversionToolController.wrapperHierarchyStructure> wrStructure {get; set;}
 	public Id migrationBacthId {get;set;}
@@ -94,6 +95,7 @@ public with sharing class ANG_ConversionToolController {
 
 			finalStruct = ANG_ConversionHelper.runFullAnalyses(selectedCountryName);
 			OverviewTable = createOverviewTable(finalStruct);
+			OverviewRiskEventTable = createOverviewRiskEventTable(finalStruct);
 			displayTable=true;
 		}
 		
@@ -123,6 +125,18 @@ public with sharing class ANG_ConversionToolController {
 	public pageReference runMigration(){
 		
 		migrationBacthId = ANG_ConversionHelper.runMigration(selectedCountryName);
+
+		batchStatusBool = true;
+		pollerBool = true;
+		//pollerBool = false;
+
+		return null;
+		
+	}
+
+	public pageReference runFullAnalysesWithReport(){
+		
+		migrationBacthId = ANG_ConversionHelper.runFullAnalysesWithReport(selectedCountryName);
 
 		batchStatusBool = true;
 		pollerBool = true;
@@ -196,6 +210,7 @@ public with sharing class ANG_ConversionToolController {
 		tblRow.isDetail = false;
 		table.add(tblRow);
 
+
 		System.debug('------------ ::: Invalid Hierarchies ::: --------------------');
 		Set<Integer> errorValues = finalStruct.inValidHierarchies.keySet();
 		for(Integer errorValue: errorValues){
@@ -213,6 +228,21 @@ public with sharing class ANG_ConversionToolController {
 			table.add(tblRow);
 		}
 
+		return table;
+	}
+
+	public List<ANG_ConversionToolController.OverviewTableRow>  createOverviewRiskEventTable(ANG_ConversionHelper.ControllerLightStructure finalStruct){
+
+		Integer listSize;
+		List<ANG_ConversionToolController.OverviewTableRow> table = new List<ANG_ConversionToolController.OverviewTableRow>();
+		ANG_ConversionToolController.OverviewTableRow tblRow = new ANG_ConversionToolController.OverviewTableRow();
+		for(String s :finalStruct.risksToAdd.keySet()){
+			tblRow = new ANG_ConversionToolController.OverviewTableRow();
+			tblRow.messageText = s;
+			tblRow.count = finalStruct.risksToAdd.get(s);
+			tblRow.isDetail = false;
+			table.add(tblRow);
+		}
 		return table;
 	}
 
@@ -256,7 +286,12 @@ public with sharing class ANG_ConversionToolController {
 		String messageText = ANG_ConversionHelper.errorMessages.get(errorDetailCode);
 		return(messageText);
 	}
-	
+
+	public String getLongDetailMessage(){
+		
+		String messageText = ANG_ConversionHelper.errorMessagesLongDescription.get(errorDetailCode);
+		return(messageText);
+	}
 	
 	public class wrapperHierarchyStructure {
 		public ANG_ConversionHelper.HierarchyStructure struct {get; set;}

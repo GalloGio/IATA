@@ -948,7 +948,7 @@ accept="application/pdf" />
                                                 <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationRR.CurrencyIsoCode}"   label="" rendered="{!IsExpediteAvailable}" /></td>
                                         </tr>
                                     </table>
-                                    
+                                        <span>{!$Label.IDCard_Expedite_Note}</span>  
                                 </apex:actionRegion>
                                 <script> 
                                 var tableStyle = document.getElementById('expediteTable').style;                                

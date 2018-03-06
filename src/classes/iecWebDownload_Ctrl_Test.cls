@@ -14,7 +14,8 @@ public with sharing class iecWebDownload_Ctrl_Test {
 			TestDataGenerator.generateApexSetting();
 			List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
 			List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,2,true); // 2 Contacts
-			List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, contacts[1].Id,true); // 1 Order
+			//List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, contacts[1].Id,true); // 1 Order
+			List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId, true); // 1 Order
 			List<OrderItem> orderItems = TestDataGenerator.generateWebDownloadOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order
 			
 			set<Id> oiIds = new set<Id>();

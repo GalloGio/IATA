@@ -70,4 +70,53 @@ private class ANG_AccountTriggerHandlerTest {
 		Test.stopTest();
 	}
 	
+	static testMethod void test_shortNameModification() {
+		
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+
+		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');	
+		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
+		Account a3 = new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3');
+		
+		insert new List<Account>{a1,a2,a3};
+		
+		Test.startTest();
+
+		List<Account> acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest1','NameTest2','NameTest3')];
+
+		Map<String,Account> acctsRetreivedMap = new Map<String,Account>();
+		
+		for(Account a: acctsRetreived){
+			acctsRetreivedMap.put(a.Name,a);
+		}
+
+		System.assertEquals('ShortNameTest1Example1',acctsRetreivedMap.get('NameTest1').Short_Name__c);
+		System.assertEquals('tradeName2',acctsRetreivedMap.get('NameTest2').Short_Name__c);
+		System.assertEquals('NameTest3',acctsRetreivedMap.get('NameTest3').Short_Name__c);
+
+		a1.Name = 'NameTest11';
+		a2.IATACode__c = '12344566';
+		a2.TradeName__c = 'tradeName22';
+		a3.Name = 'NameTest33';
+		a3.Short_Name__c = 'ShortNameTest1Example33';
+		a3.TradeName__c = 'tradeName3';
+
+		update new List<Account>{a1,a2,a3};
+
+		acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest11','NameTest2','NameTest33')];
+
+		acctsRetreivedMap = new Map<String,Account>();
+		
+		for(Account a: acctsRetreived){
+			acctsRetreivedMap.put(a.Name,a);
+		}
+
+		System.assertEquals('ShortNameTest1Example1',acctsRetreivedMap.get('NameTest11').Short_Name__c);
+		System.assertEquals('tradeName22',acctsRetreivedMap.get('NameTest2').Short_Name__c);
+		System.assertEquals('tradeName3',acctsRetreivedMap.get('NameTest33').Short_Name__c);
+
+		Test.stopTest();
+
+	}
 }

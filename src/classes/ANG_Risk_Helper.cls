@@ -9,10 +9,14 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_STATUS_B = 'B';
 	public static final String RISK_STATUS_C = 'C';
 
-	//RECORDTYPES
-	public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
-	public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
-	public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    //RHC Information standard record type
+    public static final String RHC_INFO_STD_RT = 'RHC_Information';
+
+    //RECORDTYPES
+    public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
+    public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
+    public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    public static final String RECTYPE_STDRHCINFO           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
 
 
 	//Account - Financial_Review_Result__c
@@ -27,6 +31,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String STATUS_WITHDRAWN        = 'Inactive_Withdrawn';
 	public static final String STATUS_REVOKED          = 'Inactive_Revoked';
 	public static final String STATUS_CHANGE_OWNERSHIP = 'Inactive_CHO';
+	public static final String STATUS_INACTIVE_CASHLESS = 'Inactive_Cashless';
 	public static final String STATUS_MIGRATED         = 'Inactive_Migrated';
 
 	//RISK EVENT TYPES
@@ -41,19 +46,20 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_TYPE_PREJUDICED_COLLECTION     = 'Prejudiced collection';
 
 
-	//CHANGE CODES
-	public static final String CHANGE_CODE_FIN = 'FIN';
-	public static final String CHANGE_CODE_IRR = 'IRR';
-	public static final String CHANGE_CODE_RCR = 'RCR';
-	public static final String CHANGE_CODE_NOT = 'NOT';
-	public static final String CHANGE_CODE_MCF = 'MCF';
-	public static final String CHANGE_CODE_RVW = 'RVW';
-	public static final String CHANGE_CODE_IRW = 'IRW';
-	public static final String CHANGE_CODE_NTW = 'NTW';
-	public static final String CHANGE_CODE_CCF = 'CCF';
-	public static final String CHANGE_CODE_CHF = 'CHF';
-	public static final String CHANGE_CODE_CNF = 'CNF';
-	public static final String CHANGE_CODE_CSF = 'CSF';
+    //CHANGE CODES
+    public static final String CHANGE_CODE_FIN = 'FIN';
+    public static final String CHANGE_CODE_IRR = 'IRR';
+    public static final String CHANGE_CODE_RCR = 'RCR';
+    public static final String CHANGE_CODE_NOT = 'NOT';
+    public static final String CHANGE_CODE_MCF = 'MCF';
+    public static final String CHANGE_CODE_RVW = 'RVW';
+    public static final String CHANGE_CODE_IRW = 'IRW';
+    public static final String CHANGE_CODE_NTW = 'NTW';
+    public static final String CHANGE_CODE_CCF = 'CCF';
+    public static final String CHANGE_CODE_CHF = 'CHF';
+    public static final String CHANGE_CODE_CNF = 'CNF';
+    public static final String CHANGE_CODE_CSF = 'CSF';
+	public static final String CHANGE_CODE_RWD = 'RWD';
 
 	//CHANGE CODES REASON DESCRIPTION 
 	public static final String CHANGE_CODE_DESCRIPTION_NCAC                  = 'NON COMPLIANCE TO ACCREDITATION CRITERIA';
@@ -61,9 +67,11 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION = 'PREJUDICED COLLECTION OF FUNDS';
 	public static final String CHANGE_CODE_DESCRIPTION_NCFC                  = 'NON COMPLIANCE TO FINANCIAL CRITERIA' ;
 
-	//CHANGE CODE IRREGULARITY TYPE
-	public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
-	public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
+    //CHANGE CODE IRREGULARITY TYPE
+    public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
+    public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
+	public static final String CHANGE_CODE_IRR_FC2 = 'FC2';
+    public static final String CHANGE_CODE_IRR_SC2 = 'SC2';
 
 	//Contact - User_Portal_Status__c
 	public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
@@ -74,9 +82,11 @@ public with sharing class ANG_Risk_Helper{
 	//Case - CaseArea__c
 	public static final String CASE_AREA_RISK_MANAGEMENT_PROCESS = 'Risk Management Process';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+	public static final String CASE_AREA_CUSTOMER_SERVICE = 'Customer Service';
 
 	//Case - Reason1__c
 	public static final String CASE_REASON_FINANCIAL_SECURITY_UPDATE = 'Financial Security Update';
+	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';    
@@ -84,8 +94,8 @@ public with sharing class ANG_Risk_Helper{
 
 
 	//Account - Remittance_frequency__c
-	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'Monthly';
-	public static final String REMITTANCE_FREQUENCY_DAILY = 'Daily';
+	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'M';
+	public static final String REMITTANCE_FREQUENCY_DAILY = 'D';
 
 	// ANG_Agency_Risk_Calculation__c - ANG_Adjusted__c
 	public static final String ADJ_YES   = 'Yes';
@@ -281,4 +291,5 @@ public with sharing class ANG_Risk_Helper{
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
 	}
+
 }

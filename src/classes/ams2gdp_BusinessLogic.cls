@@ -296,59 +296,57 @@ public class ams2gdp_BusinessLogic
 			
 			
 
-			if(!(String.isBlank(acc.BillingStreet) && String.isBlank(acc.BillingCity) && String.isBlank(acc.BillingCountry)))
+			/*if(!(String.isBlank(acc.BillingStreet) && String.isBlank(acc.BillingCity) && String.isBlank(acc.BillingCountry))) ----> RN-INC350124 -> remove the blank validation to update the addres when blank
 			{
 
 				if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
 				if(String.isBlank(acc.BillingCity))  acc.BillingCity = '-';
-				if(String.isBlank(acc.BillingCountry))  acc.BillingCountry = '-';
+				if(String.isBlank(acc.BillingCountry))  acc.BillingCountry = '-';*/
 				//Generate Location Address
-				List<String> streetParts = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
-				String countryId = (acc.IATA_ISO_Country__c !=null)? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
+				List<String> streetPartsBS = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
+				String countryIdBS = (acc.IATA_ISO_Country__c !=null)? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
 				result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id+'LOCGDP'
 					, Address_Type__c = 'Location'
-					, Address_Line_1__c = (streetParts.size() > 0) ? streetParts.get(0) : '' 
-					, Address_Line_2__c = (streetParts.size() > 1) ? streetParts.get(1) : '' 
-					, Address_Line_3__c = (streetParts.size() > 2) ? streetParts.get(2) : '' 
-					, Address_City__c = acc.BillingCity.left(30)
+					, Address_Line_1__c = (streetPartsBS.size() > 0) ? streetPartsBS.get(0) : '' 
+					, Address_Line_2__c = (streetPartsBS.size() > 1) ? streetPartsBS.get(1) : '' 
+					, Address_Line_3__c = (streetPartsBS.size() > 2) ? streetPartsBS.get(2) : '' 
+					, Address_City__c = String.isBlank(acc.BillingCity) ? '' : acc.BillingCity.left(30)
 					, IATA_ISO_State__c = (acc.IATA_ISO_Billing_State__c !=null)? acc.IATA_ISO_Billing_State__c : stateIdByName.get(acc.BillingState)
-					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryId)
-					, IATA_ISO_Country__c = countryId
+					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdBS)
+					, IATA_ISO_Country__c = countryIdBS
 					, Address_Postal_Code__c = String.isNotBlank(acc.BillingPostalCode) ? acc.BillingPostalCode.left(10) : ''
 					, Related_Account__c = acc.Id 
 					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)			
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 
-			if(!(String.isBlank(acc.ShippingStreet) && String.isBlank(acc.ShippingCity) && String.isBlank(acc.ShippingCountry)))
+			/*if(!(String.isBlank(acc.ShippingStreet) && String.isBlank(acc.ShippingCity) && String.isBlank(acc.ShippingCountry))) ----> RN-INC350124 -> remove the blank validation to update the addres when blank
 			{
 
 				if(String.isBlank(acc.ShippingStreet))  acc.ShippingStreet = '-';
 				if(String.isBlank(acc.ShippingCity))  acc.ShippingCity = '-';
-				if(String.isBlank(acc.ShippingCountry))  acc.ShippingCountry = '-';
+				if(String.isBlank(acc.ShippingCountry))  acc.ShippingCountry = '-';*/
 				//Generate Mailing Address
-				List<String> streetParts = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
-				String countryId = (acc.IATA_ISO_Shipping_Country__c !=null)? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
+				List<String> streetPartsSH = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
+				String countryIdSH = (acc.IATA_ISO_Shipping_Country__c !=null)? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
 				result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id+'MAIGDP'
 					, Address_Type__c = 'Mailing'
-					, Address_Line_1__c = (streetParts.size() > 0) ? streetParts.get(0) : '' 
-					, Address_Line_2__c = (streetParts.size() > 1) ? streetParts.get(1) : '' 
-					, Address_Line_3__c = (streetParts.size() > 2) ? streetParts.get(2) : '' 
-					, Address_City__c = acc.ShippingCity.left(30)
+					, Address_Line_1__c = (streetPartsSH.size() > 0) ? streetPartsSH.get(0) : '' 
+					, Address_Line_2__c = (streetPartsSH.size() > 1) ? streetPartsSH.get(1) : '' 
+					, Address_Line_3__c = (streetPartsSH.size() > 2) ? streetPartsSH.get(2) : '' 
+					, Address_City__c = String.isBlank(acc.ShippingCity) ? '' : acc.ShippingCity.left(30)
 					, IATA_ISO_State__c = (acc.IATA_ISO_Shipping_State__c !=null)? acc.IATA_ISO_Shipping_State__c : stateIdByName.get(acc.ShippingState)
-					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryId)
-					, IATA_ISO_Country__c = countryId
+					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdSH)
+					, IATA_ISO_Country__c = countryIdSH
 					, Address_Postal_Code__c = String.isNotBlank(acc.ShippingPostalCode) ? acc.ShippingPostalCode.left(10) : ''
 					, Related_Account__c = acc.Id 
 					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)			
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 
 		}
-
-
 		return result;
 	}
  	
@@ -428,8 +426,8 @@ public class ams2gdp_BusinessLogic
 		for(Account acc : accounts)
 		{
 			String gdp_product = (gdpProductIdByAccountId.containsKey(acc.Id))? gdpProductIdByAccountId.get(acc.Id):null; 
-			if(String.isNotBlank(acc.Phone))
-			{
+			//if(String.isNotBlank(acc.Phone)) -RN-INC350124
+			//{
 				Map<String, String> phoneParts = ams2gdp_Utils.getPhoneNumberParts(acc.Phone, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-P1GDP'
 					, Number__c = phoneParts.get('phone')
@@ -441,10 +439,10 @@ public class ams2gdp_BusinessLogic
 					, Related_Account__c = acc.Id
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 
-			if(String.isNotBlank(acc.Fax))
-			{
+			//if(String.isNotBlank(acc.Fax)) RN-INC350124
+			//{
 				Map<String, String> faxParts = ams2gdp_Utils.getPhoneNumberParts(acc.Fax, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-FXGDP'
 					, Number__c = faxParts.get('phone')
@@ -456,7 +454,7 @@ public class ams2gdp_BusinessLogic
 					, Related_Account__c = acc.Id
 					, RecordTypeId = recordTypes.get('GDP')
 				));
-			}
+			//}
 		}
 		
 		return result; 
@@ -691,7 +689,7 @@ public class ams2gdp_BusinessLogic
 				, Owner_ID__c = rank
 				, RecordTypeId = recordTypes.get('Live')	
 			));*/
-			String name = arole.Owner_Name__c;
+			String name = arole.Unified_Owner_Name__c;
 			if(arole.Contact__r.name != null) name = arole.Contact__r.name;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
  				, Name =  name
@@ -857,14 +855,14 @@ public class ams2gdp_BusinessLogic
 				, IATA_Code__c = (territory.Appointment__r.Account__r.IATACode__c != null)? territory.Appointment__r.Account__r.IATACode__c.left(7) : null
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
-				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Location_Country_Name__c = (territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Airline_Code__c = code
 				, Airline_Name__c = name
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
 				, Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c 
 				, Territory_IATA_Numeric_Country_Code__c = territory.Appointment__r.Account__r.state_numeric_code__c
-				, Territory_Country_Name__c = territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30)
+				, Territory_Country_Name__c = (territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30))
 				, Territory_State_Abbreviation__c = territory.ISO_State__r.ISO_Code__c
 				, Territory_Description__c = (String.isNotBlank(territory.Comments__c))? territory.Comments__c.left(40):null
 			));

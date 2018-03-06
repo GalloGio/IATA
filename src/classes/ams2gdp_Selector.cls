@@ -184,7 +184,7 @@ public class ams2gdp_Selector
 	public static AMS_GDP_Batch__c getBatchInfo(String batchName)
 	{
 		List<AMS_GDP_Batch__c> batches =  [
-			SELECT Id, Batch_Name__c, Last_Sync_End_Date__c, Last_Sync_Start_Date__c, Job_1_Original_Start_Date__c, Failed_Records__c FROM AMS_GDP_Batch__c WHERE Batch_Name__c = :batchName LIMIT 1
+			SELECT Id, Batch_Name__c, Last_Sync_End_Date__c, Last_Sync_Start_Date__c, Failed_Records__c FROM AMS_GDP_Batch__c WHERE Batch_Name__c = :batchName LIMIT 1
 		];
 		return (batches.size() >0)? batches[0] : null;
 	}

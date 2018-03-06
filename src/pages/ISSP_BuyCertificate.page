@@ -83,14 +83,14 @@
                                                 </div>
                                             </div>
                                         </apex:actionregion>
-                                            <div class="row">
+                                            <!--<div class="row">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="Quantity">{!$Label.ISSP_Quantity}</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase.QuantityProduct__c}" required="true" />
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="Description">{!$Label.ISSP_BuyCertificateText}</label>

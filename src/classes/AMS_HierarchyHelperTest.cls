@@ -1,5 +1,5 @@
 @isTest
-private class AMS_HierarchyHelperTest {
+public class AMS_HierarchyHelperTest {
 
 	public static Account HO;
 	public static List<Account> secondLevel;

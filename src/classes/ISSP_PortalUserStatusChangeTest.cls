@@ -405,11 +405,13 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Pending Approval';
         Controller.con = con;
         controller.saveNewStatus();
+        
+        Test.stopTest();
+        
 
         System.assert([SELECT Id, ProfileId, Name FROM User WHERE ProfileId =:portalProfile.Id limit 10 ].size() > 0, 'User should have been created');
 
-        Test.stopTest();
-    } 
+    }
 
     Public static testMethod void testUpdateUser(){
 

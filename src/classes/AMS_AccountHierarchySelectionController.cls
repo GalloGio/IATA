@@ -296,7 +296,7 @@ public class AMS_AccountHierarchySelectionController {
 					if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
 				}
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'' + ' AND Status__c != \''+AMS_Utils.ACC_S1_NOTACCREDITED+'\'')){
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'' + ' AND Status__c != \''+AMS_Utils.ACC_S1_NOTACCREDITED+'\'' + ' AND Status__c != \'\'')){
 					Boolean main = (a.Id == oscar.Account__c);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), childAccounts.get(a.Id)));
 				}

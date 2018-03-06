@@ -324,32 +324,35 @@ private class AMS_AccreditationContactControllerTest
         Test.stopTest();
     }
 
-    static testMethod void testIncorrectDate()
-    {
-        setup();
+
+    //FM - AMSU-72 - since the fields now have the date picker, entering incorrect dates no longer occurs so this test is not necessary any more
+    //static testMethod void testIncorrectDate()
+    //{
+    //    setup();
         
-        Test.startTest();
-            ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
-            AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
+    //    Test.startTest();
+    //        ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
+    //        AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
             
-            //add owner from contact
-            Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-            insert c1; 
+    //        //add owner from contact
+    //        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+    //        insert c1; 
 
-            ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
-            ctrl.linkedRecordId = c1.Id;
-            ctrl.acWrapper.get(0).ac.Financial_interest__c = 100;
-            ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
-            ctrl.acWrapper.get(0).dateJoined = '20101-01-10';
-            ctrl.linkACwithContactOrPersonSelection();
+    //        ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
+    //        ctrl.linkedRecordId = c1.Id;
+    //        ctrl.acWrapper.get(0).ac.Financial_interest__c = 100;
+    //        ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
+    //        ctrl.acWrapper.get(0).dateJoined = '20101-01-10';
+    //        ctrl.acWrapper.get(0).ac.Date_joined_agency__c = '20101-01-10';
+    //        ctrl.linkACwithContactOrPersonSelection();
 
-            ctrl.onSave();
+    //        ctrl.onSave();
 
-            System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+ctrl.acWrapper.get(0).ac.First_Name__c + ' '+ ctrl.acWrapper.get(0).ac.Last_Name__c + ' with date: 20101-01-10')));
+    //        System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+ctrl.acWrapper.get(0).ac.First_Name__c + ' '+ ctrl.acWrapper.get(0).ac.Last_Name__c + ' with date: 20101-01-10')));
 
 
-        Test.stopTest();
-    }
+    //    Test.stopTest();
+    //}
 
     static testMethod void testIncorrectDateTrainedStaff()
     {

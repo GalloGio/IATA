@@ -114,8 +114,8 @@ public class Customer_DTO
         
         //*** get information on contact and account and parent account to determine if eligible
         List<Contact> checks = [select User_IECPortal_Status__c, Account.ParentId, Account.Industry, Account.IATACode__c
-                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c
-                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c
+                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c, Account.ACH_Member__c
+                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c, Account.Parent.ACH_Member__c
                          from Contact
                          where Id = :sfContact.Id limit 1];
 
@@ -131,14 +131,14 @@ public class Customer_DTO
         Boolean isAccountEligible = false;
         if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline )
         {
-            if ( check.Account.ParentId != null && check.Account.Parent.ICH_Member__c == true)      
+            if ( check.Account.ParentId != null && (check.Account.Parent.ICH_Member__c == true || check.Account.Parent.ACH_Member__c == true))      
                 return true;
-            if(check.Account.ICH_Member__c == true)
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
                 return true;
         }
         else
         {      
-            if(check.Account.ICH_Member__c == true)
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
                 return true;
     }
     return false;

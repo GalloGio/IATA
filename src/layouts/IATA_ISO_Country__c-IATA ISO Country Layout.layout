@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>ISS_Office_Location__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Default_State__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -77,6 +81,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_Domestic_Only__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_Country_free_text__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -280,6 +288,10 @@
                 <behavior>Edit</behavior>
                 <field>IEC_Zip_Postal_Code_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Non_Compliant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -403,6 +415,10 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Operation__c.Country__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

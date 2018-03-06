@@ -29,6 +29,6 @@ global class ams2gdp_Scheduler implements Schedulable
 
 	public static void run()
 	{
-		Database.executeBatch(new ams2gdp_Batch_Account(true));
+		Database.executeBatch(new ams2gdp_Batch_Account(true,false,false));
 	}
 }

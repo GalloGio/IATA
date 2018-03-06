@@ -338,7 +338,7 @@ public with sharing class AMS_AccreditationContactHelper
             accreditationContact.Job_Title__c = role.Position__c;
             accreditationContact.Agency_role__c = role.IsManager__c;
 
-            accreditationContact.Company__c = role.Owner_Account__c;
+            //accreditationContact.Company__c = role.Owner_Account__c;
             if(role.Hours__c != null)
                 accreditationContact.Time_devoted_to_Agency_business__c = Double.valueOf(role.Hours__c);
             accreditationContact.RecordTypeId = AMS_Utils.AccreditationContactPersonRT;

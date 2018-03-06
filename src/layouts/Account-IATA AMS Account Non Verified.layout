@@ -2,6 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -519,19 +522,18 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
         <fields>Active__c</fields>
-        <fields>Contact__c</fields>
         <fields>RECORDTYPE</fields>
-        <fields>Person__c</fields>
+        <fields>Unified_Owner_Name__c</fields>
         <fields>Owner_Name__c</fields>
         <fields>Owner_Account__c</fields>
+        <fields>Contact__c</fields>
         <fields>Percentage__c</fields>
-        <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
-        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Termination_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -659,11 +661,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Airline_Code__c</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>OSCAR__c</fields>
         <fields>CREATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -688,6 +694,18 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Contact__c</fields>
+        <fields>Owner_Name__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AMS_Account_Role__c.Owner_Account__c</relatedList>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>

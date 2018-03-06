@@ -68,7 +68,7 @@
         <apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_Type_and_Location_New,$Label.ISSP_AMS_NoC_Change_Type_and_Location)}" collapsible="false">
                     <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%">
                             <apex:outputText value="{!$Label.ISSP_AMS_NoC_Change_submitted_for}" />
-                            <apex:outputText value="{!CASE(newForm.Scope_of_Change__c, 'HO Only', $Label.ISSP_AMS_NoC_Head_Office + ' (' + hqAccount.IATACode__c + ')', 'HO - All Branches', $Label.ISSP_AMS_NoC_HO_All_Branches,'')}"/>
+                            <apex:outputText value="{!CASE(newForm.Scope_of_Change__c, 'HO Only', $Label.ISSP_AMS_NoC_Head_Entity + ' (' + hqAccount.IATACode__c + ')', 'HO - All Branches', $Label.ISSP_AMS_NoC_HE_All_Branches,'')}"/>
                             <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>
                             <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}" value="{!IF(newForm.Scope_of_Change__c=='HO - Selected Branches', accountConcerned.IATACode__c + ', ' + agencyCodesConcernedForPDF, agencyCodesConcernedForPDF)}"/>         
                             <apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -96,12 +96,82 @@
                        
                 </apex:pageBlockSection>
         </div>
+        <!-- NEWGEN-683 -->
+        <apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(newform.Is_change_bank_account_details__c))}">
+            <div style="page-break-after:always;margin-top:30px;">
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            {!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
+                        <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
+                        <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
 
+                        <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_accreditation_type_are_correct__c.Label}" style="color:black;font-size:110%"/>
+                            <apex:outputText ><img src="{!IF(newForm.Confirm_accreditation_type_are_correct__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+                        </apex:panelGrid>
+
+                        <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
+                            <apex:outputText ><img src="{!IF(newForm.Notify_Change_Accreditation_Type__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+                        </apex:panelGrid>
+
+                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                            <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
+                            <apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
+                        </apex:panelGrid>
+                        <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Accreditation_Type__c)}"></apex:outputPanel>
+                        <apex:outputPanel rendered="{!newForm.Notify_Change_Accreditation_Type__c}">
+                            <apex:panelGrid width="100%" cellpadding="10%" columns="1">
+                                <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}"/>
+                                    <apex:outputText value="{!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cashless', $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash,''))}"></apex:outputText>
+                                </apex:panelGrid>
+                                <apex:outputPanel rendered="{!(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash')}">
+                                    <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">Assessment Contact</apex:outputPanel>
+                                    <apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.FirstName.Label}"/>
+                                            <apex:outputText value="{!ifapCon.First_name__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.LastName.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Last_name__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Phone.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Phone__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Email.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Email__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}"/>
+                                            <apex:outputText ><img src="{!IF(ifapCon.Financial_Assessment_Contact__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+                                        </apex:panelGrid>
+                                    </apex:repeat>
+                                </apex:outputPanel>
+                            </apex:panelGrid>
+                        </apex:outputPanel>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </div>
+        </apex:outputPanel>
+        <!--END NEWGEN-683 -->
+        
         <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_legal_name__c==true,'','none')}">
               <apex:pageBlockSection columns="1" collapsible="false">
                   <apex:facet name="header">
                             <apex:outputpanel >
-                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
+                                <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
+                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                                    {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
+                                </apex:outputText>
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
                             </apex:outputpanel>                       
                         </apex:facet>
@@ -167,7 +237,10 @@
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
                             <apex:outputpanel >
-                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}
+                                <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
+                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                                    {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
+                                </apex:outputText>
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                             </apex:outputpanel>                       
                 </apex:facet>
@@ -281,10 +354,13 @@
         <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==false,'','none')}">
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
-                            <apex:outputpanel >
-                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
-                            </apex:outputpanel>                    
+                    <apex:outputpanel >
+                        <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+                        <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                            {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+                        </apex:outputText>
+                        <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
+                    </apex:outputpanel>                    
                 </apex:facet>
             <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col1" columns="2">    
                 <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Legal_Status}</apex:outputPanel>
@@ -512,17 +588,21 @@
                     <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false}">
                             <apex:facet name="header">
                               <apex:outputpanel >
-                                  {!$Label.ISSP_AMS_NoC_Additional_Information}
+                                <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+                                    {!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
+                                </apex:outputText>
+                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section5" style="float:right"/>                                
                               </apex:outputpanel>
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}" />
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" />
                             <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />
                             <apex:outputText value="{!newForm.New_Head_Office_IATA_Code__c}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />  
                             
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}" />
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_AE_Becoming_a_Head_Entity, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label)}" />
                             <apex:outputText value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}"/>                                   
                             
                             <!--
@@ -532,7 +612,7 @@
                             <apex:outputfield value="{!newForm.Please_provide_details_for_the_change__c}" />
                             -->
 
-                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations}" />
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations_New, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations)}" />
                             <apex:outputText value="{!newForm.Will_such_change_affect_locations__c}"/>
                             <apex:outputlabel value="{!$Label.ISSP_AMS_NoC_If_Not_Provide_Explanation}" />
                             <apex:outputfield value="{!newForm.Provide_explanation_for_change_locations__c}" />
@@ -551,6 +631,11 @@
                             <apex:outputText value="{!newForm.Will_the_change_of_ownership_cause__c}"/>
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_the_change_of_ownership__c.Label}" />
                             <apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" />
+
+                            <!--NEWGEN-683-->
+                            <apex:outputlabel value="{!$Label.ISSP_NoC_Advise_GDS}"  rendered="{!isAccreditationModelNotNullOrLegacy}"/>
+                            <apex:outputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"  rendered="{!isAccreditationModelNotNullOrLegacy}"/>
+                            <!--END NEWGEN-683-->
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
                             <apex:outputLabel value="" />

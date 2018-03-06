@@ -130,6 +130,8 @@
                 <option value="in">Indonesian</option>
                 <option value="vi">Vietnamese</option>
                 <option value="ar">Arabic</option>
+                <option value="ru">Russian</option>
+                <option value="tr">Turkish</option>
                 </select>
             </td>
           </tr>

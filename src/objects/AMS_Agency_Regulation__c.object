@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,12 +45,73 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>ISSP_Certifications</fullName>
+        <description>on Portal on &quot;Company Administration&quot; under Certifications</description>
+        <displayedFields>
+            <field>Account__r.IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account__r.Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account__r.BillingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Type_Of_Certificate__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Position__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Issued_on__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Expiry_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Expired__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>OSCAR__r.Oscar_Communication_Case_Id__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP_Certifications</label>
+    </fieldSets>
     <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
@@ -173,6 +230,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Notification_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Notification Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Notification_Sent__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -203,88 +268,131 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Registration_Number__c</fullName>
+        <description>Registration Number</description>
+        <externalId>false</externalId>
+        <label>Registration Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Training_dangerous_goods_completed__c</fullName>
         <externalId>false</externalId>
         <label>Training dangerous goods completed</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_Of_Certificate__c</fullName>
         <externalId>false</externalId>
         <label>Type Of Certificate</label>
-        <picklist>
-            <picklistValues>
-                <fullName>DGR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DGA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BCH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TSA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Experience</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>DGR</fullName>
+                    <default>false</default>
+                    <label>DGR</label>
+                </value>
+                <value>
+                    <fullName>DGA</fullName>
+                    <default>false</default>
+                    <label>DGA</label>
+                </value>
+                <value>
+                    <fullName>BCH</fullName>
+                    <default>false</default>
+                    <label>BCH</label>
+                </value>
+                <value>
+                    <fullName>TSA</fullName>
+                    <default>false</default>
+                    <label>TSA</label>
+                </value>
+                <value>
+                    <fullName>Experience</fullName>
+                    <default>false</default>
+                    <label>Experience</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>CATA</fullName>
+                    <default>false</default>
+                    <label>CATA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Validity__c</fullName>
         <externalId>false</externalId>
         <label>Validity</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1 year</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2 years</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3 years</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 year</fullName>
+                    <default>false</default>
+                    <label>1 year</label>
+                </value>
+                <value>
+                    <fullName>2 years</fullName>
+                    <default>false</default>
+                    <label>2 years</label>
+                </value>
+                <value>
+                    <fullName>3 years</fullName>
+                    <default>false</default>
+                    <label>3 years</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Validity_count__c</fullName>
+        <description>Returns 1 if the expired field is unchecked. To be used in reports.</description>
+        <externalId>false</externalId>
+        <formula>IF(Expired__c=False,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Validity count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <label>AMS Agency Regulation</label>
     <nameField>
@@ -301,4 +409,13 @@
         <errorConditionFormula>AND(ISPICKVAL(Type_Of_Certificate__c, &quot;DGR&quot;),  ISBLANK( Expiry_Date__c ))</errorConditionFormula>
         <errorMessage>DGR certificates must have an expiry date.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Uncheck_notification_sent</fullName>
+        <active>true</active>
+        <description>If expiry date is modified, &quot;Notification sent&quot; field needs to be unchecked.</description>
+        <errorConditionFormula>AND(ISCHANGED(Expiry_Date__c),Notification_Sent__c=True)</errorConditionFormula>
+        <errorDisplayField>Notification_Sent__c</errorDisplayField>
+        <errorMessage>Please un-check this field before updating the Expiry date.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

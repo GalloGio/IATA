@@ -1,6 +1,6 @@
 <messaging:emailTemplate subject="
 {!IF(relatedTo.CaseArea__c=='Accreditation Process',
-CASE(relatedTo.Reason1__c, 'New HO', $Label.ISSP_AMS_Email_HO_Subject, 'New BR / IP', $Label.ISSP_AMS_Email_Branch_Subject, 'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject, $Label.ISSP_AMS_Email_Change_Subject),
+CASE(relatedTo.Reason1__c, 'New HO', $Label.ISSP_AMS_Email_HO_Subject, 'New HE standard', $Label.ISSP_ANG_Email_HE_Cash_Subject, 'New HE lite', $Label.ISSP_ANG_Email_HE_Cashless_Subject, 'New AE', $Label.ISSP_ANG_Email_AE_Subject, 'New BR / IP', $Label.ISSP_AMS_Email_Branch_Subject, 'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject, $Label.ISSP_AMS_Email_Change_Subject),
 'BSP / CASS ' + relatedTo.CaseArea__c + ' Draft Application')} - case n° {!relatedTo.CaseNumber}" recipientType="Contact" relatedToType="Case">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
@@ -12,7 +12,7 @@ CASE(relatedTo.Reason1__c, 'New HO', $Label.ISSP_AMS_Email_HO_Subject, 'New BR /
 {!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
 {!CASE(relatedTo.CaseArea__c,
-'Accreditation Process', IF(OR(relatedTo.Reason1__c=='New HO', relatedTo.Reason1__c=='New BR / IP', relatedTo.Reason1__c=='New BR Abroad'), relatedTo.Description, $Label.ISSP_Email_Draft_Change_Process),
+'Accreditation Process', IF(OR(relatedTo.Reason1__c=='New HO', relatedTo.Reason1__c=='New HE standard', relatedTo.Reason1__c=='New HE lite', relatedTo.Reason1__c=='New AE', relatedTo.Reason1__c=='New BR / IP', relatedTo.Reason1__c=='New BR Abroad'), relatedTo.Description, $Label.ISSP_Email_Draft_Change_Process),
 'Airline Joining', 'Thank you for creating your Airline Joining BSP / CASS draft application.',
 'Thank you for creating your draft application request to change your Airline BSP / CASS details.')
 }

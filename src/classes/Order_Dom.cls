@@ -110,6 +110,9 @@ public without sharing class Order_Dom {
 
         //Update IEC Event Subscription for Event renewal
         Order_Svc.updateEventSubcriptions(newList, oldMap);
+
+        //Update iec sap invoice status (Zuora Ready) when order is Payment Confirmed INC295559
+        Order_Svc.sapInvoiceStatusUpdate(newMap, oldMap);
     }
 
     private void onAfterDelete() {

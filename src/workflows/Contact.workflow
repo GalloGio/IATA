@@ -186,6 +186,16 @@
         <template>ID_Card_templates/IDCard_RenewalEmail</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Contact_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>administrator@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Contact Owner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Deleting_IS_date_post_30</fullName>
         <description>This rule will delete the IS received date on Contact object after 30 days</description>
         <field>Instant_Survey_Last_feedback_received__c</field>
@@ -429,6 +439,24 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <value>True</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISSP - Change Owner to IATA System</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>User.UserType</field>
+            <operation>notEqual</operation>
+            <value>Standard</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contact_Owner</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>ISSP - Notification to new Portal user</fullName>

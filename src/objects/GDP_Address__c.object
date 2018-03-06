@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -81,8 +78,9 @@
     <fields>
         <fullName>Address_City_Uppercase__c</fullName>
         <externalId>false</externalId>
-        <formula>UPPER(Address_City__c)</formula>
+        <formula>UPPER(SUBSTITUTE( Address_City__c , &apos;|&apos;, &apos;/&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address City Uppercase.</inlineHelpText>
         <label>Address City Uppercase</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -118,6 +116,7 @@
         <fullName>Address_Country_Name__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Name</formula>
+        <inlineHelpText>Lookup: IATA_ISO_Country__r.Name</inlineHelpText>
         <label>Address Country Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -159,6 +158,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <fullName>Address_ISO_Country_Code__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
+        <inlineHelpText>Lookup: IATA_ISO_Country__r.ISO_Code__c</inlineHelpText>
         <label>Address ISO Country Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -172,7 +172,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
         <formula>UPPER(SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;))</formula>
-        <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -196,6 +196,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <externalId>false</externalId>
         <formula>UPPER(SUBSTITUTE( Address_Line_2__c, &apos;|&apos;, &apos;/&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 2.</inlineHelpText>
         <label>Address Line 2 Clean</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -219,6 +220,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <externalId>false</externalId>
         <formula>UPPER(SUBSTITUTE( Address_Line_3__c, &apos;|&apos;, &apos;/&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 3.</inlineHelpText>
         <label>Address Line 3 Clean</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -295,17 +297,23 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <fields>
         <fullName>Address_State_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-				OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
-                                                        IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
-						 IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
-    IATA_ISO_State__r.Name,
-				NULL
+        <formula>IF( 
+And( 
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
+!OR(IATA_ISO_State__r.Name=&apos;BR57&apos;, 
+IATA_ISO_State__r.Name=&apos;MX86&apos;, 
+IATA_ISO_State__r.Name=&apos;VE95&apos;) 
+), 
+IATA_ISO_State__r.Name, 
+NULL 
 )</formula>
+        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
         <label>Address State Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -330,34 +338,38 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Location</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Location</fullName>
+                    <default>true</default>
+                    <label>Location</label>
+                </value>
+                <value>
+                    <fullName>Mailing</fullName>
+                    <default>false</default>
+                    <label>Mailing</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Address__c</fullName>
         <description>Formula address, containing the concatenation of Address_1, Address_2, Address_3</description>
         <externalId>false</externalId>
-        <formula>SUBSTITUTE( Address_Line_1__c 
-+ IF( ISBLANK(Address_Line_2__c), &apos;&apos;, &apos; &apos; + Address_Line_2__c)
-+ IF( ISBLANK(Address_Line_3__c), &apos;&apos;, &apos; &apos; + Address_Line_3__c)
-, &apos;|&apos;, &apos;/&apos;)</formula>
+        <formula>Address_Line_1_Clean__c 
++ IF( ISBLANK(Address_Line_2_Clean__c), &apos;&apos;, &apos; &apos; + Address_Line_2_Clean__c)
++ IF( ISBLANK(Address_Line_3_Clean__c), &apos;&apos;, &apos; &apos; + Address_Line_3_Clean__c)</formula>
         <label>Address</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -415,6 +427,19 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Numeric_Country_Code__c</fullName>
+        <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(IATA_ISO_Country__c), &apos;&apos;, Related_Account__r.state_numeric_code__c)</formula>
+        <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
+        <label>IATA Numeric Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Profit_Center__c</fullName>
@@ -572,4 +597,5 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

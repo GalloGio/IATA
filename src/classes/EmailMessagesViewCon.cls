@@ -98,6 +98,8 @@ public class EmailMessagesViewCon {
         public Id contact {get;set;}
         public Datetime messageDate {get;set;}
         public Tracked_Email__c trackedEmail {get;set;}
+        public Id archivedEmailId {get;set;}
+        public Boolean isArchived {get{return emailType == 'archived';}}
 
         public EmailWrapper(Tracked_Email__c trackedEmail){
             emailType = 'tracked';
@@ -121,7 +123,8 @@ public class EmailMessagesViewCon {
 
         public EmailWrapper(Archived_Message__c archivedMessage, EmailMessage originalEmail){
             emailType = 'archived';
-            setup(originalEmail);
+			archivedEmailId = archivedMessage.Id;
+			setup(originalEmail);
             //override some behaviors defined in setup method
             displayHasAttachmentImage = '';     //different behavior than for other email types, is it normal?
             if(status != ''){

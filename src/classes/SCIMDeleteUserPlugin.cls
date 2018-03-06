@@ -33,6 +33,9 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
             SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
 
             UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
+
+            //userProvUtils.debug('UPA DELETE ---->' + upa);
+
             if (upa != null && !String.isBlank(upa.externalUserId)) {
 
                 String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
@@ -50,9 +53,11 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
 		    //Set status to 'Deactivated' for systems that do not support hard delete
                     result.put(UserProvisioningUtils.PARAM_UPASTATUS, 'Deleted');
                     result.put(UserProvisioningUtils.PARAM_DETAILS, 'User deactivated successfully with ' + upa);
-                    userProvUtils.debug('User deactivated successfully with ' + upa);
-
+                    userProvUtils.debug('User deactivated successfully with ' + upa);            
                 }
+
+                delete upa;
+                    
             } else {
                 userProvUtils.debug('Could not find user to delete from UserProvAccount where linkState = Linked and salesforceUserId = ' + userProvUtils.getSalesforceUserId());
                 result.put(UserProvisioningUtils.PARAM_STATUS, 'Failed');

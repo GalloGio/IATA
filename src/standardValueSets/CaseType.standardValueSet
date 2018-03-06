@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Application Change Request</fullName>
+        <default>false</default>
+        <label>Application Change Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Application License Request</fullName>
+        <default>false</default>
+        <label>Application License Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Application Support Request</fullName>
+        <default>false</default>
+        <label>Application Support Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bug</fullName>
+        <default>false</default>
+        <label>Bug</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bug Fix</fullName>
+        <default>false</default>
+        <label>Bug Fix</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Case</fullName>
+        <default>true</default>
+        <label>Case</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Complaint</fullName>
+        <default>false</default>
+        <label>Complaint</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Compliment</fullName>
+        <default>false</default>
+        <label>Compliment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer Service Request (ACCA)</fullName>
+        <default>false</default>
+        <label>Customer Service Request (ACCA)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>DPC Service Request</fullName>
+        <default>false</default>
+        <label>DPC Service Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FAQ / Question</fullName>
+        <default>false</default>
+        <label>FAQ / Question</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Feature Request</fullName>
+        <default>false</default>
+        <label>Feature Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Question</fullName>
+        <default>false</default>
+        <label>General Question</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA SERVICE REQUEST</fullName>
+        <default>false</default>
+        <label>IATA SERVICE REQUEST</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICH Finance</fullName>
+        <default>false</default>
+        <label>ICH Finance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICH General</fullName>
+        <default>false</default>
+        <label>ICH General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICH Membership</fullName>
+        <default>false</default>
+        <label>ICH Membership</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICH Operations</fullName>
+        <default>false</default>
+        <label>ICH Operations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Incident</fullName>
+        <default>false</default>
+        <label>Incident</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inquiry</fullName>
+        <default>false</default>
+        <label>Inquiry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal</fullName>
+        <default>false</default>
+        <label>Internal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Others</fullName>
+        <default>false</default>
+        <label>Others</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Problem / Issue</fullName>
+        <default>false</default>
+        <label>Problem / Issue</label>
+    </standardValue>
+    <standardValue>
+        <fullName>RATD data errors</fullName>
+        <default>false</default>
+        <label>RATD data errors</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Request</fullName>
+        <default>false</default>
+        <label>Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>RM Issue</fullName>
+        <default>false</default>
+        <label>RM Issue</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Feature Request</fullName>
+        <default>false</default>
+        <label>SIS Feature Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Internal Case</fullName>
+        <default>false</default>
+        <label>SIS Internal Case</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Member Profile Update</fullName>
+        <default>false</default>
+        <label>SIS Member Profile Update</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Membership</fullName>
+        <default>false</default>
+        <label>SIS Membership</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Question/Problem</fullName>
+        <default>false</default>
+        <label>SIS Question/Problem</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SIS Technical Problem</fullName>
+        <default>false</default>
+        <label>SIS Technical Problem</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TFC data clarification/correction</fullName>
+        <default>false</default>
+        <label>TFC data clarification/correction</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TFC new code request</fullName>
+        <default>false</default>
+        <label>TFC new code request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TFC update</fullName>
+        <default>false</default>
+        <label>TFC update</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TTBS systems log-in/credentials</fullName>
+        <default>false</default>
+        <label>TTBS systems log-in/credentials</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TTBS systems troubleshoot</fullName>
+        <default>false</default>
+        <label>TTBS systems troubleshoot</label>
+    </standardValue>
+</StandardValueSet>

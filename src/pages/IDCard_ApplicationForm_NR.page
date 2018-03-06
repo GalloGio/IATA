@@ -939,7 +939,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             <table id="expediteTable">
                                 <tr>
                                     <td style="width: 170px">
-                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>
+                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>                                          
                                     </td>
                                     <td>
                                         <apex:inputField id="chckExpedite" value="{!IDCardApplicationNR.IDCard_Expedite_Delivery__c}">
@@ -947,10 +947,10 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                         </apex:inputField>
                                         &nbsp;&nbsp; 
                                         <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationNR.CurrencyIsoCode}" label="" rendered="{!IsExpediteAvailable}" />
-                                    </td>
+                                    </td>                                     
                                 </tr>
                             </table>
-                            
+                                  <span>{!$Label.IDCard_Expedite_Note}</span>                             
                         </apex:actionRegion>
                         <script> 
                         var tableStyle = document.getElementById('expediteTable').style;                                

@@ -221,6 +221,7 @@
         </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
+    <tab>standard-home</tab>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
     <tab>standard-Case</tab>
@@ -234,7 +235,11 @@
     <tab>standard-LiveChatTranscript</tab>
     <tab>standard-LiveChatVisitor</tab>
     <tab>standard-LiveAgentSession</tab>
+    <tab>AMS_Account_Role__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_Account_Role__c</tab>
+        </mapping>
         <mapping>
             <tab>Agents__c</tab>
         </mapping>
@@ -270,6 +275,9 @@
         </mapping>
         <mapping>
             <tab>standard-LiveChatVisitor</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-home</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>

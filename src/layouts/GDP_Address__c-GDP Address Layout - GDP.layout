@@ -20,10 +20,6 @@
                 <field>Address_City__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Address_City_Uppercase__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Address_Postal_Code__c</field>
             </layoutItems>
@@ -43,10 +39,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Address_State_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Profit_Center__c</field>
             </layoutItems>
             <layoutItems>
@@ -58,8 +50,8 @@
                 <field>Address_Country_Short_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_ISO_NCode__c</field>
+                <behavior>Readonly</behavior>
+                <field>IATA_Numeric_Country_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -68,7 +60,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Based on AIMS &amp; Webstar Fields</label>
+        <label>Address Decomposed Based on WAD Layout</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -115,14 +107,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Address_ISO_Country_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Address_IATA_Custom_ISO_Country_Code__c</field>
+                <field>Address_City_Uppercase__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Address_State_Code__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Address_State_Name_Uppercase__c</field>
@@ -130,6 +122,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Address_Country_Name_Uppercase__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Address_ISO_Country_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Address_IATA_Custom_ISO_Country_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

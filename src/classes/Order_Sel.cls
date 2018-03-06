@@ -13,6 +13,7 @@ public without sharing class Order_Sel extends Selector{
             Order.Type,
             Order.OrderNumber,
             Order.Status,
+            Order.Is_Paid__c,
             Order.IEC_Order_Previous_Type__c, //To h andle order conversion
             Order.EffectiveDate,
             Order.EndDate,
@@ -423,12 +424,50 @@ public without sharing class Order_Sel extends Selector{
         return (orders.isEmpty()) ? null : orders[0];
     }
 
-    public Order initializeOrder(Account a, Contact c)
+    /**
+        Retrieves the orders in status New and type of Cart and to the BillToContactId
+    */
+    public Order getPendingOrderByBillToContactId(Id billToContactId)
     {
-        return initializeOrder(a, c, true); 
+        String typ = 'Cart';
+        String stat = 'New';
+
+        String query = String.format(
+            'SELECT {0}  ' + 
+            '   , BillTo_Address__r.Street__c, BillTo_Address__r.City__c, BillTo_Address__r.ZipCode__c ' +
+            '   , BillTo_Address__r.ISO_State_Name__c, BillTo_Address__r.ISO_State_Code__c ' +
+            '   , BillTo_Address__r.ISO_Country_Name__c, BillTo_Address__r.ISO_Country_Code__c ' +
+            '   , ShipTo_Address__r.Street__c, ShipTo_Address__r.City__c, ShipTo_Address__r.ZipCode__c ' +
+            '   , ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State_Code__c ' +
+            '   , ShipTo_Address__r.ISO_Country_Name__c, ShipTo_Address__r.ISO_Country_Code__c ' +
+            'FROM {1} ' + 
+            'WHERE BillToContactId = :billToContactId AND Type = :typ AND status = :stat  ORDER BY LastModifiedDate DESC LIMIT 1 ' , 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+
+        System.debug('query::'+query);
+        System.debug('typ::'+typ);
+        System.debug('stat::'+stat);
+
+        List<Order> orders = Database.query(query);
+
+        return (orders.isEmpty()) ? null : orders[0];
     }
-    
+
+    public Order initializeOrder(Account a, Contact c, Id ownerId)
+    {
+        return initializeOrder(a, c, ownerId, true); 
+    }
+
     public Order initializeOrder(Account a, Contact c, Boolean doInsert)
+    {
+        return initializeOrder(a, c, null, doInsert); 
+    }
+
+    public Order initializeOrder(Account a, Contact c, Id ownerId, Boolean doInsert)
     {
         Pricebook_Sel pricebookSelector = new Pricebook_Sel();  
         Pricebook2 stdPriceBook = pricebookSelector.getStandardPriceBook();
@@ -484,7 +523,8 @@ public without sharing class Order_Sel extends Selector{
             ShipToContact_Name__c   = c.Name,
             ShipToContact_Salutation__c = c.Salutation,
             ShipToContact_First_Name__c = c.FirstName,
-            ShipToContact_Last_Name__c  = c.LastName/*,
+            ShipToContact_Last_Name__c  = c.LastName,
+            OwnerId = ownerId/*,
             ShipToContact_Phone__c  = c.Phone,
             ShipToContact_Email__c  = c.Email*/
         );

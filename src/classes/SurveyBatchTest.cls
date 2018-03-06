@@ -832,7 +832,7 @@ public class SurveyBatchTest {
                               AccountId = a.id,
                               Region__c = 'China & North Asia',
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
+                              Financial_Review_Result__c = 'Satisfactory',
                               Reason1__c = 'CHC – Change of Shareholding'
                               ));
 
@@ -1069,7 +1069,7 @@ public class SurveyBatchTest {
             AccountId = listAccount[i].id,
             // Region__c = 'Europe',
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
 
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
@@ -1107,10 +1107,10 @@ public class SurveyBatchTest {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
       prepareTestForCountries(5,null);
       }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1124,10 +1124,10 @@ public class SurveyBatchTest {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(5,5);
     }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1140,10 +1140,11 @@ static testMethod void testForCountries3() {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(6,10);
     }
-   test.startTest();
+   
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1202,7 +1203,7 @@ System.runAS(u) {
             AccountId = a.id,
             Region__c = region,
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
             Status = 'Financial Security Requested',
@@ -1237,7 +1238,7 @@ System.runAS(u) {
             AccountId = a.id,
             // Region__c = region,
             Assessment_Performed_Date__c = date.today(),
-            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            Financial_Review_Result__c = 'Satisfactory'
             ));
 
             cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
@@ -1325,7 +1326,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1385,7 +1386,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1448,7 +1449,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1511,7 +1512,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1574,7 +1575,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1637,7 +1638,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1700,7 +1701,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1763,7 +1764,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1826,7 +1827,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;
@@ -1889,7 +1890,7 @@ System.runAS(u) {
         c.contactid = con.id;
         c.AccountId = a.id;
         c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
+        c.Financial_Review_Result__c = 'Satisfactory' ;
         c.Subject = 'wrthsrthjr';
         // OwnerId = us.Id
         insert c;

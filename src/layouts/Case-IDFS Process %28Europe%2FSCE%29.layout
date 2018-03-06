@@ -10,6 +10,7 @@
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Migrate_SAAM_Case</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>E2CP__New_Comment</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -380,6 +381,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Criteria_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIDRA_Exclude_from_report_exceptions__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

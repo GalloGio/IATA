@@ -24,93 +24,152 @@ global with sharing class GSS_REST_FilePayload {
     global static void getFilePayload() {
         
         //try{
-            //Get and validate input parameters in the URL
-            //Get REQUIRED FileSpecificationID parameter
-            String FileSpecificationID = RestContext.request.params.get('FileSpecificationId');
-            if(FileSpecificationID == '' || FileSpecificationID == null)    throw new MyException('FileSpecificationID is required parameter');  
-            
-            
-            
-            //Get Optional lastRetrievedRecordId parameter
-            //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
-            //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c
-            String lastRetrievedRecordIdParameter = RestContext.request.params.get('LastRetrievedRecordId');
-            
-            // Get Optional RequestSizeFactor parameter, and use it to set DividerFactor
-            String RequestSizeFactorStr = RestContext.request.params.get('RequestSizeFactor');
-            Integer RequestSizeFactor = (RequestSizeFactorStr == null) ? 0 : Integer.valueOf(RequestSizeFactorStr); 
-            RequestSizeFactor = (RequestSizeFactor == null) ? 0 : RequestSizeFactor; 
-            Integer DividerFactor = Integer.valueOf(Math.pow(2, RequestSizeFactor));
-            
-            //TODO: Load the SQL information from File Specification
-            List<GDP_File_Description__c> filespecificationlist = new List<GDP_File_Description__c>();
-            filespecificationlist = [SELECT Id
-                                            ,Field_Group__c
-                                            ,Field_API__c
-                                            ,Field_Visible__c
-                                            ,Field_Type__c
-                                            ,Field_Filter__c
-                                            ,Field_Filter_Value__c
-                                            ,Field_Object_Name__c   
-                                            ,Frequency__c
-                                            ,Order_By__c
-                                            ,Product_Type__c
-                                            ,Reference_Clause__c
-                                            ,Reference__c
-                                            ,Reference__r.Field_Group__c
-                                            ,Reference__r.Field_API__c
-                                            ,Reference__r.Field_Visible__c
-                                            ,Reference__r.Field_Type__c
-                                            ,Reference__r.Field_Filter__c
-                                            ,Reference__r.Field_Filter_Value__c
-                                            ,Reference__r.Field_Object_Name__c
-                                            ,Reference__r.Reference_Clause__c
-                                            ,Reference__r.Product_Type__c
-                                            ,Reference__r.Service_Target__c
-                                            ,Reference__r.Maximum_API_Request__c
-                                            ,Reference__r.Web_Service_Default_Response__c   
-                                            ,Reference__r.Minimum_Digit_Search__c
-                                            ,Class__c
-                                            ,Magnitude__c
-                                            ,Geo_Coverage_Definition__c
-                                            ,Geo_Coverage_Definition__r.Country_Selection__c
-                                         FROM GDP_File_Description__c
-                                         WHERE id =: FileSpecificationID
-                                           ];
-            //TODO: Make sure to have File Specification or Reference File Specification to process
-            if (filespecificationlist.size()==0)
-            {
-                
-            }
-            // NEW_BATCH_SIZE is used to limit the number of rows requested
-            Integer NEW_BATCH_SIZE= BATCH_SIZE;
-            if (filespecificationlist[0].Reference__r.Maximum_API_Request__c!=null) NEW_BATCH_SIZE=Integer.ValueOf(filespecificationlist[0].Reference__r.Maximum_API_Request__c);
-            
-            NEW_BATCH_SIZE =  Integer.valueOf(Math.floor(NEW_BATCH_SIZE / DividerFactor)) + 1;
-            
-            List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();
-            fileproductionlist = [Select Id,File_Specification__c, LastModifiedDate 
-                                From GDP_File_Production__c 
-                                Where File_Specification__c=:FileSpecificationID
-                                Limit 1]; 
+        //Get and validate input parameters in the URL
+        //Get REQUIRED FileSpecificationID parameter
+        String FileSpecificationID = RestContext.request.params.get('FileSpecificationId');
+        if (FileSpecificationID == '' || FileSpecificationID == null) throw new MyException('FileSpecificationID is required parameter');  
+        Boolean IsTestMode =false;
+        String isTestString = RestContext.request.params.get('IsTestMode');
+        if (!(isTestString == '' || isTestString == null)) IsTestMode = true;
+       
+        //Based on the current File Specification record extract the Fields Arrays
+        String DynamicSQL = '';
+        String SOQL = '';
+     
         
-            //the value of lastRetrieveRecordId is based on given http parameter and related GDP_File_Description__c.Product_Type__c
-            String lastRetrievedRecordId = lastRetrievedRecordIdParameter; // default value for GSS
-            //In the case that there is no lastRetrievedRecordId, return first records
-            if(lastRetrievedRecordIdParameter == '' || lastRetrievedRecordIdParameter == null) 
-            {
-                lastRetrievedRecordId = '000000000000000000';
-            } else if ((filespecificationlist[0].Order_By__c != 'Id') && (filespecificationlist[0].Order_By__c != null))
-            {
-                 //lastRetrievedRecordId =  EncodingUtil.urlDecode(lastRetrievedRecordIdParameter, ENCODING_SCHEME).replace( '\'', '\\\'' );
-                 lastRetrievedRecordId = String.escapeSingleQuotes(lastRetrievedRecordIdParameter);
+        //Get Optional lastRetrievedRecordId parameter
+        //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
+        //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c
+        String lastRetrievedRecordIdParameter = RestContext.request.params.get('LastRetrievedRecordId');
+        
+        // Get Optional RequestSizeFactor parameter, and use it to set DividerFactor
+        String RequestSizeFactorStr = RestContext.request.params.get('RequestSizeFactor');
+        Integer RequestSizeFactor = (RequestSizeFactorStr == null) ? 0 : Integer.valueOf(RequestSizeFactorStr); 
+        RequestSizeFactor = (RequestSizeFactor == null) ? 0 : RequestSizeFactor; 
+        Integer DividerFactor = Integer.valueOf(Math.pow(2, RequestSizeFactor));
+        
+        //TODO: Load the SQL information from File Specification
+        List<GDP_File_Description__c> filespecificationlist = new List<GDP_File_Description__c>();
+        filespecificationlist = [SELECT Id
+                                        ,Field_Group__c
+                                        ,Field_API__c
+                                        ,Field_Visible__c
+                                        ,Field_Type__c
+                                        ,Field_Filter__c
+                                        ,Field_Filter_Value__c
+                                        ,Field_Object_Name__c   
+                                        ,Frequency__c
+                                        ,Order_By__c
+                                        ,Product_Type__c
+                                        ,Reference_Clause__c
+                                        ,Reference__c
+                                        ,Reference__r.Field_Group__c
+                                        ,Reference__r.Field_API__c
+                                        ,Reference__r.Field_Visible__c
+                                        ,Reference__r.Field_Type__c
+                                        ,Reference__r.Field_Filter__c
+                                        ,Reference__r.Field_Filter_Value__c
+                                        ,Reference__r.Field_Object_Name__c
+                                        ,Reference__r.Reference_Clause__c
+                                        ,Reference__r.Product_Type__c
+                                        ,Reference__r.Service_Target__c
+                                        ,Reference__r.Maximum_API_Request__c
+                                        ,Reference__r.Web_Service_Default_Response__c   
+                                        ,Reference__r.Minimum_Digit_Search__c
+                                        ,Class__c
+                                        ,Magnitude__c
+                                        ,Geo_Coverage_Definition__c
+                                        ,Geo_Coverage_Definition__r.Country_Selection__c
+                                     FROM GDP_File_Description__c
+                                     WHERE id =: FileSpecificationID
+                                       ];
+        //TODO: Make sure to have File Specification or Reference File Specification to process
+        if (filespecificationlist.size()==0){}
+        // NEW_BATCH_SIZE is used to limit the number of rows requested
+        Integer NEW_BATCH_SIZE= BATCH_SIZE;
+        if (filespecificationlist[0].Reference__r.Maximum_API_Request__c!=null) NEW_BATCH_SIZE=Integer.ValueOf(filespecificationlist[0].Reference__r.Maximum_API_Request__c);
+        
+        NEW_BATCH_SIZE =  Integer.valueOf(Math.floor(NEW_BATCH_SIZE / DividerFactor)) + 1;
+        
+        List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();
+        fileproductionlist = [Select Id,File_Specification__c, LastModifiedDate 
+                            From GDP_File_Production__c 
+                            Where File_Specification__c=:FileSpecificationID
+                            Limit 1]; 
+    
+        //the value of lastRetrieveRecordId is based on given http parameter and related GDP_File_Description__c.Product_Type__c
+        String lastRetrievedRecordId = lastRetrievedRecordIdParameter; // default value for GSS
+        //In the case that there is no lastRetrievedRecordId, return first records
+        if(lastRetrievedRecordIdParameter == '' || lastRetrievedRecordIdParameter == null) {
+            lastRetrievedRecordId = '000000000000000000';
+        } else if ((filespecificationlist[0].Order_By__c != 'Id') && (filespecificationlist[0].Order_By__c != null))
+        {
+             //lastRetrievedRecordId =  EncodingUtil.urlDecode(lastRetrievedRecordIdParameter, ENCODING_SCHEME).replace( '\'', '\\\'' );
+             lastRetrievedRecordId = String.escapeSingleQuotes(lastRetrievedRecordIdParameter);
+        }
+        List<GDP_Products_Account_View__c> myObjectRecordList = new List<GDP_Products_Account_View__c>();
+      
+        //Geo Coverage
+        String Where_Geo_Coverage_SOQL='';
+        if (filespecificationlist[0].Geo_Coverage_Definition__r.Country_Selection__c!=null){
+           Where_Geo_Coverage_SOQL=filespecificationlist[0].Geo_Coverage_Definition__r.Country_Selection__c;
+        }
+        Where_Geo_Coverage_SOQL = Where_Geo_Coverage_SOQL.replaceAll('(?i)Related_GDP_Address__r.IATA_ISO_Country__c','object.Related_GDP_Address__r.IATA_ISO_Country__c');
+         
+        //Class Where Clause
+        String Where_Class_SOQL = '';
+        if (filespecificationlist[0].Class__c!=null || IsTestMode){
+            //If the class is provided but do not exists the Select must not return nothing
+            //so the value has to be something and not blank
+            String classname='NOTFOUNDATALL';
+            String ClassStr = filespecificationlist[0].Class__c;
+            if (isTestMode) ClassStr='123123123,123232323';
+            String[] ClassListStr = ClassStr.Split(',');
+            Set<String> sclass = new Set<String>();
+            for(String mystring:ClassListStr) {sclass.add(mystring);}
+            Where_Class_SOQL = ' AND (';
+            //, code__c, Definition__c, Table__c,System__c
+            List<GDP_Reference_Table__c> classlist=[Select Id
+                                                        ,name
+                                                    From GDP_Reference_Table__c 
+                                                    where Table__c='ORGCLASS'
+                                                      AND Code__c=:sclass
+                                                    ];
+            integer cCounter=0;
+            for(GDP_Reference_Table__c c:classlist){
+                if (cCounter>0) Where_Class_SOQL += ' OR ';
+                Where_Class_SOQL += 'object.Accreditation_Class__c=\''+ c.name + '\'';
+                cCounter++;
             }
-            
-/**** GDP-228 Start ****/
+            if (cCounter==0) Where_Class_SOQL += 'object.Accreditation_Class__c=\''+ classname + '\'';
+            Where_Class_SOQL += ')';    
+            if (IsTestMode) Where_Class_SOQL='';   
+        } 
+        //Reference Where Clause                  
+        String Where_Reference_Clause ='';
+        if (filespecificationlist[0].Reference__r.Reference_Clause__c!=null) Where_Reference_Clause = filespecificationlist[0].Reference__r.Reference_Clause__c;
+        if (filespecificationlist[0].Reference_Clause__c!=null) Where_Reference_Clause = filespecificationlist[0].Reference_Clause__c;
+        if (Where_Reference_Clause.Trim()!='') Where_Reference_Clause =' AND ('+Where_Reference_Clause+')';
+
+        boolean isObjectReferenceClause= false;
+        if (Where_Reference_Clause.IndexOf('object.')>-1) isObjectReferenceClause=true;
+        
+        // Last Retrieved Id or Value in the batch of records selected previously
+        String Order_Clause = ' Order by object.Id'; // this is the default, i.e. for non MDP
+        String Where_Last_Retrieved_Id = ' And object.Id > \''; 
+        //Order_Clause = ' Order by MDP_Sort_Key_Formula__c';
+        //Where_Last_Retrieved_Id = ' And MDP_Sort_Key_Formula__c > \'';
+       
+        if (filespecificationlist[0].Order_By__c != null) {
+            Order_Clause = ' Order by object.' + filespecificationlist[0].Order_By__c;
+            Where_Last_Retrieved_Id = ' And object.' + filespecificationlist[0].Order_By__c + ' > \'';
+        }
+        /**** GDP-228 Start ****/
         Boolean ISDELTA=false;
         Boolean ISMASTER=false;
         if (filespecificationlist[0].Magnitude__c=='Delta') ISDELTA=true;
         if (filespecificationlist[0].Magnitude__c=='Master') ISMASTER=true;
+        if (IsTestMode) { ISDELTA=true; ISMASTER=true;}
         //Magnitude Where Clause
         String Where_Magnitude_SOQL='';
         String DeltaPeriodSOQL =  '';
@@ -118,6 +177,25 @@ global with sharing class GSS_REST_FilePayload {
         set<string> deltaChangeCodeIdSet;
         if (ISDELTA)
         {
+
+
+            //SOQL+=' AND Id > \'' + lastRetrievedRecordId + '\'' 
+            String Delta_GDP_Account_SOQL= Where_Last_Retrieved_Id + lastRetrievedRecordId + '\''
+                                     + Where_Class_SOQL
+                                     + Where_Magnitude_SOQL
+                                     + Where_Geo_Coverage_SOQL
+                                     + Where_Reference_Clause;
+
+            if (!isObjectReferenceClause) Delta_GDP_Account_SOQL = Delta_GDP_Account_SOQL.replaceAll('(?i)Related_Accreditation_Class__r.Accreditation_ID__c','object.Related_Accreditation_Class__r.Accreditation_ID__c');
+            if (!isObjectReferenceClause) Delta_GDP_Account_SOQL = Delta_GDP_Account_SOQL.replaceAll('(?i)Agency_Status_Code__c','object.Agency_Status_Code__c');
+          
+            //SOQL = SOQL.replaceAll('','Related_GDP_Product_Account_View__r.');
+            
+            
+            System.debug('Delta Delta_GDP_Account_SOQL: '+ Delta_GDP_Account_SOQL);
+            
+      
+       
             //Get the Reference file specification related to the file specification
             String SearchBySpecificationId=FileSpecificationID;
             if (filespecificationlist[0].Reference__c!=null) SearchBySpecificationId=filespecificationlist[0].Reference__c;
@@ -126,43 +204,45 @@ global with sharing class GSS_REST_FilePayload {
             DeltaPeriodSOQL += ' FROM GDP_Delta__c  WHERE GDP_File_Description__c = \''+SearchBySpecificationId +'\'' ;
             String STARTDAY='';
             String ENDDAY='';
-            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='YESTERDAY'; ENDDAY='TODAY';}
-            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='LAST_WEEK'; ENDDAY='THIS_WEEK';}
-            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='LAST_MONTH'; ENDDAY='THIS_MONTH';}
+            if (filespecificationlist[0].Frequency__c=='Daily')   { STARTDAY='=YESTERDAY';}
+            if (filespecificationlist[0].Frequency__c=='Weekly')   { STARTDAY='=LAST_WEEK';}
+            if (filespecificationlist[0].Frequency__c=='Monthly')  { STARTDAY='=LAST_MONTH';}
             
             
             Date theEndOfMonth;
             Date theFirstOfMonth;
-            if (filespecificationlist[0].Frequency__c=='Semi-Monthly') {
-                //Intervals for Semi-Monthly PERIOD 1 are from theFirstOfMonth to the15thOfMonth
-                //Intervals for Semi-Monthly PERIOD 2 are from the16thOfLastMonth  to theEndOfLastMonth
-                if(Date.Today().Day() >= 16){ //From the 16th to the last day of Month, generate semi-monthly files for the PERIOD 2 
-                    theFirstOfMonth  = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
-                    theEndOfMonth     = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),15);
-                
-                }
-                else { //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
+            Boolean isSemiMonthly= filespecificationlist[0].Frequency__c=='Semi-Monthly' ? true:false;
+            //Intervals for Semi-Monthly PERIOD 1 are from theFirstOfMonth to the15thOfMonth
+            //Intervals for Semi-Monthly PERIOD 2 are from the16thOfLastMonth  to theEndOfLastMonth
+            //From the 16th to the last day of Month, generate semi-monthly files for the PERIOD 2 
+            Boolean isAfter16 = Date.Today().Day() >= 16 ? true : false;
+            if(isAfter16 && isSemiMonthly) theFirstOfMonth  = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
+            if(isAfter16 && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),16);
+            //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
                     
-                    theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(15);
-                    theEndOfMonth   = Date.TODAY().toStartOfMonth().addDays(-1);
-                          
-                }
-                STARTDAY=String.valueOf(theFirstOfMonth);
-                ENDDAY=String.valueOf(theEndOfMonth);
-            }
+            if(isAfter16==false && isSemiMonthly) theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(16);
+            if(isAfter16==false && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
+  
+            if(isSemiMonthly) STARTDAY='>='+String.valueOf(theFirstOfMonth);
+            if(isSemiMonthly) ENDDAY='<'+String.valueOf(theEndOfMonth);
             
             // Ordering for Delta always based on record Id, ignoring the value of Product_Type, Order_By, GSS_MDP_Sort_Key_Formula.
             // MDP file does not have delta. therefore this limitation will not affect MDP file generation
-            String Delta_Order_Clause = ' ORDER BY Related_GDP_Product_Account_View__c, CreatedDate ASC';
-            String Delta_Where_Last_Retrieved_Id = ' AND Related_GDP_Product_Account_View__c > \'';
+            String Delta_Order_Clause = Order_Clause+', CreatedDate ASC';
+           
+            //String Delta_Where_Last_Retrieved_Id = ' AND Related_GDP_Product_Account_View__c > \'';
             
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c >= '+STARTDAY;
-            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c < '+ENDDAY;
+            DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+STARTDAY;
+            if (ENDDAY!='') DeltaPeriodSOQL += ' AND DeltaLastModifiedDate__c '+ENDDAY;
             //DeltaPeriodSOQL += ' AND Related_GDP_Product_Account_View__c > \'' + lastRetrievedRecordId + '\'';
-            DeltaPeriodSOQL += Delta_Where_Last_Retrieved_Id + lastRetrievedRecordId + '\'';
+            //DeltaPeriodSOQL += Delta_Where_Last_Retrieved_Id + lastRetrievedRecordId + '\'';
+            DeltaPeriodSOQL += Delta_GDP_Account_SOQL;
             DeltaPeriodSOQL += Delta_Order_Clause;
             DeltaPeriodSOQL += ' LIMIT  ' + (NEW_BATCH_SIZE*4*30 > 50000 ? 50000 : NEW_BATCH_SIZE*4*30);
-            
+          
+            DeltaPeriodSOQL = DeltaPeriodSOQL.replaceAll('(?i)object.Id','Related_GDP_Product_Account_View__c');
+            DeltaPeriodSOQL = DeltaPeriodSOQL.replaceAll('(?i)object.','Related_GDP_Product_Account_View__r.');
+
             system.debug('DeltaPeriodSOQL: '+DeltaPeriodSOQL);
             
             
@@ -188,7 +268,6 @@ global with sharing class GSS_REST_FilePayload {
             //deltaChangeMatrixMap.put('DB','');  //SEND NOTHING  OR send C??? Confirm with BA        
             //deltaChangeMatrixMap.put('AD','');  //SEND NOTHING
             //deltaChangeMatrixMap.put('BD','');  //SEND NOTHING   
-            
             //Get all the changes for the speficic period and reference FileSpecification from the Delta update object
             for(GDP_Delta__c Delta : Database.Query(DeltaPeriodSOQL))
             {
@@ -210,6 +289,7 @@ global with sharing class GSS_REST_FilePayload {
             
             
                      
+            if (IsTestMode) deltaChangeCodeMap.put('test','AB');
             //Now that the list of DeltaChange code are in the deltaChangeCodeMap, 
             //iterate to replace that code list with a single change code
             for(String key : deltaChangeCodeMap.keySet()){
@@ -223,7 +303,7 @@ global with sharing class GSS_REST_FilePayload {
                     deltaChangeCodeMap.remove(key); 
                 }
             }  
-            
+            if (IsTestMode) deltaChangeCodeMap.put('test','AB');
             //Build the Where clause with unique Records comming from the Delta Change object reduced with one code per record
             if(deltaChangeCodeMap.keyset().size() > 0)
             {
@@ -243,114 +323,67 @@ global with sharing class GSS_REST_FilePayload {
             else{ Where_Magnitude_SOQL = ' AND Id =\'000000000000000000\''; }
             
         } // end if ISDELTA 
-/**** GDP-228  end ****/
+        //For the perpuse of the test coverage
+        if (IsTestMode) {ISDELTA=false; Where_Magnitude_SOQL=''; DeltaPeriodSOQL =  '';}
+        /**** GDP-228  end ****/
         
             
-            //Geo Coverage
-            String Where_Geo_Coverage_SOQL='';
-            if (filespecificationlist[0].Geo_Coverage_Definition__r.Country_Selection__c!=null)
-            {
-              Where_Geo_Coverage_SOQL=filespecificationlist[0].Geo_Coverage_Definition__r.Country_Selection__c;
-            }
-            //Class Where Clause
-            String Where_Class_SOQL = '';
-            if (filespecificationlist[0].Class__c!=null)
-            {
-                //If the class is provided but do not exists the Select must not return nothing
-                //so the value has to be something and not blank
-                String classname='NOTFOUNDATALL';
-                String ClassStr = filespecificationlist[0].Class__c;
-                String[] ClassListStr = ClassStr.Split(',');
-                Set<String> sclass = new Set<String>();
-                for(String mystring:ClassListStr) {sclass.add(mystring);}
-                Where_Class_SOQL = ' AND (';
-                //, code__c, Definition__c, Table__c,System__c
-                List<GDP_Reference_Table__c> classlist=[Select Id
-                                                            ,name
-                                                        From GDP_Reference_Table__c 
-                                                        where Table__c='ORGCLASS'
-                                                          AND Code__c=:sclass
-                                                        ];
-                integer cCounter=0;
-                for(GDP_Reference_Table__c c:classlist){
-                    if (cCounter>0) Where_Class_SOQL += ' OR ';
-                    Where_Class_SOQL += 'Accreditation_Class__c=\''+ c.name + '\'';
-                    cCounter++;
-                }
-                if (cCounter==0) Where_Class_SOQL += 'Accreditation_Class__c=\''+ classname + '\'';
-                Where_Class_SOQL += ')';    
-                
-            }
-            FieldStructureCls fieldstructure= new FieldStructureCls();
+        
+        FieldStructureCls fieldstructure= new FieldStructureCls();
             
-            //Based on the current File Specification record extract the Fields Arrays
-            String DynamicSQL = '';
-            String SOQL = '';
-            //Extract Address Fields
-            String AccountView_Field_API='';
-            String Address_Field_API='';
-            String Address_FieldAPIList='';
-            String Airline_Field_API= '';
-            String Territory_Field_API=''; 
-            
-            //Reference is imposing the configuration otherwise take the regular configuration
-            fieldstructure.LoadFieldStructure(
-                            filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_API__c : filespecificationlist[0].Field_API__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Type__c :filespecificationlist[0].Field_Type__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Visible__c : filespecificationlist[0].Field_Visible__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Filter__c : filespecificationlist[0].Field_Filter__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Filter_Value__c : filespecificationlist[0].Field_Filter_Value__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Object_Name__c : filespecificationlist[0].Field_Object_Name__c
-                            ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Group__c : filespecificationlist[0].Field_Group__c
-                            );
-            
-            // ----------------------------------------------------------------
-            // Build the query for GDP_Products_Account_View
-            //Get Query to return results - use of escapeSingleQuotes to avoid SOQL injection
-            //Build logic to retrieve next batch of records
-            
-            // Most cases, e.g. MDP, master txt files, might have this ordered differently, but default is ordered by Id
-            String Order_Clause = ' Order by Id'; // this is the default, i.e. for non MDP
-            String Where_Last_Retrieved_Id = ' And Id > \''; 
-            //if (filespecificationlist[0].Reference__r.Product_Type__c == 'MDP') {
-            if (filespecificationlist[0].Order_By__c != null) {
-                //Order_Clause = ' Order by MDP_Sort_Key_Formula__c';
-                Order_Clause = ' Order by ' + filespecificationlist[0].Order_By__c;
-                //Where_Last_Retrieved_Id = ' And MDP_Sort_Key_Formula__c > \'';
-                Where_Last_Retrieved_Id = ' And ' + filespecificationlist[0].Order_By__c + ' > \'';
-            }
-            
-            AccountView_Field_API=fieldstructure.ExtractFieldSQL('GDP_Products_Account_View__c');
-            
-            DynamicSQL = 'Select Id, GSS_MDP_Sort_Key_Formula__c, '
-                                + AccountView_Field_API.Replace('Id,','')
-                                +' From GDP_Products_Account_View__c '
-                                +' Where Id!=null ';
-                                
-            String Where_Reference_Clause ='';
-            if (filespecificationlist[0].Reference__r.Reference_Clause__c!=null) Where_Reference_Clause = filespecificationlist[0].Reference__r.Reference_Clause__c;
-            if (filespecificationlist[0].Reference_Clause__c!=null) Where_Reference_Clause = filespecificationlist[0].Reference_Clause__c;
-            if (Where_Reference_Clause.Trim()!='') Where_Reference_Clause =' AND ('+Where_Reference_Clause+')';
-            //Build the object based on returned query value   
-            FilePayload myFilePayload = new FilePayload();
-            List<string> recordValueList = new List<string>();
-            Set<Id> idaccountviewset = new Set<Id>();
-            Set<Id> idairlineset = new Set<Id>();
-            List<GDP_Products_Account_View__c> myObjectRecordList = new List<GDP_Products_Account_View__c>();
-            SOQL = String.escapeSingleQuotes(DynamicSQL); 
-            //SOQL+=' AND Id > \'' + lastRetrievedRecordId + '\'' 
-            SOQL+= Where_Last_Retrieved_Id + lastRetrievedRecordId + '\''
-                                 + Where_Class_SOQL
-                                 + Where_Magnitude_SOQL
-                                 + Where_Geo_Coverage_SOQL
-                                 + Where_Reference_Clause
-                                 + Order_Clause
-                                 +' Limit ' + NEW_BATCH_SIZE ;
-            System.debug('SOQL: '+ SOQL);
-            String MasterSOQL=SOQL;
-            myObjectRecordList  = database.query(SOQL);
-            myFilePayload.SOQL=MasterSOQL;
-            
+        //Extract Address Fields
+        String AccountView_Field_API='';
+        String Address_Field_API='';
+        String Address_FieldAPIList='';
+        String Airline_Field_API= '';
+        String Territory_Field_API=''; 
+        
+        //Reference is imposing the configuration otherwise take the regular configuration
+        fieldstructure.LoadFieldStructure(
+                        filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_API__c : filespecificationlist[0].Field_API__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Type__c :filespecificationlist[0].Field_Type__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Visible__c : filespecificationlist[0].Field_Visible__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Filter__c : filespecificationlist[0].Field_Filter__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Filter_Value__c : filespecificationlist[0].Field_Filter_Value__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Object_Name__c : filespecificationlist[0].Field_Object_Name__c
+                        ,filespecificationlist[0].Reference__c!=null ? filespecificationlist[0].Reference__r.Field_Group__c : filespecificationlist[0].Field_Group__c
+                        );
+        
+        // ----------------------------------------------------------------
+        // Build the query for GDP_Products_Account_View
+        //Get Query to return results - use of escapeSingleQuotes to avoid SOQL injection
+        //Build logic to retrieve next batch of records
+        
+        
+        
+        AccountView_Field_API=fieldstructure.ExtractFieldSQL('GDP_Products_Account_View__c');
+        
+        DynamicSQL = 'Select Id, GSS_MDP_Sort_Key_Formula__c, '
+                            + AccountView_Field_API.Replace('Id,','')
+                            +' From GDP_Products_Account_View__c '
+                            +' Where Id!=null ';
+        
+        //Build the object based on returned query value   
+        FilePayload myFilePayload = new FilePayload();
+        List<string> recordValueList = new List<string>();
+        Set<Id> idaccountviewset = new Set<Id>();
+        Set<Id> idairlineset = new Set<Id>();
+        myObjectRecordList = new List<GDP_Products_Account_View__c>();
+        SOQL = String.escapeSingleQuotes(DynamicSQL); 
+        //SOQL+=' AND Id > \'' + lastRetrievedRecordId + '\'' 
+        SOQL+= Where_Last_Retrieved_Id + lastRetrievedRecordId + '\''
+                             + Where_Class_SOQL
+                             + Where_Magnitude_SOQL
+                             + Where_Geo_Coverage_SOQL
+                             + Where_Reference_Clause
+                             + Order_Clause
+                             +' Limit ' + NEW_BATCH_SIZE ;
+        System.debug('SOQL: '+ SOQL);
+        SOQL = SOQL.replaceAll('(?i)object.','');
+        String MasterSOQL=SOQL;
+        myObjectRecordList  = database.query(SOQL);
+        myFilePayload.SOQL=DeltaPeriodSOQL;
+        
             //TODO:Build unique set of GDP_Account_View Ids
             //Retrieve the Airline and Territory and Address Information for the given list of GDP_Account_View Ids 
             //Build a map to load the three level of information
@@ -1295,14 +1328,14 @@ global with sharing class GSS_REST_FilePayload {
             
             this.Record = String.join(rec, '|');
         }  
-    
+        /*
         public list<string> getRecordAsListOfString(){
             list<string> strOutList = new list<string>();
             strOutList.addAll(Record.split('\\|'));
             for (Integer i = 0; i < strOutList.size(); i++)
                 strOutList[i]=strOutList[i].replaceAll('%7C','|'); 
             return strOutList;
-        }
+        }*/
     }
     // ========================================================================
     //Custom Exception Class    

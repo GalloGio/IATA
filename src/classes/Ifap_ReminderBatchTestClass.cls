@@ -103,7 +103,7 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[0].id,
                               AccountId = accs[0].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  ,
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  ,
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[0].id,
                               IFAP_Country_ISO__c = 'SS',
                               Subject = 'Test case Suisse'
@@ -121,7 +121,7 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[1].id,
                               AccountId = accs[1].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  ,
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  ,
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[1].id,
                               IFAP_Country_ISO__c = 'IT',
                               Subject = 'Test case Italia'
@@ -139,7 +139,7 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[2].id,
                               AccountId = accs[2].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[2].id                                            
               ));
            

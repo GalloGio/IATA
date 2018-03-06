@@ -16,7 +16,7 @@ private class IECConstantsTest {
 		List<SelectOption> lst = IECConstants.getCanadaProvinces();
 		lst = IECConstants.getUSAStates();
 		
-		IECTestUtil.fakecoverage();
+		//IECTestUtil.fakecoverage();
 
 	}
 	

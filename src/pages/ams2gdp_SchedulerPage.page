@@ -32,7 +32,9 @@
                             {!query}
                         </p>
 						<div class="form-group">
-							<apex:commandButton styleClass="btn btn-default" value="Execute Job" action="{!executeJob}" rerender="frm" status="status"/>
+							<apex:commandButton styleClass="btn btn-default" value="Execute Job" action="{!executeJob}" rerender="frm" status="status">
+							<apex:param name="manual" value="true" assignTo="{!isManual}"/>
+                            </apex:commandButton>
 						</div>
 					</apex:pageBlock>
 				</div>

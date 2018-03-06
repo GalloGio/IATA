@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
-        <fullName>Change_recordtype</fullName>
-        <description>Change the recordtype from draft to permanent to hide the Approval History on the assigned page layout</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Reg_Div_Groups</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Change recordtype</name>
+        <fullName>Add_INACTIVE_to_name</fullName>
+        <description>Add &quot; - INACTIVE&quot; to the name when inactivated</description>
+        <field>Name</field>
+        <formula>Name&amp; &quot; - INACTIVE&quot;</formula>
+        <name>Add INACTIVE to name</name>
         <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Reg_Dig_Group_to_Draft</fullName>
-        <description>Change the record type back to Draft Reg/Div Group</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Draft_Reg_Div_Group</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Reg/Dig Group to Draft</name>
+        <fullName>Remove_INACTIVE_from_name</fullName>
+        <description>remove &quot; - INACTIVE&quot; from the name</description>
+        <field>Name</field>
+        <formula>SUBSTITUTE(Name, &quot; - INACTIVE&quot;, &quot;&quot;)</formula>
+        <name>Remove INACTIVE from name</name>
         <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Set_Industry_Group_Unique_Name</fullName>
         <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
         <field>Unique_Name__c</field>
-        <formula>Name</formula>
+        <formula>SUBSTITUTE(Name, &quot; - INACTIVE&quot;, &quot;&quot;)</formula>
         <name>Set Industry Group Unique Name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -56,24 +54,6 @@ RecordType.Name + &quot; - &quot; + IF( ISBLANK(Country__c), Cluster__r.Name, Co
         <name>Set Local Governance Unique Name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Set_as_Approved</fullName>
-        <field>Approved__c</field>
-        <literalValue>1</literalValue>
-        <name>Set as Approved</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Set_as_Not_Approved</fullName>
-        <field>Approved__c</field>
-        <literalValue>0</literalValue>
-        <name>Set as Not Approved</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <rules>
@@ -114,18 +94,47 @@ RecordType.Name + &quot; - &quot; + IF( ISBLANK(Country__c), Cluster__r.Name, Co
             <operation>equals</operation>
             <value>Reg/Div Groups,Draft Reg/Div Group</value>
         </criteriaItems>
-        <description>Fill the Unique Name field for industry groups with the (Draft) Reg / Div Group record types</description>
+        <description>Fill the Unique Name field for industry groups with the (Draft) Reg / Div Group record types. Note that &quot;- INACTIVE&quot; is ignored from the name so inactive groups are also considered unique.</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Reg%2FDiv group reporting to changed</fullName>
+        <fullName>Reg%2FDig Group auto-rename</fullName>
         <actions>
-            <name>Reg_Dig_Group_to_Draft</name>
+            <name>Add_INACTIVE_to_name</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>If the reporting to of an approved group is changed, send it back for re-approval</description>
-        <formula>AND( RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;, ISCHANGED( Reporting_to__c ))</formula>
-        <triggerType>onAllChanges</triggerType>
+        <criteriaItems>
+            <field>LocalGovernance__c.Active__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>LocalGovernance__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reg/Div Groups</value>
+        </criteriaItems>
+        <description>Add &quot;- INACTIVE&quot; to the name of and inactivated reg/div group or draft</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Reg%2FDig Group auto-rename back</fullName>
+        <actions>
+            <name>Remove_INACTIVE_from_name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>LocalGovernance__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>LocalGovernance__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reg/Div Groups</value>
+        </criteriaItems>
+        <description>Remove &quot;- INACTIVE&quot; from the name of an activated reg/div group or draft</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

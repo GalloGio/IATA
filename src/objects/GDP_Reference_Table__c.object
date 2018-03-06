@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -56,6 +52,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -137,10 +134,11 @@
         <columns>System__c</columns>
         <columns>System_ID__c</columns>
         <columns>Table__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Table__c</field>
-            <operation>equals</operation>
+            <field>System_ID__c</field>
+            <operation>startsWith</operation>
             <value>AIRSYS</value>
         </filters>
         <label>AIRSYS (GDS)</label>
@@ -224,6 +222,7 @@
         <columns>Code__c</columns>
         <columns>System_ID__c</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>Valid_for_GDP__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -250,6 +249,7 @@
         <fullName>Class_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>Code__c</columns>
@@ -320,9 +320,9 @@
     <listViews>
         <fullName>Status_Table</fullName>
         <columns>NAME</columns>
-        <columns>Definition__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
+        <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>System_ID__c</columns>
         <filterScope>Everything</filterScope>
@@ -357,4 +357,5 @@
         <searchResultsAdditionalFields>Definition__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

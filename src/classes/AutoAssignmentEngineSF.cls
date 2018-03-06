@@ -176,7 +176,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
             // ******************************
             // 2) Calculate Agents Workload
             // ******************************
-            Agents__c[] aAgents = [select User__r.Name, id, Last_Case_Assigned_Date_Time__c, Next_case_request_date_time__c, Maximum_case_workload__c from Agents__c where Logged_on__c = true and Region__c = :caseRegion];
+            Agents__c[] aAgents = [select User__r.Name, id, Last_Case_Assigned_Date_Time__c, Next_case_request_date_time__c, Maximum_case_workload__c from Agents__c where Logged_on__c = true];
             if (aAgents.size() == 0) {
 
                 String errorMessage = 'KO : No agents available (all logged off) for region ' + caseRegion + '.\n Case Number: ' + caseToAssign.CaseNumber + ' Case Owner: ' + caseToAssign.Owner.Name + ' Opened Date: ' + caseToAssign.CreatedDate;
@@ -219,7 +219,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
             }
 
 
-            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer')])
+            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and RecordType.Name <> 'Invoicing_Collection_Cases'])
                 for (Case c : aCase) {
 
                     double currentWorkload = m_agentWorkload.get(c.OwnerId);

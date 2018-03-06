@@ -13,7 +13,7 @@ private class IEC_ProductDetailControllerTest {
 				subCategory = subCategories.get(so.getValue())[0].getValue();
 				break;
 			}
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, false, 'IEC_Product_Information__c != null', null, true);
+		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, false, 'IEC_Product_Information__c != null', null, true, null);
 		update new Product2(Id=products[0].ProductId, Mega_Menu__c=category, Display_Ecom_Topic__c=subCategory);
 
 		Test.setCurrentPage(Page.IEC_ProductDetail);

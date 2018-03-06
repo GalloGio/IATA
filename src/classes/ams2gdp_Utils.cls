@@ -167,4 +167,26 @@ public class ams2gdp_Utils
 		return result;
 	}
 
+	public static void upsertAMS_GDP_Batch(String batchName, Datetime syncStartedDate, Integer errorsCount, Integer totalRecords, List<String> failed_records, Boolean isManual){
+        if(isManual){
+            upsert new AMS_GDP_Batch__c(
+                    Batch_Name__c=batchName,
+                    Is_Manual_Replication__c = true,
+                    Total_Failed_Records__c = errorsCount,
+                    Total_Records_Processed__c = totalRecords,
+                    Failed_Records__c = String.join(failed_records, ';').left(32768)
+            )Batch_Name__c;
+        }else{
+            upsert new AMS_GDP_Batch__c(
+                    Batch_Name__c=batchName,
+                    Is_Manual_Replication__c = false,
+                    Last_Sync_Start_Date__c=syncStartedDate,
+                    Last_Sync_End_Date__c=Datetime.now(),
+                    Total_Failed_Records__c = errorsCount,
+                    Total_Records_Processed__c = totalRecords,
+                    Failed_Records__c = String.join(failed_records, ';').left(32768)
+            )Batch_Name__c; 
+        }
+    }
+
 }

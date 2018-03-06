@@ -94,6 +94,7 @@ public class ANG_PermissionSetHelper {
 					);
 
 					if(change.needsProvisioning){
+						System.debug(loggingLevel.FINEST, '____ Add - ' + change.operation);
 						provRequests.add(
 							new UserProvisioningRequest(
 								AppName = change.provisioningAppName
@@ -110,7 +111,29 @@ public class ANG_PermissionSetHelper {
 			for(Id contact : change.contactsToRemove){
 				String key = ''+users.get(contact)+permissionSetId;
 				//find permission assignment on the map
-				if(assignments.containsKey(key)) permissionsToDelete.add(assignments.get(key));
+				//if(assignments.containsKey(key)) permissionsToDelete.add(assignments.get(key));
+
+                if(assignments.containsKey(key)) {
+                    permissionsToDelete.add(assignments.get(key));
+
+                    Id profileId = userinfo.getProfileId();
+					String profileName = [Select Id,Name from Profile where Id=:profileId].Name;
+
+                    if(profileName.startsWith('ISS Portal')) {
+	                    System.debug(loggingLevel.FINEST, '____ Remove - ' + change.operation);
+
+	                    provRequests.add(
+	                        new UserProvisioningRequest(
+	                            AppName = change.provisioningAppName
+	                            , ConnectedAppId = change.provisioningAppId
+	                            , Operation = 'Deactivate'
+	                            , ApprovalStatus = 'NotRequired'
+	                            , SalesforceUserId = users.get(contact)
+	                            , state = 'New'
+	                        )
+	                    );
+                    }
+                }
 			}
 		}
 
@@ -118,9 +141,13 @@ public class ANG_PermissionSetHelper {
 		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] provRequests - ' + provRequests);
 		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] permissionsToDelete - ' + permissionsToDelete);
 
-		if(!newPermissions.isEmpty()) insert newPermissions;
-		if(!provRequests.isEmpty()) insert provRequests;
-		if(!permissionsToDelete.isEmpty()) delete permissionsToDelete;
+		try {
+			if(!newPermissions.isEmpty()) insert newPermissions;
+			if(!provRequests.isEmpty()) insert provRequests;
+			if(!permissionsToDelete.isEmpty()) delete permissionsToDelete;
+		} catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PermissionSetHelper - managePermissions] ERROR - ' + e);
+		}
 	}
 
 	public Id enqueueJob() {
@@ -138,10 +165,15 @@ public class ANG_PermissionSetHelper {
 		changes.get(permissionSet).contactsToAdd.add(contact);
 	}
 
-	public void removePermission(String permissionSet, Id contact) {
+	public void removePermission(String permissionSet, Id contact, Connected_App_Roles__c role) {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
 
+		changes.get(permissionSet).operation = 'Deactivate';
+		changes.get(permissionSet).needsProvisioning = true;
 		permissionsChanged = true;
+		changes.get(permissionSet).provisioningAppName = role.Connected_App_Provisioning_Name__c;
+		changes.get(permissionSet).provisioningAppId = role.Provisioning_Id__c;
+
 		changes.get(permissionSet).contactsToRemove.add(contact);
 	}
 
@@ -149,6 +181,7 @@ public class ANG_PermissionSetHelper {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
 
 		changes.get(permissionSet).needsProvisioning = true;
+		changes.get(permissionSet).operation = 'Create';
 		changes.get(permissionSet).provisioningAppName = role.Connected_App_Provisioning_Name__c;
 		changes.get(permissionSet).provisioningAppId = role.Provisioning_Id__c;
 	}
@@ -161,6 +194,7 @@ public class ANG_PermissionSetHelper {
 		private String permissionSetName;
 		private String provisioningAppName;
 		private String provisioningAppId;
+		private String operation {get; set;}
 
 		private Boolean needsProvisioning{
 			get{

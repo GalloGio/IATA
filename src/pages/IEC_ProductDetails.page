@@ -105,7 +105,7 @@
                                         <div class="table-container">
                                             <table class="data-table table-product-data">                                           
                                                 <!-- Regular Price if exist -->
-                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0) }">
+                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
                                                     <tr>
                                                         <th scope="row">{!$Label.regular_price}</th>
                                                         <td>
@@ -256,19 +256,18 @@
                                     </div>
 
                                     <!-- If direct Sales -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! bIsDirectSales}">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(bIsProductCompliant)),bIsDirectSales, NOT(bIsProductCompliant))}">
                                         <div class="contact-info">
                                             <span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
                                             <a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
                                         </div>
                                     </apex:outputPanel>
-
                                     <!-- Add to cart block -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! NOT(bIsDirectSales)}">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, bIsProductCompliant)) }">
                                         <label class="input-label">
                                             <span class="show-for-extra-small">{!$Label.QTY}:</span>
                                             <span class="hide-for-extra-small">{!$Label.Quantity}:</span>
-                                            <apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5" disabled="{!NOT(bIsProductCompliant)}"/>
+                                            <apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5"/> 
                                             <!-- <input type="number" class="user-input quantity js-input-quantity" /> -->
                                         </label>
 

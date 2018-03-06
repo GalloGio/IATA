@@ -50,9 +50,9 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		String searchCond = '  SAP_Material_Number__c=\''+productNumber+'\' ';
 		String recommendedCond = '  (SAP_Material_Number__c!=\''+productNumber+'\' AND Recommended__c=true) ';
 
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false);
+		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false, null);
 
-		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false); 
+		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false, null); 
 		recommendedProducts = new List<EComProduct_DTO>();
 		for(Integer x = 0; x < lst_recommendedProducts.size(); x++)
 		{
@@ -134,8 +134,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	        //Validate Product compliance 
 	        validateCountryCompliance();
-            if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-            
+            if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+            	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
 			for(SelectOption so : categories)

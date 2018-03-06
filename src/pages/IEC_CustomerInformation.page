@@ -9,7 +9,28 @@
     <![endif]-->
     <!--[if !IE]><!-->
     
-    <html lang="{!language}">
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+   
+   <html lang="{!language}">
+
+   <script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+   </script>
+
     <!--<![endif]-->
         
         <head>
@@ -205,7 +226,7 @@
                                     <div class="footer-actions text-right">
                                         <apex:actionFunction name="saveCustomerInformation" reRender="frmCustomerInfo" action="{!saveCustomerInformation}" status="saveStatus" />
                                             
-                                        <button class="button wide" type="button" onclick="saveCustomerInformation();">
+                                        <button class="button wide" type="button" onclick="saveCustomerInformation();blockme();" oncomplete="j$.unblockUI();">
                                             {!$Label.IDCard_Continue_Button}
                                             <apex:actionStatus id="saveStatus">
                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>

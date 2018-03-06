@@ -5,10 +5,10 @@
     <tab>standard-Workspace</tab>
     <tab>standard-ContentSearch</tab>
     <tab>standard-ContentSubscriptions</tab>
-    <tab>standard-ContentFavorites</tab>
     <tab>Business_Unit__c</tab>
     <tab>Licenses__c</tab>
     <tab>CSS_Tracking__c</tab>
     <tab>ISSP_Banner__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

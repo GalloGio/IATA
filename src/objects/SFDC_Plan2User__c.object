@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Connector object that ties an Account Plan to a User.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -60,32 +57,39 @@
         <fullName>Role__c</fullName>
         <externalId>false</externalId>
         <label>Role</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Executive Committee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Products Lead</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Engineering</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Services Lead</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Executive Committee</fullName>
+                    <default>false</default>
+                    <label>Executive Committee</label>
+                </value>
+                <value>
+                    <fullName>Products Lead</fullName>
+                    <default>false</default>
+                    <label>Products Lead</label>
+                </value>
+                <value>
+                    <fullName>Sales Engineering</fullName>
+                    <default>false</default>
+                    <label>Sales Engineering</label>
+                </value>
+                <value>
+                    <fullName>Sales Management</fullName>
+                    <default>false</default>
+                    <label>Sales Management</label>
+                </value>
+                <value>
+                    <fullName>Services Lead</fullName>
+                    <default>false</default>
+                    <label>Services Lead</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SFDC_Acct_Plan__c</fullName>
@@ -120,4 +124,5 @@
     <pluralLabel>Plan2User</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -166,6 +166,49 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
            };
            sforce.console.getEnclosingPrimaryTabId(openSubtab);
         }
+
+        function doRun(action,args) {
+
+
+            if(action == 'generateIataCode'){
+
+                var r = confirm("This process will do the following: \n\r IATA Code Generation \n\r Data migration to the Agency \n\r Generation of Change Code (NEW) \n\r Due Diligence Case (if conditions apply) \n\r\n\r Do you wish to proceed ?");
+
+                if (r != true){
+                    return 'false';
+                }
+
+                document.getElementById('loaderPageBlockSTEP10').style.display = 'block';
+
+            }   
+
+            setTimeout(function(){
+                
+                
+                if(action == 'aNG_RestrictFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restrict_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restrict_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                }   
+
+                if(action == 'aNG_RestoreFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restore_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restore_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                } 
+
+                 buildFunctionCall(action,args);
+            },10);
+        }
+
     </script>
 
 <style>
@@ -295,6 +338,47 @@ body.loading .modal {
     color: white;
 }
 
+.warningRed{
+    font-weight: bold;
+    color: red;
+}
+
+body .bPageBlock .pbBody .red .pbSubheader{
+    background-color:#c00000;
+}
+body .bPageBlock .pbBody .green .pbSubheader{
+    background-color:#008000;
+}
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
+}
+
+.loaderCircle {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.datePicker{
+    z-index: 999999 !important;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -364,7 +448,7 @@ function buildFunctionCall(func, argList){
     });
 </script>
 
-<apex:pageBlock rendered="{!oscar == null}">
+<apex:pageBlock rendered="{!oscar.Account__c == null}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">UNAVAILABLE</p>
@@ -386,10 +470,14 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>* Specify Legal Status</li>
                 </apex:outputText>
-                <li>Location Class</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Class</li>
+                </apex:outputText>
                 <li>Country</li>
                 <li>Street name and number</li>
-                <li>Location Type</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Type</li>
+                </apex:outputText>
                 <li>City</li>
                 <apex:outputText rendered="{!isNotNewGenProcess}">
                     <li>Office Email (except for MSO process)</li>
@@ -398,6 +486,10 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>Office Email</li>
                     <li>Office Phone</li>
+                    <!--<li>Remittance Frequency</li>-->
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
+                    <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
         </p>
@@ -419,7 +511,10 @@ function buildFunctionCall(func, argList){
         <apex:pageBlock >
             <apex:variable var="p" value="{!process[oscar.Process__c]}" />
             <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                <apex:pageBlockSection><!-- Fake section to force SF to inject the twistSection() JS code, which is not injected anymore because of the new outputpanel below, used for colors --></apex:pageBlockSection>
+
+                <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                     <apex:outputPanel layout="block" styleClass="sectionWrapper">
                         <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
                             <p>{!$Label.AMS_Due_Diligence_Lock}</p>
@@ -455,6 +550,7 @@ function buildFunctionCall(func, argList){
                         </apex:pageBlockSection>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
+                </apex:outputPanel>
             </apex:repeat>
         </apex:pageBlock>
     </apex:outputPanel>
@@ -464,19 +560,35 @@ function buildFunctionCall(func, argList){
     <apex:repeat value="{!p.flows}" var="flow">
         <apex:repeat value="{!flow.steps}" var="step">
             <div id="inline{!step.name}" style="display:none;">
+           
+
+            <div Id="loaderPageBlock{!step.name}" style="display:none;">
+                <div class="overlay">
+                     <div class="overlay-content">
+                        <p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+                    </div>
+                  <div class="loaderCircle"></div>
+                </div>
+            </div>
+
+
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
+
+               <!-- <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
+                <br />-->
+
                 <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
                     
                 <apex:repeat value="{!step.actions}" var="action">
                     <br/>
-                    <apex:commandButton onclick="buildFunctionCall('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
+                    <apex:commandButton onclick="doRun('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
                     <br/>
                 </apex:repeat>
                 
                 <apex:repeat value="{!step.displayFields}" var="sf">
                     <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
                     <div id="{!sf}">                        
-                        <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments')}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
                             <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
@@ -488,6 +600,14 @@ function buildFunctionCall(func, argList){
                             <apex:selectList disabled="true" size="1" rendered="{!stepFieldsData[sf].picklistvalues != null}" >
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
+                        </apex:outputPanel>
+
+                        <!--NEWGEN-1989 workaround: Comments should be disabled for analysts-->
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', NOT(isAnalystProfile))}">
+                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', isAnalystProfile)}">
+                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
                         </apex:outputPanel>
                     </div>
                 </apex:repeat>

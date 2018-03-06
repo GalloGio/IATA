@@ -44,8 +44,8 @@
                     <ui:inputText aura:id="lookup" value="{!v.searchString}" class="slds-input" updateOn="keyup" keyup="{!c.search}" />
                 </div>
             </div>
-            <!-- This is the lookup list markup. Initially it's hidden -->
-            <div aura:id="lookuplist" class="slds-lookup__menu slds-hide" role="listbox">
+            <!-- This is the lookup list markup. Initially it's hidden slds-lookup__menu-->
+            <div aura:id="lookuplist" class=" slds-hide" role="listbox">
                 <div class="slds-lookup__item">
                     <button class="slds-button">
                         <c:svg class="slds-icon slds-icon-text-default slds-icon--small" xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#search" />

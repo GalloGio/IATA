@@ -364,7 +364,7 @@ public class vfIECEBC_TestPaymentSuite {
             List<SelectOption> isocountryv=ctrl.lstISOCountries;
             
             ctrl.LoadPaymentBillingContact(null);
-            Contact contactv=ctrl.oPaymentBillingContact;
+            //Contact contactv=ctrl.oPaymentBillingContact;
             
             ctrl.clickSaveBillingDetailButton();
             ctrl.clickCancelBillingDetailButton();

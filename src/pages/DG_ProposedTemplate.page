@@ -1,0 +1,223 @@
+<!--
+***************************************************************************************************************************************************** 
+* Visualforce Page Name:    DG_ProposedTemplate.page    
+* Apex class Name:          DG_ProposedTemplateControler.cls
+* Test Class:               DG_ProposedTemplate_test.cls
+* Description:              Page used to create a new case with a proposed template and to be used in customer responses 
+*                           (e-mail and chat) and AI training
+* Author:                   Right IT Services
+* Date:                     09/2017
+* 
+* Changes control (When, Why, Who, What):
+*       ------------------------------------------------------------------------------------------------------------------------------------------
+*           Version date:           Case Number:        Author:                                 Description:
+*       ------------------------------------------------------------------------------------------------------------------------------------------
+*           22_09_2017                                  Francisco Estanqueiro                   Fix the button name and message with case
+*			11_10_2017									Francisco Estanqueiro					Changes in CSS (buttons and text)  
+*
+*****************************************************************************************************************************************************
+ -->
+
+
+<apex:page standardController="Case" showHeader="false" sidebar="false" extensions="DG_ProposedTemplateControler">
+    
+    
+    <style>
+    
+    textarea {
+    	width: 80%;
+    	display: block;
+    	margin-left: auto;
+    	margin-right: auto;
+    
+    }
+    
+    #modalcontainer {
+        display:none;
+        z-index:99999;
+        width:100%;
+        height:100%;
+        }
+        
+    #modalbackground {
+        position: fixed;
+        display:block;
+        min-width:100vw;
+        min-height:100vh;
+        background-color:black;
+        //opacity: 0.5;
+        background-color:rgba(200, 200, 200, 0.5);
+        
+        }
+    
+      #textcontainer {
+        display:block;
+        z-index:99999;
+        width:100%;
+        height:100%;
+        }
+        
+    #textbackground {
+        position: fixed;
+        display:block;
+        min-width:100vw;
+        min-height:100vh;
+        font-family: 'Salesforce Sans',Arial,sans-serif;
+        color: rgb(22, 50, 92);
+        }
+          
+      #modalbox{
+          display:block;
+          background-color:white;
+          opacity: 1;
+          width:80%;
+          height:60%;
+          margin-top:20%;
+          //margin-right:10%;
+          //margin-left:10%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 10px;
+          font-size: 90%;
+      }
+      
+      #buttonsubmit{
+          margin-left:10%;
+      }
+      
+      #textintro{
+          margin-left:10%;
+          color: rgb(107, 109, 112);
+      }
+      
+      #modalbuttonyes{
+        margin-left:10%;
+      }
+      
+      #modalbuttonno{
+        margin-right:10%;
+      }
+      
+      .button {
+            background-image: none;
+			background-color: rgb(0, 112, 210);
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            padding-left: 1rem;
+			padding-right: 1rem;
+            transition: border .15s linear;
+			border-color: rgb(0, 112, 210);
+			/*border: 1px solid rgb(217, 219, 221);*/
+			font-size: 12px;
+			font-family: sans-serif;
+			line-height: 1.875rem;
+    		text-decoration-color: currentcolor;
+    		text-decoration-line: none;
+    		text-decoration-style: solid;
+			font-style: normal;
+			font-weight: normal;			
+        }
+        
+        .button:hover {
+        	background-color: rgb(0, 95, 178);
+			border-color: rgb(0, 112, 210);
+			color: rgb(255, 255, 255);
+        }
+      
+    </style>
+    
+    <script type="text/javascript">
+    function getRemoteAccount() {
+                    hidemodalBox();
+                    var templateName = document.getElementById('textarea').value;
+                    var caseId = '{!id}';
+                    if(templateName != ''){
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.DG_ProposedTemplateControler.newCase}',
+                            templateName, caseId,  
+                            function(result, event){
+                                if (event.status) {
+                                    document.getElementById('textarea').value = '';
+                                    var msm = 'A new Case was created ( '+result.CaseNumber+' )';
+                                    showmodalLastMessage(msm);
+                                } else if (event.type === 'exception') {
+                                   showmodalLastMessage(event.message+event.where);
+                                } else {
+                                    showmodalLastMessage(event.message);
+                                }
+                            }, 
+                            {escape: true}
+                        );
+                    }else{
+                        showmodalLastMessage('The text field is empty.');
+                    }
+       
+    }
+    
+    function hidemodal(){
+        document.getElementById('modalcontainer').style.display = "none";
+        console.log('##### Hide');
+    }
+    
+    function hidemodalBox(){
+        document.getElementById('beginbuttons').style.display = "none";
+        document.getElementById('modalmessage').innerHTML = 'Submitting...';
+        console.log('##### Hide');
+    }
+    
+    function showmodalLastMessage(msm){
+        document.getElementById('modalcontainer').style.display = "block";
+        document.getElementById('modalmessage').innerHTML = msm;
+        document.getElementById('modalbox').style.display = "block";
+        document.getElementById('modalbuttonfinal').style.display = "block";
+        document.getElementById('beginbuttons').style.display = "none";
+        
+    }
+    
+    function showmodal(){
+        document.getElementById('modalcontainer').style.display = "block";
+        document.getElementById('modalmessage').innerHTML = 'Do you want to submit the template for Editor?';
+        document.getElementById('modalbox').style.display = "block";
+        document.getElementById('modalbuttonfinal').style.display = "none";
+        document.getElementById('beginbuttons').style.display = "block";
+        console.log('##### Show');
+    }
+    </script>
+    
+     <div id="textcontainer">
+        <div id="textbackground">
+            <br/>
+            <div id="textintro">
+            Please enter your template suggestion:
+            </div>    
+            <!--<apex:inputtextarea id="textarea" value="{!template}" rows="12" cols="35"/>-->
+            <textarea id="textarea" type="text" rows="7"/>
+            <br/>
+            <!--<button id="buttonsubmit" onclick="getRemoteAccount()">Submit suggestion to Editor</button>  -->
+            <button id="buttonsubmit" class="button" onclick="showmodal()">Submit suggestion to Editor</button>
+        </div>
+    </div>
+    
+    <div id="modalcontainer">
+    
+        <div id="modalbackground">
+        
+            <div id="modalbox">
+            
+                <p id="modalmessage"></p>
+                <div id="beginbuttons">
+                 <button id="modalbuttonyes" class="button" onclick="getRemoteAccount()">OK</button>
+                 <button id="modalbuttonno" class="button" onclick="hidemodal()">Cancel</button>
+                 </div>
+                 <button id="modalbuttonfinal" class="button" onclick="hidemodal()">OK</button>
+            </div>
+        
+        </div>
+    
+    </div>
+        
+</apex:page>
