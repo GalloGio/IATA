@@ -3491,6 +3491,7 @@ private class ISSP_AMS_Accreditation_Test
         Test.startTest();
         System.runAs(newUser)
         {
+            List<Case> caseList = new List<Case>();
             //Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
             Case testCase = ISSP_ObjectFactory.createNewCase();
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -3504,7 +3505,8 @@ private class ISSP_AMS_Accreditation_Test
             //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = parent.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
-            insert testCase;
+            caseList.add(testCase);
+            //insert testCase;
 
             Case testCase2 = ISSP_ObjectFactory.createNewCase();
             testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -3519,20 +3521,26 @@ private class ISSP_AMS_Accreditation_Test
             testCase2.Account_Concerned__c = parent.Id;
             testCase2.IFAP_Country_ISO__c = 'tq';
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
+            caseList.add(testCase2);
             
-            insert testCase2;
+            insert caseList;
 
+            List<AMS_Pax_Accreditation_Form__c> formList = new List<AMS_Pax_Accreditation_Form__c>();
+            
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
             newForm.IsGSA__c = 'No';
             newForm.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm.SAAM_Case__c = testCase.Id;
-            insert newForm ;
+            //insert newForm ;
+            formList.add(newForm);
 
             AMS_Pax_Accreditation_Form__c newForm2 = new AMS_Pax_Accreditation_Form__c();
             newForm2.IsGSA__c = 'No';
             newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
             newForm2.SAAM_Case__c = testCase2.Id;
-            insert newForm2 ;
+            formList.add(newForm2);
+            
+            insert formList ;
 
             ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
