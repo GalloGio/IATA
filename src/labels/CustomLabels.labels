@@ -27175,12 +27175,4 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>Financial Security Exists</shortDescription>
         <value>Financial Security Exists</value>
     </labels>  
-    <labels>
-        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
-        <categories>ISSP,ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Risk Events</shortDescription>
-        <value>Risk Events</value>
-    </labels>  
 </CustomLabels>

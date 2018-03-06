@@ -8,10 +8,13 @@ public with sharing class ISSP_ANG_CodeSearch {
 	public Boolean financialSecurityExists {get; set;}
 	public String iataCodeStr {get; set;}
 	public Boolean showParent {get; set;}
-	public List<RiskEvent> riskEventsList {get; set;}
+	public List<RiskEvent> riskEventsList;
 	public String riskStatus {get; set;}
+	public Boolean isAll {get; set;}
+	public String riskStatusFilter {get; set;}
 
 	public ISSP_ANG_CodeSearch() {
+		this.riskStatusFilter = 'Active';
 		this.activeSearch = false;
 		this.activeError = false;
 		this.showParent = false;
@@ -42,6 +45,10 @@ public with sharing class ISSP_ANG_CodeSearch {
 			this.activeError = true;
 			this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_INVALID;
 		} else {
+
+			if(len == 7 || len == 10) {
+				iataCodeStr += '_';
+			}
 
 			String sector;
 			String auxReplacement;
@@ -74,10 +81,10 @@ public with sharing class ISSP_ANG_CodeSearch {
 											ParentId,
 											IATA_ISO_Country__r.ANG_Enable_NewGen__c
 									   From Account 
-									  Where Sector__c =: sector
-									    And Status__c in: statusSet
-									    And RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
-									    And IATACode__c =: iataCodeStr];									    
+									  Where Sector__c = :sector
+									    And Status__c in :statusSet
+									    And RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
+									    And IATACode__c like :iataCodeStr];									    
 
 			if(auxList.size() != 0) {
 				Account auxAgency = auxList[0];
@@ -130,27 +137,6 @@ public with sharing class ISSP_ANG_CodeSearch {
 
 				riskStatus = this.agency.ANG_HE_RiskStatus__c;
 
-				riskEventsList = new List<RiskEvent>();
-
-				String soqlStr = 'Select ANG_Risk_Type__r.ANG_Description__c,' +
-										'ANG_Issued_Date__c,' +
-										'ANG_Event_Status__c,' +
-										'ANG_expiration_date_ff__c,' +
-										'ANG_AccountId__r.IATACode__c,' +
-										'ANG_CaseId__c,' +
-										'ANG_CaseId__r.CaseNumber,' +
-										'ANG_Expired__c,' +
-										'ANG_CaseId__r.Visible_on_ISS_Portal__c' +
-								  ' From ANG_Agency_Risk_Event__c' +
-								 ' Where ANG_HE_AccountId__c = \'' + this.agency.id + '\'';
-
-
-				List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
-
-				for(ANG_Agency_Risk_Event__c event : events) {
-					if(event.ANG_CaseId__c == null || (event.ANG_CaseId__c != null && event.ANG_CaseId__r.Visible_on_ISS_Portal__c))
-						riskEventsList.add(new RiskEvent(event));
-				}
 
 				this.activeSearch = true;
 			} else {
@@ -161,7 +147,62 @@ public with sharing class ISSP_ANG_CodeSearch {
 			}									    		
 		}
 		return null;
-    }	
+    }
+
+    public PageReference refreshRiskEventsTable() {
+
+    	System.debug('ALEX REFRESH');
+
+        riskEventsList = null;
+        
+        return null;
+    }
+
+    public List<RiskEvent> getRiskEventsList() {
+
+		System.debug('ALEX GET + ' + this.riskStatusFilter);
+
+
+		riskEventsList = new List<RiskEvent>();
+
+		String soqlStr = 'Select ANG_Risk_Type__r.ANG_Description__c,' +
+								'ANG_Issued_Date__c,' +
+								'ANG_Event_Status__c,' +
+								'ANG_expiration_date_ff__c,' +
+								'ANG_AccountId__r.IATACode__c,' +
+								'ANG_CaseId__c,' +
+								'ANG_CaseId__r.CaseNumber,' +
+								'ANG_Expired__c,' +
+								'ANG_CaseId__r.Visible_on_ISS_Portal__c' +
+						  ' From ANG_Agency_Risk_Event__c' +
+						 ' Where ANG_HE_AccountId__c = \'' + this.agency.id + '\'';
+
+		this.isAll = false;
+		String filter = ' And ';
+		if(this.riskStatusFilter == 'Active') {
+			filter += 'ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
+		} else if(this.riskStatusFilter == 'Expired') {
+			filter += 'ANG_Expired__c = true';
+		} else if(this.riskStatusFilter == 'Inactive') {
+			filter += 'ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
+		} else if(this.riskStatusFilter == 'All') {
+			this.isAll = true;
+			filter += 'ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
+		}
+
+		soqlStr += filter;
+
+		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
+
+		for(ANG_Agency_Risk_Event__c event : events) {
+			if(event.ANG_CaseId__c != null && !event.ANG_CaseId__r.Visible_on_ISS_Portal__c) {
+				event.ANG_CaseId__c = null;
+			}
+
+			riskEventsList.add(new RiskEvent(event));						
+		}
+		return riskEventsList;
+    }
 
 	public class RiskEvent {
 		public String description {get; set;}
