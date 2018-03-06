@@ -164,7 +164,7 @@ public class ANG_AccountTriggerHandler {
 			    Active__c = true
 			    , Account__c = acc.Id
 			    , Change_Code__c = config.Change_Code__c
-			    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
+			    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
 			    , Reason_Code__c = config.Reason_Code__c
 			    , Reason_Description__c = config.Reason_Code_Description__c
 			    , Source__c = source
@@ -203,8 +203,8 @@ public class ANG_AccountTriggerHandler {
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
 			Account a = newMap.get(mailTargets.get(nt.Contact__c));
 			nt.Message__c = nt.Message__c
-							.replace('#RISK_STATUS#', a.ANG_RiskStatus__c)
-							.replace('#CASH_CONDITION#', (a.ANG_CashCondition__c ? 'Yes' : 'No'));
+							.replace('#RISK_STATUS#', a.ANG_HE_RiskStatus__c)
+							.replace('#CASH_CONDITION#', (a.ANG_HE_CashCondition__c ? 'Yes' : 'No'));
 			notifications.add(nt);
 		}
 
