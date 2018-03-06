@@ -389,6 +389,11 @@ HE Account: Create risk event on the HE of the current hierarchy</description>
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>REC-{00000000}</displayFormat>
         <label>Risk Event Trigger Configuration Name</label>

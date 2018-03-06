@@ -146,7 +146,7 @@
                 <behavior>Edit</behavior>
                 <field>Airline_Code__c</field>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
