@@ -83,12 +83,18 @@
             <div class="panel panel-default">
               <div class="search">
 		            <span>
-	        	      <apex:outputLabel value="IATA Code"/>
+	        	      <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
                   <span>
                     <apex:input type="number" value="{!iataCode}"/>
                     <a href="#" onclick="doSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                   </span>
                 </span>
+
+                <p>
+                  <span>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK}"/>
+                  </span>
+                </p>
 
                 <apex:pageBlock id="searchResults">
 
@@ -96,12 +102,14 @@
                     <apex:outputText value="{!errorMessage}" style="margin-top: 15px;"/>
                   </apex:outputPanel>                
 
-                  <apex:outputPanel rendered="{!activeSearch}" >
+                  <hr  width="95%"></hr>
+
+                  <apex:outputPanel id="searchResults" rendered="{!activeSearch}">
 
                     <table style="margin-top: 30px;">
                       <tr style="display:{!IF(NOT(showParent),'','none')};">
                         <td>
-                          <apex:outputLabel value="IATA Code"/>
+                          <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.IATACode__c}"/>                      
@@ -122,7 +130,7 @@
 
                       <tr style="display:{!IF(showParent,'','none')};">
                         <td>
-                          <apex:outputLabel value="IATA Code (HO / HE)"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_CODE_SEARCH_IATA_CODE_HO_HE}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.IATACode__c}"/>
@@ -131,7 +139,7 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="Legal Name"/>
+                          <apex:outputLabel value="{!$Label.ISSP_AMS_Noc_Legal_Name}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.Legal_name__c}"/>
@@ -140,7 +148,7 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="Trade Name"/>
+                          <apex:outputLabel value="{!$Label.ISSP_MyProfile_TradeName}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.TradeName__c}"/>
@@ -149,25 +157,25 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="Country"/>
+                          <apex:outputLabel value="{!$Label.Country}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.IATA_ISO_Country__r.Name}"/>
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr style="display:{!IF(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c,'','none')}">
                         <td>
-                          <apex:outputLabel value="Accreditation Type"/>
+                          <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.ANG_Accreditation_Model__c}"/>
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr style="display:{!IF(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c,'','none')}">
                         <td>
-                          <apex:outputLabel value="Risk Status"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! riskStatus}"/>
@@ -176,7 +184,7 @@
 
                       <tr>
                         <td>
-                          <apex:outputLabel value="Financial Security Exists"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS}"/>
                         </td>
                         <td>
                           <i style="display:{!IF(financialSecurityExists,'','none')}; margin-left: 2px;" class="glyphicon glyphicon-ok"></i>
@@ -184,9 +192,9 @@
                         </td>
                       </tr>
 
-                      <tr>
+                      <tr style="display:{!IF(NOT(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')}">
                         <td>
-                          <apex:outputLabel value="Accumulated Irregularities"/>
+                          <apex:outputLabel value="{!$Label.ISSP_Homepage_Irregularities}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 5px;" value="{! agency.Accumulated_Irregularities__c}"/>
@@ -195,49 +203,52 @@
 
                     </table>                
 
-                    <apex:outputLabel value="Risk Events" style="margin-top: 20px;"/>
+                    <apex:outputPanel rendered="{!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c}">
 
-                    <table id="riskHistoryTable" class="table table-striped" cellspacing="0" width="100%">
-                      <thead>
-                          <tr>
-                              <th>{!$Label.ANG_ISSP_REH_RiskDescription}</th>
-                              <th>{!$Label.ISSP_Status}</th>
-                              <th>{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
-                              <th>{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
-                              <th>{!$Label.IDCard_IATA_Code_Of_Location}</th>
-                              <th>{!$Label.ISSP_CaseNumber}</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <apex:repeat value="{! riskEventsList}" var="riskEvent">
-                          <tr>                            
-                            <td>{! riskEvent.description}</td>
-                            <td>{! riskEvent.status}</td>
-                            <td>
-                              <apex:outputText value="{0, date, d MMM yyyy}">
-                                <apex:param value="{! riskEvent.dateAssigned}" />
-                              </apex:outputText>
-                            </td>
-                            <td>
-                              <apex:outputText value="{0, date, d MMM yyyy}">
-                                <apex:param value="{! riskEvent.dateExpired}" />
-                              </apex:outputText>
-                            </td>
-                            <td>{! riskEvent.iataCode}</td>
-                            <td>
-                              <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
-                            </td>
-                          </tr>                            
-                        </apex:repeat>                    
-                      </tbody>
-                    </table>
-                    <script type="text/javascript">
-                      $('#riskHistoryTable').dataTable( {
-                        "pageLength": 5,
-                        "lengthMenu": [ 5, 10, 25, 50 ],
-                        "searching": false
-                      } );                      
-                    </script>
+                      <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS}" style="margin-top: 20px;"/>
+
+                      <table id="riskHistoryTable" class="table table-striped" cellspacing="0" width="95%">
+                        <thead>
+                            <tr>
+                                <th>{!$Label.ANG_ISSP_REH_RiskDescription}</th>
+                                <th>{!$Label.ISSP_Status}</th>
+                                <th>{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
+                                <th>{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
+                                <th>{!$Label.IDCard_IATA_Code_Of_Location}</th>
+                                <th>{!$Label.ISSP_CaseNumber}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <apex:repeat value="{! riskEventsList}" var="riskEvent">
+                            <tr>                            
+                              <td>{! riskEvent.description}</td>
+                              <td>{! riskEvent.status}</td>
+                              <td>
+                                <apex:outputText value="{0, date, d MMM yyyy}">
+                                  <apex:param value="{! riskEvent.dateAssigned}" />
+                                </apex:outputText>
+                              </td>
+                              <td>
+                                <apex:outputText value="{0, date, d MMM yyyy}">
+                                  <apex:param value="{! riskEvent.dateExpired}" />
+                                </apex:outputText>
+                              </td>
+                              <td>{! riskEvent.iataCode}</td>
+                              <td>
+                                <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
+                              </td>
+                            </tr>                            
+                          </apex:repeat>                    
+                        </tbody>
+                      </table>
+                      <script type="text/javascript">
+                        $('#riskHistoryTable').dataTable( {
+                          "pageLength": 5,
+                          "lengthMenu": [ 5, 10, 25, 50 ],
+                          "searching": false
+                        } );                      
+                      </script>
+                    </apex:outputPanel>
                   </apex:outputPanel>
                 </apex:pageBlock>
               </div>

@@ -27142,5 +27142,45 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Branch Office</shortDescription>
         <value>Branch Office</value>
-    </labels>    
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link to the IATAs CheckACode page</shortDescription>
+        <value>Please refer to our paid &lt;a href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Code (HO / HE)</shortDescription>
+        <value>IATA Code (HO / HE)</value>
+    </labels> 
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Status</shortDescription>
+        <value>Risk Status</value>
+    </labels>  
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Security Exists</shortDescription>
+        <value>Financial Security Exists</value>
+    </labels>  
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Events</shortDescription>
+        <value>Risk Events</value>
+    </labels>  
 </CustomLabels>

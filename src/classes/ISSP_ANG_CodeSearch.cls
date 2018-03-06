@@ -54,6 +54,13 @@ public with sharing class ISSP_ANG_CodeSearch {
 				auxReplacement = Label.ISSP_Cargo;
 			}
 
+			Set<String> statusSet = new Set<String>();
+			statusSet.add(Ams_Utils.ACC_S9_APPROVED);
+			statusSet.add(Ams_Utils.ACC_S8_CHANGESPROCESSED);
+			statusSet.add(Ams_Utils.ACC_S0_TERMINATED);
+			statusSet.add(Ams_Utils.ACC_S5_CASHNOCOMMISSION);
+			statusSet.add(Ams_Utils.ACC_S6_CASHWITHCOMMISSION);
+
 			List<Account> auxList = [Select id,
 											IATACode__c,
 											Legal_name__c,
@@ -64,15 +71,17 @@ public with sharing class ISSP_ANG_CodeSearch {
 											Active_Guarantees__c,
 											Accumulated_Irregularities__c,
 											Location_Type__c,
-											ParentId
+											ParentId,
+											IATA_ISO_Country__r.ANG_Enable_NewGen__c
 									   From Account 
 									  Where Sector__c =: sector
-									    And Status__c =: Ams_Utils.ACC_S9_APPROVED
-									    And IATACode__c =: iataCodeStr];
+									    And Status__c in: statusSet
+									    And RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
+									    And IATACode__c =: iataCodeStr];									    
 
 			if(auxList.size() != 0) {
 				Account auxAgency = auxList[0];
-
+				
 				if(auxAgency.Location_Type__c == Ams_Utils.AE || auxAgency.Location_Type__c == Ams_Utils.BR) {
 
 					if(auxAgency.Location_Type__c == Ams_Utils.AE) {
@@ -96,7 +105,8 @@ public with sharing class ISSP_ANG_CodeSearch {
 												   ANG_HE_RiskStatus__c,
 												   Active_Guarantees__c,
 												   Accumulated_Irregularities__c,
-												   Location_Type__c
+												   Location_Type__c,
+												   IATA_ISO_Country__r.ANG_Enable_NewGen__c
 											  From Account
 											 Where id =: auxAgency.parentId];					
 
@@ -113,7 +123,7 @@ public with sharing class ISSP_ANG_CodeSearch {
 				} else {
 					this.agency = auxAgency;
 				}
-
+				
 				if(this.agency.Active_Guarantees__c != 0) {
 					this.financialSecurityExists = true;
 				}
@@ -142,7 +152,6 @@ public with sharing class ISSP_ANG_CodeSearch {
 						riskEventsList.add(new RiskEvent(event));
 				}
 
-
 				this.activeSearch = true;
 			} else {
 				this.activeError = true;
@@ -170,10 +179,10 @@ public with sharing class ISSP_ANG_CodeSearch {
 			this.dateExpired = event.ANG_expiration_date_ff__c;
 			this.iataCode = event.ANG_AccountId__r.IATACode__c;
 
-			if(event.ANG_CaseId__r.CaseNumber != null && event.ANG_CaseId__c != null) {
+			if(event.ANG_CaseId__c != null && event.ANG_CaseId__r.CaseNumber != null && event.ANG_CaseId__r.Visible_on_ISS_Portal__c) {
 				this.caseId = event.ANG_CaseId__c;
 				this.caseNumber = event.ANG_CaseId__r.CaseNumber;
-				this.caseNumberlink = '<a href="/ISSP_Case?caseId=' + this.caseId + '&mid=M1S2">' + this.caseNumber + '</a>';				
+				this.caseNumberlink = '<a href="/ISSP_Case?caseId=' + this.caseId + '&mid=M1S2">' + this.caseNumber + '</a>';
 			}
 		
 			this.status = translateStatus(event.ANG_Event_Status__c, event.ANG_Expired__c);
