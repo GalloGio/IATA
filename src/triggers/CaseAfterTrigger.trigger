@@ -367,6 +367,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
 	private Map<Id,Account> sidraCasesAccounts;
     private Map<Id,Account> accountsToUpdate = new Map<Id,Account>();
+
+    Set<Id> caseAccsSet = new Set<Id>();
     /*Maps, Sets, Lists*/
     
     /***********************************************************************************************************************************************************/
@@ -383,24 +385,43 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		    	caseRecType = true;
 		    	casesToConsider.add(cse);
 		    	sCaseIds.add(cse.Id);
+		    	caseAccsSet.add(cse.accountId);
 		    } 
 		}
+		//set containing Newgen Account Ids
+    	Set<Id> ngAccsSet = new Map<Id, Account>([select id from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]).keySet();
+				
 		//IFAP P5 start   
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			list<Case> casesToUdpateTheAccts = new list<Case>();
+			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
 			for(Case c: CasesToConsider){
-				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+				if(!ngAccsSet.contains(c.accountId) &&
+					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
 					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
-				casesToUdpateTheAccts.add(c);
+					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))
+				){ 
+					casesToUdpateTheAccts.add(c);
+				}
+				else
+				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
+					&& ngAccsSet.contains(c.accountId) 
+					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)){
+             		//NEWGEN - adds NG account to be updated
+             		AcctToBeUpdatedPerId.put(c.accountId, new account(
+								id =c.accountId,
+								Financial_Review_Result__c=c.Financial_Review_Result__c 
+								)
+					);
 				}
 			}
 			if(!casesToUdpateTheAccts.isEmpty())  {              
 				// throw new transformationException();
-				AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-			}         
+				 map<Id,Account> temMap =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+				 AcctToBeUpdatedPerId.putAll(temMap);
+			}   
 		} 
 		System.debug('***After checking record type ' + caseRecType);
 		if(!casesToConsider.isEmpty()){

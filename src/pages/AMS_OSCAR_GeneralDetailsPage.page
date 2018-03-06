@@ -195,7 +195,7 @@
             summary="Modifying PCI Compliance will not change the forms of payment for Credit Card at Agency Level."
             rendered="{!isOSCARCorrection}"
         />
-        
+
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
             <apex:pageBlockSectionItem >
                 <apex:outputLabel value="Account"></apex:outputLabel>
@@ -216,7 +216,7 @@
                 <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
                     <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputPanel >  
-                        <apex:outputLabel id="outputRF" value="{!accreditationObj[field.name]}"/> 
+                        <apex:outputLabel id="outputRF" value="{!remittanceFrequencyToShow}"/> 
                         <apex:selectList id="cPicklist" value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()" style="display: none;"> 
                             <apex:selectOptions value="{!rfPickListValues}"/>
                         </apex:selectList>
@@ -226,7 +226,7 @@
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
                     <apex:outputPanel >
-                            <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
+                            <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
                                 <c:MultiselectPicklist leftLabel="Available"
                                 leftOptions="{!rfPickListValues}"
