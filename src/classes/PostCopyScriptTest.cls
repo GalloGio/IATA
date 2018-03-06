@@ -64,6 +64,10 @@ public class PostCopyScriptTest {
             HPM_Setting__c rec5 = new HPM_Setting__c(
                 Name = 'Test HPM_Setting__c');
             insert rec5;
+			
+			ISSP_Kavi_Settings__c rec6 = new ISSP_Kavi_Settings__c(
+                Name = 'Test ISSP_Kavi_Settings__c');
+            insert rec6;
 
         }
         
@@ -89,8 +93,11 @@ public class PostCopyScriptTest {
 
 		List<HPM_Setting__c> listRecords5 = new List<HPM_Setting__c>();
 		listRecords5 = HPM_Setting__c.getAll().values();
+		
+		List<ISSP_Kavi_Settings__c> listRecords6 = new List<ISSP_Kavi_Settings__c>();
+		listRecords6 = ISSP_Kavi_Settings__c.getAll().values();
 
-		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size();
+		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size();
 
 		if(numRecords!=0) {
             
@@ -115,8 +122,11 @@ public class PostCopyScriptTest {
 
 			listRecords5 = new List<HPM_Setting__c>();
 			listRecords5 = HPM_Setting__c.getAll().values();
+			
+			listRecords6 = new List<ISSP_Kavi_Settings__c>();
+			listRecords6 = ISSP_Kavi_Settings__c.getAll().values();
 
-			numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size();
+			numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size();
 
 			System.assertEquals(numRecords, 0);
             

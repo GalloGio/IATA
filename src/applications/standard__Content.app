@@ -10,4 +10,5 @@
     <tab>CSS_Tracking__c</tab>
     <tab>ISSP_Banner__c</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

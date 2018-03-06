@@ -15,6 +15,10 @@
     <types>
         <members>*</members>
         <name>ApprovalProcess</name>
-    </types>    
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomMetadata</name>
+    </types>
     <version>37.0</version>
 </Package>

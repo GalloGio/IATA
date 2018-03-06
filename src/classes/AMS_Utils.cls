@@ -2,6 +2,8 @@ public without sharing class AMS_Utils {
 
     public static Boolean runningContactInsertUpdateFromOSCAR = false;
 
+    //public static Boolean isNewGenProcess = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -88,6 +90,7 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -121,7 +124,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
-    public static final String OSCAR_CLOSED = 'Closed (Closed)';
+    public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
@@ -130,6 +133,7 @@ public without sharing class AMS_Utils {
     public static final String HE = 'HE';
     public static final String AE = 'AE';
 
+    public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -151,6 +155,7 @@ public without sharing class AMS_Utils {
     public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+    public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
@@ -158,8 +163,14 @@ public without sharing class AMS_Utils {
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
+    public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
+    public static final String NGVR             = 'VR.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION};
+    public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
+                                                                                    ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
+
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -179,6 +190,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_Agency_Changes');
     public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+    public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
@@ -226,6 +238,9 @@ public without sharing class AMS_Utils {
 
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
+    public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+    public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
+    public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';
@@ -240,7 +255,7 @@ public without sharing class AMS_Utils {
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
     public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
-    public static final String CATEGORY_COURIER = 'Courier';
+    public static final String CATEGORY_COURIER = 'Courier';    
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -255,7 +270,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
-    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
@@ -267,6 +282,10 @@ public without sharing class AMS_Utils {
     public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
 
     public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
+
+    public static final String ARC_TRAVEL_AGENT_USA_ONLY = 'ARC Travel Agent (USA Only)';
+    public static final String IATAN_PASSENGER_SALES_AGENT_USA_ONLY = 'IATAN Passenger Sales Agent (USA Only)';
+    public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
 
     //Account - Location_Class__c
@@ -289,8 +308,19 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
     public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
-    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
-    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);    
+    public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH); 
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES,VOLRELINQUISH};   
+
+    public static final String OPEN = 'Open';
+    public static final String NO_IEP_ACCOUNT = 'No IEP Account';
+
+    public static final String CC = 'CC';
+    public static final String CA = 'CA';
+    public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
+    public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
+    public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
+    public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
     static {
         refreshCache();
@@ -1154,8 +1184,8 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
-                (SELECT Id FROM RHC_Informations__r)
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1223,6 +1253,10 @@ public without sharing class AMS_Utils {
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
+                if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
+                    acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
+                }
+
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
@@ -1256,7 +1290,7 @@ public without sharing class AMS_Utils {
         
     }
 
-    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+    public static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
 
         if(oscarProcess == NEWHELITE){
 
@@ -2309,7 +2343,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return lRes;
     }
 
-	//20-06-2017 - Change AMSU-93 - special chars replacement
+    //20-06-2017 - Change AMSU-93 - special chars replacement
     public static String cleanSpecialChars(String s){
 
         String sRes = '';
@@ -2491,6 +2525,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
+	
+	/**
+	Method to help the transformation of accrediation types to display on ebulletin
+	*/
+	public static String transformAccreditationType(String accredType) {
+
+		String result = accredType;
+
+		if (result == null)
+			return null;
+
+		if (result.containsIgnoreCase('Cashless'))
+			result = result.replace('Cashless', 'GoLite');
+		if (result.containsIgnoreCase('Cash'))
+			result = result.replace('Cash', 'GoStandard');
+		if (result.containsIgnoreCase('Multicountry'))
+			result = result.replace('Multicountry', 'GoGlobal');
+
+		return result;
+
+	}
     
     public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
 
@@ -2510,6 +2565,23 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         return oscarSteps;
     }
+
+    public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
+        'Legacy' => 'Legacy',
+        'Cashless' =>   'GoLite',
+        'Cash' =>   'GoStandard',
+        'Multicountry' => 'GoGlobal'
+    };   
+
+    public static String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    } 
 
     public static Date getBiggestDate(Date date1, Date date2) {
         if(date1 != null && date2 != null) return (date1 > date2) ? date1 : date2;

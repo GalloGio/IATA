@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -134,6 +137,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GDP_Opt_In__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_PCI_compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -245,6 +260,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -419,6 +438,10 @@
                 <behavior>Edit</behavior>
                 <field>Manager_Last_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_Integration_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -441,7 +464,7 @@
                 <field>Guaranteed_amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
             <layoutItems>
@@ -597,16 +620,6 @@
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Web Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>CustomLinks</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -829,6 +842,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Airline_Code__c</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>OSCAR__c</fields>
@@ -903,9 +917,6 @@
         <fields>Payment_Transaction_Number__c</fields>
         <fields>Payment_Gateway_Response__c</fields>
         <relatedList>RelatedOrderList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

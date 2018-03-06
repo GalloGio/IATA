@@ -25,6 +25,15 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <fields>
+        <fullName>Chat_Answer__c</fullName>
+        <description>Field used to set up chat answers from Knowledge Articles</description>
+        <externalId>false</externalId>
+        <label>Chat Answer</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Instructions__c</fullName>
         <externalId>false</externalId>
         <label>Instructions</label>

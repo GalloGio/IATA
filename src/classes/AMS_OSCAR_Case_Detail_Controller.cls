@@ -38,6 +38,22 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Id objectId { get; set; }
 
+    public String remittanceFrequencyToShow{
+        get{
+            if (accreditationObj.Remittance_frequency__c == null || accreditationObj.Remittance_frequency__c == '') return '';
+            if (!accreditationObj.Remittance_frequency__c.contains(';')) {
+                return getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(accreditationObj.Remittance_frequency__c);
+            }else {
+                List<String> auxRF = new List<String>();
+                for (String rf :accreditationObj.Remittance_frequency__c.split(';')){
+                    auxRF.add(getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(rf));
+                }
+                return String.join(auxRF,';');
+            }                   
+        }
+        set;
+    }
+
     //using Schema to avoid typos on field Names
     private List<Schema.SObjectField> accreditationFieldList{
         get{
@@ -77,7 +93,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Abbreviated_name__c
                 , AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
                 , AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
-                , AMS_Pax_Accreditation_Form__c.Solicitation_Flag__c
+                //, AMS_Pax_Accreditation_Form__c.Solicitation_Flag__c CB: remove as per request AMSU-109
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
@@ -86,6 +102,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             };
         }
     }
+
+    public static Set<String> hidenFieldsNewgenApplications = new Set<String>{'Abbreviated_name__c','Abbreviated_Address__c'};
 
     public List<String> accreditationFieldNames {
         get{
@@ -138,19 +156,22 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
         if(fieldName == 'ANG_Accreditation_Type__c') return isNewGenProcess;
 
+        if(hidenFieldsNewgenApplications.contains(fieldName))
+            return  !isNewGenProcess;
+
         return true;
     }
 
-    private Set<String> tocList{
-        get{
-            tocList = new Set<String>();
+    //private Set<String> tocList{
+    //    get{
+    //        tocList = new Set<String>();
 
-            if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
+    //        if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
 
-            return tocList;
-        }
-        set;
-    }
+    //        return tocList;
+    //    }
+    //    set;
+    //}
 
     private List<AMS_Operation__c> operationCodes{
         get{
@@ -175,9 +196,23 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         List<SelectOption> rightopts = new List<SelectOption>();
        
         for(String a :split)
-            rightopts.add(new SelectOption(a,a));
+            rightopts.add(new SelectOption(a,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(a)));
 
         return rightopts;
+    }
+
+    // We need to know the correspondent labels to show on the page
+    private Map<String,String> getPicklistLabels (String obj, String field){
+
+        Map<String,String> valueLabelMap = new Map<String,String>();
+
+        Schema.DescribeFieldResult dfr = Schema.getGlobalDescribe().get(obj).getDescribe().fields.getMap().get(field).getDescribe();
+        for(Schema.PicklistEntry entry:  dfr.getPicklistValues()) {
+
+            valueLabelMap.put(entry.getvalue(),entry.getLabel());
+        }
+
+        return valueLabelMap;
     }
 
     //auxiliary to the custom multipicklist
@@ -200,6 +235,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
+        Set<String> auxOptions = new Set<String>();
 
                 if(!allowMultipleRemittances){
                     rfPicklistValues.add(new SelectOption('','--None--'));
@@ -218,8 +254,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     for(AMS_Operation__c operation :operationCodes) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
 
-                            if(!allowMultipleRemittances || !rightOptions.contains(attribute.Remittance_Frequency__c))
-                                rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, attribute.Remittance_Frequency__c));                               
+                            if(!auxOptions.contains(attribute.Remittance_Frequency__c)){                               
+                                rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
+                                //prevent duplication
+                                auxOptions.add(attribute.Remittance_Frequency__c);
+                            }
                         }
                     }
 
@@ -227,7 +266,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 }else if(oscarObj.Process__c == AMS_Utils.NEWAE) {
 
                     if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
-                        rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c));                 
+                        rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
                   
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
                 }else if((oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
@@ -239,7 +278,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
                                 for(ANG_BSP_Attributes__c attribute: opCode.BSP_Attributes__r) {
                                     if(!allowMultipleRemittances || !rightOptions.contains(attribute.Remittance_Frequency__c))
-                                        rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c,attribute.Remittance_Frequency__c)); 
+                                        rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c))); 
                                 }
                             }
                         }
@@ -259,9 +298,15 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean isAgencyChanges{
         get{
-            //FM 10-03-2017 - Added Correction, since correction will act like the change process
             if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES  || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
+        }
+        private set;
+    }
+
+    public Boolean isOSCARCorrection{
+        get{
+            return oscarObj != null && oscarObj.Process__c == AMS_Utils.NGCORRECTION;
         }
         private set;
     }

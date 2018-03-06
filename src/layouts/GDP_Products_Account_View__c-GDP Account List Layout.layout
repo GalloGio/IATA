@@ -90,6 +90,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Location_Type_Code_Interpreted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Related_Accreditation_Class_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -607,6 +611,17 @@
         <fields>Assoc_Affiliation_ID__c</fields>
         <fields>Assoc_Affiliation_Code__c</fields>
         <relatedList>Assoc_Affiliation_Membership__c.Related_GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>VER_Number__c</fields>
+        <fields>Json_Is_Active__c</fields>
+        <fields>Valid_To_Date__c</fields>
+        <fields>FirstName__c</fields>
+        <fields>LastName__c</fields>
+        <relatedList>ID_Card__c.GDP_Products_Account_View__c</relatedList>
+        <sortField>Valid_To_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

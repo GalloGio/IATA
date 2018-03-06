@@ -38,6 +38,14 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Is_Accredited_Agent__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LVA_Show_photo_on_chat__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LVA_Language_Skills__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

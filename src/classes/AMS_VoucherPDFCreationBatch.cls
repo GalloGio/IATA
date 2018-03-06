@@ -18,7 +18,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		vouchersToPrint = vouchersToPrintSet;
 
-		this.query = 'SELECT Id FROM AMS_Voucher__c WHERE Id in :vouchersToPrint order by runExecution__c';
+		this.query = 'SELECT Id FROM AMS_Voucher__c WHERE Id in :vouchersToPrint order by name';
 
 		this.region = regionInput;
 

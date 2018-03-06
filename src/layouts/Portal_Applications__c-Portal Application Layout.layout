@@ -97,6 +97,10 @@
                 <field>ANG_Restrict_by_Agency_Category__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Restrict_by_Accreditation_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -131,6 +135,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Service_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Description_Label__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -214,6 +222,7 @@
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Right__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>

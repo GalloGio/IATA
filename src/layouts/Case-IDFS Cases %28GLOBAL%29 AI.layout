@@ -214,6 +214,10 @@
                 <field>Case_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
             </layoutItems>

@@ -750,9 +750,9 @@ public with sharing class IECOrder_Svc {
             System.debug('No pending order, create a new order ?' + (createOrder ? 'Yes' : 'No'));
 
             if (createOrder)
-                return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+                return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact, oCurrentCustomer.sfUser.Id);
             else
-                return new Order();
+                return new Order(OwnerId = oCurrentCustomer.sfUser.Id);
         }
     }
 
@@ -777,7 +777,7 @@ public with sharing class IECOrder_Svc {
             
             if(pendingOrder == null)
             {
-                pendingOrder = orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+                pendingOrder = orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact, oCurrentCustomer.sfUser.Id);
             }
 
             Map<Id, List<OrderItem>> orderItemsByOrder = itemSelector.getOrderItems(new Set<Id>{pendingOrder.Id});
@@ -874,7 +874,7 @@ public with sharing class IECOrder_Svc {
         delete [select id from OrderItem where id in :orderItemIds];
     }*/
 
-    public static Boolean validateQuoteNumberToConvert(String quoteNumber, Id createdBy)
+    public static Boolean validateQuoteNumberToConvert(String quoteNumber, Id createdBy, Id billToContactId)
     {
         /**Type='Quote' 
                 AND 
@@ -882,10 +882,12 @@ public with sharing class IECOrder_Svc {
         List<Order> quotes = [
             SELECT Id 
             FROM Order 
-            WHERE OwnerId = :createdBy
+            WHERE ( OwnerId = :createdBy OR BillToContactId = :billToContactId)
                 AND OrderNumber = :quoteNumber
             LIMIT 1
         ];
+
+        System.debug('angielaz, validateQuoteNumberToConvert-->quotes: ' + quotes);
 
         return (quotes.size() == 1);
     }

@@ -19,7 +19,7 @@ language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Po
 {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), "", relatedTo.Portal_Application__r.Name)}
 {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
 ,$Label.ISSP_AMS_Name &" : "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName
-,$Label.ISSP_Email_AppReq_From &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName
+,$Label.ISSP_Email_AppReq_From &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName & " - IATA code of the requester location: "& relatedTo.Contact__r.IATA_Code__c
 )}
 <BR/>
 {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')

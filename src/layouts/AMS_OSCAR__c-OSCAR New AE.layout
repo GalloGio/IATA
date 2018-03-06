@@ -157,7 +157,7 @@
                 <field>Dossier_Validation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_validate__c</field>
             </layoutItems>
         </layoutColumns>
@@ -184,7 +184,7 @@
                 <field>RPM_Approval__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_approval__c</field>
             </layoutItems>
         </layoutColumns>
@@ -253,10 +253,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Update_AIMS_Approval_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Finalization_result__c</field>
             </layoutItems>
         </layoutColumns>
@@ -284,10 +280,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Update_AIMS_Disapproval_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Disapproval_result__c</field>
             </layoutItems>
         </layoutColumns>
@@ -309,10 +301,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Update_AIMS_Rejection_Date__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Rejection_result__c</field>

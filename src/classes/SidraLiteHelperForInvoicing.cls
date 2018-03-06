@@ -7,6 +7,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 
     public static final String ANNUAL_FEES = 'Annual Fees';
     public static final String ADMIN_CHARGES = 'Administrative Charges';
+    public static final set<String> VALID_AGENT_PAID = new set<String>{'Not paid','Partially unpaid'};
     public static final set<String> VALID_REASONS = new set<String>{ANNUAL_FEES,ADMIN_CHARGES};
 
     /**
@@ -32,8 +33,8 @@ public with sharing class SidraLiteHelperForInvoicing {
                 !SidraLiteUtil.isAgent(parentCase.account)) {
                     throw new SidraLiteException('You cannot create a SIDRA Lite for "' + ADMIN_CHARGES + '" Reason for this account Category');
             }
-            if (parentCase.Has_the_agent_paid_invoice__c == null || parentCase.Has_the_agent_paid_invoice__c != 'Not paid') {
-                throw new SidraLiteException('Non-compliance action can only be triggered when the field "Has the customer paid invoice?" equals to Not Paid.');
+            if (parentCase.Has_the_agent_paid_invoice__c == null || !VALID_AGENT_PAID.contains(parentCase.Has_the_agent_paid_invoice__c)) {
+                throw new SidraLiteException('Non-compliance action can only be triggered when the field "Has the customer paid invoice?" equals to ' + VALID_AGENT_PAID + '.');
             }
 
         } else {

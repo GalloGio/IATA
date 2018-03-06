@@ -300,7 +300,8 @@ global class AMS_HierarchyHelper {
 					hierarchyToDelete = rel.Hierarchy__c;
 
 				//BRs under the oldHO will move under the targetHO
-				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+				if ((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) 
+					|| (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.SA && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED)){
 					rel.Parent_Account__c = targetHO;
 					rel.Hierarchy__c = newHierarchyName;
 				}

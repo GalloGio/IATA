@@ -149,16 +149,22 @@ public class AMS_InspectionHelper {
     {
         Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
 
-        List<Account> accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
+        List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
             return;
 
+        set<Id> accountIdsToCheckAssignments = new set<Id>();
         for(Account acc : accountsToProcess){
             acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
+
+            if (acc.Location_Class__c == 'G' || acc.Location_Class__c == 'X') 
+                accountIdsToCheckAssignments.add(acc.Id);
         }
 
         update accountsToProcess;
+
+        AMS_InspectionHelper.checkActiveAppointments(accountIdsToCheckAssignments);
 
     }
 
@@ -220,6 +226,53 @@ public class AMS_InspectionHelper {
             return true;
         }
         return false;
+    }
+
+    // Checks if there is any active appointment left on the account. If none, then send an email to the current user to terminate the account
+    // To be called on the inactivation of appointments
+    private static void checkActiveAppointments(set<Id> lstAccountIdsToCheck) {
+        
+        if (lstAccountIdsToCheck.isEmpty()) 
+            return;
+
+        try {
+            map<Id, Boolean> mapActiveAppointmentPerAccountId = new map<Id, Boolean>();
+            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name, IATACode__c FROM Account WHERE Id IN :lstAccountIdsToCheck]);
+            list<AMS_Inspection__c> lstActiveInspections = [SELECT Id, Account__c FROM AMS_Inspection__c WHERE Accreditation_Endorsement_Status_code__c <> '0' AND Account__c IN :lstAccountIdsToCheck];
+     
+            for (AMS_Inspection__c app : lstActiveInspections) 
+                if (mapActiveAppointmentPerAccountId.get(app.Account__c) == null)
+                    mapActiveAppointmentPerAccountId.put(app.Account__c, true);
+
+            list<Task> lstTasksToCreate = new list<Task>();
+            OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+            List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+            for (Id acctId : lstAccountIdsToCheck)
+                if (mapActiveAppointmentPerAccountId.get(acctId) == null) {
+                    
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.Subject = 'Terminate agent with no appointments';
+                    mail.targetObjectId = userInfo.getUserId();
+                    mail.saveAsActivity = false;
+                    mail.HtmlBody = '<html><body style="font-family: Arial; font-size: 10pt;"><p>Dear ' + userInfo.getName() + ',</p>';
+                    mail.HtmlBody+= '<p>You have recently deactivated the last appointment for ' + mapAccountsPerId.get(acctId).Name + '. Please terminate the agency.</p>';
+                    mail.HtmlBody+= '<p>Account name: <a href="' + URL.getSalesforceBaseUrl().toExternalForm() + '/' + acctId + '">' + mapAccountsPerId.get(acctId).Name + '</a><br/>';
+                    mail.HtmlBody+= 'IATA Code: ' + mapAccountsPerId.get(acctId).IATACode__c + '</p>';
+                    mail.HtmlBody+= '<p>This is an automatically generated email, please do not reply.</p></body></html>';
+
+                    if ( owea.size() > 0 ) {
+                        mail.setOrgWideEmailAddressId(owea[0].Id);
+                    }
+
+                    emails.add(mail);
+                }
+
+            if (!emails.isEmpty() && !Test.IsRunningTest())
+                Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+            
+        } catch (Exception e) {
+            system.debug('ERROR checkActiveAppointments: ' + e.getMessage());
+        }
     }
 
 }

@@ -24,49 +24,6 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Role</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Business User</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Purchasing Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Evaluator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Executive Sponsor</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Influencer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project Champion</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Decision Maker</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Art Work (Advertising)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
 </CustomObject>

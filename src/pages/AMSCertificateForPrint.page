@@ -75,7 +75,7 @@
 							<apex:param value="{!acc.Check_Digit__c}"/>
 						</apex:outputText> 
 					</span>
-					{!IF( acc.Region_formula__c == 'China & North Asia', acc.Name, IF(ISBLANK(acc.TradeName__c), acc.Name, acc.TradeName__c))}
+					{!IF( acc.Region_formula__c == 'China & North Asia', acc.Name, IF(ISBLANK(acc.TradeName__c), UPPER(acc.Name), UPPER(acc.TradeName__c)))}
 					<span class="address"><apex:outputText value="{!acc.BillingCity & ', '}" rendered="{!acc.Location_Class__c == 'P'}" /> <apex:outputText value="{!acc.IATA_ISO_Country__r.Name}"/></span>
 				</h1>
 				<p>{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}</p>

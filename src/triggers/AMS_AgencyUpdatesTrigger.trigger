@@ -7,6 +7,11 @@ trigger AMS_AgencyUpdatesTrigger on AMS_Agency_Updates__c (
 	    after delete, 
 	    after undelete)
     {
+
+
+        if(trigger.isAfter && trigger.isInsert){
+            new ANG_agencyEventTriggerHandler().onAfterInsert();
+        }
     	
         if(trigger.isAfter && trigger.isUpdate){
 

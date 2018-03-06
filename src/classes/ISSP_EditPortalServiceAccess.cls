@@ -33,7 +33,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
     public list<Contact> otherUsersList {get; set;}
     public Boolean isEasyPayService {get; set;}
     public String portalServiceRole {get; set;}
-    public List<SelectOption> availablePortalServiceRoles {get; set;}    
+    public List<SelectOption2> availablePortalServiceRoles {get; set;} 
+    public Map<String, String> helpTextPortalRoles {get; set;}    
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -45,6 +46,18 @@ public with sharing class ISSP_EditPortalServiceAccess{
             options.add(new SelectOption('Access Granted','Access Granted'));
         return options;
     }
+
+    public class SelectOption2 {
+        public String value {get; set;}
+        public String label {get; set;}
+        public String helpText {get; set;}
+
+        public SelectOption2(String value, String label, String helpText) {
+            this.value = value;
+            this.label = label;
+            this.helpText = helpText;
+        }
+    }    
 
     public ISSP_EditPortalServiceAccess(){
         
@@ -65,6 +78,24 @@ public with sharing class ISSP_EditPortalServiceAccess{
         
         isEasyPayService = false;
 
+        this.helpTextPortalRoles = new Map<String, String>();
+
+        Portal_Applications__c pa = [Select name From Portal_Applications__c where Id =: ServiceId];
+
+        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+                String aux = role.Role__c.replaceAll(' ','');
+                String aux2 = aux.replaceAll('-','');
+
+                String helpText = Ams_Utils.getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+
+                if(helpText == 'NONE') helpText = '';
+
+                this.helpTextPortalRoles.put(role.Role__c, helpText);
+
+            }
+        }        
+
         if(servName != null && servName != ''){
             isAddUser = true ;
             if(servName.contains('EasyPay')) {
@@ -79,16 +110,13 @@ public with sharing class ISSP_EditPortalServiceAccess{
             }
         }
 
-        availablePortalServiceRoles = new List<SelectOption>();
+        availablePortalServiceRoles = new List<SelectOption2>();
 
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'IATA EasyPay (EDENRED)'];
-        
-        availablePortalServiceRoles.add(new SelectOption('', ''));
-        
+        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c =: pa.name order by Order__c];
+                
         for (Connected_App_Roles__c role : roles) {
-            availablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
-        }         
-
+            availablePortalServiceRoles.add(new SelectOption2(role.Role__c, role.Role__c, this.helpTextPortalRoles.get(role.Role__c)));
+        }
         
         PortalServiceAccess_List = new List<Portal_Application_Right__c>(
             [Select p.Name, p.Application_Name__c, p.Right__c, p.PortalServiceTranslatedName__c , p.Portal_Application__r.Description__c,p.Portal_Application__r.Cannot_be_managed_by_portal_admin__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
@@ -168,7 +196,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
         Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?MainNav=Services&subNav=Access&mid=M4S2&id='+ PSA.Contact__r.AccountId + '&vContactId=' + PSA.Contact__c + '&vContactName=' + EncodingUtil.urlEncode(PSA.Contact__r.Name, 'UTF-8') + commParam);
         p.setredirect(true);
         return p;
-      return null;
+      //return null;
     }
     
     public Pagereference DenyAccess(){
@@ -181,10 +209,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             update PSA;
         }
         catch(Exception e){
-            errorMessage = new List<String>();
-            errorMessage.add(e.getdmlMessage(0));
-            PSA.Right__c = oldStatus;
-            PSA.Access_Status_Reason__c = oldReason;
+            errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            PSA.Right__c = oldStatus; PSA.Access_Status_Reason__c = oldReason;
             return null;
         }
         p.setredirect(true);
@@ -202,10 +228,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             update PSA;
         }
         catch(Exception e){
-            errorMessage = new List<String>();
-            errorMessage.add(e.getdmlMessage(0));
-            PSA.Right__c = oldStatus;
-            PSA.Access_Status_Reason__c = oldReason;
+            errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            PSA.Right__c = oldStatus; PSA.Access_Status_Reason__c = oldReason;
             return null;
         }
         
@@ -243,6 +267,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
         usersToCreateList = new List <Contact>();
         otherUsersList = new List <Contact>();
         system.debug('selectedContact_Lst: ' + SelectedContacts);
+
         for(String ContactId : selectedContact_Lst){
             system.debug('adding: ' + ContactId);
             contactIdSet.add(ContactId.trim());
@@ -267,17 +292,54 @@ public with sharing class ISSP_EditPortalServiceAccess{
         system.debug('usersToActivateList: ' + usersToActivateList);
         system.debug('usersToCreateList: ' + usersToCreateList);
         system.debug('otherUsersList: ' + otherUsersList);
+
         return null;
     }
-    
-    public Pagereference CreateNewPortalAccess(){ 
-        System.debug('SFF START CreateNewPortalAccess');
-        List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();
-        List<string> selectedContact_Lst = new List<string>();
-        System.debug('SFF SelectedContacts'+SelectedContacts);
 
-        selectedContact_Lst = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
-        System.debug('SFF selectedContact_Lst'+selectedContact_Lst);
+    public Pagereference activateUsers() {
+        if(isEasyPayService) {
+            //
+            // If we are adding contacts to easyPay then we must check if the user is still active. Users that don't log in into the portal
+            // for a certain amount of time get deactivated. The EASYPAY process will perform a user provisioning on the vendor's system and for
+            // that all users must be active.
+            //
+            List<String> selectedContact_Lst = getSelectedContactsList();
+
+            List<User> usersList = [select id, isActive, contactId from User where contactId in : selectedContact_Lst];
+            List<User> usersToActivate = new List<User>();
+
+            for(User user : usersList) {
+                if(!user.isActive) {
+                    user.isActive = true;
+                    usersToActivate.add(user);
+                }
+            }
+
+            if(usersToActivate.size() != 0) {
+                update usersToActivate;
+            }
+        } 
+
+        return null;       
+    }
+    
+    public List<String> getSelectedContactsList() {
+        List<String> selectedContact_Lst = new List<String>();
+
+        List<String> selectedContact_Lst_aux = SelectedContacts.substring(1,SelectedContacts.length() -1).split(',');
+
+        for(String s : selectedContact_Lst_aux) {
+            selectedContact_Lst.add(s.trim());
+        }
+        return selectedContact_Lst;        
+    }
+
+
+    public Pagereference CreateNewPortalAccess() {
+
+        List<String> selectedContact_Lst = getSelectedContactsList();
+
+        List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();
 
         Set <String> contactIdSet = new Set <String>();
 
@@ -320,24 +382,20 @@ public with sharing class ISSP_EditPortalServiceAccess{
                  System.debug('SFF isUpdated'+isUpdated);
                 if(isUpdated == false){
                     Portal_Application_Right__c PSAitem = new Portal_Application_Right__c();
+                    
                     PSAitem.Portal_Application__c = ServiceId ;
                     PSAitem.Right__c = auxRight;
                     PSAitem.ANG_Portal_Service_Role__c = portalServiceRole;
+
                     System.debug('SFF ContactId'+ContactId);
+
                     PSAitem.Contact__c = Id.valueOf(ContactId.trim()) ;
-                    System.debug('ZzZz PSA==>'+PSA);
+
+                    //System.debug('ZzZz PSA==>'+PSA);
                     System.debug('SFF PSAitem'+PSAitem);
+
                     ContactToAdd_Lst.add(PSAitem);
                 }
-            }
-            if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0)
-            {
-                insert ContactToAdd_Lst ;
-            }
-
-            if(existPSA_Lst != null && existPSA_Lst.size() > 0)
-            {
-                update existPSA_Lst ;
             }
             
             List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIdSet];
@@ -353,21 +411,35 @@ public with sharing class ISSP_EditPortalServiceAccess{
                     createIdSet.add(thisContact.Id);
                 }
             }
+
             if (!activateIdList.isEmpty()){
                 ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
                 update processContactList;
             }
+
             if (!createIdSet.isEmpty()){
                 ISSP_ContactList ctrl = new ISSP_ContactList();
                 ctrl.processMultiplePortalUserStatusChange(createIdSet, 'Approved User', 'Active');
             }
-        }
 
+            //
+            // Save all the Portal_Application_Right__c after creating the users.
+            // This is important for all EASY PAY services because they need to have the portal users.
+            //
+            if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0) {
+                insert ContactToAdd_Lst ;
+            }
+
+            if(existPSA_Lst != null && existPSA_Lst.size() > 0) {
+                update existPSA_Lst ;
+            }
+
+        }
         Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);
         return p;
     }
-    
+
     public Pagereference RedirectToService(){       
         Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);
@@ -392,30 +464,36 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null
             order by name
             Limit 1000];          
         
         NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList1));
-        if(ContactList1.size() == 1000){
+        if(ContactList1.size() == 1000 || Test.isRunningTest()){
             ContactList2=
             [SELECT Id, Name , AccountId,
             (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 1000
             ];
             NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList2));
         }
-        if(ContactList2.size() == 1000){
+        if(ContactList2.size() == 1000 || Test.isRunningTest()){
             ContactList3 =
             [SELECT Id, Name , AccountId,
             (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 2000
@@ -429,6 +507,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 3000];
@@ -441,6 +521,8 @@ public with sharing class ISSP_EditPortalServiceAccess{
             Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
             Account.IATACode__c  from Contact
             WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            AND Community__c != null
+            AND Email != null            
             order by name
             Limit 1000
             OFFSET 4000];

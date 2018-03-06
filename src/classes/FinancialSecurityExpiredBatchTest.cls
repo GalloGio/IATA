@@ -16,6 +16,8 @@ public class FinancialSecurityExpiredBatchTest {
         insert FI;
 
         date dead = date.today().addDays(40);
+        
+        Test.startTest();
 
         Contact con = new contact(FirstName = 'jupiter', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true);
         insert con;
@@ -34,9 +36,7 @@ public class FinancialSecurityExpiredBatchTest {
         Financial_Security__c FS2 = new Financial_Security__c(CURRENCYISOCODE = 'USD', Account__c = a.Id, AMOUNT__C = 3000, EXPIRY_DATE__C = system.Today().AddDays(-100),
                 FINANCIAL_INSTITUTION__c = FI.Id, SECURITY_STATUS__C = 'Active', Security_Type__c = 'Bank Guarantee', Region__c = 'Asia & Pacific', Reception_Date__c = system.today(),
                 Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id);
-        insert FS2;
-
-        Test.startTest();
+        insert FS2;        
 
         FinancialSecurityExpiredBatchAP obj1 = new FinancialSecurityExpiredBatchAP ();
         DataBase.executeBatch(obj1);

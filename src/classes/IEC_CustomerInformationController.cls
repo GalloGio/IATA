@@ -96,7 +96,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 			quoteNumberToConvert = System.currentPageReference().getParameters().get('id');
 
             //-- Validate quoteNumberToConvert is a valid belongs to the current User 
-            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id))
+            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id, loggedCustomer.sfContact.Id))
             {
             	List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{quoteNumberToConvert});
             	if(lstOrders.size() > 0)

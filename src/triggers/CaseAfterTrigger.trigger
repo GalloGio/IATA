@@ -696,7 +696,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            lstAccountsToUpdate.add( a );
 			        }
 			        // Set / unset the Collection Case Indicator
-			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && c.Reason1__c == 'Debt Recovery') {
+			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees')) {
 			        	// TF - Open debts notification to Admins
 			        	if (Trigger.isInsert){
 			        		if (!ISSP_UserTriggerHandler.preventOtherTrigger){

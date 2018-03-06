@@ -277,7 +277,7 @@
                 <field>Dossier_Validation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_validate__c</field>
             </layoutItems>
         </layoutColumns>
@@ -300,7 +300,7 @@
                 <field>RPM_Approval__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments_approval__c</field>
             </layoutItems>
         </layoutColumns>
@@ -547,7 +547,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000K7Cf</masterLabel>
+        <masterLabel>00h7E000000GPG5</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -107,7 +107,7 @@ global class ANG_RME_Alert_Service {
 			String eventType = RestContext.request.params.get('eventType');
 
 			//fetch current information
-			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode];
+			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
 			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
@@ -158,7 +158,7 @@ global class ANG_RME_Alert_Service {
 
 	private static void updateRHC(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		rhcInfo.ANG_ConsumedRHC__c = message.consumedRHCAmount;
-		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage;
+		rhcInfo.ANG_ConsumedRHC_Percent__c = message.consumedRHCPercentage*100;
 		rhcInfo.ANG_ConsumedRHC_Last_Update__c = message.eventTime.date();
 
 		update rhcInfo;
@@ -224,7 +224,7 @@ global class ANG_RME_Alert_Service {
 		req.setHeader('Content-Type', 'application/json');
 		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
-		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
+		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c);
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 

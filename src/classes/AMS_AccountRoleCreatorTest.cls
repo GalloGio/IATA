@@ -32,6 +32,10 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
         insert onlineAccreditation;
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
         acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));

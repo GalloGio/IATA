@@ -259,8 +259,19 @@ public with sharing class AMS_OSCAR_TestDataFactory
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
+		
+		// Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = a1.Name,
+                IATAcode__c = a1.IATAcode__c,
+                Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+                SAAM_Case__c = oscarCase.Id,
+                Remittance_frequency__c = 'M'
+				);
 
-        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+        insert stagingArea;
+
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+        OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
 	}

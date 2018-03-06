@@ -130,6 +130,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Grouping_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Grouping Number</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Limit_Cash_conditions__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -150,6 +162,11 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <nameField>
         <label>Short Name</label>

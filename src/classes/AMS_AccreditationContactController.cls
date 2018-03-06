@@ -156,7 +156,7 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = false;
 
-        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && !ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))
+        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
@@ -672,7 +672,7 @@ public with sharing class AMS_AccreditationContactController {
                     fieldToCheck = tsw.certificateIssueDate;
                 }    
                 if(i == 1){
-                    if(tsw.ac.Certificate_Issued_on__c != null && tsw.ac.Type_of_certificate__c == 'DGR'){
+                    if(tsw.ac.Certificate_Issued_on__c != null && (tsw.ac.Type_of_certificate__c == 'DGR' || tsw.ac.Type_of_certificate__c == 'CATA')){
                         system.debug('RB Valid until: ' + tsw.ac.Valid_until__c);
                         DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
                         tsw.validUntil = dt.format('YYYY-MM-dd');

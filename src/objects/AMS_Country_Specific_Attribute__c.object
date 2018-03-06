@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -69,21 +66,25 @@
         <description>The direction to match with the Risk Alert inserted. Risk Alert must match Percentage and Direction to trigger actions</description>
         <externalId>false</externalId>
         <label>Direction</label>
-        <picklist>
-            <picklistValues>
-                <fullName>UP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DOWN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UP</fullName>
+                    <default>false</default>
+                    <label>UP</label>
+                </value>
+                <value>
+                    <fullName>DOWN</fullName>
+                    <default>false</default>
+                    <label>DOWN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_EmailTemplate_Legacy__c</fullName>
@@ -135,7 +136,7 @@
         <description>Secure country/class uniqueness (workflow on creation/update)</description>
         <externalId>false</externalId>
         <label>Country Class Check</label>
-        <length>25</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -182,84 +183,104 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</description>
         <externalId>false</externalId>
         <label>Location Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>J</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                    <label>K</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>Q</fullName>
+                    <default>false</default>
+                    <label>Q</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>V</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>J</fullName>
+                    <default>false</default>
+                    <label>J</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Minimum_DGR_BR__c</fullName>
@@ -310,6 +331,25 @@ J-Joint Vent</description>
         <unique>false</unique>
     </fields>
     <label>AMS Country Specific Attribute</label>
+    <listViews>
+        <fullName>RHC_Risk_Alerts</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>ANG_PortalNotificationTemplate__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RHC_Risk_Alert</value>
+        </filters>
+        <label>RHC Risk Alerts</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
@@ -885,4 +925,5 @@ OR(
 )</errorConditionFormula>
         <errorMessage>For Risk Alert attributes you must fill both Direction AND Percentage</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

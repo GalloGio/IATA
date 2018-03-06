@@ -153,6 +153,13 @@
     </style>
     
     <script>
+
+            var showProductComparisonLink = false;
+            var hideProductComparisonLink = false;       
+        
+            setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
+
+
             $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
             var pilotList = {{!pilotList}};
             var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -164,6 +171,16 @@
             
             var isPilotCountry = pilotList[defaultHQCountry];
             var isEUcountry = {!isEUcountry};
+
+            function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
+               if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
+                    showProductComparisonLink = true;
+                    hideProductComparisonLink = false;
+                } else {
+                    hideProductComparisonLink = true;
+                    showProductComparisonLink = false;
+                }    
+            }            
          
             function setIsPilotCountry(isocode) {
                 isPilotCountry = pilotList[isocode];
@@ -516,7 +533,7 @@
                 <div class="form-group">
                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Operation_Type}</label>
                     <div class="col-lg-9" style="padding-top:7px">
-                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged(this.value);">
+                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged('{!namEnabled}', this.value, '{!isHOAccredited}', '{!con.Account.Sector__c}');">
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
                         </apex:selectRadio>
@@ -538,10 +555,17 @@
                                 </apex:selectList>
 
                                 <apex:outputPanel id="compare">
-                                    <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent', OR(!isHOAccredited, con.Account.Sector__c=='Cargo Agent'))}">
-                                        <apex:outputLink value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
-                                    </apex:outputPanel>
+                                    <apex:outputLink id="ProductComparisonLink" value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
                                 </apex:outputPanel>
+
+                                <script>
+                                    if(showProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').show();
+                                    } 
+                                    if(hideProductComparisonLink) {
+                                        $('[name$=ProductComparisonLink]').hide();
+                                    }                                
+                                </script>
                             </div>
                         </div>
 
@@ -671,7 +695,7 @@
                                 <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
                                 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">                               
-                                    <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                    <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                     </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
                                 </div>
@@ -727,11 +751,14 @@
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
 
-                    function operationTypeChanged(sectorValue) {
+                    function operationTypeChanged(namEnabled, sectorValue, isHOAccredited, sector) {
                         if (sectorValue === 'Cargo_Agent') {
                             $('[name$=separateLegalEntitySelect]').prop('checked', false);
                             $('[name$=isGSASelect]').prop('checked', false);
                         }
+
+                        setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector);
+
                         refreshOfficeTypes(sectorValue);
                     }
                 </script>
@@ -1051,6 +1078,12 @@
                <apex:outputPanel rendered="{!isNoticeOfChange}">
                 {!IF(newform.Is_change_bank_account_details__c, $Label.ISSP_AMS_StepFinal_ChangeBank, $Label.ISSP_AMS_StepFinal_ChangeOther)}
                </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'FoP Management'}">
+                {!$Label.ISSP_PCI_Case_Submited}                
+               </apex:outputPanel>
+            <apex:outputPanel rendered="{!newForm.SAAM_Case__r.Reason1__c == 'CLO - Closure'}">
+                {!$Label.ISSP_VR_Case_Submited}
+            </apex:outputPanel>
            </strong>
            
            
@@ -1063,8 +1096,8 @@
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>
-            -->
-            <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange)}">
+            -->            
+            <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
                  <apex:pageBlockSection >
                      <apex:pageBlockSectionItem >
                          <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>

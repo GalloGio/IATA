@@ -66,14 +66,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY) ) notes.add('Change of location type will swap the current agency with the current HE.');				
 				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null){
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null){
 
-					if(newParent != null && diffDestination(oscar.New_parent__c)){
-						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
-						}else{
-							if(newParent != null && !diffDestination(oscar.New_parent__c))
-								notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
-					}
+					if(diffDestination(oscar.New_parent__c)) notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
+					else notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
 				}
 				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
@@ -210,7 +206,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	@TestVisible public Boolean closeTab{
+	public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
 			return closeTab;
@@ -226,14 +222,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	@TestVisible public Boolean editable {
+	public Boolean editable {
 		get{
 			return (oscar.STEP6__c != AMS_Utils.PASSED);
 		}
 		set;
 	}
 
-	@TestVisible public Boolean showTargetAgency{
+	public Boolean showTargetAgency{
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
 
@@ -248,9 +244,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 	
-	@TestVisible public Boolean showTopPanel{
+	public Boolean showTopPanel{
 		get{
-			return true;
+			return oscar.RecordTypeId != AMS_Utils.RECTYPE_NEWGENFOP;
 		}
 		private set;
 	}
@@ -299,7 +295,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(oscar.New_parent__c);
 				*/
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c not in ( ' +  getInvalidStatus() + ' )')){
 					Boolean main = (a.Id == oscar.Account__c);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.HE));
 				}
@@ -308,6 +304,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			return hierarchy;
 		}
 		set;
+	}
+
+	public String getInvalidStatus(){
+
+		return '\''+AMS_Utils.ACC_S1_NOTACCREDITED + '\'' + ',' + '\'' +  AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING + '\'' + ',' + '\'' + AMS_Utils.ACC_S3_NOTINOPERATION + '\'' + ',' + '\'' + AMS_Utils.ACC_S0_TERMINATED + '\'' + ',' + '\'' + '\'';
+
 	}
 
 	public List<HierarchyItem> hierarchyValues{
@@ -384,47 +386,29 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		System.debug('Performing validations on the hierarchyValues:'+hierarchyValues);
 
-		if(tocList.contains(AMS_Utils.ANG_LOCATION))
-			if(!isJustOneAgencySelected())
-				errorChecks.put(AMS_Utils.ANG_LOCATION, true);
+		if(tocList.contains(AMS_Utils.ANG_LOCATION) && !isJustOneAgencySelected()) errorChecks.put(AMS_Utils.ANG_LOCATION, true);
 
 		if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
-			if(!isJustOneAgencySelected())
-				errorChecks.put(AMS_Utils.ANG_LOCATION_TYPE, true);
-			if(hasTopLocationType(oscar.Account__c))
-				errorChecks.put('Location Type on TOP Agency', true);				 
+			if(!isJustOneAgencySelected()) errorChecks.put(AMS_Utils.ANG_LOCATION_TYPE, true);
+			if(hasTopLocationType(oscar.Account__c)) errorChecks.put('Location Type on TOP Agency', true);				 
 		}
 		
-		if(tocList.contains(AMS_Utils.ANG_VMFR))
-			if(!isAllHierarchySelected())
-				errorChecks.put(AMS_Utils.ANG_VMFR, true);
+		if(tocList.contains(AMS_Utils.ANG_VMFR) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_VMFR, true);
 
-		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY))
-			if(!isAllHierarchySelected())
-				errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
+		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
 			if(oscar.New_parent__c == null){
 				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
 			}else{
-				if(isTerminatedAccount(oscar.New_parent__c))
-					errorChecks.put('Terminated Accounts', true);
-				if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected())
-					errorChecks.put('Orphan Accounts', true);
-				if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c))
-					errorChecks.put('Top Location Type', true);
-				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected() )
-					errorChecks.put('Location Type Change Detected', true);
-				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c) )
-					errorChecks.put('Must include New Parent', true);
-				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
-					errorChecks.put('Multiple Hierarchies', true);
+				if(isTerminatedAccount(oscar.New_parent__c)) errorChecks.put('Terminated Accounts', true);
+				if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected()) errorChecks.put('Orphan Accounts', true);
+				if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c)) errorChecks.put('Top Location Type', true);
+				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected()) errorChecks.put('Location Type Change Detected', true);
+				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
+				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
 
-				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-
-					if(diffDestination(oscar.New_parent__c))
-						errorChecks.put('Mixed types of changes', true);
-				}
+				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
 			}
 		}
 
@@ -436,12 +420,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		//display error messages and stop execution by short-circuiting the if on the save method
-		if(!errors.isEmpty()){
-			for(String error : errors) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, error));
-			return false;
-		}
+		if(errors.isEmpty()) return true;
 
-		return true;
+		for(String error : errors) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, error));
+		return false;
 	}
 
 	@TestVisible private Boolean updateRelatedRecords() {
@@ -483,17 +465,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	// ***********************************
 
 	public void selectMain() {
-		for(HierarchyItem hi : hierarchyValues){
-			if(hi.main){
-				oscar.Account__c = hi.acc.Id;
-			}
-		}
+		for(HierarchyItem hi : hierarchyValues)	if(hi.main)	oscar.Account__c = hi.acc.Id;
 	}
 
 	public PageReference FetchNewParent(){
 
-		if(oscar.New_parent__c != null)
-			newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
+		if(oscar.New_parent__c != null)	newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
 
 		return null;
 	}
@@ -617,7 +594,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return false;
 	}
 
-	@TestVisible public boolean isSingleDestinationHierarchy(Id accountId){
+	public boolean isSingleDestinationHierarchy(Id accountId){
 
 		Set<Id> hierarchies = new Set<Id>();
 

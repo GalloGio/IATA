@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -55,6 +51,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -216,7 +213,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <label>Airline Code</label>
         <length>3</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -572,6 +569,19 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Related_GDP_Address__r.Address_Type__c, &apos;Location&apos;) , Related_GDP_Address__r.Address__c, &apos;&apos;)</formula>
         <label>Location Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type_Code_Interpreted__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Location_Type__r.Code__c = &apos;HE&apos; , &apos;HO&apos;,  IF(Location_Type__r.Code__c = &apos;AE&apos;, &apos;BR&apos;, Location_Type__r.Code__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>LOCTYP Code Value from GDP Reference Table (a41) WHERE HE is HO and AE is BR</inlineHelpText>
+        <label>Location Type Code Interpreted</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1107,6 +1117,28 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>All - No Criteria</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Location_Type_HE_AE</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_Code__c</columns>
+        <columns>Accreditation_Class__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Location_Type_Code_Interpreted__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Parent_GDP_Account_View__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Type__c</field>
+            <operation>equals</operation>
+            <value>Branch Office,Associate Entity,Head Entity</value>
+        </filters>
+        <label>Location Type HE/AE</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Name</label>
         <trackHistory>true</trackHistory>
@@ -1130,4 +1162,5 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <searchResultsAdditionalFields>Accreditation_Class__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

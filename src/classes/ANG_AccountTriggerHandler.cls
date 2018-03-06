@@ -26,11 +26,13 @@ public class ANG_AccountTriggerHandler {
 	// ************************************************************
 
 	public void onBeforeInsert(){
+		adjustShortName();
 		updateRiskStatus();
 	}
 	public void onAfterInsert() {}
 
 	public void onBeforeUpdate(){
+		adjustShortName();
 		updateRiskStatus();
 		manageDowngrades();
 		manageUpgrades();
@@ -39,6 +41,7 @@ public class ANG_AccountTriggerHandler {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
 		updateRHCInformation();
+		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
 	}
 
 	public void onBeforeDelete(){}
@@ -164,12 +167,9 @@ public class ANG_AccountTriggerHandler {
 			if(!changeCodes.isEmpty()) insert changeCodes;
 		}
 		
-			
-		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name = 'RHC Information'];
-
-		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
-		
-		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
+		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
+		List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Risk_Status_Upgrade' AND isActive = true];
+		List<Notification_Template__c> notificationTemplates = [SELECT Id, Name FROM Notification_Template__c WHERE Identifier__c = 'Risk_Status_Upgrade'];
 
 		if(rhcServices.isEmpty() || (emailTemplates.isEmpty() && notificationTemplates.isEmpty())) return;
 
@@ -462,10 +462,27 @@ public class ANG_AccountTriggerHandler {
     				aux = (Integer)attr.Remittances_Per_Year__c;
     				remitFreq = attr.Remittance_Frequency__c;
     			}
-    		}    		
+    		}
     	}
 
     	return remitFreq;
     }
 
+    private void adjustShortName(){
+
+		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
+		for(Account a : triggerNew){
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+				continue;
+
+			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
+
+				if(a.TradeName__c != null && a.TradeName__c != ''){
+					a.Short_Name__c = a.TradeName__c;
+				}else if(a.Name != null && a.Name != ''){
+					a.Short_Name__c = a.Name;
+				}
+			}
+		}
+    }
 }

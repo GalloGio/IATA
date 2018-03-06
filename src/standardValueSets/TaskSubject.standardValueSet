@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Busy Call</fullName>
+        <default>false</default>
+        <label>Busy Call</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Busy</fullName>
+        <default>false</default>
+        <label>Call - Busy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call customer!</fullName>
+        <default>false</default>
+        <label>Call customer!</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - No Answer</fullName>
+        <default>false</default>
+        <label>Call - No Answer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Successful</fullName>
+        <default>false</default>
+        <label>Call - Successful</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Voice Mail</fullName>
+        <default>false</default>
+        <label>Call - Voice Mail</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Wrong Number - Answered</fullName>
+        <default>false</default>
+        <label>Call - Wrong Number - Answered</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Wrong Number - No Line</fullName>
+        <default>false</default>
+        <label>Call - Wrong Number - No Line</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contract elaboration</fullName>
+        <default>false</default>
+        <label>Contract elaboration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FAX</fullName>
+        <default>false</default>
+        <label>FAX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Feedback request</fullName>
+        <default>false</default>
+        <label>Feedback request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow up</fullName>
+        <default>false</default>
+        <label>Follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Needs assessment</fullName>
+        <default>false</default>
+        <label>Needs assessment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Answer</fullName>
+        <default>false</default>
+        <label>No Answer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Post sales follow-up</fullName>
+        <default>false</default>
+        <label>Post sales follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Preparation of product information</fullName>
+        <default>false</default>
+        <label>Preparation of product information</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Presentation preparation</fullName>
+        <default>false</default>
+        <label>Presentation preparation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>R&amp;S reinstatement</fullName>
+        <default>false</default>
+        <label>R&amp;S reinstatement</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send information</fullName>
+        <default>false</default>
+        <label>Send information</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send letter</fullName>
+        <default>false</default>
+        <label>Send letter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Update application</fullName>
+        <default>false</default>
+        <label>Update application</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Voice Mail</fullName>
+        <default>false</default>
+        <label>Voice Mail</label>
+    </standardValue>
+</StandardValueSet>

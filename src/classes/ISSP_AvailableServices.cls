@@ -31,6 +31,7 @@ public with sharing class ISSP_AvailableServices{
     public Boolean redirect {get; set;}
     public Boolean provError {get; set;}
     public Integer failedCount  {get; set;}
+    public Map<String, String> helpTextPortalRoles {get; set;}
 
     Integer count = 0;
 
@@ -40,7 +41,7 @@ public with sharing class ISSP_AvailableServices{
     public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
-                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId, contact.name,
                                     contact.account.ANG_IEP_Status_FF__c,ContactId,
                                     languagelocalekey,ProfileId  
                                     from User where id =: UserInfo.getUserId()];
@@ -53,7 +54,95 @@ public with sharing class ISSP_AvailableServices{
 
     public String IepStatus {get; set;}
 
-    public List<SelectOption> availablePortalServiceRoles {get; set;}    
+    public class SelectOption2 {
+        public String value {get; set;}
+        public String label {get; set;}
+        public String helpText {get; set;}
+
+        public SelectOption2(String value, String label, String helpText) {
+            this.value = value;
+            this.label = label;
+            this.helpText = helpText;
+        }
+    }
+
+    public static Map<String,List<String>> availableRoles;
+
+    public List<SelectOption2> availablePortalServiceRoles {
+        get{
+
+
+            Map<String, Map<Decimal, String>> orderRoles = new Map<String, Map<Decimal, String>>();
+
+
+            availableRoles = new Map<String,List<String>>();
+
+            for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+
+                if(availableRoles.get(role.Connected_App__c) == null) {
+                    availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
+
+                    Map<Decimal, String> aux = new Map<Decimal, String>();
+                    aux.put(role.Order__c, role.Role__c);
+
+                    orderRoles.put(role.Connected_App__c, aux);
+
+                } else {                        
+                    availableRoles.get(role.Connected_App__c).add(role.Role__c);
+
+                    Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
+                    aux.put(role.Order__c, role.Role__c);                        
+                }
+
+            }
+
+            Set<String> availableRolesLst = availableRoles.keySet();
+
+            List<SelectOption2> availablePortalServiceRolesAux = new List<SelectOption2>();
+            
+            Set<String> availableRolesSet = new Set<String>();
+
+            for(String roleConnApp: availableRolesLst){
+
+                if(roleConnApp == this.Serv.recordService.Name){
+
+                    for(String roleStr : availableRoles.get(roleConnApp)){
+                        availableRolesSet.add(roleStr);
+                        //availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
+                    }
+                }
+            }
+            
+
+            if(orderRoles.containsKey(this.Serv.recordService.Name)) {
+
+                availablePortalServiceRolesAux = new List<SelectOption2>();
+
+                Map<Decimal, String> rolesOrderToApply = orderRoles.get(this.Serv.recordService.Name);
+
+                List<Decimal> orders = new List<Decimal>();
+                orders.addAll(rolesOrderToApply.keySet());
+                orders.sort();
+
+                for(Decimal o : orders) {
+
+                    String roleStr = rolesOrderToApply.get(o);
+
+                    if(availableRolesSet.contains(roleStr)) {
+                        availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
+
+                    }
+                }
+
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+
+            } else {
+                availablePortalServiceRoles = availablePortalServiceRolesAux;
+            }
+
+            return availablePortalServiceRoles;
+
+        } set;}    
 
     public String sortExpression {
      get { return sortExp; }
@@ -86,39 +175,64 @@ public with sharing class ISSP_AvailableServices{
     
     public void setSortDirection(String value) {  
         sortDirection = value;
-    }
+    }    
     
     public ISSP_AvailableServices(){
+
+        this.isModalErrorMessageEnable = false;
+
+        this.helpTextPortalRoles = new Map<String, String>();
+
+        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+                String aux = role.Role__c.replaceAll(' ','');
+                String aux2 = aux.replaceAll('-','');
+
+                String helpText = getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+
+                if(helpText == 'NONE') helpText = '';
+
+                this.helpTextPortalRoles.put(role.Role__c, helpText);
+
+            }
+        }
 
         this.iepRoles = new Map<String, String>();
 
         this.redirect = false;
         this.provError = false;
         
+        availableRoles = new Map<String,List<String>>();
+
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
             if(role.Permission_set_SSO__c != null){
                 iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
             }
-        }        
-    
-        //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c from User where id =: UserInfo.getUserId()];
 
-        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;        
 
-        availablePortalServiceRoles = new List<SelectOption>();
-
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'IATA EasyPay (EDENRED)'];
-        
-        availablePortalServiceRoles.add(new SelectOption('', ''));
-        
-        for (Connected_App_Roles__c role : roles) {
-            availablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
+            if(availableRoles.get(role.Connected_App__c) == null)
+                availableRoles.put(role.Connected_App__c , new List<String>{role.Permission_set_SSO__c});
+            else
+                availableRoles.get(role.Connected_App__c).add(role.Permission_set_SSO__c);
 
             if (role.Default_User_Role__c) {
                 this.defaultPortalUserRole = role.Role__c;
             }
-        }         
+        }
+
+        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;
+
     }
+
+    public String getCustomLabel(String labelName) {
+        if(labelName != null && labelName != '') {
+            Component.Apex.OutputText output = new Component.Apex.OutputText();
+            output.expressions.value = '{!$Label.' + labelName + '}';
+            return string.valueOf(output.value);
+        } else {
+            return labelName;
+        }
+    }    
     
     public PageReference initialization() {
         try {
@@ -171,30 +285,50 @@ public with sharing class ISSP_AvailableServices{
                 // If the IEP status is not open and is an admin and the account is HO or HE 
                 if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open') {
                     isIEPAccountEnable = true;                
-                } else if(isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
-                                     (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
+                } else if( 
+
+                    isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
+                             (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
                     isIEPAccountEnable = true;
                 }
 
+                String msgComplement;
+                if(isAdmin) {
+                    if(contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) 
+                        msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator;
+                    else
+                        msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active;
+                } else {
+                    msgComplement = Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active;
+                }
+
+                String aux;
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 } else if (contAcc.Account.Location_Type__c == 'AO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'AO') {
-                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
+                    aux = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
+                    modalErrorMessage = aux.replace('{0}', msgComplement);
                 }
 
                 if (!isIEPAccountEnable) {
                     isModalErrorMessageEnable = true;
+                    if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
+                        modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
+                    }
                 } else {
                     if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
                         modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
                         isModalErrorMessageEnable = true;
+                    } else {
+                        if(contAcc.Account.ANG_IEP_Status_FF__c != ANG_ISSP_PortalServiceHelper.STATUS_OPEN && contAcc.Account.ANG_IEP_Status_FF__c != ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+                            modalErrorMessage = aux.replace('{0}', Label.ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active);
+                            isModalErrorMessageEnable = true;
+                        }
                     }
-                }
-
-                if (!isIEPAccountEnable) {
-                    isModalErrorMessageEnable = true;
                 }
 
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
@@ -339,7 +473,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -367,6 +501,7 @@ public with sharing class ISSP_AvailableServices{
         public boolean addUsersEnable {get; set;}
         public boolean accountNotOpenError {get; set;}
         public String lineErrorMessage {get; set;}
+        public String modalStyle {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin, Boolean isAuthorisedSignatory){
             this.Status = getServiceStatus(inRecord);
@@ -374,6 +509,8 @@ public with sharing class ISSP_AvailableServices{
             this.recordService = inRecord;   
             this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
             this.lineErrorMessage = '';
+
+            this.modalStyle = 'modal-dialog';
 
             if(this.isEasyPayService) {
                 this.addUsersEnable = isAdmin;
@@ -395,6 +532,7 @@ public with sharing class ISSP_AvailableServices{
                 this.useDefaultRole = false;
                 if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
                     this.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                    this.modalStyle = 'modal-dialog modal-lg';
                 } else {
                     this.btnLabel = System.Label.ISSP_New_Service_Request;
                 }
@@ -409,7 +547,8 @@ public with sharing class ISSP_AvailableServices{
                                                                                                     p.Right__c, p.IsSCIMIFG__c, p.Portal_Application__r.Application_icon_URL__c,
                                                                                                     p.Portal_Application__r.Name, p.Portal_Application__c,
                                                                                                     p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,Technical_Provisioning_Status__c, //Mconde
-                                                                                                    p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
+                                                                                                    p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c, 
+                                                                                                    p.Portal_Application__r.Service_Description_Label__c
                                                                                                    From Portal_Application_Right__c p 
                                                                                                    where p.Contact__c =: currentPortalUser.ContactId and 
                                                                                                          p.Portal_Application__c =: inService.Id and
@@ -448,7 +587,8 @@ public with sharing class ISSP_AvailableServices{
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
-                                                        Portal_Application__r.Service_Description__c
+                                                        Portal_Application__r.Service_Description__c,
+                                                        Portal_Application__r.Service_Description_Label__c
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
                                                         AND Right__c = 'Access Granted'];
@@ -485,6 +625,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
                                                         Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        Service_Description_Label__c, 
                                                         ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
@@ -621,9 +762,14 @@ public with sharing class ISSP_AvailableServices{
 
         this.failedCount = uprFailed.size();
 
-        this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
+        this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole && !isModalErrorMessageEnable);
 
         system.debug('XXX Serv : '+Serv);
+
+        //since you have the serv available ...
+
+        availablePortalServiceRoles = null;
+
         return null ;
     }
 
