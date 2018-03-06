@@ -255,7 +255,6 @@
               isValidPhone = true;
 
             }else{
-              // alert("The Business Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code or select the country flag from the drop down.");
               $j('.invalidphone').show();
             }
           }catch(exception){
@@ -289,7 +288,6 @@
                 temp2.value = completeMobileNbr;
 
               }else{
-                //alert("The Mobile Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code or select the country flag from the drop down.");
                 $j('.invalidmobile').show();
                 isValidMobile = false;
               }
@@ -327,7 +325,6 @@
                 temp3.value = completeFaxNbr;
 
               }else{
-                //alert("The Fax Phone number entered is invalid. Please introduce a valid number. Also be sure to indicate a country code or select the country flag from the drop down.");
                 $j('.invalidfax').show();
                 isValidFax = false;
               }
