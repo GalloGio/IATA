@@ -224,6 +224,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public ANG_ProductComparisonHelper helper {get; set;}
+
+    public Boolean flagShowOptOutButton {get; set;}
+    public Boolean isIFAPContact {get; set;}
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -672,6 +675,13 @@ public without sharing class ISSP_AMS_Accreditation {
         selectPageName();
 
         this.helper = new ANG_ProductComparisonHelper('B');
+
+        flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
+            isHOAccredited && 
+            con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH &&
+            !con.Account.ANG_FA_Opt_out__c);
+
+        isIFAPContact = (!con.Financial_Assessment_Contact__c);
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {

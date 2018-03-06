@@ -91,6 +91,14 @@
                         }
                     }
                 }
+
+                function optOut() {
+                    if('{!isIFAPContact}' == 'true') {
+                        console.log('open modal');
+                    } else {
+                        bootbox.alert("{!$Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR}");
+                    }
+                }
         </script>
     
     <div class="container">   
@@ -151,6 +159,7 @@
                     </table>
                 </td>
             </tr>
+
             <tr>
                 <td></td>
                 <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};vertical-align:top;padding-right:20px">
@@ -162,6 +171,14 @@
                     </table>
                 </td>
             </tr>
+
+            <tr style="display:{!IF(flagShowOptOutButton,'','none')};">
+                <td></td>
+                <td>
+                    <input type="button" class="btn btn_iata_primary" onclick="optOut();return false;" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}"/>
+                </td>
+            </tr>
+
                 <tr>
                     <td style="padding-top:20px">
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Agency_Article}" rendered="{!communityName!='CNS'}"/>
@@ -171,10 +188,13 @@
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
                     </td>
             </tr>
+
+
             <tr>
                 <td><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Other_Forms}" rendered="{!isUserAccAccredited}"/></h3></td>
                 <td class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}"/></h3></td>
             </tr>
+
             <tr>
                 <td style="vertical-align:top">
                     <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR();return false;">

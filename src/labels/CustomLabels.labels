@@ -27198,4 +27198,20 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-out of Financial Review button label</shortDescription>
+        <value>Opt-out of Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
+        <value>Only your Agency's IFAP Contact can request to Opt-out of the Financial Review</value>
+    </labels>    
 </CustomLabels>
