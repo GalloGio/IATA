@@ -4,17 +4,6 @@
     <description>Progress Bar Settings</description>
     <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>Field__c</fullName>
-        <description>Name of the field to be used in the SOQL Query</description>
-        <externalId>false</externalId>
-        <label>Field</label>
-        <length>50</length>
-        <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Label_Translatable__c</fullName>
         <externalId>false</externalId>
         <label>Label Translatable</label>
@@ -30,17 +19,6 @@
         <externalId>false</externalId>
         <label>Label</label>
         <length>100</length>
-        <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Object__c</fullName>
-        <description>Object name to use in SOQL Query</description>
-        <externalId>false</externalId>
-        <label>Object</label>
-        <length>50</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -73,7 +51,7 @@
         <description>Value of the field to display the node as with error.</description>
         <externalId>false</externalId>
         <label>ValueError</label>
-        <length>100</length>
+        <length>255</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -84,8 +62,19 @@
         <description>Value of the field to display the node as OK</description>
         <externalId>false</externalId>
         <label>ValueOk</label>
-        <length>100</length>
+        <length>255</length>
         <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValueProgress__c</fullName>
+        <description>Value of the field to display the node as In Progress</description>
+        <externalId>false</externalId>
+        <label>Value Progress</label>
+        <length>255</length>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

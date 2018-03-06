@@ -36,13 +36,23 @@ private class ANG_RiskEventMigrationHelperTest {
 		Account a = createAccount(true);
 		insert a;
 		setAccs.add(a);
-		Agency_Applied_Change_code__c cc 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_FIN 
-												);
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(
+				Account__c = a.id,
+				Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_FIN,
+				Bulletin_Information__c ='branch'
+				);
 		insert cc;
+
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+
+		system.assertEquals(listRisks.size() , 0);
+
+		cc.Bulletin_Information__c='';
+		update cc;
+		
+		helper = new ANG_RiskEventMigrationHelper(setAccs);
+		listRisks = helper.convertChangeCodesToRiskEvents();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT);
@@ -119,10 +129,8 @@ private class ANG_RiskEventMigrationHelperTest {
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT ,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC
-
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR ,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2
 												);
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
@@ -582,78 +590,37 @@ private class ANG_RiskEventMigrationHelperTest {
 
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRW,
 												SIDRA_Case__c = c.id,
-												PreviousReason__c = '61'
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2
 												);
 		listCCs.add(cc);								
 
 		Agency_Applied_Change_code__c cc1 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
 												SIDRA_Case__c = c.id 
 
 												);
 		listCCs.add(cc1);
+
+		Case csl = createCase();
+		insert csl;
 		
-
-		//OSCAR
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Name = 'Oscar');
-		insert oscar;
-
-		Agency_Applied_Change_code__c cc2 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
-												OSCAR__c = oscar.id 
-												);
-		listCCs.add(cc2);
-
-		Agency_Applied_Change_code__c cc3 
-			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												OSCAR__c = oscar.id 
-
-												);
-		listCCs.add(cc3);
-
-
-		//-----------------RVW----------------------------------
-		//SIDRA
-		Agency_Applied_Change_code__c cc4 = new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
-												SIDRA_Case__c = c.id 
-												);
-		listCCs.add(cc4);
-
-		Agency_Applied_Change_code__c cc5 = new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												SIDRA_Case__c = c.id 
-
-												);
-		listCCs.add(cc5);
-
-		//OSCAR
-
 		Agency_Applied_Change_code__c cc6
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
-												OSCAR__c = oscar.id 
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRR,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												SIDRA_Case__c = csl.id 
 												);
 		listCCs.add(cc6);
 
 		Agency_Applied_Change_code__c cc7 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
-												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
-												Reason_Code__c = '61',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC,
-												OSCAR__c = oscar.id 
-
+												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_IRW,
+												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_SC2,
+												SIDRA_Case__c = csl.id 
 												);
 		listCCs.add(cc7);
 

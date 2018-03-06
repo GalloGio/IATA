@@ -187,6 +187,20 @@
         <value>Forecast Risk Properties</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action17</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action17</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action18</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action18</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -638,11 +652,32 @@
         <value>Ticketing Authority</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP38</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP38</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP39</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP39</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP4</shortDescription>
         <value>Application Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP40</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP40</shortDescription>
+        <value>PCI compliance</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP41</fullName>
@@ -787,6 +822,13 @@
         <value>The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
     </labels>
     <labels>
+        <fullName>ANG_Effective_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Effective_Date</shortDescription>
+        <value>Effective date:</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AFP_CashlessMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -798,14 +840,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP CashlessMessage</shortDescription>
-        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GOCash accreditation type</value>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to convert to the GoLite accreditation type</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AFP_CreditCardNoAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AFP_CreditCardNoAccess</shortDescription>
+        <value>Request access to the &lt;a href=&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&gt;IATA Accreditation &amp; Changes&lt;/a&gt; service in order to submit proof of PCI Compliance.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AFP_NoCreditCardMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP AFP NoCreditCardMessage</shortDescription>
-        <value>&lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
@@ -895,7 +944,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -967,7 +1016,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
-        <value>Return to comparison of accreditation type</value>
+        <value>Return to comparison of Accreditation Types</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
@@ -1111,7 +1160,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Entity&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Entity&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
     &lt;br/&gt;
     &lt;br/&gt;
     Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
@@ -1121,10 +1170,24 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
 &lt;br/&gt;
 &lt;br/&gt;
 Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</shortDescription>
+        <value>In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</shortDescription>
+        <value>&lt;br/&gt;&lt;br/&gt;As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
@@ -1241,7 +1304,23 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature1</shortDescription>
-        <value>Feature 1</value>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature10</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature10</shortDescription>
+        <value>Feature 10</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature10Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
+        <value>Feature 10 Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -1257,7 +1336,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2</shortDescription>
-        <value>Feature 2</value>
+        <value>IATA EasyPay</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature2Tooltip</fullName>
@@ -1273,7 +1352,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature3</shortDescription>
-        <value>Feature 3</value>
+        <value>Cash</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3Tooltip</fullName>
@@ -1289,7 +1368,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature4</shortDescription>
-        <value>Feature 4</value>
+        <value>Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature4Tooltip</fullName>
@@ -1305,7 +1384,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature5</shortDescription>
-        <value>Feature 5</value>
+        <value>Yearly Financial Assessment</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature5Tooltip</fullName>
@@ -1316,12 +1395,76 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Feature 5 Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature6</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature6</shortDescription>
+        <value>Quarterly Assessment of Parent</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature6Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature6Tooltip</shortDescription>
+        <value>Feature 6 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature7</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature7</shortDescription>
+        <value>Chargeback Insurance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature7Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature7Tooltip</shortDescription>
+        <value>Feature 7 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature8</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature8</shortDescription>
+        <value>Financial Security / Default Insurance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature8Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature8Tooltip</shortDescription>
+        <value>Feature 8 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature9</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature9</shortDescription>
+        <value>Parent Guarantee Incorporated into PSAA</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature9Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature9Tooltip</shortDescription>
+        <value>Feature 9 Tooltip</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle1</shortDescription>
-        <value>IATA Online Accreditation Agency</value>
+        <value>IATA Online Agency Accreditation</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle2</fullName>
@@ -1338,6 +1481,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonViewHere</shortDescription>
         <value>View here</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductMulticountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductMulticountry</shortDescription>
+        <value>Multicountry</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithCash</fullName>
@@ -1551,6 +1702,30 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
     </labels>
     <labels>
+        <fullName>ANG_PCI_COMPLIANT</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_PCI_COMPLIANT</shortDescription>
+        <value>PCI compliance</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTORE_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTORE_FOP</shortDescription>
+        <value>Restore Forms of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ANG_RESTRICT_FOP</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RESTRICT_FOP</shortDescription>
+        <value>Restrict Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>ANG_RHC_Accreditation_ModelTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1572,11 +1747,40 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>RHC HUB Current Usage Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_RHC_RHCAmountTooltip</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_RHC RHC Amount Tooltip</shortDescription>
+        <value>RHC Amount Tooltip</value>
+    </labels>
+    <labels>
         <fullName>ANG_RHC_RiskStatusTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
         <value>RHC Risk Status Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_VR_SELECTED_CODES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_VR_SELECTED_CODES</shortDescription>
+        <value>You have requested the voluntary relinquishment for the following IATA Codes:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish only your Agency&apos;s Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Voluntary_Relinquishment_to_NOC_Legacy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Voluntary_Relinquishment_to_NOC_Legacy</shortDescription>
+        <value>Please submit a &lt;a href=&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&gt;Notice of Change&lt;/a&gt; if you wish to relinquish only your Agency&apos;s Head Office</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -8720,7 +8924,15 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
-        <value>Compare Accreditation types</value>
+        <value>Compare Accreditation Types</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
+        <value>Click here to compare the Accreditation Types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
@@ -10629,7 +10841,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
-        <value>1. Accreditation type</value>
+        <value>1. Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -12477,6 +12689,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>* Type of Operation</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_PCI</shortDescription>
+        <value>A. IATA Code Selection</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -12547,6 +12767,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 Instructions</shortDescription>
         <value>In order to complete your application, you will need to provide the following documents (requested at the end of the application).  Please ensure that you have them available.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step2_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step2_PCI</shortDescription>
+        <value>B. Upload File</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step2_ProgressBar</fullName>
@@ -13378,6 +13606,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Owned by OtherOrg Branch</shortDescription>
         <value>If your travel agency is owned by an organization other than the head office mentioned above, answer the following with respect to the parent organization:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_PCI</shortDescription>
+        <value>C. Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_PersonModal_CheckBoxes</fullName>
@@ -14452,11 +14688,35 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ADMIN_TO_AUTHORIZED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ADMIN_TO_AUTHORIZED</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos; href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_AccreditationsAndChangesDescription</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditations and changes description</shortDescription>
+        <value>This service enables you to apply for a new IATA Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Assoc_Entity</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Assoc_Entity</shortDescription>
         <value>New Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Authorized_Signatory</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Branch_Office_address_details</fullName>
@@ -14466,12 +14726,51 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Associate Entity address details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Click_Here_PCI</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Click_Here_PCI</shortDescription>
+        <value>Click here to continue with PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Click_Here_VR</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Click_Here_VR</shortDescription>
+        <value>Click here to continue with Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Country_Req</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Country_Req</shortDescription>
         <value>View Country Requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ENTIRE_HIERARCHY</shortDescription>
+        <value>Entire Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Not_Past</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Not_Past</shortDescription>
+        <value>The Effective Date cannot be in the past.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Effective_Date_Of_Change</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Effective_Date_Of_Change</shortDescription>
+        <value>Please select an Effective Date that is not in the past.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Email_AE_Subject</fullName>
@@ -14495,6 +14794,44 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Agency Accreditation Head Entity GoLite Draft Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Enabel_Credit_Card_Codes</fullName>
+        <categories>PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Enabel_Credit_Card_Codes</shortDescription>
+        <value>Enable Credit Card Form of Payment for the Code(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_GenericError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic error message</shortDescription>
+        <value>An error has occurred. Please contact support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_TO_PROVIDE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_TO_PROVIDE</shortDescription>
+        <value>Select the IATA Code(s) for which proof of PCI Compliance is to be provided:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Iata_Codes_Relinquish</fullName>
+        <categories>PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Iata_Codes_Relinquish</shortDescription>
+        <value>IATA Codes to relinquish</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Least_One_Branch</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Least_One_Branch</shortDescription>
+        <value>Please select at least one Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14507,6 +14844,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>Must Add Users To Service</shortDescription>
         <value>At least one contact must be selected</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ONE_OR_MORE_AE</shortDescription>
+        <value>One or more Associate Entities</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
@@ -14530,6 +14874,136 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Passenger Sales</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_One_or_More</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_One_or_More</shortDescription>
+        <value>One or more Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_Choose_IATA_Code</shortDescription>
+        <value>Accredited IATA Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_Compliance</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_Compliance</shortDescription>
+        <value>PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PCI_Selected_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PCI_Selected_IATA_Code</shortDescription>
+        <value>* Selected IATA Code(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PROOF_OF_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_PROOF_OF_PCI</shortDescription>
+        <value>Proof of PCI Compliance for the following IATA Codes:.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the Company Administration -&gt; Contacts section</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_AgencyReadOnly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Agency Read Only</shortDescription>
+        <value>&lt;ul&gt;&lt;li&gt;Read only access to the Master and/or Sub-wallet(s) assigned to the user&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_IEPAdmin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
+        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates direct funded Wallet(s)&lt;/li&gt;&lt;li&gt;Generates and manages indirect funded Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s), including responding to user access requests&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers funds for Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
+        <value>&lt;ul&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;li&gt;Allowed to Add funds from the registered Bank Account to the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Withdraw funds from the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Transfer funds between the Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages users&apos; access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
+        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer”&apos; IATA EasyPay users&apos; access and Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from the assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
+        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompAnnualFees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
+        <value>Annual fees for 2018</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>All application fees are refundable, in the event accreditation is not achieved:
+Small – up to USD 200.000 gross annual sales
+Medium – USD 200.001 – USD 2.000.000 gross annual sales
+Large – more than USD 2.000.000 gross annual sales</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ProdCompCostTooltipConvert</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
+        <value>The cost of converting from one Accreditation Type to another is as follows.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_RHC_InformationDescription</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RHC Information description</shortDescription>
+        <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_RHC_Risk_Event_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Risk Event Status</shortDescription>
+        <value>Risk Event Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14542,6 +15016,21 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</shortDescription>
         <value>SECTION 2 - Identification of Agency for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_SearchContacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search for Contacts String</shortDescription>
+        <value>Search for Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
+        <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_HE</fullName>
@@ -14566,6 +15055,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Full Address of the Head Entity for which Application for Approval is made</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Step1_VR</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Step1_VR</shortDescription>
+        <value>B. Submit to IATA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14578,6 +15075,53 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
         <value>Thank you for submitting your Accreditation application for your Associate Entity.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_VR_Disclaimer</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Voluntary Relinquishment Disclaimer</shortDescription>
+        <value>&lt;p&gt;I hereby voluntarily relinquish IATA Accreditation in respect to the Approved Locations as listed above.&lt;p/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Voluntary_Relinquishment</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Voluntary_Relinquishment</shortDescription>
+        <value>Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_WISH_TO_RELINQUISH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_WISH_TO_RELINQUISH</shortDescription>
+        <value>I wish to relinquish:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_choose_what_to_relinquish</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_choose_what_to_relinquish</shortDescription>
+        <value>Please choose what you want to relinquish.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_proof_PCI</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Other_Changes</shortDescription>
+        <value>Proof of PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_proof_PCI_Info</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Other_Changes_Info</shortDescription>
+        <value>PCI Compliance is a pre-requisite to enable the Credit Card Form of Payment for an IATA Code.</value>
     </labels>
     <labels>
         <fullName>ISSP_AN_Step1_AE_Full_Address</fullName>
@@ -16785,6 +17329,22 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for creating your draft Notice of Change form.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_PCI</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_PCI</shortDescription>
+        <value>Thank you for creating your draft proof of PCI compliance online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Draft_Change_Process_VR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Change_Process_VR</shortDescription>
+        <value>Thank you for creating your draft Voluntary Relinquishment online form.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
         <categories>ISSP, AMS, Email</categories>
         <language>en_US</language>
@@ -17143,7 +17703,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>Note that this is a system generated message. Please do not respond to this email.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -18989,7 +19549,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
-        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
@@ -19030,7 +19590,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGSA_CNS</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
@@ -19050,7 +19610,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
         <value>No Company was found for these search criteria. Please modify your search and try again.
-&lt;br/&gt;&lt;br/&gt; 
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
@@ -19250,6 +19810,38 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>c</shortDescription>
         <value>Invalid VAT Number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</shortDescription>
+        <value>Agency Codes - Proof of PCI Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PCI_Agency_Codes_VR</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Agency_Codes_VR</shortDescription>
+        <value>Agency Codes - Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PCI_Case_Submited</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
+        <value>Thank you for submitting your self-declaration or PCI DSS Certificate.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PCI_Least_One_IATA_CODE</fullName>
+        <categories>ISSP,PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PCI_Least_One_IATA_CODE</shortDescription>
+        <value>Please select at least one IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_PCI_Logout</fullName>
@@ -19744,7 +20336,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP RHC HUB RP</shortDescription>
-        <value>Risk Profile</value>
+        <value>Accreditation and Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
@@ -21207,6 +21799,14 @@ CNS Customer Services</value>
         <value>These users cannot be inactivated because they currently have access to the following services:</value>
     </labels>
     <labels>
+        <fullName>ISSP_VR_Case_Submited</fullName>
+        <categories>ISSP, PCI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_VR_Case_Submited</shortDescription>
+        <value>Thank you for submiting the request for Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Version</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -21243,6 +21843,13 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_View_PWC_Lithuania_DC</shortDescription>
         <value>PwC Lithuania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_Portal_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Add FAP Contact</shortDescription>
+        <value>View all Users for this service</value>
     </labels>
     <labels>
         <fullName>ISSP_View_PwC_Argentina_DC</fullName>
@@ -21525,7 +22132,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_generalError_CNS</shortDescription>
-        <value>It is not possible to finalize your registration process. 
+        <value>It is not possible to finalize your registration process. 
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal please contact us at Tel: 786-413-1000</value>
     </labels>
@@ -26298,6 +26905,16 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>label regular price</shortDescription>
         <value>regular price</value>
+    </labels>
+    <labels>
+        <fullName>n</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0} 
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
     </labels>
     <labels>
         <fullName>noreplyEmail</fullName>
