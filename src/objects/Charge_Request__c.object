@@ -66,6 +66,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Case_subject__c</fullName>
+        <description>Formula to get the Subject field from the parent Case</description>
+        <externalId>false</externalId>
+        <formula>Local_Charge_Request__r.Subject</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case subject</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
         <label>Country ISO Code</label>
@@ -827,6 +840,20 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to IATA ISO Country to replace old picklist Country_ISO_Code__c</description>
+        <externalId>false</externalId>
+        <label>ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Charge Requests</relationshipLabel>
+        <relationshipName>Charge_Requests</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>IATA_Membership__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The IATA membership list can be found at the following link : http://www.iata.org/about/members/Pages/airline-list.aspx</inlineHelpText>
@@ -877,6 +904,18 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>ISO_Country_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Local_Charge_Request__c</fullName>

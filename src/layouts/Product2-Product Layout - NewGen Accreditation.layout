@@ -37,6 +37,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_HE_Annual_Fees__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_HE_Application_Registration_Fees__c</field>
             </layoutItems>
         </layoutColumns>
@@ -62,6 +66,10 @@
         <editHeading>true</editHeading>
         <label>Associate Entity(s)</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_AE_Annual_Fees__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_AE_Application_Registration_Fees__c</field>

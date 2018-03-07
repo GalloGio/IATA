@@ -119,10 +119,20 @@
         <label>Send To Zuora Listener</label>
     </fieldSets>
     <fields>
+        <fullName>ANG_AE_Annual_Fees__c</fullName>
+        <externalId>false</externalId>
+        <label>AE Annual Fees</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_AE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for AEs</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -133,7 +143,7 @@
         <fullName>ANG_AE_Fees_Additional_Locations__c</fullName>
         <description>N/A. Placeholder</description>
         <externalId>false</externalId>
-        <label>Any Additional Locations</label>
+        <label>Additional locations/codes beyond 25</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -144,7 +154,7 @@
         <fullName>ANG_AE_Fees_First_10_locations__c</fullName>
         <description>AE: Annual fees for first 20 locations</description>
         <externalId>false</externalId>
-        <label>First 10 locations</label>
+        <label>First 10 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -155,7 +165,7 @@
         <fullName>ANG_AE_Fees_Next_15_Locations__c</fullName>
         <description>AE: Annual fees for Next 15 locations</description>
         <externalId>false</externalId>
-        <label>Next 15 locations</label>
+        <label>11-25 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -199,7 +209,7 @@
         <fullName>ANG_HE_AnnualFees_Large_Agents__c</fullName>
         <description>HE: Annual fees for large agents</description>
         <externalId>false</externalId>
-        <label>Large agents</label>
+        <label>Large Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -210,7 +220,7 @@
         <fullName>ANG_HE_AnnualFees_Medium_Agents__c</fullName>
         <description>HE: Annual fees for medium agents</description>
         <externalId>false</externalId>
-        <label>Medium agents</label>
+        <label>Medium Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -229,10 +239,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_HE_Annual_Fees__c</fullName>
+        <externalId>false</externalId>
+        <label>HE Annual Fees</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_HE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for new HE</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13304,6 +13324,18 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS-Fraud %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS-Tools %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -13325,6 +13357,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>ID Cards%2FTIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13372,6 +13408,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PBI %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -13401,6 +13441,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO %28SFO Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
