@@ -118,7 +118,7 @@
 
                 <p>
                   <span>
-                    <apex:outputText escape="false" value="{!$Label.ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK}"/>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK}"/>
                   </span>
                 </p>
 
