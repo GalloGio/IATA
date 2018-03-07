@@ -69,12 +69,9 @@ public with sharing class EComProduct_DTO
         ProductName = prod.Name;
         ProductNumber = prod.SAP_Material_Number__c;
         ProductCategory = mapPickList_Label.get('Category').get(prod.Line_of_Business__c);
-        system.debug('susana prod.IEC_Product_Information__c : '+prod.IEC_Product_Information__c);
         // Special handling required for the GDP products to retrieve information from different location
         ProductDesc = (prod.IEC_Product_Information__c == null) ? prod.Description : prod.IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c;
         ProductShortDesc = (prod.IEC_Product_Information__c == null) ? prod.Short_Description__c : prod.IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c;
-        system.debug('susana ProductDesc : '+ProductDesc);
-        system.debug('susana ProductShortDesc : '+ProductShortDesc);
         ProductInfoId = prod.IEC_Product_Information__c;
         ProductRatePlanInfoId = prod.IEC_Product_Rate_Plan_Information__c;
 
