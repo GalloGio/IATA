@@ -657,7 +657,7 @@ function buildFunctionCall(func, argList){
             picklist.append(new Option("-- None --", ""));
             picklist.append(new Option("Yes", "Yes"));
             picklist.append(new Option("No", "No"));
-            picklist.append(new Option("Nil CC", "Nil CC"));            
+            picklist.append(new Option("Nil CC", "Nil CC"));           
         }
     }
     /*** AMSU-113 End ***/
