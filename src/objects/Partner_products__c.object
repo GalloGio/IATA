@@ -445,6 +445,119 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Partner Products</pluralLabel>
+    <recordTypes>
+        <fullName>TIP_Product</fullName>
+        <active>true</active>
+        <label>TIP Product</label>
+        <picklistValues>
+            <picklist>PP_Accepted_transactions__c</picklist>
+            <values>
+                <fullName>Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Refund</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Category__c</picklist>
+            <values>
+                <fullName>CONSUMER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORPORATE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Form_of_payment__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Pay_in_model__c</picklist>
+            <values>
+                <fullName>Pay Later</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepaid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_Product_Network_type__c</picklist>
+            <values>
+                <fullName>CLOSED_LOOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OPEN_LOOP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_guarantee__c</picklist>
+            <values>
+                <fullName>COMMERCIAL_DISPUTE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FRAUD_DISPUTE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Payment_network__c</picklist>
+            <values>
+                <fullName>Amex %28AX%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Diners %28DC%2FDS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MasterCard %28CA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UATP %28TP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Visa %28VI%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_VAN_type__c</picklist>
+            <values>
+                <fullName>Multi Use Van</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Single Use VAN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
