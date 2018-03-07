@@ -27213,5 +27213,24 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
         <value>Only your Agency's IFAP Contact can request to Opt-out of the Financial Review</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title in the modal window to opt out the financial review</shortDescription>
+        <value>Request to Opt-Out of Financial review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
+        <value>You are about to opt out the financial review. You must reconsider your choice...
+We strongly advise you to remain with us primarily because you can't breathe under watter or fly.
+We might have to make you a proposal you can not refuse, and the proposal will be delivered by our associates Tessio e Clemenza.
+You Shall not opt out!!!!</value>
+    </labels>
 </CustomLabels>

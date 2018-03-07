@@ -227,6 +227,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Boolean flagShowOptOutButton {get; set;}
     public Boolean isIFAPContact {get; set;}
+    public Date DateStringProperty{get;set;}   
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -681,7 +682,7 @@ public without sharing class ISSP_AMS_Accreditation {
             con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH &&
             !con.Account.ANG_FA_Opt_out__c);
 
-        isIFAPContact = (!con.Financial_Assessment_Contact__c);
+        isIFAPContact = (con.Financial_Assessment_Contact__c);
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {

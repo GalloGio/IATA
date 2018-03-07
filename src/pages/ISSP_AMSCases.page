@@ -5,6 +5,7 @@
            standardStylesheets="false"
            applyBodyTag="false"
            applyHtmlTag="false"
+           docType="html-5.0"
            >
 <html>
         <style>
@@ -22,7 +23,15 @@
         </style>
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
         <body>
+
         <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.datePickerFix)}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
+
         <script type="text/javascript">
                 var $j = jQuery.noConflict();
                 var typeAccredSelected = '';
@@ -94,11 +103,36 @@
 
                 function optOut() {
                     if('{!isIFAPContact}' == 'true') {
-                        console.log('open modal');
+                        $j('#ModalOptOut').modal('toggle');
                     } else {
                         bootbox.alert("{!$Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR}");
                     }
                 }
+
+                function modalModalOptOutClose() {
+                    $j('#ModalOptOut').modal('toggle');
+                }
+
+                function doOptOut() {
+                    $j('#ModalOptOut').modal('toggle');
+                }
+
+                function showFuturePastDates(){             
+                    datePickerYearsAdded = false;                               
+                    var futureYearsToAdd = 20;  
+                    var pastYearsToAdd = 5;                         
+                    if (!datePickerYearsAdded) {
+                        var select = document.getElementById('calYearPicker');
+                        if (!select) return;
+                        select.innerHTML = '';
+                        var startYear = new Date().getFullYear() - pastYearsToAdd; ;
+                        for (var year = startYear; year < startYear + futureYearsToAdd + 1; year++) {
+                            select.options[select.options.length] = new Option(year, year);
+                        }
+                        datePickerYearsAdded = true;
+                    }
+                }
+
         </script>
     
     <div class="container">   
@@ -173,7 +207,33 @@
             </tr>
 
             <tr style="display:{!IF(flagShowOptOutButton,'','none')};">
-                <td></td>
+                <td>
+<!--
+                    Date: <apex:input type="date" value="{!DateStringProperty}"/>
+                -->
+                    <!--
+                    <span class="dateInput dateOnlyInput">  
+                               <apex:inputText id="inputFieldId" size="12" value="{!DateStringProperty}" style="width:72px;text-align:center;" onclick="DatePicker.pickDate(false, this, false);" onfocus="DatePicker.pickDate(false, this, false);"/>  
+                          </span>
+
+-->
+                    <!--
+                    Date: <apex:inputText value="{!newForm.Effective_Date_Of_Change__c}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> 
+                -->
+                <div class="form-group">
+                                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
+                                        {!$Label.ANG_Effective_Date}  
+                                    </label>
+                                    <div class="col-lg-9" style="padding-top:7px"> 
+                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
+                                        
+                                    </div>
+                    </div>
+                    
+
+
+
+                </td>
                 <td>
                     <input type="button" class="btn btn_iata_primary" onclick="optOut();return false;" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}"/>
                 </td>
@@ -278,6 +338,71 @@
             </div>
           </apex:outputPanel>
         </div>
+
+        <div class="modal" id="ModalOptOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">{!$Label.ISSP_ANG_OPT_OUT_MODAL_TITLE}</h4>
+              </div>
+              <div class="modal-body">
+                <apex:outputText value="{!$Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT}"></apex:outputText>
+
+                <br></br>
+                <br></br>
+
+
+
+
+
+                                <div class="form-group">                                    
+                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
+                                        * {!$Label.ANG_Effective_Date}  
+                                    </label>
+                                    <div class="col-lg-9" style="padding-top:7px"> 
+                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>                                        
+                                    </div>
+                                </div>
+
+                <!--Date: <apex:inputText value="{!optOutDate}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> -->
+
+                <!--
+
+                <apex:pageBlock >
+                    <apex:pageBlockSection>
+                        <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
+                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            -->
+
+
+                <!--div class="form-group">                               
+                    <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
+                    <apex:inputField value="{!optOutDate}" onclick="showFuturePastDates();"/>
+                </div-->
+
+                <br></br>
+                <br></br>
+
+              </div>
+              <div class="modal-footer">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">                    
+                      <button type="button" onclick="modalModalOptOutClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" onclick="doOptOut()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                    </div>
+                  </div>
+                </div>                
+              </div>          
+            </div>
+          </div>
+        </div>        
      
    </apex:form>
    </div>
