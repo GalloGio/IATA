@@ -1724,6 +1724,14 @@ public without sharing class ISSP_Case {
         }
     }
     
+    public String getCaseContactName() {
+        try {
+            return [SELECT Name FROM Contact WHERE Id = :newCase.contactId].Name;
+        } catch (Exception e) {
+            return '';
+        }
+    }
+    
     public list<CaseHistory> getListCaseHistory() {
         list<String> listExcluded;
         try {

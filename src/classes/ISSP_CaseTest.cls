@@ -736,9 +736,12 @@ public class ISSP_CaseTest {
             cttr.getListCaseHistory();
             System.assertEquals(true,cttr.getIsInterDPCCase());
             cttr.getAccountConcernedName();
+            cttr.getCaseContactName();
             cttr.newCase.Account_Concerned__c = null;
+            cttr.newCase.ContactId = null;
             update cttr.newCase;
             cttr.getAccountConcernedName();
+            cttr.getCaseContactName();
         }
         Test.stopTest();
     }

@@ -935,7 +935,7 @@
                                             <apex:outputLink value="/ISSP_Account?id={!newCase.AccountId}&mid=M1S2">{!newCase.Account.Name}</apex:outputLink>
                                         </apex:outputText>
                                          -->
-                                        <apex:outputfield value="{!newCase.Contact.Name}" label="{!$Label.ISSP_Contact}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
+                                        <apex:outputText value="{!CaseContactName}" label="{!$Label.ISSP_Contact}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
 
                                         <apex:outputfield value="{!newCase.SuppliedEmail}" rendered="{!caseType='DPCSR'}" />
                                         <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
