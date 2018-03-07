@@ -3232,7 +3232,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <fields>
         <fullName>Proof_of_payment_received__c</fullName>
         <externalId>false</externalId>
-        <label>Confirm Payment Received</label>
+        <label>Payment Status Updated</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
