@@ -3,17 +3,6 @@
     <customSettingsType>List</customSettingsType>
     <description>Progress Bar Settings</description>
     <enableFeeds>false</enableFeeds>
-	<fields>
-        <fullName>Field__c</fullName>
-        <description>Name of the field to be used in the SOQL Query</description>
-        <externalId>false</externalId>
-        <label>Field</label>
-        <length>50</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>Label_Translatable__c</fullName>
         <externalId>false</externalId>
@@ -31,17 +20,6 @@
         <label>Label</label>
         <length>100</length>
         <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-	<fields>
-        <fullName>Object__c</fullName>
-        <description>Object name to use in SOQL Query</description>
-        <externalId>false</externalId>
-        <label>Object</label>
-        <length>50</length>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

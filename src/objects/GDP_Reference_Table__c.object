@@ -249,6 +249,7 @@
         <fullName>Class_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>Code__c</columns>
