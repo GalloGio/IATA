@@ -3330,26 +3330,25 @@ public class AMS_OSCARTriggerHandler {
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
         Map<Id, AMS_OSCAR__c> newMap = (Map<Id,AMS_OSCAR__c>) Trigger.newMap;
 
-        Set<Id> oscarsToProcess = new Set<Id>();
+        Set<Id> oscarCaseIdToProcess = new Set<Id>();
 
         for(AMS_Oscar__c oscar: newMap.values()){
 
-            if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed')
-                oscarsToProcess.add(oscar.Id);
+            if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed' && oscar.Oscar_Communication_Case_Id__c != null)
+                oscarCaseIdToProcess.add(oscar.Oscar_Communication_Case_Id__c);
 
         }
 
+        if(oscarCaseIdToProcess.isEmpty())
+            return;
+        
         List<Case> casesToUpdate = new List<Case>();
 
-        if(oscarsToProcess.isEmpty())
-            return;
-
-        List<Case> casesToProcess = [Select Id , Status, OSCAR__c from Case where OSCAR__c in :oscarsToProcess and RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP];
+        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
         
-        for(Case c: casesToProcess){
-            if(c.Status != 'Closed Opt-out'){
-                c.Status = 'Closed Opt-out';
-                casesToUpdate.add(c);
+        for(Case c: oscarCasesToProcess){
+            if(c.Parent.Status != 'Closed Opt-out'){
+                casesToUpdate.add(new Case(Id = c.ParentId, Status = 'Closed Opt-out'));
             }
         }
 
