@@ -1,9 +1,9 @@
 public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
     public static final Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
-    public static final Integer MAX_SEARCH_ELEMENTS = 6000;
+    public static final Integer MAX_SEARCH_ELEMENTS = 5000;
 
-    public WrapperFilter filter {get;set;}    
+    public WrapperFilter filter {get;set;}
 
     public Map<String,IATA_ISO_Country__c> mCountries;
     public List<String> dailyCountry {get; set;}
@@ -17,16 +17,14 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public Boolean isBatchFinished {get;set;}
     public Boolean isPollerActive {get;set;}
     public Boolean showResults {get;set;}
-    public Id batchId {get;set;}
-    public Map<Id, AccountWrapper> mapAccounts {get;set;}
-    public List<AccountWrapper> lstAccountsWrapper {
+    public Boolean tooMuchResults {
         get {
-            return mapAccounts.values();
+            return srw.totalAccounts > MAX_SEARCH_ELEMENTS;
         }
         set;
     }
-    public Map<Id, String> mapAccountToError {get;set;}
-    public String selectedIds {get;set;}
+    public Id batchId {get;set;}
+    public SearchResultWrapper srw {get;set;}
 
     public AMS_PCI_Compliant_Mass_OSCAR_CreationCtr() {
     	dailyCountry = new List<String>();
@@ -36,62 +34,59 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         isBatchFinished = false;
         isPollerActive = false;
         showResults = false;
-        mapAccounts = new Map<Id, AccountWrapper>();
-        mapAccountToError = new Map<Id,String>();       
+        srw = new SearchResultWrapper();
+    }
+
+    public class SearchResultWrapper {
+        public Map<String, List<Account>> mapCountriesAccounts {get;set;}
+        public Map<String, Integer> mapCountriesErrors {get;set;}
+        public Integer totalErrors {
+            get {
+                Integer total = 0;
+                for(Integer i : mapCountriesErrors.values()) {
+                    total += i;
+                }
+                return total;
+            }
+            set;
+        }
+        public Integer totalAccounts {
+            get {
+                Integer total = 0;
+                for(List<Account> accs : mapCountriesAccounts.values()) {
+                    if(accs != null) {
+                        total += accs.size();
+                    }
+                } 
+                return total;
+            }
+            set;
+        }
+
+        public SearchResultWrapper() {
+            this.mapCountriesAccounts = new Map<String, List<Account>>();
+            this.mapCountriesErrors = new Map<String, Integer>();
+        }
     }
 
     public PageReference createPCIOscar() {
         batchStartTime = Datetime.now();
         isPollerActive = true;
         Set<Account> filteredAccounts = new Set<Account>();
-        system.debug('selectedIds: ' + selectedIds);
-        
-        for(AccountWrapper accW : lstAccountsWrapper) {
-            if(accW.selected) {
-                filteredAccounts.add(accW.accountRecord);
-            }
+        for(List<Account> accs : srw.mapCountriesAccounts.values()) {
+            filteredAccounts.addAll(accs);
         }
 
         if(filteredAccounts.isEmpty()) {
             isPollerActive = false;
             return null;
         }
-        
-        batchClass = new AMS_PCI_Complaint_Batch(1, new Set<String>(this.filter.country), 
-            filteredAccounts.size() == lstAccountsWrapper.size() && filteredAccounts.size() != 0  ? null : filteredAccounts);
-        batchId = Database.executeBatch(batchClass, 1);
-        isBatchRunning = true;
-        return null;
-    }
 
-    public PageReference checkBatchStatus() {
-        if(batchId != null) {
-            system.debug('batchClass: ' + batchClass);
-            AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
-            isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
-            isBatchFinished = !isBatchRunning;
-            if(isBatchFinished) {
-                checkLogs();
-                isPollerActive = false;
-                searchCases();
-            }
-        }
-        return null;
-    }
+       batchClass = new AMS_PCI_Complaint_Batch(1, null, filteredAccounts);
+       batchId = Database.executeBatch(batchClass, 1);
+       isBatchRunning = true;
 
-    public void checkLogs() {
-         List<Technical_Logs__c> logs = [SELECT Status__c, Log__c 
-                                        FROM Technical_Logs__c 
-                                        WHERE CreatedDate >= :batchStartTime AND Record__c = :this.batchId];
-
-        for(Technical_Logs__c log : logs) {
-            mapAccountToError.put(log.Status__c, log.Log__c);
-        }
-    }
-
-    public PageReference searchPreview() {
-        searchAccounts();
-        return null;
+       return null;
     }
 
     public void searchAccounts() {
@@ -116,167 +111,62 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         query +=       ' LIMIT ' + (MAX_SEARCH_ELEMENTS + 1);
 
         List<Account> accounts = (List<Account>) Database.query(query);
+        srw = new SearchResultWrapper();
         for(Account acc : accounts) {
-            mapAccounts.put(acc.Id, new AccountWrapper(acc));
+            List<Account> accs = srw.mapCountriesAccounts.get(acc.IATA_ISO_Country__r.Name);
+            
+            if(accs == null) {
+                accs = new List<Account>();
+                srw.mapCountriesAccounts.put(acc.IATA_ISO_Country__r.Name, accs);
+                srw.mapCountriesErrors.put(acc.IATA_ISO_Country__r.Name, 0);
+            }
+
+            accs.add(acc);
         }
 
-        if(accounts.size() > MAX_SEARCH_ELEMENTS) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,
-                    'Your search criteria result exceeds the limit of number of records (' + MAX_SEARCH_ELEMENTS + ').' +
-                    'Try to apply more filters to reduce the number of records or process your request in multiple sessions'));
-        }
 
-        showResults = accounts.size() <= MAX_SEARCH_ELEMENTS;
-
-        searchContacts(accounts);
+        showResults = true;
     }
 
-    public void searchContacts(List<Account> accounts) {
+    public PageReference checkBatchStatus() {
+        if(batchId != null) {
+            system.debug('batchClass: ' + batchClass);
+            AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
+            isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
+            isBatchFinished = !isBatchRunning;
+            if(isBatchFinished) {
+                checkLogs();
+                isPollerActive = false;
+            }
+        }
+        return null;
+    }
+
+    public void checkLogs() {
+         List<Technical_Logs__c> logs = [SELECT Status__c, Log__c 
+                                        FROM Technical_Logs__c 
+                                        WHERE CreatedDate >= :batchStartTime AND Record__c = :this.batchId];
+
+
         Set<Id> accountIds = new Set<Id>();
-        Map<Id, Map<String, Contact>> mapContacts = new Map<Id, Map<String, Contact>>();
-        for(Account acc : accounts) {
-            accountIds.add(acc.Id);
-            if(acc.Location_Type__c != 'HO' && acc.Location_Type__c != 'AO' && !String.isBlank(acc.Top_Parent__c)) {
-                accountIds.add(acc.Top_Parent__c);
-                system.debug('top parent: ' + acc.Top_Parent__c);
-            }   
+        for(Technical_Logs__c log : logs) {
+            accountIds.add(log.Status__c);
         }
 
-        String query = 'SELECT Id, Name, AccountId, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c ' +
-                       'FROM Contact ' +
-                       'WHERE AccountId IN :accountIds AND IsEmailBounced = false AND ' +
-                       ' (BSP_CASS_Payment_contact__c = true OR Financial_Assessment_Contact__c = true OR User_Portal_Status__c = \'Approved Admin\')';
+        List<Account> accs = [SELECT Id, IATA_ISO_Country__r.Name FROM Account WHERE Id IN :accountIds];
 
-        List<Contact> contacts = (List<Contact>) Database.query(query);
-
-        system.debug('contacts: ' + contacts);
-
-        Map<Id, List<Contact>> mapAccountToContacts = new Map<Id, List<Contact>>();
-        for(Contact con : contacts) {
-            List<Contact> lstContacts = mapAccountToContacts.get(con.AccountId);
-            if(lstContacts == null) {
-                lstContacts = new List<Contact>();
-                mapAccountToContacts.put(con.AccountId, lstContacts);
-            }
-            lstContacts.add(con);
-        }
-
-        for(Account acc : accounts) {
-            List<Contact> accountContacts = mapAccountToContacts.get(acc.Id);
-            if(accountContacts == null) {
-                accountContacts = new List<Contact>();
-            }
-            Map<String, List<Contact>> mapStatusToContacts = new Map<String, List<Contact>>();
-            List<Contact> appLst = new List<Contact>();
-            List<Contact> finLst = new List<Contact>();
-            List<Contact> bspLst = new List<Contact>();
-            mapStatusToContacts.put('Approved Admin', appLst);
-            mapStatusToContacts.put('Financial contact', finLst);
-            mapStatusToContacts.put('BSP Cass contact', bspLst);
-            Boolean needsHOContacts = populateMapContacts(accountContacts, mapStatusToContacts);
-            if(needsHOContacts) {
-                system.debug('top parent needed: ' + mapAccounts);
-                accountContacts = mapAccountToContacts.get(acc.Top_Parent__c);
-                if(accountContacts == null) {
-                    continue;
-                }
-                populateMapContacts(accountContacts, mapStatusToContacts);
-            }
-            if(!appLst.isEmpty()) {
-                mapAccounts.get(acc.Id).setContact(appLst[0]);
-                continue;
-            }
-            if(!finLst.isEmpty()) {
-                mapAccounts.get(acc.Id).setContact(finLst[0]);
-                continue;
-            }
-            if(!bspLst.isEmpty()) {
-                mapAccounts.get(acc.Id).setContact(bspLst[0]);
-            }
-
+        for(Account acc : accs) {
+            Integer errors = srw.mapCountriesErrors.get(acc.IATA_ISO_Country__r.Name);
+            errors++;
+            srw.mapCountriesErrors.put(acc.IATA_ISO_Country__r.Name, errors);
         }
     }
 
-    public static Boolean populateMapContacts(List<Contact> contacts, Map<String, List<Contact>> mapContacts) {
-        List<Contact> appLst = mapContacts.get('Approved Admin');
-        List<Contact> finLst = mapContacts.get('Financial contact');
-        List<Contact> bspLst = mapContacts.get('BSP Cass contact');
-        for(Contact c : contacts) {
-            if(c.User_Portal_Status__c == 'Approved Admin') {
-                appLst.add(c);
-            }
-
-            if(c.Financial_Assessment_Contact__c) {
-                finLst.add(c);
-            }
-
-            if(c.BSP_CASS_Payment_contact__c) {
-                bspLst.add(c);
-            }
-        }
-        return appLst.isEmpty() && finLst.isEmpty() && bspLst.isEmpty();
+    public PageReference searchPreview() {
+        searchAccounts();
+        return null;
     }
 
-    public void searchCases() {
-        Set<Id> accountIds = mapAccounts.keySet();
-
-        String reason = 'PCI DSS Compliant';
-        String query = 'SELECT Id, CaseNumber, AccountId ' + 
-                       'FROM Case ' + 
-                       'WHERE AccountId IN :accountIds AND CreatedDate >= :batchStartTime ' +
-                       'ORDER BY CreatedDate DESC';
-
-        List<Case> cases = (List<Case>) Database.query(query);
-
-        system.debug('cases: ' + cases);
-
-        for(Case cs : cases) {
-            if(mapAccounts.get(cs.AccountId).caseRecord == null) {
-                mapAccounts.get(cs.AccountId).setCase(cs);
-            }
-        }
-
-    }
-
-    public class AccountWrapper {
-        public Boolean selected {get;set;}
-        public Account accountRecord {get;set;}
-        public Contact contactRecord {get;set;}
-        public Case caseRecord {get;set;}
-        public String portalStatus {get;set;}
-
-        public AccountWrapper(Account acc) {
-            selected = false;
-            accountRecord = acc;
-        }
-
-        public void setContact(Contact con) {
-            contactRecord = con;
-            if(con != null) {
-                portalStatus = getStatus(accountRecord, contactRecord);
-            }
-        }
-
-        public void setCase(Case cse) {
-            caseRecord = cse;
-        }
-
-        private String getStatus(Account acc, Contact con) {
-            String status;
-            if(con.User_Portal_Status__c == 'Approved Admin') {
-                status = 'Approved Admin';
-            } else if(con.Financial_Assessment_Contact__c) {
-                status = 'Financial contact';
-            } else if (con.BSP_CASS_Payment_contact__c) {
-                status = 'BSP Cass contact';
-            } else {
-                status = '';
-            }
-
-            return status;
-        }
-
-    }
     /*** AMSU-113 End ***/
 
     public List<SelectOption> countryNameListSelectOption {
@@ -355,14 +245,12 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     **/
     public PageReference reset() {
         this.filter = new WrapperFilter();
-        this.selectedIds = '';
         fillMapCountries();
         isBatchRunning = false;
         isBatchFinished = false;
         isPollerActive = false;
         showResults = false;
-        mapAccounts = new Map<Id, AccountWrapper>();
-        mapAccountToError = new Map<Id,String>();
+        srw = new SearchResultWrapper();
         return null;
     }
 

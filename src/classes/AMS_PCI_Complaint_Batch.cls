@@ -49,18 +49,21 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                        ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
                        ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
                        'FROM Account ' + 
-                       'WHERE Location_Class__c = :location AND Status__c IN :availableStatus AND Is_PCI_compliant__c NOT IN :pciValues' + 
-                       ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false)' + 
-                       ' AND RecordtypeId = :AGENCY_RECORDTYPE';
-
-        if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
-            query += ' AND IATA_ISO_Country__c IN :list_iata_iso_Country_id';
-        }
+                       'WHERE';
 
         if(filteredAccounts != null && !filteredAccounts.isEmpty()) {
-            query += ' AND Id IN :filteredAccounts';
+            query += ' Id IN :filteredAccounts';
+        } else {
+            query += ' Location_Class__c = :location AND Status__c IN :availableStatus AND Is_PCI_compliant__c NOT IN :pciValues' +
+                     ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false)' +
+                     ' AND RecordtypeId = :AGENCY_RECORDTYPE';
+
+            if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
+                query += ' AND IATA_ISO_Country__c IN :list_iata_iso_Country_id';
+            }
         }
 
+        
         return Database.getQueryLocator(query);
     }
 
@@ -321,6 +324,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
         update theOscar;
 
+
+        theCommunicationCase.Visible_on_ISS_Portal__c = true;
+        update theCommunicationCase;
+
         return theOscar;
     }
 
@@ -439,7 +446,6 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
             }
 
-            //FM 24/10/2017 - AMSU-32 
             if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
                 for(String key : mPortalAdminsEmailsDGR.keySet()){
                     
@@ -554,30 +560,27 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     }
 
     public static void sendEmailResult(List<ResultWrapper> results) {
-        String body = '<html><body>';
-        String table = '<table border="1" cellpadding="10"><tr><th>Account</th><th>Contact</th><th>Contact Portal Status</th><th>IATA Code</th>';
-        table += '<th>Country</th><th>Case</th><th>Message</th></tr>';
+        String body = 'Account,Contact,Contact Portal Status,IATA Code,Country,Case Number,Case Id,Message\n';
+
         for(ResultWrapper res : results) {
-            table += '<tr>';
-            table += '<td>' + res.acc.Name + '</td>';
-            table += '<td>' + res.con.Name + '</td>';
-            table += '<td>' + res.con.User_Portal_Status__c + '</td>';
-            table += '<td>' + res.acc.IATACode__c + '</td>';
-            table += '<td>' + res.acc.IATA_ISO_Country__r.Name + '</td>';
-            table += '<td>' + res.cse.CaseNumber + '</td>';
-            table += '<td>' + res.message + '</td>';
-            table += '</tr>';
+            body += res.acc.Name + ',' + res.con.Name + ',' + res.con.User_Portal_Status__c + ',' + res.acc.IATACode__c + ',' + 
+                    res.acc.IATA_ISO_Country__r.Name + ',' + res.cse.CaseNumber + ',' + res.cse.Id + ',' + res.message + '\n';
         }
-        table += '</table>';
-        body += table + '</body></html>';
+
+        Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+        Blob csvReport = Blob.valueOf(body);
+        csvAttc.setFileName('PCI Oscar mass creation report.csv');
+        csvAttc.setBody(csvReport);
 
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
         message.subject = 'PCI Oscar mass creation report';
-        message.htmlBody = body;
         
         message.toAddresses = new List<String> {UserInfo.getUserEmail()};
+        message.setPlainTextBody('PCI Oscar mass creation report - Check attachment with execution results');
+        message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
         Messaging.sendEmail(messages);
+
     }
     
 }

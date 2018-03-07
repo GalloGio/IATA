@@ -38,39 +38,13 @@ private class AMS_PCI_Compliant_Mass_OSCAR_Create_Test {
 		ctrl.filter.country = new List<String> {isoc1.Id};
 		ctrl.searchPreview();
 		ctrl.createPCIOscar();
-		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper aw = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper(a1);
-		aw.selected = true;
-		ctrl.mapAccounts.put(a1.Id,aw);
-		ctrl.createPCIOscar();
-		ctrl.checkBatchStatus();
-		ctrl.getApprovalButtonLabel();
-		List<SelectOption> opts = ctrl.countryNameListSelectOption;
-		ctrl.searchCases();
 		ctrl.checkLogs();
-		List<String> l1 = ctrl.countryList;
-		List<AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper> l2 = ctrl.lstAccountsWrapper;
+		ctrl.checkBatchStatus();
+		Integer i = ctrl.srw.totalErrors;
+		i = ctrl.srw.totalAccounts;
+		List<SelectOption> opts = ctrl.countryNameListSelectOption;
+		ctrl.getApprovalButtonLabel();
 		Test.stopTest();
 	}
-
-	@isTest static void test_method_two() {
-		Account a1 = new Account();
-		Contact c1 = new Contact(User_Portal_Status__c= 'Approved Admin');
-		Contact c2 = new Contact(Financial_Assessment_Contact__c= true);
-		Contact c3 = new Contact(BSP_CASS_Payment_contact__c= true);
-		List<Contact> contacts = new List<Contact> {c1, c2, c3};
-		Map<String, List<Contact>> mapContacts = new Map<String, List<Contact>> {
-			'Approved Admin' => new List<Contact>(),
-			'Financial contact' => new List<Contact>(),
-			'BSP Cass contact' => new List<Contact>()
-		};
-		Test.startTest();
-		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.populateMapContacts(contacts, mapContacts);
-		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper aw1 = new  AMS_PCI_Compliant_Mass_OSCAR_CreationCtr.AccountWrapper(a1);
-		aw1.setContact(c1);
-		aw1.setContact(c2);
-		aw1.setContact(c3);
-		aw1.setCase(new Case());
-		Test.stopTest();
-	}	
 
 }
