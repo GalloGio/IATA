@@ -158,7 +158,7 @@
 
                       <tr style="display:{!IF(showParent,'','none')};">
                         <td>
-                          <apex:outputLabel value="{!$Label.ISSP_ANG_CODE_SEARCH_IATA_CODE_HO_HE}"/>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 15px;" value="{! agency.IATACode__c}"/>
