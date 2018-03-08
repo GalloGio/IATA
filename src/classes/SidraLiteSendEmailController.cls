@@ -181,8 +181,8 @@ public with sharing class SidraLiteSendEmailController {
         listQueries.add('[PARENTACCOUNT]' + formatID15(QUERY_ACCOUNT.id) + '?pv0=' + formatID15(this.cse.AccountId));
         listQueries.add('[PARENTCASE]' + formatID15(QUERY_PARENT_CASE.id) + '?pv0=' + formatID15(this.cse.Parent.Id));
 
-        listQueries.add('[RHCINFO]' + formatID15(QUERY_RHC.id) + '?pv0=' + formatID15(this.cse.AccountId));
-        listQueries.add('[FOPINFO]' + formatID15(QUERY_FOP.id) + '?pv0=' + formatID15(this.cse.AccountId));
+        listQueries.add('[ANGRHCINFO]' + formatID15(QUERY_RHC.id) + '?pv0=' + formatID15(this.cse.AccountId));
+        listQueries.add('[FORMSOFPAYMENT]' + formatID15(QUERY_FOP.id) + '?pv0=' + formatID15(this.cse.AccountId));
                 
 
         // return conga url
