@@ -3336,7 +3336,6 @@ public class AMS_OSCARTriggerHandler {
 
             if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed' && oscar.Oscar_Communication_Case_Id__c != null)
                 oscarCaseIdToProcess.add(oscar.Oscar_Communication_Case_Id__c);
-
         }
 
         if(oscarCaseIdToProcess.isEmpty())
@@ -3344,8 +3343,8 @@ public class AMS_OSCARTriggerHandler {
         
         List<Case> casesToUpdate = new List<Case>();
 
-        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
-        
+        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM AND Parent.Status <> null];
+
         for(Case c: oscarCasesToProcess){
             if(c.Parent.Status != 'Closed Opt-out'){
                 casesToUpdate.add(new Case(Id = c.ParentId, Status = 'Closed Opt-out'));
