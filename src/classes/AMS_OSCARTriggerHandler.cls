@@ -3338,6 +3338,7 @@ public class AMS_OSCARTriggerHandler {
                 oscarCaseIdToProcess.add(oscar.Oscar_Communication_Case_Id__c);
 
         }
+        System.debug('## oscarCaseIdToProcess: '+oscarCaseIdToProcess.size());
 
         if(oscarCaseIdToProcess.isEmpty())
             return;
@@ -3346,11 +3347,16 @@ public class AMS_OSCARTriggerHandler {
 
         List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
         
+        System.debug('## oscarCasesToProcess: '+oscarCasesToProcess);
+
         for(Case c: oscarCasesToProcess){
+            System.debug('## c.Parent.Status: '+c.Parent.Status);
             if(c.Parent.Status != 'Closed Opt-out'){
                 casesToUpdate.add(new Case(Id = c.ParentId, Status = 'Closed Opt-out'));
             }
         }
+
+        System.debug('## oasesToUpdate: '+casesToUpdate);
 
         if(!casesToUpdate.isEmpty())
             update casesToUpdate;
