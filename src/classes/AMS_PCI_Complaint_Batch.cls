@@ -563,8 +563,11 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         String body = 'Account,Contact,Contact Portal Status,IATA Code,Country,Case Number,Case Id,Message\n';
 
         for(ResultWrapper res : results) {
-            body += res.acc.Name + ',' + res.con.Name + ',' + res.con.User_Portal_Status__c + ',' + res.acc.IATACode__c + ',' + 
-                    res.acc.IATA_ISO_Country__r.Name + ',' + res.cse.CaseNumber + ',' + res.cse.Id + ',' + res.message + '\n';
+            body += res.acc != null ? res.acc.Name + ',' : ',';    
+            body += res.con != null ? res.con.Name + ',' + res.con.User_Portal_Status__c + ',' : ',,';
+            body += res.acc != null ? res.acc.IATACode__c  + ',' + res.acc.IATA_ISO_Country__r.Name + ',' : ',,';
+            body += res.cse != null ? res.cse.CaseNumber  + ',' + res.cse.Id + ',' : ',,';
+            body += res.message + '\n';
         }
 
         Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
