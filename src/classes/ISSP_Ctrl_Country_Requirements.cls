@@ -128,11 +128,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             
             category = user.contact.Account.Category__c;
             
-            //
-            // At this point the country requirements are only available for Travel Agents.
-            //
-            sector = 'Travel Agent';
-            //sector = user.contact.Account.Sector__c;
+            if(user.contact.Account.Sector__c == 'Cargo Agent') {
+                sector = 'Travel Agent';
+            } else {
+                sector = user.contact.Account.Sector__c;
+            }
 
             countryName = user.contact.Account.IATA_ISO_Country__r.Name; 
             amsCountryLabel = countryName;
