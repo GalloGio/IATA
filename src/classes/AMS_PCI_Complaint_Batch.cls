@@ -71,7 +71,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         List<ResultWrapper> resChunk = new List<ResultWrapper>();
         Savepoint sp = Database.setSavepoint();
         try {
-            validateCandidatesForRenewal(scope, resChunk);
+            validateCandidatesForRenewal(scope, resChunk);            
         } catch(Exception e) {
             Database.rollback(sp);
             for(sObject record : scope) {

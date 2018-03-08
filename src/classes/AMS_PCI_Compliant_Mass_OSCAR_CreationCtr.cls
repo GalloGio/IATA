@@ -38,7 +38,17 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     }
 
     public class SearchResultWrapper {
-        public Map<String, List<Account>> mapCountriesAccounts {get;set;}
+        public Map<String, List<Id>> mapCountriesAccounts {get;set;}
+        public Map<String, Integer> mapNrAccounts {
+            get {
+                Map<String, Integer> res = new Map<String, Integer>();
+                for(String country : mapCountriesAccounts.keySet()) {
+                    res.put(country, mapCountriesAccounts.get(country).size());
+                }
+                return res;
+            }
+            set;
+        }
         public Map<String, Integer> mapCountriesErrors {get;set;}
         public Integer totalErrors {
             get {
@@ -53,7 +63,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         public Integer totalAccounts {
             get {
                 Integer total = 0;
-                for(List<Account> accs : mapCountriesAccounts.values()) {
+                for(List<Id> accs : mapCountriesAccounts.values()) {
                     if(accs != null) {
                         total += accs.size();
                     }
@@ -64,7 +74,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         }
 
         public SearchResultWrapper() {
-            this.mapCountriesAccounts = new Map<String, List<Account>>();
+            this.mapCountriesAccounts = new Map<String, List<Id>>();
             this.mapCountriesErrors = new Map<String, Integer>();
         }
     }
@@ -73,8 +83,10 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         batchStartTime = Datetime.now();
         isPollerActive = true;
         Set<Account> filteredAccounts = new Set<Account>();
-        for(List<Account> accs : srw.mapCountriesAccounts.values()) {
-            filteredAccounts.addAll(accs);
+        for(List<Id> accs : srw.mapCountriesAccounts.values()) {
+            for(Id accId : accs) {
+                filteredAccounts.add(new Account(Id= accId));
+            }
         }
 
         if(filteredAccounts.isEmpty()) {
@@ -113,15 +125,15 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         List<Account> accounts = (List<Account>) Database.query(query);
         srw = new SearchResultWrapper();
         for(Account acc : accounts) {
-            List<Account> accs = srw.mapCountriesAccounts.get(acc.IATA_ISO_Country__r.Name);
+            List<Id> accs = srw.mapCountriesAccounts.get(acc.IATA_ISO_Country__r.Name);
             
             if(accs == null) {
-                accs = new List<Account>();
+                accs = new List<Id>();
                 srw.mapCountriesAccounts.put(acc.IATA_ISO_Country__r.Name, accs);
                 srw.mapCountriesErrors.put(acc.IATA_ISO_Country__r.Name, 0);
             }
 
-            accs.add(acc);
+            accs.add(acc.Id);
         }
 
 

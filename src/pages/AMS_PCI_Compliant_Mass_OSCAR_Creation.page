@@ -96,13 +96,12 @@
                   <th width="150px" align="center"># Errors</th>
                   <th width="150px" align="center"># Created Cases</th>
                 </tr>
-                <apex:repeat value="{!srw.mapCountriesAccounts}" var="country">
-                  <apex:variable value="{!srw.mapCountriesAccounts[country]}" var="list"/>
+                <apex:repeat value="{!srw.mapNrAccounts}" var="country">
                   <tr>
                       <td>{!country}</td>
-                      <td><apex:outputText value="{!list.size}"/></td>
+                      <td><apex:outputText value="{!srw.mapNrAccounts[country]}"/></td>
                       <td><apex:outputText value="{!srw.mapCountriesErrors[country]}"/></td>
-                      <td><apex:outputText value="{!IF(!isBatchFinished,0,list.size - srw.mapCountriesErrors[country])}"/></td>
+                      <td><apex:outputText value="{!IF(!isBatchFinished,0,srw.mapNrAccounts[country] - srw.mapCountriesErrors[country])}"/></td>
                   </tr>
                 </apex:repeat>
                   <tr>
