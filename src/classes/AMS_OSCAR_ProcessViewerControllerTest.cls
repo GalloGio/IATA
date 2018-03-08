@@ -59,5 +59,12 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 
         Test.stopTest();
     }
+	
+	@isTest static void test_ProcessViewer_2() {
+        Test.startTest();
+        AMS_OSCAR_ProcessViewerController ctr = new AMS_OSCAR_ProcessViewerController();
+        ctr.checkAMSRemittance(new AMS_OSCAR__c());
+        Test.stopTest();
+    }
 
 }
