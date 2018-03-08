@@ -215,6 +215,8 @@ public class ANG_RHCHelper {
 		public void execute(QueueableContext context) {
 			sendMailUpdate(mails);
 
+			if(alertIds == null || alertIds.isEmpty()) return;
+
 			List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>();
 			for(Id alertId : alertIds) alerts.add(new ANG_Risk_Alert__c(Id = alertId, ANG_email_sent__c = true));
 
