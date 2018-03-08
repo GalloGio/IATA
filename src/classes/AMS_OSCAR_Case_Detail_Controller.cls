@@ -250,8 +250,18 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
         set;
     }
+	
+	//AMSU-125
+    public Boolean loadAMSRemittance(AMS_OSCAR__c oscar) {
+        Set<String> locationsClass = new Set<String> {'P', 'D'};        
+        return !String.isBlank(oscar.Process__c) && locationsClass.contains(oscar.Location_Class__c) && (AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.AGENCYCHANGES);
+    }
 
     public List<SelectOption> getRfPicklistValues(){
+		//AMSU-125
+        if(loadAMSRemittance(oscarObj)) {
+            return getRfPicklistValuesAMS();    
+        }
 
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
@@ -314,7 +324,21 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return rfPicklistValues;
         
     }
-
+	   
+    //AMSU-125
+    public List<SelectOption> getRfPicklistValuesAMS() {
+        List<SelectOption> rfPicklistValues = new List<SelectOption>();
+        system.debug('operationCodes: ' +operationCodes);
+        rfPicklistValues.add(new SelectOption('', '--None--'));
+        if(!operationCodes.isEmpty()) {
+            for(AMS_Operation__c opCode: operationCodes) {
+                for(ANG_BSP_Attributes__c attribute : opCode.BSP_Attributes__r) {
+                    rfPicklistValues.add(new SelectOption(attribute.Remittance_Frequency__c, attribute.Remittance_Frequency__c));
+                }
+            }
+        }
+        return rfPicklistValues;
+    }
 
     public Boolean isAgencyChanges{
         get{
@@ -582,7 +606,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, //FM AMSU-1
-                        STEP6__c
+                        STEP6__c, Location_Class__c
                           from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
