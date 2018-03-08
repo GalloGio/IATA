@@ -282,6 +282,41 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Field07_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field07_Values__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field07__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Object_Record_Type__c</fullName>
         <description>Define the record type of the object that the risck event is created from (see Object Type)</description>
         <externalId>false</externalId>
@@ -683,6 +718,61 @@ HE Account: Create risk event on the HE of the current hierarchy</description>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Field06_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field07_Conditions__c</picklist>
             <values>
                 <fullName>%3C</fullName>
                 <default>false</default>
