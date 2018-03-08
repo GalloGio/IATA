@@ -15032,7 +15032,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 22)) AND 16 AND 18 AND 19 AND NOT(20 AND 21)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16 AND 18 AND 19) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15051,7 +15051,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application,Inter DPCs</value>
+            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15123,25 +15123,10 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>IEP Bank account setup</value>
         </criteriaItems>
-		<criteriaItems>
+        <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>FoP Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
-        </criteriaItems>
-		<criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>PCI DSS Compliant</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15172,7 +15157,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Service Request,Airline Coding Application,Inter DPCs</value>
+            <value>IATA Service Request,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Origin</field>

@@ -2920,6 +2920,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
+        <description>PCI compliance expiry date</description>
+        <externalId>false</externalId>
+        <label>PCI compliance expiry date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
@@ -10438,6 +10448,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Is_DGR_Compliant__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for HO &gt;=2, for BR &gt;=1</description>
+        <externalId>false</externalId>
+        <label>Is DGR Compliant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_PCI_compliant__c</fullName>
         <description>Determines if an agency is PCI Compliant</description>
         <externalId>false</externalId>
@@ -11058,23 +11078,25 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
-        <formula>case (TEXT(Location_Type__c)
-       , &apos;AO&apos;, 1
-       , &apos;EP&apos;, 1
-       , &apos;HO&apos;, 1
+        <formula>case (TEXT(Location_Type__c) 
+, &apos;AO&apos;, 1 
+, &apos;EP&apos;, 1 
+, &apos;HO&apos;, 1 
+, &apos;HE&apos;, 1 
 
-       , &apos;BR&apos;, 2
-       , &apos;CS&apos;, 2
-       , &apos;EB&apos;, 2
-       , &apos;ES&apos;, 2
-       , &apos;SE&apos;, 2
-       , &apos;TD&apos;, 2
-       , &apos;WH&apos;, 2
+, &apos;BR&apos;, 2 
+, &apos;CS&apos;, 2 
+, &apos;EB&apos;, 2 
+, &apos;ES&apos;, 2 
+, &apos;SE&apos;, 2 
+, &apos;TD&apos;, 2 
+, &apos;WH&apos;, 2 
+, &apos;AE&apos;, 2 
 
-       , &apos;ST&apos;, 3
-       , &apos;AW&apos;, 3
-       , &apos;SA&apos;, 3
-       , 99
+, &apos;ST&apos;, 3 
+, &apos;AW&apos;, 3 
+, &apos;SA&apos;, 3 
+, 99 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Location Type Ordered</label>
@@ -12564,42 +12586,42 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Monthly</fullName>
+                    <fullName>M</fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
                 <value>
-                    <fullName>Fortnightly</fullName>
+                    <fullName>F</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
                 </value>
                 <value>
-                    <fullName>Every 10 days</fullName>
+                    <fullName>R</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
                 </value>
                 <value>
-                    <fullName>4 times per month</fullName>
+                    <fullName>W</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
                 </value>
                 <value>
-                    <fullName>Weekly</fullName>
+                    <fullName>V</fullName>
                     <default>false</default>
                     <label>Weekly</label>
                 </value>
                 <value>
-                    <fullName>Every 5 days</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
                 </value>
                 <value>
-                    <fullName>Every 3 days</fullName>
+                    <fullName>B</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
-                    <fullName>Daily</fullName>
+                    <fullName>D</fullName>
                     <default>false</default>
                     <label>Daily</label>
                 </value>
@@ -27541,7 +27563,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30592,7 +30614,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33221,7 +33243,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36293,35 +36315,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43231,7 +43253,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47674,7 +47696,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50361,7 +50383,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54814,7 +54836,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59228,7 +59250,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61747,7 +61769,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64201,7 +64223,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66990,7 +67012,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72612,15 +72634,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77911,7 +77933,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82662,35 +82684,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84505,7 +84527,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
         <errorConditionFormula>AND(
   OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
@@ -84517,7 +84539,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
    EF_SIS_Code_Verified__c=true,
    OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
@@ -84711,14 +84733,14 @@ ANG_IsNewGenAgency__c,
 
 NOT(Country_ISO_Code__c  = &apos;BR&apos;),
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
 AND(
 
@@ -84726,14 +84748,14 @@ ANG_IsNewGenAgency__c,
 
 Country_ISO_Code__c  = &apos;BR&apos;,
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
 )</errorConditionFormula>
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>

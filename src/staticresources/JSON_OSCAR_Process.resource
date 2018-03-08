@@ -22,9 +22,7 @@
                   }
                 ],
                 "DisplayFields": [
-          "Is_PCI_compliant__c",
-          "ANG_PCI_compliance_expiry_date__c",
-                  "STEP6__c"          
+                  "STEP6__c"
                 ],
                 "IsDependent": false
               }
@@ -518,8 +516,6 @@
                   }
                 ],
                 "DisplayFields": [
-          "Is_PCI_compliant__c",
-          "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -3785,13 +3781,7 @@
               {
                 "Name": "STEP6",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "checkAccountHierarchyCorrection",
-                    "ActionLabel": "AMS_OSCAR_Action6",
-                    "args": ["oscarid"]
-                  }
-				],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -6248,37 +6238,6 @@
             ]
           }
         ]
-      },
-      {
-		"Name": "PCI.COMPLIANT.1.0",
-		"Flows": [
-		  {
-			"Name": "AMS_OSCAR_APPLICATIONRECEIPT",
-			"Steps": [
-			  {
-				"Name": "STEP6",
-				"Required": [],
-				"Actions": [],
-				"Automations": [
-				  {
-					"Status": "Passed",
-					"ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
-				  },
-				  {
-					"Status": "Failed",
-					"ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
-				  }
-				],
-				"DisplayFields": [
-				  "Is_PCI_compliant__c",
-				  "ANG_PCI_compliance_expiry_date__c",
-				  "STEP6__c"
-				],
-				"IsDependent": false
-			  }
-			]
-		  }
-		]
       }
     ]
   }

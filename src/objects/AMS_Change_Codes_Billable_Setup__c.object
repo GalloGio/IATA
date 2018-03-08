@@ -41,6 +41,21 @@ Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Location_Type_To_Exclude__c</fullName>
+        <description>Location Type To Exclude:
+-Leaving it empty would mean all location types of the change code/country/class are not billable
+-Having some values (e.g. BR, SA, AE) in it would mean that BR,SA,AE are not billable but the other location types of the change code/country/class remain billable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>-Leaving it empty would mean all location types of the change code/country/class are not billabl
+-Having some values (e.g. BR,SA,AE) in it would mean that BR,SA,AE are not billable but the other location types of the change code/country/class remain bill</inlineHelpText>
+        <label>Location Type To Exclude</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>AMS Change Codes Billable Setup</label>
     <visibility>Protected</visibility>
 </CustomObject>

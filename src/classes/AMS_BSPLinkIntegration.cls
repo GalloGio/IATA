@@ -421,6 +421,53 @@ global class AMS_BSPLinkIntegration {
 		*/
 		return lsToReturn;
 	}
+
+	//method invoked after the SIDRA Lite process to save the result in an attachment 
+	webservice static void SaveResponseInAttchment(String caseId, String process, String message, String isSuccess) {
+		
+		String result = 'Error';
+
+		if (isSuccess.equals('Y'))
+			result = 'Success';
+
+		Attachment att = new Attachment();
+		att.ParentID = caseId;
+		att.Name = process + '_' +  Datetime.now().format('yyyyMMdd_HHmm') + '_' + result + '.pdf';
+		att.Body = Blob.toPdf(message);
+		att.ContentType = 'application/pdf';
+
+		insert att;
+
+    }
+
+    //method invoked after the SIDRA Lite process to save the result in an attachment 
+	webservice static void SaveResponseInAttachmentFromOscar(List<Id> oscarIds, String process, String message, String isSuccess) {
+		
+		String caseId = '';
+		List<Case> cases = new List<Case>();
+		cases = [SELECT Id FROM Case WHERE OSCAR__c IN :oscarIds AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) LIMIT 1];
+
+		if(cases.isEmpty()) {
+			return;
+		}
+
+		caseId = cases.get(0).Id;
+
+		String result = 'Error';
+
+		if (isSuccess.equals('Y'))
+			result = 'Success';
+
+		Attachment att = new Attachment();
+		att.ParentID = caseId;
+		att.Name = process + '_' +  Datetime.now().format('yyyyMMdd_HHmm') + '_' + result + '.pdf';
+		att.Body = Blob.toPdf(message);
+		att.ContentType = 'application/pdf';
+
+		insert att;
+
+    }
+
     
     /***********************************************
     ********** REQUEST AND RESPONSE FORMAT**********

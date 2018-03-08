@@ -9,6 +9,17 @@ public with sharing class ISSP_AccessToService{
     private String sortExp  = 'CreatedDate'; 
     
     public Boolean isAdmin {get;set;} 
+    public String denyReason {get;set;} 
+    public String grantReason {get;set;}
+
+    public String serviceId {get;set;} 
+    public String serviceName {get;set;} 
+    public String contactId {get;set;} 
+
+    public list<String> errorMessage {get; set;}
+    public Integer failedCount  {get; set;}
+    public Datetime timeStamp {get; set;}
+    public String contactStatus {get; set;}
     
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -36,6 +47,31 @@ public with sharing class ISSP_AccessToService{
        sortExp = value;
      }
     }
+    
+    public static User currentPortalUser {
+        get {
+            if(currentPortalUser == null){
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
+                                    contact.account.ANG_IEP_Status_FF__c,ContactId,
+                                    languagelocalekey,ProfileId  
+                                    from User where id =: UserInfo.getUserId()];
+            }
+            return currentPortalUser;
+        } 
+        set;}
+
+    public boolean pollerOn {get; set;}
+    public Boolean redirect {get; set;}
+    public Boolean provError {get; set;}
+    public Map<String, String> iepRoles {get; set;}
+    public String defaultPortalUserRole {get; set;}    
+
+    public ISSP_AccessToService() {
+        this.errorMessage = null;
+        this.pollerOn = false;       
+        this.denyReason = '';
+        this.grantReason = '';
+    }
 
     public String getSortDirection() {
         //if not column is selected 
@@ -48,11 +84,7 @@ public with sharing class ISSP_AccessToService{
     public void setSortDirection(String value) {  
         sortDirection = value;
     }
-    
-    public ISSP_AccessToService(){
-         
-    }
-    
+        
     public PageReference initialization() {
         try {
             AlphaList = new list<String> {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other', 'All'};
@@ -201,41 +233,24 @@ public with sharing class ISSP_AccessToService{
     public ApexPages.StandardSetController setCon {
         get{
             if(setCon == null){
-                string sortFullExp = '';
-                if (sortExpression == 'Name')
-                    sortFullExp = 'LastName'  + ' ' + sortDirection;
-                else
-                    sortFullExp = sortExpression  + ' ' + sortDirection;
-                system.debug('ORDERING BY: ' + sortExpression);
-                system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate ,Contact__r.name ,Application_Name__c,PortalServiceTranslatedName__c  ';
+                String query = ' CreatedDate, Account__c, Contact__r.name, Contact__r.User_Portal_Status__c, Application_Name__c,PortalServiceTranslatedName__c,' +
+                               ' Portal_Application__r.Cannot_be_managed_by_portal_admin__c';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
                 string queryString = '';
-                system.debug('AlphaFilter: ' + AlphaFilter);
-                if (AlphaFilter != '' && AlphaFilter != null && AlphaFilter != 'All' && sortExpression != 'CreatedDate' && AlphaFilter != 'Other'){
-                    if (sortExpression == 'Name')
-                        queryString = 'select '+query+' from Portal_Application_Right__c '+getQueryConditions()+ ' AND LastName like \'' + AlphaFilter + '%\'' + ' order by '+ sortFullExp;
-                    else
-                        queryString = 'select '+query+' from  Portal_Application_Right__c '+getQueryConditions()+ ' AND ' + sortExpression + ' like \'' + AlphaFilter + '%\'' + ' order by '+ sortFullExp;
-                }
-                else if (AlphaFilter == 'Other' && sortExpression != 'CreatedDate'){
-                    if (sortExpression == 'Name')
-                        queryString = 'select '+query+' from Portal_Application_Right__c '+getQueryConditions()+ ' AND (LastName < \'A\' OR LastName > \'Z\') AND (NOT LastName LIKE \'Z%\') order by '+ sortFullExp;
-                    else
-                        queryString = 'select '+query+' from Portal_Application_Right__c '+getQueryConditions()+ ' AND (' + sortExpression + ' < \'A\' OR ' + sortExpression + ' > \'Z\') AND (NOT ' + sortExpression + ' LIKE \'Z%\') order by '+ sortFullExp;
-                }
-                else{
-                    queryString = 'select '+query+' from Portal_Application_Right__c '+getQueryConditions()+' order by '+ sortFullExp;
-                }
+
+                queryString = 'select '+query+' from Portal_Application_Right__c '+getQueryConditions()+' order by Application_Name__c';
 
                 ISSP_Utilities.log('SQL String: ' + queryString);
+
+                System.debug(LoggingLevel.ERROR, 'ALEX SQL-->' + queryString);
+
                 setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
                 setCon.setPageSize(size);
-                noOfRecords = setCon.getResultSize();
+                noOfRecords = setCon.getResultSize();                
             }
             return setCon;
         }set;
@@ -244,13 +259,83 @@ public with sharing class ISSP_AccessToService{
     public class AccServiceWrapper {
         public Boolean selected {get; set;}
         public Portal_Application_Right__c recordAccService {get; set;}
+        public String contactStatus {get; set;}
+        public Boolean cannotBeManagedByPortalAdmin {get; set;}
+        public Boolean isEasyPayService {get; set;}
+        public boolean hide {get; set;}
+        public boolean showGrant {get; set;}
+        public boolean showDeny {get; set;}
+        public boolean showIfap {get; set;}
     }
     
     public List<AccServiceWrapper > getAccServiceList(){
+        this.denyReason = '';
+        this.grantReason = '';
+
         List<AccServiceWrapper > allAccServiceList =  new List<AccServiceWrapper>();   
         List<Portal_Application_Right__c > allAccServices = (List<Portal_Application_Right__c >)setCon.getRecords();
-        for (Portal_Application_Right__c thisAccService : allAccServices){
+
+        Set<String> contactIds = new Set<String>();
+        for (Portal_Application_Right__c thisAccService : allAccServices) {
+            contactIds.add(thisAccService.contact__c);
+        }
+
+        List<User> userList = [SELECT Id, IsActive, ContactId FROM User WHERE ContactId IN :contactIds];
+
+        Map<String, String> userContact = new Map<String, String>();
+        for(User u : userList) {
+            userContact.put(u.contactId, u.id);
+        }
+
+        for (Portal_Application_Right__c thisAccService : allAccServices) {
+
             AccServiceWrapper thisAccServiceRecord = new AccServiceWrapper ();
+            thisAccServiceRecord.contactStatus = 'AA';
+
+            String contactStatus = thisAccService.Contact__r.User_Portal_Status__c;
+
+            thisAccServiceRecord.cannotBeManagedByPortalAdmin = thisAccService.Portal_Application__r.Cannot_be_managed_by_portal_admin__c;
+            thisAccServiceRecord.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(thisAccService.Application_Name__c);
+
+            thisAccServiceRecord.hide = ((thisAccServiceRecord.isEasyPayService && !thisAccServiceRecord.cannotBeManagedByPortalAdmin) ||
+                                         (thisAccServiceRecord.isEasyPayService && thisAccServiceRecord.cannotBeManagedByPortalAdmin && thisAccService.right__c != 'Access Granted') ||
+                                         (!thisAccServiceRecord.isEasyPayService && thisAccServiceRecord.cannotBeManagedByPortalAdmin)
+                                        );
+
+            if (contactStatus == 'Pending Approval') {
+                thisAccServiceRecord.contactStatus = 'PA';
+            } else if (contactStatus == 'Inactive' || contactStatus == 'Rejected' || contactStatus == 'Deactivated') {
+                thisAccServiceRecord.contactStatus = 'IN';
+            } else if (!userContact.containsKey(thisAccService.Contact__c)) {
+                thisAccServiceRecord.contactStatus = 'NO';
+            }
+
+            thisAccServiceRecord.showGrant = false;
+            thisAccServiceRecord.showDeny = false;
+            thisAccServiceRecord.showIfap = false;
+
+            if(thisAccServiceRecord.isEasyPayService) {
+                if(thisAccServiceRecord.cannotBeManagedByPortalAdmin && thisAccService.right__c == 'Access Granted') {
+                    thisAccServiceRecord.showDeny = true;
+                }
+            } else {
+                if(!thisAccServiceRecord.cannotBeManagedByPortalAdmin) {                
+                    if(thisAccService.Application_Name__c == 'IFAP') {
+                        thisAccServiceRecord.showIfap = true;
+                        if(thisAccService.right__c == 'Access Requested') {
+                            thisAccServiceRecord.showDeny = true;
+                        }
+                    } else if(thisAccService.right__c == 'Access Denied') {
+                        thisAccServiceRecord.showGrant = true;
+                    } else  if(thisAccService.right__c == 'Access Requested') {
+                        thisAccServiceRecord.showGrant = true;
+                        thisAccServiceRecord.showDeny = true;
+                    } else {
+                        thisAccServiceRecord.showDeny = true;
+                    }
+                }
+            }
+
             thisAccServiceRecord.selected = false;
             thisAccServiceRecord.recordAccService = thisAccService;
             allAccServiceList.add(thisAccServiceRecord);
@@ -345,6 +430,147 @@ public with sharing class ISSP_AccessToService{
         }
     }
     
+
+    public Pagereference denyAccess() {
+
+        Portal_Application_Right__c psa;
+
+        pollerOn = true;
+
+        List<Portal_Application_Right__c> psal = [Select Id, Right__c, Access_Status_Reason__c,
+                                                         LastModifiedDate 
+                                                    From Portal_Application_Right__c
+                                                   Where Portal_Application__c =: serviceId
+                                                     And Contact__c =: contactId];
+
+
+        if(psal.size() != 0) {
+            psa = psal[0];
+        }
+
+        if(psa == null) {
+            System.debug(LoggingLevel.ERROR, 'PSA is null [serviceId : ' + serviceId + ' - contactId : ' + contactId + ']');            
+            errorMessage = new List<String>(); errorMessage.add(Label.ISSP_ANG_GenericError);
+        } else {
+            this.timeStamp = psa.LastModifiedDate;                                              
+
+            psa.Right__c = 'Access Denied';
+            psa.Access_Status_Reason__c = denyReason;
+
+            try {
+                update psa;
+
+                this.denyReason = '';
+                this.grantReason = '';
+
+            } catch(Exception e) {
+                errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            }
+        }
+
+        return null;
+    }    
    
-   
+    public Pagereference grantAccess() {
+
+        Portal_Application_Right__c psa;
+
+        pollerOn = true;
+
+        List<Portal_Application_Right__c> psal = [Select Id, Right__c, Access_Status_Reason__c,
+                                                         LastModifiedDate 
+                                                    From Portal_Application_Right__c
+                                                   Where Portal_Application__c =: serviceId
+                                                     And Contact__c =: contactId];
+
+        if(psal.size() != 0) {
+            psa = psal[0];
+        }
+
+        if(psa == null) {
+            System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + ']');            
+            errorMessage = new List<String>(); errorMessage.add(Label.ISSP_ANG_GenericError);
+            
+        } else {
+            Contact contact = null;
+
+            List<Contact> cl = [Select Id, User_Portal_Status__c From Contact Where id =: contactId];
+
+            if(cl.size() != 0) {
+                contact = cl[0];
+            }
+
+            if (this.contactStatus == 'PA') {
+                // Pending Approval
+                if (contact != null) {
+                    contact.User_Portal_Status__c = 'Approved User';
+                    update contact;
+                    ISSP_EditPortalServiceAccessExt.updateUserProfile(contact.Id);
+                }
+            } else if (this.contactStatus == 'NO') {
+                // No USer
+                if (contact != null) {
+                    Set <Id> idSet = new Set <Id>();
+                    idSet.add(contact.Id);
+
+                    ISSP_ContactList ctrl = new ISSP_ContactList();
+
+                    ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
+                }
+            }
+
+            this.timeStamp = psa.LastModifiedDate;
+
+            psa.Right__c = 'Access Granted';
+            psa.Access_Status_Reason__c = grantReason;
+
+            try {          
+                update psa; 
+
+                this.denyReason = '';
+                this.grantReason = '';
+
+            } catch(Exception e) {
+                errorMessage = new List<String>(); errorMessage.add(e.getdmlMessage(0));
+            }
+        }
+
+        return null;
+    }
+
+    public PageReference permissionSetPoller() {
+
+        if(errorMessage != null) {
+            pollerOn = false;
+        } else {
+            List<Portal_Application_Right__c> psal = [Select Id, Right__c, Access_Status_Reason__c,
+                                                             LastModifiedDate 
+                                                        From Portal_Application_Right__c
+                                                       Where Portal_Application__c =: serviceId
+                                                         And Contact__c =: contactId];
+
+            Portal_Application_Right__c psa = null;
+
+            if(psal.size() != 0) {
+                psa = psal[0];
+            }
+
+            if(psa == null) {
+                System.debug(LoggingLevel.ERROR, 'PSA is null (3) [serviceId : ' + serviceId + ' - contactId : ' + contactId + ']');            
+                errorMessage = new List<String>(); errorMessage.add('And error has occured');
+                pollerOn = false;
+            } else {
+                if(psa.LastModifiedDate > this.timeStamp) {
+                    pollerOn = false;
+                }
+            }
+        }
+        return null;
+    }    
+
+    public Pagereference refreshList() {
+        pollerOn = false;
+        setCon = null;
+        return null;
+    }    
 }

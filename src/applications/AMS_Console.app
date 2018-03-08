@@ -222,7 +222,9 @@
     <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
     <tab>AMS_Account_Role__c</tab>
-	<tab>AMS_PCI_Compliant_Mass_Oscar_Creation</tab>
+    <tab>ANG_Agency_Risk_Calculation__c</tab>
+    <tab>ANG_Risk_Event_Configuration__c</tab>
+    <tab>ANG_Risk_Event_Type__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>AMS_Account_Role__c</tab>
@@ -230,11 +232,17 @@
         <mapping>
             <tab>AMS_OSCAR__c</tab>
         </mapping>
-		<mapping>
-            <tab>AMS_PCI_Compliant_Mass_Oscar_Creation</tab>
-        </mapping>
         <mapping>
             <tab>AMS_Voucher_Region__c</tab>
+        </mapping>
+        <mapping>
+            <tab>ANG_Agency_Risk_Calculation__c</tab>
+        </mapping>
+        <mapping>
+            <tab>ANG_Risk_Event_Configuration__c</tab>
+        </mapping>
+        <mapping>
+            <tab>ANG_Risk_Event_Type__c</tab>
         </mapping>
         <mapping>
             <tab>APXTConga4__Conga_Template__c</tab>
