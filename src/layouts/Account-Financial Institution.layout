@@ -30,6 +30,14 @@
                 <behavior>Required</behavior>
                 <field>TIP_HQ_Location__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sector__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Industry</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -37,7 +45,7 @@
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Accreditation_date__c</field>
             </layoutItems>
             <layoutItems>
@@ -55,6 +63,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TIP_Documents__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -120,6 +136,24 @@
         <fields>Name</fields>
         <fields>ParentId</fields>
     </miniLayout>
+    <relatedLists>
+        <fields>FULL_NAME</fields>
+        <fields>CONTACT.TITLE</fields>
+        <fields>CONTACT.EMAIL</fields>
+        <fields>CONTACT.PHONE1</fields>
+        <relatedList>RelatedContactList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>PP_Payment_Product_Code__c</fields>
+        <fields>BIN_Range__c</fields>
+        <fields>PP_status__c</fields>
+        <fields>PP_Effective_from_Date__c</fields>
+        <fields>PP_Effective_to_Date__c</fields>
+        <fields>PP_Form_of_payment__c</fields>
+        <fields>PP_Payment_network__c</fields>
+        <relatedList>Partner_products__c.Provider__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
