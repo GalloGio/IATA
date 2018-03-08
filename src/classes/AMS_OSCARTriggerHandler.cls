@@ -3114,6 +3114,8 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
 
+
+
         for(AMS_OSCAR__c oscar: oscarsToInsertList){
 
             if(oscar.ANG_Sanity_checks__c == AMS_Utils.PASSED && ( oscar.ANG_Sanity_checks__c != oldOscars.get(oscar.id).ANG_Sanity_checks__c)){        
@@ -3336,7 +3338,6 @@ public class AMS_OSCARTriggerHandler {
 
             if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed' && oscar.Oscar_Communication_Case_Id__c != null)
                 oscarCaseIdToProcess.add(oscar.Oscar_Communication_Case_Id__c);
-
         }
 
         if(oscarCaseIdToProcess.isEmpty())
@@ -3344,8 +3345,8 @@ public class AMS_OSCARTriggerHandler {
         
         List<Case> casesToUpdate = new List<Case>();
 
-        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
-        
+        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND parent.RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
+
         for(Case c: oscarCasesToProcess){
             if(c.Parent.Status != 'Closed Opt-out'){
                 casesToUpdate.add(new Case(Id = c.ParentId, Status = 'Closed Opt-out'));
