@@ -78,22 +78,22 @@ public with sharing class ISSP_AvailableServices{
             availableRoles = new Map<String,List<String>>();
 
             for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+				if(role.Connected_App__c.startsWith('IATA EasyPay')) {
+					if(availableRoles.get(role.Connected_App__c) == null) {
+						availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
 
-                if(availableRoles.get(role.Connected_App__c) == null) {
-                    availableRoles.put(role.Connected_App__c , new List<String>{role.Role__c});
+						Map<Decimal, String> aux = new Map<Decimal, String>();
+						aux.put(role.Order__c, role.Role__c);
 
-                    Map<Decimal, String> aux = new Map<Decimal, String>();
-                    aux.put(role.Order__c, role.Role__c);
+						orderRoles.put(role.Connected_App__c, aux);
 
-                    orderRoles.put(role.Connected_App__c, aux);
+					} else {                        
+						availableRoles.get(role.Connected_App__c).add(role.Role__c);
 
-                } else {                        
-                    availableRoles.get(role.Connected_App__c).add(role.Role__c);
-
-                    Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
-                    aux.put(role.Order__c, role.Role__c);                        
-                }
-
+						Map<Decimal, String> aux = orderRoles.get(role.Connected_App__c);
+						aux.put(role.Order__c, role.Role__c);                        
+					}
+				}
             }
 
             Set<String> availableRolesLst = availableRoles.keySet();
@@ -184,17 +184,19 @@ public with sharing class ISSP_AvailableServices{
         this.helpTextPortalRoles = new Map<String, String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
-            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
-                String aux = role.Role__c.replaceAll(' ','');
-                String aux2 = aux.replaceAll('-','');
+			if(role.Connected_App__c.startsWith('IATA EasyPay')) {
+				if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+					String aux = role.Role__c.replaceAll(' ','');
+					String aux2 = aux.replaceAll('-','');
 
-                String helpText = getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+					String helpText = getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
 
-                if(helpText == 'NONE') helpText = '';
+					if(helpText == 'NONE') helpText = '';
 
-                this.helpTextPortalRoles.put(role.Role__c, helpText);
+					this.helpTextPortalRoles.put(role.Role__c, helpText);
 
-            }
+				}
+			}
         }
 
         this.iepRoles = new Map<String, String>();
@@ -205,19 +207,21 @@ public with sharing class ISSP_AvailableServices{
         availableRoles = new Map<String,List<String>>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
-            if(role.Permission_set_SSO__c != null){
-                iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
-            }
+			if(role.Connected_App__c.startsWith('IATA EasyPay')) {
+				if(role.Permission_set_SSO__c != null){
+					iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
+				}
 
 
-            if(availableRoles.get(role.Connected_App__c) == null)
-                availableRoles.put(role.Connected_App__c , new List<String>{role.Permission_set_SSO__c});
-            else
-                availableRoles.get(role.Connected_App__c).add(role.Permission_set_SSO__c);
+				if(availableRoles.get(role.Connected_App__c) == null)
+					availableRoles.put(role.Connected_App__c , new List<String>{role.Permission_set_SSO__c});
+				else
+					availableRoles.get(role.Connected_App__c).add(role.Permission_set_SSO__c);
 
-            if (role.Default_User_Role__c) {
-                this.defaultPortalUserRole = role.Role__c;
-            }
+				if (role.Default_User_Role__c) {
+					this.defaultPortalUserRole = role.Role__c;
+				}
+			}
         }
 
         IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;
