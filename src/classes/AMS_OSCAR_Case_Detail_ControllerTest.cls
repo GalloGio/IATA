@@ -2,7 +2,8 @@
 private class AMS_OSCAR_Case_Detail_ControllerTest {
 	
 	@testSetup static void setup(){
-		AMS_OSCAR_TestDataFactory.createOSCARtestData();
+		//AMS_OSCAR_TestDataFactory.createOSCARtestData();
+		AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c limit 1];
 		Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
 
@@ -47,10 +48,19 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			System.assert(!controller.hasEditableFields, 'Found editable fields');
 			System.assert(controller.getExistOscarInspections(), 'No inspections found');
 			System.assert(!controller.getRfPicklistValues().isEmpty());
+
+			Id idCorrRT = controller.corrRT;
+			Boolean bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
+			Boolean bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
+			bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
+			bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
+
 		Test.stopTest();
 	}
 
 	@isTest static void test_OSCARCaseDetail2(){
+		Test.startTest();
+		
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
 		Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
@@ -78,7 +88,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		insert a;
 
-		Test.startTest();
+		
 
 			AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
 
