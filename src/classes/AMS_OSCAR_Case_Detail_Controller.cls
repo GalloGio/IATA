@@ -606,7 +606,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, //FM AMSU-1
-                        STEP6__c, Location_Class__c
+                        STEP6__c
                           from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
