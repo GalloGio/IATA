@@ -5,9 +5,8 @@
            standardStylesheets="false"
            applyBodyTag="false"
            applyHtmlTag="false"
-           docType="html-5.0"
            >
-<html>
+<html lang="en">
         <style>
             .moveup {
                 position: relative;
@@ -25,17 +24,22 @@
         <body>
 
         <script src="{!URLFOR($Resource.bootbox)}" />
-
+  <!--link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/-->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+  <!--script src="i18n/datepicker-ar.js"></script>
+  <script src="i18n/datepicker-fr.js"></script>
+  <script src="i18n/datepicker-he.js"></script>
+  <script src="i18n/datepicker-zh-TW.js"></script-->        
         
 
         <script type="text/javascript">
-
-                var j$ = jQuery.noConflict();
-
+                var $j = jQuery.noConflict();
                 var typeAccredSelected = '';
    
-                $(function () {
-                    j$('[data-toggle="tooltip"]').tooltip();
+                $j(function () {
+                    $j('[data-toggle="tooltip"]').tooltip();
                 })
 
                 function checkEligibility(isBankAccountChange){
@@ -73,7 +77,7 @@
 
                 function newnAccreditationApplicationNavigateTo() {
                     if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
-                        j$('#modalChooseAccreditationType').modal('toggle');
+                        $j('#modalChooseAccreditationType').modal('toggle');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
@@ -81,12 +85,12 @@
                 }
 
                 function modalChooseAccreditationTypeClose() {
-                    j$('#modalChooseAccreditationType').modal('toggle');
+                    $j('#modalChooseAccreditationType').modal('toggle');
                 }
 
                 function redirectAccreditationType() {
 
-                    typeAccredSelected = $('input[type=radio]:checked').val();
+                    typeAccredSelected = $j('input[type=radio]:checked').val();
 
                     if(typeAccredSelected == '') {
                         document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
@@ -101,18 +105,18 @@
 
                 function optOut() {
                     if('{!isIFAPContact}' == 'true') {
-                        j$('#ModalOptOut').modal('toggle');
+                        $('#ModalOptOut').modal('toggle');
                     } else {
                         bootbox.alert("{!$Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR}");
                     }
                 }
 
                 function modalModalOptOutClose() {
-                    j$('#ModalOptOut').modal('toggle');
+                    $('#ModalOptOut').modal('toggle');
                 }
 
                 function doOptOut() {
-                    j$('#ModalOptOut').modal('toggle');
+                    $('#ModalOptOut').modal('toggle');
                 }
 
                 function showFuturePastDates(){
@@ -132,6 +136,15 @@
                     }
                     */
                 }
+
+                $( function() {
+                    $( '#datepicker' ).datepicker( $.datepicker.regional[ "en" ] );
+
+                } );
+
+                $( "#datepicker" ).on( "change", function() {
+                    alert( $( this ).val() );
+                });
 
         </script>
     
@@ -220,6 +233,9 @@
                     <!--
                     Date: <apex:inputText value="{!newForm.Effective_Date_Of_Change__c}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> 
                 -->
+
+
+<!--
                 <apex:pageBlock id="step1Block">
                 <div class="form-group">
                                     <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
@@ -231,7 +247,7 @@
                                     </div>
                     </div>
                     </apex:pageBlock>
-                    
+    -->                
 
 
 
@@ -353,38 +369,7 @@
                 <br></br>
                 <br></br>
 
-
-
-
-
-                                <div class="form-group">                                    
-                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
-                                        * {!$Label.ANG_Effective_Date}  
-                                    </label>
-                                    <div class="col-lg-9" style="padding-top:7px"> 
-                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>                                        
-                                    </div>
-                                </div>
-
-                <!--Date: <apex:inputText value="{!optOutDate}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> -->
-
-                <!--
-
-                <apex:pageBlock >
-                    <apex:pageBlockSection>
-                        <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
-                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
-                        </apex:pageBlockSectionItem>
-                    </apex:pageBlockSection>
-                </apex:pageBlock>
-            -->
-
-
-                <!--div class="form-group">                               
-                    <apex:outputLabel value="{!$Label.ANG_Effective_Date}"/>
-                    <apex:inputField value="{!optOutDate}" onclick="showFuturePastDates();"/>
-                </div-->
+                    <p>Date: <input type="text" id="datepicker"/></p>
 
                 <br></br>
                 <br></br>
