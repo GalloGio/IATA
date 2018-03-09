@@ -2439,7 +2439,7 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-				if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c)){
+				if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c)){
                     
                     boolean isToValidate = true;
                     
