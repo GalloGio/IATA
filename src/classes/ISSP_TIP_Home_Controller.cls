@@ -34,15 +34,11 @@ public without sharing class ISSP_TIP_Home_Controller {
         con = DAL_ISSP.getContact(user.ContactId);
 
         //if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-        if (con.User_Portal_Status__c == 'Approved Admin' )
-            isAdmin = true;
+        if (con.User_Portal_Status__c == 'Approved Admin' ) isAdmin = true;
 
         acc = [SELECT id, recordtypeid, category__c FROM ACCOUNT WHERE ID = :con.AccountId];
 
-        if(acc.recordtypeid == STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider')
-        	btnEnabled = true;
-        else
-        	btnEnabled = false;
+        btnEnabled = (acc.recordtypeid == STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.category__c=='Payment Provider');
     }
 
     public List<Case> getCases(){
