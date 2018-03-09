@@ -72,6 +72,4 @@ public without sharing class ISSP_TIP_Home_Controller {
         return closedStatusesList;
     }
 
-
-	public void refresh(){}
 }
