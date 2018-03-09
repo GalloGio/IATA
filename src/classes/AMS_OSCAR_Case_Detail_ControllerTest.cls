@@ -221,13 +221,6 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			update accredForm;
 
-			AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != ''];
-
-			oscar.Account__c = a.Id;
-			oscar.Process__c = AMS_Utils.NEWHELITE;
-
-			update oscar;
-
 			Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
 
 			AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
