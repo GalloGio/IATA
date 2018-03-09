@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_AMS_Accreditation"
+<apex:page controller="ISSP_TIP_Home_Controller"
 cache="false"
 sidebar="false"
 showHeader="false"
@@ -12,6 +12,21 @@ applyHtmlTag="false"
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
   <c:ISSP_Header></c:ISSP_Header>
   <c:iss_ap_css />
+
+<script type="text/javascript">
+
+
+  $(document).ready(function () { 
+    changeRequestButtonStatus(); 
+  })
+
+  function changeRequestButtonStatus(){
+    //document.getElementById("requestButton").disabled = {!!btnEnabled}; 
+  }
+
+
+  </script>
+
 </head>
 
 
@@ -148,9 +163,15 @@ input + label {
 }
 </style>
 <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
-<body>
 
 
+
+<body onLoad="changeRequestButtonStatus()">
+<script type="text/javascript">
+  function tt (){
+    Alert("teste");
+  }
+</script>
   <div class="container">   
     <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
@@ -162,7 +183,7 @@ input + label {
     </div>
 
     
-    <div id='enrolment_certification' style= "padding-top: 50px; padding-bottom: 100px">
+    <div id='enrolment_certification' style= "padding-top: 50px; padding-bottom: 100px; ">
 
       <section name="left-side" class="col-md-8 col-sm-12">
         <section name="remittance-holding" class="row">
@@ -171,35 +192,70 @@ input + label {
               <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Payment Provider Enrolment/Certification</strong>
             </div>
           </header></section>
-            
+          
           <div style= "padding-top: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
-            <button id="requestRME" onclick="requestBalanceUpdate(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
+            <button id="requestButton" onclick="tt(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
           </div>
-
           
         </section>
       </div>
 
-      <div id='tipRequests' style= "padding-top: 50px; padding-bottom: 100px">
+      <div id='tipRequests' style= "padding-top: 50px; padding-bottom: 200px;">
 
-      <section name="left-side" class="col-md-8 col-sm-12">
-        <section name="remittance-holding" class="row">
-          <header class="col-xs-12">
-            <div class="section-header">
-              <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Ongoing TIP Requests</strong>
-            </div>
-          </header></section>
+        <section name="left-side" class="col-md-8 col-sm-12">
+          <section name="remittance-holding" class="row">
+            <header class="col-xs-12">
+              <div class="section-header">
+                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Ongoing TIP Requests</strong>
+              </div>
+            </header></section>
 
-          
-          case list in here
+            <apex:pageBlock>
+            <apex:form>
+            <hr />
+            <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
+            <apex:column > 
+            <apex:facet name="header">
+            {!$ObjectType.Case.fields.CaseNumber.label}
+          </apex:facet>
+          <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
+        </apex:column>
+
+        <apex:column  >
+        <apex:facet name="header">
+        Subject
+      </apex:facet>
+      {!item.subject}
+    </apex:column>
+
+    <apex:column  >
+    <apex:facet name="header">
+    Status
+  </apex:facet>
+  {!item.status}
+</apex:column>
+
+<apex:column  >
+<apex:facet name="header">
+Date time-opened
+</apex:facet>
+  {!item.createddate}
+</apex:column>
 
 
-        </section>
-      </div>
+</apex:pageBlockTable>
+</apex:form>
+</apex:pageBlock>
 
-      <c:ISSP_CustomFooter communityName="{!communityName}"/>
-    </div><!-- end container-->
+</section>
+</div>
 
-  </body>  
-  </html>
-</apex:page>
+<div>
+<c:ISSP_CustomFooter communityName="{!communityName}" />
+</div>
+
+</div><!-- end container-->
+
+</body>  
+</html>
+    </apex:page>
