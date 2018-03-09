@@ -6352,6 +6352,57 @@
           }
       
       ]
+      },
+      {
+        "Name": "ANG.ANNUAL.REVALIDATION",
+        "Flows": [
+          {
+            "Name": "ANG_NON_COMPLIANCE",
+            "Steps": [
+              {
+                "Name": "STEP43",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "SIDRALiteAction",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid", "43"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "Administrative_non_compliance_date__c",
+                  "STEP43__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                "Documentation_remarks__c",
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }   
     ]
   }

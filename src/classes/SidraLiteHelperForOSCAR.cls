@@ -17,6 +17,7 @@ public with sharing class SidraLiteHelperForOSCAR {
         '14' => 'Non submission of PSAA',
         '26' => 'Late/Absence of Notification of Change',
         '35' => 'Financial Security Non-compliance (OSCAR Change)',
+        '43' => 'Annual Revalidation Non-Compliance',
         'RPM' => 'Change Deficiency',
         'DGR' => 'Failure to submit DGR certificate by deadline'
     };

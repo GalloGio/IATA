@@ -169,6 +169,7 @@ public without sharing class AMS_Utils {
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
+    public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
 
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
