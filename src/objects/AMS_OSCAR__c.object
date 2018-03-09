@@ -40,6 +40,2181 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Information__c</fullName>
+        <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
+        <externalId>false</externalId>
+        <label>Additional Information</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Base_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Base URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>AmazonFiles</relationshipLabel>
+        <relationshipName>AmazonFiles</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contractual</fullName>
+                    <default>false</default>
+                    <label>Contractual</label>
+                </value>
+                <value>
+                    <fullName>Meeting Minutes</fullName>
+                    <default>false</default>
+                    <label>Meeting Minutes</label>
+                </value>
+                <value>
+                    <fullName>Client Pricing or Charges</fullName>
+                    <default>false</default>
+                    <label>Client Pricing or Charges</label>
+                </value>
+                <value>
+                    <fullName>Garnishee/Sanctions</fullName>
+                    <default>false</default>
+                    <label>Garnishee/Sanctions</label>
+                </value>
+                <value>
+                    <fullName>VAT Certificate</fullName>
+                    <default>false</default>
+                    <label>VAT Certificate</label>
+                </value>
+                <value>
+                    <fullName>Operating License/Certificate</fullName>
+                    <default>false</default>
+                    <label>Operating License/Certificate</label>
+                </value>
+                <value>
+                    <fullName>Aircraft/Fleet Information</fullName>
+                    <default>false</default>
+                    <label>Aircraft/Fleet Information</label>
+                </value>
+                <value>
+                    <fullName>Operational Calendars</fullName>
+                    <default>false</default>
+                    <label>Operational Calendars</label>
+                </value>
+                <value>
+                    <fullName>Debt Management</fullName>
+                    <default>false</default>
+                    <label>Debt Management</label>
+                </value>
+                <value>
+                    <fullName>Communications</fullName>
+                    <default>false</default>
+                    <label>Communications</label>
+                </value>
+                <value>
+                    <fullName>Ad-Hoc Report</fullName>
+                    <default>false</default>
+                    <label>Ad-Hoc Report</label>
+                </value>
+                <value>
+                    <fullName>Audit</fullName>
+                    <default>false</default>
+                    <label>Audit</label>
+                </value>
+                <value>
+                    <fullName>Miscellaneous</fullName>
+                    <default>false</default>
+                    <label>Miscellaneous</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Document Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Created_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have originally provided the document to IATA.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have originally provided the document to IATA.</inlineHelpText>
+        <label>E&amp;F Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Created_On__c</fullName>
+        <description>For storing the original creation date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The original creation date of the document.</inlineHelpText>
+        <label>E&amp;F Created On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>EF_Enterprise_Keywords__c</fullName>
+        <description>For storing keywords regarding a document and a related company.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing keywords regarding a document and a related company.</inlineHelpText>
+        <label>E&amp;F Enterprise Keywords</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have modified the related document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have modified the related document.</inlineHelpText>
+        <label>E&amp;F Modified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_On__c</fullName>
+        <description>For storing the last modified date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The last modified date of the document.</inlineHelpText>
+        <label>E&amp;F Modified On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>EF_Private__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Private</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Expiry_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>File_Identifier__c</fullName>
+        <externalId>false</externalId>
+        <label>File Identifier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Identifier_picklist__c</fullName>
+        <externalId>false</externalId>
+        <label>File Identifier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ACC_GRMNY</fullName>
+                    <default>false</default>
+                    <label>ACC_GRMNY</label>
+                </value>
+                <value>
+                    <fullName>ACRA_PROFILE</fullName>
+                    <default>false</default>
+                    <label>ACRA_PROFILE</label>
+                </value>
+                <value>
+                    <fullName>AIR_SERV_CERT</fullName>
+                    <default>false</default>
+                    <label>AIR_SERV_CERT</label>
+                </value>
+                <value>
+                    <fullName>AIRLN_REF</fullName>
+                    <default>false</default>
+                    <label>AIRLN_REF</label>
+                </value>
+                <value>
+                    <fullName>ARTICLES_ASSOC</fullName>
+                    <default>false</default>
+                    <label>ARTICLES_ASSOC</label>
+                </value>
+                <value>
+                    <fullName>ASCERT_CERT</fullName>
+                    <default>false</default>
+                    <label>ASCERT_CERT</label>
+                </value>
+                <value>
+                    <fullName>BNK_ACCNT_DTLS</fullName>
+                    <default>false</default>
+                    <label>BNK_ACCNT_DTLS</label>
+                </value>
+                <value>
+                    <fullName>BNK_REF</fullName>
+                    <default>false</default>
+                    <label>BNK_REF</label>
+                </value>
+                <value>
+                    <fullName>BR_REG_CERT</fullName>
+                    <default>false</default>
+                    <label>BR_REG_CERT</label>
+                </value>
+                <value>
+                    <fullName>CERT_ACCIONISTAS</fullName>
+                    <default>false</default>
+                    <label>CERT_ACCIONISTAS</label>
+                </value>
+                <value>
+                    <fullName>CGO_SIGNED_CONTRACT</fullName>
+                    <default>false</default>
+                    <label>CGO_SIGNED_CONTRACT</label>
+                </value>
+                <value>
+                    <fullName>COMM_CHMBR_CERT</fullName>
+                    <default>false</default>
+                    <label>COMM_CHMBR_CERT</label>
+                </value>
+                <value>
+                    <fullName>CORPORATE_SEAL</fullName>
+                    <default>false</default>
+                    <label>CORPORATE_SEAL</label>
+                </value>
+                <value>
+                    <fullName>CRMNL_REC</fullName>
+                    <default>false</default>
+                    <label>CRMNL_REC</label>
+                </value>
+                <value>
+                    <fullName>CV</fullName>
+                    <default>false</default>
+                    <label>CV</label>
+                </value>
+                <value>
+                    <fullName>DATA_PROT</fullName>
+                    <default>false</default>
+                    <label>DATA_PROT</label>
+                </value>
+                <value>
+                    <fullName>DIRECT_DEBIT</fullName>
+                    <default>false</default>
+                    <label>DIRECT_DEBIT</label>
+                </value>
+                <value>
+                    <fullName>FIN_STATEMENTS</fullName>
+                    <default>false</default>
+                    <label>FIN_STATEMENTS</label>
+                </value>
+                <value>
+                    <fullName>FINANCIAL_CONTACT</fullName>
+                    <default>false</default>
+                    <label>FINANCIAL_CONTACT</label>
+                </value>
+                <value>
+                    <fullName>ID_PASSP</fullName>
+                    <default>false</default>
+                    <label>ID_PASSP</label>
+                </value>
+                <value>
+                    <fullName>LEGAL_DOCS</fullName>
+                    <default>false</default>
+                    <label>LEGAL_DOCS</label>
+                </value>
+                <value>
+                    <fullName>LETTERHEAD</fullName>
+                    <default>false</default>
+                    <label>LETTERHEAD</label>
+                </value>
+                <value>
+                    <fullName>LOI</fullName>
+                    <default>false</default>
+                    <label>LOI</label>
+                </value>
+                <value>
+                    <fullName>LTR_APT_CPY_CNTRCT</fullName>
+                    <default>false</default>
+                    <label>LTR_APT_CPY_CNTRCT</label>
+                </value>
+                <value>
+                    <fullName>MISC_DOCS</fullName>
+                    <default>false</default>
+                    <label>MISC_DOCS</label>
+                </value>
+                <value>
+                    <fullName>OFFICE_LEASE</fullName>
+                    <default>false</default>
+                    <label>OFFICE_LEASE</label>
+                </value>
+                <value>
+                    <fullName>PHOTOS_INT_EXT</fullName>
+                    <default>false</default>
+                    <label>PHOTOS_INT_EXT</label>
+                </value>
+                <value>
+                    <fullName>PREV_BNK_GRNT</fullName>
+                    <default>false</default>
+                    <label>PREV_BNK_GRNT</label>
+                </value>
+                <value>
+                    <fullName>PREV_OWN_ARTC</fullName>
+                    <default>false</default>
+                    <label>PREV_OWN_ARTC</label>
+                </value>
+                <value>
+                    <fullName>PRTNR_CONTR</fullName>
+                    <default>false</default>
+                    <label>PRTNR_CONTR</label>
+                </value>
+                <value>
+                    <fullName>REG_CERT</fullName>
+                    <default>false</default>
+                    <label>REG_CERT</label>
+                </value>
+                <value>
+                    <fullName>RENTAL_AGREEMENT</fullName>
+                    <default>false</default>
+                    <label>RENTAL_AGREEMENT</label>
+                </value>
+                <value>
+                    <fullName>REZ_PERMT</fullName>
+                    <default>false</default>
+                    <label>REZ_PERMT</label>
+                </value>
+                <value>
+                    <fullName>SCAA</fullName>
+                    <default>false</default>
+                    <label>SCAA</label>
+                </value>
+                <value>
+                    <fullName>SEC_SYST_SPECS</fullName>
+                    <default>false</default>
+                    <label>SEC_SYST_SPECS</label>
+                </value>
+                <value>
+                    <fullName>SHARE_CAP_CERT</fullName>
+                    <default>false</default>
+                    <label>SHARE_CAP_CERT</label>
+                </value>
+                <value>
+                    <fullName>SIGN_SPEC</fullName>
+                    <default>false</default>
+                    <label>SIGN_SPEC</label>
+                </value>
+                <value>
+                    <fullName>SOLV_STTMNT</fullName>
+                    <default>false</default>
+                    <label>SOLV_STTMNT</label>
+                </value>
+                <value>
+                    <fullName>SRTY_BOND</fullName>
+                    <default>false</default>
+                    <label>SRTY_BOND</label>
+                </value>
+                <value>
+                    <fullName>SS_CERT</fullName>
+                    <default>false</default>
+                    <label>SS_CERT</label>
+                </value>
+                <value>
+                    <fullName>STAFF_LIST</fullName>
+                    <default>false</default>
+                    <label>STAFF_LIST</label>
+                </value>
+                <value>
+                    <fullName>STEERING_COMM</fullName>
+                    <default>false</default>
+                    <label>STEERING_COMM</label>
+                </value>
+                <value>
+                    <fullName>TAX_CERT</fullName>
+                    <default>false</default>
+                    <label>TAX_CERT</label>
+                </value>
+                <value>
+                    <fullName>TAX_DECL</fullName>
+                    <default>false</default>
+                    <label>TAX_DECL</label>
+                </value>
+                <value>
+                    <fullName>TOUR_OP_REG</fullName>
+                    <default>false</default>
+                    <label>TOUR_OP_REG</label>
+                </value>
+                <value>
+                    <fullName>TOURISM_LICENSE</fullName>
+                    <default>false</default>
+                    <label>TOURISM_LICENSE</label>
+                </value>
+                <value>
+                    <fullName>UK_MNY_LNDRNG_LG_FRM</fullName>
+                    <default>false</default>
+                    <label>UK_MNY_LNDRNG_LG_FRM</label>
+                </value>
+                <value>
+                    <fullName>VAT_REG</fullName>
+                    <default>false</default>
+                    <label>VAT_REG</label>
+                </value>
+                <value>
+                    <fullName>WAREHOUSE_LEASE</fullName>
+                    <default>false</default>
+                    <label>WAREHOUSE_LEASE</label>
+                </value>
+                <value>
+                    <fullName>WAREHOUSE_SUBCONTRACTED</fullName>
+                    <default>false</default>
+                    <label>WAREHOUSE_SUBCONTRACTED</label>
+                </value>
+                <value>
+                    <fullName>DGR_CERT</fullName>
+                    <default>false</default>
+                    <label>DGR_CERT</label>
+                </value>
+                <value>
+                    <fullName>DGA_CERT</fullName>
+                    <default>false</default>
+                    <label>DGA_CERT</label>
+                </value>
+                <value>
+                    <fullName>NON_DG_DECL</fullName>
+                    <default>false</default>
+                    <label>NON_DG_DECL</label>
+                </value>
+                <value>
+                    <fullName>CGO_INTRO_CERT</fullName>
+                    <default>false</default>
+                    <label>CGO_INTRO_CERT</label>
+                </value>
+                <value>
+                    <fullName>NOC_SIGNED_CONTRACT</fullName>
+                    <default>false</default>
+                    <label>NOC_SIGNED_CONTRACT</label>
+                </value>
+                <value>
+                    <fullName>APP_FORM</fullName>
+                    <default>false</default>
+                    <label>APP_FORM</label>
+                </value>
+                <value>
+                    <fullName>CASS_FORM</fullName>
+                    <default>false</default>
+                    <label>CASS_FORM</label>
+                </value>
+                <value>
+                    <fullName>OTHERS</fullName>
+                    <default>false</default>
+                    <label>OTHERS</label>
+                </value>
+                <value>
+                    <fullName>PCI_COMPLIANCE</fullName>
+                    <default>false</default>
+                    <label>PCI_COMPLIANCE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Full_Name_Unique__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>false</externalId>
+        <label>Full Name (Unique)</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Internal_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Comments</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Owner_Email__c</fullName>
+        <defaultValue>$User.Email</defaultValue>
+        <externalId>false</externalId>
+        <label>Owner Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Review_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Review Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>true</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Accepted</fullName>
+                    <default>false</default>
+                    <label>Accepted</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Rejected Closed</fullName>
+                    <default>false</default>
+                    <label>Rejected Closed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SAP_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Size_MB__c</fullName>
+        <externalId>false</externalId>
+        <label>Size MB</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Skip_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Skip Validation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Source</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Portal</fullName>
+                    <default>false</default>
+                    <label>Portal</label>
+                </value>
+                <value>
+                    <fullName>Internal</fullName>
+                    <default>false</default>
+                    <label>Internal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Subcategory__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Category__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contract/Amendment</fullName>
+                    <default>false</default>
+                    <label>Contract/Amendment</label>
+                </value>
+                <value>
+                    <fullName>Notam/AIP</fullName>
+                    <default>false</default>
+                    <label>Notam/AIP</label>
+                </value>
+                <value>
+                    <fullName>Signatory Authority</fullName>
+                    <default>false</default>
+                    <label>Signatory Authority</label>
+                </value>
+                <value>
+                    <fullName>Bank</fullName>
+                    <default>false</default>
+                    <label>Bank</label>
+                </value>
+                <value>
+                    <fullName>Termination</fullName>
+                    <default>false</default>
+                    <label>Termination</label>
+                </value>
+                <value>
+                    <fullName>Signatory Authentication</fullName>
+                    <default>false</default>
+                    <label>Signatory Authentication</label>
+                </value>
+                <value>
+                    <fullName>Proof of legal existence</fullName>
+                    <default>false</default>
+                    <label>Proof of legal existence</label>
+                </value>
+                <value>
+                    <fullName>Deal Value Calculation</fullName>
+                    <default>false</default>
+                    <label>Deal Value Calculation</label>
+                </value>
+                <value>
+                    <fullName>Implementation Summary</fullName>
+                    <default>false</default>
+                    <label>Implementation Summary</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+                <value>
+                    <fullName>Client</fullName>
+                    <default>false</default>
+                    <label>Client</label>
+                </value>
+                <value>
+                    <fullName>Airline Status</fullName>
+                    <default>false</default>
+                    <label>Airline Status</label>
+                </value>
+                <value>
+                    <fullName>Legal Case</fullName>
+                    <default>false</default>
+                    <label>Legal Case</label>
+                </value>
+                <value>
+                    <fullName>Funds Management</fullName>
+                    <default>false</default>
+                    <label>Funds Management</label>
+                </value>
+                <value>
+                    <fullName>Campaign</fullName>
+                    <default>false</default>
+                    <label>Campaign</label>
+                </value>
+                <value>
+                    <fullName>Inbound letter/fax</fullName>
+                    <default>false</default>
+                    <label>Inbound letter/fax</label>
+                </value>
+                <value>
+                    <fullName>Outbound letter/fax</fullName>
+                    <default>false</default>
+                    <label>Outbound letter/fax</label>
+                </value>
+                <value>
+                    <fullName>Circular/Notification</fullName>
+                    <default>false</default>
+                    <label>Circular/Notification</label>
+                </value>
+                <value>
+                    <fullName>AML Forms</fullName>
+                    <default>false</default>
+                    <label>AML Forms</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Contract/Amendment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Notam/AIP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Signatory Authority</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Bank</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Termination</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Signatory Authentication</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Proof of legal existence</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Deal Value Calculation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>Implementation Summary</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Contractual</controllingFieldValue>
+                <valueName>AML Forms</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>BSP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>ICH</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Operational Calendars</controllingFieldValue>
+                <valueName>Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Airline Status</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Legal Case</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Debt Management</controllingFieldValue>
+                <valueName>Funds Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Campaign</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Inbound letter/fax</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Outbound letter/fax</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Communications</controllingFieldValue>
+                <valueName>Circular/Notification</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>isPublic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If this record is visible or not in the Portal</description>
+        <externalId>false</externalId>
+        <label>Public</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>sObject_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>sObject Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>AmazonFile</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>AmazonFile Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>AmazonFiles</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>AMS_File</fullName>
+        <active>true</active>
+        <label>AMS File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>File_Identifier_picklist__c</picklist>
+            <values>
+                <fullName>ACC_GRMNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACRA_PROFILE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIRLN_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIR_SERV_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARTICLES_ASSOC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASCERT_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_ACCNT_DTLS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR_REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CERT_ACCIONISTAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_INTRO_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COMM_CHMBR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORPORATE_SEAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRMNL_REC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DATA_PROT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DIRECT_DEBIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FINANCIAL_CONTACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN_STATEMENTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_PASSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LEGAL_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LETTERHEAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LOI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTR_APT_CPY_CNTRCT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MISC_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOC_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NON_DG_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OTHERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHOTOS_INT_EXT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_BNK_GRNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_OWN_ARTC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRTNR_CONTR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RENTAL_AGREEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REZ_PERMT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCAA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEC_SYST_SPECS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHARE_CAP_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIGN_SPEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOLV_STTMNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRTY_BOND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STAFF_LIST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STEERING_COMM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOURISM_LICENSE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOUR_OP_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UK_MNY_LNDRNG_LG_FRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_SUBCONTRACTED</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Review_Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected Closed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EF_File</fullName>
+        <active>true</active>
+        <label>E&amp;F File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>File_Identifier_picklist__c</picklist>
+            <values>
+                <fullName>ACC_GRMNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACRA_PROFILE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIRLN_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIR_SERV_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARTICLES_ASSOC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASCERT_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_ACCNT_DTLS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR_REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CERT_ACCIONISTAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_INTRO_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COMM_CHMBR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORPORATE_SEAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRMNL_REC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DATA_PROT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DIRECT_DEBIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FINANCIAL_CONTACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN_STATEMENTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_PASSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LEGAL_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LETTERHEAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LOI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTR_APT_CPY_CNTRCT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MISC_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOC_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NON_DG_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+				<fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHOTOS_INT_EXT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_BNK_GRNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_OWN_ARTC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRTNR_CONTR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RENTAL_AGREEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REZ_PERMT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCAA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEC_SYST_SPECS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHARE_CAP_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIGN_SPEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOLV_STTMNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRTY_BOND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STAFF_LIST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STEERING_COMM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOURISM_LICENSE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOUR_OP_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UK_MNY_LNDRNG_LG_FRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_SUBCONTRACTED</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Review_Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected Closed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>AML Forms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>File</fullName>
+        <active>true</active>
+        <label>File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>File_Identifier_picklist__c</picklist>
+            <values>
+                <fullName>ACC_GRMNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACRA_PROFILE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIRLN_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIR_SERV_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARTICLES_ASSOC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASCERT_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_ACCNT_DTLS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BNK_REF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR_REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CERT_ACCIONISTAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_INTRO_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COMM_CHMBR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORPORATE_SEAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRMNL_REC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DATA_PROT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DIRECT_DEBIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FINANCIAL_CONTACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN_STATEMENTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_PASSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LEGAL_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LETTERHEAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LOI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTR_APT_CPY_CNTRCT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MISC_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOC_SIGNED_CONTRACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NON_DG_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+				<fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>PHOTOS_INT_EXT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_BNK_GRNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PREV_OWN_ARTC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRTNR_CONTR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RENTAL_AGREEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REZ_PERMT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCAA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEC_SYST_SPECS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHARE_CAP_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIGN_SPEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOLV_STTMNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRTY_BOND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STAFF_LIST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STEERING_COMM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAX_DECL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOURISM_LICENSE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOUR_OP_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UK_MNY_LNDRNG_LG_FRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT_REG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WAREHOUSE_SUBCONTRACTED</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Review_Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Case__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Full_Name_Unique__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
     <allowInChatterGroups>true</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
@@ -1522,6 +3697,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <fullName>FIN - Application Finalized</fullName>
                     <default>false</default>
                     <label>FIN - Application Finalized</label>
+				</value>
+                <value>
+                    <fullName>PCI</fullName>
+                    <default>false</default>
+					<label>PCI</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1566,9 +3746,9 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <label>Swap with the parent</label>
                 </value>
                 <value>
-                    <fullName>Don’t change the parent</fullName>
+                    <fullName>Donâ€™t change the parent</fullName>
                     <default>false</default>
-                    <label>Don’t change the parent</label>
+                    <label>Donâ€™t change the parent</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2616,6 +4796,11 @@ Format: YYYY</inlineHelpText>
                     <fullName>No</fullName>
                     <default>false</default>
                     <label>No</label>
+				</value>
+                <value>
+                    <fullName>Nil CC</fullName>
+                    <default>false</default>
+					<label>Nil CC</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3225,6 +5410,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>ANG.FOPMANAGEMENT.1.0</fullName>
                     <default>false</default>
                     <label>ANG.FOPMANAGEMENT.1.0</label>
+				</value>
+                <value>
+                    <fullName>PCI.COMPLIANT.1.0</fullName>
+                    <default>false</default>
+					<label>PCI.COMPLIANT.1.0</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3435,13 +5625,13 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 
       )
     ,IF(RecordType.DeveloperName=&quot;CHANGE&quot;, 
-        IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;CHG – Data Maintenance&quot;
-        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS – Change of Ownership / Legal Status&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC – Change of Shareholding&quot;
+        IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;CHG â€“ Data Maintenance&quot;
+        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS â€“ Change of Ownership / Legal Status&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC â€“ Change of Shareholding&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
         ,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG â€“ Data Maintenance&quot;
         ,&quot;&quot;  )))))))
     , &quot;&quot;)
    )</formula>
@@ -23305,6 +25495,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>NEW - New Application</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>PCI</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
@@ -23470,6 +25664,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -23560,6 +25769,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI%2ECOMPLIANT%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29108,6 +31321,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38220,6 +40448,32 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>AMS_PCI_Expiry_Date_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+	OR(
+		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+	),
+	OR(
+		AND(
+			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c)
+		),
+		AND(
+			RecordType.DeveloperName = &apos;NEW&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c),
+			OR(
+				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+				TEXT(Process__c) == &apos;NEW.BR&apos;
+			)
+		)	
+	)
+)</errorConditionFormula>
+        <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
@@ -38516,5 +40770,25 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <protected>false</protected>
         <requireRowSelection>true</requireRowSelection>
         <url>javascript:srcUp(&quot;/apex/OSCARWizzardFlowPage&quot;);</url>
+    </webLinks>
+</CustomObject>
+    <webLinks>
+        <fullName>Download</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Download</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+var id = sforce.apex.execute(&quot;AMS_OSCAR_Attachments&quot;,&quot;getExpiringLinkWS&quot;, 
+{fileName:&apos;{!AmazonFile__c.Full_Name_Unique__c}&apos;}); 
+var result2= String(id).replace(&quot;&amp;amp;&quot;,&quot;&amp;&quot;); 
+var newWin = window.open(result2); 
+if(!newWin || newWin.closed || typeof newWin.closed==&apos;undefined&apos;){ 
+alert(&apos;{!$Label.Check_popup_settings}&apos;); 
+}</url>
     </webLinks>
 </CustomObject>
