@@ -1,0 +1,907 @@
+<apex:page controller="ISSP_AMS_Accreditation"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           language="{!displayLanguage}"
+
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           >
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <c:iss_ap_css />
+        <c:ISSP_WaitingStatus />    
+        <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.datePickerFix)}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+        
+    <style>
+        .datePicker{
+            z-index:9999;
+        }
+        .ui-autocomplete{  
+            z-index:9999 !important;
+        }
+        .ui-dialog{  
+            z-index:9999 !important;
+        }
+        .adlabel  {
+         font-size: 91%;
+         text-align: right;
+         }
+         
+         .address-label {
+           padding-left:30px;
+         }
+        .pbTitle {
+            width: {!IF(isstep2,'90% !important','40% !important')};
+        }
+       
+       .pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+        
+        body .bPageBlock .pbBody .pbSubheader{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+        
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+                   
+        .dataCol {
+          padding-left:0px !important;
+        }
+                   
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+
+        .statusIcon {
+            margin-left: 2px;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%}
+            
+            .email-input {width: 180px;float:left;margin-left:11px}
+            .email-label {
+         		font-size:91%;
+                float:left;
+                padding-left:18px;
+                width:185px
+            }
+                
+            .address-label {
+                float: left;
+                width: 185px !important;
+            }
+            .address-input {
+                width: 185px;
+                float:left;
+            }
+            .address-status {
+                float:left;
+            }
+            
+            .text-label-no-margin {
+                margin-left: 0px !important;
+            }
+                   
+            .phone-input {width: 173px;float:left;margin-left:105px}
+         	.phone-label {
+                width: 182px;
+                text-align: left;
+                font-size:91%;
+                float: left;
+            }
+           
+           .branch_office_email__c {
+               width: 178px;
+          	}
+            
+            .email__c {
+               width: 174px;
+          	}
+                   
+           label {
+              float: left;
+              margin-left: 20px;
+           }
+           
+           input + label {
+               margin-left:0px;
+               float: none;
+               padding-left:4px
+           }
+
+    </style>
+    
+    <script type="text/javascript">
+    var $j = jQuery.noConflict();
+                   
+    var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
+    var isEUcountry = {!isEUcountry};
+
+    $j(function(){ $j('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
+
+    $j(function () {
+        $j('[data-toggle="tooltip"]').tooltip();
+    })
+
+
+    $j(document).ready(function() {
+        $j(".country__c").val("{!isocountry.Name}");
+        $j(".country__c").attr('readonly', true);
+        $j(".country__c").attr('disabled','disabled');
+        $j(".email-label label").text("{!$Label.OneId_Profile_OfficeEmail} *");
+        $j(".phoneLabelText").hide();
+        $j("#phone").hide();
+        $j("#branch_office_phone__c").hide();
+        $j("#BranchPhoneSection").hide();
+    });
+
+    function closeModal() {
+
+        $j(function() {
+            $j( '#addNewContactModal' ).modal('hide');
+            clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+      });
+
+    }
+                   
+    function closeUpdateOwnerModal() {
+
+        $j(function() {
+            $j( '#updateOwnerModal' ).modal('hide');
+            clearForm('{!$Component.updateOwner}', '{!$Component.updateOwner.contactBlock.contactcountry}');
+      });
+
+    }
+
+    function closeModalWithConsoleLogComment() {
+
+        $j(function() {
+            $j( '#addNewContactModal' ).modal('hide');
+            clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+      });
+
+    }
+
+    function closeModal2() {
+        $j(function() {
+            $j( '#addNewCompanyModal' ).modal('hide');
+            clearForm('{!$Component.newCompany}', '{!$Component.newContact.contactBlock.contactcountry}');
+      });
+    }
+
+    function closeModal3() {
+        $j(function() {
+            $j( '#updateAgencyModal' ).modal('hide');
+      });
+    }
+
+    function closeModal4() {
+        $j(function() {
+            $j( '#addNewSalesModal' ).modal('hide');
+            clearForm('{!$Component.newSales}', '');
+      });
+    }
+
+    function clearForm(fname, ctryfield) {
+        var oForm = document.forms[fname];
+        var elements = oForm.elements;
+        oForm.reset();
+
+    for(i=0; i<elements.length; i++) {
+
+        field_type = elements[i].type.toLowerCase();
+
+        switch(field_type) {
+
+        case "text":
+                elements[i].value = "";
+                break;
+        case "password":
+        case "textarea":
+            case "hidden":
+
+            elements[i].value = "";
+            break;
+
+        case "radio":
+        case "checkbox":
+            if (elements[i].checked) {
+                elements[i].checked = false;
+            }
+            break;
+
+        case "select-one":
+        case "select-multi":
+                    elements[i].selectedIndex = -1;
+                    break;
+        default:
+            break;
+            }
+        }
+
+        //Reset all the previous employment fields
+        document.getElementById('{!$Component.newContact.contactBlock.prevWorkedFor}').disabled=true;
+        document.getElementById('prevJobsLabel').innerHTML = '';
+
+        document.getElementById('{!$Component.newContact.contactBlock.job1accredited}').checked=false;
+        document.getElementById('{!$Component.newContact.contactBlock.iatacode1}').disabled=true;
+        document.getElementById('{!$Component.newContact.contactBlock.job1employer}').disabled=false;
+        document.getElementById('{!$Component.newContact.contactBlock.job1address}').disabled=false;
+        document.getElementById('job1').style.display='none';
+
+        document.getElementById('{!$Component.newContact.contactBlock.job2accredited}').checked=false;
+        document.getElementById('{!$Component.newContact.contactBlock.iatacode2}').disabled=true;
+        document.getElementById('{!$Component.newContact.contactBlock.job2employer}').disabled=false;
+        document.getElementById('{!$Component.newContact.contactBlock.job2address}').disabled=false;
+        document.getElementById('job2').style.display='none';
+        
+        
+    }
+
+    function IsNumeric(input)
+    {
+        return (input - 0) == input && (''+input).trim().length > 0;
+    }
+
+    function showNewContactDialog() {
+        $j(function() {
+            $j( '#addNewContactModal').modal('show');
+            $j( '.datePicker').css('position','fixed');
+      });
+    }
+    
+    function showUpdateOwnerDialog() {
+        $j(function() {
+            $j( '#updateOwnerModal').modal('show');
+            $j( '.datePicker').css('position','fixed');
+      });
+    }
+
+     function showNewCompanyDialog() {
+        $j(function() {
+            $j( '#addNewCompanyModal').modal('show');
+      });
+    }
+
+    function showUpdateAgencyDialog() {
+        $j(function() {            
+            $j(".billingcountry").attr('readonly', true);
+            $j(".billingcountry").attr('disabled', 'disabled');
+      });
+    }
+
+    function showNewSalesDialog() {
+        $j(function() {
+            $j( '#addNewSalesModal').modal('show');
+      });
+    }
+
+    function toggleDefaultDetails(myValue){
+        //  alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+                document.getElementById('txtDefaultDetails').style.display='block';
+             } else {
+                document.getElementById('txtDefaultDetails').style.display='none';
+             }
+    }
+
+    function toggleInternationalSales(myValue, salesId){
+        //  alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+                document.getElementById('InternationalSales').style.display='block';
+             } else {
+                document.getElementById('InternationalSales').style.display='none';
+             }
+    }
+
+    function toggleLegalStatus(myValue){
+        var theValue = document.getElementById(myValue).value;
+        if (theValue == 'Corporation') {
+            $j("#corporatedetails").show();
+            $j("#multi-owners").show();
+        } else if (theValue == 'Sole Proprietorship' || theValue == 'State Owned Enterprise'){
+            $j("#corporatedetails").hide();
+            $j("#multi-owners").hide();
+        } else {
+            $j("#multi-owners").show();
+            $j("#corporatedetails").hide();
+        }
+        setHeaderLabels(theValue.toLowerCase());
+    }
+    
+    function retAddressCompUrl(){
+        return 'https://iata--newportal--dse.cs18.visual.force.com/apex/DS_AccountDQPage?id=' + '{!con.AccountId}' + '&isdtp=vw';
+    }
+
+    var ownerModalFields = [];
+    ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactStreet}";
+    ownerModalFields[1] = "{!$Component.newContact.contactBlock.contactCity}";
+    ownerModalFields[2] = "{!$Component.newContact.contactBlock.contactPostalCode}";
+    ownerModalFields[3] = "{!$Component.newContact.contactBlock.contactCountry}";
+    ownerModalFields[4] = "{!$Component.newContact.contactBlock.contactFinInterest}";
+    ownerModalFields[5] = "{!$Component.newContact.contactBlock.contactTimeToBusiness}";
+    ownerModalFields[6] = "{!$Component.newContact.contactBlock.contactJoinDate}";
+    ownerModalFields[7] = "{!$Component.newContact.contactBlock.contactJobTitle}";
+
+    $j(document).ready(function() {
+        document.getElementById(ownerModalFields[3]).value = '{!JSENCODE(amsCountryLabel)}';
+        document.getElementById(ownerModalFields[3]).disabled = true;
+        //replaceShippingTXT(document.body);
+        console.log('vHQAccountId: ' + retAddressCompUrl());
+    });
+
+    function removeReq(){
+        $j('[id$=legalname]').unwrap().prev('.requiredBlock').remove();
+    }
+
+    function toggleModalContactFields(ownerId, managerId, prevWorkId) {
+            if (!document.getElementById(ownerId).checked && !document.getElementById(managerId).checked){
+                togglePreviousEmploy('');
+                document.getElementById(ownerModalFields[6]).value = null;
+            }
+
+            if(document.getElementById(ownerId).checked  || document.getElementById(managerId).checked ){
+                document.getElementById(prevWorkId).disabled=false;
+            } else {
+                document.getElementById(prevWorkId).disabled=true;
+                document.getElementById(prevWorkId).value = null;
+            }
+
+            if(document.getElementById(ownerId).checked){
+                for (index = 0; index < (ownerModalFields.length -1); index++) {
+                    document.getElementById(ownerModalFields[index]).disabled = false;
+                }                
+                $j('[id$=contactStreet]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');           
+                $j('[id$=contactCity]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');           
+                $j('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');         
+                $j('[id$=contactTimeToBusiness]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');         
+                $j('[id$=contactBlock]').find('.contactcountry').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
+            } else {
+                 for (index = 0; index < (ownerModalFields.length -2); index++) {
+                    document.getElementById(ownerModalFields[index]).disabled = true;
+                    document.getElementById(ownerModalFields[index]).value = null;
+                }
+                document.getElementById(ownerModalFields[6]).disabled = true;
+                 if($j('[id$=contactStreet]').parent().is('div')) {
+                    $j('[id$=contactStreet]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactCity]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactTimeToBusiness]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactBlock]').find('.contactcountry').unwrap().prev('.requiredBlock').remove();
+                }
+            }
+
+            if(document.getElementById(managerId).checked) {
+                document.getElementById(ownerModalFields[7]).disabled = false;
+             } else {
+                 document.getElementById(ownerModalFields[7]).disabled = true;
+                 document.getElementById(ownerModalFields[7]).value = null;
+            }
+
+            if(!document.getElementById(ownerId).checked && document.getElementById(managerId).checked) {
+               for  (index = 0; index < (ownerModalFields.length - 2); index++) {
+                    document.getElementById(ownerModalFields[index]).disabled = true;
+                    document.getElementById(ownerModalFields[index]).value = null;
+                }
+                           
+                document.getElementById(ownerModalFields[6]).disabled = false;
+                document.getElementById(ownerModalFields[7]).disabled = false;
+            }
+        
+         if($j('[id$=contactBlock]').find('.contactcountry').val()==null)
+            $j('[id$=contactBlock]').find('.contactcountry').val('');
+    }
+
+    function toggleModalManagerFields(managerId) {
+            if(document.getElementById(managerId).checked){
+                for (index = 0; index < managerModalFields.length; index++) {
+                    document.getElementById(managerModalFields[index]).disabled = false;
+                }
+            } else {
+                 for (index = 0; index < managerModalFields.length; index++) {
+                    document.getElementById(managerModalFields[index]).disabled = true;
+                    document.getElementById(managerModalFields[index]).value = null;
+                }
+            }
+    }
+
+    function toggleOnlineAgencyURL(myValue){
+
+        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+                document.getElementById('onlineagencyURL').style.display='block';
+             } else {
+                document.getElementById('onlineagencyURL').style.display='none';
+             }
+    }
+
+    function toggleIATACode(myValue){
+
+        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+                $j('[id$=iatacode]')[0].style.display='block';
+                $j('[id$=cargoagentdetails]')[0].style.display = 'none';
+             } else {
+                $j('[id$=iatacode]')[0].style.display='none';
+                cleanInputsInDiv('iatacode');
+             }
+    }
+
+    //NEWGEN - 663
+    function toggleIATANCode(myValue){
+        
+        if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+            $j('[id$=iatacodeIATAN]')[0].style.display='block';
+            $j('[id$=iatantravelagent]')[0].style.display = 'none';
+         } else {
+            $j('[id$=iatacodeIATAN]')[0].style.display='none';
+            cleanInputsInDiv('iatacodeIATAN');
+         }
+    }
+
+    function togglePrevIATACode(cb, iatacode, employername, employeraddress, cbid) {
+        if(cb==null) {
+            cb = document.getElementById(cbid);
+        }
+
+        if(cb.checked) {
+         document.getElementById(iatacode).disabled=false;
+         document.getElementById(employername).disabled=true;
+         document.getElementById(employeraddress).disabled=true;
+         if(document.getElementById(iatacode).value==''){
+             document.getElementById(employername).value='';
+             document.getElementById(employeraddress).value='';
+        }
+        } else {
+            document.getElementById(iatacode).disabled=true;
+            document.getElementById(iatacode).value=null;
+            document.getElementById(employername).disabled=false;
+            document.getElementById(employeraddress).disabled=false;
+        }
+    }
+
+    function disablePrevEmploymentFields(empname, empaddress) {
+        document.getElementById(empname).disabled=true;
+        document.getElementById(empaddress).disabled=true;
+    }
+
+    function toggleShareholdersMsg(myValue){
+
+        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+            if( $j('input[name="' + myValue + '"][value=No]').prop("checked")) {
+                document.getElementById('msgshareholdersdetails').style.display='block';
+             } else {
+                document.getElementById('msgshareholdersdetails').style.display='none';
+             }
+    }
+
+    function toggleContactDetails(s) {
+        if($j(s).hasClass("glyphicon-plus")) {
+            $j(s).switchClass("glyphicon-plus", "glyphicon-minus");
+        } else {
+            $j(s).switchClass("glyphicon-minus", "glyphicon-plus");
+        }
+        $j("." + s.id).toggle();
+    }
+
+    function toggleCurrencyCode(c) {
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.y1.y1CurrencyCode}").innerHTML = ' ' + c;
+        document.getElementById("{!$Component.AMSForm.AMSBlock.blockSix.sectionSix.y2.y2CurrencyCode}").innerHTML = ' ' + c;
+    }
+
+    function cleanInputsInDiv(s){
+        //var inputs = document.getElementById(s).getElementsByTagName('input');
+        var inputs = $j('[id$="' + s + '"]');
+        
+        inputs.each(function() {
+    // do something exciting with each div
+    		$(this).val("abc");
+		});
+    }
+
+    function togglePreviousEmploy(p) {
+        if(p=='' || p=='none') {
+            document.getElementById('{!$Component.newContact.contactBlock.job1employer}').value = null;
+            document.getElementById('{!$Component.newContact.contactBlock.job2employer}').value = null;
+            document.getElementById('{!$Component.newContact.contactBlock.job1address}').innerHTML='';
+            document.getElementById('{!$Component.newContact.contactBlock.job2address}').innerHTML='';
+            document.getElementById('job1').style.display='none';
+            cleanInputsInDiv('job1');
+            document.getElementById('{!$Component.newContact.contactBlock.job1accredited}').checked = false;
+            document.getElementById('job2').style.display='none';
+            cleanInputsInDiv('job2');
+            document.getElementById('{!$Component.newContact.contactBlock.job2accredited}').checked = false;
+            document.getElementById('prevJobsLabel').innerHTML = '';
+        } else {
+            document.getElementById('job1').style.display='block';
+            document.getElementById('prevJobsLabel').innerHTML = '{!$Label.ISSP_AMS_Prev_Jobs}';
+        }
+
+         if(p=='2' || p=='3 or more') {
+            document.getElementById('job2').style.display='block';
+
+         } else {
+            document.getElementById('{!$Component.newContact.contactBlock.job2employer}').value = null;
+            document.getElementById('{!$Component.newContact.contactBlock.job2address}').innerHTML='';
+            document.getElementById('job2').style.display='none';
+            cleanInputsInDiv('job2');
+            document.getElementById('{!$Component.newContact.contactBlock.job2accredited}').checked = false;
+        }
+
+        if(p=='2') {
+            document.getElementById('prevJobsLabel').innerHTML = '{!$Label.ISSP_AMS_Prev_Jobs_Most_Recent}';
+        }
+    }
+    
+    function togglePageItem(v, fldId) {
+        var el = document.getElementById(fldId)
+        if(v=='Yes') {
+            el.style.display='none';
+        } else {
+            el.style.display='block';
+        }
+    }
+
+
+    function updateFieldValue(input, textid) {
+        document.getElementById(textid).value = input.value;
+    }
+
+    function setPortalAdmin(f) {
+        var adminid = document.getElementById(f).value;
+        $j( "#" + adminid ).prop( "checked", true );
+    }
+
+    function confirmContactDelete(conid, conname, contype) {
+        msg =
+        bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
+            if(result) {
+                deleteContact(conid);
+            }
+        });
+    }
+    function confirmInternationalSaleDelete(isaleid, isalename, isaletype) {
+        msg =
+        bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
+            if(result) {
+                deleteInternationalSale(isaleid);
+            }
+        });
+    }
+    
+    function copyPhysicalAddress() {
+        var checkBox = document.getElementById('copyCheckBox');
+        if (checkBox.checked){
+            $j(".PostalStreet").val($j(".PhysicalStreet").val());
+            $j(".PostalCity").val($j(".PhysicalCity").val());
+            $j(".PostalState").val($j(".PhysicalState").val());
+            $j(".PostalPostalCode").val($j(".PhysicalPostalCode").val());
+            $j(".PostalProvince").val($j(".PhysicalProvince").val());
+            $j(".PostalArea").val($j(".PhysicalArea").val());
+        }
+    }
+    
+    </script>
+     <div class="container">
+       <div id="contentWrapper">
+           <c:ISSP_CustomNavigation />    
+    <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
+        <p class="LOB">{!$Label.ISSP_Travel_Agent}</p>
+       
+    </div>
+     
+     <div class="panel-primary">
+        <div class="panel-heading head_panel_green">
+            <h3 class="panel-title">{!lblPAXTitle}</h3>
+        </div>
+
+	</div>
+	</div>
+      
+      <div class="modal-footer">
+        <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
+        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');"
+            onclick="this.disabled='disabled';"
+            reRender="contactList, ownerList, theMessages">
+            <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+         </apex:commandButton>&nbsp;
+        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
+        
+        <script>
+
+        function closeModalByCommandButton()
+        {          
+            closeModal();
+            setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
+            $j( '.datePicker').css('position','absolute');
+                
+        }
+
+        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+
+        natphone.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+
+        natphone.intlTelInput("setNumber", phone.val());
+
+        var natmobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobileinput}']");
+        var mobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobile}']");
+        
+         natmobile.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "MOBILE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        natmobile.intlTelInput("setNumber", mobile.val());
+        
+        var natfax = $j("input[name='{!$Component.newContact.contactBlock.contactfaxinput}']");
+        var fax = $j("input[name='{!$Component.newContact.contactBlock.contactfax}']");
+    
+         natfax.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        
+        natfax.intlTelInput("setNumber", fax.val());
+    
+        function setInternationalPhoneNo(p) {
+            if(p=='phone') {
+                phone.val(natphone.intlTelInput("getNumber"));
+            } else if(p=='mobile') {
+                mobile.val(natmobile.intlTelInput("getNumber"));
+            } else {
+                fax.val(natfax.intlTelInput("getNumber"));
+            }
+        }
+
+        toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode1}', '{!$Component.newContact.contactBlock.job1employer}','{!$Component.newContact.contactBlock.job1address}', '{!$Component.newContact.contactBlock.job1accredited}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode2}', '{!$Component.newContact.contactBlock.job2employer}','{!$Component.newContact.contactBlock.job2address}', '{!$Component.newContact.contactBlock.job2accredited}');
+    </script>      
+    
+        
+<!-- Modal Update Agency Owner - Person (for Branches) -->
+<apex:form id="updateOwner">
+<div class="modal fade" id="updateOwnerModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cancelOwnerUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Person}</h4>
+      </div>
+      
+      <apex:pageMessages id="theMessages" />
+       
+      <div class="modal-body">
+          <apex:pageBlock id="contactBlock">
+            <apex:pageBlockSection id="contactSection" columns="4">
+                <apex:pageBlockSectionItem id="contactItemOwner" labelStyle="font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
+                    <apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true"/>
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
+                    <apex:inputField value="{!newContact.Agency_role__c}" id="dom" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Authorised_signatory__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
+                    <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>      
+          </apex:pageBlock>
+      </div>
+      
+      <div class="modal-footer">
+        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');"
+            onclick="this.disabled='disabled';"
+            reRender="contactList, ownerList, theMessages">
+            <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+         </apex:commandButton>&nbsp;
+        <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
+              
+    </div>
+  </div>
+</div>
+    
+</apex:form>
+
+        
+        
+<!-- Modal New Agency Contact - Company -->
+<apex:form id="newCompany">
+<div class="modal fade" id="addNewCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cancelCompanyUpdate(); return false;"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>
+      </div>
+      <div class="modal-body">
+          <apex:pageBlock >
+           <apex:pageMessages id="companyMessages" />
+        
+         <apex:pageBlockSection id="companySection" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsCompanyNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}"/>
+                    <apex:inputField value="{!newContact.Name}" required="true"/>
+                </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                 <apex:outputLabel value="{!txtLocalAgencyDetailsCompanyNameLocal}" />
+                 <apex:outputPanel >
+                    <apex:inputField value="{!newContact.Company_Name_Local__c}" required="true"/>
+                    <apex:image value="/img/msg_icons/info16.png" style="margin-left: 43%;margin-top: -7%;" title="{!txtLocalAgencyDetailsNoLocalCompanyName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                </apex:outputPanel>
+             </apex:pageBlockSectionItem>
+                <apex:inputField value="{!newContact.Registration_number__c}" required="true" />
+                <apex:inputField value="{!newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim())"/>
+
+                <apex:actionStatus id="loadingDetailsCompanyModal" startStyleClass="bg-info">
+                    <apex:facet name="start" >
+                        {!$Label.ISSP_Loading_Travel_Agency_Details}     
+                    </apex:facet>
+                </apex:actionStatus>
+
+                <apex:outputPanel id="companyModalIataCodeValidation">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(companyModalNameOfEmployer=='', iatacode!='')}"/>    
+                    <apex:outputPanel rendered="{!AND(companyModalNameOfEmployer!='', iatacode!='')}">
+                        <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_MyProfile_AGENT} </span>{!companyModalNameOfEmployer} <br/>
+                        <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}
+                   </apex:outputPanel>
+                </apex:outputPanel>                   
+
+                <apex:inputField value="{!newContact.Financial_interest__c}" required="true"/>
+          </apex:pageBlockSection>
+          </apex:pageBlock>
+      </div>
+      
+      <div class="modal-footer">
+          <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
+            <apex:param value="Company" name="companytype" assignTo="{!contactType}" />
+         </apex:commandButton>&nbsp;
+        <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+</apex:form>
+                
+     </div>   
+     </div>
+           
+         </div>
+         <c:ISSP_CustomFooter />
+         </div>
+       
+    </body>  
+</html>
+
+</apex:page>
