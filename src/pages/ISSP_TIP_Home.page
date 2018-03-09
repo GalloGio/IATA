@@ -7,11 +7,12 @@ applyBodyTag="false"
 applyHtmlTag="false"
 >
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-  <c:ISSP_Header></c:ISSP_Header>
-  <c:iss_ap_css />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <c:ISSP_Header ></c:ISSP_Header>
+    <c:iss_ap_css />
+
 
 <script type="text/javascript">
 
@@ -21,168 +22,149 @@ applyHtmlTag="false"
   })
 
   function changeRequestButtonStatus(){
-    //document.getElementById("requestButton").disabled = {!!btnEnabled}; 
+    document.getElementById("requestButton").disabled = {!!btnEnabled}; 
   }
 
+  function validateIfportalAdmin(){
+    if({!isAdmin}){
+      //navigate to iss
+      window.location.href = '/apex/ISSP_TIP_Enrolment';
+    }
+    else{
+
+      alert("Only Portal Administrators can apply to Enlistment as a Payment Provider");
+    }
+  }
 
   </script>
-
-</head>
-
-
+  </head>
 <html>
-<style>
 
-.section-header {
-  background-color: rgb(43, 120, 228);
-  color: white;
-  line-height: 1.42857143;
-  padding: 8px;
-  vertical-align: top;
-  border-top: 1px solid #ddd;
-}
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
 
-.section-header>i {
-  color: black;
-  margin-right: 5px;
-}
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
 
-main {
-  background-color: white;
-}
+      main {
+        background-color: white;
+      }
 
-td>img {
-  padding-bottom: 7px;
-  padding-left: 5px;
-}
+      td>img {
+        padding-bottom: 7px;
+        padding-left: 5px;
+      }
 
-i.check {
-  color: green;
-}
+      i.check {
+        color: green;
+      }
 
-i.wrong {
-  color: red;
-}
+      i.wrong {
+        color: red;
+      }
 
-#gaugeSection {
-  padding-left: 0;
-  text-align: center;
-  font-size: 14px;
-}
+      #gaugeSection {
+        padding-left: 0;
+        text-align: center;
+        font-size: 14px;
+      }
 
-#gaugeSection > strong {
-  margin-left: 15px;
-}
+      #gaugeSection > strong {
+        margin-left: 15px;
+      }
 
-.tableFormat {
-  padding-left : 5px !important;
-  padding-right : 15px !important;
-  padding-bottom: 2px !important;
-  padding-top :  2px !important;
-  vertical-align: middle !important;
-}
+      .tableFormat {
+        padding-left : 5px !important;
+        padding-right : 15px !important;
+        padding-bottom: 2px !important;
+        padding-top :  2px !important;
+        vertical-align: middle !important;
+      }
 
-.last-updated {
-  display: block;
-  width: 100%;
-  text-align: center;
-  color: rgb(121, 118, 111);
-  font-size: 12px;
-}
+      .last-updated {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: rgb(121, 118, 111);
+        font-size: 12px;
+      }
 
-div.customTable {
-  width: 100%;
-}
+      div.customTable {
+        width: 100%;
+      }
 
-div.customTable>div:nth-child(2n-1) {
-  padding-top: 5px;
-  width: 50%;
-  float: left;
-}
+      div.customTable>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }
 
-div.customTable>div:nth-child(2n) {
-  padding-top: 5px;
-  width: 50%;
-  float: left;
-}      
+      div.customTable>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }      
 
-div.customTable2 {
-  width: 100%;
-}
+      div.customTable2 {
+        width: 100%;
+      }
 
-div.customTable2>div:nth-child(2n-1) {
-  padding-top: 5px;
-  width: 30%;
-  float: left;
-}
+      div.customTable2>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 30%;
+        float: left;
+      }
 
-div.customTable2>div:nth-child(2n) {
-  padding-top: 5px;
-  width: 70%;
-  float: left;
-}      
+      div.customTable2>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 70%;
+        float: left;
+      }      
 
-div.customTable3 {
-  width: 100%;
-}
+      div.customTable3 {
+        width: 100%;
+      }
 
-input + label {
-  font-weight:normal;
-} 
+      input + label {
+        font-weight:normal;
+      } 
 
-@media (max-width: 992px) {
-  .fa-money {
-    font-size: 200px;
-  }
-  .fa-credit-card-alt {
-    font-size: 167px;
-  }
-  .fa-credit-card {
-    font-size: 198px;
-  }
-  #gaugeSection > strong {
-    margin-left: 25px;
-    font-size: 20px;
-  }
-  .last-updated {
-    font-size: 13px;
-  }
-}
+      @media (max-width: 992px) {
+        .fa-money {
+          font-size: 200px;
+        }
+        .fa-credit-card-alt {
+          font-size: 167px;
+        }
+        .fa-credit-card {
+          font-size: 198px;
+        }
+        #gaugeSection > strong {
+          margin-left: 25px;
+          font-size: 20px;
+        }
+        .last-updated {
+          font-size: 13px;
+        }
+      }
+    </style>
 
+  <body>
 
-.moveup {
-  position: relative;
-  bottom: 160px;
-}
-.movetableup {
-  position: relative; 
-  bottom: 246px;
-}
-.text-normal * {
-  font-weight: normal;
-}
-</style>
-<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      
 
 
-
-<body onLoad="changeRequestButtonStatus()">
-<script type="text/javascript">
-  function tt (){
-    Alert("teste");
-  }
-</script>
-  <div class="container">   
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-    <div>
-      <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
-    </div>
-    <div style="padding-top:16px;padding-left:44px">
-      <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, 'Transparency in Payments (TIP)'))}</h3>
-      <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, 'TIP description'))}" escape="false"/>
-    </div>
-
-    
     <div id='enrolment_certification' style= "padding-top: 50px; padding-bottom: 100px; ">
 
       <section name="left-side" class="col-md-8 col-sm-12">
@@ -194,7 +176,7 @@ input + label {
           </header></section>
           
           <div style= "padding-top: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
-            <button id="requestButton" onclick="tt(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
+            <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
           </div>
           
         </section>
@@ -210,8 +192,8 @@ input + label {
               </div>
             </header></section>
 
-            <apex:pageBlock>
-            <apex:form>
+            <apex:pageBlock >
+            <apex:form >
             <hr />
             <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
             <apex:column > 
@@ -221,25 +203,25 @@ input + label {
           <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
         </apex:column>
 
-        <apex:column  >
+        <apex:column >
         <apex:facet name="header">
         Subject
       </apex:facet>
       {!item.subject}
     </apex:column>
 
-    <apex:column  >
+    <apex:column >
     <apex:facet name="header">
     Status
   </apex:facet>
   {!item.status}
 </apex:column>
 
-<apex:column  >
+<apex:column >
 <apex:facet name="header">
 Date time-opened
 </apex:facet>
-  {!item.createddate}
+{!item.CaseArea__c}
 </apex:column>
 
 
@@ -254,8 +236,7 @@ Date time-opened
 <c:ISSP_CustomFooter communityName="{!communityName}" />
 </div>
 
-</div><!-- end container-->
-
-</body>  
+  </main>
+</body>
 </html>
     </apex:page>

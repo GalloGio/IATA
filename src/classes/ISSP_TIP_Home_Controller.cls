@@ -2,7 +2,8 @@ public without sharing class ISSP_TIP_Home_Controller {
     
     private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
     private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Payment Provider').RecordTypeId;
-
+    
+    private static String PROCESS_CASE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Process').RecordTypeId;
 
     public ISSP_TIP_Home_Controller(){
     	popContact();
@@ -33,7 +34,8 @@ public without sharing class ISSP_TIP_Home_Controller {
         con = DAL_ISSP.getContact(user.ContactId);
 
         //if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-            isAdmin = false;
+        if (con.User_Portal_Status__c == 'Approved Admin' )
+            isAdmin = true;
 
         acc = [SELECT id, recordtypeid, category__c FROM ACCOUNT WHERE ID = :con.AccountId];
 
@@ -44,8 +46,32 @@ public without sharing class ISSP_TIP_Home_Controller {
     }
 
     public List<Case> getCases(){
-    	return [SELECT id,status,CaseNumber, subject, createddate  FROM Case WHERE AccountId = :con.AccountId];
+    	Set<string> closedStatusesList = createListOfClosedStatuses();
+
+    	return [SELECT id,status,CaseNumber, subject, createddate,CaseArea__c  FROM Case 
+    	WHERE AccountId = :con.AccountId 
+    	and recordtypeid = :PROCESS_CASE_RECORD_TYPE_ID 
+    	and CaseArea__c like '%Transparency in Payments%'
+    	AND (Status = 'Draft' OR Status Not In :closedStatusesList)];
     }
 	
+    public Set<string> createListOfClosedStatuses() {
+        Set<string> closedStatusesList = new Set<string>();
+        Schema.DescribeFieldResult caseDescribe = case.Status.getDescribe();
+
+        List<Schema.PicklistEntry> caseStatusValues = caseDescribe.getPicklistValues();
+
+        List<String> caseStatuesStrValues = new List<String>();
+
+        for (Schema.PicklistEntry csv : caseStatusValues)
+            caseStatuesStrValues.add(csv.getValue());
+
+        for (casestatus cs : [Select Apiname, IsClosed from casestatus where ApiName IN: caseStatuesStrValues And IsClosed = true])
+            closedStatusesList.add(cs.apiname);
+
+        return closedStatusesList;
+    }
+
+
 	public void refresh(){}
 }
