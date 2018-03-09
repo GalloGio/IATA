@@ -1,14 +1,8 @@
 /**
-* Batch Class to Synchronize AMS_Agency_Authorization__c => Remittance__c
+* Batch Class to Synchronize AMS_Agency_Authorization__c => Authorized_Forms_Of_Payment__c
 * @author Aku Luukka <luukkaa@iata.org>
 * @version 1.0
 */
-// public with sharing class  {
-// 	public ams2gdp_Batch_AMS_Agency_Authorization() {
-//
-// 	}
-// }
-
 
  global class ams2gdp_Batch_AMS_Agency_Authorization implements Database.Batchable<sObject> , Database.Stateful
  {
@@ -129,8 +123,7 @@
 		errorsCount = 0;
 		totalRecords = 0;
 		failed_records = new List<String>();
-System.debug('aaaaa ' + extraIds);
-System.debug('aaaaa ' + query);
+
 		return Database.getQueryLocator(query);
 	}
 
@@ -140,10 +133,10 @@ System.debug('aaaaa ' + query);
 
    		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
-   		List<GDP_Products_Account_View__c> records2Save = new List<GDP_Products_Account_View__c>();
+   		List<Authorized_Forms_Of_Payment__c> records2Save = new List<Authorized_Forms_Of_Payment__c>();
    		try
    		{
-   			records2Save = ams2gdp_BusinessLogic.formatAgencyAuthorization2GDPAccountView(scope);
+   			records2Save = ams2gdp_BusinessLogic.formatAgencyAuthorization2AuthorizedFormOfPayment(scope);
 
    			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();
@@ -155,26 +148,14 @@ System.debug('aaaaa ' + query);
 
 		System.debug('aaaaaa ' + records2Save);
 		//-- Save Records
-		List<Database.SaveResult> products_save_results = Database.update(records2Save, false);
+		List<Database.UpsertResult> products_save_results = Database.upsert(records2Save, Authorized_Forms_Of_Payment__c.AMS_GDP_Key__c.getDescribe().getSObjectField(), false);
 
 		//-- Process Errors
-		errors.addAll(ams2gdp_Error.formatUpdateResult(records2Save, products_save_results, batchName, 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(records2Save, products_save_results, batchName, 'AMS_GDP_Key__c'));
 
 		// List<Database.UpsertResult> save_results = Database.upsert(records2Save,GDP_Agency_Profile_Specialization__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
 
-		//--Check if there is orphan GDP records
-		// for(GDP_Agency_Profile_Specialization__c aps: records2Save)
-		// {
-		// 	if(aps.Related_GDP_Products_Account_View__c == null)
-		// 	{
-		// 		errors.add(new ams2gdp_Error(batchName,aps.AMS_GDP_Key__c.left(18), null, 'ORPHAN_RECORD'));
-		// 	}
-		// }
-
-		// //-- Process Errors
-		// errors.addAll(ams2gdp_Error.formatUpsertResult(records2save, save_results, batchName, 'AMS_GDP_Key__c'));
-        //
-		// //Log the current Errors
+		//Log the current Errors
 		if(!errors.isEmpty())
 		{
 			errorsCount = errorsCount + errors.size();
