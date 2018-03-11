@@ -563,10 +563,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         String body = 'Account,Contact,Contact Portal Status,IATA Code,Country,Case Number,Case Id,Message\n';
 
         for(ResultWrapper res : results) {
-            body += res.acc != null ? res.acc.Name + ',' : ',';    
-            body += res.con != null ? res.con.Name + ',' + res.con.User_Portal_Status__c + ',' : ',,';
-            body += res.acc != null ? res.acc.IATACode__c  + ',' + res.acc.IATA_ISO_Country__r.Name + ',' : ',,';
-            body += res.cse != null ? res.cse.CaseNumber  + ',' + res.cse.Id + ',' : ',,';
+            body += (res.acc == null || String.isBlank(res.acc.Name) ? '' : res.acc.Name.escapeCSV()) + ','; 
+            body += (res.con == null || String.isBlank(res.con.Name) ? '' : res.con.Name.escapeCSV()) + ',';
+            body += (res.con == null || String.isBlank(res.con.User_Portal_Status__c) ? '' : res.con.User_Portal_Status__c.escapeCSV()) + ',';
+            body += (res.acc == null ? '' : res.acc.IATACode__c) + ',';
+            body += (res.acc == null || String.isBlank(res.acc.IATA_ISO_Country__r.Name) ? '' : res.acc.IATA_ISO_Country__r.Name.escapeCSV()) + ',';
+            body += (res.cse == null ? '' : res.cse.CaseNumber) + ',';
+            body += (res.cse == null ? '' : res.cse.Id) + ',';
             body += res.message + '\n';
         }
 
