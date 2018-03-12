@@ -15253,6 +15253,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
                     <fullName>Applicant</fullName>
                     <default>false</default>
                     <label>Applicant</label>
@@ -15286,6 +15291,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                     <fullName>Endorsed</fullName>
                     <default>false</default>
                     <label>Endorsed</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
                 </value>
                 <value>
                     <fullName>Listed</fullName>
@@ -87903,31 +87918,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cash basis%2Fno commission</fullName>
+                <fullName>In Progress</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Changes processed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>New application pending</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No longer a customer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Under review</fullName>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
