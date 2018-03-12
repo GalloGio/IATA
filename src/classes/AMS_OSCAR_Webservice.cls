@@ -375,10 +375,6 @@ global class AMS_OSCAR_Webservice {
             if (oscar.Step35__c == 'Failed') return;
             throw new OSCARException(message);
         }       
-        if (step=='35') {
-            if (oscar.Step35__c == 'Failed') return;
-            throw new OSCARException(message);
-        }
         if (step=='43') {
             if (oscar.Step43__c == 'Failed') return;
             throw new OSCARException(message);
