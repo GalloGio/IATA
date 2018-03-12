@@ -3,8 +3,8 @@
 **/
 public with sharing class SidraLiteHelperForOSCAR {
 
-    public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Certificate DGR','Major Change', 'Change of Hierarchy', 'Accreditation Type'};
-    public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change', 'Change of Hierarchy', 'Accreditation Type'};
+    public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Certificate DGR','Major Change', 'Change of Hierarchy', 'Accreditation Type','Annual revalidation'};
+    public static final set<String> VALID_REASONS1 = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location','Major Change', 'Change of Hierarchy', 'Accreditation Type','Annual revalidation'};
     public static final set<String> VALID_REASONS2 = new set<String>{'Certificate DGR'};
     
     public static String CHECK_STEP = null;
@@ -157,8 +157,14 @@ public with sharing class SidraLiteHelperForOSCAR {
                 return reason;
             }
         }
-		if (oscar.Step35__c == 'Failed') {
+        if (oscar.Step35__c == 'Failed') {
             String reason = MAP_STEP_REASON.get('35');
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step43__c == 'Failed') {
+            String reason = MAP_STEP_REASON.get('43');
             if (!existentReasons.contains(reason) ) {
                 return reason;
             }
