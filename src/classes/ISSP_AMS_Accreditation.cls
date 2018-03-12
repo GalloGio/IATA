@@ -679,12 +679,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
         this.helper = new ANG_ProductComparisonHelper('B');
 
-        flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
-            isHOAccredited && 
-            con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH &&
-            !con.Account.ANG_FA_Opt_out__c && 
-            !isOptOutInProgress);
-
         isIFAPContact = (con.Financial_Assessment_Contact__c);
     }
 
@@ -4208,6 +4202,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 break;
             }
         }
+
+        flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
+            isHOAccredited && 
+            con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH &&
+            !con.Account.ANG_FA_Opt_out__c && 
+            !isOptOutInProgress);        
 
         return l;
     }
@@ -8074,9 +8074,6 @@ system.debug('aqui sectorValue ' + sectorValue);
                                 
         newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
 
-        System.debug('newcase : ' + newcase);
-        System.debug('newForm : ' + newForm);
-
         newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
         newCase.Status = AMS_Utils.OPEN;
         newCase.CaseArea__c = AMS_Utils.CASE_AREA_ACCREDITATION_PROCESS;
@@ -8088,23 +8085,16 @@ system.debug('aqui sectorValue ' + sectorValue);
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Type_of_customer__c = AMS_Utils.CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT;        
         newCase.Account_Concerned__c = con.AccountId;
+        newCase.Product_Category_ID__c = '_';
+
 
         newCase.Subject = getCaseReason(AMS_Utils.CASE_REASON_OPT_OUT, hqAccount.ANG_Accreditation_Model__c) + ' - ' + hqAccount.ANG_Accreditation_Model__c + ' - ' + hqAccount.name;
 
-        // AMSU-110 assign Case via assignment rules -> re-trigger assignment rules on update
-        //update newCase;
-        Database.DMLOptions dmo = new Database.DMLOptions();
-        dmo.assignmentRuleHeader.useDefaultRule = true;
-        Database.update(newCase, dmo);
-
-        upsert newCase;        
+        upsert newCase;
 
         saveAMSForm();
 
         ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.NGOPTINOUT, newCase.Id);
-
-        System.debug('NewCase : ' + newCase);
-        System.debug('NewForm : ' + newForm);
 
         return null;
     }

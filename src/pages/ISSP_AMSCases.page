@@ -110,6 +110,7 @@
                 }
 
                 function optOut() {
+                    startLoading();
                     if('{!isIFAPContact}' == 'true') {
                         $('#ModalOptOut').modal('toggle');
                     } else {
@@ -133,7 +134,9 @@
                 }
 
                 function onCompleteOptOut() {
+                    endLoading();
                     bootbox.alert('Congratulations you have succeeded in placing a Financial review opt-out');  
+                    window.location.reload();
                 }                
 
                 $( function() {
@@ -155,6 +158,14 @@
                   });
                 });
 
+                function startLoading(){
+                  //$('#load_scrl').css('top', $j(document).scrollTop() - 200);
+                  $('.loadingBox').show();
+                }
+                function endLoading(){
+                  $('.loadingBox').hide();
+                }                
+
         </script>
     
     <div class="container">   
@@ -166,12 +177,18 @@
         <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
         <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
     </div>
+
+    <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+    <div class="loadingBox overlay"> </div>
+
     <div style="padding-left:138px">
           <apex:form > 
 
           <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/> 
 
-          <apex:actionFunction action="{!runOptOut}" name="runOptOut" oncomplete="onCompleteOptOut();"/>
+          <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+
+          <apex:actionFunction action="{!runOptOut}" name="runOptOut" oncomplete="onCompleteOptOut();" rerender="DraftCases" />
 
         <table width="100%">
             <tr>
@@ -239,6 +256,14 @@
                     <input type="button" class="btn btn_iata_primary" onclick="optOut();return false;" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}"/>
                 </td>
             </tr>
+            <tr style="display:{!IF(flagShowOptOutButton,'none','')};">
+                <td>
+                </td>
+                <td>
+                    <input type="button" class="btn btn_iata_primary" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}" disabled="true"/>
+                </td>
+            </tr>
+            
 
                 <tr>
                     <td style="padding-top:20px">
@@ -267,7 +292,7 @@
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
             <apex:pageBlock >
                 
-            <apex:pageBlockTable value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
+            <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
@@ -383,7 +408,32 @@
     
     <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
-        
+
+    <style>
+        .overlay {
+            display: none;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            opacity: 0.3;
+            -moz-opacity: 0.3;
+            width: 100%;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            background: #000;
+            -khtml-opacity: 0.3;
+            z-index: 1000;
+        }
+        .loader {
+            background: url('/img/loading32.gif') scroll no-repeat 0 0;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            left: 50%;
+        }
+    </style>
+
   </body>  
 </html>
 </apex:page>
