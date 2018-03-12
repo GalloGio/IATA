@@ -438,7 +438,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				acctIds.add(cse.AccountId);
 			}
 			//Re-open/ed is not considered as Closed Status anymore.
-			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
+			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out') AND  AccountId in :acctIds]);
 			Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
 			List<Account> accountUpdated = new List<Account>();
 			for (Account acct : acctsToUpdate.values()) {
