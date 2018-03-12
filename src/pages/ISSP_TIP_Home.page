@@ -1,0 +1,235 @@
+<apex:page controller="ISSP_TIP_Home_Controller" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <c:ISSP_Header></c:ISSP_Header>
+        <c:iss_ap_css />
+
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                changeRequestButtonStatus();
+            })
+
+            function changeRequestButtonStatus() {
+                document.getElementById("requestButton").disabled = {!!btnEnabled
+                };
+            }
+
+            function validateIfportalAdmin() {
+                if ({!isAdmin
+                    }) {
+                    window.location.href = '/apex/ISSP_TIP_Enrolment';
+                } else {
+                    alert("Only Portal Administrators can apply to Enlistment as a Payment Provider");
+                }
+            }
+        </script>
+    </head>
+    <html>
+
+    <style>
+        .section-header {
+            background-color: rgb(43, 120, 228);
+            color: white;
+            line-height: 1.42857143;
+            padding: 8px;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .section-header>i {
+            color: black;
+            margin-right: 5px;
+        }
+
+        main {
+            background-color: white;
+        }
+
+        td>img {
+            padding-bottom: 7px;
+            padding-left: 5px;
+        }
+
+        i.check {
+            color: green;
+        }
+
+        i.wrong {
+            color: red;
+        }
+
+        #gaugeSection {
+            padding-left: 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #gaugeSection>strong {
+            margin-left: 15px;
+        }
+
+        .tableFormat {
+            padding-left: 5px !important;
+            padding-right: 15px !important;
+            padding-bottom: 2px !important;
+            padding-top: 2px !important;
+            vertical-align: middle !important;
+        }
+
+        .last-updated {
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: rgb(121, 118, 111);
+            font-size: 12px;
+        }
+
+        div.customTable {
+            width: 100%;
+        }
+
+        div.customTable>div:nth-child(2n-1) {
+            padding-top: 5px;
+            width: 50%;
+            float: left;
+        }
+
+        div.customTable>div:nth-child(2n) {
+            padding-top: 5px;
+            width: 50%;
+            float: left;
+        }
+
+        div.customTable2 {
+            width: 100%;
+        }
+
+        div.customTable2>div:nth-child(2n-1) {
+            padding-top: 5px;
+            width: 30%;
+            float: left;
+        }
+
+        div.customTable2>div:nth-child(2n) {
+            padding-top: 5px;
+            width: 70%;
+            float: left;
+        }
+
+        div.customTable3 {
+            width: 100%;
+        }
+
+        input+label {
+            font-weight: normal;
+        }
+
+        @media (max-width: 992px) {
+            .fa-money {
+                font-size: 200px;
+            }
+            .fa-credit-card-alt {
+                font-size: 167px;
+            }
+            .fa-credit-card {
+                font-size: 198px;
+            }
+            #gaugeSection>strong {
+                margin-left: 25px;
+                font-size: 20px;
+            }
+            .last-updated {
+                font-size: 13px;
+            }
+        }
+    </style>
+
+    <body>
+
+        <main class="container">
+            <c:ISSP_CustomNavigation />
+
+
+
+            <div id='enrolment_certification' style="padding-top: 50px; padding-bottom: 100px; ">
+
+                <section name="left-side" class="col-md-8 col-sm-12">
+                    <section name="remittance-holding" class="row">
+                        <header class="col-xs-12">
+                            <div class="section-header">
+                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Payment Provider Enrolment/Certification</strong>
+                            </div>
+                        </header>
+                    </section>
+
+                    <div style="padding-top: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
+                        <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
+                    </div>
+
+                </section>
+            </div>
+
+            <div id='tipRequests' style="padding-top: 50px; padding-bottom: 200px;">
+
+                <section name="left-side" class="col-md-8 col-sm-12">
+                    <section name="remittance-holding" class="row">
+                        <header class="col-xs-12">
+                            <div class="section-header">
+                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Ongoing TIP Requests</strong>
+                            </div>
+                        </header>
+                    </section>
+
+                    <apex:pageBlock>
+                        <apex:form>
+                            <hr />
+                            <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
+                                <apex:column>
+                                    <apex:facet name="header">
+                                        {!$ObjectType.Case.fields.CaseNumber.label}
+                                    </apex:facet>
+                                    <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                </apex:column>
+
+                                <apex:column>
+                                    <apex:facet name="header">
+                                        Subject
+                                    </apex:facet>
+                                    {!item.subject}
+                                </apex:column>
+
+                                <apex:column>
+                                    <apex:facet name="header">
+                                        Status
+                                    </apex:facet>
+                                    {!item.status}
+                                </apex:column>
+
+                                <apex:column>
+                                    <apex:facet name="header">
+                                        Date time-opened
+                                    </apex:facet>
+                                    {!item.CaseArea__c}
+                                </apex:column>
+
+
+                            </apex:pageBlockTable>
+                        </apex:form>
+                    </apex:pageBlock>
+
+                </section>
+            </div>
+
+            <div>
+                <c:ISSP_CustomFooter communityName="{!communityName}" />
+            </div>
+
+        </main>
+    </body>
+
+    </html>
+</apex:page>
