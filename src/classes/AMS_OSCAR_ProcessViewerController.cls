@@ -59,11 +59,18 @@ public class AMS_OSCAR_ProcessViewerController {
                 && (!(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.Account__r.ANG_IsNewGenAgency__c))
                 && oscar.Process__c != AMS_Utils.IEPBANKACCOUNTSETUP
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
-            ) || checkAMSRemittance(oscar); //AMSU-125
+            ) || isAMSCheckRemittance; //AMSU-125
         }
     }
 	
 	//AMSU-125
+    public Boolean isAMSCheckRemittance {
+        get {
+            return oscar != null && checkAMSRemittance(oscar);
+        } 
+        set;
+    }
+    
     public Boolean checkAMSRemittance(AMS_OSCAR__c oscar) { 
         List<AMS_Operation__c> operationCodes =  ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c, oscar.AMS_Online_Accreditation__r.Location_Class__c);       
         Set<String> locationsClass = new Set<String> {'P', 'D'};
