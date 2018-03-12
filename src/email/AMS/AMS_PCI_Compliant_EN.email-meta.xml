@@ -5,21 +5,40 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>AMS_PCI Compliant EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name}  – PCI Compliant</subject>
+    <subject>Ref nr {!Case.CaseNumber} – PCI Compliant</subject>
     <textOnly>Dear Sir/Madam,
-Under the provisions of the IATA Resolutions, all Approved Cargo Agents/Intermediaries should continue to meet at all times the requirements and criteria set forth in Program Handbook to ensure retention as an IATA Cargo Agent/Intermediary.
-In accordance with IATA Resolutions, your Company is required to have at least two full-time employees holding a valid Dangerous Goods Acceptance certificate issued within the previous two years to provide the services and handling functions described in the Handbook.
-According to our records, Dangerous Goods certificates provided by your Company will expire on {!AMS_OSCAR__c.Change_effective_as_of__c}.  Therefore, please send evidence/copies of new and/or updated Dangerous Goods Acceptance certificates, together with any other information you feel may have a bearing on your qualifications, to indicate that your Company is in compliance with such requirement.
-The above requested certificates should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!AMS_OSCAR__c.Change_effective_as_of__c}. Please attach a scanned copy to case {!AMS_OSCAR__c.Name} visible on your portal home page under ‘My recent cases’ section.
-The Agency Administrator will carry out a review, and make a decision based upon the evidence available. Therefore, in your own interest, please give this matter your immediate attention.
-We would appreciate your acknowledgement of this letter and confirmation that you will give this matter your immediate attention.
-Yours faithfully,
-Agency Management
-International Air Transport Association
------------------------------------------------------------------------------
-In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
 
-{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+
+IATA Code: {!Case.IATA_Code__c}
+
+In reference to advice given to IATA concerning the risks associated with payment card transactions and potential data breaches, there is a need to confirm the compliance of Accredited Agencies operating within the BSP to be Payment Card Industry (PCI) Data Security Standard (DSS) compliant.
+
+Under the Passenger Sales Agency Rules, all IATA Accredited Agencies must ensure its full compliance with the PCI DSS.
+
+The PCI DSS, is a global standard aimed at helping merchants (Agency) understand and implement standards for security policies, technologies and ongoing processes that protect their payment systems from breaches and theft of cardholder data.
+
+In light of the above, you are kindly requested to provide us with your Attestation of Compliance to indicate your company’s compliance.
+
+The Attestation of Compliance is the document used to indicate that the appropriate Report on Compliance or Self-assessment Questionnaire has been performed, and to attest to your organization’s compliance status with PCI DSS.
+
+For further information about how to become PCI DSS compliance please visit our PCI DSS dedicated web page: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+In case you are currently not processing any transactions through BSP utilizing Credit Card form of payment and not intending to do so, you can submit the Nil Credit Card Self-Declaration, attached to this communication.
+
+It should be noted that upon completion of such declaration no further proof of compliance will be requested from your Agency, however Credit Card form of payment will be disabled for your Agency upon migration of your country of operation under NewGen environment and resolution 812
+
+
+The above requested documentation (Attestation of Compliance or Nil Credit Card Self-Declaration) should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!Today()+30}. Please attach a scanned copy to case  {!Case.CaseNumber} visible on your portal home page under ‘My recent cases’ section.
+
+The instructions about how to submit your documentation can be found as an attachment to this communication.
+
+The Agency Management Department will carry out a review, and make a decision based upon the evidence available.
+
+---------------------------------------------------------------------------------------------------------------------
+Please note that failure to comply with this requirement per IATA’s request will result in a Notice of Non-Compliance / Administrative Non-Compliance being issued against the Agency.
+---------------------------------------------------------------------------------------------------------------------
+
+We would appreciate you will give this matter your immediate attention. Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: www.iata.org/cs.</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
