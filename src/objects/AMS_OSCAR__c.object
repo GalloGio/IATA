@@ -23315,15 +23315,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>NEW - New Application</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>PCI</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>PCI</fullName>
                 <default>false</default>
             </values>
             <values>
