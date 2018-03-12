@@ -271,6 +271,20 @@
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIDRA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share all sidra cases with integration user</description>
+        <label>SIDRA</label>
+        <sharedTo>
+            <group>SIDRA_All_Cases</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA Lite,SIDRA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
         <accessLevel>Edit</accessLevel>

@@ -1002,15 +1002,6 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Approvers_EBC_Campaign</fullName>
-        <filterScope>Queue</filterScope>
-        <label>eBroadcast Approvers</label>
-        <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Pending_Review</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
