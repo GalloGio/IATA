@@ -5,8 +5,9 @@
            standardStylesheets="false"
            applyBodyTag="false"
            applyHtmlTag="false"
+           language="{!displayLanguage}"
            >
-<html lang="en">
+<html>
         <style>
             .moveup {
                 position: relative;
@@ -24,18 +25,23 @@
         <body>
 
         <script src="{!URLFOR($Resource.bootbox)}" />
+
+    
   <!--link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="/resources/demos/style.css"/-->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{!URLFOR($Resource.datePickerFix)}" />  
   <!--script src="i18n/datepicker-ar.js"></script>
   <script src="i18n/datepicker-fr.js"></script>
   <script src="i18n/datepicker-he.js"></script>
-  <script src="i18n/datepicker-zh-TW.js"></script-->        
+  <script src="i18n/datepicker-zh-TW.js"></script-->
+  <!--script src="{!URLFOR($Resource.jquery_ui_i18n, '/i18n/datepicker-pt.js')}" /-->
         
 
         <script type="text/javascript">
                 var $j = jQuery.noConflict();
+            
                 var typeAccredSelected = '';
    
                 $j(function () {
@@ -116,34 +122,39 @@
                 }
 
                 function doOptOut() {
-                    $('#ModalOptOut').modal('toggle');
+                    var date = $("#datepicker").val();
+
+                    if(date == '') {
+                        document.querySelector("[Id$='emptyDateErrorMessage']").style.display = '';
+                    } else {
+                        $('#ModalOptOut').modal('toggle');
+                        runOptOut();
+                    }
                 }
 
-                function showFuturePastDates(){
-                    /*
-                    datePickerYearsAdded = false;                               
-                    var futureYearsToAdd = 20;  
-                    var pastYearsToAdd = 5;                         
-                    if (!datePickerYearsAdded) {
-                        var select = document.getElementById('calYearPicker');
-                        if (!select) return;
-                        select.innerHTML = '';
-                        var startYear = new Date().getFullYear() - pastYearsToAdd; ;
-                        for (var year = startYear; year < startYear + futureYearsToAdd + 1; year++) {
-                            select.options[select.options.length] = new Option(year, year);
-                        }
-                        datePickerYearsAdded = true;
-                    }
-                    */
-                }
+                function onCompleteOptOut() {
+                    bootbox.alert('Congratulations you have succeeded in placing a Financial review opt-out');  
+                }                
 
                 $( function() {
-                    $( '#datepicker' ).datepicker( $.datepicker.regional[ "en" ] );
+                  var lan = "";
+                  if('{!displayLanguage}' == 'en_US')
+                    lan = "en";
+                  //if('{!displayLanguage}' == 'pt_BR')
+                    //lan = "pt";
 
-                } );
+                  if(lan == "") 
+                    lan = '{!displayLanguage}';
 
-                $( "#datepicker" ).on( "change", function() {
-                    alert( $( this ).val() );
+
+                alert(lan);
+
+                  $( "#datepicker" ).datepicker({minDate: 0});
+                  $( "#datepicker" ).datepicker( "option", $.datepicker.regional[ lan ] );
+                  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+                  $( "#datepicker" ).on( "change", function() {
+                    $('[id$=effectiveDateOfChange]').val($("#datepicker").val());
+                  });
                 });
 
         </script>
@@ -159,6 +170,10 @@
     </div>
     <div style="padding-left:138px">
           <apex:form > 
+
+          <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/> 
+
+          <apex:actionFunction action="{!runOptOut}" name="runOptOut" oncomplete="onCompleteOptOut();"/>
 
         <table width="100%">
             <tr>
@@ -221,36 +236,6 @@
 
             <tr style="display:{!IF(flagShowOptOutButton,'','none')};">
                 <td>
-<!--
-                    Date: <apex:input type="date" value="{!DateStringProperty}"/>
-                -->
-                    <!--
-                    <span class="dateInput dateOnlyInput">  
-                               <apex:inputText id="inputFieldId" size="12" value="{!DateStringProperty}" style="width:72px;text-align:center;" onclick="DatePicker.pickDate(false, this, false);" onfocus="DatePicker.pickDate(false, this, false);"/>  
-                          </span>
-
--->
-                    <!--
-                    Date: <apex:inputText value="{!newForm.Effective_Date_Of_Change__c}" size="10" id="demo" onfocus="DatePicker.pickDate(false, this , false);" /> 
-                -->
-
-
-<!--
-                <apex:pageBlock id="step1Block">
-                <div class="form-group">
-                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
-                                        {!$Label.ANG_Effective_Date}  
-                                    </label>
-                                    <div class="col-lg-9"> 
-                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
-                                        
-                                    </div>
-                    </div>
-                    </apex:pageBlock>
-    -->                
-
-
-
                 </td>
                 <td>
                     <input type="button" class="btn btn_iata_primary" onclick="optOut();return false;" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}"/>
@@ -266,7 +251,6 @@
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
                     </td>
             </tr>
-
 
             <tr>
                 <td><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Other_Forms}" rendered="{!isUserAccAccredited}"/></h3></td>
@@ -364,12 +348,17 @@
                 <h4 class="modal-title">{!$Label.ISSP_ANG_OPT_OUT_MODAL_TITLE}</h4>
               </div>
               <div class="modal-body">
+
+                <div class="alert alert-danger" id="emptyDateErrorMessage" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_OptOutEmptyDateErrorMessage} </strong>
+                </div>
+
                 <apex:outputText value="{!$Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT}"></apex:outputText>
 
                 <br></br>
                 <br></br>
 
-                    <p>Date: <input type="text" id="datepicker"/></p>
+                    <p>{!$Label.ANG_Effective_Date} <input type="text" id="datepicker"/></p>
 
                 <br></br>
                 <br></br>

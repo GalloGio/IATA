@@ -27204,7 +27204,7 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Opt-out of Financial Review button label</shortDescription>
-        <value>Opt-out of Financial Review</value>
+        <value>Request to Opt-Out of Financial review</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</fullName>
@@ -27229,8 +27229,24 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
         <value>You are about to opt out the financial review. You must reconsider your choice...
-We strongly advise you to remain with us primarily because you can't breathe under watter or fly.
+We strongly advise you to remain with us primarily because you can't breathe under water or fly.
 We might have to make you a proposal you can not refuse, and the proposal will be delivered by our associates Tessio e Clemenza.
 You Shall not opt out!!!!</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>You must specify an opt out date</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case reason used in the case subject</shortDescription>
+        <value>Financial review opt-in / opt-out</value>
+    </labels>    
 </CustomLabels>
