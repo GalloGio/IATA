@@ -41,7 +41,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
                                                        AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
-        Set<String> pciValues = new Set<String> {'Yes', 'Nil CC', 'No'};
+        Set<String> pciValues = new Set<String> {'Yes', 'Nil CC'};
         String query = 'SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c,' +
                        ' Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity,' +
                        ' IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet,' +
@@ -58,8 +58,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         if(filteredAccounts != null && !filteredAccounts.isEmpty()) {
             query += ' Id IN :filteredAccounts';
         } else {
-            query += ' Location_Class__c = :location AND Status__c IN :availableStatus AND Is_PCI_compliant__c NOT IN :pciValues' +
-                     ' AND Id NOT IN (SELECT AccountId FROM Case WHERE Reason1__c = :reason AND IsClosed = false)' +
+            query += ' Location_Class__c = :location AND Status__c IN :availableStatus AND ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90' +
+                     ' AND PCI_DSS_Compliant__c = NULL' +
+                     ' AND Is_PCI_compliant__c IN :pciValues' +
                      ' AND RecordtypeId = :AGENCY_RECORDTYPE';
 
             if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
