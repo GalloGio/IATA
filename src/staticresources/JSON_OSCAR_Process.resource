@@ -6373,7 +6373,7 @@
                 ],
                 "Automations": [],
                 "DisplayFields": [
-                  "Administrative_non_compliance_date__c",
+                  "ANG_Administrative_non_compliance_date__c",
                   "STEP43__c"
                 ],
                 "IsDependent": false
