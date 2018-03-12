@@ -150,7 +150,7 @@ trigger trgCaseIFAP_AfterInsertDeleteUpdateUndelete on Case (after delete, after
 
 
                                                               RecordTypeID =: IFAPcaseRecordTypeID
-                                                                AND (status != 'Closed' and status != 'Closed Opt-out' and status != 'Assessment Cancelled') 
+                                                                AND (status != 'Closed' and status != 'Assessment Cancelled') 
                                                               AND  AccountId in :acctIds]);
 
 
