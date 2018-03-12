@@ -1523,11 +1523,6 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>FIN - Application Finalized</label>
                 </value>
-                <value>
-                    <fullName>PCI</fullName>
-                    <default>false</default>
-                    <label>PCI</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2621,11 +2616,6 @@ Format: YYYY</inlineHelpText>
                     <fullName>No</fullName>
                     <default>false</default>
                     <label>No</label>
-                </value>
-                <value>
-                    <fullName>Nil CC</fullName>
-                    <default>false</default>
-                    <label>Nil CC</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -23322,10 +23312,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>Don%E2%80%99t change the parent</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>PCI</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Swap with the parent</fullName>
                 <default>false</default>
@@ -23484,21 +23470,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Is_PCI_compliant__c</picklist>
-            <values>
-                <fullName>Nil CC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -23589,10 +23560,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>NEW%2ETIDS%2E1%2E0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PCI%2ECOMPLIANT%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29146,14 +29113,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
         <picklistValues>
             <picklist>Is_PCI_compliant__c</picklist>
-            <values>
-                <fullName>Nil CC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Yes</fullName>
                 <default>false</default>
@@ -38267,32 +38226,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
-    <validationRules>
-        <fullName>AMS_PCI_Expiry_Date_Required</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(
-	OR(
-		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-	),
-	OR(
-		AND(
-			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c)
-		),
-		AND(
-			RecordType.DeveloperName = &apos;NEW&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c),
-			OR(
-				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-				TEXT(Process__c) == &apos;NEW.BR&apos;
-			)
-		)	
-	)
-)</errorConditionFormula>
-        <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
-    </validationRules>
     <validationRules>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
