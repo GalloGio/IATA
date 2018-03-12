@@ -110,8 +110,9 @@ public without sharing class Location_Dom {
 
 		//Verifies if there are deactivated locations - INC376899
 		if(deactivatedlocationsList.size() > 0 ){
+			
 			List<Order> ordersToUpdate = Order_Sel.getNewOrdersByLocation(deactivatedlocationsList);
-			Order_Svc.cleanBillToShipToLocationsFromOrders(ordersToUpdate);
+			Order_Svc.deleteOrders(ordersToUpdate);
 		}
 
 

@@ -4288,17 +4288,12 @@ public without sharing class Order_Svc
     }
 
     /*******************************************************************
-        Updating Orders, cleaning the BillTo and ShipTo Locations (Used when locations are deactivated)
+        Delete Orders (Used when locations are deactivated)
         INC376899
       *******************************************************************/
-    public static void cleanBillToShipToLocationsFromOrders(List<Order> orders){
+    public static void deleteOrders(List<Order> orders){
 
-        for(Order order : orders){
-            order.BillTo_Location__c = null;
-            order.ShipTo_Location__c = null;
-        }
-
-        update orders;
+        delete orders;
 
     }
 
