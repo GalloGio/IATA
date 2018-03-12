@@ -27244,7 +27244,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>He message</shortDescription>
-        <value>The IATA Code %IATA_CODE% is for a %CHILD_LOCATION%. The %PARENT_LOCATION% details are as follows</value>
+        <value>The IATA Code &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; is for %CHILD_LOCATION%. The %PARENT_LOCATION% details are as follows</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ASSOCIATE_ENTITY</fullName>

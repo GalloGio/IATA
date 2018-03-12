@@ -455,7 +455,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -470,6 +470,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				childAccount.ANG_HE_CashCondition__c = parentAccount.ANG_HE_CashCondition__c;
 				childAccount.ANG_HE_RiskHistoryAssessment__c = parentAccount.ANG_HE_RiskHistoryAssessment__c;
 				childAccount.ANG_HE_RiskStatus__c = parentAccount.ANG_HE_RiskStatus__c;
+				childAccount.Financial_Review_Result__c = parentAccount.Financial_Review_Result__c;
 				childAccount.Top_Parent__c = null;
 
 				parentAccount.ANG_IEP_HE_AccntNum__c = null;
@@ -1017,7 +1018,7 @@ public with sharing class ANG_AgencyChangesHelper {
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
         	toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
-        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, true);
+        		ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
         }
 
 		if(!toUpsert.isEmpty())

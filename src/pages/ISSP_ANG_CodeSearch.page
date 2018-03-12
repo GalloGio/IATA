@@ -146,7 +146,7 @@
 
                       <tr style="display:{!IF(showParent,'','none')};">
                         <td colspan="2">
-                          <apex:outputText value="{! heMessage}"/>
+                          <apex:outputText escape="false" value="{! heMessage}"/>
                         </td>
                       </tr>
 
@@ -170,7 +170,7 @@
                           <apex:outputLabel value="{!$Label.ISSP_AMS_Noc_Legal_Name}"/>
                         </td>
                         <td>
-                          <apex:outputText style="margin-left: 15px;" value="{! agency.Legal_name__c}"/>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.name}"/>
                         </td>
                       </tr>
 
@@ -192,16 +192,16 @@
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c,'','none')}">
+                      <tr style="display:{!IF(AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel),'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
                         </td>
                         <td>
-                          <apex:outputText style="margin-left: 15px;" value="{! agency.ANG_Accreditation_Model__c}"/>
+                          <apex:outputText style="margin-left: 15px;" value="{! accreditationModel}"/>                                                   
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c,'','none')}">
+                      <tr style="display:{!IF(AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel),'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS}"/>
                         </td>
