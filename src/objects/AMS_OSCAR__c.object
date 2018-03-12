@@ -38377,6 +38377,19 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
+        <active>true</active>
+        <description>Block from using the OSCAR on accounts that are not Agency or Standard</description>
+        <errorConditionFormula>AND(
+  NOT(OR(
+    Account__r.RecordType.DeveloperName=&quot;Standard_Account&quot;,
+    Account__r.RecordType.DeveloperName=&quot;IATA_Agency&quot;
+  )),
+  ISNEW()
+)</errorConditionFormula>
+        <errorMessage>OSCAR object can&apos;t be used in accounts that are not Agencies or Standard</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Voluntary_Relinquishment_Suspension</fullName>
         <active>true</active>
         <errorConditionFormula>RecordType.Name = &apos;VOLUNTARY RELINQUISHMENT&apos;
