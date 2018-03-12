@@ -11,7 +11,9 @@ public class ISSP_ANG_CodeSearch {
 	public List<RiskEvent> riskEventsList;
 	public String riskStatus {get; set;}
 	public Boolean isAll {get; set;}
+	public Boolean isTravel {get; set;}
 	public String riskStatusFilter {get; set;}
+	public String accreditationModel {get; set;}
 
 	public ISSP_ANG_CodeSearch() {
 		this.riskStatusFilter = 'Active';
@@ -25,6 +27,7 @@ public class ISSP_ANG_CodeSearch {
 		this.activeError = false;
 		this.showParent = false;
 		this.agency = null;
+		this.isTravel = false;
 		this.riskStatus = '';
 		this.financialSecurityExists = false;
 
@@ -56,6 +59,7 @@ public class ISSP_ANG_CodeSearch {
 			if(len >= 7 && len <= 8) {
 				sector = Ams_Utils.SECTOR_PASSENGER;
 				auxReplacement = Label.ISSP_Travel;
+				this.isTravel = true;
 			} else {
 				sector = Ams_Utils.SECTOR_CARGO;
 				auxReplacement = Label.ISSP_Cargo;
@@ -70,7 +74,7 @@ public class ISSP_ANG_CodeSearch {
 
 			List<Account> auxList = [Select id,
 											IATACode__c,
-											Legal_name__c,
+											Name,
 											TradeName__c,
 											IATA_ISO_Country__r.Name,
 											ANG_Accreditation_Model__c,
@@ -92,20 +96,20 @@ public class ISSP_ANG_CodeSearch {
 				if(auxAgency.Location_Type__c == Ams_Utils.AE || auxAgency.Location_Type__c == Ams_Utils.BR) {
 
 					if(auxAgency.Location_Type__c == Ams_Utils.AE) {
-						auxReplacement = Label.ISSP_ANG_ASSOCIATE_ENTITY;
+						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
-						auxReplacement = Label.ISSP_ANG_BRANCH_OFFICE;
+						auxReplacement = 'a ' + Label.ISSP_ANG_BRANCH_OFFICE;
 					}
 
 					this.showParent = true;
 
 					String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_HE;
-					String aux2 = aux.replace('%IATA_CODE%', iataCodeStr);
+					String aux2 = aux.replace('%IATA_CODE%', auxAgency.IATACode__c);
 					String aux3 = aux2.replace('%CHILD_LOCATION%', auxReplacement);
 
 					Account parentAgency = [Select id,
 												   IATACode__c,
-												   Legal_name__c,
+												   Name,
 												   TradeName__c,
 												   IATA_ISO_Country__r.Name,
 												   ANG_Accreditation_Model__c,
@@ -136,7 +140,8 @@ public class ISSP_ANG_CodeSearch {
 				}
 
 				riskStatus = this.agency.ANG_HE_RiskStatus__c;
-
+	
+				this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
 
 				this.activeSearch = true;
 			} else {
