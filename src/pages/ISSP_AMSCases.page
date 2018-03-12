@@ -137,17 +137,15 @@
                 }                
 
                 $( function() {
+
                   var lan = "";
                   if('{!displayLanguage}' == 'en_US')
                     lan = "en";
-                  //if('{!displayLanguage}' == 'pt_BR')
-                    //lan = "pt";
+                  if('{!displayLanguage}' == 'pt_BR')
+                    lan = "pt-BR";
 
                   if(lan == "") 
                     lan = '{!displayLanguage}';
-
-
-                alert(lan);
 
                   $( "#datepicker" ).datepicker({minDate: 0});
                   $( "#datepicker" ).datepicker( "option", $.datepicker.regional[ lan ] );
