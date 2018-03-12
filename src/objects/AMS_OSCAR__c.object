@@ -170,6 +170,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Administrative_non_compliance_date__c</fullName>
+        <description>Used on OSCAR Annual Revalidation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used on OSCAR Annual Revalidation</inlineHelpText>
+        <label>Administrative non-compliance date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
