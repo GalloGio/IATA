@@ -222,8 +222,13 @@ public with sharing class ISSP_ANG_RHC {
 		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
 
 		for(ANG_Agency_Risk_Event__c event : events) {
-			if(event.ANG_CaseId__c == null || (event.ANG_CaseId__c != null && event.ANG_CaseId__r.Visible_on_ISS_Portal__c))
-				riskEventsList.add(new RiskEvent(event));
+			//
+			// If the case is not visible in the portal then we do not show the link to it.
+			//
+			if(event.ANG_CaseId__c != null && !event.ANG_CaseId__r.Visible_on_ISS_Portal__c) {
+				event.ANG_CaseId__c = null;
+			}
+			riskEventsList.add(new RiskEvent(event));
 		}
 
 		return riskEventsList;

@@ -130,7 +130,7 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Is_DGR_Compliant__c</field>
-            </layoutItems>            
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
