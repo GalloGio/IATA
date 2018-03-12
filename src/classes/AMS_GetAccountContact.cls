@@ -17,7 +17,7 @@ global class AMS_GetAccountContact {
 		if(needsHOContacts) {
 			Account accountBR = [SELECT Id, Top_Parent__c, Location_Type__c FROM Account WHERE Id = :accountIdBR];
 			if(accountBR.Location_Type__c != 'HO' && accountBR.Location_Type__c != 'AO') {
-				List<Contact> contactsHO = getContacts(accountIdBR);
+				List<Contact> contactsHO = getContacts(accountBR.Top_Parent__c);
 				populateMapContacts(contactsHO, mapContacts);
 			}
 		}
