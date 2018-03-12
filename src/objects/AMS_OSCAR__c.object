@@ -170,18 +170,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Administrative_non_compliance_date__c</fullName>
-        <description>Used on OSCAR Annual Revalidation</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Used on OSCAR Annual Revalidation</inlineHelpText>
-        <label>Administrative non-compliance date</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -208,6 +196,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Administrative_non_compliance_date__c</fullName>
+        <description>Used on OSCAR Annual Revalidation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used on OSCAR Annual Revalidation</inlineHelpText>
+        <label>Administrative non-compliance date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
@@ -6502,6 +6502,41 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <description>Step used on Bank Account Setup Oscar Process</description>
         <externalId>false</externalId>
         <label>STEP42</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passed</fullName>
+                    <default>false</default>
+                    <label>Passed</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>STEP43__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP43</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
