@@ -32,6 +32,24 @@
         <template>SARA/Automatic_Security_Renewal_Process</template>
     </alerts>
     <fieldUpdates>
+        <fullName>FS_UF</fullName>
+        <field>External_Security_ID__c</field>
+        <formula>TEXT(Financial_Institution__r.First_Call_Letter_required__c)</formula>
+        <name>FS UF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>First_call_letter_required_update</fullName>
+        <field>First_Call_Letter_required1__c</field>
+        <formula>Text(Financial_Institution__r.First_Call_Letter_required__c)</formula>
+        <name>First call letter required update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SARA_Financial_Security_Status_Close_t</fullName>
         <field>Security_Status__c</field>
         <literalValue>Close to Expiry Date</literalValue>
@@ -69,6 +87,26 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>FS WF Test</fullName>
+        <actions>
+            <name>FS_UF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>true</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>First call letter required</fullName>
+        <actions>
+            <name>First_call_letter_required_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>true</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
     <rules>
         <fullName>SARA Automatic Case renewal A1</fullName>
         <actions>

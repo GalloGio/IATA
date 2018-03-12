@@ -239,6 +239,18 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>First_Call_Letter_required1__c</fullName>
+        <description>Takes the value from the Financial Institution through a WF</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>First_Call_Letter_required__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(
