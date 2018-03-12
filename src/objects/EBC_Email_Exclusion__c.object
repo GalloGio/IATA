@@ -418,7 +418,7 @@
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>lu@dreamtravelnh.com</value>
+            <value>medhat@right-travel.com</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>
