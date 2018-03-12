@@ -488,7 +488,7 @@ function buildFunctionCall(func, argList){
                     <li>Office Phone</li>
                     <!--<li>Remittance Frequency</li>-->
                 </apex:outputText>
-                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
+                <apex:outputText rendered="{!OR(AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess)), isAMSCheckRemittance)}">
                     <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
