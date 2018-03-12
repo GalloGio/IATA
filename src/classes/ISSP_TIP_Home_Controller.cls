@@ -1,19 +1,17 @@
 public without sharing class ISSP_TIP_Home_Controller {
     
-    private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
-    private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Payment Provider').RecordTypeId;
+    private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard Account');      
+    private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Payment Provider');
     
-    private static String PROCESS_CASE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Process').RecordTypeId;
+    private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Process');
+
+
 
     public ISSP_TIP_Home_Controller(){
     	popContact();
     }
-/*
-    public string teste {get;set;}
-    public string sortExpression {get;set;}
-    public string sortdirection {get;set;}*/
-    public string currNavState {get;set;}
-    
+
+    public string currNavState {get;set;}    
     public Contact con {get; set;}
     public Account acc {get;set;}
     public boolean btnEnabled {get;set;}
@@ -26,15 +24,13 @@ public without sharing class ISSP_TIP_Home_Controller {
         return isocountry.AMS_Accreditation_New_Labels__c;
     }
 
-
-
     private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         system.debug('user.ContactId ' + user.ContactId);
         con = DAL_ISSP.getContact(user.ContactId);
 
         //if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-        if (con.User_Portal_Status__c == 'Approved Admin' ) isAdmin = true;
+        if (con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM ) isAdmin = true;
 
         acc = [SELECT id, recordtypeid, category__c FROM ACCOUNT WHERE ID = :con.AccountId];
 
