@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_CodeSearch {
+public class ISSP_ANG_CodeSearch {
 	public Long iataCode {get; set;}
 	public Boolean activeSearch {get; set;}
 	public Boolean activeError {get; set;}
