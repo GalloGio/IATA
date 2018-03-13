@@ -27279,5 +27279,56 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>Financial Security Exists</shortDescription>
         <value>Financial Security Exists</value>
-    </labels>     
+    </labels>        
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-out of Financial Review button label</shortDescription>
+        <value>Request to Opt-Out of Financial review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
+        <value>Only your Agency's IFAP Contact can request to Opt-out of the Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title in the modal window to opt out the financial review</shortDescription>
+        <value>Request to Opt-Out of Financial review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
+        <value>You are about to opt out the financial review. You must reconsider your choice...
+We strongly advise you to remain with us primarily because you can't breathe under water or fly.
+We might have to make you a proposal you can not refuse, and the proposal will be delivered by our associates Tessio e Clemenza.
+You Shall not opt out!!!!</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>You must specify an opt out date</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case reason used in the case subject</shortDescription>
+        <value>Financial review opt-in / opt-out</value>
+    </labels>    
 </CustomLabels>
