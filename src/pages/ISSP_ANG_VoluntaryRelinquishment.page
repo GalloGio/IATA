@@ -1,0 +1,445 @@
+<apex:page controller="ISSP_ANG_VoluntaryRelinquishment"           
+           cache="false"
+           sidebar="false"
+           showHeader="false"          
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}"
+           >
+
+    <html> 
+        <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
+        <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.datePickerFix)}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
+        <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
+       
+    <style>
+       
+       .pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+                 
+        input + label {
+            font-weight:normal;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                
+        }
+
+        .progress-bare{
+            float:left;width:0;
+            font-size:12px;
+            line-height:20px;
+            color:#fff;text-align:center;
+            background-color:#337ab7;
+            -webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
+            box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
+            -webkit-transition:width .6s ease;
+            -o-transition:width .6s ease;
+            transition:width .6s ease;
+
+        }
+        
+        body .bPageBlock .pbBody .pbSubheader{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+        
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+                   
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%;vertical-align: text-top;}
+            
+            .col1_inner {width:25%; vertical-align: text-top;}
+            .col2_inner {width:25%; vertical-align: text-top;}
+                   
+             .row1 {padding-bottom:16px; vertical-align: text-top;}
+
+             .btn {
+                background:none;
+            }
+
+        .colPanel1 {
+        width:30%;
+        font-weight:bold;
+        padding-bottom:10px
+      }
+        
+      .colPanel2 {
+        width:65%;
+        font-weight:normal !important;
+      }
+    </style>
+    <script type="text/javascript">
+    
+    var operationType = '{!sectorvalue}';
+
+
+
+    function gotoStep1(myValue, nextStep) {
+        console.log('myValue ' + myValue + ' nextStep ' + nextStep);
+            defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
+            if($('#brcountry').css('display') == 'none'){
+                checkBranchAbroad(nextStep);
+            }
+            
+                var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]'); 
+                vOfficeType = $lists.val();                               
+                var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
+                console.log('no empty voffice '+vOfficeType);
+                isAllowedCountry = 't';
+            
+    }
+
+    function isIE(){
+            //alert(navigator.userAgent);
+            //return /MSIE/.test(navigator.userAgent);
+            if (/MSIE/.test(navigator.userAgent)){
+                return true;
+            }
+            else if (/rv:11/.test(navigator.userAgent)){
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+
+    function getFileLink(fileName) {
+        
+        $("#loading").show();
+        setTimeout(function(){
+        try{
+            ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+                var result2= result.replace("&amp;","&"); 
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+                }
+                $("#loading").hide();
+            },{escape:false});
+        }catch(err){alert( err.message);}
+        },500);
+    }
+
+     function togglePageItem(v, fldId) {
+        var el = document.getElementById(fldId);
+        console.log(v);
+        console.log(fldId);
+        if(v=='Selected Branches Only') {
+            el.style.display='block';
+        } else {
+            el.style.display='none';
+        }
+
+    }
+
+    function showFuturePastDates(){             
+        datePickerYearsAdded = false;                               
+        var futureYearsToAdd = 20;  
+        var pastYearsToAdd = 5;                         
+        if (!datePickerYearsAdded) {
+            var select = document.getElementById('calYearPicker');
+            if (!select) return;
+            select.innerHTML = '';
+            var startYear = new Date().getFullYear() - pastYearsToAdd; ;
+            for (var year = startYear; year < startYear + futureYearsToAdd + 1; year++) {
+                select.options[select.options.length] = new Option(year, year);
+            }
+            datePickerYearsAdded = true;
+        }
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    
+    </script>
+            
+     <div class="container">
+       <div id="contentWrapper">
+           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+            
+    
+<!--       -->
+<!-- STEP 1-->
+<!--       -->
+            <apex:outputText rendered="{!isStep1}">                
+                <div class="panel-primary">
+                    <div class="panel-heading head_panel_green">
+                        <h3 class="panel-title">{!$Label.ISSP_ANG_Voluntary_Relinquishment}</h3>
+                    </div>
+                    <div class="panel-body" id="body-enquiries">                            
+                        <apex:form id="step1Form" styleClass="form-horizontal">
+                        <apex:pageBlock id="step1Block" mode="edit" >
+                            <!--Step Progress bar start -->
+                            
+                            <div class="progress">         
+                                <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                                    {!$Label.ISSP_AMS_Step1_PCI}
+                                </div>
+                                <div class="progress-bare progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_ANG_Step1_VR}" id="Next3">
+                                        <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                                        </apex:commandLink>
+                                </div>                                
+                            </div>
+                            <apex:pageMessages id="msg" />
+                            <!--Step Progress bar End -->
+
+                            <div class="alert alert-warning"  role="alert">                             
+                                {!$Label.ISSP_AMS_Noc_StepA_message}
+                            </div>
+
+                            <!--Multi select picklist Start -->
+                            <apex:outputPanel >
+                                <div class="form-group">
+                                    <label for="operationtype" class="col-lg-3 control-label">
+                                        * {!$Label.ISSP_ANG_WISH_TO_RELINQUISH} 
+                                    </label>
+                                    <div class="col-lg-9" style="padding-top:7px">
+                                            <apex:outputPanel rendered="{!!isHierarchy}">
+                                                <apex:outputPanel rendered="{!locationType == 'HO'}">
+                                                    <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                </apex:outputPanel>                                                                                        
+                                                <apex:outputPanel rendered="{!locationType == 'HE'}">
+                                                    <input type="radio" itemValue="HO Only" name="colors" value="green" checked="checked"> {!lTypeIata}</input>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+
+                                            <apex:outputPanel rendered="{!isHierarchy}">
+                                            <apex:selectRadio required="true" id="LocationType" value="{!newForm.Scope_of_Change__c}" layout="pageDirection" style="width:45%;"  onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
+                                                <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_ANG_ENTIRE_HIERARCHY}"/>
+                                                <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(isNGaccount==true,$Label.ISSP_ANG_ONE_OR_MORE_AE,$Label.ISSP_ANG_One_or_More)}"/>
+                                            </apex:selectRadio>
+                                            </apex:outputPanel>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>                            
+                            <apex:outputPanel id="branchaccountsel" style="display:{!IF(newForm.Scope_of_Change__c=='Selected Branches Only','','none')}">                                
+                                <div class="form-group">
+                                    <label for="approval focus" class="col-lg-3 control-label"></label>
+                                    <div class="col-lg-9">
+                                            <c:MultiselectPicklist leftLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_NoC_Choose_Branch_Account, $Label.ISSP_AMS_NoC_Choose_Associate_Entities)}" 
+                                                                    leftOptions="{!RelatedAccount}"
+                                                                    rightLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_Selected_Branch_Offices, $Label.ISSP_AMS_Selected_Associate_Entities)}"
+                                                                    rightOptions="{!AgencyCodesConcerned}"
+                                                                    size="8"
+                                                                    width="300px"
+                                                                    btn_up_down="false"
+                                            />                                            
+                                    <br></br>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                                <div class="form-group">                                    
+                                    <label for="operationtype" class="col-lg-3 control-label" style="padding-right:50px">
+                                        * {!$Label.ANG_Effective_Date}  
+                                    </label>
+                                    <div class="col-lg-9" style="padding-top:7px"> 
+                                        <apex:inputField value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
+                                        <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_ANG_Effective_Date_Of_Change}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                        <br></br><br></br>
+                                        <apex:outputPanel rendered="{!isHierarchy}">    
+                                                <apex:outputText escape="false" value="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ANG_Voluntary_Relinquishment_to_NOC_Legacy, $Label.ANG_Voluntary_Relinquishment_to_NOC)}" />
+                                        </apex:outputPanel>
+                                        
+                                    </div>
+                                </div>
+
+                            <!--Multi select picklist End -->
+                            
+                                <apex:pageBlockButtons location="bottom" style="padding-left:218px">
+                                    <apex:actionStatus id="buttonLoadingStep1">
+                                        <apex:facet name="stop"><apex:outputPanel >
+                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
+                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form"/>
+                                        </apex:outputPanel></apex:facet>
+                                        <apex:facet name="start"><apex:outputPanel >
+                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>                                           
+                                            <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
+                                        </apex:outputPanel></apex:facet>                                                   
+                                    </apex:actionStatus>
+                                </apex:pageBlockButtons>
+                                
+                            </apex:pageBlock>
+                            
+                        </apex:form>         
+                    </div>
+                </div>
+                
+            </apex:outputText>
+    
+<!--       -->       
+<!-- STEP 2-->
+<!--       --> 
+           
+    <apex:outputText rendered="{!isStep2}">
+        <div class="panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">{!$Label.ISSP_ANG_Voluntary_Relinquishment}</h3>
+            </div>
+            <div class="panel-body" id="body-enquiries">
+                <apex:form >
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                            <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1Submit"/>
+                        </div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                            {!$Label.ISSP_ANG_Step1_VR}
+                        </div>                              
+                    </div>
+                </apex:form>                     
+                <apex:pageBlock >                
+                    <apex:pageBlockSection title="{!$Label.ISSP_PCI_Agency_Codes_VR}" columns="1" collapsible="false">                        
+                            <apex:pageBlockSectionItem >
+                            <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%">
+                                <apex:outputText >{!$Label.ISSP_ANG_Iata_Codes_Relinquish}</apex:outputText>
+                                <apex:outputText rendered="{!AND(newform.Scope_of_Change__c == 'HO Only',locationType == 'HE')}" value="{!$Label.ISSP_AMS_NoC_Head_Entity + ' (' + hqAccount.IATACode__c + ')'}"/>
+                                <apex:outputText rendered="{!AND(newform.Scope_of_Change__c == 'HO Only',locationType == 'HO')}" value="{!$Label.ISSP_AMS_NoC_Head_Office + ' (' + hqAccount.IATACode__c + ')'}"/>
+                                <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='Selected Branches Only', newForm.Scope_of_Change__c=='HO - All Branches')}" value="{!IF(newForm.Scope_of_Change__c=='Selected Branches Only',agencyCodesConcernedStr,  $Label.ISSP_ANG_ENTIRE_HIERARCHY)}"/>
+                            </apex:panelGrid>
+                            </apex:pageBlockSectionItem>                        
+                            <apex:pageBlockSectionItem >
+                                <apex:outputText escape="false" value="{!$Label.ISSP_ANG_VR_Disclaimer}"/>
+                            </apex:pageBlockSectionItem>                        
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                 <apex:form id="tCondiForm">
+                <apex:pageMessages />
+
+                        <apex:pageBlock >
+                            <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                                <apex:actionStatus id="buttonLoadingStep3">
+                                    <apex:facet name="stop"><apex:outputPanel >
+                                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
+                                    </apex:outputPanel></apex:facet>
+                                    <apex:facet name="start"><apex:outputPanel >
+                                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right" reRender="tCondiForm" />
+                                    </apex:outputPanel></apex:facet>                                                   
+                                </apex:actionStatus>
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
+                </apex:form>
+            </div>
+        </div>
+    </apex:outputText>
+           
+     </div>
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
+     </div>
+       
+    </body>  
+</html>
+
+</apex:page>

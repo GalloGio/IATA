@@ -196,20 +196,6 @@
             rendered="{!isOSCARCorrection}"
         />
 
-		<!-- FM AMSU-1 -->	
-        <apex:pageMessage severity="WARNING"
-            strength="1"
-            summary="{!IF(isAllHierarchySelected,'Complete Hierarchy selected, ALL fields available to Edit','Per Location Hierarchy selected, ONLY Partial fields available to edit!')}"
-            rendered="{!isAgencyCorrection}"
-        />
-    
-		<!-- FM AMSU-1 -->
-        <apex:pageMessage severity="WARNING"
-            strength="1"
-            summary="{!IF(isVATnumberSpecialCase,'The VAT Number fields will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy','The VAT Number fields will only be updated on all agency, except for the agencies that are Branch Abroad')}"
-            rendered="{!isAgencyCorrection && (isVATnumberSpecialCase || isBranchAbroadSelected)}"
-        />
-
         <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
             <apex:pageBlockSectionItem >
                 <apex:outputLabel value="Account"></apex:outputLabel>
@@ -303,25 +289,6 @@
         $(".isoState").dblclick(function() {
           openSubTab('/{!accreditationObj.IATA_ISO_State__c}','','',true);return false;
         });
-		
-		//FM AMSU-1
-        $(".vatNumber").change(function() {
-            if({!isVATnumberSpecialCase}){
-                alert('The VAT Number will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy');return true;
-            }
-            if({!isBranchAbroadSelected}){
-                alert('The VAT Number will only be updated on all agency, except for the agencies that are Branch Abroad');return true;
-            }
-        });
-        $(".vatNumber2").change(function() {
-            if({!isVATnumberSpecialCase}){
-                alert('The VAT Number 2 will only be updated on the current agency, it will not be updated on the other agencies of the hierarchy');return true;
-            }
-            if({!isBranchAbroadSelected}){
-                alert('The VAT Number 2 will only be updated on all agency, except for the agencies that are Branch Abroad');return true;
-            }
-        });
-
 
         if({!saveAction}){
             refreshTab();
