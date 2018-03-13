@@ -1631,36 +1631,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>GoLite</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCashTooltip</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCashTooltip</shortDescription>
-        <value>Two roads diverged in a yellow wood,
-And sorry I could not travel both
-And be one traveler, long I stood
-And looked down one as far as I could
-To where it bent in the undergrowth;
-
-Then took the other, as just as fair,
-And having perhaps the better claim,
-Because it was grassy and wanted wear;
-Though as for that the passing there
-Had worn them really about the same,
-
-And both that morning equally lay
-In leaves no step had trodden black.
-Oh, I kept the first for another day!
-Yet knowing how way leads on to way,
-I doubted if I should ever come back.
-
-I shall be telling this with a sigh
-Somewhere ages and ages hence:
-Two roads diverged in a wood, and I—
-I took the one less traveled by,
-And that has made all the difference.</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_ProgressBarNode1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -4087,14 +4057,6 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <shortDescription>Home Page New Release Msg.</shortDescription>
         <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more. 
 Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
-    </labels>
-    <labels>
-        <fullName>IANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
-        <categories>ISSP,ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Error message when the opt out date is empty</shortDescription>
-        <value>You must specify an opt out date</value>
     </labels>
     <labels>
         <fullName>IATA_Alpha</fullName>
@@ -17243,14 +17205,6 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP EMADOMVAL Title</shortDescription>
         <value>Manage my company Email domains</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_EasyPayLegalConfirmation</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
-        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account. By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law. Do you wish to proceed?</value>
     </labels>
     <labels>
         <fullName>ISSP_Edit</fullName>
