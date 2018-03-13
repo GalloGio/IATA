@@ -461,13 +461,4 @@ public class AMS_OSCAR_ProcessViewerController {
 
     }
 
-    /*** AMSU-113 Start ***/
-    public Boolean isPCICompliant {
-        get {
-            return oscar.Process__c == AMS_Utils.PCI_COMPLIANT;
-        }
-        set;
-    }
-    /*** AMSU-113 End ***/
-
 }
