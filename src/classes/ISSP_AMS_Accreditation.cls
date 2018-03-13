@@ -4204,10 +4204,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
 
         flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
-            isHOAccredited && 
-            con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH &&
-            !con.Account.ANG_FA_Opt_out__c && 
-            !isOptOutInProgress);        
+            isHOAccredited && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c && !isOptOutInProgress);        
 
         return l;
     }
