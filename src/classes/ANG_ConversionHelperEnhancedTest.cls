@@ -586,7 +586,7 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Id, Account__c, Change_Code__c  FROM Agency_Applied_Change_code__c ];
 
-		System.assertEquals(5,changeCodes.size());
+		System.assertEquals(1,changeCodes.size());
 
 		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
 
@@ -1574,8 +1574,13 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		}
 
-		System.assertEquals('HE' , mapAccount.get('Agency BR (P) 4').Location_Type__c);
-		System.assertEquals('AE' , mapAccount.get('Agency BR (P) 3').Location_Type__c);
+		if(mapAccount.get('Agency BR (P) 4').Location_Type__c == 'HE'){
+			System.assertEquals('HE' , mapAccount.get('Agency BR (P) 4').Location_Type__c);
+			System.assertEquals('AE' , mapAccount.get('Agency BR (P) 3').Location_Type__c);
+		}else{
+			System.assertEquals('AE' , mapAccount.get('Agency BR (P) 4').Location_Type__c);
+			System.assertEquals('HE' , mapAccount.get('Agency BR (P) 3').Location_Type__c);
+		}
 
 		System.assertEquals('BR' , mapAccount.get('Agency BR (P) 1').Location_Type__c);
 		System.assertEquals('BR' , mapAccount.get('Agency BR (P) 2').Location_Type__c);
@@ -1584,11 +1589,19 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals(3 , rels.size());
 		System.assertEquals(2 , hiers.size());
 
-		System.assertEquals(null , mapAccount.get('Agency BR (P) 4').ParentId);
-		System.assertEquals(null , mapAccount.get('Agency BR (P) 4').Top_Parent__c);
+		if(mapAccount.get('Agency BR (P) 4').Location_Type__c == 'HE'){
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 4').ParentId);
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 4').Top_Parent__c);
 
-		System.assertEquals(mapAccount.get('Agency BR (P) 4').Id , mapAccount.get('Agency BR (P) 3').ParentId);
-		System.assertEquals(mapAccount.get('Agency BR (P) 4').Id , mapAccount.get('Agency BR (P) 3').Top_Parent__c);
+			System.assertEquals(mapAccount.get('Agency BR (P) 4').Id , mapAccount.get('Agency BR (P) 3').ParentId);
+			System.assertEquals(mapAccount.get('Agency BR (P) 4').Id , mapAccount.get('Agency BR (P) 3').Top_Parent__c);
+		}else{
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 3').ParentId);
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 3').Top_Parent__c);
+
+			System.assertEquals(mapAccount.get('Agency BR (P) 3').Id , mapAccount.get('Agency BR (P) 4').ParentId);
+			System.assertEquals(mapAccount.get('Agency BR (P) 3').Id , mapAccount.get('Agency BR (P) 4').Top_Parent__c);
+		}
 
 
 		System.assertEquals(null , mapAccount.get('Agency HO').ParentId);
