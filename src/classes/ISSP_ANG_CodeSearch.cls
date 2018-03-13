@@ -40,9 +40,9 @@ public class ISSP_ANG_CodeSearch {
 		Integer len = iataCodeStr.length();
 
 		//
-		// IATA CODE 7-8 DIGITS => Travel Agency
+		// IATA CODE 7-8 DIGITS => Travel Agency (Last digit is a checkcode)
 		//
-		// IATA CODE 10-11 DIGITS => Cargo Agency
+		// IATA CODE 10-11 DIGITS => Cargo Agency (Last digit is a checkcode)
 		//
 		if(len < 7 || len > 11 || len == 9) {
 			this.activeError = true;
@@ -156,17 +156,12 @@ public class ISSP_ANG_CodeSearch {
 
     public PageReference refreshRiskEventsTable() {
 
-    	System.debug('ALEX REFRESH');
-
         riskEventsList = null;
         
         return null;
     }
 
     public List<RiskEvent> getRiskEventsList() {
-
-		System.debug('ALEX GET + ' + this.riskStatusFilter);
-
 
 		riskEventsList = new List<RiskEvent>();
 
