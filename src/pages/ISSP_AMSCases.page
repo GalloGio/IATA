@@ -146,6 +146,8 @@
                     lan = "en";
                   if('{!displayLanguage}' == 'pt_BR')
                     lan = "pt-BR";
+                  if('{!displayLanguage}' == 'zh_CN')                    
+                    lan = "zh-CN";
 
                   if(lan == "") 
                     lan = '{!displayLanguage}';
@@ -158,11 +160,10 @@
                   });
                 });
 
-                function startLoading(){
-                  //$('#load_scrl').css('top', $j(document).scrollTop() - 200);
+                function startLoading() {
                   $('.loadingBox').show();
                 }
-                function endLoading(){
+                function endLoading() {
                   $('.loadingBox').hide();
                 }                
 
