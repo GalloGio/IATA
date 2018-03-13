@@ -331,15 +331,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
     }
 
-    /*** AMSU-121 Start ***/
-    public Boolean isChangeOfLocation {
-        get {
-            return oscarObj != null && !String.isBlank(oscarObj.Type_of_change__c) && oscarObj.Type_of_change__c.indexOf(AMS_Utils.Location) >= 0;
-        }
-        set;
-    }
-    /*** AMSU-121 End ***/
-
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
 
 
