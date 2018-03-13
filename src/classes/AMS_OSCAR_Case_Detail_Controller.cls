@@ -330,6 +330,15 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return editable;
         }
     }
+	
+	/*** AMSU-121 Start ***/
+    public Boolean isChangeOfLocation {
+        get {
+            return oscarObj != null && !String.isBlank(oscarObj.Type_of_change__c) && oscarObj.Type_of_change__c.indexOf(AMS_Utils.Location) >= 0;
+        }
+        set;
+    }
+    /*** AMSU-121 End ***/
 
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
 
@@ -405,7 +414,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
-                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c  from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
+                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c, STEP6__c  from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
 
