@@ -70,8 +70,10 @@ public class ams2gdp_BusinessLogic
 				remittance1 = account.Remittance_frequency__c.split(';')[0];
 				if(account.Remittance_frequency__c.indexOf(';') != -1) remittance2 = account.Remittance_frequency__c.split(';')[1];
 			}
-			// code PCI Complicance to single char
-			String PCICompliance = account.Is_PCI_compliant__c == 'Yes' ? 'Y' : 'N';
+			// code PCI Complicance to single char - or empty
+			String PCICompliance = '';
+			if(account.Is_PCI_compliant__c == 'Yes') {PCICompliance = 'Y';}
+			else if(account.Is_PCI_compliant__c == 'No') {PCICompliance = 'N';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
 				, Parent_GDP_Account_View__c = (account.ParentId !=null)? parentMap.get(account.ParentId): null
