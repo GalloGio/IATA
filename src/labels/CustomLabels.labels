@@ -20378,6 +20378,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Business Phone</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_BusinessPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Business Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_ChangeMyCompany</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20521,6 +20529,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Please select the type of customer</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_FaxPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Fax Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_IATACode_Bubble</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20581,6 +20597,14 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Mobile Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_MobilePhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Mobile Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_MyCompany</fullName>
