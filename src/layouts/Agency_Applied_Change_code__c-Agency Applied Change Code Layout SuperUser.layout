@@ -43,10 +43,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AccountPreviousStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>AccountNewStatus__c</field>
             </layoutItems>
             <layoutItems>
@@ -55,10 +51,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PreviousReason__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Reason_Description__c</field>
