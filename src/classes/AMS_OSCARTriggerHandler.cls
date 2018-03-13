@@ -2484,6 +2484,8 @@ public class AMS_OSCARTriggerHandler {
                                     oscar.addError('Error - There are no PCI Compliant attachments with associated with this case/oscar.');
                                 }else{ 
                                 oscar.addError('Error - There are no attachments associated with this case/oscar.');
+								}
+							}
                         }
                     }
                 }
