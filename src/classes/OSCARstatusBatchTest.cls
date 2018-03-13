@@ -12,16 +12,20 @@ private class OSCARstatusBatchTest {
 		Date today = System.today();
 		system.debug('Today:' + today);
 		
-		AMS_OSCAR__c osc1 = new AMS_OSCAR__c(Name = 'Voluntary_Relinquishment1',
+		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Account account = new Account(RecordTypeId = agencyRT, Name = 'Test Account');
+		insert account;
+		
+		AMS_OSCAR__c osc1 = new AMS_OSCAR__c(Name = 'Voluntary_Relinquishment1', Account__c = account.Id,
 		                                     Change_effective_as_of__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Voluntary_Relinquishment_Id);
 		
-		AMS_OSCAR__c osc2 = new AMS_OSCAR__c(Name = 'Voluntary_Relinquishment3',
+		AMS_OSCAR__c osc2 = new AMS_OSCAR__c(Name = 'Voluntary_Relinquishment3', Account__c = account.Id,
 		                                     Termination_Date__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Voluntary_Relinquishment_Id);
 		
-		AMS_OSCAR__c osc3 = new AMS_OSCAR__c(Name = 'Change1',
+		AMS_OSCAR__c osc3 = new AMS_OSCAR__c(Name = 'Change1', Account__c = account.Id,
 		                                     Change_effective_as_of__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Change_Id[1].id);
 		
-		AMS_OSCAR__c osc4 = new AMS_OSCAR__c(Name = 'certification1',
+		AMS_OSCAR__c osc4 = new AMS_OSCAR__c(Name = 'certification1', Account__c = account.Id,
 		                                     Sanity_check_deadline__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Certification_Id);
 		
 		oscarList.add(osc1);
