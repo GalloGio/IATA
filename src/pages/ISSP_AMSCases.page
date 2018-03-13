@@ -119,6 +119,7 @@
                 }
 
                 function modalModalOptOutClose() {
+                    endLoading();
                     $('#ModalOptOut').modal('toggle');
                 }
 
