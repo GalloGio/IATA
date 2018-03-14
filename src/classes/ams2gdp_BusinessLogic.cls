@@ -967,9 +967,6 @@ public class ams2gdp_BusinessLogic
 
 		// NewGen
 		Map<String, GDP_Reference_Table__c> accreditation_model_references 		= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(accreditation_models, 'ACCTYP');
-		// Map<String, GDP_Reference_Table__c> risk_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(risk_status, 'RISKSTAT');
-		// Map<String, GDP_Reference_Table__c> remittance_frequency_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(remittance_frequencies, 'REMITFREQ');
-		// Map<String, GDP_Reference_Table__c> easy_pay_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(easy_pay_statuses, 'EPSTAT');
 
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>();

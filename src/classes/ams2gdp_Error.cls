@@ -54,36 +54,4 @@ public class ams2gdp_Error
 		return errors;		
 	}
 
-	public static List<ams2gdp_Error> formatUpdateResult(List<sObject> records, List<Database.SaveResult> save_results, String jobName, String externalKey)
-	{
-		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
-
-		system.debug('**records**'+records+'**'+save_results+'**job**'+jobName+'**key**'+externalKey);
-		for(Integer x = 0; x<records.size(); x++)
-		{
-			Database.SaveResult res = save_results[x];
-			sObject rec = records[x];
-
-			//Upsert failed ?
-			if(!res.isSuccess())
-			{
-				for(Database.Error err: res.getErrors())
-				{
-					String msg = 'Error Code: ' + err.getStatusCode()
-						+'\nFields: '+ err.getFields()
-						+'\nMessage: ' + err.getMessage();
-
-					String externalKeyValue = (String)rec.get(externalKey);
-					if(String.isNotBlank(externalKeyValue))
-						externalKeyValue = externalKeyValue.left(18);
-
-					errors.add(new ams2gdp_Error(jobName, (String)rec.get(externalKey), res.getId(), msg));
-				}
-			}
-		}
-
-		system.debug('errors-----'+errors);
-
-		return errors;
-	}
 }
