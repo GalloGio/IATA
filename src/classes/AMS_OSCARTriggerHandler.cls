@@ -95,6 +95,8 @@ public class AMS_OSCARTriggerHandler {
 
         updateAccountWithOptINOUT((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
+        handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
     }
 
     public static void handleBeforeInsert() {
@@ -2266,6 +2268,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_App';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
+        else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -3359,6 +3362,34 @@ public class AMS_OSCARTriggerHandler {
 
         if(!casesToUpdate.isEmpty())
             update casesToUpdate;
+    }
+
+    public static void handleAnnualRevalidation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+
+        List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+
+        for (AMS_OSCAR__c oscar : oscars){
+            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED){
+                oscarsToProcess.add(oscar);
+            }
+        }
+
+        if (oscarsToProcess.isEmpty())
+            return;
+
+        List<Agency_Applied_Change_code__c> listNewCCs = new List<Agency_Applied_Change_code__c>();
+
+        for (AMS_Oscar__c oscar: oscarsToProcess){
+            sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
+
+            AMS_ChangeCodes__c config = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('ARV');
+            listNewCCs.add(new Agency_Applied_Change_Code__c(Change_Code__c = config.Change_Code__c, OSCAR__c = oscar.Id,  Account__c = oscar.Account__c,
+                            Bulletin_Information__c = config.Bulletin_Memo_Text__c, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c)); 
+        }
+
+        if(!listNewCCs.isEmpty())
+            insert listNewCCs;
+
     }
 
 }

@@ -6362,19 +6362,29 @@
               {
                 "Name": "STEP43",
                 "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "ANG_Administrative_non_compliance_date__c",
+                  "STEP43__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP44",
+                "Required": [],
                 "Actions": [
                   {
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
-                      "oscarid", "43"
+                      "oscarid", "44"
                     ]
                   }
                 ],
                 "Automations": [],
                 "DisplayFields": [
-                  "ANG_Administrative_non_compliance_date__c",
-                  "STEP43__c"
+                  "STEP44__c"
                 ],
                 "IsDependent": false
               }
