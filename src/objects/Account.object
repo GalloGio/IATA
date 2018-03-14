@@ -20234,8 +20234,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Finland Agents</label>
         <language>en_US</language>
         <sharedTo>
+            <group>IDFSEuropeRegionalOffice</group>
             <group>IDFSFinland</group>
-            <role>IDFSEuropeRegionalOffice</role>
         </sharedTo>
     </listViews>
     <listViews>
