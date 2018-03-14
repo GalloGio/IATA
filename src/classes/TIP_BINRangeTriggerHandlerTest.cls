@@ -5,12 +5,13 @@ private class TIP_BINRangeTriggerHandlerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Payment Provider').getRecordTypeId();
+		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
 
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
 			TIP_HQ_Location__c = country.Id,
-			RecordTypeId = paymentProviderRecordTypeId);
+			RecordTypeId = paymentProviderRecordTypeId,
+			Accreditation_date__c = Date.today());
 		insert provider;
 
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
@@ -35,7 +36,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 			Payment_Network__c = 'Amex (AX)');
 		insert paymentNetworkConfig;
 
-		Id listedByIATARecordTypeId = Schema.SObjectType.TIP_BIN_Range__c.getRecordTypeInfosByName().get('Listed by IATA').getRecordTypeId();
+		Id listedByIATARecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Listed_by_IATA');
 
 		List<TIP_BIN_Range__c> binRanges = new List<TIP_BIN_Range__c>();
 
@@ -67,8 +68,6 @@ private class TIP_BINRangeTriggerHandlerTest {
 		for (TIP_BIN_Range__c bin: binRanges) {
 			System.assertEquals('123400000000000', bin.TIP_Range_Start__c, 'Not the expected padded number');
 			System.assertEquals('123499999999999', bin.TIP_Range_End__c, 'Not the expected padded number');
-		}
-
-		
+		}		
 	}
 }
