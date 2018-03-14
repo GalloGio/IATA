@@ -49,7 +49,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -118,7 +118,7 @@
         <inlineHelpText>Primary Currency and Secondary Currency fields per country . This should also be a criteria. The provider should accept at least one of the currencies valid in the BSPs where the product is available. This should be checked by IATA manually.</inlineHelpText>
         <label>Issuing Currency</label>
         <length>4</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -166,9 +166,15 @@
         </valueSet>
     </fields>
     <label>Payment Product Country Config</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
-        <label>Payment Product Country Config Name</label>
-        <type>Text</type>
+        <displayFormat>PCC-{00000000}</displayFormat>
+        <label>Payment Product Country Config Number</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payment Product Country Configs</pluralLabel>
     <searchLayouts/>
