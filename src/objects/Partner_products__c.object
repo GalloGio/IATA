@@ -130,11 +130,24 @@
         <externalId>false</externalId>
         <inlineHelpText>Subject to chargeback</inlineHelpText>
         <label>Chargeback airlines</label>
-        <length>1</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>PP_Chargeback_airlines_duration__c</fullName>
@@ -193,7 +206,7 @@
         <externalId>false</externalId>
         <label>Interchange fee (Default)</label>
         <precision>18</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -218,6 +231,16 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PP_Network_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Network Fee (default)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>PP_Pay_in_model__c</fullName>
@@ -348,6 +371,11 @@
                     <default>false</default>
                     <label>Diners (DC/DS)</label>
                 </value>
+                <value>
+                    <fullName>Other (OTH)</fullName>
+                    <default>false</default>
+                    <label>Other (OTH)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -392,11 +420,29 @@
         <externalId>false</externalId>
         <inlineHelpText>Product status in the product lifecycle. If active, airlines can consent to the product, and it can be used in the TIP solution. If inactive, the product has been terminated by the provider or IATA</inlineHelpText>
         <label>Product status</label>
-        <length>40</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product_Country_Configuration__c</fullName>
@@ -428,11 +474,24 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the product subject to PCI DSS requirements?</inlineHelpText>
         <label>Product subject to PCI DSS requirements?</label>
-        <length>5</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Partner Product</label>
     <listViews>
@@ -472,13 +531,24 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>PP_Form_of_payment__c</picklist>
+            <picklist>PP_Chargeback_airlines__c</picklist>
             <values>
-                <fullName>CA</fullName>
+                <fullName>N</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PP_Form_of_payment__c</picklist>
+            <values>
                 <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC VA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -538,6 +608,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Other %28OTH%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>UATP %28TP%29</fullName>
                 <default>false</default>
             </values>
@@ -557,6 +631,32 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>PP_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>is_PCI_DSS_required__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
@@ -566,6 +666,13 @@
         <errorConditionFormula>ISPICKVAL(Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(PP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
         <errorDisplayField>PP_Payment_Product_Network_type__c</errorDisplayField>
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Yes&apos;), RecordType.DeveloperName = &apos;TIP Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
+        <errorDisplayField>PP_Chargeback_airlines_duration__c</errorDisplayField>
+        <errorMessage>If subject to chargeback, please indicate the maximun number of days after transaction for which a chargeback can be issued.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
