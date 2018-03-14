@@ -92,6 +92,9 @@ public class AMS_OSCARTriggerHandler {
         processGeneralActionsOnOscarBeforeUpdate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         handleNewgenFOPActionsBeforeUpdate(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
+        updateAccountWithOptINOUT((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
     }
 
     public static void handleBeforeInsert() {
@@ -114,6 +117,7 @@ public class AMS_OSCARTriggerHandler {
         updateCaseKPIFields();
         updateCaseInfo();
         createHoAdminNotifications();
+        updateIfapForOptinOut();
     }
 
     private static void processGeneralActionsOnOscarBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
@@ -354,6 +358,17 @@ public class AMS_OSCARTriggerHandler {
                 }
 
             }
+
+            if(oscar.Process__c == AMS_Utils.NGOPTINOUT){
+                
+                oscar.Process_Start_Date__c = System.today();
+
+                if(oscar.ANG_FA_Opt_out__c == 'Opt-Out'){
+                    oscar.STEP11__c = 'Not Applicable';
+                }
+
+            }
+
         }
     }
 
@@ -2243,6 +2258,10 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && wasApproved) templateId   = 'IEP_Setup_Finalization_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SETUPFINALIZATION && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
+        else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_App';
+        else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.PASSED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_App';
+        else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
+        else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -2381,7 +2400,7 @@ public class AMS_OSCARTriggerHandler {
                     
                     boolean isToValidate = true;
                     
-                    if(oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR)){
+                    if((oscar.Process__c == AMS_Utils.NGVR && oscar.Is_NewGen__c) || (oscar.Process__c == AMS_Utils.NGCHANGES && (oscar.ANG_Type_Of_Change__c == null || oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_VMFR))){
                             isToValidate = false; // we can skipp this validation
                     }
 
@@ -2562,6 +2581,7 @@ public class AMS_OSCARTriggerHandler {
             updatedOSCAR.STEP35__c = 'In Progress';
         }
 
+        /*  NEWGEN-2809
         if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
 
             Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
@@ -2580,7 +2600,8 @@ public class AMS_OSCARTriggerHandler {
 
 
         }
-
+        */
+        
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
             updatedOSCAR.STEP13__c = 'In Progress';
 
@@ -2827,6 +2848,10 @@ public class AMS_OSCARTriggerHandler {
             }
 
             if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+        }
+
+        if(updatedOSCAR.Process__c == AMS_utils.NGOPTINOUT && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOSCAR.Step11__c <> AMS_Utils.PASSED && updatedOscar.ANG_FA_Opt_out__c == 'Opt-In'){
+            updatedOscar.addError('If Financial assessment opt-in / opt-out is set to Opt-in, Conduct Financial Review is mandatory to close the case');
         }
 
     }
@@ -3089,6 +3114,8 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
 
+
+
         for(AMS_OSCAR__c oscar: oscarsToInsertList){
 
             if(oscar.ANG_Sanity_checks__c == AMS_Utils.PASSED && ( oscar.ANG_Sanity_checks__c != oldOscars.get(oscar.id).ANG_Sanity_checks__c)){        
@@ -3183,6 +3210,151 @@ public class AMS_OSCARTriggerHandler {
 
         return toReturn;
 
+    }
+
+    public static void updateAccountWithOptINOUT(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
+        
+        List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+
+        for(AMS_Oscar__c oscar: oscarsToInsert){
+
+            if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oscar.STEP1__c != oldOscars.get(oscar.id).STEP1__c)
+                oscarsToProcess.add(oscar);
+
+        }
+
+
+        if(oscarsToProcess.isEmpty())
+            return;
+
+        List<Account> accountsToUpdate = new List<Account>();
+
+        Set<Id> accountIds = new Set<Id>();
+        Map<Id,AMS_Oscar__c> accountsOscars = new Map<Id,AMS_Oscar__c>();
+
+        For(AMS_Oscar__c oscar: oscarsToProcess){
+            accountIds.add(oscar.account__c);
+            accountsOscars.put(oscar.account__c,oscar);
+        }
+
+        Map<Id,Account> accountsFS = new Map<Id,Account>([Select Id, ParentId, ANG_FA_Opt_out__c, Guaranteed_amount__c from Account where Id in:accountIds or ParentId in:accountIds]);
+
+        Map<Id,List<Account>> accountsChildren = new Map<Id,List<Account>>();
+
+        For(Account account: accountsFS.values()){
+
+            if(!accountIds.contains(account.Id)){
+
+                if(accountsChildren.get(account.ParentId) == null)
+                    accountsChildren.put(account.ParentId,new List<Account>{account});
+                else
+                    accountsChildren.get(account.ParentId).add(account);
+            }
+        }
+
+        for (AMS_OSCAR__c oscar : oscarsToProcess){
+
+            if(oscar.STEP1__c == AMS_Utils.PASSED){        
+                
+                if(accountsFS.get(oscar.account__c).Guaranteed_amount__c == 0){
+
+                    oscar.addError('Cannot set Application Finalization step to "Passed" if the total FS provided (Guaranteed amount) by the HE is 0.');
+                    continue;
+
+                }
+                
+                Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
+
+                if(accountsFs.get(oscar.Account__c).ANG_FA_Opt_out__c != valueToAgency ){
+                    Account a = new Account(Id = oscar.Account__c);
+                    a.ANG_FA_Opt_out__c = valueToAgency;
+                    accountsToUpdate.add(a);
+
+                    if(accountsChildren.get(oscar.Account__c) != null){
+                        For(Account acct: accountsChildren.get(oscar.Account__c)){
+                            acct.ANG_FA_Opt_out__c = valueToAgency;
+                            accountsToUpdate.add(acct);
+                        }
+                    }
+                }
+                
+                System.debug('Sending email alert for process ' + oscar.Process__c + ' with value for Opt set to ' + oscar.ANG_FA_Opt_out__c);
+                AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.PASSED, oscar.ANG_FA_Opt_out__c == 'Opt-In');
+                
+            }else if (oscar.STEP1__c == AMS_Utils.FAILED){
+
+                System.debug('Sending email alert for process ' + oscar.Process__c + ' with value for Opt set to ' + oscar.ANG_FA_Opt_out__c);
+                AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, oscar.ANG_FA_Opt_out__c == 'Opt-In');
+                
+            }
+
+        }
+
+        List<Agency_Applied_Change_code__c> activeChangeCodes =
+            new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+
+        //map accountId -> active change code
+        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+        for (Id accId : accountIds) {
+            for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
+                if (changeCode.Account__c == accId)
+                    accountsChangeCode.put(accId, changeCode);
+        }
+
+
+
+        For(Account acct: accountsToUpdate){
+
+            if(accountIds.contains(acct.Id)){
+
+                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                changeCode.name = acct.ANG_FA_Opt_out__c ? 'OOT' : 'OIN';
+                changeCode.memoText = acct.ANG_FA_Opt_out__c ? 'Agent has opted out from Annual financial review.' : 'Agent has opted in from Annual financial review.';
+                
+                changeCode.reasonCode = accountsChangeCode.get(acct.Id).Reason_Code__c;
+                changeCode.reasonDesc  = accountsChangeCode.get(acct.Id).Reason_Description__c;
+
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
+            }
+
+        }
+
+        if(!accountsToUpdate.isEmpty()){
+
+            update accountsToUpdate;
+        }
+    }
+
+
+    public static void updateIfapForOptinOut(){
+
+        Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+        Map<Id, AMS_OSCAR__c> newMap = (Map<Id,AMS_OSCAR__c>) Trigger.newMap;
+
+        Set<Id> oscarCaseIdToProcess = new Set<Id>();
+
+        for(AMS_Oscar__c oscar: newMap.values()){
+
+            if(oscar.Process__c == AMS_Utils.NGOPTINOUT && oldMap.get(oscar.id).Status__c != newMap.get(oscar.id).Status__c && newMap.get(oscar.id).Status__c == 'Closed' && oscar.Oscar_Communication_Case_Id__c != null)
+                oscarCaseIdToProcess.add(oscar.Oscar_Communication_Case_Id__c);
+        }
+
+        if(oscarCaseIdToProcess.isEmpty())
+            return;
+        
+        List<Case> casesToUpdate = new List<Case>();
+
+        List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND parent.RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
+
+        for(Case c: oscarCasesToProcess){
+            if(c.Parent.Status != 'Closed Opt-out'){
+                casesToUpdate.add(new Case(Id = c.ParentId, Status = 'Closed Opt-out'));
+            }
+        }
+
+        if(!casesToUpdate.isEmpty())
+            update casesToUpdate;
     }
 
 }

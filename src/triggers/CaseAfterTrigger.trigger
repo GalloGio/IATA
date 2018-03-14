@@ -389,15 +389,15 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		    } 
 		}
 		//set containing Newgen Account Ids
-    	Set<Id> ngAccsSet = new Map<Id, Account>([select id from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]).keySet();
-				
+
+		Map<Id, Account> ngAccounts = new Map<Id, Account>([select id, Assessment_Performed_Date__c, Financial_Review_Result__c from account where id in :caseAccsSet and ANG_IsNewGenAgency__c=true]);
 		//IFAP P5 start   
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			list<Case> casesToUdpateTheAccts = new list<Case>();
 			map<id,case> casesToUpdateNGaccsMap = new map<id,case>();
 			for(Case c: CasesToConsider){
-				if(!ngAccsSet.contains(c.accountId) &&
+				if(!ngAccounts.containsKey(c.accountId) &&
 					c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
 					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
 					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
@@ -407,14 +407,19 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				}
 				else
 				 if((Trigger.isInsert || (Trigger.isUpdate && c.status != trigger.oldMap.get(c.id).status)) 
-					&& ngAccsSet.contains(c.accountId) 
-					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)){
+					&& ngAccounts.containsKey(c.accountId) 
+					&& AMS_Utils.CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET.contains(c.status)
+					&& ngAccounts.get(c.accountId).Financial_Review_Result__c != c.Financial_Review_Result__c){
+             		
+             		Account account = ngAccounts.get(c.accountId);
              		//NEWGEN - adds NG account to be updated
              		AcctToBeUpdatedPerId.put(c.accountId, new account(
 								id =c.accountId,
-								Financial_Review_Result__c=c.Financial_Review_Result__c 
+								Financial_Review_Result__c=c.Financial_Review_Result__c,
+								Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, account.Assessment_Performed_Date__c)
 								)
 					);
+					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
 				}
 			}
 			if(!casesToUdpateTheAccts.isEmpty())  {              

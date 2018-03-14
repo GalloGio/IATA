@@ -497,6 +497,10 @@
                 <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_FA_Opt_out__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

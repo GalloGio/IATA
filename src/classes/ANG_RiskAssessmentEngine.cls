@@ -51,12 +51,12 @@ public class ANG_RiskAssessmentEngine{
         get{
             if(accInfoMap==null){
                 accInfoMap = new map<id,accHelperClass>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
+                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Limit_Cash_Conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
                     integer nAdjs=0;
                     boolean hasCashCond=false;
                     for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
                         if(are.ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes') nAdjs++;
-                        hasCashCond=hasCashCond||are.ANG_Risk_Type__r.Limit_Cash_conditions__c;
+                        hasCashCond=hasCashCond||are.ANG_Limit_Cash_Conditions__c;
                     }
                     accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c));
 
@@ -148,8 +148,7 @@ public class ANG_RiskAssessmentEngine{
         }
     }
 
-
-    public ANG_RiskAssessmentEngine(map<account,list<string>> accRiskEventsMap){
+    public ANG_RiskAssessmentEngine(map<account,list<ang_agency_risk_event__c>> accRiskEventsMap){
         //list<string>> accRiskEventsMap -> list of strings containg the risk Type Id or de risk type UniqueKey
         for(account acc:accRiskEventsMap.KeySet()){
             if(acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_CASHLESS || acc.status__c== AMS_Utils.ACC_S0_TERMINATED){
@@ -159,8 +158,8 @@ public class ANG_RiskAssessmentEngine{
             boolean hasCashCond=false;
             integer nrAdjustedRe=0;
             map<id,integer> tempCalcMap = new map<id,integer>();
-            for(string reid:(list<string>)accRiskEventsMap.get(acc)){
-                ang_risk_event_type__c ret=(ang_risk_event_type__c)reType2CalcMap.get(reid);
+            for(ang_agency_risk_event__c are:(list<ang_agency_risk_event__c>)accRiskEventsMap.get(acc)){
+                ang_risk_event_type__c ret=(ang_risk_event_type__c)reType2CalcMap.get(are.ANG_Risk_Type__c);
                 id calcId=ret.ANG_Agency_Risk_Calculation__c;
                 if(tempCalcMap.containsKey(calcId)){
                     Integer nOcc=(integer)tempCalcMap.get(calcId)+1;
@@ -172,11 +171,11 @@ public class ANG_RiskAssessmentEngine{
                 if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c==ANG_Risk_Helper.ADJ_YES){
                     nrAdjustedRe+=1;
                 }
-                hasCashCond=hasCashCond||ret.Limit_Cash_conditions__c;
+                hasCashCond=hasCashCond||are.ANG_Limit_Cash_Conditions__c;
             }
             accCalcMap.put(acc.id,tempCalcMap);
             accInfoMap.put(acc.id,new accHelperClass(nrAdjustedRe,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C));
-      }
+        }
     }
 
     //============================ END CONSTRUCTORS ====================================================

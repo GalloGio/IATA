@@ -759,6 +759,13 @@
         <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
     </labels>
     <labels>
+        <fullName>ANG_Conversion_Tool_Error_10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_Conversion_Tool_Error_10</shortDescription>
+        <value>The system found some Branch Agencies in another country&apos;s Hierarchy. If you migrate these hierarchies, the BR will be removed from the hierarchy and will be teamed up in a new migrated hierarchy.</value>
+    </labels>
+    <labels>
         <fullName>ANG_Conversion_Tool_Error_2</fullName>
         <language>en_US</language>
         <protected>false</protected>

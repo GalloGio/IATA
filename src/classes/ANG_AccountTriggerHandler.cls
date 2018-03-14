@@ -1,5 +1,11 @@
 public class ANG_AccountTriggerHandler {
 
+	public List<Account> triggerNew = (List<Account>) Trigger.new;
+	public List<Account> triggerOld = (List<Account>) Trigger.old;
+
+	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
+	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
+
 	public static Boolean isExpiration{
 		get{
 			if(isExpiration == null) isExpiration = false;
@@ -7,12 +13,13 @@ public class ANG_AccountTriggerHandler {
 		}
 		set;
 	}
-
-	public List<Account> triggerNew = (List<Account>) Trigger.new;
-	public List<Account> triggerOld = (List<Account>) Trigger.old;
-
-	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
-	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
+	public static Boolean isLastFinancialReviewUpgrade{
+		get{
+			if(isLastFinancialReviewUpgrade == null) isLastFinancialReviewUpgrade = false;
+			return isLastFinancialReviewUpgrade;
+		}
+		set;
+	}
 
 	// ************************************************************
 	// ****************** distribution methods ********************
@@ -32,9 +39,10 @@ public class ANG_AccountTriggerHandler {
 	}
 	public void onAfterUpdate() {
 		runRiskAssessment();
-		UpdateRiskEventStatus();
+		updateRiskEventStatus();
 		updateRHCInformation();
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
+		recalculateRHC();
 	}
 
 	public void onBeforeDelete(){}
@@ -124,51 +132,57 @@ public class ANG_AccountTriggerHandler {
 
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
 	private void manageUpgrades() {
-		if(!isExpiration) return;
+		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
 
-		List<Account> upgradedAccounts = new List<Account>();
+		Set<Id> toNotify = new Set<Id>();
+		Set<Id> toChangeCode = new Set<Id>();
+
+		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+
 		for(Account acc : triggerNew){
 			Account oldAcc = oldMap.get(acc.Id);
-			if(
-				(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A))
-				|| (oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false)
-			)
-			upgradedAccounts.add(acc);
+
+			if(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
+				toNotify.add(acc.Id);
+				if(isExpiration && config != null) toChangeCode.add(acc.Id);
+			}
+
+			if(oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false){
+				toNotify.add(acc.Id);
+				if(config != null) toChangeCode.add(acc.Id);
+			}
 		}
 
-		if(upgradedAccounts.isEmpty()) return;
+		if(toChangeCode.isEmpty() && toNotify.isEmpty()) return;
 
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
-		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
 
-		if(config != null){
-			for(Account acc : upgradedAccounts){
-				changeCodes.add(new Agency_Applied_Change_code__c(
-				    Active__c = true
-				    , Account__c = acc.Id
-				    , Change_Code__c = config.Change_Code__c
-				    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_RiskStatus__c).toUpperCase()
-				    , Reason_Code__c = config.Reason_Code__c
-				    , Reason_Description__c = config.Reason_Code_Description__c
-				    , Source__c = source
-				    , CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
-				    , To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
-				));
-			}
-
-			if(!changeCodes.isEmpty()) insert changeCodes;
+		for(Id accId : toChangeCode){
+			Account acc = newMap.get(accId);
+			changeCodes.add(new Agency_Applied_Change_code__c(
+			    Active__c = true
+			    , Account__c = acc.Id
+			    , Change_Code__c = config.Change_Code__c
+			    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
+			    , Reason_Code__c = config.Reason_Code__c
+			    , Reason_Description__c = config.Reason_Code_Description__c
+			    , Source__c = source
+			    , CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
+			    , To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+			));
 		}
+
+		if(!changeCodes.isEmpty()) insert changeCodes;
 		
-		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
-		List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Risk_Status_Upgrade' AND isActive = true];
-		List<Notification_Template__c> notificationTemplates = [SELECT Id, Name FROM Notification_Template__c WHERE Identifier__c = 'Risk_Status_Upgrade'];
+			
+		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
+		
+		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
 
-		if(rhcServices.isEmpty() || (emailTemplates.isEmpty() && notificationTemplates.isEmpty())) return;
+		if(emailTemplates.isEmpty() && notificationTemplates.isEmpty()) return;
 
-		Set<Id> accountIds = new Map<Id, Account>(upgradedAccounts).keySet();
-		Set<Id> serviceIds = new Map<Id, Portal_Applications__c>(rhcServices).keySet();
-		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIds, serviceIds);
+		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(toNotify, new set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE});
 
 		if(contactsPerAccount.isEmpty()) return;
 
@@ -178,22 +192,133 @@ public class ANG_AccountTriggerHandler {
 		for(Id accountId : contactsPerAccount.keySet()){
 			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 				mailTargets.put(contactId, accountId);
-				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
-				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates.get(0).Id));
+				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates.get(0).Name);
 			}
 		}
 
-		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) ANG_RHCHelper.sendMailUpdate(emails);
+		if(!mailTargets.isEmpty() && !emailTemplates.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(emails, null));
 
 		List<Notification__c> notifications = new List<Notification__c>();
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
 			Account a = newMap.get(mailTargets.get(nt.Contact__c));
 			nt.Message__c = nt.Message__c
-							.replace('#RISK_STATUS#', a.ANG_RiskStatus__c)
-							.replace('#CASH_CONDITION#', (a.ANG_CashCondition__c ? 'Yes' : 'No'));
+							.replace('#RISK_STATUS#', a.ANG_HE_RiskStatus__c)
+							.replace('#CASH_CONDITION#', (a.ANG_HE_CashCondition__c ? 'Yes' : 'No'));
 			notifications.add(nt);
 		}
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageUpgrades] Notifications - ' + notifications);
+		
 		if(!notifications.isEmpty()) insert notifications;
+	}
+
+	public void updateRiskEventStatus (){
+		set<Id> inactiveAccsIdSet = new set<Id>();
+		set<Id> activeAccsIdSet = new set<Id>();
+		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
+
+		//get just account ids where status changed to Terminated 
+		for(Account a : triggerNew){
+			if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
+				inactiveAccsIdSet.add(a.id);
+			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
+				activeAccsIdSet.add(a.id);
+		}
+
+		
+		//create set with modified Accs
+		set<id> accIdSet = new set<id>(activeAccsIdSet);
+		accIdSet.addAll(inactiveAccsIdSet);
+
+		//get all related risk Events 
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
+		
+		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
+			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
+				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
+					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
+				
+			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+			}
+
+		}
+
+		update reToUpdateList;
+	}
+
+	private void recalculateRHC() {
+
+		List<Account> accountsList = new List<Account>();
+
+		for(Account newAcc : triggerNew) {
+			Account oldAcc = oldMap.get(newAcc.Id);
+			//
+			// Check if ANG_FA_Opt_out__c changed from TRUE to FALSE
+			// Check if ANG_CashCondition__c changed from TRUE to FALSE and isLastFinancialReviewUpgrade is TRUE 
+			// (isLastFinancialReviewUpgrade = TRUE means that the change was originated in a IFAP process) 
+			//
+			//
+			if((oldAcc.ANG_FA_Opt_out__c  && !newAcc.ANG_FA_Opt_out__c) || 
+			   (oldAcc.ANG_CashCondition__c  && !newAcc.ANG_CashCondition__c && isLastFinancialReviewUpgrade)
+			  ) {
+				accountsList.add(newAcc);	
+			}
+		}
+
+		if(!accountsList.isEmpty()) {
+			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(accountsList, 1);
+			database.executebatch(b, 100);
+		}
+
+	}
+
+	private void runRiskAssessment() {
+		
+		Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+		for(account acc : triggerNew){  
+			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
+		}
+
+		if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+	}
+
+	private void updateRHCInformation() {
+		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
+		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
+		Set<Id> changedStatus = new Set<Id>();
+
+		//Find relevant accounts
+		for(Account a : triggerNew){
+			if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
+			if(a.Status__c != oldMap.get(a.Id).Status__c && oldMap.get(a.Id).Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
+
+		}
+
+		//check to see if we need the logic below
+		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
+
+		//find rhc records
+		for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+			rhcToUpdate.put(r.ANG_AccountId__c, r);
+		}
+
+		if(rhcToUpdate.isEmpty()) return;
+
+		//first we set the Cash Conditions that changed
+		for(Id acc : changedConditions.keySet()) if(rhcToUpdate.containsKey(acc)) rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
+		
+		//then set the recalculated values
+		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
+		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) reactivatedRHC.add(rhcToUpdate.get(acc));
+
+		ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
+		
+		//then, at last, we make the update
+		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
 	}
 
 
@@ -348,89 +473,6 @@ public class ANG_AccountTriggerHandler {
 		}
 		
 		update oscars;
-	}
-
-	public void UpdateRiskEventStatus (){
-		set<Id> inactiveAccsIdSet = new set<Id>();
-		set<Id> activeAccsIdSet = new set<Id>();
-		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
-		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
-		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
-
-		//get just account ids where status changed to Terminated 
-		for(Account a : triggerNew){
-			if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
-				inactiveAccsIdSet.add(a.id);
-			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
-				activeAccsIdSet.add(a.id);
-		}
-
-		
-		//create set with modified Accs
-		set<id> accIdSet = new set<id>(activeAccsIdSet);
-		accIdSet.addAll(inactiveAccsIdSet);
-
-		//get all related risk Events 
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
-		
-		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
-			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
-				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
-					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
-				
-			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
-				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
-			}
-
-		}
-
-		update reToUpdateList;
-	}
-
-
-	private void runRiskAssessment() {
-		
-		Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
-		for(account acc : triggerNew){  
-			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
-		}
-
-		if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
-	}
-
-	private void updateRHCInformation() {
-		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
-		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
-		Set<Id> changedStatus = new Set<Id>();
-
-		//Find relevant accounts
-		for(Account a : triggerNew){
-			if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
-			if(a.Status__c != oldMap.get(a.Id).Status__c && oldMap.get(a.Id).Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
-
-		}
-
-		//check to see if we need the logic below
-		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
-
-		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
-			rhcToUpdate.put(r.ANG_AccountId__c, r);
-		}
-
-		if(rhcToUpdate.isEmpty()) return;
-
-		//first we set the Cash Conditions that changed
-		for(Id acc : changedConditions.keySet()) if(rhcToUpdate.containsKey(acc)) rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
-		
-		//then set the recalculated values
-		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
-		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) reactivatedRHC.add(rhcToUpdate.get(acc));
-
-		ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
-		
-		//then, at last, we make the update
-		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
 	}
 
     /**

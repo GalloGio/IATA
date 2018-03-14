@@ -404,6 +404,8 @@ public with sharing class clsMassCaseCreationController {
       //openCasesReportURL = '/00OR0000000k0QE?';   //'/00OR0000000k06s?';  // ID of the report
 
       soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+      soql += ' and Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079';
+
       system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);
 
       List<Report> r = [SELECT Id FROM Report where DeveloperName = 'IFAP_Agents_with_Open_Closed_cases' limit 1];
@@ -541,6 +543,9 @@ public with sharing class clsMassCaseCreationController {
 
     // Location Type HO/ AO filter
     soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\')';
+
+    soql += 'and c.Contact.Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079
+
     casesQuery = soql;
 
     for (Case c : Database.query(soql)) {
@@ -570,9 +575,9 @@ public with sharing class clsMassCaseCreationController {
   
   // Create cases (The case created by this function will be flagged as "Agent to be notified (Tracked Email)")
   public PageReference MassCaseCreateSendTrackedEmail() {
-		MassCaseCreation('tracked email');
+    MassCaseCreation('tracked email');
         System.debug('**** MassCaseCreateSendTrackedEmail');
-		return null;
+    return null;
   }
 
   //openCase is used as a flag if theres any contact in lstContact has an open case this will be used in js function

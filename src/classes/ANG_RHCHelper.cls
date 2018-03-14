@@ -18,6 +18,7 @@ public class ANG_RHCHelper {
     //RHC Portal Service Name
     public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
 
+    public static final String DEFAULT_CODE = 'WW';
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
@@ -84,12 +85,35 @@ public class ANG_RHCHelper {
 	
 	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
+
+
+		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+
+		Set<Id> accountsIds = new Set<Id>();
+		for(ANG_RHC_Information__c rhc : rhcInfo) {
+			accountsIds.add(rhc.ANG_AccountId__c);
+		}
+
+		Map<Id, Account> accountsMap = new Map<Id, Account>([Select id, IATA_ISO_Country__c From Account Where id in: accountsIds]);
+
+		Set<Id> isoSet = new Set<Id>();
+		for(Id key : accountsMap.keySet()) {
+			isoSet.add(accountsMap.get(key).IATA_ISO_Country__c);
+		}
+		
+		List<AMS_Country_Specific_Attribute__c> csa = [Select id, IATA_ISO_Country__c, IATA_ISO_Country__r.Iso_code__c, ANG_Minimum_RHC_Amount__c From AMS_Country_Specific_Attribute__c Where RecordTypeId =: devRecordTypeId And (IATA_ISO_Country__c IN :isoSet OR IATA_ISO_Country__r.Iso_code__c =: DEFAULT_CODE)];
+
+		Map<String, Decimal> csaMap = new Map<String, Decimal>();
+		for(AMS_Country_Specific_Attribute__c a : csa) csaMap.put((isoSet.contains(a.IATA_ISO_Country__c) ? String.valueOf(a.IATA_ISO_Country__c) : DEFAULT_CODE), a.ANG_Minimum_RHC_Amount__c);
+
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
 			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
 				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
 				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
 			}else{
+				if(!rhc.ANG_CashCondition__c) rhc.ANG_RME_Amount__c = rhc.ANG_RHC_Amount_Provisional__c;
+
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
 				Decimal provisionalRHC = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
@@ -101,6 +125,37 @@ public class ANG_RHCHelper {
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
 			}
+
+			//
+			// Minimum RHC amount 
+			//
+			// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
+			// if that is not defined the we get the AMS Country Specific Attributes for the ww country (All countries)
+			//
+			// Then if the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
+			//						
+			Decimal minimumRHCAmount = null;
+
+			if(csaMap.containsKey(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) && csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) != null)
+				minimumRHCAmount = csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c);
+			else
+				minimumRHCAmount = csaMap.get(DEFAULT_CODE);
+
+			//
+			// Apply the rule
+			//
+			if(minimumRHCAmount != null) {
+				minimumRHCAmount = ANG_Risk_Helper.currencyConverter('USD', minimumRHCAmount, rhc.CurrencyIsoCode);
+
+				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) {
+					rhc.ANG_RHC_Amount__c = minimumRHCAmount;					
+				}
+
+				if(rhc.ANG_RHC_Amount_Forecasted__c < minimumRHCAmount) {
+					rhc.ANG_RHC_Amount_Forecasted__c = minimumRHCAmount;					
+				}
+			}
+			
 		}
 	}
 
@@ -159,6 +214,8 @@ public class ANG_RHCHelper {
 
 		public void execute(QueueableContext context) {
 			sendMailUpdate(mails);
+
+			if(alertIds == null || alertIds.isEmpty()) return;
 
 			List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>();
 			for(Id alertId : alertIds) alerts.add(new ANG_Risk_Alert__c(Id = alertId, ANG_email_sent__c = true));
