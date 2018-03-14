@@ -578,25 +578,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Read_Only_Country_office_Access_For_SIS</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>Edit</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>Read-only access to accounts with the RT IATA COuntry Office for SIS users</description>
-        <label>Read Only Country office Access For SIS</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
-        </sharedTo>
-        <criteriaItems>
-            <field>Merged_Account__c</field>
-            <operation>notEqual</operation>
-            <value>Merged</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>SIS_Old_RT_R_W</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
