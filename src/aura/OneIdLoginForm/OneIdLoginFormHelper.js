@@ -100,7 +100,7 @@
          });
 	},
     
-    getSanctionCountry : function (component, event, helpler, clientIpAddress) {
+    /*getSanctionCountry : function (component, event, helpler, clientIpAddress) {
 
         //Configure apex controller action function
         var action = component.get("c.getSanctionCountry");
@@ -118,7 +118,7 @@
             }
         });
         $A.enqueueAction(action);
-    },
+    },*/
     
     getShow90Days : function (component, event, helpler) {
         var action = component.get("c.getShow90Days");
@@ -191,5 +191,32 @@
     onchangeClientIpAddressAjax: function(cmp, event, helper) {
         alert("Changed field!");
         console.log("Changed field!");
-    } 
+    },
+
+    getFindLocation : function (ip, component) {
+    console.log('start getFindLocation');      
+
+        var action = component.get("c.getFindLocation");
+        action.setParams({"ipAddress" : ip,
+                        "saveLog" : true});        
+        
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {             
+                component.set("v.sanctionCountry",response.getReturnValue());                
+            }            
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " + 
+                                 errors[0].message);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });        
+        $A.enqueueAction(action);
+    }
 })

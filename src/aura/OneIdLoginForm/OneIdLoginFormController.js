@@ -13,7 +13,11 @@
                 helper.getSanctionCountry(component, event, helper, $("#clientIpAddressAjax").val());
                 
                 console.log('After action: helper.getSanctionCountry'); 
-            })
+            }),
+            $.getJSON("https://jsonip.com/?callback=?", function (data) {                    
+                        //console.log('data.ip ' + data.ip);                    
+                        helper.getFindLocation(data.ip,component);
+            });
             console.log('JQuery EVENTS Configured...');
          });
          
@@ -34,7 +38,7 @@
         helper.getShow90Days(component, event, helper);
     },
     
-    getClientIpAddress: function(component, event, helper){
+   /* getClientIpAddress: function(component, event, helper){
         console.log('getClientIpAddress call getSanctionCountry on Synchronous ip adress get.');
         
         helper.getClientIpAddressAjax(component, event, helper);
@@ -43,7 +47,7 @@
         //If ajax schyncronous
         console.log('component.v.clientIpAddress='+component.get("v.clientIpAddress"));
         helper.getSanctionCountry(component, event, helper, component.get("v.clientIpAddress"));
-    },
+    },*/
     
     handleLogin: function (component, event, helper) {
         console.log('handleLogin');

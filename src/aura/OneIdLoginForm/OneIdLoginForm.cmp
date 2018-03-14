@@ -23,7 +23,7 @@
     
     <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
     <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
-    <aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>
+    <!--<aura:handler name="change" value="{!v.siteCompleteUrl}" action="{!c.getClientIpAddress}"/>-->
     
     
     <aura:dependency resource="c:setStartUrl" type="EVENT"/>
