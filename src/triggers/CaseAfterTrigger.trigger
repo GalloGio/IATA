@@ -432,16 +432,32 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			//for (Case cse : cases) 
 				acctIds.add(cse.AccountId);
 			}
-			//Re-open/ed is not considered as Closed Status anymore.
-			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
-			Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
-			List<Account> accountUpdated = new List<Account>();
+
+			//START - Too many SOQL fix
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
+			Set<Id> caseIds;
+
 			for (Account acct : acctsToUpdate.values()) {
-				Set<ID> caseIds = new Set<ID>();
-				for (Case cse : casesForAccounts.values()) {
-					if (cse.AccountId == acct.Id)
+				caseIds = new Set<Id>();
+
+				for (Case cse :acct.cases){
 						caseIds.add(cse.Id);
 				}
+			//END - Too many SOQL fix
+
+			//START commented - Too many SOQL fix: 
+			//Re-open/ed is not considered as Closed Status anymore.
+			//Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
+			//Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
+			//List<Account> accountUpdated = new List<Account>();
+			//for (Account acct : acctsToUpdate.values()) {
+			//	Set<ID> caseIds = new Set<ID>();
+			//	for (Case cse : casesForAccounts.values()) {
+			//		if (cse.AccountId == acct.Id)
+			//			caseIds.add(cse.Id);
+			//	}
+			//END commented - Too many SOQL fix
+			
 				if (acct.Number_of_open_Financial_Review_Cases__c != caseIds.size()){
 					acct.Number_of_open_Financial_Review_Cases__c = caseIds.size();
 					if (caseIds.size() > 0){
