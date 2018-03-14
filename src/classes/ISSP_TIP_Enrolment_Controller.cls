@@ -1,6 +1,6 @@
 public with sharing class ISSP_TIP_Enrolment_Controller {
 
-	private static String PROCESS_CASE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Process').RecordTypeId;//RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Process');
+	private static String PROCESS_CASE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
 
     public String applyLanguage {get; set;}
     public String displayLanguage {get; set;}
