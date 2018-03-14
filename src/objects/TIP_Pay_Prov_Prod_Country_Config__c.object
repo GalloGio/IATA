@@ -172,7 +172,7 @@
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>PCC-{00000000}</displayFormat>
+        <displayFormat>PCC-{0000000000}</displayFormat>
         <label>Payment Product Country Config Number</label>
         <type>AutoNumber</type>
     </nameField>
