@@ -730,7 +730,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Account> accountsToReturn = new Set<Account>();
 
 		For(Account acct: accounts){
-			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED || acct.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED || acct.Status__c == '')
+			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED || acct.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED || acct.Status__c == '' || acct.Status__c == null)
 				continue;
 
 			accountsToReturn.add(acct);
