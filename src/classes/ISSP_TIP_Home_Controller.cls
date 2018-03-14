@@ -3,8 +3,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     private static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard Account');      
     private static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Payment Provider');
     
-    private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Process');
-
+    private static String PROCESS_CASE_RECORD_TYPE_ID     = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
 
 
     public ISSP_TIP_Home_Controller(){
