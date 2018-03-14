@@ -14,13 +14,11 @@
             })
 
             function changeRequestButtonStatus() {
-                document.getElementById("requestButton").disabled = {!!btnEnabled
-                };
+                document.getElementById("requestButton").disabled = {!btnEnabled};
             }
 
             function validateIfportalAdmin() {
-                if ({!isAdmin
-                    }) {
+                if ({!isAdmin}) {
                     window.location.href = '/apex/ISSP_TIP_Enrolment';
                 } else {
                     alert("Only Portal Administrators can apply to Enlistment as a Payment Provider");
@@ -152,9 +150,6 @@
 
         <main class="container">
             <c:ISSP_CustomNavigation />
-
-
-
             <div id='enrolment_certification' style="padding-top: 50px; padding-bottom: 100px; ">
 
                 <section name="left-side" class="col-md-8 col-sm-12">
@@ -213,7 +208,7 @@
                                     <apex:facet name="header">
                                         Date time-opened
                                     </apex:facet>
-                                    {!item.CaseArea__c}
+                                    {!item.createddate}
                                 </apex:column>
 
 
