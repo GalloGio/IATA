@@ -13,7 +13,11 @@
                 helper.getSanctionCountry(component, event, helper, $("#clientIpAddressAjax").val());
                 
                 console.log('After action: helper.getSanctionCountry'); 
-            })
+            }),
+            $.getJSON("https://jsonip.com/?callback=?", function (data) {                    
+                        //console.log('data.ip ' + data.ip);                    
+                        helper.getFindLocation(data.ip,component);
+            });
             console.log('JQuery EVENTS Configured...');
          });
          
