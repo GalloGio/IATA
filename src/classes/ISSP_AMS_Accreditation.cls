@@ -225,10 +225,17 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public ANG_ProductComparisonHelper helper {get; set;}
 
-    public Boolean flagShowOptOutButton {get; set;}
+    public Boolean flagShowOptInOutButton {get; set;}
+    public Boolean flagShowOptInOutButtonDisabled {get; set;}
     public Boolean isIFAPContact {get; set;}
     public String pEfectiveDateStr {get;set;}  
-    public Boolean isOptOutInProgress {get;set;}  
+    
+    public String optInOutMessage {get; set;}
+    public String optInOutModalTitle {get; set;}
+
+    public String optInOutSuccessMessage {get; set;}
+    public String optInOutBtn {get; set;}
+    public String optInOutErrorNoDate {get; set;}
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -256,7 +263,6 @@ public without sharing class ISSP_AMS_Accreditation {
         namEnabled = false;
         cntIFAPContacts = 0;
         isAuthorizedSignature = false;
-        isOptOutInProgress = false;
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -678,8 +684,6 @@ public without sharing class ISSP_AMS_Accreditation {
         selectPageName();
 
         this.helper = new ANG_ProductComparisonHelper('B');
-
-        isIFAPContact = (con.Financial_Assessment_Contact__c);
     }
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
@@ -4196,15 +4200,72 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         List<Case> l = (List<Case>) setConn.getRecords();
 
+        Boolean isOpt_IN_OUT_InProgress = false;
+
         for(Case c : l) {
             if(c.Reason1__c == AMS_Utils.CASE_REASON_OPT_OUT) {
-                isOptOutInProgress = true;
+                isOpt_IN_OUT_InProgress = true;
                 break;
+            }
+        }   
+
+        Boolean flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
+            isHOAccredited && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c);
+
+        Boolean flagShowOptOutButtonDisabled = (flagShowOptOutButton && isOpt_IN_OUT_InProgress);
+
+        if(flagShowOptOutButtonDisabled) flagShowOptOutButton = false;
+                
+
+        Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
+            isHOAccredited && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
+        Boolean flagShowOptInButtonDisabled = (flagShowOptInButton && isOpt_IN_OUT_InProgress);
+
+        if(flagShowOptInButtonDisabled) flagShowOptInButton = false;
+        
+        if(flagShowOptOutButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE;
+
+        if(flagShowOptInButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_IN_SUCCESS_MESSAGE;
+
+        isIFAPContact = (con.Financial_Assessment_Contact__c);
+
+        if (flagShowOptInButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptInEmptyDateErrorMessage;
+            optInOutBtn = Label.ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN;
+            optInOutModalTitle = Label.ISSP_ANG_OPT_IN_MODAL_TITLE;
+            flagShowOptInOutButton = true;
+            if(isIFAPContact) {
+                if(bIsAdmin) {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1;
+                } else {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2 ;
+                }
+            } else {
+                if(bIsAdmin) {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3;
+                } else {
+                    optInOutMessage = Label.ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4 ;
+                }            
             }
         }
 
-        flagShowOptOutButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
-            isHOAccredited && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && !con.Account.ANG_FA_Opt_out__c && !isOptOutInProgress);        
+        if (flagShowOptOutButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptOutEmptyDateErrorMessage;
+            optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;
+            flagShowOptInOutButton = true;
+            optInOutModalTitle = Label.ISSP_ANG_OPT_OUT_MODAL_TITLE;
+            optInOutMessage = Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT;
+        }
+
+        flagShowOptInOutButtonDisabled = (flagShowOptInButtonDisabled || flagShowOptOutButtonDisabled);
+
+        if(flagShowOptInButtonDisabled) {
+            optInOutBtn = Label.ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN;   
+        }
+        if(flagShowOptOutButtonDisabled) {
+            optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;   
+        }
 
         return l;
     }
@@ -8067,7 +8128,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
     }
 
-    public Pagereference runOptOut() {
+    public Pagereference runOptInOut() {
                                 
         newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
 

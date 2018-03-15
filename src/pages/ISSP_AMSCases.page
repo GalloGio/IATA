@@ -24,7 +24,7 @@
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
         <body>
 
-        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.bootbox)}"/>
 
     
   <!--link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
@@ -109,36 +109,35 @@
                     }
                 }
 
-                function optOut() {
-                    startLoading();
+                function optInOut() {                    
                     if('{!isIFAPContact}' == 'true') {
-                        $('#ModalOptOut').modal('toggle');
+                        $('#ModalOptInOut').modal('toggle');
                     } else {
-                        bootbox.alert("{!$Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR}");
+                        bootbox.alert("{!optInOutMessage}");
                     }
                 }
 
-                function modalModalOptOutClose() {
-                    endLoading();
-                    $('#ModalOptOut').modal('toggle');
+                function modalModalOptInOutClose() {
+                    $('#ModalOptInOut').modal('toggle');
                 }
 
-                function doOptOut() {
+                function doOptInOut() {
                     var date = $("#datepicker").val();
 
                     if(date == '') {
                         document.querySelector("[Id$='emptyDateErrorMessage']").style.display = '';
                     } else {
-                        $('#ModalOptOut').modal('toggle');
-                        runOptOut();
+                        $('#ModalOptInOut').modal('toggle');
+                        startLoading();
+                        runOptInOut();
                     }
                 }
 
-                function onCompleteOptOut() {
+                function onCompleteOptInOut() {
                     endLoading();
-                    bootbox.alert('Congratulations you have succeeded in placing a Financial review opt-out');  
+                    bootbox.alert('{!optInOutSuccessMessage}');  
                     window.location.reload();
-                }                
+                }
 
                 $( function() {
 
@@ -190,7 +189,7 @@
 
           <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
 
-          <apex:actionFunction action="{!runOptOut}" name="runOptOut" oncomplete="onCompleteOptOut();" rerender="DraftCases" />
+          <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases" />
 
         <table width="100%">
             <tr>
@@ -241,7 +240,7 @@
 
             <tr>
                 <td></td>
-                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};vertical-align:top;padding-right:20px">
+                <td style="display:{! IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};vertical-align:top;padding-right:20px;padding-bottom:20px;">
                     <table>
                         <tr>                            
                             <td><input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/></td>
@@ -250,22 +249,23 @@
                     </table>
                 </td>
             </tr>
-
-            <tr style="display:{!IF(flagShowOptOutButton,'','none')};">
-                <td>
-                </td>
-                <td>
-                    <input type="button" class="btn btn_iata_primary" onclick="optOut();return false;" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}"/>
-                </td>
-            </tr>
-            <tr style="display:{!IF(flagShowOptOutButton,'none','')};">
-                <td>
-                </td>
-                <td>
-                    <input type="button" class="btn btn_iata_primary" value="{!$Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN}" disabled="true"/>
-                </td>
-            </tr>
             
+
+            <tr style="display:{!IF(flagShowOptInOutButton,'','none')};">
+                <td>
+                </td>
+                <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
+                    <input type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
+                </td>
+            </tr>
+
+            <tr style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};">
+                <td>
+                </td>
+                <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
+                    <input type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
+                </td>
+            </tr>
 
                 <tr>
                     <td style="padding-top:20px">
@@ -366,19 +366,19 @@
           </apex:outputPanel>
         </div>
 
-        <div class="modal" id="ModalOptOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
+        <div class="modal" id="ModalOptInOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">{!$Label.ISSP_ANG_OPT_OUT_MODAL_TITLE}</h4>
+                <h4 class="modal-title">{!optInOutModalTitle}</h4>
               </div>
               <div class="modal-body">
 
                 <div class="alert alert-danger" id="emptyDateErrorMessage" style ="display: none">
-                  <strong> {!$Label.ANG_ISSP_OptOutEmptyDateErrorMessage} </strong>
+                  <strong> {!optInOutErrorNoDate} </strong>
                 </div>
 
-                <apex:outputText value="{!$Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT}"></apex:outputText>
+                <apex:outputText escape="false" value="{!optInOutMessage}"></apex:outputText>
 
                 <br></br>
                 <br></br>
@@ -393,10 +393,10 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-6">                    
-                      <button type="button" onclick="modalModalOptOutClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
+                      <button type="button" onclick="modalModalOptInOutClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" onclick="doOptOut()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                      <button type="button" onclick="doOptInOut()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
                     </div>
                   </div>
                 </div>                
@@ -404,7 +404,6 @@
             </div>
           </div>
         </div>        
-     
    </apex:form>
    </div>
     
@@ -435,7 +434,6 @@
             left: 50%;
         }
     </style>
-
   </body>  
 </html>
 </apex:page>
