@@ -1347,7 +1347,7 @@ var cardStatus = &apos;{!ID_Card__c.Card_Status__c}&apos;;
 var sentToAIMSon = &apos;{!ID_Card__c.Sent_to_AIMS_on__c}&apos;;
 
 
-if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;) 
+if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Valid ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 

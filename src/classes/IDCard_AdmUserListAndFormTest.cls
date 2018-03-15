@@ -597,7 +597,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        	idcs.add(new ID_Card__c(Related_Contact__c = cs[i].id,
 	                                Valid_To_Date__c = date.today().addMonths(5),
 	                                Name_on_ID_Card__c = cs[i].FirstName + ' '+cs[i].LastName,
-	                                Card_status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED,
+	                                Card_status__c = IDCardUtil.CARDSTATUS_VALID,
 	                                VER_Number__c = cs[i].VER_Number_2__c,
 	                                Agency_IATA_Code__c = a.IATAcode__c,
 	                                Photo__c = 'useless string'
@@ -850,7 +850,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        	idcs.add(new ID_Card__c(Related_Contact__c = cs[i].id,
 		                                Valid_To_Date__c = date.today().addMonths(5),
 		                                Name_on_ID_Card__c = cs[i].FirstName + ' '+cs[i].LastName,	
-		                                Card_status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED,
+		                                Card_status__c = IDCardUtil.CARDSTATUS_VALID,
 		                                VER_Number__c = cs[i].VER_Number_2__c,
 		                                Agency_IATA_Code__c = a.IATAcode__c,
 		                                Photo__c = 'uselessstring.jpg',
