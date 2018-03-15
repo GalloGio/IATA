@@ -876,7 +876,7 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
-	public static void createRevalidationOscar(Account acc, List<Contact> contactsAcc){
+	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc){
 
 		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
@@ -955,6 +955,8 @@ global class ANG_OscarProcessHelper {
         insert stagingArea;
 
         System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id+ ' | StagingArea: '+stagingArea.Id);
+
+        return cse.Id;
 	}
 
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
