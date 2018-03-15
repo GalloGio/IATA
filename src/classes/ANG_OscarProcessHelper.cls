@@ -876,6 +876,35 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
+	public static void createRevalidationOscar(Id accountId){
+
+		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+		//AMS_OSCAR__c:
+        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
+        fieldsOfObject.put('RecordTypeId',AMS_Utils.RECTYPE_NEWGENANNUALREVAL);
+		fieldsOfObject.put('Status__c','Open');
+		fieldsOfObject.put('Account__c', accountId);
+
+
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, accountId, fieldsOfObject);
+		
+		//fieldsOfObject = new Map<String,Object>();
+  //      fieldsOfObject.put('Oscar__c',oscar.Id);
+  //      fieldsOfObject.put('AccountId',accountId);
+  //      fieldsOfObject.put('ContactId',c.ContactId);
+  //      fieldsOfObject.put('ParentId',caseId);
+  //      fieldsOfObject.put('BSPCountry__c',c.Account.BillingCountry);
+  //      fieldsOfObject.put('CaseArea__c','Accreditation Process');
+  //      fieldsOfObject.put('ContactId',c.ContactId);
+  //      fieldsOfObject.put('Origin','Internal User');
+  //      fieldsOfObject.put('Reason1__c','FoP Management');
+  //      fieldsOfObject.put('Region__c',c.Account.Region_formula__c);
+  //      fieldsOfObject.put('Subject','FoP Management - ' + c.Account.IATACode__c + ' - ' + c.Account.Name);
+  //      fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+	}
+
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;
