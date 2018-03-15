@@ -1338,12 +1338,20 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Open IATA EasyPay Account</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_OptInEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>Please specify an Opt-In date.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Error message when the opt out date is empty</shortDescription>
-        <value>You must specify an opt out date</value>
+        <value>Please specify an Opt-Out date.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE</fullName>
@@ -15122,6 +15130,62 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Passenger Sales</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and admin</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else assign the correct person as the IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; and ask them to proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and regular user</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else please ask your Portal Administrator to assign the correct person as the IFAP Contact and have them proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is not IFAP nut is a portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process. You can view your current IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; , where you can assign the correct person if required, before asking them to proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is neither IFAP or portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process.. If you hold this role within your Agency then please contact your Portal Administrator, to have them assign you as the IFAP Contact so that you can proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review button label</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review modal</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-in</shortDescription>
+        <value>Thanks for requesting to Opt-In to the Financial review process. IATA will contact you shortly concerning this request.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -15135,10 +15199,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
-        <value>You are about to opt out the financial review. You must reconsider your choice...
-We strongly advise you to remain with us primarily because you can&apos;t breathe under water or fly.
-We might have to make you a proposal you can not refuse, and the proposal will be delivered by our associates Tessio e Clemenza.
-You Shall not opt out!!!!</value>
+        <value>Opt-Out confimation text</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
@@ -15155,6 +15216,14 @@ You Shall not opt out!!!!</value>
         <protected>false</protected>
         <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
         <value>Only your Agency&apos;s IFAP Contact can request to Opt-out of the Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-out</shortDescription>
+        <value>Thanks for requesting to Opt-Out of the Financial review process. IATA will contact you shortly concerning this request.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_One_or_More</fullName>
