@@ -40,7 +40,6 @@ public class ANG_AccountTriggerHandler {
 		updateRiskEventStatus();
 		updateRHCInformation();
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
-		recalculateRHC();
 		manageDowngrades();
 		manageUpgrades();
 	}
@@ -237,8 +236,8 @@ public class ANG_AccountTriggerHandler {
 		for(Id accountId : contactsPerAccount.keySet()){
 			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 				mailTargets.put(contactId, accountId);
-				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates.get(0).Id));
-				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates.get(0).Name);
+				emails.add(new ANG_RHCHelper.Email(contactId, accountId, emailTemplates[0].Id));
+				if(!notificationTemplates.isEmpty()) notificationTargets.add(contactId+':'+notificationTemplates[0].Name);
 			}
 		}
 
@@ -295,32 +294,6 @@ public class ANG_AccountTriggerHandler {
 		update reToUpdateList;
 	}
 
-	private void recalculateRHC() {
-
-		List<Account> accountsList = new List<Account>();
-
-		for(Account newAcc : triggerNew) {
-			Account oldAcc = oldMap.get(newAcc.Id);
-			//
-			// Check if ANG_FA_Opt_out__c changed from TRUE to FALSE
-			// Check if ANG_CashCondition__c changed from TRUE to FALSE and isLastFinancialReviewUpgrade is TRUE 
-			// (isLastFinancialReviewUpgrade = TRUE means that the change was originated in a IFAP process) 
-			//
-			//
-			if((oldAcc.ANG_FA_Opt_out__c  && !newAcc.ANG_FA_Opt_out__c) || 
-			   (oldAcc.ANG_HE_CashCondition__c  && !newAcc.ANG_HE_CashCondition__c && isLastFinancialReviewUpgrade)
-			  ) {
-				accountsList.add(newAcc);	
-			}
-		}
-
-		if(!accountsList.isEmpty()) {
-			ANG_UpdateRHCInformationBatch b = new ANG_UpdateRHCInformationBatch(accountsList, 1);
-			database.executebatch(b, 100);
-		}
-
-	}
-
 	private void updateRHCInformation() {
 		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
 		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
@@ -328,7 +301,11 @@ public class ANG_AccountTriggerHandler {
 
 		//Find relevant accounts
 		for(Account a : triggerNew){
-			if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
+			//need to check both fields as some will change the be done 
+			//previously on the trigger (on on physical field), and some 
+			//cases will change only the formula field (i.e.: Opt-in)
+			if(a.ANG_HE_CashCondition__c != oldMap.get(a.Id).ANG_HE_CashCondition__c) changedConditions.put(a.Id, a.ANG_HE_CashCondition__c);
+			else if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
 			if(a.Status__c != oldMap.get(a.Id).Status__c && oldMap.get(a.Id).Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
 
 		}
@@ -350,7 +327,7 @@ public class ANG_AccountTriggerHandler {
 		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
 		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) reactivatedRHC.add(rhcToUpdate.get(acc));
 
-		ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
+		if(!reactivatedRHC.isEmpty()) ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
 		
 		//then, at last, we make the update
 		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
