@@ -57,6 +57,9 @@ public class vfIECEBC_Test {
     public static testMethod void testCampaignIDCardSendMassMailing() {
         vfIECEBC_TestSuite.testCampaignIDCardSendMassMailing();
     }
+    public static testMethod void testFixIDCARD() {
+        vfIECEBC_TestSuite.testFixIDCARD();
+    }
     public static testMethod void testElasticQuery() {
         vfIECEBC_TestSuite.testElasticQuery();
     }

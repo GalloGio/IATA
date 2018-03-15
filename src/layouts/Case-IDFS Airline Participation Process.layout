@@ -8,7 +8,6 @@
     <customButtons>New_Manage_Fees_Checklist</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -74,6 +73,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Classification_SIS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Defect_Issue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -213,6 +224,9 @@
         <layoutColumns>
             <layoutItems>
                 <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <customLink>Conga_Merge_Letters</customLink>
             </layoutItems>
         </layoutColumns>
         <style>CustomLinks</style>

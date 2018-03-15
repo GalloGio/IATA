@@ -1,7 +1,7 @@
 @isTest
 private class EF_AttachmentListControllerTest {
 
-    /*@testSetup
+    @testSetup
     public static void setupTest() {
 
         //     Case cse = new Case();
@@ -206,11 +206,6 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.deleteAttachment(String.valueOf(att.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(arch.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(aFile.Id), 'asd');
-    }*/
-    
-    static testMethod void removeThis() {
-
-        EF_AttachmentListController.removeThis();
     }
-    
+       
 }

@@ -14,4 +14,5 @@
     <tab>UAT_Calendar</tab>
     <tab>Operational_Improvements__c</tab>
     <tab>Deployment_Plan__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

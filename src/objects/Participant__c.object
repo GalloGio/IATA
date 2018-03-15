@@ -228,7 +228,7 @@ Contact__r.AccountId
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Local_Group_Type__c</fullName>
@@ -644,18 +644,19 @@ Contact__r.Account.Name
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
-        <description>It&apos; s not possible to change anything if the participant is related to a local group inactive</description>
+        <description>It&apos; s not possible to change anything if the participant is related to an inactive group</description>
         <errorConditionFormula>AND(
  Local_Governance__r.Active__c = false,
- Local_Governance__r.RecordType.DeveloperName =  &apos;Local_Groups&apos;,  
+ 
  OR(
   ISNEW(),
   ISCHANGED(Contact__c),
   ISCHANGED(Local_Governance__c ),
-  ISCHANGED(Participant_Type__c )
+  ISCHANGED(Participant_Type__c ),
+  ISCHANGED(Representing__c)
  )
 )</errorConditionFormula>
-        <errorMessage>It&apos; s not possible to insert a new pariticipant or change  the existing one if the participant is related to an inactive local group.</errorMessage>
+        <errorMessage>It&apos; s not possible to insert a new participant or change  the existing one if the participant is related to an inactive group.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Cant_add_before_approval</fullName>
@@ -690,6 +691,19 @@ Contact__r.Account.Name
 First Name, Last Name, Title, Email and Account Name. Please complete these information and try again.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Create_Edit_Participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Reg_Div_Groups&apos;,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Local_Groups&apos;,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to add or edit participants to this group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Group_Type</fullName>
         <active>true</active>
         <description>Verify the account type for the participiant</description>
@@ -704,6 +718,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
 )),
@@ -719,6 +734,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
@@ -741,6 +757,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
 )),
@@ -756,6 +773,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )

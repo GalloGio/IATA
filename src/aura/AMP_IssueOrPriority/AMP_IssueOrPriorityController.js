@@ -36,7 +36,7 @@
         var issue = component.get("v.issue");
         var status = issue.Status__c;
         var importance = issue.AM_Level_of_importance__c;
-console.log(JSON.stringify(issue));
+        console.log(JSON.stringify(issue));
         var levelOfImportanceValues = component.get("v.importanceValues");
         var statusValues = component.get("v.statusValues");
         // var source = component.get("v.relatedContact");
@@ -53,7 +53,7 @@ console.log(JSON.stringify(issue));
         var issue = component.get("v.issue");
         if(issue.Id === undefined) {
             console.log('cancel add new issue -> delete');
-            var deleteIssueEvent = component.getEvent("deleteIssue");
+            var deleteIssueEvent = component.getEvent("cancelAddIssue");
             deleteIssueEvent.setParams({'issue' : issue});
             deleteIssueEvent.fire();
         }
@@ -62,7 +62,7 @@ console.log(JSON.stringify(issue));
     deleteItem : function(component, event, helper) {
         // Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
 
-        console.log('delete clicked...');
+        console.log('delete OK clicked...');
         var issue = component.get("v.issue");
 
         var deleteIssueEvent = component.getEvent("deleteIssue");

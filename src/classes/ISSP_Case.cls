@@ -155,6 +155,39 @@ public without sharing class ISSP_Case {
         return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
+    public String fullnameNOCFile { get{
+
+            Id caseId = ApexPages.currentPage().getParameters().get('caseId');
+            String folderName = '500/' + caseid + '/';
+            String fileName = 'Notice_of_Change_form.pdf';
+            String fullname = folderName + fileName;
+
+            List<AmazonFile__c> amazonfilesList = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c =: caseId];
+            Boolean hasFile = false;
+            for(AmazonFile__c af : amazonfilesList) {
+                if(af.Full_Name_Unique__c == fullname) {
+                    hasFile = true;
+                    break;
+                }
+            }
+
+            if(hasFile){
+                String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+                return link;
+            } else {
+
+                Boolean isBankAccountChange = false;
+
+                if(newCase.Reason1__c == 'Bank Detail Update')
+                    isBankAccountChange = true;
+
+                return '/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            }
+        
+        }
+    }
+
     public ISSP_Case() {
         System.debug('xx2 Controller ');
         newCase = new Case();
@@ -536,7 +569,15 @@ public without sharing class ISSP_Case {
         objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
         objectsIds.put('CASE', newCase.id); 
 
-        progressBarHelper = new ANG_ProgressBarHelper(newCase.Oscar__r.Process__c, objectsIds);
+        // If the process is null the use the reason on the casop.
+        String process = '';
+        if(newCase.Oscar__r.Process__c == null || (newCase.Oscar__r.Process__c != null && newCase.Oscar__r.Process__c == '')) {
+            process = newCase.Reason1__c;
+        } else {
+            process = newCase.Oscar__r.Process__c;
+        }
+
+        progressBarHelper = new ANG_ProgressBarHelper(process, objectsIds);
 
         for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
             if (node.titleTranslatable != null && node.titleTranslatable != '') {

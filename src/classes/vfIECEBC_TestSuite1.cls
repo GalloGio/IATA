@@ -546,6 +546,10 @@ public class vfIECEBC_TestSuite1 {
             layoutController.getSProdGSS();
             layoutController.getSContactEmail();
             layoutController.getSContactSubject();
+            layoutController.logout();
+            Boolean newNow=layoutController.showRenewNow;
+            String pageUrl=layoutController.renewalPageUrl;
+            layoutController.getIsUserLoggedIn();
             
             vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
             System.assertEquals(4, dashboardCon.campaignsCount);

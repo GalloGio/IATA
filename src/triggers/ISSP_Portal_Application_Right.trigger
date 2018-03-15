@@ -1554,7 +1554,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	
 	
     if(PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
-    
+
+	//we skip this trigger if IFAP portal service so we avoid too many SOQL queries
+	if (!trigger.isDelete) {
+		for (Portal_Application_Right__c access : trigger.new) {
+			if (access.Application_Name__c == 'IFAP' )
+				return;
+		}
+	}
+
     //TF - give permission set automatically for SIS
     system.debug('STARTING TRIGGER');
     Set <Id> contactIdSet = new Set <Id>();
@@ -1825,9 +1833,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 	if (!contactIdSet.isEmpty() || !contactRemoveIdSet.isEmpty()){
 		system.debug('WILL START FUTURE METHOD');
-		if (!ISSP_UserTriggerHandler.preventTrigger)
-			ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
-		ISSP_UserTriggerHandler.preventTrigger = true;
+        if (!ISSP_UserTriggerHandler.preventSISIntegration) {
+            //call external WS to update SIS user
+            ISSP_UserTriggerHandler.calloutSIS_ActivateDeactivateUsers(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        if (!ISSP_UserTriggerHandler.preventTrigger) {
+            ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
+        }
+        ISSP_UserTriggerHandler.preventTrigger = true;
 	}
 
 	//deleteTwoFactor

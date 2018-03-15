@@ -2714,27 +2714,6 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
     </fields>
     <label>IATA ISO Country</label>
     <listViews>
-        <fullName>All_Countries</fullName>
-        <columns>NAME</columns>
-        <columns>International_dialing_code_ISD__c</columns>
-        <columns>ISO_Code__c</columns>
-        <columns>LVA_CountryLanguage__c</columns>
-        <columns>AMS_Default_State__c</columns>
-        <columns>Region__c</columns>
-        <columns>Sub_Region__c</columns>
-        <columns>AIMS_Area_Name__c</columns>
-        <columns>Case_BSP_Country__c</columns>
-        <columns>AIMS_Area_ID__c</columns>
-        <columns>SLA_Type__c</columns>
-        <columns>Sanctioned_Country__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>Country_Manager__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Countries</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>All_CountriesISS</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>

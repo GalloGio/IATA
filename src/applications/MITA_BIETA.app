@@ -8,4 +8,5 @@
     <tab>Memorandums</tab>
     <tab>AmazonFile__c</tab>
     <tab>MITA_Agreement__c</tab>
+    <tab>AMS_Account_Role__c</tab>
 </CustomApplication>

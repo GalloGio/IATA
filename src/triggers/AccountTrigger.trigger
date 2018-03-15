@@ -2,8 +2,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
-  //DTULLO: added to skip trigger execution if aggreagating data for PwC
-  if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
+  //NOT NEEDED ANYMORE AS PER NEWGEN-796 - DTULLO: added to skip trigger execution if aggreagating data for PwC
+  //if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
   
   
   if(trigger.isBefore && (trigger.isInsert || trigger.isupdate )){
@@ -63,4 +63,15 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
    {
     system.debug('old..'+Trigger.old);
     ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
+    //SIS Integration trigger
+    if(Trigger.isBefore && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.beforeInsert(Trigger.new);
+    } 
+    if(Trigger.isAfter && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.afterInsert(Trigger.new);
+    }
+    
+    if(Trigger.isBefore && Trigger.isUpdate){
+        ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+    }
 }

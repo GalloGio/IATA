@@ -327,9 +327,9 @@ margin-top:50px;
     <!-- PORTAL_DIRECT files can always be uploaded to SAAM / OSCAR Comm. cases once it is beyondd the draft status -->
     <br/>
         <c:ISSP_AMS_FormUpload reqCnt="100"
-            reqRequired="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_Mandatory, $Label.ISSP_Optional)}"
-            reqName="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form, $Label.ISSP_AMS_Case_Attach)}"
-            reqDescription="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form_message + ' - ' + newCase.Subject, $Label.ISSP_AMS_Case_Attach_Description)}"
+            reqRequired="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_Mandatory, $Label.ISSP_Optional)}"
+            reqName="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form, $Label.ISSP_AMS_Case_Attach)}"
+            reqDescription="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form_message + ' - ' + newCase.Subject, $Label.ISSP_AMS_Case_Attach_Description)}"
             reqIdentifier="PORTAL_CASE_DIRECT"
             rendered="{!AND(isOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products', tmpCase.CaseArea__c == 'Remittance & Settlement Process', tmpCase.CaseArea__c == 'Remittance & Settlement'))}"
         />

@@ -2959,6 +2959,23 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Identity_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Identity</value>
+        </filters>
+        <label>Identity Users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Knowledge_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.USERNAME</columns>

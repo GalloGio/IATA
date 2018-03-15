@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>For email alert when a Contact with SIS application is changing its parent account</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP WS SIS send alert on Account change</name>
+    <style>none</style>
+    <subject>Manual action required - SIS user has moved to another account</subject>
+    <textOnly>Dear SIS help desk, 
+
+The below SIS contact was moved to another account in Salesforce which resulted in deactivating the user in SIS System.
+As per the procedures, please note that the user has to be manually activated in SIS and linked to the new account.
+
+Contact name: {!Contact.Name}
+Email: {!Contact.Email}
+federation id: {!Contact.Id}
+Link to the contact in SF: {!Contact.Link}</textOnly>
+    <type>custom</type>
+</EmailTemplate>
