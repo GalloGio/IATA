@@ -72,24 +72,6 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <fields>
-        <fullName>isMyAccount__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>check this to filter cases where the case owner is from the same account as the viewer</description>
-        <externalId>false</externalId>
-        <label>isMyAccount</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>isOwnedByMe__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>check this to filter based on the case owner == Userinfo.getUserId()</description>
-        <externalId>false</externalId>
-        <label>isOwnedByMe</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <label>ISSP Case List View</label>
     <visibility>Public</visibility>
 </CustomObject>
