@@ -219,7 +219,7 @@
                 </section>
             </div>
 
-            <div>
+            <div style="display: inline-block;">
                 <c:ISSP_CustomFooter communityName="{!communityName}" />
             </div>
 
