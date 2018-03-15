@@ -235,6 +235,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public String optInOutSuccessMessage {get; set;}
     public String optInOutBtn {get; set;}
+    public String optInOutErrorNoDate {get; set;}
     
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -4223,7 +4224,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         if(flagShowOptInButtonDisabled) flagShowOptInButton = false;
         
-
         if(flagShowOptOutButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE;
 
         if(flagShowOptInButton) optInOutSuccessMessage = Label.ISSP_ANG_OPT_IN_SUCCESS_MESSAGE;
@@ -4231,6 +4231,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         isIFAPContact = (con.Financial_Assessment_Contact__c);
 
         if (flagShowOptInButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptInEmptyDateErrorMessage;
             optInOutBtn = Label.ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN;
             optInOutModalTitle = Label.ISSP_ANG_OPT_IN_MODAL_TITLE;
             flagShowOptInOutButton = true;
@@ -4250,6 +4251,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
 
         if (flagShowOptOutButton) {
+            optInOutErrorNoDate = Label.ANG_ISSP_OptOutEmptyDateErrorMessage;
             optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;
             flagShowOptInOutButton = true;
             optInOutModalTitle = Label.ISSP_ANG_OPT_OUT_MODAL_TITLE;
