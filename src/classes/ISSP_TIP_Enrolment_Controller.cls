@@ -10,7 +10,8 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     private Id accountID {get; set;}
     private Case newCase {get; set;}
     private List <Case> accountCases {get; set;}
-
+    public List <Contact> contactList {get; set;}
+    private Map<Contact, Boolean> primaryContacts;
 
 	public ISSP_TIP_Enrolment_Controller() {
 
@@ -34,6 +35,8 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 							AND Status = 'Draft'
     	 				LIMIT 1]; 
 
+    	fillContactList();
+    	primaryContacts = new Map<Contact, Boolean>();
 	}
 
 	public Pagereference submitToIATA() {
@@ -149,5 +152,11 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
             options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
+    }
+
+    private void fillContactList() {
+    	contactList = [SELECT Name, Email, FirstName, LastName, Phone, Primary_Contact__c
+                FROM Contact
+                WHERE Status__c = 'Active'];
     }
 }

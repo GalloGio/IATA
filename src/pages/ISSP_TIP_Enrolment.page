@@ -6,6 +6,7 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
+           docType="html-5.0"
            >
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
@@ -596,10 +597,36 @@
 
 <!-------section 2 in here---->
 
-              
+         <apex:pageBlockSection id="sectionFour" columns="1" collapsible="false">
+            <apex:facet name="header">
+                <apex:outputpanel>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3}</apex:outputpanel>
+            </apex:facet>
+            <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_1}</strong></div>
+
+            <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
+
+            <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/> 
+                <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!con.LastName}"/>
+                <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!con.Phone}"/>
+                <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!con.Email}"/>
+                <apex:column headerValue="Cenas">
+                    <apex:selectRadio value="{!con.Primary_Contact__c}" onclick="changeSelectedContact();"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+
+        <script type="text/javascript">
+            function changeSelectedContact() {
+                
+            }
+        </script>
+
 
             </div>  <!-- EO APContainer -->
          </apex:pageBlock>
+
+
        
         </apex:form> <!-- EO AMS Form -->
                 
