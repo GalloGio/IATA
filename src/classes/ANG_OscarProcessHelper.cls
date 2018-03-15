@@ -876,11 +876,11 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
-	public static void createRevalidationOscar(Account acc){
+	public static void createRevalidationOscar(Account acc, List<Contact> contactsAcc){
 
 		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
-		Contact keyContact = fetchKeyContact(acc, acc.contacts);
+		Contact keyContact = fetchKeyContact(acc, contactsAcc);
 		
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
