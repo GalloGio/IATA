@@ -171,8 +171,8 @@
                                 html-data-toggle="{!IF(wrapper.countryClusterTooltip=='','','tooltip')}" title="{!wrapper.countryClusterTooltip}"/>
                         </td>
                         <td>
-                            <apex:outputText value="{!wrapper.participant.Local_Group_Type__c}"
-                                html-data-toggle="{!IF(OR(wrapper.participant.Local_Group_Type__c=='',wrapper.groupTypeTooltip==''),'','tooltip')}" title="{!wrapper.groupTypeTooltip}"/>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Local_Governance_type__c}"
+                                html-data-toggle="{!IF(OR(wrapper.participant.Local_Governance__r.Local_Governance_type__c=='',wrapper.groupTypeTooltip==''),'','tooltip')}" title="{!wrapper.groupTypeTooltip}"/>
                         </td>
                         <td>{!wrapper.participant.Local_Governance__r.Cargo_Passenger__c}</td>
                         <td>{!wrapper.participant.Participant_Type__c}</td>
