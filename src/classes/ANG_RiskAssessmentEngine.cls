@@ -1,29 +1,29 @@
 public class ANG_RiskAssessmentEngine{
     
-    private map<id,ang_agency_risk_calculation__c> risCalcMap{ // map risk event Calculations
+    private static map<id,ang_agency_risk_calculation__c> risCalcMap{ // map risk event Calculations
         get{
-            if(risCalcMap==null) setMaps();
-            return risCalcMap;
+            if(ANG_RiskAssessmentEngine.risCalcMap==null) setMaps();
+            return ANG_RiskAssessmentEngine.risCalcMap;
         }
         set;
     }
 
-    private map<id,ang_agency_risk_calculation__c> risCalAdjcMap{ //map adjusted risk calculations
+    private static map<id,ang_agency_risk_calculation__c> risCalAdjcMap{ //map adjusted risk calculations
         get{
-            if(risCalAdjcMap==null) setMaps();
-            return risCalAdjcMap;
+            if(ANG_RiskAssessmentEngine.risCalAdjcMap==null) setMaps();
+            return ANG_RiskAssessmentEngine.risCalAdjcMap;
         }
         private set;
     }
 
-    private void setMaps(){ // method to populate the risk event calculation maps
-        risCalcMap = new map<id,ang_agency_risk_calculation__c>();
-        risCalAdjcMap = new map<id,ang_agency_risk_calculation__c>();
+    private static void setMaps(){ // method to populate the risk event calculation maps
+        ANG_RiskAssessmentEngine.risCalcMap = new map<id,ang_agency_risk_calculation__c>();
+        ANG_RiskAssessmentEngine.risCalAdjcMap = new map<id,ang_agency_risk_calculation__c>();
         for(ang_agency_risk_calculation__c arc:[select id,ANG_Occurrence_Num__c,(select id,ANG_Parent_Occurences__c,ANG_Occurrence_Num__c,ANG_Remittance_Frequency__c from ANG_Adjustments__r) from ang_agency_risk_calculation__c where recordtype.name='Rules' order by ANG_Occurrence_Num__c asc]){
             if(arc.ANG_Occurrence_Num__c ==0){
-                risCalAdjcMap.put(arc.id,arc);    
+                ANG_RiskAssessmentEngine.risCalAdjcMap.put(arc.id,arc);    
             }else{
-                risCalcMap.put(arc.id,arc);
+                ANG_RiskAssessmentEngine.risCalcMap.put(arc.id,arc);
             }
         }
     }
@@ -44,6 +44,7 @@ public class ANG_RiskAssessmentEngine{
             accreditantionModel=accrModel;
             financialReviewResult=financialReviewRes;
             status=stats;
+            System.debug(loggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - accHelperClass constructor] this - ' + this);
         }
     }
 
@@ -209,7 +210,7 @@ public class ANG_RiskAssessmentEngine{
             updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
             updAcc.Financial_Review_Result__c=accInfoMap.get(accKey).financialReviewResult;
         }
-        AccUpdList =ANG_Risk_Helper.updateRiskStatus(AccUpdList);
+        ANG_Risk_Helper.updateRiskStatus(AccUpdList);
         for(account a : AccUpdList) a.ANG_HE_CashCondition__c = a.ANG_Limit_Cash_Condition__c || accInfoMap.get(a.id).hasCashCondition;
         
         return AccUpdList;  
@@ -220,12 +221,12 @@ public class ANG_RiskAssessmentEngine{
         if(groupingMap==null)return result;
         for(string reRec: groupingMap.keySet()){ // iterate groupings
             integer accParentOccs=groupingMap.get(reRec);                
-            if(risCalcMap.containsKey(reRec)){ //validate REC
-                if( accParentOccs>=risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
+            if(ANG_RiskAssessmentEngine.risCalcMap.containsKey(reRec)){ //validate REC
+                if( accParentOccs>=ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
                     result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                     break;
-                }else if(risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){                        
-                    for(ang_agency_risk_calculation__c arca: risCalcMap.get(reRec).ANG_Adjustments__r){
+                }else if(ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){                        
+                    for(ang_agency_risk_calculation__c arca: ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r){
                         if(arca.ANG_Remittance_Frequency__c==remiFreq && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= nrAdjusRe){
                             result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                             breakCicle=true;
