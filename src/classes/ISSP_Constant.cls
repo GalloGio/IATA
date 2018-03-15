@@ -148,7 +148,6 @@ Constant Class
     // Case RecordType Names map
     public static final Map<String,String> caseTypeMap = new Map<String,String>{
         'DPC Service Request'   => 'DPCSR',
-        'Inter DPCs'   => 'DPCSR',
             'IATA Service Request'  => 'IATASR',
             'IATA Financial Review' => 'IFAP',
             'Application Change Request (DPC Systems - locked)' => 'ACR',
