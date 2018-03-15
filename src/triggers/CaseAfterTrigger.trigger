@@ -967,15 +967,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(CaseBeforInsert){
 			system.debug('CaseBeforInsert Trigger.isInsert');
 	        ISSP_Case.preventTrigger = true;
-	        User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
-	        system.debug('#ROW# '+users);
 	        for(Case c : trigger.new){ //GM - IMPRO - START
-	            if(c.Origin == 'Portal'){
-	                if (users != null && users.size() > 0){
-	                    if (users[0].UserType == 'PowerPartner' || users[0].UserType == 'Guest'){
-	                        casesIds.add(c.Id);
-	                    }
-	                }
+	            if(c.Origin == 'Portal' && (UserInfo.getUserType() == 'PowerPartner' || UserInfo.getUserType() == 'Guest')) {
+	        		system.debug('#ROW# '+UserInfo.getUserType());
+	                casesIds.add(c.Id);	                    
 	            }
 	            if (c.RecordTypeId == RT_AirlineSuspension_Id || c.RecordTypeId == RT_AirlineDeactivation_Id || c.RecordTypeId == RT_FundsManagement_Id) {
 	                setASCaseIds.add(c.Id);
