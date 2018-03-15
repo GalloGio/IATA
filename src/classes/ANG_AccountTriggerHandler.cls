@@ -34,15 +34,15 @@ public class ANG_AccountTriggerHandler {
 	public void onBeforeUpdate(){
 		adjustShortName();
 		updateRiskStatus();
-		manageDowngrades();
-		manageUpgrades();
+		runRiskAssessment();
 	}
 	public void onAfterUpdate() {
-		runRiskAssessment();
 		updateRiskEventStatus();
 		updateRHCInformation();
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'Account','id').run();
 		recalculateRHC();
+		manageDowngrades();
+		manageUpgrades();
 	}
 
 	public void onBeforeDelete(){}
@@ -51,6 +51,24 @@ public class ANG_AccountTriggerHandler {
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
+
+	private void adjustShortName(){
+
+		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
+		for(Account a : triggerNew){
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+				continue;
+
+			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
+
+				if(a.TradeName__c != null && a.TradeName__c != ''){
+					a.Short_Name__c = a.TradeName__c;
+				}else if(a.Name != null && a.Name != ''){
+					a.Short_Name__c = a.Name;
+				}
+			}
+		}
+	}
 
 	private void updateRiskStatus() {
 
@@ -66,35 +84,59 @@ public class ANG_AccountTriggerHandler {
 		if(!accs.isEmpty()) ANG_Risk_Helper.updateRiskStatus(accs);
 	}
 
+	private void runRiskAssessment() {
+		
+		Map<Account,List<ANG_Agency_Risk_Event__c>> involvedAccounts = new Map<Account,List<ANG_Agency_Risk_Event__c>>();
+		for(account acc : triggerNew){  
+			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc, new List<ANG_Agency_Risk_Event__c>());
+		}
+
+		if(!involvedAccounts.isEmpty()){
+			for(ANG_Agency_Risk_Event__c re : [SELECT Id, ANG_HE_AccountId__c, ANG_Risk_Type__c, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c IN :involvedAccounts.keySet() AND ANG_Event_Status__c = :Ang_Risk_Helper.STATUS_ACTIVE]){
+				involvedAccounts.get(newMap.get(re.ANG_HE_AccountId__c)).add(re);
+			}
+
+			for(Account a : new ANG_RiskAssessmentEngine(involvedAccounts).forecastAssessment()){
+				System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - runRiskAssessment] a (after forecast) - ' + a);
+				Account acc = newMap.get(a.Id);
+				acc.ANG_HE_RiskHistoryAssessment__c = a.ANG_HE_RiskHistoryAssessment__c;
+				acc.ANG_HE_RiskStatus__c = a.ANG_HE_RiskStatus__c;
+				acc.ANG_HE_CashCondition__c = a.ANG_HE_CashCondition__c;
+				acc.Financial_Review_Result__c = a.Financial_Review_Result__c;
+			}
+		}
+	}
+
 	private void manageDowngrades() {
 		List<Account> downGradeAtoB = new List<Account>();
 		List<Account> downGradeBtoC = new List<Account>();
+		List<Account> createFOP = new List<Account>();
 
 		for(Account acc : triggerNew){
-			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Risk Status - ' + acc.ANG_HE_RiskStatus__c);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Risk Status - ' + oldMap.get(acc.Id).ANG_HE_RiskStatus__c);
-			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_CashCondition__c);
-			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_CashCondition__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Risk Status - ' + acc.ANG_HE_RiskStatus__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_HE_CashCondition__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_HE_CashCondition__c);
 
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B) downGradeBtoC.add(acc);
+			if(isExpiration && acc.Guaranteed_amount__c == 0 && acc.ANG_HE_CashCondition__c && !oldMap.get(acc.Id).ANG_HE_CashCondition__c) createFOP.add(acc);
 		}
 
-		if(downGradeAtoB.isEmpty() && downGradeBtoC.isEmpty()) return;
+		if(downGradeAtoB.isEmpty() && downGradeBtoC.isEmpty() && createFOP.isEmpty()) return;
 
 		//fetch portal admins
-		Map<Id, Id> portalAdmins = new Map<Id, Id>();
-		Map<Id, Boolean> hasOwnAdmin = new Map<Id, Boolean>();
+		Map<Id, Id> rhcContacts = new Map<Id, Id>();
 
 		Set<Id> involvedAccounts = new Set<Id>();
 		involvedAccounts.addAll(new Map<Id, Account>(downGradeAtoB).keySet());
 		involvedAccounts.addAll(new Map<Id, Account>(downGradeBtoC).keySet());
+		involvedAccounts.addAll(new Map<Id, Account>(createFOP).keySet());
 
-		for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :involvedAccounts OR AccountId IN :involvedAccounts)]){
+		Map<String, Set<Id>> allRhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(involvedAccounts, new Set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE} );
 
-			//select a portal admin from the HE, if possible, or from the hierarchy if not
-			if(involvedAccounts.contains(c.AccountId)) portalAdmins.put(c.AccountId, c.Id);
-			else if (!portalAdmins.containsKey(c.Account.Top_Parent__c)) portalAdmins.put(c.Account.Top_Parent__c, c.Id);
+		for(String accId : allRhcContacts.keySet()){
+			rhcContacts.put(accId, allRhcContacts.containsKey(accId) ? new List<Id>(allRhcContacts.get(accId))[0] : null);
 		}
 
 		//create cases
@@ -108,7 +150,7 @@ public class ANG_AccountTriggerHandler {
 			Case c = new Case();
 			c.RecordTypeId = saamRecordType;
 			c.AccountId = acc.Id;
-			c.ContactId = portalAdmins.get(acc.Id);
+			c.ContactId = rhcContacts.get(acc.Id);
 			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
 			c.Region__c = acc.Region_formula__c;
 			c.BSPCountry__c = acc.BillingCountry;
@@ -127,7 +169,10 @@ public class ANG_AccountTriggerHandler {
 		if(!newCases.isEmpty()) insert newCases;
 		
 		//downgrade from B to C
-		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, portalAdmins);
+		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, rhcContacts);
+
+		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
+		if(!createFOP.isEmpty()) createFOPOscar(createFOP, rhcContacts);
 	}
 
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
@@ -161,15 +206,15 @@ public class ANG_AccountTriggerHandler {
 		for(Id accId : toChangeCode){
 			Account acc = newMap.get(accId);
 			changeCodes.add(new Agency_Applied_Change_code__c(
-			    Active__c = true
-			    , Account__c = acc.Id
-			    , Change_Code__c = config.Change_Code__c
-			    , Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
-			    , Reason_Code__c = config.Reason_Code__c
-			    , Reason_Description__c = config.Reason_Code_Description__c
-			    , Source__c = source
-			    , CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
-			    , To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+				Active__c = true
+				, Account__c = acc.Id
+				, Change_Code__c = config.Change_Code__c
+				, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
+				, Reason_Code__c = config.Reason_Code__c
+				, Reason_Description__c = config.Reason_Code_Description__c
+				, Source__c = source
+				, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
+				, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
 			));
 		}
 
@@ -263,7 +308,7 @@ public class ANG_AccountTriggerHandler {
 			//
 			//
 			if((oldAcc.ANG_FA_Opt_out__c  && !newAcc.ANG_FA_Opt_out__c) || 
-			   (oldAcc.ANG_CashCondition__c  && !newAcc.ANG_CashCondition__c && isLastFinancialReviewUpgrade)
+			   (oldAcc.ANG_HE_CashCondition__c  && !newAcc.ANG_HE_CashCondition__c && isLastFinancialReviewUpgrade)
 			  ) {
 				accountsList.add(newAcc);	
 			}
@@ -274,16 +319,6 @@ public class ANG_AccountTriggerHandler {
 			database.executebatch(b, 100);
 		}
 
-	}
-
-	private void runRiskAssessment() {
-		
-		Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
-		for(account acc : triggerNew){  
-			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
-		}
-
-		if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
 	}
 
 	private void updateRHCInformation() {
@@ -339,33 +374,19 @@ public class ANG_AccountTriggerHandler {
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
 
-	private static Set<Id> downgradedAccounts{
-		get{
-			if(downgradedAccounts == null) downgradedAccounts = new Set<Id>();
-			return downgradedAccounts;
-		}
-		set;
-	}
-
-	private void createVMFROscars(List<Account> allAccounts, Map<Id, Id> contacts){
+	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 
 		//to prevent errors on test classes
 		if(Test.isRunningTest()){
-			insert new ANG_AgencyChangesConfig__c(Name = 'ChangeVFMR', TC_VMFR__c = true,
-		                    TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
-		                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
-		                    TC_Major_Shareholding__c = false, TC_Ownership__c = false,
-		                    TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+			if(ANG_AgencyChangesConfig__c.getInstance('ChangeVFMR') == null){
+				insert new ANG_AgencyChangesConfig__c(Name = 'ChangeVFMR', TC_VMFR__c = true,
+								TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
+								TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
+								TC_Major_Shareholding__c = false, TC_Ownership__c = false,
+								TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+			}
 		}
-
-		//filter accounts
-		List<Account> accounts = new List<Account>();
-		for(Account acc : allAccounts){
-			if(downgradedAccounts.add(acc.Id)) accounts.add(acc);
-		}
-
-		if(accounts.isEmpty()) return;
 
 		//create object reference map
 		Map<Id, OscarObjects> objects = new Map<Id, OscarObjects>();
@@ -380,7 +401,7 @@ public class ANG_AccountTriggerHandler {
 			objects.get(acc.Id).oscar = oscar;
 		}
 
-		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars, newMap);
 
 		// insert oscars
 		insert oscars;
@@ -406,7 +427,6 @@ public class ANG_AccountTriggerHandler {
 			cases.add(c);
 			objects.get(acc.Id).commCase = c;
 		}
-
 		//insert cases
 		insert cases;
 
@@ -475,49 +495,82 @@ public class ANG_AccountTriggerHandler {
 		update oscars;
 	}
 
-    /**
+	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
+		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - createFOPOscar] Creating FOP Oscar for '+new Map<Id, Account>(accounts).keyset());
+
+		//create object reference map
+		Map<Id, OscarObjects> objects = new Map<Id, OscarObjects>();
+
+		//create oscars
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+
+		for(Account a : accounts){
+			objects.put(a.Id, new OscarObjects());
+
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NEWGENFOP, Account__c = a.Id,  Process__c = AMS_Utils.NGFOP, Status__c='Open');
+
+			oscars.add(oscar);
+			objects.get(a.Id).oscar = oscar;
+		}
+
+		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars, newMap);
+
+		// insert oscars
+		insert oscars;
+
+		//create cases
+		List<Case> cases = new List<Case>();
+
+		for(Account a : accounts){
+			Case c = new Case();
+
+			c.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+			c.OSCAR__c = objects.get(a.Id).oscar.Id;
+			c.AccountId = a.Id;
+			c.ContactId = contacts.get(a.Id);
+			c.BSPCountry__c = a.BillingCountry;
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
+			c.Origin = 'Internal User';
+			c.Reason1__c = 'FoP Management';
+			c.Region__c = a.Region_formula__c;
+			c.Subject = 'FoP Management - ' + a.IATACode__c + ' - ' + a.Name;
+			c.Type_of_customer__c = 'IATA Travel Agent';
+
+			String oscarOwner = objects.get(a.Id).oscar.OwnerId;
+			if(!String.isEmpty(oscarOwner)) c.OwnerId = oscarOwner;
+
+			cases.add(c);
+		}
+
+		//insert cases
+		insert cases;
+	}
+
+	/**
 	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
-    */
-    private String getHighestRemittanceFrequency(List<Account> accs){
-    	
-    	String remitFreq = '';
-    	List<Id> accsIds = new List<Id>();
+	*/
+	private String getHighestRemittanceFrequency(List<Account> accs){
+		
+		String remitFreq = '';
+		List<Id> accsIds = new List<Id>();
 
-    	for (Account a: accs)
-    		accsIds.add(a.Id);
+		for (Account a: accs)
+			accsIds.add(a.Id);
 
-    	Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-    	List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+		Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
+		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
 
-    	Integer aux = 0;
-    	for(AMS_Operation__c op: opCodes){
-    		for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+		Integer aux = 0;
+		for(AMS_Operation__c op: opCodes){
+			for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
 
-    			if((Integer)attr.Remittances_Per_Year__c > aux){
-    				aux = (Integer)attr.Remittances_Per_Year__c;
-    				remitFreq = attr.Remittance_Frequency__c;
-    			}
-    		}
-    	}
-
-    	return remitFreq;
-    }
-
-    private void adjustShortName(){
-
-		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
-		for(Account a : triggerNew){
-			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
-				continue;
-
-			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
-
-				if(a.TradeName__c != null && a.TradeName__c != ''){
-					a.Short_Name__c = a.TradeName__c;
-				}else if(a.Name != null && a.Name != ''){
-					a.Short_Name__c = a.Name;
+				if((Integer)attr.Remittances_Per_Year__c > aux){
+					aux = (Integer)attr.Remittances_Per_Year__c;
+					remitFreq = attr.Remittance_Frequency__c;
 				}
 			}
 		}
-    }
+
+		return remitFreq;
+	}
 }

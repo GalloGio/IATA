@@ -125,7 +125,7 @@ private class ANG_financialReviewOnCaseTest {
 
             System.debug(loggingLevel.FINE, '____ [cls ANG_financialReviewOnCaseTest - updateCaseStatusToUpgradeAccountRiskStatus] Limits - ' + Limits.getQueries());
 
-            c.status = 'Financial Security Requested';
+            c.status = 'Closed';
             update c;
 
             System.debug(loggingLevel.FINE, '____ [cls ANG_financialReviewOnCaseTest - updateCaseStatusToUpgradeAccountRiskStatus] Limits - ' + Limits.getQueries());
@@ -141,7 +141,7 @@ private class ANG_financialReviewOnCaseTest {
 
         System.assertEquals(c.Financial_Review_Result__c,updatedAcc.Financial_Review_Result__c);
         System.assertEquals('A',updatedAcc.ANG_HE_RiskStatus__c);
-        System.assertEquals(2, [SELECT Id, Subject__c FROM Notification__c].size(), 'Notification was not created'); 
+        System.assertEquals(1, [SELECT Id, Subject__c FROM Notification__c].size(), 'Notification was not created'); 
         System.assertEquals(1, updatedAcc.Agencies_Applied_Change_codes__r.size(), 'Change Code was not created');
     }
 
