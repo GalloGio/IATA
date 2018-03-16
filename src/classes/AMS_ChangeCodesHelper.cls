@@ -651,7 +651,7 @@ public class AMS_ChangeCodesHelper {
                     setFOPs.add(authRelabel);                    
                 }
             }
-
+            // include payment method if it's being restored
             if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add('Cash');
             if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add('Credit Card'); 
 
