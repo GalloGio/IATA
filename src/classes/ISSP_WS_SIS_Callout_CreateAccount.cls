@@ -118,8 +118,8 @@ public with sharing class ISSP_WS_SIS_Callout_CreateAccount {
                 request.AddressLine1 = fullAddress.mid(0,70);
                 request.AddressLine2 = fullAddress.mid(70,70);
                 request.AddressLine3 = fullAddress.mid(140,70);
-                request.CityName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.BillingCity);
-                request.SubDivisionName = ISSP_WS_SIS_Callout_Common.cleanSpecialChars(account.BillingState);
+                request.CityName = AMS_Utils.cleanSpecialChars(account.BillingCity);
+                request.SubDivisionName = AMS_Utils.cleanSpecialChars(account.BillingState);
                 request.PostalCode = nvl(account.BillingPostalCode);
                 request.CountryCode = nvl(account.Country_ISO_Code__c).toUpperCase();
             }
