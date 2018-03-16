@@ -45,6 +45,7 @@
             , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
             , 'Account__r.CNS_Agency__c = false'
 			, 'Account__r.CNS_Account__c = false'
+			, 'RecordType.DeveloperName = \'FormOfPayment\''
 			// , 'Account__c IN ('+accreditation_condition+')'
 		};
 

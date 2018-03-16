@@ -99,7 +99,7 @@ Mapped to &quot;ANG_Accreditation_Model__c&quot; on AMS Account for Replication.
         <relationshipLabel>Accreditation (Accreditation Model)</relationshipLabel>
         <relationshipName>Accreditation3</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -112,7 +112,7 @@ Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication.</desc
         <inlineHelpText>If Checked, RHC equals Financial Security Amount Provided.
 Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>Cash Conditions Override</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -183,7 +183,7 @@ Mapped to &quot;ANG_IsNewGenAgency__c&quot; on AMS Account for Replication.</des
         <externalId>false</externalId>
         <inlineHelpText>Mapped to &quot;ANG_IsNewGenAgency__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>Is NewGen Agency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -248,7 +248,7 @@ Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</descrip
         <inlineHelpText>Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>Risk Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>

@@ -351,6 +351,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     </fields>
     <fields>
         <fullName>Due_Diligence_Status_Code__c</fullName>
+        <description>Agency&apos;s AML Compliance</description>
         <externalId>false</externalId>
         <formula>CASE( Due_Diligence_Status__c ,
   &quot;Cleared&quot;,&quot;C&quot;,
@@ -358,6 +359,10 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
   &quot;S&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Agency&apos;s AML Compliance
+C =Cleared
+I = In Progress
+S = Sanctioned</inlineHelpText>
         <label>Due Diligence Status Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -367,13 +372,14 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     </fields>
     <fields>
         <fullName>Due_Diligence_Status__c</fullName>
-        <description>Indicator on the Agency AML compliance
+        <description>Agency&apos;s AML Compliance
 Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <inlineHelpText>Agency&apos;s AML Compliance
+Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>Due Diligence Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -425,7 +431,7 @@ Mapped to &quot;ANG_IEP_Status_FF__c&quot; on AMS Account for Replication.</desc
         <relationshipLabel>GDP Products - Accounts View (EasyPay Account Status Code)</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View5</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -810,7 +816,7 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
         <inlineHelpText>Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>PCI Compliance</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -827,6 +833,11 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
                     <default>false</default>
                     <label>N</label>
                 </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -837,7 +848,7 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
         <inlineHelpText>Mapped to &quot;ANG_PCI_compliance_expiry_date__c&quot; on AMS Account for Replication.</inlineHelpText>
         <label>PCI Compliance Expiry Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -884,7 +895,7 @@ Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</desc
         <label>Passenger And Cargo</label>
         <length>1</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1000,7 +1011,7 @@ Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Sp
         <relationshipLabel>GDP Products - Accounts View (Remittance Frequency 1 Code)</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View3</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1017,7 +1028,7 @@ Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Sp
         <relationshipLabel>GDP Products - Accounts View (Remittance Frequency 2 Code)</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View4</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1077,7 +1088,7 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <label>TTY</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1145,7 +1156,7 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <label>Ticketing Agent Last Name</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1347,6 +1358,10 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
             <picklist>PCI_Compliance__c</picklist>
             <values>
                 <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
                 <default>false</default>
             </values>
             <values>

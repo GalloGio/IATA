@@ -88,9 +88,15 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
     // when the Agency Authorizations are deleted
     public static void removeAuthorizedFormsOfPayment(List<Agency_Authorization__c> aaValues){
         List<Id> lsAccountIds = new List<Id>();
+        RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType='Agency_Authorization__c' AND RecordType.DeveloperName = 'FormOfPayment'];
+        List<Agency_Authorization__c> lsFormsOfPayment = new List<Agency_Authorization__c>();
         for(Agency_Authorization__c aa: aaValues){
+            if(aa.RecordTypeId == rt.Id) lsFormsOfPayment.add(aa);
+        }
+        for(Agency_Authorization__c aa: lsFormsOfPayment){
             lsAccountIds.add(aa.Account__c);
         }
+
         List<GDP_Products_Account_View__c> lsProducts =
             [SELECT Id, AMS_GDP_Key__c
             FROM GDP_Products_Account_View__c
@@ -102,7 +108,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
         List<Authorized_Forms_Of_Payment__c> lsAFP2Delete = new List<Authorized_Forms_Of_Payment__c>();
 
-        for(Agency_Authorization__c aa : aaValues) {
+        for(Agency_Authorization__c aa : lsFormsOfPayment ) {
             for(Authorized_Forms_Of_Payment__c r : lsAFP) {
                 if(r.Related_GDP_Products_Account_View__r.Related_Accreditation_Class__r.Related_Account__c == aa.Account__c
                     && r.Form_of_Payment_Code__c == aa.ANG_FormOfPayment_ID__c ) {
