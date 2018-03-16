@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alert_for_Local_Groups</fullName>
+        <description>Alert for Local Groups</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account_management_team</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Local_Governance/Alert_for_Local_Groups</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Add_INACTIVE_to_name</fullName>
         <description>Add &quot; - INACTIVE&quot; to the name when inactivated</description>
@@ -56,6 +67,21 @@ RecordType.Name + &quot; - &quot; + IF( ISBLANK(Country__c), Cluster__r.Name, Co
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>Alert for Local Groups</fullName>
+        <actions>
+            <name>Alert_for_Local_Groups</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>LocalGovernance__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Local Groups</value>
+        </criteriaItems>
+        <description>Notification sent to AMP team when local group is created.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
     <rules>
         <fullName>Local Governance Auto Name</fullName>
         <actions>
