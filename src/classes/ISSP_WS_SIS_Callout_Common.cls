@@ -63,7 +63,7 @@ public with sharing class ISSP_WS_SIS_Callout_Common {
         str += ', ' + nvl(address.getCity()).normalizeSpace();
         str += ', ' + nvl(address.getState()).normalizeSpace();
         str += ', ' + nvl(address.getCountry()).normalizeSpace();
-        return str;
+        return AMS_Utils.cleanSpecialChars(str);
     }
     
     private static String nvl(String str) {

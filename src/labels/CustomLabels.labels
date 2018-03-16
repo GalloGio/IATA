@@ -2409,7 +2409,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -19007,6 +19007,62 @@ this is the tiess topic help</value>
         <value>Loading Travel Agent Details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Local_Groups_Contact_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Contact Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Country</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Country</shortDescription>
+        <value>Country/Cluster</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Export_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Export CSV</shortDescription>
+        <value>Export in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry</shortDescription>
+        <value>Local Industry Groups</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Description</shortDescription>
+        <value>description</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Title</shortDescription>
+        <value>My Local Groups</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Location</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -20378,6 +20434,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Business Phone</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_BusinessPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Business Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_ChangeMyCompany</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20521,6 +20585,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Please select the type of customer</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_FaxPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Fax Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_IATACode_Bubble</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20581,6 +20653,14 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Mobile Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_MobilePhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Mobile Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_MyCompany</fullName>

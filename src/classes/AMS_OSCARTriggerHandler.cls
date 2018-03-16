@@ -2893,9 +2893,9 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-                    //Remove TERMINATED Accounts from list
-                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
-                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
+                    //Remove TERMINATED and NOT ACCREDITED Accounts from list
+                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds]){
+                        if(acc.Status__c == null || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED) || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S1_NOTACCREDITED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
                     //RB: Bypass hierarchy verification when hierarchy is too big with many owners
