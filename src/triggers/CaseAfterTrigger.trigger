@@ -866,6 +866,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   		if(Trigger.isInsert || Trigger.isUpdate){
     		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
   		}
+
+  		if(Trigger.isUpdate){
+  			List<Id> updatedIFAPS = new List<Id>();
+  			for(Case c : Trigger.New){
+  				if(c.RecordTypeId == IFAPcaseRecordTypeID && String.isNotBlank(c.Financial_Review_Result__c) && String.isBlank(Trigger.oldMap.get(c.Id).Financial_Review_Result__c)){
+  					updatedIFAPS.add(c.Id);
+  				}
+  			}
+
+  			if(!updatedIFAPS.isEmpty()){
+  				List<ANG_Agency_Risk_Event__c> res = [SELECT Id, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c WHERE ANG_CaseId__r.ParentId IN :updatedIFAPS AND ANG_Limit_Cash_Conditions__c = true];
+
+  				if(!res.isEmpty()){
+  					for(ANG_Agency_Risk_Event__c r : res) r.ANG_Limit_Cash_Conditions__c = false;
+  					update res; 
+  				}
+  			}
+  		}
   		/*Risk Event Management*/
 	}
 	/*Share trigger code*/
