@@ -884,17 +884,7 @@ global class ANG_OscarProcessHelper {
 		
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
-		//AMS_OSCAR__c:
-        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
-		fieldsOfObject.put('Status__c','Open');
-
-		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
-        insert oscar;
-
 		//Case:
-		fieldsOfObject = new Map<String,Object>();
-
-        fieldsOfObject.put('Oscar__c',oscar.Id);
         fieldsOfObject.put('Account_Concerned__c',acc.Id);
       	fieldsOfObject.put('ContactId',keyContact.Id);
         fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
@@ -907,7 +897,6 @@ global class ANG_OscarProcessHelper {
         
        	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
        	insert cse;
-
 		//StagingArea:
 		fieldsOfObject = new Map<String,Object>();
 
@@ -953,6 +942,19 @@ global class ANG_OscarProcessHelper {
         	Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, cse.Id, fieldsOfObject);
 
         insert stagingArea;
+
+		//AMS_OSCAR__c:
+		fieldsOfObject = new Map<String,Object>();
+
+		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
+        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
+		fieldsOfObject.put('Status__c','Open');
+
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
+        insert oscar;
+
+        cse.oscar__c = oscar.Id;
+        update cse;
 
         System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id+ ' | StagingArea: '+stagingArea.Id);
 
