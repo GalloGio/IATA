@@ -124,6 +124,9 @@ public without sharing class AMS_Utils {
     public static final String ANG_VMFR =  'VMFR';
     public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
 
+    public static final Set<String> ANG_OSCAR_MAJOR_CHANGES_PROCESSES = new Set<String>{ANG_OWNERSHIP, ANG_HIERARCHY, ANG_LOCATION_TYPE_DIFFLEGALENTITY, ANG_LEGAL_NAME,
+                                                                                ANG_LEGAL_STATUS, ANG_MAJOR_SHAREHOLDING, ANG_ACCREDITATION_TYPE};
+
     public static final String OSCAR_CLOSED = 'Closed';
 
     public static final String BR = 'BR';
@@ -166,13 +169,14 @@ public without sharing class AMS_Utils {
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
+    public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
 
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
-    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION}; 
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -194,12 +198,15 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
     public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
     public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
+    public static final String RECTYPE_NEWGENANNUALREVAL   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+
+    public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -244,6 +251,10 @@ public without sharing class AMS_Utils {
     public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
     public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
     public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';  
+    public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
+
+    // Case - Origin
+    public static final String CASE_ORIGIN_PORTAL = 'Portal';        
 
     // Case - Status    
     public static final String CASE_STATUS_CLOSED = 'Closed';
@@ -252,7 +263,7 @@ public without sharing class AMS_Utils {
     //set with the ifap status to update the account's last financial review
     public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
 
-
+    public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';

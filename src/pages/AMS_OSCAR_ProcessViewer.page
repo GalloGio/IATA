@@ -586,9 +586,9 @@ function buildFunctionCall(func, argList){
                 </apex:repeat>
                 
                 <apex:repeat value="{!step.displayFields}" var="sf">
-                    <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
+                        <br/><h2>{!IF(OR(stepFieldsData[sf].fieldLabel != 'Financial assessment opt-in / opt-out',NOT(hideFAoptOut)),stepFieldsData[sf].fieldLabel,'')}</h2>
                     <div id="{!sf}">                        
-                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', blockFAoptOut)))}">
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
                             <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
@@ -611,7 +611,7 @@ function buildFunctionCall(func, argList){
                         </apex:outputPanel>
 
                         <!--NEWGEN-1088 -->                       
-                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', blockFAoptOut)}">
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', blockFAoptOut, NOT(hideFAoptOut))}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
                         </apex:outputPanel>
 

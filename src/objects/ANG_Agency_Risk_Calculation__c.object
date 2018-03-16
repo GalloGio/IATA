@@ -243,6 +243,11 @@
     </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>Risk_Assessment</fullName>
         <columns>NAME</columns>
         <columns>ANG_Financial_Review_Result__c</columns>

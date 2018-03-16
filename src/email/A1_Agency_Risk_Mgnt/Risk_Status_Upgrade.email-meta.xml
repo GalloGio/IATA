@@ -12,8 +12,8 @@
 We would like to inform you that according to our records your Risk Status / Cash conditions have been recently updated.
 
 Your risk information result now in:
-Risk Status: {!Account.ANG_RiskStatus__c}
-Cash conditions limited to Financial Security: {!IF(Account.ANG_CashCondition__c, &apos;Yes&apos;,&apos;No&apos;)}
+Risk Status: {!Account.ANG_HE_RiskStatus__c}
+Cash conditions limited to Financial Security: {!IF(Account.ANG_HE_CashCondition__c, &apos;Yes&apos;,&apos;No&apos;)}
 
 Please check more details to the IATA Customer Portal.
 Thank you

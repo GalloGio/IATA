@@ -88,12 +88,12 @@ public class ANG_EntityCreator {
         return (AMS_OSCAR__c)addFieldsToObject((sObject)obj, fieldsOfObject);
     }
 
-    public static AMS_Pax_Accreditation_Form__c createStagingArea(Id recordTypeId, Id accountId, Id caseId, Map<String,Object> fieldsOfObject){
+    public static AMS_Pax_Accreditation_Form__c createStagingArea(Id recordTypeId, String accountName, Id caseId, Map<String,Object> fieldsOfObject){
 
-        if(recordTypeId == null || accountId == null || caseId == null)
+        if(recordTypeId == null || accountName == null || caseId == null)
             throw new AMS_ApplicationException('Please fill the mandatory fields.');
 
-        AMS_Pax_Accreditation_Form__c c = new AMS_Pax_Accreditation_Form__c(RecordTypeId = recordTypeId, Account_Name__c = accountId, SAAM_Case__c = caseId);
+        AMS_Pax_Accreditation_Form__c c = new AMS_Pax_Accreditation_Form__c(RecordTypeId = recordTypeId, Account_Name__c = accountName, SAAM_Case__c = caseId);
 
         sObject obj = addFieldsToObject((sObject)c, fieldsOfObject);
 

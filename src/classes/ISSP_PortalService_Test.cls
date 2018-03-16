@@ -150,6 +150,7 @@ public class ISSP_PortalService_Test {
         Test.stopTest();
 	}
 	
+	
 	public static testMethod void unitTest4() {
 		ISSP_PortalService_Test.createTestData();
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
@@ -208,7 +209,7 @@ public class ISSP_PortalService_Test {
 		con2.Community__c = 'ISS Customer Portal';
 		cl.add(con2);
 		
-		Test.startTest();
+		
 		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;
@@ -217,6 +218,8 @@ public class ISSP_PortalService_Test {
 		cl.add(con3);		
 
 		insert cl;		
+		
+		Test.startTest();
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation'); 
         insert app;
@@ -234,7 +237,7 @@ public class ISSP_PortalService_Test {
         //ctrl3.CreateNewPortalAccess();
         test.stopTest();
 	}
-
+	
 
 	public static testMethod void unitTest5() {
 
