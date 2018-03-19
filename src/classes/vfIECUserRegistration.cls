@@ -931,7 +931,7 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
                 upsert conIDCard;        
             } catch (Exception ex) {
                     transformationHelper.sendSFDevsAlertMessage('error',
-                     '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com'});
+                     '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
             }
                 
                    return true;

@@ -15,7 +15,11 @@ public class AMS_OSCAR_WebserviceTest {
     private static Case oscarCase;
 
     private static void setup(){
-        oscar = new AMS_OSCAR__c(Status__c = 'Reopen', Billing_Document_Number__c = '54321');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        oscar = new AMS_OSCAR__c(Account__c=account.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         insert oscar;
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;

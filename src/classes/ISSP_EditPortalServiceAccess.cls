@@ -83,16 +83,18 @@ public with sharing class ISSP_EditPortalServiceAccess{
         Portal_Applications__c pa = [Select name From Portal_Applications__c where Id =: ServiceId];
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
-            if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
-                String aux = role.Role__c.replaceAll(' ','');
-                String aux2 = aux.replaceAll('-','');
+            if(role.Connected_App__c.startsWith('IATA EasyPay')) {
+                if(!this.helpTextPortalRoles.containsKey(role.Role__c)) {
+                    String aux = role.Role__c.replaceAll(' ','');
+                    String aux2 = aux.replaceAll('-','');
 
-                String helpText = Ams_Utils.getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
+                    String helpText = Ams_Utils.getCustomLabel('ISSP_ANG_Portal_Role_' + aux2);
 
-                if(helpText == 'NONE') helpText = '';
+                    if(helpText == 'NONE') helpText = '';
 
-                this.helpTextPortalRoles.put(role.Role__c, helpText);
+                    this.helpTextPortalRoles.put(role.Role__c, helpText);
 
+                }
             }
         }        
 
