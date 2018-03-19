@@ -520,8 +520,6 @@ global class ANG_OscarProcessHelper {
 		System.debug('[ANG_OscarProcessHelper] 1. Number of Queries used in this apex code so far: ' + Limits.getQueries());
 	    System.debug('[ANG_OscarProcessHelper] 2 .Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
 	    System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
-	    System.debug('[ANG_OscarProcessHelper] 4. Number of Queries used in this apex code so far: ' + Limits.getQueries());
-	    System.debug('[ANG_OscarProcessHelper] 5. Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
     }
 
     webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
@@ -875,6 +873,110 @@ global class ANG_OscarProcessHelper {
 
 		return true;
 	}
+
+	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc){
+
+		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+		Contact keyContact = fetchKeyContact(acc, contactsAcc);
+		
+		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+		//AMS_OSCAR__c:
+        fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
+		fieldsOfObject.put('Status__c','Open');
+
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
+        insert oscar;
+
+		//Case:
+		fieldsOfObject = new Map<String,Object>();
+
+        fieldsOfObject.put('Oscar__c',oscar.Id);
+        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+      	fieldsOfObject.put('ContactId',keyContact.Id);
+        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+        fieldsOfObject.put('Origin','Internal User');
+        fieldsOfObject.put('Reason1__c','Annual revalidation');
+        fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+        
+       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+       	insert cse;
+
+		//StagingArea:
+		fieldsOfObject = new Map<String,Object>();
+
+        fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
+        fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
+        fieldsOfObject.put('Accept_terms_and_conditions__c',true);
+        fieldsOfObject.put('Billing_State__c',acc.BillingState);
+        fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
+        fieldsOfObject.put('Branch_Office_Email__c',acc.Email__c);
+        fieldsOfObject.put('Branch_Office_FAX__c',acc.Fax);
+        fieldsOfObject.put('Branch_Office_Phone__c',acc.Phone);
+        fieldsOfObject.put('Branch_Office_Postal_code__c',acc.BillingPostalCode);
+        fieldsOfObject.put('Branch_Office_Street_name_number__c',acc.BillingStreet);
+        fieldsOfObject.put('CASS_Number__c',acc.CASS_Number__c);
+        fieldsOfObject.put('HO_Account__c',acc.Id);
+        fieldsOfObject.put('IATACode__c',acc.IATACode__c);
+        fieldsOfObject.put('IATA_ISO_State__c',acc.Iso_State__c);
+        fieldsOfObject.put('ISSP_AMS_GDS_with_signed_contract__c',acc.GDS__c);
+        fieldsOfObject.put('ISSP_AMS_Legal_Status__c',AMS_Utils.transformLegalStatus(acc.Company_Type__c));
+        fieldsOfObject.put('ISSP_AMS_License_No__c',acc.License_Number__c);
+        fieldsOfObject.put('ISSP_AMS_VAT_number__c',acc.VAT_Number__c);
+        fieldsOfObject.put('Is_your_firm_handling_Dangerous_Goods__c',acc.Is_your_firm_handling_Dangerous_Goods__c);
+        fieldsOfObject.put('Link_agent_name__c',acc.Id);
+        fieldsOfObject.put('Location_Class__c',acc.Location_Class__c);
+        fieldsOfObject.put('Location_Type__c',acc.Location_Type__c);
+        fieldsOfObject.put('Mobile__c',acc.Mobile__c);
+        fieldsOfObject.put('Operation__c',acc.Operation__c);
+        fieldsOfObject.put('Remittance_frequency__c',acc.Remittance_frequency__c);
+        fieldsOfObject.put('Shipping_City__c',acc.ShippingCity);
+        fieldsOfObject.put('Shipping_Country__c',acc.ShippingCountry);
+        fieldsOfObject.put('Shipping_ISO_Country__c',acc.IATA_ISO_Shipping_Country__c);
+        fieldsOfObject.put('Shipping_ISO_State__c',acc.IATA_ISO_Shipping_State__c);
+        fieldsOfObject.put('Shipping_Postal_Code__c',acc.ShippingPostalCode);
+        fieldsOfObject.put('Shipping_State__c',acc.ShippingState);
+        fieldsOfObject.put('Shipping_Street__c',acc.ShippingStreet);
+        fieldsOfObject.put('Short_Name__c',acc.Short_Name__c);
+        fieldsOfObject.put('Solicitation_Flag__c',acc.Solicitation_Flag__c);
+        fieldsOfObject.put('Trade_Name__c',acc.TradeName__c);
+        fieldsOfObject.put('VAT_Number_2__c',acc.VAT_Number_2__c);
+        fieldsOfObject.put('Website__c',acc.Website);
+
+        AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
+        	Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, cse.Id, fieldsOfObject);
+
+        insert stagingArea;
+
+        System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id+ ' | StagingArea: '+stagingArea.Id);
+
+        return cse.Id;
+	}
+
+	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		Contact adminCon;
+
+		for (Contact con :contacts){
+			if (con.Financial_Assessment_Contact__c){
+				return con;	
+				adminCon = con.User_Portal_Status__c == 'Approved Admin' && adminCon == null ? con : adminCon;
+			}
+		} 
+
+		if (adminCon != null)
+			return adminCon;			
+ 
+		return contacts[0];
+	}
+
 
     public Class EntityUpdater{
 

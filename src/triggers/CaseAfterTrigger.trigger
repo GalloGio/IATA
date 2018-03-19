@@ -437,16 +437,32 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			//for (Case cse : cases) 
 				acctIds.add(cse.AccountId);
 			}
-			//Re-open/ed is not considered as Closed Status anymore.
-			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
-			Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
-			List<Account> accountUpdated = new List<Account>();
+
+			//START - Too many SOQL fix
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
+			Set<Id> caseIds;
+
 			for (Account acct : acctsToUpdate.values()) {
-				Set<ID> caseIds = new Set<ID>();
-				for (Case cse : casesForAccounts.values()) {
-					if (cse.AccountId == acct.Id)
+				caseIds = new Set<Id>();
+
+				for (Case cse :acct.cases){
 						caseIds.add(cse.Id);
 				}
+			//END - Too many SOQL fix
+
+			//START commented - Too many SOQL fix: 
+			//Re-open/ed is not considered as Closed Status anymore.
+			//Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
+			//Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
+			//List<Account> accountUpdated = new List<Account>();
+			//for (Account acct : acctsToUpdate.values()) {
+			//	Set<ID> caseIds = new Set<ID>();
+			//	for (Case cse : casesForAccounts.values()) {
+			//		if (cse.AccountId == acct.Id)
+			//			caseIds.add(cse.Id);
+			//	}
+			//END commented - Too many SOQL fix
+			
 				if (acct.Number_of_open_Financial_Review_Cases__c != caseIds.size()){
 					acct.Number_of_open_Financial_Review_Cases__c = caseIds.size();
 					if (caseIds.size() > 0){
@@ -866,6 +882,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   		if(Trigger.isInsert || Trigger.isUpdate){
     		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
   		}
+
+  		if(Trigger.isUpdate){
+  			List<Id> updatedIFAPS = new List<Id>();
+  			for(Case c : Trigger.New){
+  				if(c.RecordTypeId == IFAPcaseRecordTypeID && String.isNotBlank(c.Financial_Review_Result__c) && String.isBlank(Trigger.oldMap.get(c.Id).Financial_Review_Result__c)){
+  					updatedIFAPS.add(c.Id);
+  				}
+  			}
+
+  			if(!updatedIFAPS.isEmpty()){
+  				List<ANG_Agency_Risk_Event__c> res = [SELECT Id, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c WHERE ANG_CaseId__r.ParentId IN :updatedIFAPS AND ANG_Limit_Cash_Conditions__c = true];
+
+  				if(!res.isEmpty()){
+  					for(ANG_Agency_Risk_Event__c r : res) r.ANG_Limit_Cash_Conditions__c = false;
+  					update res; 
+  				}
+  			}
+  		}
   		/*Risk Event Management*/
 	}
 	/*Share trigger code*/
@@ -951,16 +985,28 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(CaseBeforInsert){
 			system.debug('CaseBeforInsert Trigger.isInsert');
 	        ISSP_Case.preventTrigger = true;
-	        User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
-	        system.debug('#ROW# '+users);
+
+	    //Start -commented - too many soql queries
+	        //User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
+	        //system.debug('#ROW# '+users);
+	        //for(Case c : trigger.new){ //GM - IMPRO - START
+	        //    if(c.Origin == 'Portal'){
+	        //        if (users != null && users.size() > 0){
+		       //             if (users[0].UserType == 'PowerPartner' || users[0].UserType == 'Guest'){
+		       //                 casesIds.add(c.Id);
+		       //             }
+		       //      }
+		       // }
+		//Stop - commented - too many soql queries
+		       
+		//Start - Fix too many soql queries
 	        for(Case c : trigger.new){ //GM - IMPRO - START
-	            if(c.Origin == 'Portal'){
-	                if (users != null && users.size() > 0){
-	                    if (users[0].UserType == 'PowerPartner' || users[0].UserType == 'Guest'){
-	                        casesIds.add(c.Id);
-	                    }
-	                }
+	            if(c.Origin == 'Portal' && (UserInfo.getUserType() == 'PowerPartner' || UserInfo.getUserType() == 'Guest')) {
+	        		system.debug('#ROW# '+UserInfo.getUserType());
+	                casesIds.add(c.Id);	                    
 	            }
+	    //Stop - Fix too many soql queries
+
 	            if (c.RecordTypeId == RT_AirlineSuspension_Id || c.RecordTypeId == RT_AirlineDeactivation_Id || c.RecordTypeId == RT_FundsManagement_Id) {
 	                setASCaseIds.add(c.Id);
 	            }else if (c.RecordTypeId == RT_DIP_Review_Id) {

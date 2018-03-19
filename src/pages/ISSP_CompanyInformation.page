@@ -378,8 +378,8 @@
                           </apex:outputText>
                           
                           <hr />
-                             
-                          <apex:outputText rendered="{!AND(FinSubmission!='',!PermissionForStandardAccount)}">
+
+                          <apex:outputText rendered="{!AND(FinSubmission!='',!PermissionForStandardAccount, NOT(flagCashOptedOutFinReview))}">   
                           <div class="row">
                                 <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
                                 <div class="col-md-7">
@@ -414,7 +414,7 @@
 
                         <!-- Account email domain validation  -->
                         <apex:outputPanel layout="block" styleclass="panel-body form-horizontal" style="padding-top: 0px;" rendered="{! AND (bIsAdmin, AccountDomainValidRT) }">
-                          <apex:form>
+                          <apex:form >
                             <div style="padding-top:15px;" >
                                 <div class="row">
                                     <div class="lbl col-lg-12" style="padding-bottom:5px;">{! $Label.ISSP_CompanyInformation_EMADOMVAL_Title }</div>

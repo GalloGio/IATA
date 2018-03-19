@@ -716,7 +716,7 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null){
 			createAgencyAuthorizations(container.accountsToUpdate);
-			createCorrectionChangeCodes(accountsToUpdate);
+			createCorrectionChangeCodes(filterByStatus(accountsToUpdate));
 		}
 
 		//return toReturn;
@@ -724,6 +724,20 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+
+	public static Set<Account> filterByStatus(Set<Account> accounts){
+
+		Set<Account> accountsToReturn = new Set<Account>();
+
+		For(Account acct: accounts){
+			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED || acct.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED || acct.Status__c == '' || acct.Status__c == null)
+				continue;
+
+			accountsToReturn.add(acct);
+		}
+
+		return accountsToReturn;
+	}
 
 	public static Map<Id,List<Account>> fetchAllAgenciesInvolved(List<ANG_ConversionHelper.HierarchyStructure> structs){
 
@@ -740,7 +754,7 @@ global with sharing class ANG_ConversionHelper {
 				accountIdsToSearch.add(struct.topParentId);
 		}
 
-		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode from Account where Id in :accountIdsToSearch];
+		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c from Account where Id in :accountIdsToSearch];
 
 		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
 
@@ -863,7 +877,11 @@ global with sharing class ANG_ConversionHelper {
 				allAgencies.get(soloId).ANG_Accreditation_Model__c = 'Cash';
 				allAgencies.get(soloId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 				allAgencies.get(soloId).ANG_HE_CashCondition__c = false;
-				allAgencies.get(soloId).Is_PCI_compliant__c = 'Yes';
+				//allAgencies.get(soloId).Is_PCI_compliant__c = 'Yes';
+				
+				if(allAgencies.get(soloId).ANG_IEP_Status__c ==null)
+					allAgencies.get(soloId).ANG_IEP_Status__c  = 'No IEP Account';
+
 				allAgencies.get(soloId).Organization_Last_Change_Date__c = System.today();
 				allAgencies.get(soloId).Top_Parent__c = null;
 				allAgencies.get(soloId).ParentId = null;
@@ -889,7 +907,11 @@ global with sharing class ANG_ConversionHelper {
 						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
 						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
-						allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
+						//allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
+
+						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
+							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
+
 						allAgencies.get(acct.Id).Organization_Last_Change_Date__c = System.today();
 						allAgencies.get(acct.Id).Top_Parent__c = null;
 						allAgencies.get(acct.Id).ParentId = null;
@@ -902,7 +924,11 @@ global with sharing class ANG_ConversionHelper {
 						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
 						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
-						allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
+						//allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
+
+						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
+							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
+
 						allAgencies.get(acct.Id).Organization_Last_Change_Date__c = System.today();
 						allAgencies.get(acct.Id).Top_Parent__c = struct.topParentId;
 						allAgencies.get(acct.Id).ParentId = struct.topParentId;
@@ -977,7 +1003,12 @@ global with sharing class ANG_ConversionHelper {
 			allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
 			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 			allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
-			allAgencies.get(struct.topParentId).Is_PCI_compliant__c = 'Yes';
+			//allAgencies.get(struct.topParentId).Is_PCI_compliant__c = 'Yes';
+
+			if(allAgencies.get(struct.topParentId).ANG_IEP_Status__c == null)
+				allAgencies.get(struct.topParentId).ANG_IEP_Status__c  = 'No IEP Account';
+
+
 			allAgencies.get(struct.topParentId).Organization_Last_Change_Date__c = System.today();
 
 			accountsToUpdate.add(allAgencies.get(struct.topParentId));
@@ -1005,7 +1036,11 @@ global with sharing class ANG_ConversionHelper {
 						allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
 						allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
-						allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
+						//allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
+
+						if(allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c ==null)
+							allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
+
 						allAgencies.get(rel.Parent_Account__c).Organization_Last_Change_Date__c = System.today();
 
 
@@ -1015,7 +1050,11 @@ global with sharing class ANG_ConversionHelper {
 							allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
-							allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
+							//allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
+
+							if(allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c ==null)
+								allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
+
 							allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
 							if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
@@ -1104,7 +1143,12 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
-					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+					//allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
+
+					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c ==null)
+						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c  = 'No IEP Account';
+
+
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Organization_Last_Change_Date__c = System.today();
 
 					System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
