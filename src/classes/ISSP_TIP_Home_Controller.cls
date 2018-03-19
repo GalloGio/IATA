@@ -17,11 +17,7 @@ public without sharing class ISSP_TIP_Home_Controller {
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
 	public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 	public IATA_ISO_Country__c isocountry {get; set;}
-	
-	public Boolean getnewlabels() {
-        if (isocountry==null) return false;
-        return isocountry.AMS_Accreditation_New_Labels__c;
-    }
+
 
     private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());

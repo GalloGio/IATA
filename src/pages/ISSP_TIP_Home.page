@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-        <c:ISSP_Header></c:ISSP_Header>
+        <c:ISSP_Header ></c:ISSP_Header>
         <c:iss_ap_css />
 
 
@@ -156,13 +156,13 @@
                     <section name="remittance-holding" class="row">
                         <header class="col-xs-12">
                             <div class="section-header">
-                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Payment Provider Enrolment/Certification</strong>
+                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$Label.ISSP_Payment_Provider_Home_title}</strong>
                             </div>
                         </header>
                     </section>
 
                     <div style="padding-top: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
-                        <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">Request Enlistment as Payment Provider</button>
+                        <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">{!$label.ISSP_Button_Request_Enlistment}</button>
                     </div>
 
                 </section>
@@ -174,39 +174,39 @@
                     <section name="remittance-holding" class="row">
                         <header class="col-xs-12">
                             <div class="section-header">
-                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Ongoing TIP Requests</strong>
+                                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_Ongoing_TIP_Requests}</strong>
                             </div>
                         </header>
                     </section>
 
-                    <apex:pageBlock>
-                        <apex:form>
+                    <apex:pageBlock >
+                        <apex:form >
                             <hr />
                             <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
-                                <apex:column>
+                                <apex:column >
                                     <apex:facet name="header">
                                         {!$ObjectType.Case.fields.CaseNumber.label}
                                     </apex:facet>
                                     <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid={!currNavState}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
                                 </apex:column>
 
-                                <apex:column>
+                                <apex:column >
                                     <apex:facet name="header">
-                                        Subject
+                                        {!$ObjectType.Case.fields.Subject.label}
                                     </apex:facet>
                                     {!item.subject}
                                 </apex:column>
 
-                                <apex:column>
+                                <apex:column >
                                     <apex:facet name="header">
-                                        Status
+                                        {!$ObjectType.Case.fields.Status.label}
                                     </apex:facet>
                                     {!item.status}
                                 </apex:column>
 
-                                <apex:column>
+                                <apex:column >
                                     <apex:facet name="header">
-                                        Date time-opened
+                                        {!$label.ISSP_Home_Table_Date_Time_Opened}
                                     </apex:facet>
                                     {!item.createddate}
                                 </apex:column>
@@ -219,7 +219,7 @@
                 </section>
             </div>
 
-            <div>
+            <div style="display: inline-block;">
                 <c:ISSP_CustomFooter communityName="{!communityName}" />
             </div>
 
