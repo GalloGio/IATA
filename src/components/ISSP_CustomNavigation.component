@@ -127,7 +127,7 @@ window.onload = function HighlightBar() {
         var subvar = getUrlParameter('subNav');
         var menuid = mid && mid.substr(0,2);
 
-     $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
+     $("#searchbox").css("display", (menuid=="M2" || mid=="M4S1") ? "none" : "");    /* hides the search box if for resources & docs*/
 
 
      $("#"+mid).parentsUntil("nav").addClass("in active-issp");
@@ -725,6 +725,11 @@ background-color:#428bca;
          <li>
     <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" >
                {!$Label.ISSP_Manage_Services}
+                </a>
+        </li>
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
                 </a>
         </li>
         <!-- * FM 31-07-2017 - AMSU-26 -->

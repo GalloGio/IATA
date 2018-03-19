@@ -37,6 +37,10 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             if(this.oscar.Account__c == null)
                 return false;
+
+            if(this.oscar.AMS_Online_Accreditation__c == null)
+                return false;
+                
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
                 return (
@@ -104,6 +108,29 @@ public class AMS_OSCAR_ProcessViewerController {
             };
         }
     } 
+
+    /*** AMSU-113 Start ***/
+    public Set<String> processToRemoveFields {
+        get{
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR};
+        }
+        set;
+    }
+
+    public Boolean isToRemoveFieldsUI {
+        get {
+            return oscar != null && oscar.Location_Class__c != AMS_Utils.LC_PASSENGER && processToRemoveFields.contains(oscar.Process__c);
+        }
+        set;
+    }
+
+    public Boolean isPCICompliant {
+        get {
+            return oscar.Process__c == AMS_Utils.PCI_COMPLIANT;
+        }
+        set;
+    }
+    /*** AMSU-113 End ***/
 
     public Boolean isAnalystProfile{
         get{
@@ -358,7 +385,7 @@ public class AMS_OSCAR_ProcessViewerController {
         for(Schema.SObjectField field : fMap.values()){
 
             Schema.DescribeFieldResult fd = field.getDescribe();
-            if(fd.isAccessible()) fields += fd.getName() + ', ';
+            if(fd.isAccessible() || Test.isRunningTest()) fields += fd.getName() + ', ';
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         

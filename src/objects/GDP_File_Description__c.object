@@ -1162,7 +1162,6 @@
         <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
         </filters>
         <label>02_GSS_3rd_Party_TXT_Masters</label>
         <language>en_US</language>
