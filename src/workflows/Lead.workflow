@@ -367,6 +367,30 @@
         <template>MarketingPAX/Web_to_Lead_Alert</template>
     </alerts>
     <alerts>
+        <fullName>New_lead_product_owner_alert</fullName>
+        <description>New lead product owner alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email_A__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Web_to_Lead_Alert_Product_Owner</template>
+    </alerts>
+    <alerts>
+        <fullName>New_lead_team_manager_alert</fullName>
+        <description>New lead team manager alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email_B__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Web_to_Lead_Alert_Product_Owner</template>
+    </alerts>
+    <alerts>
         <fullName>PAX_IS_Forum_2013</fullName>
         <ccEmails>ghebremard@iata.org</ccEmails>
         <description>PAX IS Forum 2013</description>
