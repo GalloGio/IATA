@@ -8,7 +8,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     public Set<Account> filteredAccounts {get;set;}
     public static Map<String, EmailTemplate> countryTemplates {get;set;}
     public static Map<Id, EmailTemplate> templateIdVsTemplates {get;set;}
-    public static Map<Id, Attachment> templateIdVsAttachemnt {get;set;}
+    public static Map<Id, List<Attachment>> templateIdVsAttachemnt {get;set;}
     public static Map<Id, Case> casesInfo {get;set;}
 
     global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id) {
@@ -26,8 +26,31 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         this.filteredAccounts = filteredAccounts;
     }
 
+    //public static void start(String cron, Integer scope) {
+    //    System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
+    //}
     public static void start(String cron, Integer scope) {
-        System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
+        if(!Test.isRunningTest()) {
+            System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
+        }else{
+            System.schedule('AMS PCI Compliant Batch TEST', cron, new AMS_PCI_Complaint_Batch (scope, null));
+        }
+        
+    }
+
+    global static void stop(){
+        String sJobName = '';
+        if(!Test.isRunningTest()) {
+            sJobName = 'AMS PCI Compliant Batch';
+        }else{
+            sJobName = 'AMS PCI Compliant Batch TEST';
+        }
+        
+        List<CronTrigger> SCHEDULE_ID = [SELECT Id FROM CronTrigger where CronJobDetail.Name = :sJobName limit 1]; 
+        
+        if(SCHEDULE_ID.size() > 0){
+            System.abortJob(SCHEDULE_ID[0].Id);
+        }
     }
 
     global void execute(SchedulableContext sc) {
@@ -558,27 +581,34 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                     htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
                     htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
                     htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
+                    htmlBody = htmlBody.replace('{!Case.Id}', oscarCommCaseId);
                 }
 
                 if(textBody != ''){
                     textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
                     textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
                     textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
+                    textBody = textBody.replace('{!Case.Id}', oscarCommCaseId);
                 }
 
                 mail.setHtmlBody(htmlBody);
                 mail.setPlainTextBody(textBody);
 
-                Attachment attach = templateIdVsAttachemnt.get(mail.getTemplateId());
-                if(attach != null){
+                List<Attachment> attachs = templateIdVsAttachemnt.get(mail.getTemplateId());
+                system.debug('DGR sendEmailAlert: attachs : ' + attachs);
+                List<Messaging.EmailFileAttachment> emailAttachs = new list<Messaging.EmailFileAttachment>();
+                for(Attachment attach : attachs){
                     Messaging.EmailFileAttachment emailAttc = new Messaging.EmailFileAttachment();
                     emailAttc.setFileName(attach.Name);
                     emailAttc.setBody(attach.Body);
                     emailAttc.setContenttype(attach.ContentType);
 
-                    mail.setFileAttachments(new Messaging.EmailFileAttachment[]{emailAttc});
+                    emailAttachs.add(emailAttc);    
                 }
+                system.debug('DGR sendEmailAlert: emailAttachs : ' + emailAttachs);
+                mail.setFileAttachments(emailAttachs);
             }
+
             system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
 
 
@@ -609,7 +639,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Map<String, Id> multilangTemplates = new Map<String, Id>();
         Map<String, EmailTemplate> auxCountryTemplates = new Map<String, EmailTemplate>();
         Map<Id, EmailTemplate> auxTemplateIdVsTemplates = new Map<Id, EmailTemplate>();
-        Map<Id, Attachment> auxTemplateIdVsAttachemnt = new Map<Id, Attachment>();
+        Map<Id, List<Attachment>> auxTemplateIdVsAttachemnt = new Map<Id, List<Attachment>>();
         String devNameLike = 'AMS_' + type + '_Compliant%';
         List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Body, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
         list<Attachment> attachments = [select ContentType, Body, parentId, Id, Name From Attachment where parentId in :etDGR];
@@ -623,7 +653,15 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
         }
         for(Attachment attc : attachments){
-            auxTemplateIdVsAttachemnt.put(attc.parentId, attc);
+            //auxTemplateIdVsAttachemnt.put(attc.parentId, attc);
+            List<Attachment> auxl;
+            if(auxTemplateIdVsAttachemnt.containsKey(attc.parentId)){
+                auxl = auxTemplateIdVsAttachemnt.get(attc.parentId);
+                auxl.add(attc);
+            }else{
+                auxl = new List<Attachment>{attc};
+            }
+            auxTemplateIdVsAttachemnt.put(attc.parentId, auxl);
             
         }
 
