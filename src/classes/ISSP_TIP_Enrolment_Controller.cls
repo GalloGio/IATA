@@ -159,4 +159,10 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
                 FROM Contact
                 WHERE Status__c = 'Active'];
     }
+
+    public void ola() {
+    	for (Contact c: contactList) {
+    		c.Primary_Contact__c = false;
+    	}
+    }
 }
