@@ -15,6 +15,7 @@ public class ISSP_ANG_CodeSearch {
 	public String riskStatusFilter {get; set;}
 	public String accreditationModel {get; set;}
 	public String ho_he {get; set;}
+	public Boolean showIrregularities {get; set;}
 
 	public ISSP_ANG_CodeSearch() {
 		this.riskStatusFilter = 'Active';
@@ -30,6 +31,7 @@ public class ISSP_ANG_CodeSearch {
 		this.agency = null;
 		this.isTravel = false;
 		this.riskStatus = '';
+		this.showIrregularities = false;
 		this.financialSecurityExists = false;
 		this.ho_he = '';
 
@@ -147,6 +149,8 @@ public class ISSP_ANG_CodeSearch {
 				riskStatus = this.agency.ANG_HE_RiskStatus__c;
 	
 				this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
+
+				this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
 
 				this.activeSearch = true;
 			} else {
