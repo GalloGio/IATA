@@ -313,7 +313,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(!operationCodes.isEmpty()) {
             for(AMS_Operation__c opCode: operationCodes) {
                 for(ANG_BSP_Attributes__c attribute : opCode.BSP_Attributes__r) {
-                    rfPicklistValues.add(new SelectOption(attribute.Remittance_Frequency__c, attribute.Remittance_Frequency__c));
+                    //rfPicklistValues.add(new SelectOption(attribute.Remittance_Frequency__c, attribute.Remittance_Frequency__c));
+                    rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c))); 
                 }
             }
         }
