@@ -15641,6 +15641,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>BSP / CASS Change Request</value>
     </labels>
     <labels>
+        <fullName>ISSP_BSP_Concerned</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Concerned</shortDescription>
+        <value>BSP Concerned</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Back</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -19377,6 +19384,22 @@ this is the tiess topic help</value>
         <value>My Cases</value>
     </labels>
     <labels>
+        <fullName>ISSP_My_Cases_Created</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_My_Cases_Created</shortDescription>
+        <value>My cases that I created</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_My_Cases_Working_On</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_My_Cases_Working_On</shortDescription>
+        <value>My cases that I am working on</value>
+    </labels>
+    <labels>
         <fullName>ISSP_My_Company_Cases</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -19838,12 +19861,28 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Other Company</value>
     </labels>
     <labels>
+        <fullName>ISSP_Our_Company_Cases</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Our_Company_Cases</shortDescription>
+        <value>Unassigned cases in our queue</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Owner</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Owner</shortDescription>
         <value>Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Owner_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Owner Name</shortDescription>
+        <value>Owner Name</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -22093,6 +22132,13 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_We_sorry_you_are_unsatisfied</shortDescription>
         <value>We&apos;re sorry you are dissatisfied.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Who_to_contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Who to contact</shortDescription>
+        <value>Who to contact</value>
     </labels>
     <labels>
         <fullName>ISSP_Yes</fullName>
