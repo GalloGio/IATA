@@ -220,7 +220,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(NOT(isTravel),'','none')}">
+                      <tr style="display:{!IF(showIrregularities,'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_Homepage_Irregularities}"/>
                         </td>
@@ -231,7 +231,7 @@
 
                     </table>                
 
-                    <apex:outputPanel rendered="{!isTravel}">
+                    <apex:outputPanel rendered="{!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c AND isTravel}">
 
                       <br></br>
 
