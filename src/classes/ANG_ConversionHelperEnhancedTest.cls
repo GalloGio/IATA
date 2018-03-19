@@ -1769,8 +1769,14 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		}
 
-		System.assertEquals('HE' , mapAccount.get('Agency BR (P) 1').Location_Type__c);
-		System.assertEquals('AE' , mapAccount.get('Agency BR (P) 2').Location_Type__c);
+		if(mapAccount.get('Agency BR (P) 1').Location_Type__c == 'HE'){
+			System.assertEquals('HE' , mapAccount.get('Agency BR (P) 1').Location_Type__c);
+			System.assertEquals('AE' , mapAccount.get('Agency BR (P) 2').Location_Type__c);
+		}
+		else{
+			System.assertEquals('AE' , mapAccount.get('Agency BR (P) 1').Location_Type__c);
+			System.assertEquals('HE' , mapAccount.get('Agency BR (P) 2').Location_Type__c);			
+		}
 
 		System.assertEquals('HO' , mapAccount.get('Agency HO').Location_Type__c);
 
@@ -1779,12 +1785,17 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		System.assertNotEquals(hierarchy.Id, hiers.get(0).Id);
 
-		System.assertEquals(null , mapAccount.get('Agency BR (P) 1').ParentId);
-		System.assertEquals(null , mapAccount.get('Agency BR (P) 1').Top_Parent__c);
-
-		System.assertEquals(mapAccount.get('Agency BR (P) 1').Id , mapAccount.get('Agency BR (P) 2').ParentId);
-		System.assertEquals(mapAccount.get('Agency BR (P) 1').Id , mapAccount.get('Agency BR (P) 2').Top_Parent__c);
-
+		if(mapAccount.get('Agency BR (P) 1').ParentId == null){
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 1').ParentId);
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 1').Top_Parent__c);
+			System.assertEquals(mapAccount.get('Agency BR (P) 1').Id , mapAccount.get('Agency BR (P) 2').ParentId);
+			System.assertEquals(mapAccount.get('Agency BR (P) 1').Id , mapAccount.get('Agency BR (P) 2').Top_Parent__c);
+		}else{
+			System.assertEquals(mapAccount.get('Agency BR (P) 2').Id , mapAccount.get('Agency BR (P) 1').ParentId);
+			System.assertEquals(mapAccount.get('Agency BR (P) 2').Id , mapAccount.get('Agency BR (P) 1').Top_Parent__c);
+			System.assertEquals(null , mapAccount.get('Agency BR (P) 2').ParentId);
+			System.assertEquals(null, mapAccount.get('Agency BR (P) 2').Top_Parent__c);
+		}
 
 		System.assertEquals(null , mapAccount.get('Agency HO').ParentId);
 		System.assertEquals(null , mapAccount.get('Agency HO').Top_Parent__c);
