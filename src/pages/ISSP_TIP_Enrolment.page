@@ -146,7 +146,7 @@
         }
 
         .statusIcon {
-            margin-left: 2px;
+            margin-left: 6px;
         }
         
             .col1 {
@@ -168,17 +168,22 @@
             .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
             .col3 {width:50%}
             
-            .email-input {width: 180px;float:left;margin-left:11px}
+            .email-input {
+                width: 200px;
+                float:left;
+            }
+
             .email-label {
          		font-size:91%;
                 float:left;
                 padding-left:18px;
-                width:185px
+                width:195px;
             }
                 
             .address-label {
                 float: left;
-                width: 200px !important;
+                width: 182px !important;
+                margin-left: 15px;
             }
             .address-input {
                 width: 200px;
@@ -205,7 +210,7 @@
           	}
             
             .email__c {
-               width: 174px;
+               width: 200px;
           	}
                    
            label {
@@ -298,7 +303,7 @@
 
      <div class="panel-primary">
         <div class="panel-heading head_panel_green">
-            <h3 class="panel-title">Application for Enlistment as a Payment Provider</h3>
+            <h3 class="panel-title">{!$label.ISSP_Application_for_Enlistment_as_a_Payment_Provider}</h3>
         </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form id="AMSForm">
@@ -325,7 +330,7 @@
                      <apex:pageBlockSection columns="2" collapsible="false">
                         <apex:facet name="header">
                             <apex:outputpanel >
-                            SECTION 1 - Paymernt Provider Details
+                            {!$label.ISSP_Payment_Provider_Details_section_1}
                             </apex:outputpanel>
                         </apex:facet>
                     </apex:pageBlockSection> 
@@ -342,12 +347,12 @@
 
                                 <apex:pageBlockSectionItem >
                                    <apex:outputLabel value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
-                                    <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch" value="{!account.Name}" id="legalname"/> 
+                                    <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Name}" id="legalname"/> 
                                 </apex:pageBlockSectionItem>
 
                              <!--   <apex:pageBlockSectionItem >
                                     <apex:outputLabel value="{!$ObjectType.Account.fields.Email__c.Label}"/> 
-                                    <apex:inputField value="{!account.Email__c}"  style="width: 174.4px;" styleclass="form-control recSearch"/>  
+                                    <apex:inputField value="{!account.Email__c}"  style="width: 200px;" styleclass="form-control recSearch"/>  
                                 </apex:pageBlockSectionItem>
 -->                             <apex:pageBlockSectionItem />
                                 <apex:pageBlockSectionItem id="phonesection">
@@ -357,7 +362,7 @@
                                         </div>
                                         <apex:outputPanel layout="none">
                                             <div class="input-width" style="float:left;">
-                                                <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch" value="{!account.PhoneNational__c}" onblur="setInternationalAccountPhoneNo('phone');$j('.phone').change();" id="companyphoneinput"/>
+                                                <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.PhoneNational__c}" onblur="setInternationalAccountPhoneNo('phone');$j('.phone').change();" id="companyphoneinput"/>
                                             </div>
                                             <div id="div-verify-office-phone" style="float:left; width: 16px;"></div>
                                         </apex:outputPanel>
@@ -380,19 +385,19 @@
 
                                 <apex:pageBlockSectionItem >
                                     <apex:outputLabel style="margin-right: 0px !important;" value="{!$ObjectType.Account.fields.Website.Label}"/>     
-                                    <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch" value="{!account.Website}"/> 
+                                    <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Website}"/> 
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem id="companyItemMobile">  
                                     <apex:outputLabel value="{!$ObjectType.Account.fields.Mobile__c.Label}"/>
-                                    <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch" value="{!account.Mobile__c}" onblur="setInternationalAccountPhoneNo('mobile');" id="companymobileinput"/>
+                                    <apex:inputField style="width: 200px;" styleclass="form-control recSearch" value="{!account.Mobile__c}" onblur="setInternationalAccountPhoneNo('mobile');" id="companymobileinput"/>
                                 </apex:pageBlockSectionItem>
                                 
                                 
 
                                 <apex:pageBlockSectionItem id="companyItemFax">
                                     <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
-                                    <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
+                                    <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
                                 </apex:pageBlockSectionItem>
 
                     	<!--<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
@@ -415,9 +420,9 @@
                                 <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
                                 <apex:inputHidden value="{!account.Fax}" id="companyfax"/>
                             </apex:pageBlockSection>
-                              
-                   <apex:outputText ><strong>Office address</strong></apex:outputText>       
-                                 
+                              <div style="padding-top: 20px; padding-bottom:10px;" >
+                   <apex:outputText ><strong>{!$label.ISSP_Encolment_page_Office_address}</strong></apex:outputText>       
+                                </div> 
                             
                         <apex:pageBlockSection id="billingAddressBlockSection" columns="2">      
                             <apex:pageBlockSectionItem >            
@@ -437,19 +442,19 @@
 
                       
                         <apex:pageBlockSection>
-                            <apex:selectList styleclass="form-control recSearch" value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter" size="1" >
+                            <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter" size="1" >
                               <!--  <apex:selectOption itemValue="" itemLabel="Location of Headquarter"/> -->
                                 <apex:selectOptions value="{!ISOCountry}"/>
                             </apex:selectList>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$ObjectType.Account.fields.TIP_Documents__c.Label}"/>
-                                <apex:inputTextArea styleclass="form-control recSearch" value="{!account.TIP_Documents__c}"/>
+                                <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_Documents__c}"/>
                             </apex:pageBlockSectionItem>
 
                         </apex:pageBlockSection>
 
-                        <!--style="width: 174.4px;"-->
+                        <!--style="width: 200px;"-->
 
                        <script type="text/javascript">
                             var $j = jQuery.noConflict();
