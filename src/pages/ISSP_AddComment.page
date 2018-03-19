@@ -210,7 +210,7 @@ margin-top:50px;
     </div>
     <div class="col-md-12">
         <apex:outputText value="{!$Label.ISSP_CCOthers}: " />
-        <apex:outputText value="{!additionalCC}" id="aditionalCC"/>
+        <apex:outputText value="{!additionalCC}" id="aditionalCC" style="word-break: break-all;display: block;"/>
     </div>
     <div class="col-md-12">
         <h5 class="blueback">{!$Label.ISSP_Email_Comment}</h5>

@@ -346,7 +346,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>2/16/2018 12:00 AM</value>
+            <value>TODAY</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
@@ -402,7 +402,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>YESTERDAY</value>
         </filters>
         <filters>
             <field>Method__c</field>
