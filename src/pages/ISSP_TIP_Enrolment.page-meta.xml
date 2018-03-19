@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>ISSP_TIP_Enrolment</label>
+    <packageVersions>
+        <majorNumber>6</majorNumber>
+        <minorNumber>40</minorNumber>
+        <namespace>DSE</namespace>
+    </packageVersions>
 </ApexPage>
