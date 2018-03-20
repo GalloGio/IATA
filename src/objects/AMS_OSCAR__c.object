@@ -38282,11 +38282,13 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
 	),
 	OR(
 		AND(
+			OR(Location_Class__c == 'P', Location_Class__c =='D'), 
 			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
 			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
 			ISBLANK(ANG_PCI_compliance_expiry_date__c)
 		),
 		AND(
+			OR(Location_Class__c == 'P', Location_Class__c =='D'), 
 			RecordType.DeveloperName = &apos;NEW&apos;,
 			ISBLANK(ANG_PCI_compliance_expiry_date__c),
 			OR(
