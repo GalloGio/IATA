@@ -12919,10 +12919,9 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
-        <description>Sanction Notice for AMP Team, Account Managers and direct reports</description>
+        <description>Used by AM Team, Account Managers and their Direct Reports to display important information on the account.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Sanction Notice for AMP Team, Account Managers and direct reports</inlineHelpText>
-        <label>SanctionNotice</label>
+        <label>Account Note</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
