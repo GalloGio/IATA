@@ -3628,9 +3628,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             System.debug('SFSF accredModel ' + accredModel);
 
+            if(newAccreditationModels){ //AMSU-113
             //NEWGEN-583 start
             if(newForm.Enable_Credit_Card_FOP__c == 'Yes')
-                allowIdentifierSetTravel.add(AMS_UTILS.PCI_COMPLIANCE);
+                    allowIdentifierSetTravel.add(PCI_COMPLIANCE);
+            }
+            else{
+                allowIdentifierSetTravel.add(PCI_COMPLIANCE);    
+            }    
 
             Set<String> excludeIdentifierSetTravel = new Set<String>();
             for(String identifier : identifierSetTravel){
