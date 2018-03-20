@@ -452,6 +452,11 @@
         <label>Email to case – GDI risk</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - GDS FOP Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - GDS FOP Support</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Georgia</fullName>
         <default>false</default>
         <label>E-mail to Case - Georgia</label>

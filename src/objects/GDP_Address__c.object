@@ -257,20 +257,21 @@ The source of information is taken from IATA_ISO_State.
 In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
         <formula>IF(
-				OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
-							IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
-                                                        IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
-						        IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
-    				
-				IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
-        , IF(LEN(IATA_ISO_State__r.ISO_Code__c) = 5,RIGHT(IATA_ISO_State__r.ISO_Code__c, 2), RIGHT(IATA_ISO_State__r.ISO_Code__c, 3))
-        , IATA_ISO_Country__r.ISO_Code__c 
-    ),
-				
-				NULL
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;,
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;),
+
+IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;)
+, IF(LEN(IATA_ISO_State__r.ISO_Code__c) = 5,RIGHT(IATA_ISO_State__r.ISO_Code__c, 2), RIGHT(IATA_ISO_State__r.ISO_Code__c, 3))
+, IATA_ISO_Country__r.ISO_Code__c
+),
+
+NULL
 )</formula>
         <inlineHelpText>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
@@ -299,9 +300,11 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <externalId>false</externalId>
         <formula>IF( 
 And( 
-OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+OR(
+IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
 IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
@@ -313,7 +316,7 @@ IATA_ISO_State__r.Name=&apos;VE95&apos;)
 IATA_ISO_State__r.Name, 
 NULL 
 )</formula>
-        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
+        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, AE, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
         <label>Address State Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

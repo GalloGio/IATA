@@ -64,6 +64,8 @@ global with sharing class IDCardUtil {
     @RemoteAction
     public static final String CARDSTATUS_APPROVED = 'Sent ID Card';
     @RemoteAction
+    public static final String CARDSTATUS_VALID = 'Valid ID Card';
+    @RemoteAction
     public static final String CARDSTATUS_PRINTED_DELIVERED = 'Printed/Delivered';
     @RemoteAction
     public static final String CARDSTATUS_CANCELED = 'Cancelled ID Card';
@@ -1549,7 +1551,7 @@ public static String generateVER(Account theAccount) {
 
         //integer renewableCardDays = integer.valueOf(Label.IDCard_IsRenewableCard_Days);
         Date renewableEndDate  = date.today().addDays(days);
-        ID_Card__c[] idCard = [Select Id, Valid_To_Date__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED
+        ID_Card__c[] idCard = [Select Id, Valid_To_Date__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_VALID
                                AND c.Is_Active_Card__c = : true
                                        order by c.Valid_To_Date__c desc ];
 
@@ -1744,7 +1746,7 @@ public static String generateVER(Account theAccount) {
                     // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) and change of agency
                     if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE || application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
                         //find old card to cancel it
-                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_VALID order by CreatedDate desc];
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             idCards[0].Cancellation_Date__c = Date.Today();
