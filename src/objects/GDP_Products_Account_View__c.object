@@ -354,9 +354,10 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <description>Agency&apos;s AML Compliance</description>
         <externalId>false</externalId>
         <formula>CASE( Due_Diligence_Status__c ,
-  &quot;Cleared&quot;,&quot;C&quot;,
-  &quot;In Progress&quot;, &quot;I&quot;,
-  &quot;S&quot;
+&quot;Cleared&quot;,&quot;C&quot;,
+&quot;In Progress&quot;, &quot;I&quot;,
+&quot;Sanctioned. Please contact compliance&quot;, &quot;S&quot;,
+&quot;&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Agency&apos;s AML Compliance
