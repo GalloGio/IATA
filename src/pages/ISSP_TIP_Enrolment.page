@@ -642,6 +642,189 @@
          </div>
          <c:ISSP_CustomFooter />
          </div>
+
+        <apex:form id="newContact">
+            <div class="modal fade" id="addNewContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">New Contact</h4>
+                        </div>
+                        <div class="modal-body">
+                            <apex:pageBlock id="contactBlock">
+                                <div style="width: 100%;">
+                                    <div>
+                                        <div style="width: 20%; display: inline;">
+                                            <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}"/>&nbsp;
+                                        </div>
+                                        <div style="width: 80%; display: inline-block;">
+                                            <apex:inputField style="width: 174.4px; margin-right: 0px !important;" styleclass="form-control recSearch" value="{!newContact.Salutation}"/><br/>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div style="width: 20%; display: inline;">
+                                            <apex:outputLabel value="{!$ObjectType.Contact.fields.FirstName.Label}"/>&nbsp;
+                                        </div>
+                                        <div style="width: 80%; display: inline-block;">
+                                            <apex:inputField style="width: 174.4px; margin-right: 0px !important;" styleclass="form-control recSearch" value="{!newContact.FirstName}"/><br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:pageBlock>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </apex:form>
+            
+
+                <!--            <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">New Contact</h4>
+                        </div>
+      
+                        <apex:pageMessages id="theMessages" />
+       
+                        <div class="modal-body">
+                            <apex:pageBlock id="contactBlock">
+              <table>
+                  
+                  <tr>
+                      <td style="width:50%">
+                        <table>
+                            <tr><td class="modalrow">
+                                <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}" /><br/>
+                                <apex:inputField value="{!newContact.Salutation}" />
+                                </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:outputLabel value="{!$ObjectType.Contact.fields.FirstName.Label}" /><br/>
+                                <apex:inputField value="{!newContact.FirstName}" required="true"/>
+                                </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:outputLabel value="{!$ObjectType.Contact.fields.LastName.Label}" /><br/>
+                                <apex:inputField value="{!newContact.LastName}" />
+                                </td></tr>
+                            
+                            <tr><td class="modalrow">
+                                <apex:inputHidden value="{!newContact.Phone}" id="contactphone" />
+                                <apex:outputText value="{!$ObjectType.Contact.fields.Phone.Label}" /><br/>
+                                <apex:inputField id="contactphoneinput" html-placeholder="" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" required="true" style="width:85%"/>
+                                </td></tr>
+                             <tr><td class="modalrow">
+                                 <apex:inputHidden value="{!newContact.MobilePhone}" id="contactmobile" />
+                                 <apex:outputText value="{!$ObjectType.Contact.fields.MobilePhone.Label}" /><br/>
+                                 <apex:inputField id="contactmobileinput" html-placeholder="" value="{!newContact.MobilePhone}" onblur="setInternationalPhoneNo('mobile');" style="width:85%"/>
+                                 </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:inputHidden value="{!newContact.Fax}" id="contactfax" />
+                                <apex:outputText value="{!$ObjectType.Contact.fields.Fax.Label}"/><br/>
+                                <apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAXNational__c}" onblur="setInternationalPhoneNo('fax');" style="width:85%"/>
+                                </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
+                                <apex:inputField value="{!newContact.Email}" required="true" />
+                                </td></tr>
+                        </table>
+                      </td>
+                      <td style="width:50%">
+                        <table>
+                            <tr><td class="modalrow">
+                                <apex:inputField value="{!newContact.MailingStreet}" id="contactStreet" html-placeholder="{!$Label.ISSP_AMS_Street}"/>
+                                </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:inputField value="{!newContact.MailingCity}" id="contactCity"  html-placeholder="{!$Label.ISSP_AMS_City}"/>
+                                </td></tr>
+                            <tr><td class="modalrow">
+                                <apex:inputField value="{!newContact.MailingPostalCode}" id="contactPostalCode" html-disabled="true" html-placeholder="{!$Label.ISSP_AMS_PostCode}"/>
+                                </td></tr>
+                            <tr><td class="modalrow" style="vertical-align:top;padding-bottom:30px">
+                                <!--<apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" size="1">
+                                    <apex:selectOptions value="{!countryNameList}"/>
+                                </apex:selectList>
+                                </td></tr>
+                          </table>
+                      </td>
+                  </tr>
+              </table>      
+          </apex:pageBlock>
+      </div>
+      
+      <div class="modal-footer">
+         <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> 
+        <apex:commandButton action="{!createContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');"
+            onclick="this.disabled='disabled';"
+            reRender="contactList, ownerList, theMessages">
+            <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+         </apex:commandButton>&nbsp;
+        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>-->
+        
+        <!--<script>
+
+        function closeModalByCommandButton()
+        {          
+            closeModal();
+            setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
+            $j( '.datePicker').css('position','absolute');
+                
+        }
+
+        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+
+        natphone.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+
+        natphone.intlTelInput("setNumber", phone.val());
+
+        var natmobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobileinput}']");
+        var mobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobile}']");
+        
+         natmobile.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "MOBILE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        natmobile.intlTelInput("setNumber", mobile.val());
+        
+        var natfax = $j("input[name='{!$Component.newContact.contactBlock.contactfaxinput}']");
+        var fax = $j("input[name='{!$Component.newContact.contactBlock.contactfax}']");
+    
+         natfax.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        
+        natfax.intlTelInput("setNumber", fax.val());
+    
+        function setInternationalPhoneNo(p) {
+            if(p=='phone') {
+                phone.val(natphone.intlTelInput("getNumber"));
+            } else if(p=='mobile') {
+                mobile.val(natmobile.intlTelInput("getNumber"));
+            } else {
+                fax.val(natfax.intlTelInput("getNumber"));
+            }
+        }
+
+        /*toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode1}', '{!$Component.newContact.contactBlock.job1employer}','{!$Component.newContact.contactBlock.job1address}', '{!$Component.newContact.contactBlock.job1accredited}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode2}', '{!$Component.newContact.contactBlock.job2employer}','{!$Component.newContact.contactBlock.job2address}', '{!$Component.newContact.contactBlock.job2accredited}');
+    <!--</script>
+   <!-- </div>
+  </div>
+</div>
+    
+</apex:form>-->
        
     </body>  
 </html>
