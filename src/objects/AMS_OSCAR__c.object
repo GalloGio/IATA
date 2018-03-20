@@ -1535,6 +1535,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>FIN - Application Finalized</label>
                 </value>
+                <value>
+                    <fullName>PCI</fullName>
+                    <default>false</default>
+                    <label>PCI</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2653,6 +2658,11 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>No</label>
                 </value>
+                <value>
+                    <fullName>Nil CC</fullName>
+                    <default>false</default>
+                    <label>Nil CC</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3261,6 +3271,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>ANG.FOPMANAGEMENT.1.0</fullName>
                     <default>false</default>
                     <label>ANG.FOPMANAGEMENT.1.0</label>
+                </value>
+                <value>
+                    <fullName>PCI.COMPLIANT.1.0</fullName>
+                    <default>false</default>
+                    <label>PCI.COMPLIANT.1.0</label>
                 </value>
                 <value>
                     <fullName>ANG.FS.OPTINOUT</fullName>
@@ -29898,6 +29913,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <fullName>NEW - New Application</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>PCI</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
@@ -30063,6 +30082,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Local_Inspection_compliant__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -30153,6 +30187,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI%2ECOMPLIANT%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35701,6 +35739,21 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>Nil CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -44813,6 +44866,32 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>AMS_PCI_Expiry_Date_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+	OR(
+		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+	),
+	OR(
+		AND(
+			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c)
+		),
+		AND(
+			RecordType.DeveloperName = &apos;NEW&apos;,
+			ISBLANK(ANG_PCI_compliance_expiry_date__c),
+			OR(
+				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+				TEXT(Process__c) == &apos;NEW.BR&apos;
+			)
+		)	
+	)
+)</errorConditionFormula>
+        <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
@@ -44961,6 +45040,19 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>RPM_Approval__c</errorDisplayField>
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
+        <active>true</active>
+        <description>Block from using the OSCAR on accounts that are not Agency or Standard</description>
+        <errorConditionFormula>AND(
+  NOT(OR(
+    Account__r.RecordType.DeveloperName=&quot;Standard_Account&quot;,
+    Account__r.RecordType.DeveloperName=&quot;IATA_Agency&quot;
+  )),
+  ISNEW()
+)</errorConditionFormula>
+        <errorMessage>OSCAR object can&apos;t be used in accounts that are not Agencies or Standard</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Voluntary_Relinquishment_Suspension</fullName>

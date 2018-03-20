@@ -518,8 +518,8 @@ function buildFunctionCall(func, argList){
                     <div>Office Phone</div>
                     <!--<li>Remittance Frequency</li>-->
                 </apex:outputText>
-                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
-                    <div>Remittance Frequency</div>
+                <apex:outputText rendered="{!OR(AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess)), isAMSCheckRemittance)}">
+                    <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
         </p>
@@ -669,15 +669,54 @@ function buildFunctionCall(func, argList){
 
     var clickedId;
 
-    j$(document).ready(function() {
+    /*** AMSU-113 Start ***/
+    function removePCIelements() {
+        if("{!isToRemoveFieldsUI}" == "true") {
+            var nodes = j$("#inlineSTEP6")[0].childNodes;
+            if(nodes) {
+                for(var i = 0; i<nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.id && node.id.indexOf("PCI") >= 0) {
+                        var node_1 = j$(nodes[i-1]);
+                        var node_2 = j$(nodes[i-2]);
+                        var node_3 = j$(nodes[i-3]);
+                        node_1.remove();
+                        node_2.remove();
+                        node_3.remove();
+                        j$(node).remove();
+                    }
+                }
+            }
+        }
+        
+        if("{!isPCICompliant}" == "true") {
+            var picklist = j$("select.inputElem option[value='Yes']").parent();
+            
+            j$("select.inputElem option[value='Not Applicable']").remove();
+            j$("select.inputElem option[value='Yes']").remove();
+            j$("select.inputElem option[value='No']").remove();
+            j$("select.inputElem option[value='Nil CC']").remove();    
 
+            picklist.append(new Option("-- None --", ""));
+            picklist.append(new Option("Yes", "Yes"));
+            picklist.append(new Option("No", "No"));
+            picklist.append(new Option("Nil CC", "Nil CC"));           
+        }
+    }
+    /*** AMSU-113 End ***/
+
+    j$(document).ready(function() {
         /* This is basic - uses default settings */
         j$(".lightbox").lightcase();
         
-    });
+    });    
     
     function clicked(item) {
         clickedId = "inline" + j$(item).attr("id");
+
+        /*** AMSU-113 Start ***/
+        removePCIelements();
+        /*** AMSU-113 End ***/
     }
 
     j$('.hasTooltip').each(function() {

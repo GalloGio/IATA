@@ -14,6 +14,8 @@ public class ISSP_ANG_CodeSearch {
 	public Boolean isTravel {get; set;}
 	public String riskStatusFilter {get; set;}
 	public String accreditationModel {get; set;}
+	public String ho_he {get; set;}
+	public Boolean showIrregularities {get; set;}
 
 	public ISSP_ANG_CodeSearch() {
 		this.riskStatusFilter = 'Active';
@@ -29,7 +31,9 @@ public class ISSP_ANG_CodeSearch {
 		this.agency = null;
 		this.isTravel = false;
 		this.riskStatus = '';
+		this.showIrregularities = false;
 		this.financialSecurityExists = false;
+		this.ho_he = '';
 
 		try{
 			this.iataCodeStr = String.valueOf(iataCode);	
@@ -121,10 +125,13 @@ public class ISSP_ANG_CodeSearch {
 											  From Account
 											 Where id =: auxAgency.parentId];					
 
+					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
 						auxReplacement = Label.ISSP_AMS_NoC_Head_Entity;
+						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Entity);
 					} else {
 						auxReplacement = Label.ISSP_AMS_NoC_Head_Office;
+						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Office);
 					}
 
 					heMessage = aux3.replace('%PARENT_LOCATION%', auxReplacement);		 
@@ -142,6 +149,8 @@ public class ISSP_ANG_CodeSearch {
 				riskStatus = this.agency.ANG_HE_RiskStatus__c;
 	
 				this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
+
+				this.showIrregularities = (!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c || !isTravel);
 
 				this.activeSearch = true;
 			} else {

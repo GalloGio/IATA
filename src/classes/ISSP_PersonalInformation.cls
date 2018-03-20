@@ -46,7 +46,8 @@ public with sharing class ISSP_PersonalInformation {
 	public String ValidatedAirlineUser_Str {get;set;}
 	
 	public Boolean hasIdCard {get;set;}
-    public boolean showIEPStatus {get;set;}    
+    public boolean showIEPStatus {get;set;}
+    public Boolean flagCashOptedOutFinReview {get;set;}
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -133,7 +134,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c) && !con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
                 showIrregularities = True;
         }
         else {
@@ -163,6 +164,8 @@ public with sharing class ISSP_PersonalInformation {
             showIEPStatus = true;
         }
        
+        flagCashOptedOutFinReview = (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
     }
     
