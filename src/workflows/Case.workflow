@@ -15025,7 +15025,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
- 	<rules>
+    <rules>
         <fullName>ISS Portal - Make case invisible</fullName>
         <actions>
             <name>ISS_Portal_Make_case_invisible</name>
@@ -15128,7 +15128,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>FoP Management</value>
         </criteriaItems>
-		<criteriaItems>
+        <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>PCI DSS Compliant</value>
@@ -15223,7 +15223,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>FoP Management</value>
-		</criteriaItems>
+        </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
