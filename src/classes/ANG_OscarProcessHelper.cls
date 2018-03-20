@@ -882,9 +882,8 @@ global class ANG_OscarProcessHelper {
 
 		Contact keyContact = fetchKeyContact(acc, contactsAcc);
 		
-		Map<String,Object> fieldsOfObject = new Map<String,Object>();
-
 		//Case:
+		Map<String,Object> fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Account_Concerned__c',acc.Id);
       	fieldsOfObject.put('ContactId',keyContact.Id);
         fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
@@ -894,17 +893,25 @@ global class ANG_OscarProcessHelper {
         fieldsOfObject.put('Reason1__c','Annual revalidation');
         fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
         fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
         
        	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+        //assign to queue
+       	Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        cse.setOptions(dmo);
+
        	insert cse;
+
 		//StagingArea:
 		fieldsOfObject = new Map<String,Object>();
-
         fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
         fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
         fieldsOfObject.put('Accept_terms_and_conditions__c',true);
         fieldsOfObject.put('Billing_State__c',acc.BillingState);
         fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
+        fieldsOfObject.put('Branch_Office_Country__c',acc.IATA_ISO_Country__c);
         fieldsOfObject.put('Branch_Office_Email__c',acc.Email__c);
         fieldsOfObject.put('Branch_Office_FAX__c',acc.Fax);
         fieldsOfObject.put('Branch_Office_Phone__c',acc.Phone);
@@ -943,16 +950,21 @@ global class ANG_OscarProcessHelper {
 
         insert stagingArea;
 
+        String cseId = [Select ownerId from Case where id = :cse.id][0].ownerId;
+
 		//AMS_OSCAR__c:
 		fieldsOfObject = new Map<String,Object>();
-
 		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
         fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 		fieldsOfObject.put('Status__c','Open');
+		fieldsOfObject.put('OSCAR_Deadline__c',Date.today().addDays(30));
+		fieldsOfObject.put('OwnerId',cseId);
+
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
         insert oscar;
 
+        //update Oscar
         cse.oscar__c = oscar.Id;
         update cse;
 
