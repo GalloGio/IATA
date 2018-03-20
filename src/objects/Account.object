@@ -88828,7 +88828,6 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <fullName>Effective_Start_Date_on_Payment_Provider</fullName>
         <active>true</active>
         <errorConditionFormula>AND(ISCHANGED(RecordTypeId) ,RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;,   NOT(ISNEW()), ISBLANK(Accreditation_date__c))</errorConditionFormula>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, ISBLANK(Accreditation_date__c))</errorConditionFormula>
         <errorDisplayField>Accreditation_date__c</errorDisplayField>
         <errorMessage>Accreditation Date is mandatory for Payment Provider</errorMessage>
     </validationRules>
