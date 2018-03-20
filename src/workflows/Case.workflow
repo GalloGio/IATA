@@ -15143,7 +15143,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17))) AND (((5 AND 17) OR (17 AND 18)) AND 6) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
