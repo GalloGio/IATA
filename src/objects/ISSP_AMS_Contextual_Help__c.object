@@ -94,6 +94,14 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>ISSP_AMS_HelpText_tr__c</fullName>
+        <externalId>false</externalId>
+        <label>Contextual Help Text (tr)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>ISSP_AMS_HelpText_vi__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Vietnamese</inlineHelpText>
