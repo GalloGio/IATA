@@ -532,6 +532,51 @@ NULL
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Address_State_Codes_Accepted</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>Australia,Brazil,Canada,Mexico,United States</value>
+        </filters>
+        <filters>
+            <field>Address_State_Code__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>US TERRITORIES AND POSSESS,Venezuela</value>
+        </filters>
+        <label>Address State Codes Accepted</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Address_State_Codes_UP</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Address_IATA_Custom_ISO_Country_Code__c</field>
+            <operation>equals</operation>
+            <value>UP</value>
+        </filters>
+        <label>Country Code UP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Related_Account__c</columns>

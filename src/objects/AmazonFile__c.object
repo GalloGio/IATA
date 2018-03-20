@@ -1551,7 +1551,7 @@
                 <default>false</default>
             </values>
             <values>
-				<fullName>PCI_COMPLIANCE</fullName>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1959,10 +1959,10 @@
                 <default>false</default>
             </values>
             <values>
-				<fullName>PCI_COMPLIANCE</fullName>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </values>

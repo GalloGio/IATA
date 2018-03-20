@@ -1126,6 +1126,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
