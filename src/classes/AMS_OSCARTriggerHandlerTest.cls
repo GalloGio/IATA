@@ -74,7 +74,7 @@ private class AMS_OSCARTriggerHandlerTest {
         fieldsOfObject.put('Website__c',acc.Website);
 
         AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
-        	Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.name, cse.Id, fieldsOfObject);
+        	Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.Id, cse.Id, fieldsOfObject);
 
         insert stagingArea;
 
