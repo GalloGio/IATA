@@ -488,7 +488,7 @@ function buildFunctionCall(func, argList){
                     <li>Office Phone</li>
                     <!--<li>Remittance Frequency</li>-->
                 </apex:outputText>
-                <apex:outputText rendered="{!AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess))}">
+                <apex:outputText rendered="{!OR(AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess)), isAMSCheckRemittance)}">
                     <li>Remittance Frequency</li>
                 </apex:outputText>
             </ul>
@@ -632,15 +632,55 @@ function buildFunctionCall(func, argList){
 
     var clickedId;
 
+    /*** AMSU-113 Start ***/
+    function removePCIelements() {
+        if("{!isToRemoveFieldsUI}" == "true") {
+            var nodes = $("#inlineSTEP6")[0].childNodes;
+            if(nodes) {
+                for(var i = 0; i<nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.id && node.id.indexOf("PCI") >= 0) {
+                        var node_1 = $(nodes[i-1]);
+                        var node_2 = $(nodes[i-2]);
+                        var node_3 = $(nodes[i-3]);
+                        node_1.remove();
+                        node_2.remove();
+                        node_3.remove();
+                        $(node).remove();
+                    }
+                }
+            }
+        }
+        
+        if("{!isPCICompliant}" == "true") {
+            var picklist = $("select.inputElem option[value='Yes']").parent();
+            
+            $("select.inputElem option[value='Not Applicable']").remove();
+            $("select.inputElem option[value='Yes']").remove();
+            $("select.inputElem option[value='No']").remove();
+            $("select.inputElem option[value='Nil CC']").remove();    
+
+            picklist.append(new Option("-- None --", ""));
+            picklist.append(new Option("Yes", "Yes"));
+            picklist.append(new Option("No", "No"));
+            picklist.append(new Option("Nil CC", "Nil CC"));           
+        }
+    }
+    /*** AMSU-113 End ***/
+
     $(document).ready(function() {
 
         /* This is basic - uses default settings */
         $(".lightbox").lightcase();
         
-    });
+    });    
     
     function clicked(item) {
         clickedId = "inline" + $(item).attr("id");
+
+        /*** AMSU-113 Start ***/
+        removePCIelements();
+        /*** AMSU-113 End ***/
     }
 
     $('.hasTooltip').each(function() {

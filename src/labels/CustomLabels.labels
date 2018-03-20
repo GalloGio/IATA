@@ -19424,7 +19424,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Local Groups Industry Description</shortDescription>
-        <value>description</value>
+        <value>On this page, you can view the participation of your airline on IATA’s Passenger and Cargo local governance groups</value>
     </labels>
     <labels>
         <fullName>ISSP_Local_Groups_Industry_Reset</fullName>
