@@ -8,6 +8,7 @@
            applyHtmlTag="false"
            docType="html-5.0"
            >
+
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
         <c:iss_ap_css />
@@ -603,31 +604,53 @@
                 <apex:outputpanel>SECTION 2</apex:outputpanel>
             </apex:facet>
             <div class="col-md-12 bg-info"><strong>Section 2.1</strong></div>
+<form >
 
             <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
-            <apex:actionFunction name="rerenderTopPanel" rerender="TopPanel" />
-<apex:outputPanel id="TopPanel">
+            <apex:actionFunction name="rerenderTopPanel" rerender="sectionFour" />
+
+
+
+
+
+
             <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                 <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/> 
                 <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!con.LastName}"/>
                 <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!con.Phone}"/>
                 <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!con.Email}"/>
+                
                 <apex:column headerValue="Primary Contact">
-                    <apex:selectRadio id="primaryContactRadio" value="{!con.Primary_Contact__c}" onclick="return false ;"/>
+
+                    <apex:outputPanel rendered="{!con.Primary_Contact__c}">
+                        <input type="radio" id="primaryContactRadio"  checked="cheked" />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!!con.Primary_Contact__c}" onclick=" refroshTable('{!con.id}'); ">
+                        <input type="radio" id="primaryContactRadio"   />
+                    </apex:outputPanel>
+
                 </apex:column>
             </apex:pageBlockTable>
-            </apex:outputPanel>
-        </apex:pageBlockSection>
 
-        <apex:actionFunction action="{!ola}" name="updateRadioButton"/>
+
+
+        <apex:actionFunction action="{!ola}" name="updateRadioButton" rerender="sectionFour">
+            <apex:param id="contactID" name="contactID" value="test" assignTo="{!conID}" />
+        </apex:actionFunction>
 
         <script type="text/javascript">
-            function refroshTable() {
-                updateRadioButton();
-                rerenderTopPanel();
-                return false;
+            function refroshTable(contactID) {
+                console.log(contactID);
+                updateRadioButton(contactID);
+                //rerenderTopPanel();
+                //return false;
             }
         </script>
+
+            </form>
+        </apex:pageBlockSection>
+
         
             </div>  <!-- EO APContainer -->
          </apex:pageBlock>

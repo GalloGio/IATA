@@ -10,6 +10,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     private Id accountID {get; set;}
     private Case newCase {get; set;}
     private List <Case> accountCases {get; set;}
+    public String conID {get; set;}
     public List <Contact> contactList {get; set;}
     private Map<Contact, Boolean> primaryContacts;
 
@@ -155,14 +156,21 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     }
 
     private void fillContactList() {
-    	contactList = [SELECT Name, Email, FirstName, LastName, Phone, Primary_Contact__c
+    	contactList = [SELECT id,Name, Email, FirstName, LastName, Phone, Primary_Contact__c
                 FROM Contact
                 WHERE Status__c = 'Active'];
     }
 
     public void ola() {
+    	ID contactID = Apexpages.currentPage().getParameters().get('contactID');
+    	system.debug('##contact ID: ' + Apexpages.currentPage().getParameters().get('acontactID'));
+    	system.debug('##contact ID1: ' + Apexpages.currentPage().getParameters().get('contactID'));
+    	system.debug('##contact ID2: ' + contactID);
+    	system.debug('##contact ID3: ' + conID);
     	for (Contact c: contactList) {
     		c.Primary_Contact__c = false;
+    		if(c.id == contactID)
+    			c.Primary_Contact__c = true;
     	}
     }
 }
