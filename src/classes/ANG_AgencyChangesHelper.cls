@@ -208,7 +208,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					List<Account> accountsToUpdate = new List<Account>();
 
 					if (!new Set<String>{'COR','CAD','LET'}.contains(oscar.AMS_Correction_change_code__c))
-						oscar.addError('To pass sanity checks a change code is required.');
+						oscar.addError('To pass sanity checks a Correction change code is required.');
 
 					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
 						AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
