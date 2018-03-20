@@ -135,5 +135,25 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		Test.stopTest();
 	}
+
+    @isTest static void testANGEmailTemplates() {
+
+        Test.startTest();
+
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId() ];
+        System.runAs ( thisUser ) {
+            insert new EmailTemplate(
+                isActive = true,
+                Name = 'ANG_Financial_Assesment_Opt_out_DIS_English',
+                DeveloperName = 'ANG_Financial_Assesment_Opt_out_DIS_English',
+                TemplateType = 'text',
+                FolderId = UserInfo.getUserId()
+            );
+        }
+        AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGOPTINOUT, AMS_Utils.FAILED, false);
+
+        Test.stopTest();
+        
+    }
 	
 }

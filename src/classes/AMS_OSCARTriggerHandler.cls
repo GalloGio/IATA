@@ -2299,7 +2299,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
     
-    private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
+    @TestVisible private static Map<String, Id> ANGemailTemplates(String agencyType, String step, boolean wasApproved){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
 
