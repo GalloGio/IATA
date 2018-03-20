@@ -33,6 +33,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
     private static Set<String> analystProfiles = new Set<String>{'FDS Hub Analyst ARM'};
 
+    public String selectedTab{get;set;}
+
     public Boolean showRequiredOverlay{
         get{
             if(this.oscar.Account__c == null)
@@ -194,7 +196,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
         }   
         
-  
+            selectedTab = 'tab1';
+
     }
 
     public String convertToString(Blob value){
