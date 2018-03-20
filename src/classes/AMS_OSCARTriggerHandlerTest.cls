@@ -136,8 +136,4 @@ private class AMS_OSCARTriggerHandlerTest {
 		Test.stopTest();
 	}
 	
-	@isTest static void test_method_two() {
-		// Implement test code
-	}
-	
 }
