@@ -824,7 +824,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_Cash_Condition</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.ANG_Limit_Cash_Condition__c</field>
             <operation>equals</operation>

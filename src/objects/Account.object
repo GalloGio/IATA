@@ -2516,6 +2516,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_FA_Opt_out__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -2758,17 +2763,23 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-                false,
-                    IF(
-              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-                ANG_HE_CashCondition__c,  
-                Top_Parent__r.ANG_HE_CashCondition__c
-              )
-            )</formula>
+        <formula>IF(ANG_FA_Opt_out__c,true,
+   IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
+      IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c)
+   ))</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_FA_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</inlineHelpText>
+        <label>Financial Assessment opt-out</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2951,7 +2962,7 @@
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
                 &apos;Not Applicable&apos;,
                     IF(
               ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
@@ -3435,9 +3446,19 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Full Service Carrier</fullName>
+                    <fullName>Full Service Network Carrier</fullName>
                     <default>false</default>
-                    <label>Full Service Carrier</label>
+                    <label>Full Service Network Carrier</label>
+                </value>
+                <value>
+                    <fullName>Full Service Regional Carrier</fullName>
+                    <default>false</default>
+                    <label>Full Service Regional Carrier</label>
+                </value>
+                <value>
+                    <fullName>Full Service Holiday Carrier</fullName>
+                    <default>false</default>
+                    <label>Full Service Holiday Carrier</label>
                 </value>
                 <value>
                     <fullName>Low Cost Carrier</fullName>
@@ -3445,9 +3466,9 @@
                     <label>Low Cost Carrier</label>
                 </value>
                 <value>
-                    <fullName>Leisure Carrier</fullName>
+                    <fullName>Ultra Low Cost Carrier</fullName>
                     <default>false</default>
-                    <label>Leisure Carrier</label>
+                    <label>Ultra Low Cost Carrier</label>
                 </value>
                 <value>
                     <fullName>Hybrid Carrier</fullName>
@@ -3455,9 +3476,14 @@
                     <label>Hybrid Carrier</label>
                 </value>
                 <value>
-                    <fullName>Cargo</fullName>
+                    <fullName>Cargo Only Carrier</fullName>
                     <default>false</default>
-                    <label>Cargo</label>
+                    <label>Cargo Only Carrier</label>
+                </value>
+                <value>
+                    <fullName>Legacy</fullName>
+                    <default>false</default>
+                    <label>Legacy</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -34036,6 +34062,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -40380,11 +40410,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Carrier</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40392,11 +40430,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Leisure Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48509,6 +48547,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -52978,6 +53020,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -67867,11 +67913,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo</fullName>
+                <fullName>Cargo Only Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Carrier</fullName>
+                <fullName>Full Service Holiday Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Network Carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Full Service Regional Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67879,11 +67933,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Leisure Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Ultra Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75534,6 +75588,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -79864,6 +79922,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
