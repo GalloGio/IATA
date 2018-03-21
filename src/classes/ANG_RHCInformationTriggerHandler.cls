@@ -27,11 +27,11 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onBeforeUpdate(){
 		convertAndSumFS();
 		sumRHCAmount();
-		refreshRMEData();
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(triggerNew,oldMap,'RHC_Information','ANG_AccountId__c').run();
+		refreshRMEData();
 	}
 
 	public void onBeforeDelete(){}
@@ -104,7 +104,7 @@ public class ANG_RHCInformationTriggerHandler{
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
 
-		if(!accIds.isEmpty()) Database.executebatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true), 100);
+		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100));
 			
 	}
 
