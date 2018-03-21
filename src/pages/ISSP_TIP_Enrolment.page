@@ -245,6 +245,7 @@
         $j("#phone").hide();
         $j("#branch_office_phone__c").hide();
         $j("#BranchPhoneSection").hide();
+        //$j('#multiSelectPicklistCell').removeClass('form-control');
     });
 
     function showUpdateAgencyDialog() {
@@ -270,9 +271,6 @@
     ownerModalFields[7] = "{!$Component.newContact.contactBlock.contactJobTitle}";
 
     $j(document).ready(function() {
-        //document.getElementById(ownerModalFields[3]).disabled = true;
-        //replaceShippingTXT(document.body);
-       // console.log('accountID: ' + retAddressCompUrl());
        removeReq();
        showUpdateAgencyDialog();
     });
@@ -287,11 +285,6 @@
             $j(".billingcountry").attr('disabled', 'disabled');
       });
     }
-    /*
-    function setPortalAdmin(f) {
-        var adminid = document.getElementById(f).value;
-        $j( "#" + adminid ).prop( "checked", true );
-    }*/
 
     </script>
      <div class="container">
@@ -305,11 +298,6 @@
     <div class="panel-body" id="body-enquiries">
         <apex:form id="AMSForm">
 
-            <!-- <apex:actionFunction name="resetSaleSaved" action"{!}" status="WaitingStatus" reRender="newSalesForm"/> 
-            <apex:inputHidden value="{!newForm.ISSP_AMS_Portal_admin__c}" id="PortalAdminId" />
-             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
-                    <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
-             </apex:actionfunction>-->
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
@@ -396,23 +384,8 @@
                                     <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
                                     <apex:inputField style="width: 174.4px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
                                 </apex:pageBlockSectionItem>
-
-                    	<!--<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                            <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}"/>
-                          <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'-20px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
-                            <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px" />
-                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
-                                <apex:facet name="start">
-                                    {!$Label.ISSP_PAX_Validating_VAT_Number}
-                                </apex:facet>
-                            </apex:actionstatus>
-                        </apex:outputpanel>
-                    </apex:pageblocksectionitem>-->
                                 
-                             
-
+               
                                 <apex:inputHidden value="{!account.Phone}" id="companyphone"/>
                                 <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
                                 <apex:inputHidden value="{!account.Fax}" id="companyfax"/>
@@ -456,19 +429,6 @@
                        <script type="text/javascript">
                             var $j = jQuery.noConflict();
 
-/*                          function mandatoryLabels() {
-                                var labelBillStreet = $j('.address-label')[0].childNodes[0],
-                                    labelBillCity = $j('.address-label')[1].childNodes[0];
-                                if (labelBillStreet)
-                                    labelBillStreet.textContent = labelBillStreet.textContent + ' *' ;
-                                if (labelBillCity)
-                                    labelBillCity.textContent = labelBillCity.textContent + ' *' ;                                
-                            }
-*/
-                           // document.onload = mandatoryLabels();
-                            //document.onload = showUpdateAgencyDialog();
-                            //document.onload = removeReq();
-                        
                         	var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
                             	observer = new MutationObserver(function (mutations) {
                                 $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
@@ -485,28 +445,7 @@
                                 faxacct = $j("[id$=companyfax]"),
                                 natmobileacct = $j("[id$=companymobileinput]"),
                                 mobileacct = $j("[id$=companymobile]");
-							/*
-                            natphoneacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "FIXED_LINE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
 
-                            natmobileacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "MOBILE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
-
-                            natfaxacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "FIXED_LINE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
-                            */
 
                             natphoneacct.intlTelInput("setNumber", phoneacct.val());
                             natmobileacct.intlTelInput("setNumber", mobileacct.val());
@@ -560,26 +499,6 @@
                         natmobileacctTerm = $j("[id$=companymobileinputTerminated]"),
                         mobileacctTerm = $j("[id$=companymobile2]");
 
-                    /*natphoneacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "FIXED_LINE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });
-
-                    natmobileacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "MOBILE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });
-
-                    natfaxacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "FIXED_LINE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });*/
 
                     natphoneacctTerm.intlTelInput("setNumber", phoneacctTerm.val());
                     natmobileacctTerm.intlTelInput("setNumber", mobileacctTerm.val());
@@ -601,9 +520,8 @@
         
          <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false">
             <apex:facet name="header">
-                <apex:outputpanel>SECTION 2</apex:outputpanel>
+                <apex:outputpanel>{!$label.ISSP_Payment_Provider_Details_section_2}</apex:outputpanel>
             </apex:facet>
-            <div class="col-md-12 bg-info"><strong>Section 2.1</strong></div>
 <form >
 
             <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
@@ -687,7 +605,7 @@
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
                   </div>                  
-                <apex:inputField styleclass="form-control rec"  id="email" value="{!newContact.email}"/>
+                <apex:inputField styleclass="form-control rec"  id="email" required="true" value="{!newContact.email}"/>
               </div>
 
         <div class="form-group" id="Salutation">
@@ -709,12 +627,12 @@
                 <div class="hiddenerror" style="display: none;">
                   <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_FirstName}</p>
                 </div>
-                <apex:inputField id="inFirstName" styleClass="form-control rec" value="{!newContact.FirstName}"/>
+                <apex:inputField id="inFirstName" styleClass="form-control rec" required="true" value="{!newContact.FirstName}"/>
                   
             </div>
             <div class="form-group" id="LastName">
                 <label for="inLastName"><span class="required">*</span>{!$ObjectType.Contact.fields.LastName.Label}</label>
-                <apex:inputField id="inLastName" styleclass="form-control rec" value="{!newContact.LastName}"/>
+                <apex:inputField id="inLastName" styleclass="form-control rec" required="true" value="{!newContact.LastName}"/>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
                   </div>
@@ -722,17 +640,17 @@
               
               <div class="form-group" id="Title">
                 <label for="inJobTitle"><span class="required">*</span>{!$Label.ISSP_Registration_JobTitle}</label>
-                <apex:inputField id="inJobTitle" styleclass="form-control rec" value="{!newContact.Title}"/>
+                <apex:inputField id="inJobTitle" styleclass="form-control rec" required="true" value="{!newContact.Title}"/>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobTitle}</p>
                   </div>
               </div>
-   <!--           
-              <apex:outputPanel layout="none" >
+              
+              <apex:outputPanel layout="inline" >
                 <div id="Function">
                   <span class="multiSelectFunction">
-                      <label for="inJobFunction"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>
-                      <apex:inputField id="inJobFunction" styleclass="form-control" value="{!newContact.Membership_Function__c}"/>
+                      <label for="inJobFunction"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>&nbsp;<p></p>
+                      <apex:inputField id="inJobFunction"  style="margin-left: 20px" value="{!newContact.Membership_Function__c}"/>
                     <div class="hiddenerror" style="display: none;">
                       <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobFunction}</p>
                     </div>
@@ -740,19 +658,18 @@
                 </div>
               </apex:outputPanel>
 
--->
+
 
               <div class="form-group" id="Phone">
                 <label for="businessphoneinput"><span class="required">*</span>{!$Label.ISSP_Registration_BusinessPhone}</label><br/>
                 <apex:inputHidden id="businessphone" value="{!newContact.Phone}" />
 
-                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" 
+                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" required="true" value="{!newContact.Phone}" onblur="setInternationalPhoneNo('phone');" 
                   onkeyup="setLengthPhone(this,0)"/>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
                   </div>
               </div>
-
 
 
               <div class="form-group" id="Phone2">
@@ -761,46 +678,25 @@
                 <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!newContact.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"
                   onkeyup="setLengthPhone(this,1)"/>
               </div>
-              <div class="form-group" id="Fax">
-                <label   for="businessfaxinput">{!$ObjectType.Contact.fields.Fax.Label}</label><br/>
-                <apex:inputHidden id="businessfax" value="{!newContact.Fax}" />
-                <apex:inputField id="businessfaxinput" styleclass="form-control" value="{!newContact.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"
-                  onkeyup="setLengthPhone(this,2)"/>
-              </div>
 
       </div>
       <div class="modal-footer">
-        <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
-        <apex:commandButton action="createContact" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
-            
-            onclick="closeModalByCommandButton();"
-            reRender="sectiontwo">
+        <apex:commandButton action="{!createContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="closeModalByCommandButton();">
          </apex:commandButton>&nbsp;
-
-
-         <button onclick="submitContact();" type="button" class="btn btn-default" >teste
-         </button>
 
         <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
-        
 
-
-        <apex:actionFunction action="{!createContact}" name="createContacttt" rerender="sectionTwo">
-        </apex:actionFunction>
+      <apex:actionFunction name="rerenderAfterInsertContact" rerender="sectionTwo,newContact" />
 
         <script>
-
-        function submitContact(){
-            createContacttt();
-            closeModalByCommandButton();
-            return false;
-        }
         function closeModal() {
 
             $j(function() {
                 $j( '#addNewContactModal' ).modal('hide');
                 clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+                rerenderAfterInsertContact();
             });
 
         }
@@ -831,7 +727,6 @@
 
         function closeModalByCommandButton()
         {          
-            console.log("here");
             closeModal();
             //setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
             $j( '.datePicker').css('position','absolute');

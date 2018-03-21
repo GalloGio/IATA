@@ -54,7 +54,14 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		
 		
 		//confirm that primary contact is choosen
-//-------missing TIP-37 to be done --------------------------
+		Boolean hasPrimaryContact = false;
+		for(Contact c : contactList){
+			if (c.Primary_Contact__c) hasPrimaryContact = true;
+		}
+
+		if(!hasPrimaryContact) contactList[0].Primary_Contact__c = true;
+		upsert contactList;
+
 
 		//Update or create case with status Open
 		updateCase();
@@ -171,17 +178,12 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	}
     }
 
-    public void createContact(){
-    	system.debug('##entering here');
+    public Pagereference createContact(){
+
     	Contact conToInsert = newContact.clone();
     	insert conToInsert;
-    	system.debug('##0 con:' + newContact);
-    	system.debug('##1 con:' + conToInsert);
     	contactList.add(conToInsert);
-
     	newContact = new Contact();
-
-    	system.debug('##exiting from method');
-
+    	return null;
     }
 }
