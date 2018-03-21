@@ -4216,7 +4216,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         if(flagShowOptOutButtonDisabled) flagShowOptOutButton = false;
                 
-
         Boolean flagShowOptInButton = (sector ==  AMS_Utils.SECTOR_PASSENGER && 
             isHOAccredited && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
 
@@ -4255,7 +4254,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             optInOutBtn = Label.ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN;
             flagShowOptInOutButton = true;
             optInOutModalTitle = Label.ISSP_ANG_OPT_OUT_MODAL_TITLE;
-            optInOutMessage = Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT;
+            if(isIFAPContact) {            
+                optInOutMessage = Label.ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT;
+            } else {
+                optInOutMessage = Label.ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR;
+            }
         }
 
         flagShowOptInOutButtonDisabled = (flagShowOptInButtonDisabled || flagShowOptOutButtonDisabled);
