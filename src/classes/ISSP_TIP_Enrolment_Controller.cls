@@ -10,9 +10,10 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     private Id accountID {get; set;}
     private Case newCase {get; set;}
     private List <Case> accountCases {get; set;}
+
     public String conID {get; set;}
+    public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
-    private Map<Contact, Boolean> primaryContacts;
 
 	public ISSP_TIP_Enrolment_Controller() {
 
@@ -37,7 +38,7 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     	 				LIMIT 1]; 
 
     	fillContactList();
-    	primaryContacts = new Map<Contact, Boolean>();
+    	newContact = new Contact();
 	}
 
 	public Pagereference submitToIATA() {
@@ -161,16 +162,26 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
                 WHERE Status__c = 'Active'];
     }
 
-    public void ola() {
+    public void updateRadioButtonStatus() {
     	ID contactID = Apexpages.currentPage().getParameters().get('contactID');
-    	system.debug('##contact ID: ' + Apexpages.currentPage().getParameters().get('acontactID'));
-    	system.debug('##contact ID1: ' + Apexpages.currentPage().getParameters().get('contactID'));
-    	system.debug('##contact ID2: ' + contactID);
-    	system.debug('##contact ID3: ' + conID);
     	for (Contact c: contactList) {
     		c.Primary_Contact__c = false;
-    		if(c.id == contactID)
-    			c.Primary_Contact__c = true;
+    		
+    		if(c.id == contactID) c.Primary_Contact__c = true;
     	}
+    }
+
+    public void createContact(){
+    	system.debug('##entering here');
+    	Contact conToInsert = newContact.clone();
+    	insert conToInsert;
+    	system.debug('##0 con:' + newContact);
+    	system.debug('##1 con:' + conToInsert);
+    	contactList.add(conToInsert);
+
+    	newContact = new Contact();
+
+    	system.debug('##exiting from method');
+
     }
 }

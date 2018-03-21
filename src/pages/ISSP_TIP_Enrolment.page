@@ -599,15 +599,15 @@
 <!-------section 2 in here---->
         
         
-         <apex:pageBlockSection id="sectionFour" columns="1" collapsible="false">
+         <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel>SECTION 2</apex:outputpanel>
             </apex:facet>
             <div class="col-md-12 bg-info"><strong>Section 2.1</strong></div>
 <form >
 
-            <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
-            <apex:actionFunction name="rerenderTopPanel" rerender="sectionFour" />
+            <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
+            <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
 
 
 
@@ -623,10 +623,10 @@
                 <apex:column headerValue="Primary Contact">
 
                     <apex:outputPanel rendered="{!con.Primary_Contact__c}">
-                        <input type="radio" id="primaryContactRadio"  checked="cheked" />
+                        <input type="radio" id="primaryContactRadio" checked="checked" />
                     </apex:outputPanel>
 
-                    <apex:outputPanel rendered="{!!con.Primary_Contact__c}" onclick=" refroshTable('{!con.id}'); ">
+                    <apex:outputPanel rendered="{!!con.Primary_Contact__c}" onclick=" refreshTable('{!con.id}'); ">
                         <input type="radio" id="primaryContactRadio"   />
                     </apex:outputPanel>
 
@@ -635,16 +635,19 @@
 
 
 
-        <apex:actionFunction action="{!ola}" name="updateRadioButton" rerender="sectionFour">
-            <apex:param id="contactID" name="contactID" value="test" assignTo="{!conID}" />
+        <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo">
+            <apex:param id="contactID" name="contactID" value="" />
         </apex:actionFunction>
 
         <script type="text/javascript">
-            function refroshTable(contactID) {
-                console.log(contactID);
+            function refreshTable(contactID) {
                 updateRadioButton(contactID);
-                //rerenderTopPanel();
-                //return false;
+            }
+            function showNewContactDialog() {
+                $j(function() {
+                    $j( '#addNewContactModal').modal('show');
+                    $j( '.datePicker').css('position','fixed');
+                });
             }
         </script>
 
@@ -666,130 +669,171 @@
          <c:ISSP_CustomFooter />
          </div>
 
-        <apex:form id="newContact">
-            <div class="modal fade" id="addNewContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">New Contact</h4>
-                        </div>
-                        <div class="modal-body">
-                            <apex:pageBlock id="contactBlock">
-                                <div style="width: 100%;">
-                                    <div>
-                                        <div style="width: 20%; display: inline;">
-                                            <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}"/>&nbsp;
-                                        </div>
-                                        <div style="width: 80%; display: inline-block;">
-                                            <apex:inputField style="width: 174.4px; margin-right: 0px !important;" styleclass="form-control recSearch" value="{!newContact.Salutation}"/><br/>
-                                        </div>
-                                    </div>
 
-                                    <div>
-                                        <div style="width: 20%; display: inline;">
-                                            <apex:outputLabel value="{!$ObjectType.Contact.fields.FirstName.Label}"/>&nbsp;
-                                        </div>
-                                        <div style="width: 80%; display: inline-block;">
-                                            <apex:inputField style="width: 174.4px; margin-right: 0px !important;" styleclass="form-control recSearch" value="{!newContact.FirstName}"/><br/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </apex:pageBlock>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </apex:form>
-            
-
-                <!--            <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">New Contact</h4>
-                        </div>
-      
-                        <apex:pageMessages id="theMessages" />
-       
-                        <div class="modal-body">
-                            <apex:pageBlock id="contactBlock">
-              <table>
-                  
-                  <tr>
-                      <td style="width:50%">
-                        <table>
-                            <tr><td class="modalrow">
-                                <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}" /><br/>
-                                <apex:inputField value="{!newContact.Salutation}" />
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputLabel value="{!$ObjectType.Contact.fields.FirstName.Label}" /><br/>
-                                <apex:inputField value="{!newContact.FirstName}" required="true"/>
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputLabel value="{!$ObjectType.Contact.fields.LastName.Label}" /><br/>
-                                <apex:inputField value="{!newContact.LastName}" />
-                                </td></tr>
-                            
-                            <tr><td class="modalrow">
-                                <apex:inputHidden value="{!newContact.Phone}" id="contactphone" />
-                                <apex:outputText value="{!$ObjectType.Contact.fields.Phone.Label}" /><br/>
-                                <apex:inputField id="contactphoneinput" html-placeholder="" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" required="true" style="width:85%"/>
-                                </td></tr>
-                             <tr><td class="modalrow">
-                                 <apex:inputHidden value="{!newContact.MobilePhone}" id="contactmobile" />
-                                 <apex:outputText value="{!$ObjectType.Contact.fields.MobilePhone.Label}" /><br/>
-                                 <apex:inputField id="contactmobileinput" html-placeholder="" value="{!newContact.MobilePhone}" onblur="setInternationalPhoneNo('mobile');" style="width:85%"/>
-                                 </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:inputHidden value="{!newContact.Fax}" id="contactfax" />
-                                <apex:outputText value="{!$ObjectType.Contact.fields.Fax.Label}"/><br/>
-                                <apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAXNational__c}" onblur="setInternationalPhoneNo('fax');" style="width:85%"/>
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
-                                <apex:inputField value="{!newContact.Email}" required="true" />
-                                </td></tr>
-                        </table>
-                      </td>
-                      <td style="width:50%">
-                        <table>
-                            <tr><td class="modalrow">
-                                <apex:inputField value="{!newContact.MailingStreet}" id="contactStreet" html-placeholder="{!$Label.ISSP_AMS_Street}"/>
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:inputField value="{!newContact.MailingCity}" id="contactCity"  html-placeholder="{!$Label.ISSP_AMS_City}"/>
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:inputField value="{!newContact.MailingPostalCode}" id="contactPostalCode" html-disabled="true" html-placeholder="{!$Label.ISSP_AMS_PostCode}"/>
-                                </td></tr>
-                            <tr><td class="modalrow" style="vertical-align:top;padding-bottom:30px">
-                                <!--<apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" size="1">
-                                    <apex:selectOptions value="{!countryNameList}"/>
-                                </apex:selectList>
-                                </td></tr>
-                          </table>
-                      </td>
-                  </tr>
-              </table>      
-          </apex:pageBlock>
+<apex:form id="newContact">
+<div class="modal fade" id="addNewContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Insert New Contact</h4>
       </div>
       
+      <apex:pageMessages id="theMessages" />
+      <div class="modal-body">
+
+        <div class="form-group">
+                <label for="email"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
+                  </div>                  
+                <apex:inputField styleclass="form-control rec"  id="email" value="{!newContact.email}"/>
+              </div>
+
+        <div class="form-group" id="Salutation">
+                <div><label for="inSalutation"><span class="required">*</span>{!$Label.ISSP_Salutation}</label></div>
+
+                    <apex:selectList id="inSalutation" styleclass="form-control rec" value="{!newContact.Salutation}" size="1" required="true">
+                      <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_None}"/>
+                      <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
+                      <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
+                      <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
+                    </apex:selectList>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
+                  </div>
+            </div>
+
+             <div class="form-group">
+                <label for="inFirstName"><span class="required">*</span>{!$ObjectType.Contact.fields.FirstName.Label}</label>
+                <div class="hiddenerror" style="display: none;">
+                  <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_FirstName}</p>
+                </div>
+                <apex:inputField id="inFirstName" styleClass="form-control rec" value="{!newContact.FirstName}"/>
+                  
+            </div>
+            <div class="form-group" id="LastName">
+                <label for="inLastName"><span class="required">*</span>{!$ObjectType.Contact.fields.LastName.Label}</label>
+                <apex:inputField id="inLastName" styleclass="form-control rec" value="{!newContact.LastName}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
+                  </div>
+              </div>
+              
+              <div class="form-group" id="Title">
+                <label for="inJobTitle"><span class="required">*</span>{!$Label.ISSP_Registration_JobTitle}</label>
+                <apex:inputField id="inJobTitle" styleclass="form-control rec" value="{!newContact.Title}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobTitle}</p>
+                  </div>
+              </div>
+   <!--           
+              <apex:outputPanel layout="none" >
+                <div id="Function">
+                  <span class="multiSelectFunction">
+                      <label for="inJobFunction"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>
+                      <apex:inputField id="inJobFunction" styleclass="form-control" value="{!newContact.Membership_Function__c}"/>
+                    <div class="hiddenerror" style="display: none;">
+                      <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobFunction}</p>
+                    </div>
+                  </span>
+                </div>
+              </apex:outputPanel>
+
+-->
+
+              <div class="form-group" id="Phone">
+                <label for="businessphoneinput"><span class="required">*</span>{!$Label.ISSP_Registration_BusinessPhone}</label><br/>
+                <apex:inputHidden id="businessphone" value="{!newContact.Phone}" />
+
+                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" 
+                  onkeyup="setLengthPhone(this,0)"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                  </div>
+              </div>
+
+
+
+              <div class="form-group" id="Phone2">
+                <label   for="businessmobileinput">{!$Label.ISSP_Registration_MobilePhone}</label><br/>
+                <apex:inputHidden id="businessmobile" value="{!newContact.MobilePhone}" />
+                <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!newContact.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"
+                  onkeyup="setLengthPhone(this,1)"/>
+              </div>
+              <div class="form-group" id="Fax">
+                <label   for="businessfaxinput">{!$ObjectType.Contact.fields.Fax.Label}</label><br/>
+                <apex:inputHidden id="businessfax" value="{!newContact.Fax}" />
+                <apex:inputField id="businessfaxinput" styleclass="form-control" value="{!newContact.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"
+                  onkeyup="setLengthPhone(this,2)"/>
+              </div>
+
+      </div>
       <div class="modal-footer">
-         <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> 
-        <apex:commandButton action="{!createContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
-            oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');"
-            onclick="this.disabled='disabled';"
-            reRender="contactList, ownerList, theMessages">
-            <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+        <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
+        <apex:commandButton action="createContact" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            
+            onclick="closeModalByCommandButton();"
+            reRender="sectiontwo">
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
-      </div>-->
+
+
+         <button onclick="submitContact();" type="button" class="btn btn-default" >teste
+         </button>
+
+        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
         
-        <!--<script>
+
+
+        <apex:actionFunction action="{!createContact}" name="createContacttt" rerender="sectionTwo">
+        </apex:actionFunction>
+
+        <script>
+
+        function submitContact(){
+            createContacttt();
+            closeModalByCommandButton();
+            return false;
+        }
+        function closeModal() {
+
+            $j(function() {
+                $j( '#addNewContactModal' ).modal('hide');
+                clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+            });
+
+        }
+
+        function clearForm(fname, ctryfield) {
+
+        }
+
+        function setLengthPhone(e, i) {
+          var phoneVal = e.value;
+          if(phoneVal ) {           
+            var formatedSize = phoneVal.length;
+            var unformatedSize = phoneVal.replace(" ", "").replace("-","").length;
+        
+            if(phoneVal.charAt(0) == "+") {
+              $(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+            } else {
+              var flagDrpd = $j($j(".flag-dropdown")[i]).find("div")[0];
+              if(flagDrpd && flagDrpd.title && flagDrpd.title.split("+")[1]) {
+                var selectedFlagLength = flagDrpd.title.split("+")[1].length;
+                $(e).attr("maxlength", 15 + (formatedSize - unformatedSize) - selectedFlagLength);
+              } else {
+                $(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+              } 
+            }           
+          }
+        }
 
         function closeModalByCommandButton()
         {          
+            console.log("here");
             closeModal();
-            setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
+            //setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
             $j( '.datePicker').css('position','absolute');
                 
         }
@@ -839,15 +883,16 @@
             }
         }
 
-        /*toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}');
+        toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}');
         togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode1}', '{!$Component.newContact.contactBlock.job1employer}','{!$Component.newContact.contactBlock.job1address}', '{!$Component.newContact.contactBlock.job1accredited}');
         togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode2}', '{!$Component.newContact.contactBlock.job2employer}','{!$Component.newContact.contactBlock.job2address}', '{!$Component.newContact.contactBlock.job2accredited}');
-    <!--</script>
-   <!-- </div>
+    </script>      
+    </div>
   </div>
 </div>
     
-</apex:form>-->
+</apex:form>
+
        
     </body>  
 </html>
