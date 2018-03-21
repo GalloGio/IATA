@@ -14890,6 +14890,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Code (HO / HE)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_CODE_SEARCH_SA</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Location type SA name</shortDescription>
+        <value>Specific Sales Activity (SA)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
         <categories>ISSP, Portal, ANG</categories>
         <language>en_US</language>
