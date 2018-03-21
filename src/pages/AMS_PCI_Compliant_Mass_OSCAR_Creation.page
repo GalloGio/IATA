@@ -41,6 +41,7 @@
   </script>
 
   <apex:form id="mainForm">
+    <apex:PageMessages />
     <apex:actionFunction action="{!null}" name="refreshForm" reRender="searchResult"/>
     <c:Loading />
     <apex:pageBlock title="PCI Oscar mass creation" mode="edit">
@@ -70,6 +71,15 @@
                            leftOptions="{!countryNameListSelectOption}"
                            rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
                            rightOptions="{!CountrySelected}"
+                           size="8"
+                           width="100px"
+                           btn_up_down="false"
+                           readonly="false"/>
+                <c:MultiselectPicklist id="locationTypes" 
+                           leftLabel="Available Locations" 
+                           leftOptions="{!locationTypes}"
+                           rightLabel="Selected Locations"
+                           rightOptions="{!selectedLocationTypes}"
                            size="8"
                            width="100px"
                            btn_up_down="false"
