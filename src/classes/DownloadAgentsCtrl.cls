@@ -18,11 +18,11 @@ public with sharing class DownloadAgentsCtrl {
         public String exclClosedCases       {get;set;}
   
     public DownloadAgentsCtrl (){
-    	
+        
     agentType = Apexpages.currentPage().getParameters().get('agenttype');
     agentStatus = Apexpages.currentPage().getParameters().get('agentstatus');
     //country = Apexpages.currentPage().getParameters().get('country');
-	country = Apexpages.currentPage().getParameters().get('ISOcountry');
+    country = Apexpages.currentPage().getParameters().get('ISOcountry');
     email = Apexpages.currentPage().getParameters().get('email');
     yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
     targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
@@ -100,7 +100,7 @@ public with sharing class DownloadAgentsCtrl {
                 soql += ' and Account.Fin_statements_submission_deadline__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\'';
         
              // Location Type AO/HO/BR filter     
-             soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\')'; 
+             soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\' OR Account.Location_Type__c LIKE \'HE%\' OR Account.Location_Type__c LIKE \'AE%\')'; 
              
             // exclude opened cases
             if (exclOpenCases.equals('true'))
@@ -209,7 +209,7 @@ public with sharing class DownloadAgentsCtrl {
             soql += ' and c.Contact.Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
     
         // Location Type HO/ AO filter     
-        soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\')';
+        soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\'  OR c.Contact.Account.Location_Type__c LIKE \'AE%\')';
         casesQuery = soql;
 
         for (Case c : Database.query(soql)) {

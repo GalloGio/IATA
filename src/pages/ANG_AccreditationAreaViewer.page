@@ -1,0 +1,167 @@
+    
+<apex:page readOnly="true" standardController="AMS_Pax_Accreditation_Form__c" extensions="ANG_AccreditationAreaViewer">
+
+<script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
+<script src="../../soap/ajax/34.0/apex.js" type="text/javascript"></script>
+<apex:includeScript value="/support/console/42.0/integration.js"/>
+
+<script type="text/javascript" language="javascript">
+
+	function undoStuff(){
+		document.getElementById('loaderPageBlock').style.display = 'none';
+	};
+
+    function createChangesOscar(arg1){
+
+		document.getElementById('loaderPageBlock').style.display = 'block';
+
+		setTimeout(function(){
+    		sforce.connection.sessionId = "{!$Api.Session_ID}";
+
+			var accreditations = sforce.connection.query("Select Id, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = '{!accreditationObj.HO_Account__c}' and Id != '{!accreditationObj.Id}' and SAAM_Case__r.ParentId = '{!accreditationObj.SAAM_Case__c}'");
+
+			if(accreditations.size > 0){
+				document.getElementById('loaderPageBlock').style.display = 'none';
+				alert('This Staging Area already has a case. Please refresh the page.');
+				return;
+			}
+
+			var result = sforce.apex.execute("ANG_OscarProcessHelper","createOscarChangesCase", {accreditationId: arg1}); 
+
+			if(result[0] == '-1')
+				alert("Error trying to create oscar case. Reason:" + result[1]);
+			else{
+
+				var oscarId = result[0];
+				var oscarNumber = result[1];
+
+				var openPrimarytab = function(result)
+				{               
+				    sforce.console.openPrimaryTab(null, '/'+oscarId, false, oscarNumber);     
+				};
+
+				sforce.console.getEnclosingPrimaryTabId(openPrimarytab);
+				}
+			},10);
+
+	}
+
+    function openCase(arg1,arg2){
+
+			var openPrimarytab = function(result)
+			{               
+			    sforce.console.openPrimaryTab(null, '/'+arg1, true, arg2);     
+			};
+
+			sforce.console.getEnclosingPrimaryTabId(openPrimarytab);
+		
+	
+	}
+
+</script>
+
+<style>
+	.overlay{
+	    height: 100%;
+	    width: 100%;
+	    position: fixed;
+	    z-index: 100;
+	    top: 0;
+	    left: 0;
+	    background-color: rgb(0,0,0);
+	    background-color: rgba(0,0,0, 0.85);
+	    overflow-x: hidden;
+	}
+
+	.overlay-content {
+	    position: relative;
+	    top: 15%;
+	    width: 100%;
+	    text-align: center;
+	    margin-top: 30px;
+	}
+
+	.overlay a:hover, .overlay a:focus {
+	    color: #f1f1f1;
+	}
+
+	.overlay a:visited {
+	    color: #666666;
+	}
+
+	.overlay {
+	    padding: 0 0 8px 0;
+	    text-decoration: none;
+	    font-size: 22px;
+	    color: #818181;
+	    display: block; /* Display block instead of inline */
+	    transition: 0.3s; /* Transition effects on hover (color) */
+	}
+
+	.overlay {
+	    font-size: 14px;
+	    color: #818181;
+	    text-align: left;
+	    display: block; /* Display block instead of inline */
+	}
+
+	.loaderCircle {
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		display: block;
+		margin: 0 auto;
+		width: 120px;
+		height: 120px;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+		}
+
+</style>
+
+	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.IATACode__c}"/>
+	<apex:form>
+		<div Id="loaderPageBlock" style="display:none;">
+			<div class="overlay">
+				<div class="overlay-content">
+					<p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+				</div>
+			<div class="loaderCircle"></div>
+			</div>
+		</div>
+
+		<apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" id="mainPageBlock">
+			<apex:pageBlockSection columns="2">
+				<apex:repeat value="{!accreditationFields}" var="field">
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field].Label}" />
+						<apex:outputField value="{!accreditationObj[field]}" />
+					</apex:pageBlockSectionItem>
+				</apex:repeat>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true" rendered="{!doNotHaveOscarYet}">
+                <apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+                    <apex:outputText value="{!note}"/>
+                </apex:dataList>
+            </apex:pageBlockSection>
+			<apex:pageBlockButtons location="bottom" rendered="{!doNotHaveOscarYet}">
+				<apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" oncomplete="undoStuff();" reRender="mainPageBlock"/>
+			</apex:pageBlockButtons>
+			<br/><br/><br/><br/>
+				<apex:outputText  style="color: red;font-size: 14px;" value="This Staging Area already has a case, click below to open the case" rendered="{!!doNotHaveOscarYet}"/>
+				<apex:pageBlockButtons location="bottom" rendered="{!!doNotHaveOscarYet}">
+					<apex:commandButton value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
+				</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

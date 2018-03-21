@@ -2331,6 +2331,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_in_DIS';
         else if(agencyType == AMS_Utils.NGOPTINOUT && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Financial_Assesment_Opt_out_DIS';
         else if(agencyType == AMS_Utils.NGANNUALREVAL && step == AMS_Utils.FAILED && !wasApproved) templateId  = 'ANG_Annual_Revalidation_Failed';
+        else if(agencyType == AMS_Utils.NGANNUALREVAL && step == null) templateId  = 'ANG_Anual_Renewal_Case';
+
+        System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
@@ -2697,7 +2700,7 @@ public class AMS_OSCARTriggerHandler {
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
 
-            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c))
+            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c) && updatedOSCAR.Process__c <> AMS_Utils.NGOPTINOUT)
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 40;
             else
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;

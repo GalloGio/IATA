@@ -199,6 +199,8 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public String selectedTab{get;set;}
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -234,7 +236,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
         }   
         
-  
+    selectedTab = 'tab1';
+
     }
 
     public String convertToString(Blob value){
