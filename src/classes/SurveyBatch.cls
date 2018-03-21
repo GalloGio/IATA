@@ -766,7 +766,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Indonesia')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Indonesia')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Indonesia'
         )
@@ -782,7 +782,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Japan')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Japan')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Japan'
         )
@@ -790,7 +790,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Thailand')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Thailand')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Korea, Republic of'
         )
@@ -801,7 +801,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           ((RoleName.contains('MAD Hub CS') &&
             c.Region__c == 'Europe' &&
             AccountCountry == 'Portugal') ||
-           (RoleName.contains('Americas Customer Service Staff') &&
+           (RoleName.contains('Americas Customer Service') &&
             c.Region__c == 'Americas' &&
             AccountCountry == 'Brazil'))
 
@@ -821,7 +821,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           ((RoleName.contains('MAD Hub CS') &&
             c.Region__c == 'Europe' &&
             (AccountCountry == 'Spain' || AccountCountry == 'Andorra')) ||
-           (RoleName.contains('Americas Customer Service Staff') &&
+           (RoleName.contains('Americas Customer Service') &&
             c.Region__c == 'Americas' &&
             (AccountCountry == 'Ecuador' || AccountCountry == 'Costa Rica' || AccountCountry == 'Colombia' || AccountCountry == 'El Salvador' ||
              AccountCountry == 'Belize' || AccountCountry == 'Panama' || AccountCountry == 'Guatemala' || AccountCountry == 'Nicaragua' ||
@@ -834,7 +834,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Thailand')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Thailand')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Thailand'
         )
@@ -850,7 +850,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         */
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Vietnam')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Vietnam')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Vietnam'
         )
@@ -865,7 +865,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           template = templates.get('Clicktools_Contact_Email_CX_AR_AUG17');
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') &&
+          (RoleName.contains('A&P Customer Service') &&
            c.Region__c == 'Asia & Pacific' &&
            (AccountCountry == 'Philippines' || AccountCountry == 'India' || AccountCountry == 'Nepal' || AccountCountry == 'Bangladesh' ||
             AccountCountry == 'Pakistan' || AccountCountry == 'Singapore' || AccountCountry == 'Sri Lanka' || AccountCountry == 'Cambodia' ||
@@ -877,7 +877,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             AccountCountry != 'Italy' && AccountCountry != 'Portugal' &&
             AccountCountry != 'Spain' && AccountCountry != 'Andorra' && AccountCountry != 'Russian Federation'))
           ||
-          (RoleName.contains('China & N. Asia Customer Service Staff') &&
+          (RoleName.contains('China & N. Asia Customer Service') &&
            c.Region__c == 'China & North Asia' &&
            (AccountCountry == 'Mongolia' || AccountCountry == 'Chinese Taipei' || AccountCountry == 'Hong Kong (SAR), China' ))
           ||
@@ -893,12 +893,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             AccountCountry != 'Libya' && AccountCountry != 'Somalia' && AccountCountry != 'South Sudan' && AccountCountry != 'Sudan' &&
             AccountCountry != 'Suriname' && AccountCountry != 'Syria'))
           ||
-          (RoleName.contains('Americas Customer Service Staff') &&
+          (RoleName.contains('Americas Customer Service') &&
            c.Region__c == 'Americas' &&
            (AccountCountry == 'HAITI' || AccountCountry == 'JAMAICA' || AccountCountry == 'CAYMAN ISLANDS' ||
             AccountCountry == 'TURKS AND CAICOS ISLANDS' || AccountCountry == 'Trinidad and Tobago' || AccountCountry == 'BERMUDA' ))
           ||
-          (RoleName.contains('A&P Customer Service Staff') &&
+          (RoleName.contains('A&P Customer Service') &&
            c.Region__c == 'Asia & Pacific' &&
            AccountCountry == 'Australia')
         )
