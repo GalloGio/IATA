@@ -105,7 +105,11 @@ public class ISSP_ANG_CodeSearch {
 					if(auxAgency.Location_Type__c == Ams_Utils.AE) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
-						auxReplacement = 'a ' + Label.ISSP_ANG_BRANCH_OFFICE;
+						if(auxAgency.Location_Type__c == Ams_Utils.BR) {
+							auxReplacement = 'a ' + Label.ISSP_ANG_BRANCH_OFFICE;
+						} else {
+							auxReplacement = 'a ' + Label.ISSP_ANG_CODE_SEARCH_SA;
+						}
 					}
 
 					this.showParent = true;
