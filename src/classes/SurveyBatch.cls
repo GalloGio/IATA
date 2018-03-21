@@ -736,7 +736,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
            c.Region__c == 'Europe' &&
            AccountCountry == 'France' )
           ||
-          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
+          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS') || RoleName.contains('Africa & ME CS Manager')) &&
            c.Region__c == 'Africa & Middle East' &&
            (AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' || AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde'
             || AccountCountry == 'Tchad' || AccountCountry == 'Congo, the Democratic Republic of the' || AccountCountry == 'Congo (Brazzaville)'
@@ -857,7 +857,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           template = templates.get('Clicktools_Contact_Email_CX_VI_AUG17');
 
         else if (
-          (RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
+          (RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS') || RoleName.contains('Africa & ME CS Manager')) &&
           c.Region__c == 'Africa & Middle East' &&
           (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
            AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
@@ -881,7 +881,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
            c.Region__c == 'China & North Asia' &&
            (AccountCountry == 'Mongolia' || AccountCountry == 'Chinese Taipei' || AccountCountry == 'Hong Kong (SAR), China' ))
           ||
-          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
+          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS') || RoleName.contains('Africa & ME CS Manager')) &&
            c.Region__c == 'Africa & Middle East' &&
            (AccountCountry != 'Benin' && AccountCountry != 'Burkina Faso' && AccountCountry != 'Cameroon' && AccountCountry != 'Cape Verde' &&
             AccountCountry != 'Tchad' && AccountCountry != 'Congo, the Democratic Republic of the' && AccountCountry != 'Congo (Brazzaville)' &&
