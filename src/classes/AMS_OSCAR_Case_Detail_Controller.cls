@@ -474,7 +474,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             }
 
         }catch(Exception e){
-                accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                if(!e.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION, CASS Number')){
+                    accreditationObj.addError('An error occured trying to save Accreditation Object, reason:' + e);
+                }
         }
     } 
 
