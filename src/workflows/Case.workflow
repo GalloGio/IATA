@@ -5460,19 +5460,19 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;, 
-(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
-(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
-(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
+        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;,
+(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;,
+(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;,
+(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;,
 (IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
@@ -5657,11 +5657,11 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <fullName>IDFS_SIDRA_Update_nbr_IRR_for_DEF</fullName>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
-        <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), 
+        <formula>CASE( Region__c ,
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4),
 &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(OR(ISPICKVAL( BSPCountry__c , &quot;India&quot;)),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),
 &quot;China &amp; North Asia&quot;, IF(AND(OR(ISPICKVAL(BSPCountry__c , &quot;China (People&apos;s Republic of)&quot;),(ISPICKVAL(BSPCountry__c , &quot;People&apos;s Republic of China&quot;))),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),
-&quot;Americas&quot;, IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
+&quot;Americas&quot;, IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1
 )</formula>
         <name>IDFS_SIDRA_Update nbr IRR for DEF</name>
         <notifyAssignee>false</notifyAssignee>
@@ -6291,11 +6291,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <fieldUpdates>
         <fullName>SARA_Termination_date_manual_update</fullName>
         <field>Termination_date_manual_entry__c</field>
-        <formula>DATETIMEVALUE(TEXT(IF(MONTH(datevalue(now()))=12, 
-DATE(YEAR(datevalue(now())) +1, 1, 31), 
-DATE(YEAR(datevalue(now()) ), MONTH(datevalue(now())) +1, 
+        <formula>DATETIMEVALUE(TEXT(IF(MONTH(datevalue(now()))=12,
+DATE(YEAR(datevalue(now())) +1, 1, 31),
+DATE(YEAR(datevalue(now()) ), MONTH(datevalue(now())) +1,
 
-Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,31,11,30,12,31,30) 
+Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,31,11,30,12,31,30)
 )))&amp;&quot;:16:00&quot;)</formula>
         <name>SARA Termination date (manual entry)</name>
         <notifyAssignee>false</notifyAssignee>
@@ -7296,7 +7296,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>Update_previous_owner</fullName>
         <description>Updates the &quot;Previous Case Owner&quot; field with the name of the current owner (this field update will no longer be called when the owner will be changed).</description>
         <field>Previous_case_owner__c</field>
-        <formula>IF ( 
+        <formula>IF (
   LEFT( OwnerId , 3 ) = &apos;005&apos;,
   Owner:User.FirstName + &apos; &apos; + Owner:User.LastName,
   Owner:Queue.QueueName
@@ -7353,11 +7353,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Agency Management&quot;),CONTAINS($Profile.Name,&quot;Hub Analyst ARM&quot;)),&quot;Agency Management&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;),&quot;Invoicing &amp; Collection&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),&quot;Operations&quot;,
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
@@ -14594,7 +14594,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>Agent to be Notified</value>
         </criteriaItems>
-        <description>If “FA Letter Sent” is checked 
+        <description>If “FA Letter Sent” is checked
 Change the case status to “Agent Notified (mail)” if case status was “Agent to be Notified”.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15032,7 +15032,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20)) AND 16 AND 18 AND 19 AND 21) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15133,6 +15133,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>notEqual</operation>
             <value>PCI DSS Compliant</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Financial review opt-in / opt-out</value>
+        </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -15143,7 +15148,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15233,6 +15238,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Internal Case</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Financial review opt-in / opt-out</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16935,8 +16945,8 @@ For cases coming from web forms</description>
             <operation>lessOrEqual</operation>
             <value>5000</value>
         </criteriaItems>
-        <description>SEDA :, the case be assigned to Airline Suspension Team automatically. 
-1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000) 
+        <description>SEDA :, the case be assigned to Airline Suspension Team automatically.
+1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000)
 2) Recurrence Negative Settlement no matter the amount</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
