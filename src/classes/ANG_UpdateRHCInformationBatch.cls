@@ -1,18 +1,38 @@
-public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject>, Database.AllowsCallouts {
+public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject>, Queueable, Database.AllowsCallouts {
 
 	public enum Process {PROVISIONAL, CONSUMED}
 
 	private Set<Id> accountsIds;
 	private Process p;
 	private Boolean runEverything;
+	private Integer scopeSize = 100; //sets default scope size . this is used on the Queuable Constructor
 
+	// *********************************************************
+	// ******************** Constructors ***********************
+	// *********************************************************
 
+	public ANG_UpdateRHCInformationBatch(Set<Id> a, Process p, Boolean r, Integer s) {
+		this(a, p, r);
+		this.scopeSize = s;
+	}
 	public ANG_UpdateRHCInformationBatch(Set<Id> a, Process p, Boolean r) {
 		this.accountsIds = a;
 		this.p = p;
 		this.runEverything = r;
 	}
 
+
+	// *********************************************************
+	// ****************** Queuable method **********************
+	// *********************************************************
+	public void execute(QueueableContext context) {
+		Database.executeBatch(this, scopeSize);
+	}
+
+
+	// *********************************************************
+	// ******************* Batch methods ***********************
+	// *********************************************************
 	public Database.QueryLocator start(Database.BatchableContext BC) {
 		//fetch all accounts
 		return Database.getQueryLocator([Select Id From Account Where Id in: accountsIds]);
