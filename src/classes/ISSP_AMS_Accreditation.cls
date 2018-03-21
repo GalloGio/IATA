@@ -8133,7 +8133,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 
     public Pagereference runOptInOut() {
                                 
-        newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
+        //newForm.Effective_Date_Of_Change__c = Date.valueOf(pEfectiveDateStr);
 
         newCase.RecordTypeId = AMS_Utils.OSCAR_COMUNICATION;
         newCase.Status = AMS_Utils.OPEN;

@@ -40,12 +40,12 @@
         
 
         <script type="text/javascript">
-                var $j = jQuery.noConflict();
+                //var $j = jQuery.noConflict();
             
                 var typeAccredSelected = '';
    
-                $j(function () {
-                    $j('[data-toggle="tooltip"]').tooltip();
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
                 })
 
                 function checkEligibility(isBankAccountChange){
@@ -83,7 +83,7 @@
 
                 function newnAccreditationApplicationNavigateTo() {
                     if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
-                        $j('#modalChooseAccreditationType').modal('toggle');
+                        $('#modalChooseAccreditationType').modal('toggle');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
@@ -91,12 +91,12 @@
                 }
 
                 function modalChooseAccreditationTypeClose() {
-                    $j('#modalChooseAccreditationType').modal('toggle');
+                    $('#modalChooseAccreditationType').modal('toggle');
                 }
 
                 function redirectAccreditationType() {
 
-                    typeAccredSelected = $j('input[type=radio]:checked').val();
+                    typeAccredSelected = $('input[type=radio]:checked').val();
 
                     if(typeAccredSelected == '') {
                         document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
