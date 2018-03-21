@@ -3435,19 +3435,9 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Full Service Network Carrier</fullName>
+                    <fullName>Full Service Carrier</fullName>
                     <default>false</default>
-                    <label>Full Service Network Carrier</label>
-                </value>
-                <value>
-                    <fullName>Full Service Regional Carrier</fullName>
-                    <default>false</default>
-                    <label>Full Service Regional Carrier</label>
-                </value>
-                <value>
-                    <fullName>Full Service Holiday Carrier</fullName>
-                    <default>false</default>
-                    <label>Full Service Holiday Carrier</label>
+                    <label>Full Service Carrier</label>
                 </value>
                 <value>
                     <fullName>Low Cost Carrier</fullName>
@@ -3455,9 +3445,9 @@
                     <label>Low Cost Carrier</label>
                 </value>
                 <value>
-                    <fullName>Ultra Low Cost Carrier</fullName>
+                    <fullName>Leisure Carrier</fullName>
                     <default>false</default>
-                    <label>Ultra Low Cost Carrier</label>
+                    <label>Leisure Carrier</label>
                 </value>
                 <value>
                     <fullName>Hybrid Carrier</fullName>
@@ -3465,14 +3455,9 @@
                     <label>Hybrid Carrier</label>
                 </value>
                 <value>
-                    <fullName>Cargo Only Carrier</fullName>
+                    <fullName>Cargo</fullName>
                     <default>false</default>
-                    <label>Cargo Only Carrier</label>
-                </value>
-                <value>
-                    <fullName>Legacy</fullName>
-                    <default>false</default>
-                    <label>Legacy</label>
+                    <label>Cargo</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -34051,10 +34036,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -40399,19 +40380,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo Only Carrier</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Holiday Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Network Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Regional Carrier</fullName>
+                <fullName>Full Service Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40419,11 +40392,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Leisure Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Ultra Low Cost Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48536,10 +48509,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -53009,10 +52978,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
@@ -67902,19 +67867,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Cargo Only Carrier</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Full Service Holiday Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Network Carrier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Full Service Regional Carrier</fullName>
+                <fullName>Full Service Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67922,11 +67879,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Low Cost Carrier</fullName>
+                <fullName>Leisure Carrier</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Ultra Low Cost Carrier</fullName>
+                <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75577,10 +75534,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
             </values>
@@ -79911,10 +79864,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Low Cost Carrier</fullName>
                 <default>false</default>
