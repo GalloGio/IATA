@@ -6,7 +6,9 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
+           docType="html-5.0"
            >
+
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
         <c:iss_ap_css />
@@ -248,6 +250,7 @@
         $j("#phone").hide();
         $j("#branch_office_phone__c").hide();
         $j("#BranchPhoneSection").hide();
+        //$j('#multiSelectPicklistCell').removeClass('form-control');
     });
 
     function showUpdateAgencyDialog() {
@@ -273,9 +276,6 @@
     ownerModalFields[7] = "{!$Component.newContact.contactBlock.contactJobTitle}";
 
     $j(document).ready(function() {
-        //document.getElementById(ownerModalFields[3]).disabled = true;
-        //replaceShippingTXT(document.body);
-       // console.log('accountID: ' + retAddressCompUrl());
        removeReq();
        showUpdateAgencyDialog();
     });
@@ -290,11 +290,6 @@
             $j(".billingcountry").attr('disabled', 'disabled');
       });
     }
-    /*
-    function setPortalAdmin(f) {
-        var adminid = document.getElementById(f).value;
-        $j( "#" + adminid ).prop( "checked", true );
-    }*/
 
     </script>
      <div class="container">
@@ -308,11 +303,6 @@
     <div class="panel-body" id="body-enquiries">
         <apex:form id="AMSForm">
 
-            <!-- <apex:actionFunction name="resetSaleSaved" action"{!}" status="WaitingStatus" reRender="newSalesForm"/> 
-            <apex:inputHidden value="{!newForm.ISSP_AMS_Portal_admin__c}" id="PortalAdminId" />
-             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
-                    <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
-             </apex:actionfunction>-->
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
@@ -399,23 +389,8 @@
                                     <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
                                     <apex:inputField style="width: 200px;" styleclass="form-control recSearch"  value="{!account.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
                                 </apex:pageBlockSectionItem>
-
-                    	<!--<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                            <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}"/>
-                          <apex:outputpanel id="VATNumberInput">
-                            <span style="margin-left:{!If(isEUcountry,'-20px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
-                            <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:174px" />
-                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
-                                <apex:facet name="start">
-                                    {!$Label.ISSP_PAX_Validating_VAT_Number}
-                                </apex:facet>
-                            </apex:actionstatus>
-                        </apex:outputpanel>
-                    </apex:pageblocksectionitem>-->
                                 
-                             
-
+               
                                 <apex:inputHidden value="{!account.Phone}" id="companyphone"/>
                                 <apex:inputHidden value="{!account.Mobile__c}" id="companymobile"/>
                                 <apex:inputHidden value="{!account.Fax}" id="companyfax"/>
@@ -459,19 +434,6 @@
                        <script type="text/javascript">
                             var $j = jQuery.noConflict();
 
-/*                          function mandatoryLabels() {
-                                var labelBillStreet = $j('.address-label')[0].childNodes[0],
-                                    labelBillCity = $j('.address-label')[1].childNodes[0];
-                                if (labelBillStreet)
-                                    labelBillStreet.textContent = labelBillStreet.textContent + ' *' ;
-                                if (labelBillCity)
-                                    labelBillCity.textContent = labelBillCity.textContent + ' *' ;                                
-                            }
-*/
-                           // document.onload = mandatoryLabels();
-                            //document.onload = showUpdateAgencyDialog();
-                            //document.onload = removeReq();
-                        
                         	var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
                             	observer = new MutationObserver(function (mutations) {
                                 $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
@@ -488,28 +450,7 @@
                                 faxacct = $j("[id$=companyfax]"),
                                 natmobileacct = $j("[id$=companymobileinput]"),
                                 mobileacct = $j("[id$=companymobile]");
-							/*
-                            natphoneacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "FIXED_LINE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
 
-                            natmobileacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "MOBILE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
-
-                            natfaxacct.intlTelInput({
-                                nationalMode: true,
-                                defaultCountry: defaultHQCountry,
-                                numberType: "FIXED_LINE",
-                                utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                            });
-                            */
 
                             natphoneacct.intlTelInput("setNumber", phoneacct.val());
                             natmobileacct.intlTelInput("setNumber", mobileacct.val());
@@ -563,26 +504,6 @@
                         natmobileacctTerm = $j("[id$=companymobileinputTerminated]"),
                         mobileacctTerm = $j("[id$=companymobile2]");
 
-                    /*natphoneacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "FIXED_LINE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });
-
-                    natmobileacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "MOBILE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });
-
-                    natfaxacctTerm.intlTelInput({
-                        nationalMode: true,
-                        defaultCountry: defaultHQCountry,
-                        numberType: "FIXED_LINE",
-                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                    });*/
 
                     natphoneacctTerm.intlTelInput("setNumber", phoneacctTerm.val());
                     natmobileacctTerm.intlTelInput("setNumber", mobileacctTerm.val());
@@ -600,11 +521,67 @@
         </script>
 
 <!-------section 2 in here---->
+        
+        
+         <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false">
+            <apex:facet name="header">
+                <apex:outputpanel>{!$label.ISSP_Payment_Provider_Details_section_2}</apex:outputpanel>
+            </apex:facet>
+<form >
 
-              
+            <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact</apex:commandLink>
+            <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
 
+
+
+
+
+
+            <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/> 
+                <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!con.LastName}"/>
+                <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!con.Phone}"/>
+                <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!con.Email}"/>
+                
+                <apex:column headerValue="Primary Contact">
+
+                    <apex:outputPanel rendered="{!con.Primary_Contact__c}">
+                        <input type="radio" id="primaryContactRadio" checked="checked" />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!!con.Primary_Contact__c}" onclick=" refreshTable('{!con.id}'); ">
+                        <input type="radio" id="primaryContactRadio"   />
+                    </apex:outputPanel>
+
+                </apex:column>
+            </apex:pageBlockTable>
+
+
+
+        <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo">
+            <apex:param id="contactID" name="contactID" value="" />
+        </apex:actionFunction>
+
+        <script type="text/javascript">
+            function refreshTable(contactID) {
+                updateRadioButton(contactID);
+            }
+            function showNewContactDialog() {
+                $j(function() {
+                    $j( '#addNewContactModal').modal('show');
+                    $j( '.datePicker').css('position','fixed');
+                });
+            }
+        </script>
+
+            </form>
+        </apex:pageBlockSection>
+
+        
             </div>  <!-- EO APContainer -->
          </apex:pageBlock>
+
+
        
         </apex:form> <!-- EO AMS Form -->
                 
@@ -614,6 +591,208 @@
          </div>
          <c:ISSP_CustomFooter />
          </div>
+
+
+<apex:form id="newContact">
+<div class="modal fade" id="addNewContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Insert New Contact</h4>
+      </div>
+      
+      <apex:pageMessages id="theMessages" />
+      <div class="modal-body">
+
+        <div class="form-group">
+                <label for="email"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
+                  </div>                  
+                <apex:inputField styleclass="form-control rec"  id="email" required="true" value="{!newContact.email}"/>
+              </div>
+
+        <div class="form-group" id="Salutation">
+                <div><label for="inSalutation"><span class="required">*</span>{!$Label.ISSP_Salutation}</label></div>
+
+                    <apex:selectList id="inSalutation" styleclass="form-control rec" value="{!newContact.Salutation}" size="1" required="true">
+                      <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_None}"/>
+                      <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
+                      <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
+                      <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
+                    </apex:selectList>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
+                  </div>
+            </div>
+
+             <div class="form-group">
+                <label for="inFirstName"><span class="required">*</span>{!$ObjectType.Contact.fields.FirstName.Label}</label>
+                <div class="hiddenerror" style="display: none;">
+                  <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_FirstName}</p>
+                </div>
+                <apex:inputField id="inFirstName" styleClass="form-control rec" required="true" value="{!newContact.FirstName}"/>
+                  
+            </div>
+            <div class="form-group" id="LastName">
+                <label for="inLastName"><span class="required">*</span>{!$ObjectType.Contact.fields.LastName.Label}</label>
+                <apex:inputField id="inLastName" styleclass="form-control rec" required="true" value="{!newContact.LastName}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
+                  </div>
+              </div>
+              
+              <div class="form-group" id="Title">
+                <label for="inJobTitle"><span class="required">*</span>{!$Label.ISSP_Registration_JobTitle}</label>
+                <apex:inputField id="inJobTitle" styleclass="form-control rec" required="true" value="{!newContact.Title}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobTitle}</p>
+                  </div>
+              </div>
+              
+              <apex:outputPanel layout="inline" >
+                <div id="Function">
+                  <span class="multiSelectFunction">
+                      <label for="inJobFunction"><span class="required">*</span>{!$ObjectType.Contact.fields.Membership_Function__c.Label}</label>&nbsp;<p></p>
+                      <apex:inputField id="inJobFunction"  style="margin-left: 20px" value="{!newContact.Membership_Function__c}"/>
+                    <div class="hiddenerror" style="display: none;">
+                      <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_JobFunction}</p>
+                    </div>
+                  </span>
+                </div>
+              </apex:outputPanel>
+
+
+
+              <div class="form-group" id="Phone">
+                <label for="businessphoneinput"><span class="required">*</span>{!$Label.ISSP_Registration_BusinessPhone}</label><br/>
+                <apex:inputHidden id="businessphone" value="{!newContact.Phone}" />
+
+                <apex:inputField id="businessphoneinput" html-placeholder="" styleclass="form-control rec" required="true" value="{!newContact.Phone}" onblur="setInternationalPhoneNo('phone');" 
+                  onkeyup="setLengthPhone(this,0)"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                  </div>
+              </div>
+
+
+              <div class="form-group" id="Phone2">
+                <label   for="businessmobileinput">{!$Label.ISSP_Registration_MobilePhone}</label><br/>
+                <apex:inputHidden id="businessmobile" value="{!newContact.MobilePhone}" />
+                <apex:inputField id="businessmobileinput" styleclass="form-control" html-placeholder="" value="{!newContact.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"
+                  onkeyup="setLengthPhone(this,1)"/>
+              </div>
+
+      </div>
+      <div class="modal-footer">
+        <apex:commandButton action="{!createContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="closeModalByCommandButton();">
+         </apex:commandButton>&nbsp;
+
+        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
+
+      <apex:actionFunction name="rerenderAfterInsertContact" rerender="sectionTwo,newContact" />
+
+        <script>
+        function closeModal() {
+
+            $j(function() {
+                $j( '#addNewContactModal' ).modal('hide');
+                clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+                rerenderAfterInsertContact();
+            });
+
+        }
+
+        function clearForm(fname, ctryfield) {
+
+        }
+
+        function setLengthPhone(e, i) {
+          var phoneVal = e.value;
+          if(phoneVal ) {           
+            var formatedSize = phoneVal.length;
+            var unformatedSize = phoneVal.replace(" ", "").replace("-","").length;
+        
+            if(phoneVal.charAt(0) == "+") {
+              $(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+            } else {
+              var flagDrpd = $j($j(".flag-dropdown")[i]).find("div")[0];
+              if(flagDrpd && flagDrpd.title && flagDrpd.title.split("+")[1]) {
+                var selectedFlagLength = flagDrpd.title.split("+")[1].length;
+                $(e).attr("maxlength", 15 + (formatedSize - unformatedSize) - selectedFlagLength);
+              } else {
+                $(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+              } 
+            }           
+          }
+        }
+
+        function closeModalByCommandButton()
+        {          
+            closeModal();
+            //setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');
+            $j( '.datePicker').css('position','absolute');
+                
+        }
+
+        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+
+        natphone.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+
+        natphone.intlTelInput("setNumber", phone.val());
+
+        var natmobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobileinput}']");
+        var mobile = $j("input[name='{!$Component.newContact.contactBlock.contactmobile}']");
+        
+         natmobile.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "MOBILE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        natmobile.intlTelInput("setNumber", mobile.val());
+        
+        var natfax = $j("input[name='{!$Component.newContact.contactBlock.contactfaxinput}']");
+        var fax = $j("input[name='{!$Component.newContact.contactBlock.contactfax}']");
+    
+         natfax.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        
+        natfax.intlTelInput("setNumber", fax.val());
+    
+        function setInternationalPhoneNo(p) {
+            if(p=='phone') {
+                phone.val(natphone.intlTelInput("getNumber"));
+            } else if(p=='mobile') {
+                mobile.val(natmobile.intlTelInput("getNumber"));
+            } else {
+                fax.val(natfax.intlTelInput("getNumber"));
+            }
+        }
+
+        toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode1}', '{!$Component.newContact.contactBlock.job1employer}','{!$Component.newContact.contactBlock.job1address}', '{!$Component.newContact.contactBlock.job1accredited}');
+        togglePrevIATACode(null, '{!$Component.newContact.contactBlock.iatacode2}', '{!$Component.newContact.contactBlock.job2employer}','{!$Component.newContact.contactBlock.job2address}', '{!$Component.newContact.contactBlock.job2accredited}');
+    </script>      
+    </div>
+  </div>
+</div>
+    
+</apex:form>
+
        
     </body>  
 </html>

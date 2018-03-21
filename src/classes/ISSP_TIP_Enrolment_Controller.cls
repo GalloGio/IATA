@@ -11,6 +11,9 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
     private Case newCase {get; set;}
     private List <Case> accountCases {get; set;}
 
+    public String conID {get; set;}
+    public Contact newContact {get;set;} 
+    public List <Contact> contactList {get; set;}
 
 	public ISSP_TIP_Enrolment_Controller() {
 
@@ -34,6 +37,8 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 							AND Status = 'Draft'
     	 				LIMIT 1]; 
 
+    	fillContactList();
+    	newContact = new Contact();
 	}
 
 	public Pagereference submitToIATA() {
@@ -49,7 +54,14 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
 		
 		
 		//confirm that primary contact is choosen
-//-------missing TIP-37 to be done --------------------------
+		Boolean hasPrimaryContact = false;
+		for(Contact c : contactList){
+			if (c.Primary_Contact__c) hasPrimaryContact = true;
+		}
+
+		if(!hasPrimaryContact) contactList[0].Primary_Contact__c = true;
+		upsert contactList;
+
 
 		//Update or create case with status Open
 		updateCase();
@@ -149,5 +161,29 @@ public with sharing class ISSP_TIP_Enrolment_Controller {
             options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
+    }
+
+    private void fillContactList() {
+    	contactList = [SELECT id,Name, Email, FirstName, LastName, Phone, Primary_Contact__c
+                FROM Contact
+                WHERE Status__c = 'Active'];
+    }
+
+    public void updateRadioButtonStatus() {
+    	ID contactID = Apexpages.currentPage().getParameters().get('contactID');
+    	for (Contact c: contactList) {
+    		c.Primary_Contact__c = false;
+    		
+    		if(c.id == contactID) c.Primary_Contact__c = true;
+    	}
+    }
+
+    public Pagereference createContact(){
+
+    	Contact conToInsert = newContact.clone();
+    	insert conToInsert;
+    	contactList.add(conToInsert);
+    	newContact = new Contact();
+    	return null;
     }
 }
