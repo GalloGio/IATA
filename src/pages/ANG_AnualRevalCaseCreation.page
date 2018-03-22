@@ -151,7 +151,7 @@
 
 				<apex:pageBlockSectionItem >
     			
-    				<apex:commandButton value="Lauch Campaign" action="{!launchCampaign}" id="actionButton2" disabled="{!accountsToCreate.size = 0 || shouldDisableButton}"/>
+    				<apex:commandButton value="Launch Campaign" action="{!launchCampaign}" id="actionButton2" disabled="{!accountsToCreate.size = 0 || shouldDisableButton}"/>
             	
 				</apex:pageBlockSectionItem>
 

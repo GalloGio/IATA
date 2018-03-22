@@ -206,6 +206,10 @@
                 color: red;
                 font-weight: bold;
             }
+            .warningMessage1{
+                color:red;
+                text-align: center;
+            }
 
      </style>
 
@@ -349,11 +353,17 @@
             <apex:pageBlockButtons location="bottom" rendered="{!doNotHaveOscarYet}">
                 <apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" reRender="mainPageBlock"/>
             </apex:pageBlockButtons>
-            <br/><br/><br/><br/>
-                <apex:outputText  style="color: red;font-size: 14px;" value="This Staging Area already has a case, click below to open the case" rendered="{!!doNotHaveOscarYet}"/>
-                <apex:pageBlockButtons location="bottom" rendered="{!!doNotHaveOscarYet}">
-                    <apex:commandButton value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
-                </apex:pageBlockButtons>
+                  <apex:outputText  style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
+                <div class="warningMessage1">
+                    <div>This Staging Area already has a case, click below to open the case</div>
+                    <br />
+                    <div>
+
+                            <apex:commandButton rendered="{!!doNotHaveOscarYet}" value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
+                    </div>
+                </div>
+                </apex:outputText>
+
     </apex:pageBlock>
 
     </apex:form>

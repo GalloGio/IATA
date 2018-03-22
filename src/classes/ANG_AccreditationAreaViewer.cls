@@ -8,7 +8,7 @@ public with sharing class ANG_AccreditationAreaViewer {
             get{
                             
                             notes = new Set<String>();
-                            notes.add('This is the Staging Area for the Account ' + accreditationObj.IATACode__c);
+                            notes.add('This is the Staging Area for the Account ' + accreditationObj.HO_Account__r.IATACODE__c);
                             notes.add('You can create an Oscar Changes process by clicking the button below.');
                             notes.add('The Oscar Process will clone this accreditation area and will create a new Oscar/Case to be processed, attached to this account.');
 
@@ -18,7 +18,7 @@ public with sharing class ANG_AccreditationAreaViewer {
     }
     public boolean doNotHaveOscarYet{
         get{
-                List<AMS_Pax_Accreditation_Form__c> paxLst = [Select Id, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = :this.accreditationObj.HO_Account__c and Id != :this.accreditationObj.Id and SAAM_Case__r.ParentId = :this.accreditationObj.SAAM_Case__c ];
+                List<AMS_Pax_Accreditation_Form__c> paxLst = [Select Id, HO_Account__r.IATACODE__c, HO_Account__c, SAAM_Case__c, SAAM_Case__r.Casenumber from AMS_Pax_Accreditation_Form__c where HO_Account__c = :this.accreditationObj.HO_Account__c and Id != :this.accreditationObj.Id and SAAM_Case__r.ParentId = :this.accreditationObj.SAAM_Case__c ];
 
                 if(!paxLst.isEmpty()){
                     existingOscarCaseId = paxLst.get(0).SAAM_Case__c;
@@ -76,7 +76,7 @@ public with sharing class ANG_AccreditationAreaViewer {
 	private AMS_Pax_Accreditation_Form__c fetchAccreditationFields(Id accreditationId){
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, HO_Account__r.IATACODE__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.isEmpty()) return null;
 
