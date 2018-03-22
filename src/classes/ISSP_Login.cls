@@ -233,30 +233,35 @@ public without sharing class ISSP_Login {
 
     public PageReference findLocationCaller(){                
         findLocation(true);
-        system.debug('## communityName ' + communityName);
+        system.debug('## communityName ' + communityName);        
+        String getUrl = ApexPages.currentPage().getUrl();
         String oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
         String startUrl = ApexPages.currentPage().getParameters().get('startURL');
         system.debug('startURL ' + startURL);
         
         if(startUrl != null){            
             if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference('/identity/s/login/?startURL='+startUrl);
+                PageReference pr = new PageReference('/identity/s/login/?startURL='+startUrl+'&serviceName=ISSP');
                 pr.setRedirect(true);                        
                 return pr;    
             }else{                
                 return null;
             }            
         }
-        else if(communityName == null && startUrl == null){
+        else if(communityName == null && startUrl == null && !getUrl.contains('issp_login')){            
             if(oneIDStatus == 'ON'){                
                 PageReference pr = new PageReference('/identity');
                 pr.setRedirect(true);
                 return pr;    
-            }else{                
+            }else{
                 return null;
-            }            
-        }
-        else{            
+            }
+        }                    
+        else if (getUrl.contains('issp_login')){                
+                    PageReference pr = new PageReference('/identity/s/login/?startURL=%2F'+'ISSP_Homepage&serviceName=ISSP');
+                    pr.setRedirect(true);
+                    return pr;                  
+       }else{                 
             return null;
         }  
     }    

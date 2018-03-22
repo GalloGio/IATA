@@ -1,22 +1,29 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
-	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
-	<aura:attribute name="vfHost" type="String" default=""/>
-	<aura:attribute name="commName" type="String" default="{!$Label.c.OneId_Community_Name}"/>
-	<!--aura:handler name="init" value="{!this}" action="{!c.doInit}" /-->
-	
-    <div class="oiHeader">
-		<a class="homeIcon" href="{!'/' + v.commName}">
-			<span class="icon icon-logo"></span>
-			<span class="subLogo"></span>
-		</a>
-		<div id="suiteBar">
-			<div id="headerBar">
-				&nbsp;
-			</div>
-		</div>	
-	</div>
-	<div id="miniTopNav">
-		<span class="tnContainer centralLimiter">
-		</span>
-	</div>
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">	
+	<aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="greeting" type="String" default="OneId" access="global" />
+	<aura:attribute name="vfHost" type="String" default=""/>	
+	<aura:attribute name="customCommunity" type="Boolean" default="false" />
+	<aura:attribute name="serviceName" type="String" default="" />
+	<aura:attribute name="commName" type="String" default="{!$Label.c.Identity}"/>	
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+    
+	<aura:if isTrue="{!v.loaded}">
+    	<div class="oiHeader">
+            <a class="homeIcon" href="{!'/' + v.commName}">
+                <span class="icon icon-logo"></span>
+                <span class="{!'subLogo' + v.serviceName}"></span>
+            </a>
+            <div id="suiteBar">
+                <div id="headerBar">
+                    &nbsp;
+                </div>
+            </div>	
+        </div>
+        <aura:set attribute="else">
+            <lightning:spinner variant="brand" size="large"/>
+        </aura:set>
+    </aura:if>    
 </aura:component>

@@ -9,7 +9,7 @@
     
     <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
     <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister"/>
-    <aura:attribute name="sanctionCountry" type="String" required="false" default="false"/>
+    <aura:attribute name="sanctionCountry" type="Boolean" required="false" default="false"/>
     <aura:attribute name="show90Days" type="Boolean" required="false" default="false"/>
     <aura:attribute name="siteCompleteUrl" type="String" required="false" default=""/>
     
