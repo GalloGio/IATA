@@ -139,6 +139,10 @@
                 <behavior>Readonly</behavior>
                 <field>JSON_WS_Complex__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>JSON_WS_IDCard_App__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

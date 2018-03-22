@@ -20,6 +20,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
     private static final string DECEMBER = 'December';
 
     private static final string CSPRINTEDDELIVERED = 'Printed/Delivered';
+    private static final string CSVALID = 'Valid ID Card';
     private static final String CSCANCELED = 'Cancelled ID Card';
 
     private static final string SFUPDATEFAILED = 'FAILED';
@@ -128,7 +129,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
                     //Date firstDayOfMonth = date.valueOf(pValidToDate).toStartOfMonth();
                     //Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
                     //aCard.Valid_To_Date__c = lastDayOfMonth;
-                    aCard.Card_Status__c = CSPRINTEDDELIVERED;
+                    aCard.Card_Status__c = CSVALID;
                     aCard.Received_From_AIMS__c = Datetime.now();
 
                     List<Case> c = [Select Id, Status from Case c where c.Related_ID_Card_Application__c = : aCard.ID_Card_Application__c and c.RecordType.Name = 'ID Card Application'];
@@ -899,7 +900,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
                     //Date firstDayOfMonth = date.valueOf(pValidToDate).toStartOfMonth();
                     //Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
                     //aCard.Valid_To_Date__c = lastDayOfMonth;
-                    aCard.Card_Status__c = CSPRINTEDDELIVERED;
+                    aCard.Card_Status__c = CSVALID;
                     aCard.Received_From_AIMS__c = Datetime.now();
 
                     List<Case> c = [SELECT Id, Status FROM Case c WHERE c.Related_ID_Card_Application__c = : aCard.ID_Card_Application__c AND c.RecordType.Name = 'ID Card Application'];

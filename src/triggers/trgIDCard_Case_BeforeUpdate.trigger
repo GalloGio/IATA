@@ -129,7 +129,7 @@ trigger trgIDCard_Case_BeforeUpdate on Case (before update) {
                     if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE)
                     {
                         //find old card to cancel it
-                        ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                        ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc];
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             update idcards[0];

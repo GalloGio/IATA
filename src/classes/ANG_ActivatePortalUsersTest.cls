@@ -9,7 +9,8 @@ private class ANG_ActivatePortalUsersTest {
         IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'Winterfell', ISO_Code__c = 'TS', IATA_Iso_Country__c = isoc.Id);
    		insert isos;
 
-   		Account acc1 = new Account(Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+   		Account acc1 = new Account(RecordTypeId = agencyRT, Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
         insert acc1;
 
         Contact c1 = new Contact(AccountId = acc1.id, FirstName='Name', Lastname='LastName', Email = 'unique@email.com', Community__c = 'ISS Customer Portal', Phone = '3424322343');
