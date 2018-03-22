@@ -347,32 +347,32 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Amex (AX)</fullName>
+                    <fullName>AX</fullName>
                     <default>false</default>
                     <label>Amex (AX)</label>
                 </value>
                 <value>
-                    <fullName>MasterCard (CA)</fullName>
+                    <fullName>CA</fullName>
                     <default>false</default>
                     <label>MasterCard (CA)</label>
                 </value>
                 <value>
-                    <fullName>UATP (TP)</fullName>
+                    <fullName>TP</fullName>
                     <default>false</default>
                     <label>UATP (TP)</label>
                 </value>
                 <value>
-                    <fullName>Visa (VI)</fullName>
+                    <fullName>VI</fullName>
                     <default>false</default>
                     <label>Visa (VI)</label>
                 </value>
                 <value>
-                    <fullName>Diners (DC/DS)</fullName>
+                    <fullName>DC/DS</fullName>
                     <default>false</default>
                     <label>Diners (DC/DS)</label>
                 </value>
                 <value>
-                    <fullName>Other (OTH)</fullName>
+                    <fullName>OTH</fullName>
                     <default>false</default>
                     <label>Other (OTH)</label>
                 </value>
@@ -596,27 +596,27 @@
         <picklistValues>
             <picklist>PP_Payment_network__c</picklist>
             <values>
-                <fullName>Amex %28AX%29</fullName>
+                <fullName>AX</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Diners %28DC%2FDS%29</fullName>
+                <fullName>DC/DS</fullName>
+                <default>false</default>
+            </values>d
+            <values>
+                <fullName>CA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MasterCard %28CA%29</fullName>
+                <fullName>OTH</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other %28OTH%29</fullName>
+                <fullName>TP</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>UATP %28TP%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Visa %28VI%29</fullName>
+                <fullName>VI</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
