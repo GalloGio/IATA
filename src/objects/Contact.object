@@ -9910,6 +9910,26 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_BSP_CASS__c</fullName>
+        <description>counts the number of ISS portal services for BSP/CASS that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service BSP/CASS</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000bA6Y,a2ww0000001D7YS,a2ww0000000dbeP</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>S_BSPlink__c</fullName>
         <description>counts the number of BSPlink portal services of Management information report that the contact has access to</description>
         <externalId>false</externalId>
@@ -9950,6 +9970,26 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_Currency_Center__c</fullName>
+        <description>counts the number of ISS portal services for Currency Center that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service Currency Center</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000SddT</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>S_EBulletin__c</fullName>
         <description>counts the number of active E-Bulletin services for the contact</description>
         <externalId>false</externalId>
@@ -9970,6 +10010,66 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_EasyPay__c</fullName>
+        <description>counts the number of ISS portal services for EasyPay that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service EasyPay</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000001E0KI,a2ww0000001VEAE</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>S_ICE__c</fullName>
+        <description>counts the number of ISS portal services for ICE that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service ICE</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000dpBd</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>S_Risk_RHC__c</fullName>
+        <description>counts the number of ISS portal services for Risk RHC that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service Risk RHC</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2w1r000001VjHh</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>S_SIS__c</fullName>
         <description>counts the number of SIS services that the contact has access to on the ISS portal</description>
         <externalId>false</externalId>
@@ -9983,6 +10083,26 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             <field>Portal_Application_Right__c.Portal_Application__c</field>
             <operation>equals</operation>
             <value>a2ww0000001D7kd,a2ww0000000d5oZ</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>S_Standards_Setting_Workspace__c</fullName>
+        <description>counts the number of ISS portal services for SSW that the contact has access to</description>
+        <externalId>false</externalId>
+        <label>Service SSW</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000SYtj</value>
         </summaryFilterItems>
         <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
@@ -10273,7 +10393,19 @@ IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000
 &amp;&quot; &quot;&amp; 
 IF(S_EBulletin__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(S_Accreditation_Changes__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DHlA&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_BSP_CASS__c&gt;0,IMAGE(&quot;&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Currency_Center__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004yCw2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_EasyPay__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000056QFS&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
