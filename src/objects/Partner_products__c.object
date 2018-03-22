@@ -602,7 +602,7 @@
             <values>
                 <fullName>DC/DS</fullName>
                 <default>false</default>
-            </values>d
+            </values>
             <values>
                 <fullName>CA</fullName>
                 <default>false</default>
