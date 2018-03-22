@@ -676,6 +676,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
         isNoticeOfChange = false;
+        newAccreditationModels = false;
 
         newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
         
@@ -720,6 +721,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         applyLanguage = newCase.Case_Language__c;
+
+        // NewGen is only valid for Travel Agents
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
