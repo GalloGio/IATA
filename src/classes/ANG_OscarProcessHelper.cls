@@ -957,7 +957,6 @@ global class ANG_OscarProcessHelper {
 		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
         fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 		fieldsOfObject.put('Status__c','Open');
-		fieldsOfObject.put('OSCAR_Deadline__c',Date.today().addDays(30));
 		fieldsOfObject.put('OwnerId',cseId);
 
 
