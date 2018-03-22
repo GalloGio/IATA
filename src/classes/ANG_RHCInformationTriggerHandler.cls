@@ -27,6 +27,7 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onBeforeUpdate(){
 		convertAndSumFS();
 		sumRHCAmount();
+		refreshRMEData();
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
 	}
 	public void onAfterUpdate(){
@@ -94,6 +95,17 @@ public class ANG_RHCInformationTriggerHandler{
 		for(ANG_RHC_Information__c rhc : triggerNew){
 			if(Trigger.isInsert || oldMap.get(rhc.id).ANG_RHC_Amount__c != rhc.ANG_RHC_Amount__c) rhc.ANG_RHC_Effective_Date__c=System.Today();
 		}
+	}
+
+	private void refreshRMEData() {
+
+		Set<Id> accIds = new Set<Id>();
+		for(ANG_RHC_Information__c r : triggerNew){
+			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
+		}
+
+		if(!accIds.isEmpty()) Database.executebatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true), 100);
+			
 	}
 
 	/* as per NEWGEN-1085
