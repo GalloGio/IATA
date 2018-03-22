@@ -892,13 +892,19 @@ global class ANG_OscarProcessHelper {
         fieldsOfObject.put('Reason1__c','Annual revalidation');
         fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
         fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
         
        	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+        //assign to queue
+       	Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        cse.setOptions(dmo);
+
        	insert cse;
 
 		//StagingArea:
 		fieldsOfObject = new Map<String,Object>();
-
         fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
         fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
         fieldsOfObject.put('Accept_terms_and_conditions__c',true);
@@ -944,19 +950,19 @@ global class ANG_OscarProcessHelper {
 
         insert stagingArea;
 
-
-		fieldsOfObject = new Map<String,Object>();
+        String cseId = [Select ownerId from Case where id = :cse.id][0].ownerId;
 
 		//AMS_OSCAR__c:
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
         fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 		fieldsOfObject.put('Status__c','Open');
-		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
+		fieldsOfObject.put('OwnerId',cseId);
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
         insert oscar;
 
 		cse.Oscar__c = oscar.Id;
-
 		update cse;
 
 		if(toSendEmail)
