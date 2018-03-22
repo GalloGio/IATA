@@ -126,10 +126,13 @@
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 		}
-
+            .warningMessage1{
+                color:red;
+                text-align: center;
+            }
 </style>
 
-	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.IATACode__c}"/>
+	<apex:sectionHeader title="Staging Area" subtitle="Staging Area for Account {!accreditationObj.HO_Account__r.IATACode__c}"/>
 	<apex:form>
 		<div Id="loaderPageBlock" style="display:none;">
 			<div class="overlay">
@@ -157,11 +160,18 @@
 			<apex:pageBlockButtons location="bottom" rendered="{!doNotHaveOscarYet}">
 				<apex:commandButton value="Create Change Process" style=" display:inline;" onclick="createChangesOscar('{!accreditationObj.Id}')" oncomplete="undoStuff();" reRender="mainPageBlock"/>
 			</apex:pageBlockButtons>
-			<br/><br/><br/><br/>
-				<apex:outputText  style="color: red;font-size: 14px;" value="This Staging Area already has a case, click below to open the case" rendered="{!!doNotHaveOscarYet}"/>
-				<apex:pageBlockButtons location="bottom" rendered="{!!doNotHaveOscarYet}">
-					<apex:commandButton value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
-				</apex:pageBlockButtons>
+
+<br/><br/><br/>
+			<apex:outputText  style="color: red;font-size: 14px;" rendered="{!!doNotHaveOscarYet}">
+                <div class="warningMessage1">
+                    <div>This Staging Area already has a case, click below to open the case</div>
+                    <br />
+                    <div>
+
+                            <apex:commandButton rendered="{!!doNotHaveOscarYet}" value="Go to Oscar Case" style=" display:inline;" onclick="openCase('{!existingOscarCaseId}','{!existingOscarCaseNumber}')"/>
+                    </div>
+                </div>
+            </apex:outputText>
 		</apex:pageBlock>
 	</apex:form>
 </apex:page>
