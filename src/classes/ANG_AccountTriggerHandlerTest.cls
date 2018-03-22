@@ -11,7 +11,33 @@ private class ANG_AccountTriggerHandlerTest {
         Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
         Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
-		Account a = new Account(Name = 'Test', IATACode__c = '123', RecordTypeId = accRT, Location_Type__c = AMS_Utils.HE);
+        IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
+        		Name = 'Iso Country Name Test', 
+        		CurrencyIsoCode = 'EUR', 
+        		ISO_Code_Numeric__c = 620, 
+        		ISO_Code__c = 'PT',
+        		AIMS_Area_ID__c='1',
+        		ANG_Enable_NewGen__c = true
+        	);
+
+        insert isoTest;
+
+        Account a = new Account(
+        		Name ='Test', 
+        		Type = 'IATA Passenger Sales Agent',
+        		Sector__c='Travel Agent', 
+        		Location_Type__c = AMS_Utils.HE,
+        		Location_Class__c = 'P',
+        		ANG_FA_Opt_out__c = false,
+        		IATACode__c='12345678',
+        		IATA_ISO_Country__c = isoTest.Id,
+        		BillingCountry='Iso Country Name Test',
+        		ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+        		Status__c = AMS_Utils.ACC_S9_APPROVED,
+        		ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+        		Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+        		RecordTypeId = accRT
+        	);
 		insert a;
 
 		insert new ANG_RHC_Information__c (ANG_AccountId__c = a.Id);
@@ -19,36 +45,36 @@ private class ANG_AccountTriggerHandlerTest {
 		ANG_Agency_Risk_Calculation__c calcA = new ANG_Agency_Risk_Calculation__c(
 			RecordTypeId = riskStatusAssessmentRT, 
 			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, 
-			ANG_Risk_History_Assessment__c = AMS_Utils.PASSED,
+			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A, 
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(
 			RecordTypeId = riskStatusAssessmentRT, 
 			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, 
-			ANG_Risk_History_Assessment__c = AMS_Utils.PASSED,
+			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B,
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcB2 = new ANG_Agency_Risk_Calculation__c(
 			RecordTypeId = riskStatusAssessmentRT, 
 			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, 
-			ANG_Risk_History_Assessment__c = AMS_Utils.FAILED,
+			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B,
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(
 			RecordTypeId = riskStatusAssessmentRT, 
 			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
-			ANG_Risk_History_Assessment__c = AMS_Utils.FAILED,
-			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c,
+			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
+			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_C,
 			ANG_Limit_Cash_Condition__c = true);
 
 		ANG_Agency_Risk_Calculation__c calcC2 = new ANG_Agency_Risk_Calculation__c(
 			RecordTypeId = riskStatusAssessmentRT,
 		 	ANG_Financial_Review_Result__c = null,
-		 	ANG_Risk_History_Assessment__c = AMS_Utils.FAILED,
-		 	ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_c, 
+		 	ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
+		 	ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_C, 
 		 	ANG_Limit_Cash_Condition__c = true);
 
         ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
@@ -65,7 +91,8 @@ private class ANG_AccountTriggerHandlerTest {
 	            ANG_Description__c = 'Risk Event Test',
 	            ANG_Expiration__c = 24,
 	            ANG_Risk_ID__c = 'testRiskId',
-	            ANG_Agency_Risk_Calculation__c = rule.Id
+	            ANG_Agency_Risk_Calculation__c = rule.Id,
+	            Limit_Cash_conditions__c = false
         	);
         insert ret;
 
@@ -74,8 +101,6 @@ private class ANG_AccountTriggerHandlerTest {
 	static testMethod void test_riskStatus_allcases() {
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		// fill accounts last financial review result and risk history and assert new risk status
-		Test.startTest();
-
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] first update should be A');
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY;
 		a.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.PASSED;
@@ -90,10 +115,12 @@ private class ANG_AccountTriggerHandlerTest {
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		update a;
 
+		Test.startTest();
+
 		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_B, a.ANG_RiskStatus__c);
 		System.assertEquals(1, a.Cases.size());
-		System.assertEquals('Test - 123 - Downgrade Risk Status', a.Cases[0].Subject);
+		System.assertEquals('Test - 12345678 - Downgrade Risk Status', a.Cases[0].Subject);
 
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] third update should be C');
@@ -131,7 +158,7 @@ private class ANG_AccountTriggerHandlerTest {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
 
-		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');	
+		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');	
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
 		Account a3 = new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3');
 		
@@ -209,6 +236,8 @@ private class ANG_AccountTriggerHandlerTest {
 
 		update a;
 
+		//forcing call as test will not "chain" processes
+		new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
@@ -217,44 +246,13 @@ private class ANG_AccountTriggerHandlerTest {
 												  from ANG_RHC_Information__c 
 												 Where ANG_AccountId__c =: a.id];
 
-		System.assertEquals(rhcList[0].ANG_RME_Amount__c, message.provisionalRHC);
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
 
 	}
 
 	static testMethod void test_updateRHCInformation_OptIN_OptOUT_2() {
 
-		ID agencyRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
-
-		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
-				Name = 'Iso Country Name Test', 
-				CurrencyIsoCode = 'EUR', 
-				ISO_Code_Numeric__c = 620, 
-				ISO_Code__c = 'PT',
-				AIMS_Area_ID__c='1',
-				ANG_Enable_NewGen__c = true
-			);
-
-		insert isoTest;
-
-		Account a = new Account(
-				Name ='Test Name', 
-				IATA_ISO_Country__c = isoTest.id, 
-				Type = 'IATA Passenger Sales Agent',
-				Sector__c='Travel Agent', 
-				Location_Type__c = 'HE',
-				Location_Class__c = 'P',
-				ANG_FA_Opt_out__c = false,
-				iataCode__C='99999999',
-				BillingCountry='Iso Country Name Test',
-				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
-				Status__c = AMS_Utils.ACC_S9_APPROVED,
-				RecordTypeId = agencyRT
-				//ANG_HE_RiskStatus__c = 'C'
-			);
-
-		insert a;
-
-		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
+		Account a = [SELECT Id FROM Account];
 
   		Contact cont = new Contact(
 				lastName ='lastName',
@@ -273,7 +271,7 @@ private class ANG_AccountTriggerHandlerTest {
 	            ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
         	);
 
-        insert re1;		
+        insert re1;	
 
         Test.startTest();
 		   
@@ -283,7 +281,7 @@ private class ANG_AccountTriggerHandlerTest {
 				contactId = cont.Id,
 				Status = 'Open', 
 				Assessment_Performed_Date__c = system.today(),
-				Financial_Review_Result__c = 'Satisfactory - No Action',
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY,
 				RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),
 				IFAP_Area__c = 'asda44'
 			);
@@ -297,7 +295,7 @@ private class ANG_AccountTriggerHandlerTest {
 		message.storedBaseCurrency = 'USD';
 		message.consumedRHCAmount = 100;
 		message.consumedRHCPercentage = 0.1;
-		message.iataCode = '99999999';
+		message.iataCode = '12345678';
 		message.eventTime = System.now();
 		message.storedRHCValue = 200;
 
@@ -305,6 +303,8 @@ private class ANG_AccountTriggerHandlerTest {
 
 		update cFS;
 
+		//forcing call as test will not "chain" processes
+        new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
@@ -313,8 +313,7 @@ private class ANG_AccountTriggerHandlerTest {
 												  from ANG_RHC_Information__c 
 												 Where ANG_AccountId__c =: a.id];
 
-		System.assertEquals(rhcList[0].ANG_RME_Amount__c, message.provisionalRHC);
-
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
 	}	
 	
 }

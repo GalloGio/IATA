@@ -158,7 +158,7 @@
 
                       <tr style="display:{!IF(showParent,'','none')};">
                         <td>
-                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE}"/>
+                          <apex:outputLabel value="{!ho_he}"/>
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 15px;" value="{! agency.IATACode__c}"/>
@@ -180,6 +180,15 @@
                         </td>
                         <td>
                           <apex:outputText style="margin-left: 15px;" value="{! agency.TradeName__c}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_Status}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! status}"/>
                         </td>
                       </tr>
 
@@ -220,7 +229,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(NOT(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')}">
+                      <tr style="display:{!IF(showIrregularities,'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_Homepage_Irregularities}"/>
                         </td>
@@ -231,7 +240,7 @@
 
                     </table>                
 
-                    <apex:outputPanel rendered="{!agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c}">
+                    <apex:outputPanel rendered="{!AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel)}">
 
                       <br></br>
 
@@ -269,7 +278,6 @@
                                   <th class="tableFormat">{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
                                   <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
                                   <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
-                                  <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -288,9 +296,6 @@
                                   </apex:outputText>
                                 </td>
                                 <td class="tableFormat">{! riskEvent.iataCode}</td>
-                                <td class="tableFormat">
-                                  <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
-                                </td>
                               </tr>                            
                             </apex:repeat>                    
                           </tbody>

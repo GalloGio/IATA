@@ -520,8 +520,6 @@ global class ANG_OscarProcessHelper {
 		System.debug('[ANG_OscarProcessHelper] 1. Number of Queries used in this apex code so far: ' + Limits.getQueries());
 	    System.debug('[ANG_OscarProcessHelper] 2 .Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
 	    System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
-	    System.debug('[ANG_OscarProcessHelper] 4. Number of Queries used in this apex code so far: ' + Limits.getQueries());
-	    System.debug('[ANG_OscarProcessHelper] 5. Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
     }
 
     webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
@@ -876,7 +874,7 @@ global class ANG_OscarProcessHelper {
 		return true;
 	}
 
-	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc){
+	public static String createRevalidationOscar(Account acc, List<Contact> contactsAcc, Boolean toSendEmail ){
 
 		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
@@ -884,6 +882,7 @@ global class ANG_OscarProcessHelper {
 		
 		//Case:
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
         fieldsOfObject.put('Account_Concerned__c',acc.Id);
       	fieldsOfObject.put('ContactId',keyContact.Id);
         fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
@@ -909,6 +908,7 @@ global class ANG_OscarProcessHelper {
         fieldsOfObject.put('Abbreviated_Address__c',acc.Abbreviated_address__c);
         fieldsOfObject.put('Abbreviated_name__c',acc.Abbreviated_name__c);
         fieldsOfObject.put('Accept_terms_and_conditions__c',true);
+		fieldsOfObject.put('Account_Name__c',acc.Name);
         fieldsOfObject.put('Billing_State__c',acc.BillingState);
         fieldsOfObject.put('Branch_Office_City__c',acc.BillingCity);
         fieldsOfObject.put('Branch_Office_Country__c',acc.IATA_ISO_Country__c);
@@ -959,15 +959,16 @@ global class ANG_OscarProcessHelper {
 		fieldsOfObject.put('Status__c','Open');
 		fieldsOfObject.put('OwnerId',cseId);
 
-
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		
         insert oscar;
 
-        //update Oscar
-        cse.oscar__c = oscar.Id;
-        update cse;
+		cse.Oscar__c = oscar.Id;
+		update cse;
 
-        System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id+ ' | StagingArea: '+stagingArea.Id);
+		if(toSendEmail)
+			AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, cse.Id, AMS_Utils.NGANNUALREVAL, null, true);
+
+		System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHED INSERTING - OSCAR: '+oscar.Id + ' | Case: '+cse.Id+ ' | StagingArea: '+stagingArea.Id);
 
         return cse.Id;
 	}
@@ -992,7 +993,91 @@ global class ANG_OscarProcessHelper {
 		return contacts[0];
 	}
 
+	webservice static String[] createOscarChangesCase(Id accreditationId){
+		
+		Savepoint sp = Database.setSavepoint();
+		AMS_OSCAR__c oscar = null;
+		Case newCaseOscar = null;
 
+		try{
+
+			System.debug('Starting to create Oscar Changes from Staging area');
+			
+			List<String> fieldList = new List<String>();
+
+			Map<String, Schema.SObjectField> schemaFieldMap = AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
+
+			AMS_Pax_Accreditation_Form__c newAccr = acr.clone(false, true, false, false);
+
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
+
+	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+
+			Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('ParentId',c.Id);
+	        fieldsOfObject.put('BSPCountry__c',newAccr.HO_Account__r.BillingCountry);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Agency Changes');
+	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
+	        fieldsOfObject.put('Subject','Agency changes - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+
+	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
+
+	        insert newCaseOscar;
+
+
+
+	        newAccr.SAAM_Case__c = newCaseOscar.Id;
+	        insert newAccr;
+
+			fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGCHANGES);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
+
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, c.AccountId, fieldsOfObject);
+
+			insert oscar;
+
+			newCaseOscar.Oscar__c = oscar.Id;
+
+			update newCaseOscar;
+
+			newCaseOscar = [Select Id, Casenumber from Case where Id=:newCaseOscar.Id LIMIT 1];
+
+		}catch(Exception ex){
+
+       		Database.rollback(sp);
+
+        	String exMessage = 'Unhandle error on process:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+
+	        System.debug('[ANG_OscarProcessHelper create changes oscar case] Process failed with the following exception:' + ex.getStackTraceString());
+
+	        isIATACodeGenerationRunning = false;
+
+			return new String[]{'-1',exMessage};
+
+		}
+
+		System.debug('Created oscar with id: ' + oscar.Id);
+
+		return new String[]{newCaseOscar.Id,newCaseOscar.Casenumber};
+
+	}
     public Class EntityUpdater{
 
     	public Map<Id,Account> acctMap;

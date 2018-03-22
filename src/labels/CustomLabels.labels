@@ -694,20 +694,6 @@
         <value>Setup Finalization</value>
     </labels>
     <labels>
-        <fullName>AMS_OSCAR_STEP43</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_STEP43</shortDescription>
-        <value>Non-compliance - Adminstrative non-compliance</value>
-    </labels>
-    <labels>
-        <fullName>AMS_OSCAR_STEP44</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_STEP44</shortDescription>
-        <value>Non-compliance - Notice of Termination</value>
-    </labels>
-    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -973,7 +959,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -1059,7 +1045,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
-        <value>Return to comparison of Accreditation Types</value>
+        <value>Return to comparison of accreditation type</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
@@ -1338,12 +1324,20 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Open IATA EasyPay Account</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_OptInEmptyDateErrorMessage</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error message when the opt out date is empty</shortDescription>
+        <value>Please specify an Opt-In date.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_OptOutEmptyDateErrorMessage</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Error message when the opt out date is empty</shortDescription>
-        <value>You must specify an opt out date</value>
+        <value>Please specify an Opt-Out date.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE</fullName>
@@ -1586,7 +1580,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonTitle1</shortDescription>
-        <value>IATA Online Agency Accreditation</value>
+        <value>IATA Online Accreditation Agency</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonTitle2</fullName>
@@ -1810,13 +1804,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
         <value>E-mail address</value>
-    </labels>
-    <labels>
-        <fullName>ANG_NON_COMPLIANCE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_NON_COMPLIANCE</shortDescription>
-        <value>Non-compliance</value>
     </labels>
     <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
@@ -2561,7 +2548,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2575,7 +2562,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Airline/Operator Data Changes,New Airline/Operator,Debt Recovery,Billing Query,User Management,Other,Airline Reconciliation,Payments</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -9069,7 +9056,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
-        <value>Compare Accreditation Types</value>
+        <value>Compare Accreditation types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
@@ -9077,7 +9064,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Compare Accreditation Types in RHC page</shortDescription>
-        <value>Click here to compare the Accreditation Types</value>
+        <value>Click here to compare the accreditation types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
@@ -10986,7 +10973,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
-        <value>1. Accreditation Type</value>
+        <value>1. Accreditation type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -14903,6 +14890,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Code (HO / HE)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_CODE_SEARCH_SA</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Location type SA name</shortDescription>
+        <value>Specific Sales Activity (SA)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
         <categories>ISSP, Portal, ANG</categories>
         <language>en_US</language>
@@ -14991,7 +14986,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Link to the IATAs CheckACode page</shortDescription>
-        <value>Please refer to our paid &lt;a href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
+        <value>Please refer to our paid &lt;a target=&quot;_blank&quot; href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; service if you require the contact details for any agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
@@ -15122,6 +15117,62 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>IATA Passenger Sales</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and admin</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else assign the correct person as the IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; and ask them to proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is both IFAP and regular user</shortDescription>
+        <value>According to our records you are listed as the IFAP Contact for your agency. If this is still the case then please proceed to request to opt-in to the Financial Review process, else please ask your Portal Administrator to assign the correct person as the IFAP Contact and have them proceed with the request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is not IFAP nut is a portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process. You can view your current IFAP Contact on the &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt; , where you can assign the correct person if required, before asking them to proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message that appears when the portal user is neither IFAP or portal admin</shortDescription>
+        <value>Only your Agency&apos;s IFAP Contact can request to Opt-In to the Financial review process.. If you hold this role within your Agency then please contact your Portal Administrator, to have them assign you as the IFAP Contact so that you can proceed with this request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review button label</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_MODAL_TITLE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opt-in of Financial Review modal</shortDescription>
+        <value>Request to Opt-In to Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-in</shortDescription>
+        <value>Thanks for requesting to Opt-In to the Financial review process. IATA will contact you shortly concerning this request.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -15135,10 +15186,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Confirmation text in the modal window to opt out the financial review</shortDescription>
-        <value>You are about to opt out the financial review. You must reconsider your choice...
-We strongly advise you to remain with us primarily because you can&apos;t breathe under water or fly.
-We might have to make you a proposal you can not refuse, and the proposal will be delivered by our associates Tessio e Clemenza.
-You Shall not opt out!!!!</value>
+        <value>Opt-Out confimation text</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_OPT_OUT_MODAL_TITLE</fullName>
@@ -15155,6 +15203,14 @@ You Shall not opt out!!!!</value>
         <protected>false</protected>
         <shortDescription>Error message when the contact is not an IFAP contact</shortDescription>
         <value>Only your Agency&apos;s IFAP Contact can request to Opt-out of the Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success messagem on opt-out</shortDescription>
+        <value>Thanks for requesting to Opt-Out of the Financial review process. IATA will contact you shortly concerning this request.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_One_or_More</fullName>
@@ -15229,28 +15285,28 @@ You Shall not opt out!!!!</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role IEP Admin</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates direct funded Wallet(s)&lt;/li&gt;&lt;li&gt;Generates and manages indirect funded Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s), including responding to user access requests&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers funds for Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Full access to the Master Wallet and any Sub-wallet(s); establish new and close Sub-wallets&lt;/li&gt;&lt;li&gt;Full IEP Account management, including account closure&lt;/li&gt;&lt;li&gt;Full user management, and assignment of users to Master and Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_MasterWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Master Wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages Bank Account registration and closure&lt;/li&gt;&lt;li&gt;Allowed to Add funds from the registered Bank Account to the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Withdraw funds from the direct funded wallet(s)&lt;/li&gt;&lt;li&gt;Transfer funds between the Master Wallet and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages users&apos; access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer”&apos; IATA EasyPay users&apos; access and Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from the assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Manages funds of the assigned Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Manages “Ticket Issuer” user access within the Sub-wallet(s)&lt;/li&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_Role_TicketIssuer</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Ticket Issuer</shortDescription>
-        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via GDS&lt;/li&gt;&lt;/ul&gt;</value>
+        <value>&lt;ul&gt;&lt;li&gt;Generates IATA EasyPay Numbers from any assigned wallet(s) to be used to issue tickets via your GDS&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_TicketIssuer</fullName>
@@ -15268,7 +15324,6 @@ You Shall not opt out!!!!</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
-        <categories>ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
@@ -15299,6 +15354,22 @@ Large – more than USD 2.000.000 gross annual sales</value>
         <protected>false</protected>
         <shortDescription>Risk Event Status</shortDescription>
         <value>Risk Event Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STATUS_APPROVED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Approved</shortDescription>
+        <value>Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STATUS_TERMINATED</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Terminated</shortDescription>
+        <value>Terminated</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
@@ -15943,6 +16014,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_BSP_CASS_Change</shortDescription>
         <value>BSP / CASS Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_BSP_Concerned</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Concerned</shortDescription>
+        <value>BSP Concerned</value>
     </labels>
     <labels>
         <fullName>ISSP_Back</fullName>
@@ -16844,7 +16922,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CountryConcerned</shortDescription>
-        <value>Country/Territory concerned</value>
+        <value>Country concerned</value>
     </labels>
     <labels>
         <fullName>ISSP_Country_Requirements</fullName>
@@ -16859,7 +16937,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Country_of_Publication</shortDescription>
-        <value>Country/Territory of Publication</value>
+        <value>Country of Publication</value>
     </labels>
     <labels>
         <fullName>ISSP_Create_New_Agency</fullName>
@@ -18231,7 +18309,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Country</shortDescription>
-        <value>Filter by Country/Territory</value>
+        <value>Filter by Country</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Country_Publication</fullName>
@@ -19311,6 +19389,62 @@ this is the tiess topic help</value>
         <value>Loading Travel Agent Details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Local_Groups_Contact_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Contact Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Country</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Country</shortDescription>
+        <value>Country/Cluster</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Export_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Export CSV</shortDescription>
+        <value>Export in CSV</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry</shortDescription>
+        <value>Local Industry Groups</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Description</shortDescription>
+        <value>On this page, you can view the participation of your airline on IATA’s Passenger and Cargo local governance groups</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Industry_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Industry Title</shortDescription>
+        <value>My Local Groups</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Location</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -19623,6 +19757,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP My Cases</shortDescription>
         <value>My Cases</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_My_Cases_Created</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_My_Cases_Created</shortDescription>
+        <value>My cases that I created</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_My_Cases_Working_On</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_My_Cases_Working_On</shortDescription>
+        <value>My cases that I am working on</value>
     </labels>
     <labels>
         <fullName>ISSP_My_Company_Cases</fullName>
@@ -20086,12 +20236,28 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Other Company</value>
     </labels>
     <labels>
+        <fullName>ISSP_Our_Company_Cases</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Our_Company_Cases</shortDescription>
+        <value>Unassigned cases in our queue</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Owner</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Owner</shortDescription>
         <value>Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Owner_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Owner Name</shortDescription>
+        <value>Owner Name</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -20130,7 +20296,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PCI_Case_Submited</shortDescription>
-        <value>Thank you for submitting your self-declaration or PCI DSS Certificate.</value>
+        <value>Thank you for submiting the request for Credit Card form of Payment.</value>
     </labels>
     <labels>
         <fullName>ISSP_PCI_Least_One_IATA_CODE</fullName>
@@ -20633,7 +20799,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP RHC HUB RP</shortDescription>
-        <value>Accreditation and Risk Profile</value>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ISSP_ReasonInactivation</fullName>
@@ -20680,6 +20846,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Business Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_BusinessPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Business Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_ChangeMyCompany</fullName>
@@ -20825,6 +20999,14 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Please select the type of customer</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_FaxPhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Fax Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_IATACode_Bubble</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20885,6 +21067,14 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Mobile Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_MobilePhone_Msg</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>The Mobile Phone is invalid, please verify. Also check that the correct country is selected by either choosing a flag from the list OR entering the country code prefixed with a &apos;+&apos;.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_MyCompany</fullName>
@@ -22319,6 +22509,13 @@ CNS Customer Services</value>
         <value>We&apos;re sorry you are dissatisfied.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Who_to_contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Who to contact</shortDescription>
+        <value>Who to contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Yes</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -23153,7 +23350,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
-        <value>We attend the lines:</value>
+        <value>Available Period:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>

@@ -1134,7 +1134,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <filters>
             <field>Location_Type__c</field>
             <operation>equals</operation>
-            <value>Branch Office,Associate Entity,Head Entity</value>
+            <value>Associate Entity,Head Entity</value>
         </filters>
         <label>Location Type HE/AE</label>
         <language>en_US</language>

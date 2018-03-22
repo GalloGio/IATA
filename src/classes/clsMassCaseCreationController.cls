@@ -391,7 +391,7 @@ public with sharing class clsMassCaseCreationController {
         soql += ' and Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
 
       // Location Type AO/HO/BR filter
-      soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\')';
+      soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\' OR Account.Location_Type__c LIKE \'HE%\' OR Account.Location_Type__c LIKE \'AE%\')';
 
       // exclude opened cases
       if (exclOpenCases.equals('true'))
@@ -542,7 +542,7 @@ public with sharing class clsMassCaseCreationController {
       soql += ' and c.Contact.Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
 
     // Location Type HO/ AO filter
-    soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\')';
+    soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\' OR c.Contact.Account.Location_Type__c LIKE \'AE%\' )';
 
     soql += 'and c.Contact.Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079
 

@@ -26,7 +26,7 @@ public class ANG_RHCHelper {
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 		
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c from RHC_Informations__r where RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c FROM RHC_Informations__r WHERE RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -86,25 +86,35 @@ public class ANG_RHCHelper {
 	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 
-
-		Id devRecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('Minimum RHC Amount').getRecordTypeId();
+		//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
+		Id minRHCrt = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('Minimum_RHC_Amount');
 
 		Set<Id> accountsIds = new Set<Id>();
 		for(ANG_RHC_Information__c rhc : rhcInfo) {
-			accountsIds.add(rhc.ANG_AccountId__c);
+			if(!rhc.ANG_CashCondition__c) accountsIds.add(rhc.ANG_AccountId__c);
 		}
 
-		Map<Id, Account> accountsMap = new Map<Id, Account>([Select id, IATA_ISO_Country__c From Account Where id in: accountsIds]);
+		Map<Id, String> isoCountries = new Map<Id, String>();
+		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
 
-		Set<Id> isoSet = new Set<Id>();
-		for(Id key : accountsMap.keySet()) {
-			isoSet.add(accountsMap.get(key).IATA_ISO_Country__c);
+		if(!accountsIds.isEmpty()){
+			for(Account a : [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Id IN :accountsIds]) {
+				isoCountries.put(a.Id, a.IATA_ISO_Country__c);
+			}
+			
+			for(AMS_Country_Specific_Attribute__c a : [SELECT
+														Id
+														, IATA_ISO_Country__c
+														, IATA_ISO_Country__r.Iso_code__c
+														, ANG_Minimum_RHC_Amount__c
+														, CurrencyIsoCode
+													FROM AMS_Country_Specific_Attribute__c
+													WHERE RecordTypeId =: minRHCrt 
+													AND (IATA_ISO_Country__c IN :isoCountries.values() OR IATA_ISO_Country__r.Iso_code__c =: DEFAULT_CODE)]){
+				attributes.put(a.IATA_ISO_Country__r.Iso_code__c == DEFAULT_CODE ? DEFAULT_CODE : String.valueOf(a.IATA_ISO_Country__c), a);
+			}
 		}
 		
-		List<AMS_Country_Specific_Attribute__c> csa = [Select id, IATA_ISO_Country__c, IATA_ISO_Country__r.Iso_code__c, ANG_Minimum_RHC_Amount__c From AMS_Country_Specific_Attribute__c Where RecordTypeId =: devRecordTypeId And (IATA_ISO_Country__c IN :isoSet OR IATA_ISO_Country__r.Iso_code__c =: DEFAULT_CODE)];
-
-		Map<String, Decimal> csaMap = new Map<String, Decimal>();
-		for(AMS_Country_Specific_Attribute__c a : csa) csaMap.put((isoSet.contains(a.IATA_ISO_Country__c) ? String.valueOf(a.IATA_ISO_Country__c) : DEFAULT_CODE), a.ANG_Minimum_RHC_Amount__c);
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
@@ -112,8 +122,6 @@ public class ANG_RHCHelper {
 				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
 				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
 			}else{
-				if(!rhc.ANG_CashCondition__c) rhc.ANG_RME_Amount__c = rhc.ANG_RHC_Amount_Provisional__c;
-
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
 				Decimal provisionalRHC = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
@@ -124,37 +132,19 @@ public class ANG_RHCHelper {
 
 				if (fsAmount > (provisionalRHC + exceedingFS)) rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
 				else rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
-			}
 
-			//
-			// Minimum RHC amount 
-			//
-			// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
-			// if that is not defined the we get the AMS Country Specific Attributes for the ww country (All countries)
-			//
-			// Then if the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
-			//						
-			Decimal minimumRHCAmount = null;
+				// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
+				// if that is not defined then we get the AMS Country Specific Attributes for the ww country (All countries)
+				// If the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
+				
+				AMS_Country_Specific_Attribute__c att = attributes.get( attributes.containsKey(isoCountries.get(rhc.ANG_AccountId__c)) ? isoCountries.get(rhc.ANG_AccountId__c) : DEFAULT_CODE );
+				if(rhc.ANG_CashCondition__c || att == null) continue;
 
-			if(csaMap.containsKey(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) && csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c) != null)
-				minimumRHCAmount = csaMap.get(accountsMap.get(rhc.ANG_AccountId__c).IATA_ISO_Country__c);
-			else
-				minimumRHCAmount = csaMap.get(DEFAULT_CODE);
+				Decimal minimumRHCAmount = ANG_Risk_Helper.currencyConverter(att.CurrencyIsoCode, att.ANG_Minimum_RHC_Amount__c, rhc.CurrencyIsoCode);
 
-			//
-			// Apply the rule
-			//
-			if(minimumRHCAmount != null) {
-				minimumRHCAmount = ANG_Risk_Helper.currencyConverter('USD', minimumRHCAmount, rhc.CurrencyIsoCode);
-
-				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) {
-					rhc.ANG_RHC_Amount__c = minimumRHCAmount;					
-				}
-
-				if(rhc.ANG_RHC_Amount_Forecasted__c < minimumRHCAmount) {
-					rhc.ANG_RHC_Amount_Forecasted__c = minimumRHCAmount;					
-				}
-			}
+				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) rhc.ANG_RHC_Amount__c = minimumRHCAmount;
+				if(rhc.ANG_RHC_Amount_Forecasted__c < minimumRHCAmount) rhc.ANG_RHC_Amount_Forecasted__c = minimumRHCAmount;
+			}		
 			
 		}
 	}
@@ -176,7 +166,7 @@ public class ANG_RHCHelper {
 	public static void sendMailUpdate(List<Email> messages) {
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 
-		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+		OrgWIdeEmailAddress[] owea = [SELECT Id FROM OrgWIdeEmailAddress WHERE Address = 'noreply@iata.org'];
 
 		for(Email m : messages){
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RHCHelper - sendMailUpdate] message parameters - '+m);
@@ -186,7 +176,7 @@ public class ANG_RHCHelper {
 			mail.setWhatId(m.whatId);
 			mail.setTemplateId(m.templateId);
 
-			if (!owea.isEmpty()) mail.setOrgWideEmailAddressId(owea[0].Id);
+			if (!owea.isEmpty()) mail.setOrgWIdeEmailAddressId(owea[0].Id);
 			else{
 				mail.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
 				mail.setReplyTo(ENV.Reply_Email);
