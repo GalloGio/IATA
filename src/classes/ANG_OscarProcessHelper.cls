@@ -957,6 +957,7 @@ global class ANG_OscarProcessHelper {
 		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
         fieldsOfObject.put('Process__c',AMS_Utils.NGANNUALREVAL);
 		fieldsOfObject.put('Status__c','Open');
+		fieldsOfObject.put('Oscar_Communication_Case_Id__c',cse.Id);
 		fieldsOfObject.put('OwnerId',cseId);
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENANNUALREVAL, acc.Id, fieldsOfObject);		

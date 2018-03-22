@@ -3502,6 +3502,7 @@ public class AMS_OSCARTriggerHandler {
         List<Agency_Applied_Change_code__c> listNewCCs = new List<Agency_Applied_Change_code__c>();
 
         for (AMS_Oscar__c oscar: oscarsToProcess){
+            oscar.OSCAR_Deadline__c = Date.today().addDays(30);
             sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
 
             AMS_ChangeCodes__c config = AMS_ChangeCodesConfigHelper.getChangeCodeConfig('ARV');
