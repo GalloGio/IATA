@@ -3115,6 +3115,10 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>IqScore</fullName>
+        <trackTrending>false</trackTrending>
+    </fields>
+    <fields>
         <fullName>IsMine__c</fullName>
         <description>Used for filtering purposes in list views, for the RCRM project. Field is TRUE if the opportunity &quot;is linked&quot; to the current user, FALSE otherwise. The formula describes when an Opp is considered linked to the current user.</description>
         <externalId>false</externalId>
@@ -3793,11 +3797,6 @@
                     <label>Daniel Shemi</label>
                 </value>
                 <value>
-                    <fullName>Elena Chernousova</fullName>
-                    <default>false</default>
-                    <label>Elena Chernousova</label>
-                </value>
-                <value>
                     <fullName>Gurjit Gill</fullName>
                     <default>false</default>
                     <label>Gurjit Gill</label>
@@ -3816,16 +3815,6 @@
                     <fullName>Joyce Goh</fullName>
                     <default>false</default>
                     <label>Joyce Goh</label>
-                </value>
-                <value>
-                    <fullName>Joy Gallowitsch</fullName>
-                    <default>false</default>
-                    <label>Joy Gallowitsch</label>
-                </value>
-                <value>
-                    <fullName>Karim Ayari</fullName>
-                    <default>false</default>
-                    <label>Karim Ayari</label>
                 </value>
                 <value>
                     <fullName>Laetitia Slottved</fullName>
@@ -3911,6 +3900,11 @@
                     <fullName>Shane McCorley</fullName>
                     <default>false</default>
                     <label>Shane McCorley</label>
+                </value>
+                <value>
+                    <fullName>Shanil Perera</fullName>
+                    <default>false</default>
+                    <label>Shanil Perera</label>
                 </value>
                 <value>
                     <fullName>Tanya McKay</fullName>
@@ -6270,10 +6264,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gurjit Gill</fullName>
                 <default>false</default>
             </values>
@@ -6286,15 +6276,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Joy Gallowitsch</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6363,6 +6345,10 @@
             </values>
             <values>
                 <fullName>Shane McCorley</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8051,10 +8037,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Karim Ayari</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </values>
@@ -8072,6 +8054,10 @@
             </values>
             <values>
                 <fullName>Scott Gilmore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9910,10 +9896,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gurjit Gill</fullName>
                 <default>false</default>
             </values>
@@ -9926,15 +9908,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Joy Gallowitsch</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9991,6 +9965,10 @@
             </values>
             <values>
                 <fullName>Shane McCorley</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11739,10 +11717,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gurjit Gill</fullName>
                 <default>false</default>
             </values>
@@ -11756,10 +11730,6 @@
             </values>
             <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11800,6 +11770,10 @@
             </values>
             <values>
                 <fullName>Scott Gilmore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>

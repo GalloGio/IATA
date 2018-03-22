@@ -465,7 +465,7 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
         </layoutColumns>
@@ -597,6 +597,21 @@
         <relatedList>RelatedContactList</relatedList>
         <sortField>FULL_NAME</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
+        <fields>ANG_ConsumedRHC_Percent__c</fields>
+        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
+        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

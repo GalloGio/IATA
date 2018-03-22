@@ -48,7 +48,13 @@
 
     function iepContinue() {
       isEasyPayService = true;
-      var appPortalRole = $('[id$="portalRoles"]').val();
+      
+      var appPortalRole = '';
+
+      if($("input[type='radio'].radioBtnClass").is(':checked')) {
+        appPortalRole = $("input[type='radio'].radioBtnClass:checked").val();
+      }
+    
       if (appPortalRole == "") {
         portalRoleEmpty = true;
         document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';
@@ -56,6 +62,7 @@
         portalRoleEmpty = false;
         document.querySelector("[Id$='portalRoleErrorMessage']").style.display = 'none';      
         otherContinue();
+        $('[id$="portalServiceRole"]').val(appPortalRole);
       }
     }
 
@@ -116,6 +123,11 @@
     function closeIataIepRequestAccessModal(){
         $('#iataIepRequestAccessModal').modal('hide');
     }
+
+    function onComplete() {  
+        startLoading();
+        CreateNewPortalAccess();
+    }
     
 </script>
 
@@ -133,12 +145,16 @@
 
               <div class="alert alert-danger" id="portalNoUsersErrorMessage" style ="display: none">
                 <strong>{!$Label.ISSP_ANG_MustAddContactsToService}</strong>
-              </div>              
+              </div>
+
+
 
               <apex:define name="body"> 
                   {!$Label.ISSP_Help_Edit_services_page}
                 <div class="panel-body" id="body-enquiries">
                     <apex:form id="myForm" rendered="{!isAddUser == false}">
+
+                    <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
         
                     <apex:pageBlock id="pgBlock" mode="edit" title="">
                         <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
@@ -266,7 +282,11 @@
                   </apex:form>
                   
                   <apex:form rendered="{!isAddUser == true}">
+
+                      <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
+
                       <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
+                      <apex:actionFunction name="CreateNewPortalAccess" action="{!CreateNewPortalAccess}" reRender=""/>
 
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
@@ -318,9 +338,13 @@
                               <tr>
                                 <th>{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE}</th>
                                 <td>
-                                  <apex:selectList id="portalRoles" value="{!portalServiceRole}" size="1" required="true">
-                                    <apex:selectOptions value="{!availablePortalServiceRoles}"/>
-                                  </apex:selectList>                  
+                                  <apex:repeat value="{!availablePortalServiceRoles}" var="role" id="portalRoles">
+
+                                    <div class="radio" style="border-bottom: 1px solid rgb(229, 229, 229); padding-top: 5px;">
+                                      <label style="min-width: 35%; font-weight: bold;"><input type="radio" class="radioBtnClass" name="role" value="{!role.value}">{!role.value}</input></label>
+                                      <apex:outputText value="{!role.helpText}" escape="false"></apex:outputText>
+                                    </div>                          
+                                  </apex:repeat>
                                 </td>
                               </tr>
                             </apex:outputPanel>
@@ -407,8 +431,10 @@
                                 <br/>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton action="{!CreateNewPortalAccess}" 
+                                <apex:commandButton 
+                                  action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
+                                  oncomplete="onComplete();"
                                   status="loadStatusSpinner"
                                   rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn-primary"/>
                               </div>

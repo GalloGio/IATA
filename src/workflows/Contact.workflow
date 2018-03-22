@@ -174,6 +174,7 @@
     </alerts>
     <alerts>
         <fullName>Renewal_Email_alert</fullName>
+        <ccEmails>emailtosalesforce@63lv520ssbnqnqm4j9qg25k5r.2-8tfeay.eu3.le.salesforce.com</ccEmails>
         <description>Renewal Email alert</description>
         <protected>false</protected>
         <recipients>

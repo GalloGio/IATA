@@ -1075,17 +1075,18 @@
         <fullName>Test_Layouts</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
+        <columns>Atom__c</columns>
         <columns>Class__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
+            <field>Atom__c</field>
             <operation>contains</operation>
-            <value>test</value>
+            <value>0</value>
         </filters>
-        <label>Test Layouts</label>
+        <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1161,7 +1162,6 @@
         <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
         </filters>
         <label>02_GSS_3rd_Party_TXT_Masters</label>
         <language>en_US</language>
