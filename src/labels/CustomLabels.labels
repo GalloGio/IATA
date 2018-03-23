@@ -698,7 +698,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP43</shortDescription>
-        <value>Adminstrative non-compliance</value>
+        <value>Administrative non-compliance</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP44</fullName>
