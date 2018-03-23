@@ -670,7 +670,7 @@
     <validationRules>
         <fullName>Mandatory_Chargeback_on_TIP_Product</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Yes&apos;), RecordType.DeveloperName = &apos;TIP Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
+        <errorConditionFormula>AND(ISPICKVAL(PP_Chargeback_airlines__c, &apos;Y&apos;), RecordType.DeveloperName = &apos;TIP_Product&apos;, ISBLANK(PP_Chargeback_airlines_duration__c))</errorConditionFormula>
         <errorDisplayField>PP_Chargeback_airlines_duration__c</errorDisplayField>
         <errorMessage>If subject to chargeback, please indicate the maximun number of days after transaction for which a chargeback can be issued.</errorMessage>
     </validationRules>
